@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 11: VA contínua, esperança, variância e FDA}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 11}{Variável aleatória contínua, densidade, esperança, variância e FDA (Cap. 4, Aulas 24--26)}
+
+\begin{questao}{1} \textbf{(Densidade válida: tempo de vida de um equipamento)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $\int_0^4 kx\,dx = k\left[\frac{x^2}{2}\right]_0^4 = k\times 8 = 1 \Rightarrow k=1/8$.
+  \item $F(x) = \int_0^x \frac{t}{8}dt = \frac{x^2}{16}$. $P(X\le2)=F(2)=4/16=0{,}25$.
+  \item $P(1\le X\le3) = F(3)-F(1) = 9/16-1/16 = 8/16=0{,}5$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Esperança e variância: receita de um posto de vendas)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $E(X)=\int_2^{10} x\cdot\frac18\,dx = \frac18\left[\frac{x^2}{2}\right]_2^{10} =
+    \frac18\left(\frac{100-4}{2}\right) = \frac18\times48=6$.
+  \item $\mathrm{Var}(X) = \int_2^{10}(x-6)^2\cdot\frac18\,dx$. Fazendo $u=x-6$, limites $-4$ a
+    $4$: $\frac18\int_{-4}^4 u^2\,du = \frac18\left[\frac{u^3}{3}\right]_{-4}^4 =
+    \frac18\times\frac{64-(-64)}{3} = \frac18\times\frac{128}{3} = \frac{16}{3}\approx5{,}33$.
+  \item Fórmula pronta: $E(X)=\frac{2+10}{2}=6$ (\checkmark). $\mathrm{Var}(X)=\frac{(10-2)^2}{12}=
+    \frac{64}{12}=\frac{16}{3}\approx5{,}33$ (\checkmark). Ambos coincidem com (a) e (b).
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(FDA a partir da densidade: desconto em uma promoção)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $F(x) = \int_0^x \frac{3}{8000}t^2\,dt = \frac{3}{8000}\left[\frac{t^3}{3}\right]_0^x =
+    \frac{x^3}{8000}$, para $0\le x\le20$.
+  \item $P(X\ge15) = 1-F(15) = 1-\frac{15^3}{8000} = 1-\frac{3375}{8000} = 1-0{,}4219 =
+    0{,}5781$.
+  \item $P(X\ge15) = \int_{15}^{20}\frac{3}{8000}x^2\,dx = \left[\frac{x^3}{8000}\right]_{15}^{20}
+    = \frac{8000}{8000}-\frac{3375}{8000} = 1-0{,}4219=0{,}5781$. Mesmo resultado, como esperado
+    (o item (b) é só o Teorema Fundamental do Cálculo aplicado à mesma integral).
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Propriedades: conversão de moeda)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $E(C) = 5{,}20\times50+30 = 260+30=290$.
+  \item $dp(C) = |5{,}20|\times dp(X) = 5{,}20\times8=41{,}6$.
+  \item O desvio padrão \textbf{aumenta}: $dp(C)=5{,}50\times8=44{,}0 > 41{,}6$. Pela propriedade
+    $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$ (logo $dp(aX+b)=|a|\,dp(X)$), o desvio padrão é
+    diretamente proporcional ao coeficiente de escala $a$ (a cotação); a taxa fixa $b=30$ não
+    entra nessa conta.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: $P(X=x)=0$ para VA contínua)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(x-\varepsilon<X\le x) = F(x) - F(x-\varepsilon)$ (diferença de duas probabilidades
+    acumuladas).
+  \item Por definição, $F$ é contínua em $x$ significa exatamente que
+    $\lim_{\varepsilon\to0^+} F(x-\varepsilon) = F(x)$, logo
+    $\lim_{\varepsilon\to0^+}[F(x)-F(x-\varepsilon)] = F(x)-F(x) = 0$.
+  \item O evento $\{X=x\}$ é o limite dos eventos $\{x-\varepsilon<X\le x\}$ quando
+    $\varepsilon\to0^+$ (o intervalo encolhe até o ponto único $x$). Pela continuidade de
+    probabilidade (um resultado geral que estende os axiomas), $P(X=x) =
+    \lim_{\varepsilon\to0^+} P(x-\varepsilon<X\le x)$, que pelo item (b) vale $0$. Se $F$ tivesse
+    um salto em $x$ (caso discreto), o limite em (b) seria igual ao tamanho do salto, não zero,
+    é exatamente essa ausência de saltos, garantida pela continuidade de $F$, que força
+    $P(X=x)=0$ no caso contínuo.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

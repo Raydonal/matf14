@@ -1,0 +1,188 @@
+---
+title: "Medidas de tendência central e suas relações"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "18/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+empresas <- read.csv("empresas.csv")
+options(scipen = 999)
+```
+
+class: inverse, center, middle
+
+# Aula 04: Medidas de tendência central
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## "Salário médio subiu 3%": médio segundo quem?
+
+> Um sindicato e uma empresa negociam reajuste. A empresa cita a **média** salarial da categoria; o
+> sindicato cita a **mediana**. Os dois números vêm dos mesmos dados. Por que cada lado escolhe um?
+
+--
+
+> Se você soubesse de antemão que a resposta depende da forma da distribuição salarial, que
+> pergunta faria antes de aceitar qualquer um dos dois números?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Média, mediana e moda
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\qquad\qquad
+\text{Mediana} = \begin{cases} x_{(\frac{n+1}{2})}, & n \text{ ímpar} \\ \frac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n \text{ par}\end{cases}
+$$
+
+**Moda**: valor/categoria mais frequente, a única que faz sentido para variável qualitativa.
+
+--
+
+## Quando elas divergem
+
+Em distribuições **simétricas**: média ≈ mediana ≈ moda.
+
+Em distribuições **assimétricas à direita** (cauda longa de valores altos, renda, faturamento):
+
+$$
+\text{moda} < \text{mediana} < \text{média}
+$$
+
+A média é "puxada" pelos valores extremos; a mediana não.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Faturamento das empresas: média vs. mediana
+
+```{r resumo}
+empresas |> summarise(media = mean(faturamento99), mediana = median(faturamento99))
+```
+
+A média é claramente maior que a mediana, evidência de assimetria à direita: poucas empresas muito
+grandes puxam a média para cima, enquanto a mediana continua descrevendo a empresa "típica".
+
+---
+
+## O mesmo fenômeno em renda nacional
+
+É exatamente a lógica usada para relatar desigualdade: a renda média de um país é, quase sempre,
+maior que a renda mediana. A razão entre as duas já é, informalmente, um primeiro indício (bruto)
+de desigualdade, antes mesmo de calcular um índice de Gini.
+
+```{r hist-fat, echo=FALSE}
+ggplot(empresas, aes(x = faturamento99)) +
+  geom_histogram(bins = 20, fill = "#c9971e", color = "white") +
+  geom_vline(aes(xintercept = mean(faturamento99)), color = "#0d3b54", linewidth = 1) +
+  geom_vline(aes(xintercept = median(faturamento99)), color = "#2e8b57", linewidth = 1, linetype = "dashed") +
+  labs(x = "Faturamento 1999 (R$ mil)", y = "Frequência",
+       title = "Linha cheia = média · Linha tracejada = mediana") +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: volte à pergunta de abertura
+
+**1.** Explique, agora com vocabulário formal, por que a empresa prefere citar a média e o
+sindicato a mediana na negociação salarial. Isso torna algum dos dois números "errado"?
+
+**2.** Se você fosse o setor de comunicação de uma prefeitura querendo mostrar "cidade próspera",
+qual medida de tendência central do faturamento das empresas locais você destacaria? E se fosse um
+auditor fiscal avaliando concentração de riqueza?
+
+---
+
+## Rodada 2: generalizando
+
+**3.** Dê um exemplo de uma variável econômica em que você esperaria média \(\approx\) mediana
+\(\approx\) moda (distribuição aproximadamente simétrica). O que essas três variáveis "bem
+comportadas" costumam ter em comum, em contraste com renda ou faturamento?
+
+**4.** É possível a moda estar **fora** do intervalo entre a média e a mediana (não seguir a ordem
+"moda < mediana < média" ou seu espelho)? Pense em uma distribuição bimodal para testar sua
+intuição.
+
+**5.** Retomando o Capítulo 1 do livro: um fundo de investimento anuncia "retorno médio anualizado
+de 15% nos últimos 5 anos". Que pergunta sobre a mediana anual (não só a média dos 5 anos) você
+faria antes de decidir investir?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+library(tidyverse)
+empresas <- read.csv("empresas.csv")
+
+empresas |> summarise(
+  media   = mean(faturamento99),
+  mediana = median(faturamento99)
+)
+
+# moda não tem função nativa no R: para variável qualitativa:
+empresas |> count(porte, sort = TRUE) |> slice(1)   # categoria mais frequente
+```
+
+`mean()` e `median()` ignoram `NA` só se `na.rm = TRUE` for passado, checar sempre `sum(is.na(x))`
+antes de resumir uma variável real.
+
+---
+
+## Dados da própria turma (semestre anterior)
+
+.pull-left[
+```{r fig-notas, echo=FALSE, out.width="95%"}
+knitr::include_graphics("images/notas_prova1_matf14.png")
+```
+]
+.pull-right[
+```{r fig-letras, echo=FALSE, out.width="95%"}
+knitr::include_graphics("images/letras_nomes_matf14.png")
+```
+]
+
+Duas variáveis quantitativas reais de uma turma de MATF14: notas da Prova 1, e número de letras
+no nome completo dos alunos. Estime, de cabeça, se a média está acima ou abaixo da mediana em cada
+histograma.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (23/03)
+
+## Quantis, distância interquartílica e boxplots

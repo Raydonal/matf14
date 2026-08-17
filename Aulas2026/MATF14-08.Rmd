@@ -1,0 +1,195 @@
+---
+title: "Correlação. Assimetria e curtose"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "01/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+empresas <- read.csv("empresas.csv")
+var_n <- function(x) mean((x - mean(x))^2)
+assimetria <- function(x) mean((x-mean(x))^3) / var_n(x)^{3/2}
+curtose <- function(x) mean((x-mean(x))^4) / var_n(x)^2
+```
+
+class: inverse, center, middle
+
+# Aula 08: Correlação, assimetria e curtose
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R · Fechando a Unidade 1
+
+---
+
+## Sorvete, afogamento e a última peça do quebra-cabeça
+
+> Ao longo do século XX, vendas de sorvete e número de afogamentos em praias estão fortemente
+> correlacionados. O sorvete causa afogamento?
+
+--
+
+> Duas distribuições salariais podem ter a mesma média e o mesmo desvio padrão e ainda parecerem
+> completamente diferentes num histograma. O que mais falta medir?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Coeficiente de correlação de Pearson
+
+$$
+r = \frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}},
+\qquad -1 \le r \le 1
+$$
+
+Mede força e sentido da associação **linear** entre duas variáveis quantitativas. \(r\approx 0\) não
+implica ausência de qualquer relação, só de relação linear.
+
+--
+
+## Assimetria
+
+$$
+\text{Assimetria} = \frac{\frac1n\sum_i (x_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
+$$
+
+Positiva \(\Rightarrow\) cauda longa à direita (renda, faturamento). Negativa \(\Rightarrow\) cauda
+longa à esquerda. Zero \(\Rightarrow\) simetria.
+
+---
+
+## Curtose
+
+$$
+\text{Curtose} = \frac{\frac1n\sum_i (x_i-\bar x)^4}{\mathrm{Var}(X)^{2}}
+$$
+
+Referência: Normal tem curtose \(=3\). Maior que 3 (leptocúrtica) \(\Rightarrow\) caudas mais pesadas,
+mais eventos extremos que sob normalidade, relevante para gestão de risco financeiro.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Correlação: empregados × faturamento
+
+```{r cor-emp, fig.height=3.8}
+r <- cor(empresas$empregados99, empresas$faturamento99)
+ggplot(empresas, aes(empregados99, faturamento99)) +
+  geom_point(alpha=.6, color="#0d3b54") + geom_smooth(method="lm", se=FALSE, color="#c9971e") +
+  labs(title = paste0("r = ", round(r,2)), x = "Empregados", y = "Faturamento (R$ mil)") +
+  theme_minimal(base_size=13)
+```
+
+---
+
+## Assimetria e curtose do faturamento
+
+```{r assim-curt}
+empresas |> summarise(
+  assimetria = assimetria(faturamento99),
+  curtose    = curtose(faturamento99)
+)
+```
+
+Assimetria bem positiva (cauda à direita) e curtose alta, coerente com o que já vimos: poucas
+empresas muito grandes, muitas pequenas.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (a mais longa da aula: fecha a Unidade 1)
+
+---
+
+## Rodada 1: a provocação do sorvete
+
+**1.** Identifique a variável de confusão que explica a correlação sorvete×afogamento sem que uma
+cause a outra.
+
+**2.** O número de empregados de uma empresa poderia *causar* maior faturamento, o faturamento
+poderia causar o número de empregados, ou uma terceira variável (porte, setor) poderia causar
+ambos. Os dados de correlação, sozinhos, distinguem essas três histórias? Que dado adicional
+ajudaria?
+
+**3.** Construa mentalmente um exemplo em que \(X\) e \(Y\) têm relação forte e previsível (para cada
+\(x\) existe um único \(y\)), mas \(r\approx0\). (Dica: pense numa relação em forma de "U".)
+
+---
+
+## Rodada 2: forma da distribuição
+
+**4.** Retornos diários de ações costumam ter curtose bem acima de 3. Um modelo de risco que
+assume distribuição Normal (curtose 3) para esses retornos erra para mais ou para menos na
+frequência esperada de quedas bruscas?
+
+**5.** Duas distribuições salariais têm a mesma média e o mesmo desvio padrão, mas assimetrias
+muito diferentes (uma quase zero, outra fortemente positiva). Explique por que essas duas empresas
+poderiam demandar políticas de RH bem diferentes, mesmo com os "dois primeiros números" idênticos.
+
+---
+
+## Síntese: fechando a Unidade 1
+
+**6.** Volte à primeira aula do semestre e às cinco perguntas de abertura (fundo de investimento,
+pesquisa eleitoral, inflação "dentro da meta", escore de crédito, seguro para jovens). Para cada
+uma, identifique qual ferramenta da Unidade 1 (tipo de variável, tabela, gráfico, posição,
+dispersão, correlação, assimetria) você usaria primeiro para começar a responder com rigor.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+library(tidyverse)
+empresas <- read.csv("empresas.csv")
+
+cor(empresas$empregados99, empresas$faturamento99)
+
+var_n <- function(x) mean((x - mean(x))^2)
+assimetria <- function(x) mean((x-mean(x))^3) / var_n(x)^{3/2}
+curtose    <- function(x) mean((x-mean(x))^4) / var_n(x)^2
+
+empresas |> summarise(assimetria(faturamento99), curtose(faturamento99))
+```
+
+R não tem funções nativas de assimetria/curtose no pacote base, vêm de pacotes como `e1071` ou
+`moments`, mas escrever a fórmula direto (como acima) ajuda a fixar a definição.
+
+---
+
+class: inverse, center, middle
+
+# Fim da Unidade 1: Estatística Descritiva
+
+## Prova 1 cobre exatamente esta unidade
+
+### Revise as Listas 01-04 antes da data oficial de P1
+
+---
+
+class: inverse, center, middle
+
+## Próxima aula (06/04): início da Unidade 2: Probabilidade
+
+### Espaço amostral e eventos. Revisão de teoria de conjuntos

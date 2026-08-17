@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Medidas de dispersão: AT, DP e CV</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Medidas de dispersão: AT, DP e CV
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 25/03/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 06: Medidas de dispersão
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Duas ações, mesmo retorno médio: mesma qualidade?
+
+&gt; Duas ações têm o mesmo retorno médio anual de 12%. Uma variou entre 8% e 16% nos últimos 5 anos;
+&gt; a outra, entre -30% e 45%. Um investidor avesso a risco as consideraria igualmente atraentes?
+
+--
+
+&gt; E se eu disser que o desvio padrão de "faturamento em R\$ mil" de uma empresa é maior que o de
+&gt; "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Variância e desvio padrão
+
+$$
+\mathrm{Var}(X) = \frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^2
+\qquad
+dp(X) = \sqrt{\mathrm{Var}(X)}
+$$
+
+O desvio padrão devolve a dispersão à unidade original dos dados (a variância fica ao quadrado).
+
+--
+
+**Atenção**: nesta disciplina, variância descritiva usa divisor \(n\). Em inferência/econometria, o
+divisor passa a ser \(n-1\) (correção de Bessel) quando os dados são vistos como amostra usada para
+**estimar** a variância populacional, o padrão da função `var()` do R.
+
+---
+
+## Coeficiente de variação
+
+$$
+CV(X) = \frac{dp(X)}{\bar x}
+$$
+
+Adimensional, permite comparar a dispersão **relativa** de variáveis em unidades diferentes, ou
+com médias muito diferentes (faturamento em R\$ mil vs. número de empregados).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Comparando dispersão relativa
+
+
+``` r
+empresas |&gt; summarise(
+  cv_faturamento = dp_n(faturamento99) / mean(faturamento99),
+  cv_empregados  = dp_n(empregados99) / mean(empregados99)
+)
+```
+
+```
+##   cv_faturamento cv_empregados
+## 1      0.3149947      1.118723
+```
+
+Não faz sentido comparar diretamente o desvio padrão de "faturamento" (ordem de centenas de
+milhares) com o de "nº de empregados" (ordem de dezenas), são unidades incomparáveis. O \(CV\)
+resolve isso.
+
+---
+
+## A mesma lógica em finanças
+
+A mesma ideia é usada para comparar a **volatilidade relativa** de duas ações com preços médios
+muito diferentes: um desvio padrão de R\\( 5 é enorme para uma ação de R\\) 10 (CV alto) e pequeno
+para uma de R\$ 500 (CV baixo).
+
+
+|Ação            | Preço médio| Desvio padrão|   CV|
+|:---------------|-----------:|-------------:|----:|
+|A (preço baixo) |          10|           2.5| 0.25|
+|B (preço alto)  |         500|          40.0| 0.08|
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte às duas ações da abertura (mesma média 12%, faixas 8-16% e -30-45%). Estime
+mentalmente qual delas tem desvio padrão maior. Um investidor avesso a risco, olhando só a média,
+cometeria que erro?
+
+**2.** Um gestor de risco reporta apenas "desvio padrão mensal de 2%" para um fundo. Isso basta
+para saber se há meses de perdas catastróficas raras escondidos numa distribuição majoritariamente
+estável? Que medida, ainda não vista (mas você pode arriscar um palpite), ajudaria a responder?
+
+---
+
+## Rodada 2: o coeficiente de variação e seus limites
+
+**3.** Um artigo afirma "o Brasil é mais desigual que a Argentina" citando apenas a renda média per
+capita dos dois países. Que medida de dispersão seria indispensável para essa afirmação ter
+qualquer sentido?
+
+**4.** O \(CV\) pode ser enganoso quando a média da variável está próxima de zero. Explique por que
+(pense no que acontece com uma fração quando o denominador se aproxima de zero) e dê um exemplo
+econômico em que isso seria um problema real (por exemplo, uma variável que pode ser positiva ou
+negativa, como lucro).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+library(tidyverse)
+empresas &lt;- read.csv("empresas.csv")
+
+var_n &lt;- function(x) mean((x - mean(x))^2)   # variância descritiva (divisor n)
+dp_n  &lt;- function(x) sqrt(var_n(x))
+
+empresas |&gt; summarise(
+  dp_n(faturamento99),
+  var_n(faturamento99),
+  cv = dp_n(faturamento99) / mean(faturamento99)
+)
+
+var(empresas$faturamento99)   # ATENÇÃO: usa divisor n-1, não n
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (30/03): Laboratório
+
+## R para estatística descritiva: carregar dados, tabelas e gráficos
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

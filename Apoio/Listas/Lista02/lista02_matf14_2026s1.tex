@@ -1,0 +1,238 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Lista 2 de exercícios \\
+	\end{Large}	
+%	Prazo de entrega: 4/11/2024
+\end{center}
+
+%\fbox{\begin{minipage}{30em}
+%		Nome:
+%\end{minipage}}
+%\hspace{2em} Nota: 
+
+%\vspace{2em}
+
+
+
+\vspace{2em}
+
+\begin{enumerate}
+
+    \item Defina o espaço amostral para cada um dos seguintes experimentos aleatórios:
+    \begin{enumerate}
+    	\item lançam-se dois dados e anota-se a configuração obtida;
+    	\item conta-se o número de peças defeituosas, no intervalo de uma hora, de uma linha de produção;
+    	\item investigam-se famílias com três crianças e anota-se a configuração obtida das crianças segundo o sexo delas;
+    	\item numa entrevista telefônica com cinco assinantes, pergunta-se se o proprietário tem ou não máquina de secar roupa;
+    	\item de um fichário com quatro nomes, sendo dois de mulheres e dois de homens, sorteia-se uma ficha por vez até que o último nome de mulher seja selecionado.
+    \end{enumerate}
+    
+    \item Uma moeda é lançada três vezes. Considere os eventos $A_i = \{\text{cara no $i$-ésimo lançamento}\}$, para $i=1,2,3$. Liste os elementos dos seguintes eventos:
+    \begin{enumerate}
+    	\item $A_1^c \cap A_3$;
+    	\item $A_1^c \cup A_3$;
+    	\item $(A_1^c \cap A_3^c)^c$;
+    	\item $A_1 \cap (A_2 \cup A_3)$;
+    \end{enumerate}
+    
+    \item Suponha que o espaço amostral é o intervalo $[0,1]$ dos números reais. Considere os eventos $A=\{x: \frac{1}{4} \leq x \leq \frac{7}{10}\}$ e $B=\{x: \frac{1}{2} \leq x \leq \frac{9}{10}\}$. Determine os eventos:
+    \begin{enumerate}
+    	\item $A^c$
+    	\item $A \cap B^c$
+    	\item $(A \cup B)^c$
+    	\item $A^c \cup B$
+    \end{enumerate}
+    
+    \item Uma cidade tem 20 mil habitantes e três jornais A, B e C. Uma pesquisa de opinião revela que 12 mil leem A, 8 mil leem B, 7 mil leem A e B, 6 mil leem C, 4.500 leem A e C, 1000 leem B e C, e 500 leem os três jornais. Qual é a probabilidade de que um respondente dessa pesquisa selecionado ao acaso leia:
+    \begin{enumerate}
+    	\item pelo menos um jornal?
+    	\item somente um jornal?
+    \end{enumerate}
+    
+   	\item Um restaurante popular apresenta dois tipos de refeições: salada completa ou um prato a à base de carne. Sabe-se que: 75\%  dos fregueses são homens, 10\% dos fregueses do sexo masculino preferem salada, e 40\% dos fregueses do sexo feminino preferem carne. Assuma que uma pessoa é selecionada ao acaso dentre todos os fregueses e considere os seguintes eventos:\\
+   	\begin{tabular}{ll}
+   		$H$: o freguês é homem, & $M$: o freguês é mulher,\\
+   		$S$: o freguês prefere salada, & $C$: o freguês prefere carne.\\
+   	\end{tabular}\\
+   	Calcule as seguintes probabilidades:
+   	\begin{enumerate}
+   		\item $P(H)$, $P(S|H)$ e $P(C|H)$;
+   		\item $P(S \cup H)$ e $P(S \cap H)$;
+   		\item $P(M|S)$.
+   	\end{enumerate}
+   	
+   	\item Os 250 estudantes de uma faculdade têm a seguinte distribuição segundo sexo e área de concentração:\\	
+   	\begin{center}
+   	\begin{tabular}{c|ccc}
+   	\hline
+   	  & Biológicas & Exatas & Humanas \\
+   	\hline
+   	Masculino & 42 & 30 & 58 \\
+   	Feminino  & 38 & 12 & 70 \\
+   	\hline
+   	\end{tabular}\\
+   	\end{center}
+   		Um estudante dessa faculdade é sorteado ao acaso.
+   		\begin{enumerate}
+   			\item Qual é a probabilidade de que o estudante seja do sexo feminino e da área de humanas?
+   			\item Qual é a probabilidade de que o estudante seja do sexo masculino e não seja da área de biológicas?
+   			\item Dado que foi sorteado um estudante da área de humanas, qual é a probabilidade de que ele seja do sexo feminino?
+   		\end{enumerate}
+    
+    \item Três máquinas A, B e C produzem 60\%, 30\% e 10\%, respectivamente, do total de peças de uma fábrica. As porcentagens de produção defeituosa das máquinas A, B e C são, respectivamente, 3\%, 4\% e 5\%. Suponha que uma peça é selecionada aleatoriamente. 
+    \begin{enumerate}
+	    \item Qual é a probabilidade da peça ser defeituosa?
+    	\item Se a peça selecionada é defeituosa, qual é a probabilidade dela ter sido produzida pela máquina C?    
+    \end{enumerate}
+    
+
+    
+    
+	\item Os estudantes a seguir estão matriculados em um curso de introdução à Economia. Eles estão listados de acordo com o ano que cursam e com a especialização que buscam.
+\begin{center}
+	\begin{tabular}{c|cc}
+		\hline
+		Estudante & Ano & Especialização em Economia \\
+		\hline
+		1 & 2º ano & Sim \\
+		2 & 4º ano & Não \\
+		3 & 3º ano & Sim \\
+		4 & 1º ano & Não \\
+		5 & 1º ano & Sim \\
+		6 & 2º ano & Sim \\
+		7 & 2º ano & Sim \\
+		8 & 3º ano & Não \\
+		9 & 2º ano & Sim \\
+		10 & 2º ano & Não \\
+		\hline
+	\end{tabular}\\
+\end{center}
+	Um estudante desse grupo é escolhido ao acaso. Qual a probabilidade dele ser:
+	\begin{enumerate}
+		\item um estudante do segundo ano?
+		\item um estudante especializando-se em Economia?
+		\item um estudante do primeiro ano ou do segundo ano?
+		\item um estudante que não seja do primeiro ano?
+	\end{enumerate}
+	
+	
+	\item Durante uma prova, um estudante chega a duas questões relativas a uma aula que ele faltou, e então ele decide responder aleatoriamente às duas questões. Uma das questões é do tipo verdadeiro/falso e a outra é de múltipla escolha com cinco respostas possíveis. Qual é a probabilidade do aluno marcar:
+\begin{enumerate}
+	\item a resposta correta para a questão do tipo verdadeiro/falso?
+	\item a resposta correta para a questão de múltipla escolha?
+	\item as respostas corretas para ambas as questões? 
+	\item as respostas incorretas para ambas as questões?
+\end{enumerate}	 
+
+
+\item Uma certa comunidade quer abordar o problema de conflitos raciais no colégio local. O prefeito decide estabelecer uma comissão de três moradoers para aconselhá-lo. Para ser justo no processo de seleção, o prefeito decide escolher os membros da comissão de maneira aleatória, designando o primeiro escolhido como líder da comissão. A comunidade é composta de 50\% de moradores brancos, 30\% de moradores negros e 20\% de moradores latinos. Qual é a probabilidade de:
+\begin{enumerate}
+	\item o líder da comissão ser um morador negro?
+	\item o líder da comissão ser um morador branco ou latino?
+	\item os três membros da comissão serem negros?
+\end{enumerate}
+    
+
+	
+	\item Suponha que 16\% dos presos em prisões estaduais sofram de alguma doença psiquiátrica. Qual é a probabilidade de:
+	\begin{enumerate}
+		\item um prisioneiro escolhido aleatoriamente não sofrer de uma doença psiquiátrica?
+		\item nenhum de três prisioneiros independentes escolhidos aleatoriamente não sofrerem de uma doença psiquiátrica?
+	\end{enumerate}
+ 
+\item A urna $A$ tem 8 bolas brancas e 2 bolas pretas. A urna $B$ tem 8 bolas pretas e 2 bolas brancas. Uma pessoa pega ao acaso uma dessas urnas e retira ao acaso 2 bolas. Sabendo que foram retiradas 2 bolas pretas, qual é a probabilidade de a pessoa ter pego a runa $A$?
+    
+    \item A probabilidade de que a pessoa $A$ resolva um problema é $2/3$, e a probabilidade de que a 	pessoa $B$ o resolva é $3/4$. Se ambos tentarem independentemente resolver o problema, qual é a probabilidade do problema ser resolvido?
+	
+	
+	\item Um baralho comum de 52 cartas possui 4 naipes (copas, espadas, ouros e paus), tendo 13 cartas de cada naipe. Uma carta é selecionada aleatoriamente de um baralho comum. Seja R o evento em que a carta selecionada é um rei e seja E o evento em que a carta sorteada é do naipe de espadas. Os eventos R e E são independentes?
+	    
+    
+    
+%    \item Considere uma variável aleatória discreta $T$ cuja distribuição de probabilidade é apresentada a seguir:
+%    \begin{center}
+%    \begin{tabular}{c|cccccc}
+%    \hline
+%    $t$ & 2 & 3 & 4 & 5 & 6 & 7 \\
+%    \hline
+%    $P(T=t)$ & 1/10 & 1/10 & 4/10 & 2/10 & 1/10 & 1/10 \\
+%    \hline
+%    \end{tabular}\\
+%    \end{center}
+%    \begin{enumerate}
+%    	\item Calcule a probabilidade $P(|T-4|>2)$. 
+%    	\item Calcule o valor esperado e a variância de $T$.
+%    	\item Faça uma tabela com a função de distribuição acumulada de $T$.
+%    \end{enumerate}
+%    
+%    \item Um banco de sangue necessita sangue do tipo O-Rh negativo. Suponha que a proporção de indivíduos na população com esse tipo de sangue é 9\%. Considere que as pessoas são escolhidas da população ao acaso para serem examinadas, uma de cada vez, se tem esse tipo de sangue. Seja $N$ o número de indivíduos examinados antes de se encontrar a primeira pessoa com esse tipo de sangue.
+%    \begin{enumerate}
+%    	\item Qual é a probabilidade de que o primeiro indivíduo a ser encontrado com esse tipo de sangue seja a sexta pessoa examinada?
+%    	\item Em média, quantas pessoas precisam ser examinadas até encontrar o primeiro indivíduo com sangue do tipo O-Rh negativo?
+%    \end{enumerate}
+    
+%    \item Sabe-se que os parafusos produzidos por uma certa companhia são defeituosos com probabilidade 2\%, independentemente uns dos outros. A companhia vende os parafusos em pacotes de dez unidades, selecionadas ao acaso, e oferece uma garantia de devolução do dinheiro caso existam dois ou mais parafusos defeituosos no pacote.
+%    \begin{enumerate}
+%    	\item Qual é a probabilidade da companhia precisar devolver o dinheiro da compra de um pacote escolhido ao acaso?
+%    	\item Supondo que o número de parafusos defeituosos num determinado pacote é independente dos demais pacotes, qual é a probabilidade de que uma pessoa que compra dez pacotes de parafusos tenha que retornar à companhia para receber algum dinheiro de volta? 
+%    \end{enumerate}
+    
+%    \item Suponha que o número de erros tipográficos em uma página de um livro tem distribuição Poisson com parâmetro $\lambda = 1/2$.
+%    \begin{enumerate}
+%    	\item Calcule a probabilidade de que exista pelo menos dois erro em uma página.
+%    	\item Suponha que o livro em questão possui 150 páginas. Qual é a probabilidade de não existirem erros tipográficos nesse livro?
+%    \end{enumerate}
+
+	
+		
+	
+\end{enumerate}
+
+
+\end{document}

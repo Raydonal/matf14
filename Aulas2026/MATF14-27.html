@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Distribuição Uniforme</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-10-06" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Distribuição Uniforme
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 10/06/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 27: Distribuição Uniforme
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## A distribuição "sem opinião"
+
+&gt; A Uniforme diz "todo valor no intervalo é igualmente provável", é a distribuição que representa
+&gt; a ausência total de informação adicional sobre onde, dentro do intervalo, o valor deve cair. Você
+&gt; consegue pensar em uma variável econômica real para a qual isso seria uma suposição defensável, e
+&gt; outra para a qual seria claramente ingênua?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Uniforme(\(a,b\))
+
+Densidade **constante** em \([a,b]\), zero fora, todos os subintervalos de mesmo comprimento têm a
+mesma probabilidade.
+
+$$
+f(x) = \frac{1}{b-a}, \ a\le x\le b
+\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}
+$$
+
+--
+
+Verificação rápida: \(\int_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\) ✓, a densidade é
+válida por construção.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Chegada de clientes em uma hora
+
+\(X=\) minuto de chegada de um cliente dentro de uma hora, sem padrão de horário de pico:
+\(X\sim\text{Unif}(0,60)\).
+
+
+``` r
+a &lt;- 0; b &lt;- 60
+c(E_X = (a+b)/2, Var_X = (b-a)^2/12, dp_X = sqrt((b-a)^2/12))
+```
+
+```
+##       E_X     Var_X      dp_X 
+##  30.00000 300.00000  17.32051
+```
+
+
+``` r
+punif(20, min=a, max=b)              # P(X &lt;= 20)
+```
+
+```
+## [1] 0.3333333
+```
+
+``` r
+punif(45, a, b) - punif(30, a, b)    # P(30 &lt;= X &lt;= 45)
+```
+
+```
+## [1] 0.25
+```
+
+---
+
+## Visualizando
+
+
+``` r
+ggplot(tibble(x = c(-5,0,0,60,60,65), y = c(0,0,1/60,1/60,0,0)), aes(x,y)) +
+  geom_line(color = "#0d3b54") +
+  geom_area(data = tibble(x=c(30,30,45,45), y=c(0,1/60,1/60,0)), fill="#c9971e", alpha=.6) +
+  labs(x = "minuto da hora", y = "f(x)", title = "P(30 ≤ X ≤ 45)") +
+  theme_minimal(base_size = 13)
+```
+
+&lt;img src="MATF14-27_files/figure-html/grafico-uniforme-1.png" alt="" width="504" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Retome a pergunta de abertura. Dê um exemplo econômico em que a Uniforme é defensável
+(genuína ausência de padrão dentro do intervalo) e outro em que seria ingênuo assumir uniformidade
+(por exemplo, existe claramente um "horário de pico"). O que muda no segundo caso, que tipo de
+modelo (ainda não visto, mas você pode arriscar) capturaria melhor esse padrão?
+
+**2.** \(\mathrm{Var}(X)=(b-a)^2/12\) cresce com o **quadrado** do comprimento do intervalo. Compare
+mentalmente Uniforme(0,10) com Uniforme(0,100), a segunda tem 10x mais amplitude, mas quantas
+vezes mais variância?
+
+---
+
+## Rodada 2
+
+**3.** Um analista financeiro, sem nenhuma informação sobre a distribuição real de um preço futuro,
+decide modelá-lo como Uniforme entre o mínimo e o máximo histórico. Isso é uma escolha
+conservadora, otimista, ou nenhuma das duas? Que suposição implícita essa escolha carrega sobre
+"quão informativo" é o histórico de preços?
+
+**4.** Compare a Uniforme com a Exponencial das Aulas 24–26. As duas são contínuas, mas uma é
+simétrica (constante) e outra é assimétrica à direita. Que tipo de fenômeno cada uma modela melhor
+, "tempo até um evento raro" ou "posição aleatória sem preferência dentro de um intervalo fixo"?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+dunif(x, min = a, max = b)   # densidade
+punif(x, min = a, max = b)   # FDA
+qunif(p, min = a, max = b)   # quantil
+runif(m, min = a, max = b)   # m valores simulados
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (15/06)
+
+## Distribuição Normal
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

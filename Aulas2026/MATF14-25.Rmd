@@ -1,0 +1,160 @@
+---
+title: "Esperança e Variância (VA contínua)"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "03/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+```
+
+class: inverse, center, middle
+
+# Aula 25: Esperança e variância contínuas
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## A média esconde a maioria
+
+> O tempo médio de espera em uma fila é 5 minutos. Isso significa que a maioria dos clientes espera
+> "perto de 5 minutos"? Guarde a resposta para depois de ver o gráfico da fdp Exponencial.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definições: soma vira integral
+
+$$
+E(X) = \mu = \int_{-\infty}^{\infty} x\,f(x)\,dx
+\qquad
+\mathrm{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx
+$$
+
+--
+
+## As mesmas propriedades do Cap. 3, sem alteração
+
+$$
+E(aX+b)=aE(X)+b \qquad \mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)
+$$
+$$
+E(X+Y)=E(X)+E(Y) \ \text{sempre} \qquad \mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y) \ \text{se indep.}
+$$
+
+Só a ferramenta de cálculo mudou (soma → integral); a interpretação é idêntica.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Tempo médio de espera
+
+\(f(x)=0{,}2e^{-0{,}2x}\), \(x\ge0\).
+
+$$
+E(X) = \int_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
+$$
+
+```{r esperanca-fila}
+integrand <- function(x) x * 0.2*exp(-0.2*x)
+integrate(integrand, lower = 0, upper = Inf)
+```
+
+\(E(X)=5\) minutos de espera média, número usado para dimensionar guichês de atendimento.
+
+---
+
+## Custo de superlotação
+
+Se cada minuto de espera acima de 5 custa R\$ 2 em satisfação do cliente perdida (métrica
+interna), qual o "custo esperado" simplificado \(2\times E(X)\)?
+
+```{r custo-esperado}
+2 * 5
+```
+
+Ilustra como \(E(\cdot)\) vira insumo direto de decisões operacionais, não só uma curiosidade
+teórica.
+
+---
+
+## \(E(X)\) fora da economia: engenharia aeronáutica
+
+```{r fig-peso-esperado, echo=FALSE, out.width="70%"}
+knitr::include_graphics("images/peso_esperado_aviao.jpg")
+```
+
+Companhias aéreas projetam cabines com base no **peso esperado** por passageiro. Quando o peso real
+passa a exceder sistematicamente o peso de projeto, a estrutura precisa ser refeita, o mesmo
+problema de uma seguradora recalculando \(E(X)\) quando o perfil de sinistros muda.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** A distribuição Exponencial é assimétrica à direita (Capítulo 1). Isso significa que grande
+parte dos clientes espera *menos* que 5 minutos, com uma minoria esperando bem mais e puxando a
+média para cima, assim como faturamento e renda no Capítulo 1. Calcule \(P(X<5)\) com
+`pexp(5, rate=0.2)` (ou espere até a Aula 26, FDA) para confirmar se mais ou menos da metade dos
+clientes espera menos que a média.
+
+**2.** O que isso implica para a gestão de expectativa do cliente ("tempo médio de espera: 5 min")
+comparado à experiência real da *maioria*? Como um gerente de agência poderia comunicar essa
+informação de forma menos enganosa?
+
+---
+
+## Rodada 2: generalizando
+
+**3.** As fórmulas de \(E(aX+b)\) e \(\mathrm{Var}(aX+b)\) são idênticas às do Cap. 3. Por que isso não
+é surpreendente, dado que a integral é só o "análogo contínuo" da soma? Articule a resposta usando
+o Apêndice A (soma de Riemann → integral).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+f <- function(x) 0.2*exp(-0.2*x)
+integrand <- function(x) x * f(x)
+integrate(integrand, lower = 0, upper = Inf)   # calcula E(X) numericamente
+```
+
+`integrate()` sempre precisa dos limites de integração corretos, inclusive `Inf` quando o suporte
+é ilimitado, omitir isso é um erro comum.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (08/06)
+
+## Função de distribuição acumulada (contínua)

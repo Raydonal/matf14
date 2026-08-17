@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 12: Distribuições Uniforme e Normal}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 12}{Distribuições Uniforme e Normal (Cap. 4, Aulas 27--28)}
+
+\begin{questao}{1} \textbf{(Uniforme: horário de chegada de um ônibus)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $E(X)=\frac{0+15}{2}=7{,}5$ minutos. Faz sentido: como qualquer instante entre dois
+    ônibus é igualmente provável para a chegada do passageiro, em média ele chega "no meio" do
+    intervalo, nem sempre logo após um ônibus (espera quase 15 min) nem sempre logo antes do
+    próximo (espera quase 0).
+  \item $P(X>10) = 1-F(10) = 1-\frac{10-0}{15-0} = 1-\frac{10}{15} = \frac13\approx0{,}333$.
+  \item $dp(X) = \sqrt{\frac{(15-0)^2}{12}} = \sqrt{\frac{225}{12}} = \sqrt{18{,}75}\approx4{,}33$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Normal: notas de uma prova)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $Z=\frac{5{,}0-6{,}5}{1{,}2}=-1{,}25$. $P(X<5{,}0)=P(Z<-1{,}25)\approx0{,}1056$
+    (10,56\%).
+  \item Procura-se $x_0$ tal que $P(X>x_0)=0{,}10$, ou seja, $F(x_0)=0{,}90$. O percentil 90 da
+    Normal padrão é $z\approx1{,}2816$. $x_0 = 6{,}5+1{,}2816\times1{,}2 \approx 6{,}5+1{,}538 =
+    8{,}04$.
+  \item Como a Normal é simétrica em torno da média, exatamente metade da distribuição fica
+    abaixo da média: $P(X<6{,}5)=0{,}5$, logo esperam-se $200\times0{,}5=100$ alunos abaixo da
+    média. Isso não deveria surpreender: é uma consequência direta da simetria, não uma
+    coincidência dos dados, vale sempre para qualquer Normal, independente de $\mu$ e $\sigma$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Padronização: comparando desempenho em escalas diferentes)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Matemática: $z_{mat} = \frac{720-650}{80} = \frac{70}{80}=0{,}875$.
+    Redação: $z_{red} = \frac{78-70}{10} = \frac{8}{10}=0{,}8$.
+  \item O desempenho relativamente melhor foi em \textbf{Matemática} ($z=0{,}875 > 0{,}8$): o
+    candidato ficou mais desvios padrão acima da média dos demais candidatos nessa prova do que
+    na de redação, mesmo com notas brutas (720 vs. 78) em escalas completamente diferentes.
+  \item As notas brutas estão em escalas com médias e desvios padrão diferentes entre as duas
+    provas (650 pontos vs. 70 pontos de médias, 80 vs. 10 de desvios), comparar 720 e 78
+    diretamente não diz nada sobre desempenho relativo; só a padronização (posição em unidades de
+    desvio padrão frente à respectiva distribuição) permite uma comparação válida.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Regra empírica: controle de qualidade de peso)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Pela regra empírica, $\approx95\%$ dos dados ficam entre $\mu\pm2\sigma =
+    500\pm2(5) = [490, 510]$ gramas.
+  \item $Z_1=\frac{490-500}{5}=-2$, $Z_2=\frac{510-500}{5}=2$.
+    $P(490<X<510)=P(-2<Z<2)\approx0{,}9545$ (95,45\%), muito próximo dos 95\% aproximados da
+    regra empírica (a regra é, de fato, uma aproximação arredondada desse valor exato).
+  \item $Z=\frac{485-500}{5}=-3$. $P(X<485)=P(Z<-3)\approx0{,}00135$ (cerca de 0,135\%), um
+    evento raro sob o modelo. Se a reclamação envolve pacotes "frequentemente" muito abaixo do
+    rótulo, esse resultado \textbf{não sustenta} a reclamação como algo esperado do processo
+    normal, sugere, em vez disso, que ou o processo real se afastou do modelo assumido
+    (\emph{média} ou \emph{desvio padrão} mudaram), ou os casos reclamados são mesmo exceções
+    raras, e não a regra.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: esperança e variância da Uniforme)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item
+  $$
+  E(X) = \int_a^b x\cdot\frac{1}{b-a}\,dx = \frac{1}{b-a}\left[\frac{x^2}{2}\right]_a^b
+  = \frac{1}{b-a}\cdot\frac{b^2-a^2}{2} = \frac{(b-a)(b+a)}{2(b-a)} = \frac{a+b}{2},
+  $$
+  usando a fatoração $b^2-a^2=(b-a)(b+a)$.
+  \item Primeiro, $E(X^2) = \int_a^b x^2\cdot\frac{1}{b-a}dx = \frac{1}{b-a}
+  \left[\frac{x^3}{3}\right]_a^b = \frac{b^3-a^3}{3(b-a)}$. Usando a fatoração
+  $b^3-a^3=(b-a)(b^2+ab+a^2)$: $E(X^2) = \frac{b^2+ab+a^2}{3}$. Logo,
+  $$
+  \mathrm{Var}(X) = E(X^2)-[E(X)]^2 = \frac{a^2+ab+b^2}{3} - \left(\frac{a+b}{2}\right)^2
+  = \frac{a^2+ab+b^2}{3} - \frac{a^2+2ab+b^2}{4}.
+  $$
+  Colocando em denominador comum 12:
+  $$
+  \mathrm{Var}(X) = \frac{4(a^2+ab+b^2) - 3(a^2+2ab+b^2)}{12}
+  = \frac{4a^2+4ab+4b^2-3a^2-6ab-3b^2}{12} = \frac{a^2-2ab+b^2}{12} = \frac{(b-a)^2}{12},
+  $$
+  como queríamos demonstrar.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

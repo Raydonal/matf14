@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 07: Teorema de Bayes}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 07}{Teorema da probabilidade total e Teorema de Bayes (Cap. 2, Aula 14)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito07.pdf}.}
+
+\begin{questao}{1} \textbf{(Probabilidade total: inadimplência em carteira segmentada)}
+
+Um banco tem sua carteira de crédito dividida em três segmentos: Pessoa Física (60\% da carteira,
+taxa de inadimplência histórica de 4\%), Pequena Empresa (30\% da carteira, taxa de 7\%) e Grande
+Empresa (10\% da carteira, taxa de 1\%).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a taxa de inadimplência esperada para a carteira como um todo, usando o teorema da
+    probabilidade total.
+  \item O gerente de risco observa que a inadimplência geral realizada no trimestre foi de 6\%,
+    acima do esperado em (a). Isso necessariamente significa que as taxas por segmento pioraram?
+    Cite outra explicação possível envolvendo a composição da carteira.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Bayes: origem de um sinistro de seguro)}
+
+Uma seguradora de automóveis tem apólices de dois perfis: "Perfil A" (motoristas com mais de 5
+anos de habilitação, 75\% das apólices, probabilidade de sinistro no ano de 5\%) e "Perfil B"
+(motoristas novatos, 25\% das apólices, probabilidade de sinistro no ano de 20\%).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a probabilidade de uma apólice sorteada aleatoriamente registrar sinistro no ano.
+  \item Dado que uma apólice registrou sinistro, calcule a probabilidade de ela pertencer ao
+    Perfil B.
+  \item Compare o resultado de (b) com a proporção original de apólices do Perfil B na carteira
+    (25\%). O que essa comparação mostra sobre o efeito de observar "houve sinistro" na crença
+    sobre o perfil do segurado?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Bayes com três categorias: fraude em declarações de imposto de renda)}
+
+A Receita Federal seleciona declarações de imposto de renda para malha fina usando um algoritmo.
+Historicamente, 85\% das declarações são "Normais" (probabilidade de sinalização pelo algoritmo:
+2\%), 12\% são "Atípicas, mas legítimas" (probabilidade de sinalização: 30\%), e 3\% são
+"Fraudulentas" (probabilidade de sinalização: 90\%).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a probabilidade de uma declaração sorteada aleatoriamente ser sinalizada pelo
+    algoritmo.
+  \item Dado que uma declaração foi sinalizada, calcule a probabilidade de ela ser, respectivamente,
+    Normal, Atípica-legítima ou Fraudulenta.
+  \item Some as três probabilidades do item (b). O resultado deveria dar 1? Por quê?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Discussão: base rate e política pública)}
+
+Um teste de triagem para uma doença rara (prevalência de 0,5\% na população) tem 98\% de
+sensibilidade (detecta a doença quando ela existe) e 90\% de especificidade (dá negativo quando a
+pessoa é saudável).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(\text{doente}\mid\text{teste positivo})$.
+  \item Um gestor de saúde pública, ao ver que o teste "acerta 98\% das vezes" (sensibilidade),
+    propõe usá-lo para triagem em massa de toda a população, com tratamento imediato para todo
+    resultado positivo. Usando o resultado de (a), explique o problema dessa proposta.
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato: fecha a Unidade 2 e é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{5 (discussão: síntese da Unidade 2)} \textbf{(Sem resposta única)}
+
+Volte às cinco perguntas de abertura da Aula 01 do semestre (investir em fundo, pesquisa eleitoral,
+inflação "dentro da meta", escore de crédito, seguro para condutores jovens). Escolha uma delas e
+escreva, em meia página, como você a atacaria usando o vocabulário completo da Unidade 2,
+espaço amostral, probabilidade condicional, independência, teorema da probabilidade total e/ou
+Teorema de Bayes. Não é preciso resolver numericamente: o objetivo é identificar qual ferramenta se
+aplica e justificar a escolha.
+\end{questao}
+
+\end{document}

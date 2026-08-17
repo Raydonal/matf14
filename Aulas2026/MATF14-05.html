@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Quantis, distância interquartílica e boxplots</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Quantis, distância interquartílica e boxplots
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 23/03/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 05: Quantis, IQR e boxplot
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um único ponto pode distorcer a régua inteira
+
+&gt; Uma consultoria compara o tempo de aprovação de crédito em duas agências bancárias. A agência A
+&gt; tem tempos entre 3 e 8 dias. A agência B tem quase todos entre 2 e 6 dias, exceto um caso isolado
+&gt; de 45 dias (um processo travado no jurídico). Qual das duas parece "mais lenta" se você olhar só
+&gt; a amplitude total (\(x_{max}-x_{min}\))?
+
+--
+
+Hoje: uma medida de dispersão que ignora casos extremos de propósito, e quando isso é uma
+vantagem, e quando é uma cegueira perigosa.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Quantis
+
+O **quantil de ordem \(p\)**, \(Q_p\) (\(0&lt;p&lt;1\)), é o valor abaixo do qual está uma proporção \(p\) dos
+dados ordenados. Os **quartis** dividem a amostra em 4 partes iguais:
+
+$$
+Q_1 = Q_{0{,}25}, \qquad Q_2 = Q_{0{,}50} = \text{mediana}, \qquad Q_3 = Q_{0{,}75}
+$$
+
+--
+
+## Distância interquartílica
+
+$$
+IQR = Q_3 - Q_1
+$$
+
+Mede a dispersão dos 50% centrais, **robusta** a valores extremos, ao contrário da amplitude total
+\(AT = x_{\max}-x_{\min}\), que depende só de 2 pontos.
+
+---
+
+## Boxplot
+
+Representa \(Q_1\), \(Q_2\), \(Q_3\) e sinaliza como **outlier** qualquer ponto além de
+
+$$
+Q_1 - 1{,}5\times IQR \qquad \text{ou} \qquad Q_3 + 1{,}5\times IQR
+$$
+
+&lt;img src="MATF14-05_files/figure-html/boxplot-exemplo-1.png" alt="" width="504" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Boxplot por porte da empresa
+
+
+``` r
+ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(x = "Porte", y = "Faturamento 1999 (R$ mil)") + theme_minimal(base_size = 13)
+```
+
+&lt;img src="MATF14-05_files/figure-html/boxplot-porte-1.png" alt="" width="504" /&gt;
+
+O boxplot já responde, visualmente, uma pergunta de política de crédito: a dispersão *dentro* do
+grupo "Grande" é muito maior que dentro de "Pequena".
+
+---
+
+## Quartis calculados
+
+
+``` r
+quantile(empresas$faturamento99, probs = c(.25, .5, .75))
+```
+
+```
+##      25%      50%      75% 
+## 256230.5 327898.0 397744.8
+```
+
+``` r
+IQR(empresas$faturamento99)
+```
+
+```
+## [1] 141514.2
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Recalcule mentalmente o caso das duas agências (A: 3–8 dias; B: 2–6 dias + um caso de 45
+dias). Compare \(AT\) e \(IQR\) para os dois cenários. Qual medida dá o veredito mais justo sobre
+"consistência do processo", e qual dá o veredito mais alarmante sobre "pior caso"? As duas
+perguntas são a mesma pergunta?
+
+**2.** Um analista vê muitos pontos marcados como outlier no boxplot do grupo "Grande porte" da
+Aplicação acima. Isso é evidência de erro nos dados, ou de heterogeneidade real dentro do grupo?
+Que passo você tomaria antes de decidir?
+
+---
+
+## Rodada 2: o critério do outlier
+
+**3.** Por que o critério de outlier do boxplot usa \(1{,}5\times IQR\) e não, por exemplo, "3
+desvios padrão da média" (medida que ainda não vimos formalmente, mas você já ouviu falar)? O que
+muda quando a distribuição já é assimétrica, como faturamento?
+
+**4.** Um banco usa a regra "recuse crédito se o tempo de processamento previsto for um outlier do
+boxplot histórico". Que tipo de erro essa regra pode cometer se a distribuição de tempos mudar
+estruturalmente (por exemplo, um novo sistema mais lento por padrão)?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+library(tidyverse)
+empresas &lt;- read.csv("empresas.csv")
+
+quantile(empresas$faturamento99, probs = c(.25, .5, .75))
+IQR(empresas$faturamento99)
+
+ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
+  geom_boxplot(show.legend = FALSE)
+```
+
+`quantile()` tem 9 algoritmos diferentes de interpolação (`type = 1..9`); o padrão do R (`type=7`)
+é razoável para a maioria dos usos em estatística descritiva.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (25/03)
+
+## Medidas de dispersão: amplitude total, desvio padrão, variância e coeficiente de variação
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 02: Tendência central, quantis e boxplot}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 02}{Medidas de tendência central, quantis, IQR e boxplot (Cap. 1, Aulas 04--05)}
+
+\begin{questao}{1} \textbf{(Cálculo direto: salários de uma pequena empresa)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Soma $=3+3+3{,}5+4+4+4{,}5+5+6+22=55$, $n=9$, logo $\bar x = 55/9 \approx 6{,}11$.
+    Ordenados, o valor central (5º de 9) é $4$: mediana $=4$. Moda: $3$ aparece 2 vezes, $4$
+    aparece 2 vezes, bimodal (3 e 4).
+  \item A mediana (R\$ 4 mil) representa melhor o "salário típico": a média (R\$ 6,11 mil) está
+    inflada pelo único salário muito alto (R\$ 22 mil, um outlier claro em relação ao resto),
+    enquanto a mediana não é afetada por esse valor.
+  \item A média mudaria mais (nova soma $=41$, $\bar x = 41/9\approx 4{,}56$, uma queda grande). A
+    mediana não mudaria nada: o valor na posição central continua sendo $4$ independentemente do
+    valor do maior salário, contanto que ele continue sendo o maior.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Assimetria e ordenação das medidas)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Como média (340) $>$ mediana (210), a distribuição é assimétrica à \textbf{direita}: existe uma
+    cauda de famílias com patrimônio muito alto, puxando a média para cima, enquanto a mediana
+    continua próxima do "centro" da maioria das famílias.
+  \item Um histograma com um pico concentrado em valores relativamente baixos/moderados e uma
+    cauda longa e fina se estendendo para a direita, em direção a valores de patrimônio muito
+    altos (poucas famílias muito ricas).
+  \item A mediana (R\$ 210 mil), por não ser distorcida pela cauda de patrimônios muito altos, ela
+    descreve melhor a experiência da família "do meio" da distribuição, que é geralmente o que se
+    quer comunicar como "típico".
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Quantis: tempo de espera em atendimento bancário)}
+\begin{solucao}
+Dados ordenados, $n=12$: $2,3,3,5,6,7,8,9,10,12,15,30$.
+\begin{enumerate}[label=(\alph*)]
+  \item Usando interpolação simples (posições $0{,}25(n+1)=3{,}25$ e $0{,}75(n+1)=9{,}75$):
+    $Q_1 \approx 3 + 0{,}25\times(5-3) = 3{,}5$; $Q_2 = (7+8)/2 = 7{,}5$;
+    $Q_3 \approx 10 + 0{,}75\times(12-10) = 11{,}5$. (Pequenas variações são aceitáveis dependendo
+    do método de interpolação usado, o importante é a lógica de posição.)
+  \item $IQR = Q_3 - Q_1 \approx 11{,}5 - 3{,}5 = 8{,}0$.
+  \item Limite superior $= Q_3 + 1{,}5\times IQR \approx 11{,}5 + 1{,}5\times 8{,}0 = 23{,}5$.
+    Como $30 > 23{,}5$, o valor 30 minutos \textbf{é} classificado como outlier pelo critério do
+    boxplot.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Leitura de boxplot: comparação entre grupos)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item A agência A, com caixa (IQR) mais estreita, tem processo mais consistente/previsível: a
+    maioria das propostas leva um tempo parecido para ser aprovada. B tem maior variabilidade.
+  \item Não necessariamente. A mediana menor de B indica que, na "propostas típica", B é um pouco
+    mais rápida, mas os outliers mostram que uma fração não desprezível de propostas em B demora
+    muito mais (acima de 20 dias), o que pode ser pior para o cliente médio em termos de risco de
+    espera excessiva, mesmo com mediana menor.
+  \item Para A: manter o processo, que é estável. Para B: investigar as causas dos casos extremos
+    (outliers), provavelmente um subprocesso ou tipo de proposta específico que trava, mesmo que
+    o "caso comum" seja rápido.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: robustez da mediana)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Por definição, para $n$ ímpar a mediana é o valor na posição $(n+1)/2$ da lista
+    \textbf{ordenada}. Se $x_n$ (o maior valor) é substituído por qualquer valor $x_n' > x_{n-1}$ (de
+    modo que ele continue sendo o maior), a ordem relativa de todos os outros elementos, inclusive
+    o da posição central $(n+1)/2 < n$, não se altera. Como a mediana depende apenas do valor
+    naquela posição central, e esse valor não mudou, a mediana permanece a mesma.
+  \item Exemplo com $n=5$: dados $1,2,3,4,5$. Média $=15/5=3$, mediana $=3$. Substituindo $x_5=5$
+    por $x_5'=100$: novos dados $1,2,3,4,100$. Nova média $=110/5=22$ (mudou drasticamente),
+    mas a mediana continua $3$ (não mudou).
+  \item Como mostrado em (a) e (b), a mediana depende só da posição central dos dados ordenados,
+    ignora completamente a magnitude dos valores fora dessa posição, por isso é chamada
+    \textbf{robusta}. A média usa o valor exato de \emph{todos} os pontos na soma, então qualquer
+    valor extremo (por maior que seja) afeta seu resultado proporcionalmente, ela \textbf{não} é
+    robusta a outliers.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

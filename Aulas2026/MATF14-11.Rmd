@@ -1,0 +1,141 @@
+---
+title: "Probabilidade condicional"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "13/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 11: Probabilidade condicional
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## A pergunta que muda tudo: condicional a quê?
+
+> "A probabilidade de reeleição de um prefeito bem avaliado é de 80%." Essa frase já é uma
+> afirmação sobre probabilidade condicional. Quem é o evento condicionante, e o que aconteceria com
+> o número "80%" se ele não estivesse ali?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definição
+
+$$
+P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \qquad P(B)>0
+$$
+
+Condicionar em \(B\) = restringir o espaço amostral aos resultados em que \(B\) ocorre.
+
+--
+
+## Regra do produto
+
+Da definição, isolando \(P(A\cap B)\):
+
+$$
+P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A)
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Escolaridade e desemprego
+
+```{r tabela}
+tabela <- tribble(
+  ~Escolaridade, ~Empregado, ~Desempregado, ~Total,
+  "Fund/Médio", 180, 70, 250,
+  "Superior", 210, 40, 250,
+  "Total", 390, 110, 500
+)
+tabela
+```
+
+\(B=\) "ensino superior", \(A=\) "desempregado". \(P(A\mid B) = \frac{40/500}{250/500} = 0{,}16\).
+
+Compare com \(P(A)=110/500=0{,}22\) (não condicional): saber a escolaridade muda a probabilidade de
+desemprego, de 22% para 16%.
+
+---
+
+## Sequência de eventos: regra do produto
+
+Uma urna de crédito tem 8 empréstimos bons e 2 ruins. Sorteiam-se 2, sem reposição. Qual a
+probabilidade de os dois serem bons?
+
+```{r regra-produto}
+p_primeiro_bom  <- 8/10
+p_segundo_bom_dado_primeiro <- 7/9   # sobrou 1 bom a menos, 1 total a menos
+p_ambos_bons <- p_primeiro_bom * p_segundo_bom_dado_primeiro
+p_ambos_bons
+```
+
+$$
+P(1^\circ\text{ bom} \cap 2^\circ\text{ bom}) = P(1^\circ\text{ bom})\times P(2^\circ\text{ bom}\mid 1^\circ\text{ bom}) = \tfrac{8}{10}\times\tfrac{7}{9}
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte à frase de abertura sobre reeleição. Escreva explicitamente \(P(A\mid B)\) com \(A=\)
+"reeleito" e \(B=\) "bem avaliado". Se a mesma pesquisa dissesse apenas "80% dos prefeitos são
+reeleitos" (sem a condição "bem avaliados"), essa seria a mesma afirmação? Por quê?
+
+**2.** No exemplo do crédito, por que a segunda probabilidade é \(7/9\) e não \(8/10\)? O que mudaria
+se o sorteio fosse **com** reposição? Refaça a conta para o caso com reposição.
+
+---
+
+## Rodada 2: a falácia da inversão
+
+**3.** Calcule \(P(\text{superior}\mid\text{desempregado})\) a partir da mesma tabela do exemplo
+(dica: você precisa da coluna "Desempregado", não da linha "Superior"). Compare com
+\(P(\text{desempregado}\mid\text{superior})=0{,}16\). São iguais? O erro de supor que são iguais tem
+um nome, pesquise ou arrisque um palpite sobre por que ele é perigoso em contextos jurídicos
+("dado que a evidência bate com o suspeito, ele é culpado" vs. "dado que é culpado, a evidência
+bateria").
+
+**4.** Se \(B\subseteq A\) (todo resultado de \(B\) também está em \(A\)), o que se pode concluir sobre
+\(P(A\mid B)\) sem fazer nenhuma conta numérica? Justifique só com a definição.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (15/04)
+
+## Independência estatística

@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 07: Teorema de Bayes}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 07}{Teorema da probabilidade total e Teorema de Bayes (Cap. 2, Aula 14)}
+
+\begin{questao}{1} \textbf{(Probabilidade total: inadimplência em carteira segmentada)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(\text{inad}) = 0{,}6\times 0{,}04 + 0{,}3\times 0{,}07 + 0{,}1\times 0{,}01
+    = 0{,}024+0{,}021+0{,}001 = 0{,}046$ (4,6\%).
+  \item Não necessariamente. A inadimplência geral observada (6\%) pode subir mesmo com taxas
+    por segmento inalteradas, se a \textbf{composição} da carteira mudou no trimestre, por
+    exemplo, se a participação de Pequena Empresa (segmento de maior taxa, 7\%) cresceu às custas
+    de Grande Empresa (menor taxa, 1\%), a média ponderada sobe mesmo sem nenhuma taxa individual
+    ter piorado.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Bayes: origem de um sinistro de seguro)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(S) = 0{,}75\times 0{,}05 + 0{,}25\times 0{,}20 = 0{,}0375+0{,}05 = 0{,}0875$ (8,75\%).
+  \item $P(B\mid S) = \dfrac{P(S\mid B)P(B)}{P(S)} = \dfrac{0{,}20\times 0{,}25}{0{,}0875} =
+    \dfrac{0{,}05}{0{,}0875} \approx 0{,}571$ (57,1\%).
+  \item A proporção original de Perfil B na carteira é 25\%; depois de observar que houve
+    sinistro, a probabilidade de ser Perfil B sobe para 57,1\%, mais que o dobro. Observar
+    "houve sinistro" é uma evidência forte a favor do Perfil B (motoristas novatos), porque a taxa
+    de sinistro desse perfil (20\%) é bem mais alta que a do Perfil A (5\%): a atualização
+    bayesiana desloca a crença fortemente na direção do grupo com maior probabilidade de gerar a
+    evidência observada.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Bayes com três categorias: fraude em declarações de imposto de renda)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(\text{sinal}) = 0{,}85\times 0{,}02 + 0{,}12\times 0{,}30 + 0{,}03\times 0{,}90
+    = 0{,}017 + 0{,}036 + 0{,}027 = 0{,}080$ (8,0\%).
+  \item $P(\text{Normal}\mid\text{sinal}) = 0{,}017/0{,}080 = 0{,}2125$ (21,25\%).
+    $P(\text{Atípica}\mid\text{sinal}) = 0{,}036/0{,}080 = 0{,}45$ (45\%).
+    $P(\text{Fraude}\mid\text{sinal}) = 0{,}027/0{,}080 = 0{,}3375$ (33,75\%).
+  \item Sim, a soma deve dar exatamente 1: $0{,}2125+0{,}45+0{,}3375=1{,}00$. As três categorias
+    (Normal, Atípica-legítima, Fraudulenta) formam uma \textbf{partição} do espaço amostral, toda
+    declaração sinalizada pertence a exatamente uma delas, e as probabilidades a posteriori de
+    uma partição, condicionadas ao mesmo evento, sempre somam 1 (é a mesma lógica do teorema da
+    probabilidade total, aplicada "de trás para frente").
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Discussão: base rate e política pública)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(\text{doente})=0{,}005$, $P(+\mid\text{doente})=0{,}98$,
+    $P(+\mid\text{sadio})=1-0{,}90=0{,}10$.
+    $$
+    P(+) = 0{,}98\times 0{,}005 + 0{,}10\times 0{,}995 = 0{,}0049+0{,}0995 = 0{,}1044.
+    $$
+    $$
+    P(\text{doente}\mid +) = \frac{0{,}0049}{0{,}1044} \approx 0{,}047 \ (4{,}7\%).
+    $$
+  \item Mesmo com sensibilidade alta (98\%), apenas cerca de 4,7\% das pessoas com teste positivo
+    realmente têm a doença, porque a doença é rara (0,5\%) e a especificidade (90\%) ainda deixa
+    passar 10\% de falsos positivos entre a enorme maioria saudável da população. Tratar
+    imediatamente todo positivo em uma triagem de massa significaria submeter mais de 95\% dos
+    "positivos" (pessoas saudáveis) a um tratamento desnecessário, a proposta ignora a taxa base
+    (\emph{base rate}) da doença; a decisão correta seria usar o teste positivo como gatilho para
+    um segundo exame confirmatório mais específico, não para tratamento direto.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

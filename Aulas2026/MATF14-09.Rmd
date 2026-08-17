@@ -1,0 +1,167 @@
+---
+title: "Espaço amostral e eventos. Revisão de conjuntos"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "06/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Início da Unidade 2: Probabilidade
+
+# Aula 09: Espaço amostral e eventos
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Diariamente você decide sob incerteza
+
+> Devo investir na bolsa este mês?
+
+--
+
+> Vale a pena contratar um seguro para o carro novo?
+
+--
+
+> Devo levar guarda-chuva hoje, mesmo sem certeza de chuva?
+
+--
+
+> Devo me matricular numa disciplina eletiva com alta taxa de reprovação?
+
+--
+
+Todas essas perguntas têm a mesma estrutura formal por trás: um **experimento aleatório**, um
+**espaço de resultados possíveis**, e um **evento** de interesse dentro desse espaço. Hoje
+construímos esse vocabulário.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Por que probabilidade, depois de estatística descritiva?
+
+O Capítulo 1 resumiu dados **já observados**. Agora: como quantificar incerteza sobre um resultado
+que **ainda não ocorreu**? Um investidor não sabe se uma ação sobe amanhã; um banco não sabe se um
+cliente específico vai inadimplir. Probabilidade é a linguagem formal para essas perguntas.
+
+--
+
+## Experimento aleatório, espaço amostral, evento
+
+- **Experimento aleatório**: processo cujo resultado não pode ser previsto com certeza.
+- **Espaço amostral** \(\Omega\): conjunto de todos os resultados possíveis.
+- **Evento** \(A\subseteq\Omega\): um subconjunto de resultados de interesse.
+
+---
+
+## Revisão de teoria de conjuntos
+
+Como eventos são conjuntos, valem as operações usuais:
+
+| Operação | Notação | Significado |
+|---|---|---|
+| União | \(A\cup B\) | \(A\) ou \(B\) ocorre |
+| Interseção | \(A\cap B\) | \(A\) e \(B\) ocorrem juntos |
+| Complemento | \(A^c\) | \(A\) não ocorre |
+
+--
+
+**Mutuamente exclusivos**: \(A\cap B=\emptyset\), não podem ocorrer juntos.
+
+Exemplo: "inflação do mês acima da meta" e "inflação do mês abaixo do piso da meta", mutuamente
+exclusivos (não podem ocorrer no mesmo mês).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Classificação de risco de crédito
+
+Um banco classifica cada empréstimo em uma de quatro categorias:
+
+$$
+\Omega = \{AA, A, B, C\}
+$$
+
+Evento "risco elevado": \(R = \{B, C\}\). Evento "risco baixo": \(L=\{AA,A\}\).
+
+--
+
+\(R\) e \(L\) são mutuamente exclusivos (\(R\cap L=\emptyset\)) e \(R\cup L=\Omega\), formam uma
+**partição** do espaço amostral (conceito que retomamos na Aula 14, Teorema de Bayes).
+
+---
+
+## Um espaço amostral maior: dois empréstimos
+
+Se o banco observa 2 empréstimos, cada um classificado em \(\{AA,A,B,C\}\):
+
+```{r espaco-produto}
+risco <- c("AA","A","B","C")
+Omega <- expand.grid(emp1 = risco, emp2 = risco)
+nrow(Omega)
+head(Omega, 4)
+```
+
+\(\#\Omega = 4\times 4 = 16\) resultados possíveis, o princípio multiplicativo de contagem
+(retomado na Aula 10) já aparece aqui.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: voltando à provocação inicial
+
+**1.** Escolha uma das quatro perguntas de abertura (investir na bolsa, seguro do carro, guarda-
+chuva, disciplina eletiva). Defina explicitamente: qual é o experimento aleatório, qual é um
+espaço amostral razoável \(\Omega\), e qual evento \(A\) representa a "consequência ruim" que você quer
+evitar.
+
+**2.** Dê um exemplo de dois eventos econômicos que sejam mutuamente exclusivos, e outro de dois
+eventos que possam ocorrer simultaneamente (não exclusivos).
+
+---
+
+## Rodada 2: granularidade do espaço amostral
+
+**3.** O evento "a Selic sobe na próxima reunião" e o evento "a Selic sobe mais de 0,5 p.p. na
+próxima reunião" têm alguma relação de subconjunto entre si? Qual?
+
+**4.** Um analista define \(\Omega\) do PIB do próximo trimestre como \(\{\)crescimento, recessão\(\}\).
+Outro define com 5 categorias mais finas. Nenhum dos dois está "errado", mas o que se perde ao
+escolher a versão mais grosseira?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (08/04)
+
+## Propriedades de probabilidade. Métodos de contagem

@@ -1,0 +1,64 @@
+% Preâmbulo compartilhado: MATF14, Listas de Exercícios 2026
+% Usado por ListaNN.tex e GabaritoNN.tex via \input{preamble}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{fullpage}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\definecolor{matf14azul}{HTML}{0D3B54}
+\definecolor{matf14dourado}{HTML}{C9971E}
+
+\titleformat{\section}{\normalfont\Large\bfseries\color{matf14azul}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{matf14azul}}{\thesubsection}{1em}{}
+
+\providecommand{\ListaTitulo}{Lista de Exercícios}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small MATF14: Estatística Econômica I}
+\rhead{\small \ListaTitulo}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  backgroundcolor=\color{gray!8},
+  commentstyle=\color{matf14dourado},
+  keywordstyle=\color{matf14azul}\bfseries,
+  language=R
+}
+
+\newcounter{questaocounter}
+\newenvironment{questao}[1]{%
+  \stepcounter{questaocounter}%
+  \bigskip\noindent\textbf{Questão #1.}\ %
+}{\par}
+
+\newcommand{\cabecalho}[2]{%
+  \begin{center}
+    {\Large\bfseries\color{matf14azul} #1}\\[0.3em]
+    {\large #2}
+  \end{center}
+  \vspace{0.5em}
+  \noindent\rule{\linewidth}{0.6pt}
+  \vspace{0.5em}
+}
+
+\newenvironment{solucao}{%
+  \par\smallskip\noindent\textit{\color{matf14dourado!80!black}Solução.}\ %
+}{\hfill$\blacksquare$\par}

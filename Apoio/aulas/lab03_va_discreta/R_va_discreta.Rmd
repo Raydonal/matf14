@@ -1,0 +1,594 @@
+---
+title: "Geração de variáveis aleatórias discretas"
+subtitle: "MATF14 - Estatística Econômica I"
+author: "Rodney Fonseca"
+date: "25/05/2026"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+<!--
+
+-->
+
+\begin{center}
+\large{\textcolor{blue}{Iniciando o R no Colab}}
+\end{center}
+
+## R disponível no Google Colab
+
+```{r , echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("01_pagina_colab.png")
+```
+
+
+## Criando um notebook no Colab
+
+```{r , echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("02_novo_notebook.png")
+```
+
+
+## Página de um notebook no Colab
+
+```{r , echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("03_pagina_notebook.png")
+```
+
+
+## Selecionando a linguagem R no Colab
+
+```{r , echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("04_config_notebook.png")
+```
+
+
+## Selecionando a linguagem R no Colab
+
+```{r , echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("05_selecionar_R.png")
+```
+
+
+
+## 
+
+\begin{center}
+\large{\textcolor{blue}{Relambrando alguns comandos em R}}
+\end{center}
+
+## 
+
+
+- Veremos como gerar valores de algumas distribuições de probabilidade discretas em R
+
+- **Ideia:** comparar propriedades teóricas com estatísticas calculadas de dados simulados
+
+\pause
+
+- Antes, revisaremos algumas funções necessárias
+
+<!--
+
+## Lendo planilhas em R
+
+- Vamos carregar no R a planilha `empresa.csv` disponível no Moodle
+
+- Primeiro, salve o seu script R em alguma pasta, por exemplo *Downloads*
+
+\pause
+
+- Em seguida, baixe a planilha no link *Dados de empresas* no Moodle e **salve na mesma pasta onde o seu script está salvo**
+
+
+-->
+
+## Funções básicas
+
+- Vetores em R
+```{r, echo = TRUE}
+x = c(1,4,3,-2)
+x
+```
+
+\pause
+- acessando elemento do vetor
+```{r, echo = TRUE}
+x[2]
+```
+
+\pause
+- operações com o vetor
+```{r, echo = TRUE}
+2*x
+x^2
+```
+
+
+## 
+
+- Número fatorial: $$n! = n(n-1)(n-2)\cdots 3 \cdot 2 \cdot 1$$
+
+- Em R:
+```{r, echo = TRUE}
+factorial(4)
+4*3*2*1
+```
+
+##
+
+- Binômio de Newton (combinação): $$\binom{n}{k} = \frac{n!}{k! (n-k)!}$$
+
+
+- Em R:
+```{r, echo = TRUE}
+choose(10, 3)
+```
+
+\pause 
+
+- verificando
+```{r, echo = TRUE}
+factorial(10)/( factorial(3) * factorial(10-3) )
+```
+
+
+## 
+
+\begin{center}
+\large{\textcolor{blue}{Distribuição Bernoulli}}
+\end{center}
+
+## 
+
+- Modelo para variáveis binárias
+
+- Se $X\sim Bernoulli(p)$, com $0 \leq p \leq 1$, então $X\in\{0,1\}$ e $$P(X=k) = p^k (1-p)^{1-k}, \quad k\in\{0,1\}$$
+
+\pause
+
+- Temos que $E(X) = p$ e $Var(X) = p(1-p)$
+
+- Usaremos a função `sample` para gerar amostras aleatórias da Bernoulli
+
+## Sample
+
+- A função `sample(valores, n, probs, replace=TRUE)` gera `n` valores amostrados com reposição, cada um sendo sorteado com sua respectiva probabilidade indicada em `probs`
+```{r, echo = TRUE}
+sample(c(1:9), 8, rep(1/9, 9), replace=TRUE)
+```
+
+\pause
+
+- Caso se use \textcolor{red}{`replace=FALSE`}, a amostragem seria sem reposição e os \textcolor{red}{valores não seriam repetidos}
+```{r, echo = TRUE}
+sample(c(1:9), 8, rep(1/9, 9), replace=FALSE)
+```
+
+\pause
+
+- Para gerar amostras da Bernoulli, os valores serão `c(0,1)` e sempre usaremos `replace=TRUE``
+
+##
+
+- Gerando 10 valores da distribuição $Bernoulli(0,\!3)$
+```{r, echo = TRUE}
+p = 0.3
+sample(c(0,1), 10, prob = c(1-p, p), replace = TRUE)
+```
+
+\pause
+
+- Frequências de uma amostra aleatória com 100 valores de $Bernoulli(0,\!3)$
+```{r, echo = TRUE}
+p = 0.3
+n = 100
+x = sample(c(0,1), n, prob = c(1-p, p), replace = TRUE)
+table(x)
+```
+
+
+##
+
+- Comparando média amostral e média teórica
+```{r, echo = TRUE}
+mean(x)
+p
+```
+
+\pause
+
+- Comparando variância amostral e variância teórica
+```{r, echo = TRUE}
+var(x)
+p*(1-p)
+```
+
+##
+
+```{r, echo = TRUE}
+hist(x, prob=TRUE, breaks = 2)
+```
+
+
+
+<!-- ##  
+
+\begin{center}
+\large{\textcolor{blue}{Laços/loops}}
+\end{center}
+
+## 
+
+- Útil para programar tarefas repetidas
+
+
+- Em R usamos a função `for(i in vetor){tarefa}`, onde um índice `i` varia em um certo vetor e uma tarefa é repetida para cada valor de `i`
+
+\pause
+
+```{r, echo = TRUE}
+for (i in 1:5) {
+  print(i)
+}
+```
+
+##
+
+- Atualizando valores num `for`
+```{r, echo = TRUE}
+x = 0
+for (i in 1:10) {
+  x = x + 1
+}
+x
+```
+
+\pause
+
+- Gerando amostras com um `for`
+```{r, echo = TRUE}
+x = rep(0, 8)
+for (i in 1:10) {
+  x[i] = sample(c(1:20), size = 1)
+}
+x
+```
+
+-->
+
+## 
+
+\begin{center}
+\large{\textcolor{blue}{Distribuição Binomial}}
+\end{center}
+
+## 
+
+- Modelo para contagens (número de sucessos dentre $n$ ensaios independentes de Bernoulli)
+
+- Se $X\sim Bin(n,p)$, com $0\leq p \leq 1$, então $X\in\{0,1,2, \ldots, n-1, n\}$ e $$P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k\in\{0,1,2, \ldots, n-1, n\}$$
+
+\pause
+
+- Temos que $E(X) = np$ e $Var(X) = np(1-p)$
+
+<!--
+## 
+
+- Probabilidades para uma $Bin(5; \, 0,\!7)$
+```{r, echo = TRUE}
+n = 5
+p = 0.7
+x = c(0:n)
+prob_x = rep(0,n+1)
+for (i in 1:(n+1)) {
+  k = x[i]
+  prob_x[i] = choose(n, k)*(p^k)*((1-p)^(n-k))
+}
+prob_x
+```
+\pause
+Note que
+```{r, echo = TRUE}
+sum(prob_x)
+```
+
+-->
+
+## 
+
+- `dbinom(x, n, p)` calcula probabilidades de $Bin(n, p)$ para algum valor $x$ no seu suporte
+
+
+- Exemplo com $X \sim Bin(5; \, 0,\!7)$. $P(X=2)$ é dado por:
+```{r, echo = TRUE}
+n = 5
+p = 0.7
+dbinom(2, n, p)
+```
+
+
+\pause
+
+- comparando com a fórmula
+```{r, echo = TRUE}
+choose(n, 2)*(p^2)*((1-p)^(n-2))
+```
+
+\pause
+
+- note que a soma de todas probabilidades é um:
+```{r, echo = TRUE}
+x = c(0:n)
+sum(dbinom(x, n, p))
+```
+
+## 
+
+- Função `pbinom(x, n, p)` calcula a função de distribuição acumulada
+
+- Exemplo para $X \sim Bin(5; \, 0,\!7)$. O valor de $P(X \leq 2)$ é dado por:
+```{r, echo = TRUE}
+pbinom(2, n, p)
+```
+
+\pause
+
+- Função de distribuição acumulada para vários valores
+```{r, echo = TRUE}
+x = c(0:n)
+pbinom(x, n, p)
+```
+
+## 
+
+- Usamos a função `rbinom(m, n, p)` para gerar uma amostra de `m` valores aleatórios de $Bin(n, p)$
+
+- Gerando uma amostra de 50 valores de $X \sim Bin(5; \, 0,\!7)$
+```{r, echo = TRUE}
+x = rbinom(50, n, p)
+table(x)
+```
+
+\pause
+
+- Caso $n=1$, teremos uma amostra de Bernoullis
+```{r, echo = TRUE}
+x = rbinom(50, 1, p)
+table(x)
+```
+
+## 
+
+
+- Comparando frequências relativas com probabilidades teóricas
+```{r, echo = TRUE}
+m = 1000
+y = rbinom(m, n, p)
+table(y)/m
+dbinom(0:n, n, p)
+```
+## Histograma
+
+```{r, echo = TRUE}
+hist(y, prob=TRUE, breaks = n+1)
+```
+
+## Função de distribuição acumulada
+
+```{r, echo = TRUE, out.height="0.7\\textheight", fig.align='center'}
+x = seq(0,n+1, length=1000)
+fda = pbinom(x, n, p)
+plot(x, fda, type='l')
+```
+
+## 
+
+
+- Comparando médias amostrais e teóricas
+```{r, echo = TRUE}
+mean(y)
+n*p
+```
+\pause
+- Comparando variâncias amostrais e teóricas
+```{r, echo = TRUE}
+var(y)
+n*p*(1-p)
+```
+
+## 
+
+- \textbf{Exemplo:} As peças produzidas por uma fábrica têm 1% de probabilidade de serem defeituosas, independente uma das outras. A fábrica vende pacotes com dez unidades e devolve o dinheiro se mais de uma peça no pacote for defeituosa. Qual é a probabilidade da empresa precisar devolver o dinheiro por um pacote destes aleatoriamente escolhido?
+
+\pause
+Sejam $p=P(\{\text{peça ser defeituosa}\}) = 0,01$ e $X$ o número de peças defeituosas num pacote com 10 peças. Então, $X\sim Bin(10; 0,01)$.
+Dinheiro é devolvido se $X > 1$.
+
+```{r, echo = TRUE}
+1 - pbinom(1, 10, 0.01)
+```
+
+## 
+
+- \textbf{Exercício:} Suponha que os itens de uma manufatura tem probabilidade de 1% de serem defeituosos. Se você testar uma amostra de $n$ itens selecionada aleatoriamente, o quão alto deve ser o tamanho da amostra $n$ para que a probabilidade de ter pelo menos um item defeituoso seja de pelo menos 95%?
+
+
+\pause
+
+Note que $P(\{\text{pelo menos um item defeituoso}\}) = P(X\geq 1) = 1 - P(X=0) = 1 - 0,99^n$. Logo, $P(X\geq 1) \geq 0,95 \Leftrightarrow 0,99^n \leq 0,05$. Tomando logaritmos em ambos os lados, concluímos que $n \log(0,99) \leq \log(0,05) \Leftrightarrow -0,01 \cdot n \leq -2,99 \Leftrightarrow n \geq 299$.
+
+##
+
+Gráfico do exercício, mostrando o $n$ mínimo para que a chance de achar uma peça defeituosa seja de pelo menos 95%.
+
+```{r, echo = TRUE, out.height="0.6\\textheight", fig.align='center'}
+n = 1:400
+prob = 1 - dbinom(0, n, .01)
+plot(n, prob)
+abline(h = .95)
+```
+
+
+## 
+
+\begin{center}
+\large{\textcolor{blue}{Distribuição Poisson}}
+\end{center}
+
+## 
+
+- Modelo para contagens de eventos com probabilidades baixas e amostras grandes
+
+- Se $X\sim Pois(\lambda)$, com $\lambda > 0$, então $X\in\{0,1,2, \ldots\}$ e $$P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k\in\{0,1,2, \ldots\}$$
+
+\pause
+
+- Temos que $E(X) = \lambda$ e $Var(X) = \lambda$
+
+\pause
+
+- Aproxima probabilidades de $Bin(n,p)$ usando $\lambda = np$ quando $n$ é grande e $p$ é pequeno
+
+
+
+## 
+
+- Função `dpois(x, lamb)` calcula probabilidades de $Pois(lamb)$ 
+```{r, echo = TRUE}
+lamb = 5
+dpois(4, lamb)
+```
+
+\pause
+
+- Comparando com valor da fórmula
+```{r, echo = TRUE}
+exp(-lamb)*(lamb^4)/factorial(4)
+```
+\pause
+
+A soma de vários valores não chega a um porque tem infinitos termos
+```{r, echo = TRUE}
+sum(dpois(0:20, lamb))
+```
+
+
+##
+
+- Função `ppois(x, lamb)` calcula a função de distribuição acumulada Poisson
+```{r, echo = TRUE, out.height="0.5\\textheight", fig.align='center'}
+x = seq(0,10, length=1000)
+fda = ppois(x, lamb)
+plot(x, fda, type='l')
+```
+
+
+## 
+
+- Usamos a função `rpois(m, lamb)` para gerar uma amostra de `m` valores aleatórios de $Pois(lamb)$
+```{r, echo = TRUE}
+m = 10
+lamb = 3
+y = rpois(m, lamb)
+table(y)
+```
+
+## 
+
+- Comparando frequências relativas com probabilidades teóricas
+```{r, echo = TRUE}
+m = 1000
+y = rpois(m, lamb)
+table(y)/m
+round(dpois(0:10, lamb), 3)
+```
+
+## Histograma
+
+```{r, echo = TRUE}
+hist(y, prob=TRUE)
+```
+
+
+## 
+
+- Comparando médias amostrais e teóricas
+```{r, echo = TRUE}
+mean(y)
+lamb
+```
+\pause
+- Comparando variâncias amostrais e teóricas
+```{r, echo = TRUE}
+var(y)
+lamb
+```
+
+## Aproximação da Binomial pela Poisson
+
+- Vimos que se $X\sim Bin(n, p)$ com $n$ grande e $p$ pequeno, então essa distribuição pode ser aproximada pela $Pois(\lambda)$ com $\lambda = np$
+
+\pause
+- Comparando as probabilidade de $Bin(100; 0,\!05)$ e sua aproximação pela $Pois(5)$
+```{r, echo = TRUE}
+n = 100
+p = 0.05
+lamb = n*p
+
+round(dbinom(0:10, n, p), 4)
+round(dpois(0:10, lamb), 4)
+```
+
+
+## 
+
+
+- Gráfico de probabilidades da $Bin(100; 0,\!05)$ e suas respectivas aproximações pela $Pois(5)$
+```{r, echo = TRUE, out.height="0.6\\textheight", fig.align='center'}
+x = c(0:30)
+plot(x, dbinom(x, n, p), pch=19)
+points(x, dpois(x, lamb), pch=8, col='red')
+```
+
+
+## 
+
+- \textbf{Exemplo:} Considere que a probabilidade de um certo produto apresentar defeito é de 0,01. Calcule a probabilidade de que uma amostra de 200 cópias deste produto contenha no máximo dois defeituosos. Faça o cálculo:
+
+a) através da distribuição Binomial
+
+b) através da aproximação da Binomial pela Poisson
+
+\pause
+Seja $X$ a variável aleatória representando o número de itens defeituosos. Então $X \sim Bin(200; 0,01)$. A resposta do item (a) é
+
+```{r, echo = TRUE}
+pbinom(2, 200, 0.01)
+```
+Se usarmos a aproximação pela Poisson com $\lambda=200*0,01=2$, obtemos que a resposta do item (b) é
+```{r, echo = TRUE}
+ppois(2, 2)
+```
+
+## 
+
+- \textbf{Exercício:} O número de mortes causadas por uma certa doença está sendo acompanhodo pela secretaria de saúde de uma cidade. O número de mortes nos últimos sete anos foram 2, 3, 3, 2, 2, 1 e 1. Decidiu-se utilizar um modelo/distribuição Poisson para analisar o número de casos.
+
+a) Através dos dados, qual estimativa para o parâmetro da distribuição Poisson você utilizaria?
+
+b) Com base no modelo proposto no item anterior, qual seria a probabilidade do número de mortes ser 4 ou mais no ano seguinte?
+
+\pause
+
+O parâmetro da Poisson é $\lambda$, que também é a média da distribuição. Então, podemos usar a média amostral $\bar{X} = 2$ como estimativa.
+
+Usando o modelo $Poisson(2)$, temos que $P(X \geq 4) = 1 - P(X\leq 3)$, o qual é
+```{r, echo = TRUE}
+1 - ppois(3, 2)
+```

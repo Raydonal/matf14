@@ -1,0 +1,175 @@
+---
+title: "Medidas de dispersão: AT, DP e CV"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "25/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+empresas <- read.csv("empresas.csv")
+var_n <- function(x) mean((x - mean(x))^2)
+dp_n  <- function(x) sqrt(var_n(x))
+```
+
+class: inverse, center, middle
+
+# Aula 06: Medidas de dispersão
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Duas ações, mesmo retorno médio: mesma qualidade?
+
+> Duas ações têm o mesmo retorno médio anual de 12%. Uma variou entre 8% e 16% nos últimos 5 anos;
+> a outra, entre -30% e 45%. Um investidor avesso a risco as consideraria igualmente atraentes?
+
+--
+
+> E se eu disser que o desvio padrão de "faturamento em R\$ mil" de uma empresa é maior que o de
+> "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Variância e desvio padrão
+
+$$
+\mathrm{Var}(X) = \frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^2
+\qquad
+dp(X) = \sqrt{\mathrm{Var}(X)}
+$$
+
+O desvio padrão devolve a dispersão à unidade original dos dados (a variância fica ao quadrado).
+
+--
+
+**Atenção**: nesta disciplina, variância descritiva usa divisor \(n\). Em inferência/econometria, o
+divisor passa a ser \(n-1\) (correção de Bessel) quando os dados são vistos como amostra usada para
+**estimar** a variância populacional, o padrão da função `var()` do R.
+
+---
+
+## Coeficiente de variação
+
+$$
+CV(X) = \frac{dp(X)}{\bar x}
+$$
+
+Adimensional, permite comparar a dispersão **relativa** de variáveis em unidades diferentes, ou
+com médias muito diferentes (faturamento em R\$ mil vs. número de empregados).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Comparando dispersão relativa
+
+```{r cv}
+empresas |> summarise(
+  cv_faturamento = dp_n(faturamento99) / mean(faturamento99),
+  cv_empregados  = dp_n(empregados99) / mean(empregados99)
+)
+```
+
+Não faz sentido comparar diretamente o desvio padrão de "faturamento" (ordem de centenas de
+milhares) com o de "nº de empregados" (ordem de dezenas), são unidades incomparáveis. O \(CV\)
+resolve isso.
+
+---
+
+## A mesma lógica em finanças
+
+A mesma ideia é usada para comparar a **volatilidade relativa** de duas ações com preços médios
+muito diferentes: um desvio padrão de R\\( 5 é enorme para uma ação de R\\) 10 (CV alto) e pequeno
+para uma de R\$ 500 (CV baixo).
+
+```{r acao, echo=FALSE}
+set.seed(7)
+tibble(
+  Ação = c("A (preço baixo)", "B (preço alto)"),
+  `Preço médio` = c(10, 500),
+  `Desvio padrão` = c(2.5, 40),
+  CV = round(c(2.5/10, 40/500), 2)
+) |> knitr::kable()
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte às duas ações da abertura (mesma média 12%, faixas 8-16% e -30-45%). Estime
+mentalmente qual delas tem desvio padrão maior. Um investidor avesso a risco, olhando só a média,
+cometeria que erro?
+
+**2.** Um gestor de risco reporta apenas "desvio padrão mensal de 2%" para um fundo. Isso basta
+para saber se há meses de perdas catastróficas raras escondidos numa distribuição majoritariamente
+estável? Que medida, ainda não vista (mas você pode arriscar um palpite), ajudaria a responder?
+
+---
+
+## Rodada 2: o coeficiente de variação e seus limites
+
+**3.** Um artigo afirma "o Brasil é mais desigual que a Argentina" citando apenas a renda média per
+capita dos dois países. Que medida de dispersão seria indispensável para essa afirmação ter
+qualquer sentido?
+
+**4.** O \(CV\) pode ser enganoso quando a média da variável está próxima de zero. Explique por que
+(pense no que acontece com uma fração quando o denominador se aproxima de zero) e dê um exemplo
+econômico em que isso seria um problema real (por exemplo, uma variável que pode ser positiva ou
+negativa, como lucro).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+library(tidyverse)
+empresas <- read.csv("empresas.csv")
+
+var_n <- function(x) mean((x - mean(x))^2)   # variância descritiva (divisor n)
+dp_n  <- function(x) sqrt(var_n(x))
+
+empresas |> summarise(
+  dp_n(faturamento99),
+  var_n(faturamento99),
+  cv = dp_n(faturamento99) / mean(faturamento99)
+)
+
+var(empresas$faturamento99)   # ATENÇÃO: usa divisor n-1, não n
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (30/03): Laboratório
+
+## R para estatística descritiva: carregar dados, tabelas e gráficos

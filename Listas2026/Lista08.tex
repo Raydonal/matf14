@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 08: Simulado Prova 1 (Unidade 1)}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 08: Simulado}{Revisão geral, no formato e no nível da Prova 1: Estatística Descritiva (Cap. 1, Aulas 01--08)}
+
+\noindent \textit{Simulado de 10 pontos, no mesmo formato da prova oficial: questões com múltiplos
+itens, valor indicado entre parênteses. Resolva com tempo cronometrado (sugestão: 100 minutos,
+sem consulta) antes de olhar o gabarito em \texttt{Gabarito08.pdf}.}
+
+\begin{enumerate}
+
+\item Uma amostra de 40 pequenas empresas de um município foi classificada por setor de atividade:
+28 em Comércio, 8 em Indústria e 4 em Serviços. Considere também que, das 40 empresas, o porte
+declarado foi: 22 Pequena, 14 Média e 4 Grande.
+
+\begin{enumerate}
+  \item (1 ponto) Classifique as variáveis "setor de atividade" e "porte" (nominal, ordinal,
+    discreta ou contínua).
+  \item (1 ponto) Construa a tabela de frequências absolutas e relativas (\%) para a variável
+    setor de atividade.
+  \item (1 ponto) Qual tipo de gráfico você recomendaria para apresentar a distribuição por setor a
+    uma associação comercial? Justifique frente a pelo menos uma alternativa descartada.
+\end{enumerate}
+
+\item A tabela abaixo traz o número de reclamações mensais recebidas por 12 lojas de uma rede de
+varejo:
+
+\begin{center}
+\begin{tabular}{cccccccccccc}
+\toprule
+3 & 5 & 4 & 20 & 6 & 4 & 5 & 7 & 3 & 6 & 5 & 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item (1,5 ponto) Calcule a média, a mediana e a moda do número de reclamações.
+  \item (1 ponto) Calcule o desvio padrão (divisor $n$).
+  \item (1,5 ponto) Uma das lojas (com 20 reclamações) está passando por uma crise pontual de
+    atendimento. Interprete o efeito dessa loja sobre cada uma das três medidas de tendência
+    central calculadas em (a), e indique qual delas você recomendaria usar para descrever "a loja
+    típica da rede".
+\end{enumerate}
+
+\item Uma corretora registrou, em 8 meses, o gasto mensal com marketing digital ($X$, em R\$ mil)
+e o número de novos clientes captados no mês seguinte ($Y$):
+
+\begin{center}
+\begin{tabular}{c|cccccccc}
+\toprule
+$X$ & 4 & 6 & 5 & 8 & 7 & 9 & 5 & 10 \\
+\midrule
+$Y$ & 12 & 18 & 15 & 22 & 20 & 25 & 14 & 27 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item (1,5 ponto) Calcule o coeficiente de correlação de Pearson entre $X$ e $Y$ e interprete o
+    resultado em uma frase.
+  \item (1 ponto) O gerente de marketing conclui que "gastar mais em marketing causa mais clientes
+    novos". Aponte uma explicação alternativa (não causal) plausível para essa correlação.
+\end{enumerate}
+
+\item O faturamento mensal (em R\$ mil) de uma amostra de 50 microempresas tem média R\$ 42 mil e
+mediana R\$ 31 mil.
+
+\begin{enumerate}
+  \item (0,5 ponto) A distribuição do faturamento é aproximadamente simétrica, assimétrica à
+    direita ou assimétrica à esquerda? Justifique com base na relação entre média e mediana.
+  \item (1 ponto) Um consultor quer comunicar "o faturamento típico" dessas microempresas para um
+    público leigo. Qual medida (média ou mediana) você recomendaria, e por quê?
+\end{enumerate}
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{center}
+\Large\textbf{Formulário}
+\end{center}
+\begin{small}
+\begin{itemize}
+  \item $\bar x = \frac1n\sum_i x_i$; mediana $=x_{((n+1)/2)}$ ($n$ ímpar) ou
+    $\frac{x_{(n/2)}+x_{(n/2+1)}}{2}$ ($n$ par).
+  \item $\mathrm{Var}(X)=\frac1n\sum_i(x_i-\bar x)^2$; $dp(X)=\sqrt{\mathrm{Var}(X)}$;
+    $CV=dp(X)/\bar x$.
+  \item $r_{XY} = \dfrac{\sum_i (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i(x_i-\bar x)^2}\sqrt{\sum_i(y_i-\bar y)^2}}$.
+  \item Assimetria $=\dfrac{\frac1n\sum_i(x_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}$; moda $<$ mediana
+    $<$ média sob assimetria positiva (e vice-versa sob assimetria negativa).
+\end{itemize}
+\end{small}
+
+\end{document}

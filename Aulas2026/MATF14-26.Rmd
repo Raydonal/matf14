@@ -1,0 +1,137 @@
+---
+title: "Função de distribuição acumulada (contínua)"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "08/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 26: FDA de variável contínua
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Resolvendo a dúvida da aula passada
+
+> Na Aula 25 perguntamos: a maioria dos clientes espera "perto de 5 minutos" (a média)? Hoje temos
+> a ferramenta exata para responder: a FDA.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definição
+
+$$
+F(x) = P(X\le x) = \int_{-\infty}^x f(t)\,dt
+$$
+
+**Contínua** (sem saltos), ao contrário do caso discreto, reflexo de \(P(X=x)=0\).
+
+--
+
+## Consequência importante
+
+$$
+P(X\le x)=P(X<x) \qquad P(X\ge x)=P(X>x)
+$$
+
+Ao contrário do Cap. 3 (discreto), aqui **não importa** incluir ou não o extremo do intervalo.
+
+--
+
+## Relação com \(f\)
+
+$$
+F'(x)=f(x) \qquad\qquad P(a\le X\le b) = F(b)-F(a)
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## FDA da fila de espera
+
+Primitiva de \(f(x)=0{,}2e^{-0{,}2x}\): \(F(x)=1-e^{-0{,}2x}\), \(x\ge0\).
+
+```{r fda-fila, fig.height=3.8}
+Fx <- function(x) 1 - exp(-0.2*x)
+ggplot(tibble(x=seq(0,30,length.out=300), F=Fx(x)), aes(x,F)) +
+  geom_line(color="#0d3b54") + labs(x="minutos", y="F(x)") + theme_minimal(base_size=13)
+```
+
+---
+
+## Respondendo a dúvida da Aula 25
+
+$$
+P(X < 5) = F(5) = 1-e^{-1} \approx 0{,}632
+$$
+
+```{r resposta-duvida}
+Fx(5)
+```
+
+**Resposta**: 63,2% dos clientes esperam *menos* que a média de 5 minutos, confirmando a
+assimetria à direita. A média não descreve "o cliente típico"; descreve um ponto puxado para cima
+pela minoria que espera muito.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1
+
+**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\(P(X>10)\))? Esse número
+é pequeno ou grande o suficiente para preocupar um gerente de atendimento, mesmo com uma média
+"aceitável" de 5 minutos?
+
+**2.** Dado \(F(x)=1-e^{-0{,}2x}\), como você recuperaria \(f(x)\) a partir dela, sem ter a fórmula de
+\(f\) em mãos? Use \(F'(x)=f(x)\).
+
+---
+
+## Rodada 2
+
+**3.** No caso discreto (Cap. 3), \(F\) tinha "degraus". Por que, no caso contínuo, uma FDA com um
+degrau seria logicamente impossível, que propriedade ela contradiria?
+
+**4.** Um gerente de operações decide comunicar não a média, mas "o tempo que 90% dos clientes não
+ultrapassam" (um quantil, retomado no Capítulo 1). Calcule esse valor usando `qexp(0.9, rate=0.2)`
+e compare com a média de 5 minutos. Qual dos dois números você recomendaria divulgar ao público, e
+por quê?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (10/06)
+
+## Distribuição Uniforme

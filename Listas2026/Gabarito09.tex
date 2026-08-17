@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 09: VA discreta, esperança, variância e FDA}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 09}{Variável aleatória discreta, esperança, variância e função de distribuição acumulada (Cap. 3, Aulas 17--19)}
+
+\begin{questao}{1} \textbf{(Função de probabilidade: número de ações de um fundo)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $0{,}5+k+0{,}2=1 \Rightarrow k=0{,}3$.
+  \item $E(X) = 0(0{,}5)+1(0{,}3)+2(0{,}2) = 0+0{,}3+0{,}4=0{,}7$.
+    $\mathrm{Var}(X) = (0-0{,}7)^2(0{,}5)+(1-0{,}7)^2(0{,}3)+(2-0{,}7)^2(0{,}2)$
+    $=0{,}49\times0{,}5+0{,}09\times0{,}3+1{,}69\times0{,}2 = 0{,}245+0{,}027+0{,}338=0{,}61$.
+  \item $E(C)=2000\times0{,}7=1400$. $\mathrm{Var}(C)=2000^2\times0{,}61=2.440.000$;
+    $dp(C)=\sqrt{2.440.000}\approx 1562$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(FDA: número de atrasos de pagamento)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $F(0)=0{,}70$; $F(1)=0{,}70+0{,}20=0{,}90$; $F(2)=0{,}90+0{,}07=0{,}97$;
+    $F(3)=0{,}97+0{,}03=1{,}00$.
+  \item $P(X\le1)=F(1)=0{,}90$. $P(X>1)=1-F(1)=0{,}10$. $P(X\ge2)=1-F(1)=0{,}10$ (mesmo valor de
+    $P(X>1)$ pois, sendo $X$ inteira, $X\ge 2 \Leftrightarrow X>1$).
+  \item Risco alto: $P(X\ge2)=0{,}10$, espera-se que 10\% da carteira seja de risco alto.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Propriedades de $E$ e $\mathrm{Var}$: taxas e impostos)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $E(C) = 15+0{,}02\times E(X) = 15+0{,}02\times8000 = 15+160=175$.
+  \item $\mathrm{Var}(C) = 0{,}02^2\times\mathrm{Var}(X) = 0{,}0004\times 3000^2 = 0{,}0004\times
+    9.000.000=3600$; $dp(C)=\sqrt{3600}=60$. (Alternativamente, direto:
+    $dp(C)=|0{,}02|\times dp(X)=0{,}02\times3000=60$.)
+  \item Não muda o desvio padrão: a constante $b=15$ na fórmula $\mathrm{Var}(aX+b)=a^2
+    \mathrm{Var}(X)$ não aparece no resultado. Remover a taxa fixa muda $E(C)$ (de 175 para 160),
+    mas não muda $dp(C)$, que continua $60$, a taxa fixa desloca o custo esperado, mas não altera
+    sua dispersão.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Soma de variáveis independentes: carteira de dois ativos)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $E(W)=E(X)+E(Y)=100+150=250$. Como $X,Y$ são independentes,
+    $\mathrm{Var}(W)=\mathrm{Var}(X)+\mathrm{Var}(Y)=400+900=1300$.
+  \item $dp(W)=\sqrt{1300}\approx 36{,}06$. $dp(X)+dp(Y) = \sqrt{400}+\sqrt{900}=20+30=50$.
+    São \textbf{diferentes} ($36{,}06 < 50$): o desvio padrão da soma é menor que a soma dos
+    desvios padrão individuais, esse é precisamente o efeito de diversificação. Combinar ativos
+    (mesmo sem nenhuma "mágica", só por independência) reduz o risco relativo da carteira frente à
+    soma ingênua dos riscos individuais, porque as variâncias (não os desvios padrão) é que se
+    somam sob independência, e a raiz quadrada da soma é sempre menor ou igual à soma das raízes.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item
+  $$
+  E(aX+b) = \sum_i (ax_i+b)p(x_i) = a\sum_i x_i p(x_i) + b\sum_i p(x_i) = a\mu + b\times 1 = a\mu+b,
+  $$
+  usando que $\sum_i x_ip(x_i)=\mu=E(X)$ (definição) e $\sum_i p(x_i)=1$ (axioma).
+  \item Do item (a), $E(aX+b)=a\mu+b$. Logo,
+  $$
+  (aX+b) - E(aX+b) = (aX+b) - (a\mu+b) = aX - a\mu = a(X-\mu).
+  $$
+  \item Por definição, $\mathrm{Var}(aX+b) = E\big[((aX+b)-E(aX+b))^2\big]$. Usando o item (b),
+    $(aX+b)-E(aX+b) = a(X-\mu)$, logo
+  $$
+  \mathrm{Var}(aX+b) = E\big[(a(X-\mu))^2\big] = E\big[a^2(X-\mu)^2\big] = a^2\,E\big[(X-\mu)^2\big]
+  = a^2\,\mathrm{Var}(X),
+  $$
+  pois $a^2$ é uma constante que sai da esperança (soma ponderada). De fato, $b$ não aparece no
+  resultado final: somar uma constante $b$ a $X$ apenas \textbf{desloca} todos os valores possíveis
+  igualmente, sem alterar a distância de cada um até a nova média (que também se desloca em $b$),
+  a dispersão em torno da média permanece exatamente a mesma.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

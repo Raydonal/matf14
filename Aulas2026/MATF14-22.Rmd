@@ -1,0 +1,171 @@
+---
+title: "[Laboratório] Simulação de VA discretas em R"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "25/05/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+```
+
+class: inverse, center, middle
+
+# Aula 22: Laboratório
+
+## Gerando e comparando distribuições discretas em R
+
+### Teórico × simulado
+
+---
+
+## Plano da aula
+
+1. `sample()`: gerar Bernoulli "na mão".
+2. `dbinom/pbinom/rbinom`: Binomial.
+3. Comparar frequência simulada com probabilidade teórica.
+4. `dpois/ppois/rpois`: Poisson e a aproximação Binomial→Poisson.
+5. Exercício guiado: tamanho mínimo de amostra.
+
+---
+
+## 1. Bernoulli via `sample()`
+
+```{r bernoulli}
+set.seed(42)
+p <- 0.3
+x <- sample(c(0,1), size = 100, prob = c(1-p, p), replace = TRUE)
+table(x)
+```
+
+```{r bernoulli-compara}
+c(media_simulada = mean(x), media_teorica = p)
+c(var_simulada = var(x), var_teorica = p*(1-p))
+```
+
+Pequena diferença entre simulado e teórico é esperada, com mais repetições, a diferença encolhe
+(Lei dos Grandes Números, Aula 13).
+
+---
+
+## 2. Binomial em R
+
+```{r binomial-basico}
+n <- 5; p <- 0.7
+dbinom(2, n, p)                          # P(X=2)
+choose(n,2) * p^2 * (1-p)^(n-2)           # conferindo com a fórmula
+sum(dbinom(0:n, n, p))                    # soma das probabilidades = 1
+```
+
+```{r binomial-fda}
+pbinom(2, n, p)     # P(X <= 2)
+```
+
+---
+
+## Gerando amostras de uma Binomial
+
+```{r rbinom-exemplo, fig.height=3.4}
+set.seed(1)
+y <- rbinom(1000, size = n, prob = p)
+rbind(simulado = table(y)/1000, teorico = round(dbinom(0:n, n, p), 3))
+```
+
+---
+
+## 3. Comparando médias e variâncias
+
+```{r compara-binom}
+c(media_simulada = mean(y), media_teorica = n*p)
+c(var_simulada = var(y), var_teorica = n*p*(1-p))
+```
+
+```{r hist-binom, fig.height=3.3}
+hist(y, prob = TRUE, breaks = n+1, col = "#0d3b54", main = "Binomial(5, 0,7) simulada")
+```
+
+---
+
+## 4. Poisson em R
+
+```{r poisson-basico}
+lambda <- 5
+dpois(4, lambda)
+exp(-lambda)*lambda^4/factorial(4)   # conferindo com a fórmula
+```
+
+```{r rpois-exemplo}
+set.seed(2)
+z <- rpois(1000, lambda)
+c(media_simulada = mean(z), media_teorica = lambda)
+c(var_simulada = var(z), var_teorica = lambda)
+```
+
+---
+
+## Aproximação Binomial → Poisson, visualmente
+
+```{r aproximacao, fig.height=4}
+n <- 100; p <- 0.05; lambda <- n*p
+x <- 0:20
+plot(x, dbinom(x, n, p), pch = 19, col = "#0d3b54",
+     ylab = "P(X=x)", main = "Bin(100, 0,05) vs. Poisson(5)")
+points(x, dpois(x, lambda), pch = 8, col = "#c9971e")
+legend("topright", legend = c("Binomial", "Poisson"), col = c("#0d3b54","#c9971e"), pch = c(19,8))
+```
+
+---
+
+class: inverse, center, middle
+
+# 5. Exercício guiado
+
+---
+
+## Enunciado
+
+Peças com 1% de defeito, independentes. Você quer saber o menor \(n\) tal que, ao testar \(n\) peças,
+\(P(\text{pelo menos 1 defeituosa}) \ge 0{,}95\).
+
+```{r exercicio-n-min, fig.height=3.6}
+n <- 1:400
+prob <- 1 - dbinom(0, n, 0.01)
+plot(n, prob, type = "l", col = "#0d3b54")
+abline(h = 0.95, col = "#c9971e", lty = 2)
+```
+
+1. Leia no gráfico (aproximadamente) o valor mínimo de \(n\).
+2. Confirme com `which(prob >= 0.95)[1]`.
+3. Refaça para uma taxa de defeito de 0,5% em vez de 1%, o \(n\) mínimo aumenta ou diminui? Por quê?
+
+---
+
+## Discussão do laboratório
+
+**1.** Compare a simulação de Bernoulli(0,3) com 100 repetições e a de 1.000 (rode você mesmo com
+`n=1000`). A diferença entre média simulada e teórica encolhe? Isso é a mesma Lei dos Grandes
+Números vista na Aula 13, agora aplicada a uma variável, não só a uma probabilidade de evento.
+
+**2.** No gráfico "Aproximação Binomial → Poisson", os pontos das duas distribuições quase se
+sobrepõem para \(n=100\), \(p=0{,}05\). Refaça mentalmente para \(n=10\), \(p=0{,}5\) (onde a aproximação
+é ruim), por que, nesse caso, \(p\) não é "pequeno" e a aproximação falha?
+
+**3.** No exercício guiado, depois de responder ao item 3 (taxa de defeito de 0,5%): o \(n\) mínimo
+dobrou, mais que dobrou, ou menos que dobrou em relação ao caso de 1%? Sua intuição antes de rodar
+o código bateu com o resultado?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (27/05)
+
+## Aula de exercícios + revisão de cálculo (para a Unidade 4)

@@ -1,0 +1,166 @@
+---
+title: "Estatística Econômica I"
+subtitle: "Apresentação da disciplina, metodologia e calendário"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "09/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# MATF14: Estatística Econômica I
+
+### Aula 01: Apresentação, metodologia, calendário
+
+Prof. colaborador: Raydonal Ospina · Depto. de Estatística, UFBA, 2026.1
+
+---
+
+class: inverse, center, middle
+
+# Antes de começar, cinco perguntas
+
+---
+
+## Você já decide com números incertos: mesmo sem perceber
+
+> Vale a pena trocar a poupança por um fundo multimercado, sabendo que o retorno pode ser maior,
+> mas também negativo em algum mês?
+
+--
+
+> Uma pesquisa mostra o candidato A com 52% e o B com 48%, margem de erro de 3 pontos, a eleição
+> já está decidida?
+
+--
+
+> O IBGE diz que a inflação veio "dentro da meta", meta de quem, medida em que amostra, com que
+> margem de erro?
+
+--
+
+> Um banco oferece crédito porque seu escore está "acima da média", acima de que distribuição,
+> exatamente?
+
+--
+
+> Uma seguradora cobra mais de condutores jovens, isso reflete risco medido, ou só estereótipo
+> com aparência de número?
+
+--
+
+Esta disciplina constrói o vocabulário formal por trás de cada uma dessas perguntas.
+
+---
+
+## Ementa oficial
+
+1. **Estatística Descritiva e Exploratória de Dados**
+, população/amostra, tipos de variável, tabelas, gráficos, medidas de posição, dispersão,
+   assimetria e curtose.
+2. **Introdução à Teoria das Probabilidades**
+, espaço amostral, probabilidade condicional, independência, Teorema de Bayes.
+3. **Variáveis Aleatórias Discretas**
+, esperança, variância, FDA, Bernoulli, Binomial, Poisson.
+4. **Variáveis Aleatórias Contínuas**
+, esperança, variância, FDA, Uniforme, Normal.
+
+---
+
+## Como as aulas funcionam
+
+- Aulas **teóricas** (quadro + slides) e aulas **práticas** de laboratório em R (3 ao longo do
+  semestre) e de exercícios (4 ao longo do semestre).
+- Material de apoio: livro-texto (`Livro/`), slides de cada aula (`Aulas2026/`) e listas de
+  exercícios com gabarito (`Listas2026/`).
+- **As discussões em sala valem tanto quanto as contas.** Cada bloco de aula traz perguntas
+  abertas, não são preenchimento de tempo, são o critério que mais separa quem entende a matéria
+  de quem só decorou fórmula. Espere ser chamado a responder, não só a ouvir.
+- As listas de exercícios **não valem nota**, mas cobrem exatamente o estilo de questão cobrado nas
+  provas, a forma mais eficiente de estudar é resolver a lista antes de olhar o gabarito.
+
+---
+
+## Avaliação
+
+$$
+NF = \frac{P_1 + P_2 + P_3}{3}
+$$
+
+| Prova | Cobertura |
+|---|---|
+| P1 | Unidade 1 (Estatística Descritiva) |
+| P2 | Unidades 2 e 3 (Probabilidade e VA discretas) |
+| P3 | Unidade 4 (VA contínuas) |
+
+Datas oficiais conforme calendário divulgado em sala; segunda chamada ao final do semestre.
+
+- Aprovação: frequência \(\ge 75\%\) **e** \(NF \ge 5{,}0\).
+- Sem projetos nesta disciplina, o foco é dominar os conceitos e resolver problemas sob prova.
+
+---
+
+## Bibliografia
+
+**Básica**
+
+- Hoffmann, R. *Estatística para Economistas*. Thomson, 2006.
+- Morettin, P. A.; Bussab, W. O. *Estatística Básica*. Saraiva, 2012.
+- Magalhães, M. N. *Probabilidade e Variáveis Aleatórias*. EDUSP, 2004.
+- Ross, S. *Probabilidade: um curso moderno com aplicações*. Bookman, 2010.
+
+**Complementar**
+
+- Dantas, C. A. B. *Probabilidade: um curso introdutório*. EDUSP, 1997.
+- Hogg, R.; McKean, J.; Craig, A. *Introduction to Mathematical Statistics*. Pearson, 2013.
+- Triola, M. F. *Introdução à Estatística*. LTC, 2007.
+
+---
+
+class: inverse, center, middle
+
+# Discussão de abertura
+
+---
+
+## Para discutir agora, em grupo
+
+**1.** Cite uma manchete de jornal ou rede social recente que usou (bem ou mal) um número
+estatístico para embasar uma afirmação econômica.
+
+**2.** O que precisaria ser verdade sobre *como aquele número foi calculado* para que a afirmação
+fosse confiável? Liste ao menos duas condições.
+
+**3.** Retome as cinco perguntas do início do slide. Escolha uma e tente, sem nenhum conceito
+formal ainda, esboçar em uma frase por que ela é difícil de responder "no olho".
+
+**4.** Você conhece alguém (familiar, colega, você mesmo) que já tomou uma decisão financeira
+importante baseada em uma estatística mal interpretada? O que deu errado na leitura do número, não
+no número em si?
+
+--
+
+Guarde essas respostas, vamos revisitar esse tipo de exemplo ao longo do semestre, à medida que
+formos construindo as ferramentas para avaliá-lo com rigor.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (11/03)
+
+## População e amostra. Tipos de variáveis.
+
+Traga um exemplo de base de dados (uma planilha, uma tabela de um relatório) que você já tenha
+visto na sua área de interesse, vamos classificar as variáveis dela juntos.

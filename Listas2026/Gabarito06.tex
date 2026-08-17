@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 06: Probabilidade condicional e independência}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 06}{Probabilidade condicional e independência estatística (Cap. 2, Aulas 11--12)}
+
+\begin{questao}{1} \textbf{(Condicional: inadimplência por faixa de renda)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(\text{inad}\mid\text{baixa}) = 80/400 = 0{,}20$.
+  \item $P(\text{inad}\mid\text{alta}) = 5/200 = 0{,}025$.
+  \item $P(\text{inad})$ geral $=105/1000=0{,}105$. As três probabilidades condicionais
+    ($0{,}20$ para renda baixa, $5{,}0\%$ para renda média, $20/400$, e $2{,}5\%$ para renda alta)
+    são bem diferentes entre si e diferentes da probabilidade geral, \textbf{não há} independência:
+    a faixa de renda carrega informação relevante sobre a probabilidade de inadimplência nesta
+    base.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Regra do produto: sorteio sem reposição)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(1^\circ\text{ irregular}) = 4/15$. Dado que o primeiro foi irregular, sobram 3
+    irregulares em 14: $P(2^\circ\text{ irregular}\mid 1^\circ\text{ irregular}) = 3/14$. Logo,
+    $P(\text{ambos irregulares}) = \frac{4}{15}\times\frac{3}{14} = \frac{12}{210} = \frac{2}{35}
+    \approx 0{,}057$.
+  \item $P(1^\circ\text{ regular})=11/15$; dado isso, sobram 10 regulares em 14:
+    $P(2^\circ\text{ regular}\mid 1^\circ\text{ regular})=10/14$. Logo,
+    $P(\text{nenhum irregular}) = \frac{11}{15}\times\frac{10}{14} = \frac{110}{210} =
+    \frac{11}{21} \approx 0{,}524$.
+  \item Com reposição: $P(\text{ambos irregulares}) = \frac{4}{15}\times\frac{4}{15} =
+    \frac{16}{225}\approx 0{,}071$, maior que o valor sem reposição ($0{,}057$). Sem reposição, o
+    primeiro sorteio "consome" um processo irregular, reduzindo a proporção de irregulares
+    disponíveis para o segundo sorteio ($3/14 < 4/15$), com reposição, a proporção permanece
+    constante em $4/15$ nos dois sorteios, sendo eventos independentes.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Independência: verificação numérica)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(\text{comércio}) = 120/200 = 0{,}6$. $P(\text{crédito}) = 60/200 = 0{,}3$.
+    $P(\text{comércio}\cap\text{crédito}) = 36/200 = 0{,}18$.
+  \item $P(\text{comércio})\times P(\text{crédito}) = 0{,}6\times 0{,}3 = 0{,}18$, exatamente igual
+    a $P(\text{comércio}\cap\text{crédito})=0{,}18$ observado. Nesta amostra, setor (comércio ou
+    não) e acesso a crédito subsidiado \textbf{são independentes}, a proporção de empresas de
+    comércio é a mesma dentro e fora do grupo que acessou crédito.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Mutuamente exclusivos vs. independentes: discussão numérica)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Mutuamente exclusivos $\Rightarrow P(A\cap B)=0$ (por definição). Logo,
+    $P(A\mid B) = P(A\cap B)/P(B) = 0/0{,}5 = 0$.
+  \item Independentes $\Rightarrow P(A\cap B) = P(A)P(B) = 0{,}4\times 0{,}5 = 0{,}20$. Logo,
+    $P(A\mid B) = P(A) = 0{,}4$ (por definição de independência).
+  \item Não é possível. Se fossem mutuamente exclusivos, $P(A\cap B)$ teria que ser $0$; se fossem
+    independentes (com essas probabilidades individuais positivas), $P(A\cap B)$ teria que ser
+    $0{,}20 \ne 0$. Como $P(A)>0$ e $P(B)>0$, os dois valores exigidos são incompatíveis entre si, dois eventos de probabilidade positiva não podem ser simultaneamente mutuamente exclusivos e
+    independentes.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: independência é simétrica)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Pela definição de probabilidade condicional, $P(A\mid B) = \dfrac{P(A\cap B)}{P(B)}$.
+    Substituindo a hipótese $P(A\cap B)=P(A)P(B)$:
+    $$
+    P(A\mid B) = \frac{P(A)P(B)}{P(B)} = P(A),
+    $$
+    usando que $P(B)>0$ para poder cancelar.
+  \item Analogamente, $P(B\mid A) = \dfrac{P(A\cap B)}{P(A)} = \dfrac{P(A)P(B)}{P(A)} = P(B)$,
+    usando $P(A)>0$. Como a hipótese $P(A\cap B)=P(A)P(B)$ é simétrica em $A$ e $B$ (o produto não
+    depende da ordem), as duas conclusões, $P(A\mid B)=P(A)$ e $P(B\mid A)=P(B)$, decorrem da
+    mesma hipótese única, confirmando que a independência de $A$ em relação a $B$ é equivalente à
+    independência de $B$ em relação a $A$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 03: Dispersão: AT, DP, variância e CV}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 03}{Amplitude total, desvio padrão, variância e coeficiente de variação (Cap. 1, Aula 06)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito03.pdf}.}
+
+\begin{questao}{1} \textbf{(Cálculo direto: retorno de dois fundos de investimento)}
+
+Os retornos mensais (\%) de dois fundos de investimento, nos últimos 5 meses, foram:
+$$
+\text{Fundo A: } 1{,}0,\ 1{,}2,\ 0{,}9,\ 1{,}1,\ 0{,}8 \qquad
+\text{Fundo B: } -2{,}0,\ 4{,}0,\ 0{,}5,\ 3{,}0,\ -0{,}5
+$$
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a média de retorno de cada fundo.
+  \item Calcule a variância e o desvio padrão (divisor $n$) de cada fundo.
+  \item Os dois fundos têm médias parecidas. Um investidor avesso a risco prefere qual fundo?
+    Justifique com base no desvio padrão.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Coeficiente de variação: comparando variáveis em unidades diferentes)}
+
+Uma pesquisa com 50 empresas registrou o número de funcionários (média $=45$, desvio padrão
+$=18$) e o faturamento anual em milhões de reais (média $=12$, desvio padrão $=3$).
+
+\begin{enumerate}[label=(\alph*)]
+  \item É correto afirmar que "o número de funcionários é mais disperso que o faturamento, porque
+    seu desvio padrão (18) é maior que o do faturamento (3)"? Justifique.
+  \item Calcule o $CV$ de cada variável e responda: qual delas é \emph{relativamente} mais
+    dispersa em torno de sua própria média?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Amplitude total vs. desvio padrão: sensibilidade a outliers)}
+
+Dois times de vendedores têm as seguintes vendas mensais (em unidades vendidas):
+$$
+\text{Time 1: } 20, 22, 21, 23, 19, 20, 21 \qquad
+\text{Time 2: } 20, 21, 20, 22, 19, 21, 90
+$$
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a amplitude total ($AT$) de cada time.
+  \item Calcule o desvio padrão de cada time e compare com o resultado de (a). O que essa
+    comparação revela sobre a sensibilidade relativa de $AT$ e de $dp$ a um único valor atípico
+    (o "90" do Time 2, um provável erro de digitação ou uma venda excepcional isolada)?
+  \item Qual medida de dispersão você recomendaria usar para avaliar a consistência normal das
+    vendas do Time 2, dado que o valor 90 pode ser um erro a ser investigado, não descartado sem
+    checagem? (Relembre a Aula 05.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Dedução: a variância é sempre não negativa)}
+
+Seja $x_1, \ldots, x_n$ um conjunto de dados quaisquer, com média $\bar x$, e
+$\mathrm{Var}(X) = \frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^2$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que $\mathrm{Var}(X) \ge 0$ sempre, qualquer que seja o conjunto de dados.
+  \item Mostre que $\mathrm{Var}(X) = 0$ se, e somente se, todos os valores $x_1=x_2=\cdots=x_n$
+    são iguais (isto é, não há dispersão nenhuma). (Dica: uma soma de termos não negativos é zero
+    se, e só se, todos os termos são zero.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: fórmula alternativa da variância)}
+
+Mostre que
+$$
+\mathrm{Var}(X) = \frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^2 = \left(\frac{1}{n}\sum_{i=1}^n x_i^2\right) - \bar{x}^2,
+$$
+ou seja, "a variância é a média dos quadrados menos o quadrado da média". (Dica: expanda o
+quadrado $(x_i-\bar x)^2 = x_i^2 - 2x_i\bar x + \bar x^2$ dentro do somatório e use que
+$\sum_i x_i = n\bar x$.) Essa fórmula alternativa é frequentemente mais rápida para cálculo manual, refaça o item (b) da Questão 1 (Fundo A) usando essa fórmula e confira que obtém o mesmo valor.
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Um gestor de fundos anuncia dois produtos com o mesmo retorno médio histórico, mas se recusa a
+divulgar o desvio padrão de nenhum dos dois "para não confundir o cliente". Escreva, em poucas
+linhas, um argumento para convencê-lo de que omitir essa informação pode ser mais prejudicial ao
+cliente do que divulgá-la, e proponha uma forma simples de comunicar risco a um público
+não técnico, sem recorrer só ao termo "desvio padrão".
+\end{questao}
+
+\end{document}

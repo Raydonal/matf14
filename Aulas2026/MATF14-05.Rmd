@@ -1,0 +1,171 @@
+---
+title: "Quantis, distância interquartílica e boxplots"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "23/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+empresas <- read.csv("empresas.csv")
+```
+
+class: inverse, center, middle
+
+# Aula 05: Quantis, IQR e boxplot
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um único ponto pode distorcer a régua inteira
+
+> Uma consultoria compara o tempo de aprovação de crédito em duas agências bancárias. A agência A
+> tem tempos entre 3 e 8 dias. A agência B tem quase todos entre 2 e 6 dias, exceto um caso isolado
+> de 45 dias (um processo travado no jurídico). Qual das duas parece "mais lenta" se você olhar só
+> a amplitude total (\(x_{max}-x_{min}\))?
+
+--
+
+Hoje: uma medida de dispersão que ignora casos extremos de propósito, e quando isso é uma
+vantagem, e quando é uma cegueira perigosa.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Quantis
+
+O **quantil de ordem \(p\)**, \(Q_p\) (\(0<p<1\)), é o valor abaixo do qual está uma proporção \(p\) dos
+dados ordenados. Os **quartis** dividem a amostra em 4 partes iguais:
+
+$$
+Q_1 = Q_{0{,}25}, \qquad Q_2 = Q_{0{,}50} = \text{mediana}, \qquad Q_3 = Q_{0{,}75}
+$$
+
+--
+
+## Distância interquartílica
+
+$$
+IQR = Q_3 - Q_1
+$$
+
+Mede a dispersão dos 50% centrais, **robusta** a valores extremos, ao contrário da amplitude total
+\(AT = x_{\max}-x_{\min}\), que depende só de 2 pontos.
+
+---
+
+## Boxplot
+
+Representa \(Q_1\), \(Q_2\), \(Q_3\) e sinaliza como **outlier** qualquer ponto além de
+
+$$
+Q_1 - 1{,}5\times IQR \qquad \text{ou} \qquad Q_3 + 1{,}5\times IQR
+$$
+
+```{r boxplot-exemplo, echo=FALSE, fig.height=3}
+ggplot(empresas, aes(x = "", y = faturamento99)) +
+  geom_boxplot(fill = "#cfe8ef", outlier.color = "#c9971e") + coord_flip() +
+  labs(x = NULL, y = "Faturamento 1999 (R$ mil)") + theme_minimal(base_size = 13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Boxplot por porte da empresa
+
+```{r boxplot-porte, fig.height=4.3}
+ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(x = "Porte", y = "Faturamento 1999 (R$ mil)") + theme_minimal(base_size = 13)
+```
+
+O boxplot já responde, visualmente, uma pergunta de política de crédito: a dispersão *dentro* do
+grupo "Grande" é muito maior que dentro de "Pequena".
+
+---
+
+## Quartis calculados
+
+```{r quantile}
+quantile(empresas$faturamento99, probs = c(.25, .5, .75))
+IQR(empresas$faturamento99)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Recalcule mentalmente o caso das duas agências (A: 3–8 dias; B: 2–6 dias + um caso de 45
+dias). Compare \(AT\) e \(IQR\) para os dois cenários. Qual medida dá o veredito mais justo sobre
+"consistência do processo", e qual dá o veredito mais alarmante sobre "pior caso"? As duas
+perguntas são a mesma pergunta?
+
+**2.** Um analista vê muitos pontos marcados como outlier no boxplot do grupo "Grande porte" da
+Aplicação acima. Isso é evidência de erro nos dados, ou de heterogeneidade real dentro do grupo?
+Que passo você tomaria antes de decidir?
+
+---
+
+## Rodada 2: o critério do outlier
+
+**3.** Por que o critério de outlier do boxplot usa \(1{,}5\times IQR\) e não, por exemplo, "3
+desvios padrão da média" (medida que ainda não vimos formalmente, mas você já ouviu falar)? O que
+muda quando a distribuição já é assimétrica, como faturamento?
+
+**4.** Um banco usa a regra "recuse crédito se o tempo de processamento previsto for um outlier do
+boxplot histórico". Que tipo de erro essa regra pode cometer se a distribuição de tempos mudar
+estruturalmente (por exemplo, um novo sistema mais lento por padrão)?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+library(tidyverse)
+empresas <- read.csv("empresas.csv")
+
+quantile(empresas$faturamento99, probs = c(.25, .5, .75))
+IQR(empresas$faturamento99)
+
+ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
+  geom_boxplot(show.legend = FALSE)
+```
+
+`quantile()` tem 9 algoritmos diferentes de interpolação (`type = 1..9`); o padrão do R (`type=7`)
+é razoável para a maioria dos usos em estatística descritiva.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (25/03)
+
+## Medidas de dispersão: amplitude total, desvio padrão, variância e coeficiente de variação

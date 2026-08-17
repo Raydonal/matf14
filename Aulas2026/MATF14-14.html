@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Teorema de Bayes</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Teorema de Bayes
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 22/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 14: Teorema de Bayes
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um sistema "de 95% de acerto" pode estar quase sempre errado
+
+&gt; Um sistema antifraude detecta 95% das fraudes reais e erra (falso alarme) em apenas 3% das
+&gt; transações legítimas. Fraudes são raras: 0,2% de todas as transações. Quando o sistema aponta uma
+&gt; transação como "suspeita", qual é a chance de ser mesmo uma fraude, 95%? 50%? Bem menos que
+&gt; isso? Guarde seu palpite.
+
+---
+
+&lt;img src="images/bayes_teorema.jpg" alt="" width="60%" /&gt;
+
+O Teorema de Bayes virou regra essencial da computação moderna, filtros de spam, sistemas de
+recomendação, diagnóstico por IA. Hoje vemos por que ele resolve exatamente a provocação acima.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Teorema da probabilidade total
+
+Se \(B_1,\ldots,B_k\) particionam \(\Omega\):
+
+$$
+P(A) = \sum_{i=1}^k P(A\mid B_i)\,P(B_i)
+$$
+
+--
+
+## Teorema de Bayes
+
+Combinando a regra do produto nos dois sentidos:
+
+$$
+P(B_i\mid A) = \frac{P(A\mid B_i)\,P(B_i)}{\sum_{j=1}^k P(A\mid B_j)\,P(B_j)}
+$$
+
+\(P(B_i)\): probabilidade **a priori**. \(P(B_i\mid A)\): probabilidade **a posteriori**, depois de
+observar a evidência \(A\).
+
+---
+
+## Por que isso importa
+
+Frequentemente sabemos \(P(\text{evidência}\mid\text{causa})\) (fácil de medir por frequência
+histórica) e queremos \(P(\text{causa}\mid\text{evidência})\) (o que realmente importa, mas é difícil
+de medir direto). Bayes é a ponte entre as duas.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Resolvendo a provocação inicial
+
+\(P(\text{suspeito}\mid\text{fraude})=0{,}95\); \(P(\text{suspeito}\mid\text{legítima})=0{,}03\);
+\(P(\text{fraude})=0{,}002\).
+
+
+``` r
+p_fraude &lt;- 0.002; p_legit &lt;- 1 - p_fraude
+p_susp_dado_fraude &lt;- 0.95; p_susp_dado_legit &lt;- 0.03
+
+p_susp &lt;- p_susp_dado_fraude*p_fraude + p_susp_dado_legit*p_legit
+p_fraude_dado_susp &lt;- (p_susp_dado_fraude*p_fraude) / p_susp
+round(p_fraude_dado_susp, 3)
+```
+
+```
+## [1] 0.06
+```
+
+Mesmo com um teste "bom", só **6.0%** das
+transações suspeitas são fraudes reais, muito abaixo do que a maioria das pessoas chuta. Compare
+com o palpite que você registrou na abertura do slide.
+
+---
+
+## O mesmo raciocínio em testes de doença rara
+
+
+``` r
+p_doenca &lt;- 0.001
+p_pos_dado_doente &lt;- 0.99   # sensibilidade
+p_pos_dado_sadio  &lt;- 0.05   # 1 - especificidade
+
+p_pos &lt;- p_pos_dado_doente*p_doenca + p_pos_dado_sadio*(1-p_doenca)
+p_doente_dado_pos &lt;- (p_pos_dado_doente*p_doenca)/p_pos
+round(p_doente_dado_pos, 3)
+```
+
+```
+## [1] 0.019
+```
+
+Um teste com 99% de sensibilidade ainda deixa a maioria dos "positivos" sendo falsos positivos,
+quando a doença é rara, a mesma matemática de risco de crédito, antifraude, e diagnóstico médico.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (a mais longa da Unidade 2)
+
+---
+
+## Rodada 1: a provocação inicial, revisitada
+
+**1.** Compare o resultado calculado (0.06) com o palpite que você
+registrou no início da aula. Se você chutou um número bem mais alto, tente articular por que a
+intuição humana costuma superestimar \(P(\text{causa}\mid\text{evidência})\) nesses casos, o que ela
+está "esquecendo" de levar em conta?
+
+**2.** Um gestor de risco vê a taxa de detecção (95%) do sistema antifraude e conclui "o sistema é
+confiável". Reformule a frase dele de forma tecnicamente correta, usando o resultado calculado.
+
+---
+
+## Rodada 2: sensibilidade ao cenário
+
+**3.** Se a taxa de fraude na base **subisse** de 0,2% para 5% (um período de fraudes em massa), o
+que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo o mesmo sistema de detecção?
+Refaça a conta e confirme sua intuição antes de calcular.
+
+**4.** Um banco decide usar o mesmo sistema antifraude, mas agora aplicado só a transações acima de
+R\$ 10.000 (onde a taxa de fraude histórica é bem maior, digamos 3% em vez de 0,2%). Sem refazer a
+conta completa, você espera que \(P(\text{fraude}\mid\text{suspeito})\) suba ou desça em relação ao
+caso original? Depois, confirme calculando.
+
+---
+
+## Síntese
+
+**5.** Escreva, em uma frase, a lição central do Teorema de Bayes para qualquer sistema de
+triagem/alarme (antifraude, exame médico, detector de metais em aeroporto): por que a taxa de
+acerto do teste, sozinha, nunca é suficiente para avaliar sua utilidade prática?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+p_fraude &lt;- 0.002; p_legit &lt;- 1 - p_fraude
+p_susp_dado_fraude &lt;- 0.95; p_susp_dado_legit &lt;- 0.03
+
+# probabilidade total (denominador de Bayes)
+p_susp &lt;- p_susp_dado_fraude*p_fraude + p_susp_dado_legit*p_legit
+
+# Bayes
+p_fraude_dado_susp &lt;- (p_susp_dado_fraude*p_fraude) / p_susp
+```
+
+Sempre calcule o denominador (probabilidade total) **antes**, como uma variável separada, reduz
+erro de digitação em fórmulas longas de Bayes com muitas categorias.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (27/04)
+
+## Aula de exercícios: Unidades 1 e 2
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

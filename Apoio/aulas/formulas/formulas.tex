@@ -1,0 +1,241 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=4cm,right=4cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{diagbox}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF59 T01 - Estatística básica para humanidades - 2025.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Fórmulas \\
+	\end{Large}	
+\end{center}
+
+
+\bigskip
+
+
+\begin{Large}
+\noindent
+Se o número de casos de uma categoria é $f$ e o número total de casos é $n$, então
+\begin{align*}
+\text{Proporção da categoria} = \frac{f}{n}
+\end{align*}
+e
+\begin{align*}
+\text{Porcentagem da categoria} = \left( 100 \times\frac{f}{n} \right) \%
+\end{align*}
+\end{Large}
+
+\bigskip
+--------------------------------------------
+
+
+\begin{Large}
+\noindent
+Se o número de casos de uma categoria é $f_1$ e o número de casos numa outra categoria é $f_2$, então
+\begin{align*}
+\text{Razão da categoria 1 para a categoria 2} = \frac{f_1}{f_2}.
+\end{align*}
+Usando um número $n$ como base, dizemos que há $n \times \frac{f_1}{f_2} $ elementos da categoria 1 para cada $n$ elementos da categoria~2.
+\end{Large}
+
+\bigskip
+--------------------------------------------
+
+
+\begin{Large}
+\noindent
+Se o valor da variável no tempo 1 é $f_1$ e o valor no tempo 2 é $f_2$, então
+\begin{align*}
+\text{Taxa de variação do tempo 1 para o tempo 2} = 100 \times \left(\frac{f_2 - f_1}{f_1}\right)\%
+\end{align*}
+\end{Large}
+
+
+\bigskip
+--------------------------------------------
+
+\begin{align*}
+\text{Mediana} = \left\{\begin{array}{lc}
+\text{valor na posição $\frac{n+1}{2}$}, & \text{se $n$ for ímpar} \\
+\text{média dos valores nas posições $\frac{n}{2}$ e $\frac{n}{2}+1$}, & \text{se $n$ for par}
+\end{array}\right.
+\end{align*}
+
+\begin{Huge}
+\begin{center}
+Se temos $n$ valores $x_1, x_2, \ldots, x_n$, a média deles será
+\begin{align*}
+\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{\sum_{i=1}^n x_i}{n}
+\end{align*}
+\end{center}
+\end{Huge}
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+Sendo $x_{\max}$ e $x_{\min}$ o máximo e mínimo dos dados, respectivamente, a amplitude total será
+\begin{align*}
+AT = x_{\max} - x_{\min}
+\end{align*}
+\end{center}
+\end{Large}
+
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+Sejam $x_1, \ldots, x_n$ os $n$ valores e $\bar{x}$ a média deles. \\ A variância será:
+\begin{align*}
+var(X) = \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n} = \frac{(x_1 - \bar{x})^2 + (x_1 - \bar{x})^2 + \cdots + (x_n - \bar{x})^2}{n}
+\end{align*}
+\end{center}
+\end{Large}
+
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+O desvio padrão dos $n$ valores $x_1, \ldots, x_n$ será:
+\begin{align*}
+dp(X) = \sqrt{ \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n} } = \sqrt{ \frac{(x_1 - \bar{x})^2 + (x_1 - \bar{x})^2 + \cdots + (x_n - \bar{x})^2}{n} }
+\end{align*}
+\end{center}
+\end{Large}
+
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+A medida de assimetria de $x_1, \ldots, x_n$ é:
+\begin{align*}
+\frac{\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^3}{var(X)^{3/2}} = \frac{\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^3}{\left( \frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2 \right)^{3/2}},
+\end{align*}
+em que $\bar{x}$ e $var(X)$ são a média variância amostrais
+\end{center}
+\end{Large}
+
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+A medida de curtose de $x_1, \ldots, x_n$ é:
+\begin{align*}
+\frac{\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^4}{var(X)^{2}} = \frac{\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^4}{\left( \frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2 \right)^{2}},
+\end{align*}
+em que $\bar{x}$ e $var(X)$ são a média variância amostrais
+\end{center}
+\end{Large}
+
+\bigskip
+
+
+\begin{Large}
+\begin{center}
+Sejam $\bar{x}$ e $dp(X)$ a média e o desvio padrão dos $n$ valores $x_1, \ldots, x_n$. O coeficiente de variação é:
+\begin{align*}
+CV(X) = \frac{dp(X)}{\bar{x}}
+\end{align*}
+\end{center}
+\end{Large}
+
+
+\bigskip
+
+
+\begin{minipage}{0.8\textwidth}
+Tabela: Distribuição das frequências absolutas segundo sexo e curso
+\begin{center}
+\begin{tabular}{c|cc}
+\hline
+\diagbox{Curso}{Sexo} & Masculino & Feminino \\
+\hline
+Física    & 100 & 20 \\
+Geografia & 40  & 40 \\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+
+
+\bigskip
+
+
+\begin{minipage}{0.7\textwidth}
+Tabela: Distribuição das frequências absolutas segundo sexo e curso, com frequências relativas em relação ao curso
+\begin{tabular}{c|cc|c}
+\hline
+\diagbox{Curso}{Sexo} & Masculino & Feminino & Total\\
+\hline
+Física    & 100 (71\%) & 20 (33\%) & 120 (60\%) \\
+Geografia & 40 (29\%)  & 40 (67\%) &  80 (40\%) \\
+\hline
+Total & 140 (100\%) & 60 (100\%) &  200 (100\%) \\
+\hline
+\end{tabular}
+\end{minipage}
+
+
+\bigskip
+
+
+\begin{minipage}{0.7\textwidth}
+\begin{center}
+\begin{tabular}{c|cc|c}
+\hline
+ & Recuperados & Mortes & Total\\
+\hline
+Vacinados     & 197 &  2 & 199 \\
+Não-vacinados & 139 & 19 & 158 \\
+\hline
+Total & 336 & 21 & 357 \\
+\hline
+\end{tabular}\\
+{\tiny Fonte: Yule, G. U. (1912). On the methods of measuring association between two attributes. JRSS, 75(6), 579-652.}
+\end{center}
+\end{minipage}
+
+
+
+
+
+\end{document}

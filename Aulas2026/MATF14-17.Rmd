@@ -1,0 +1,119 @@
+---
+title: "Variável aleatória discreta: conceituação"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "06/05/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Início da Unidade 3
+
+# Aula 17: Variável aleatória discreta
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## A seguradora sabe o futuro?
+
+> Uma seguradora conhece, do histórico, a distribuição de probabilidade do número de sinistros por
+> apólice em um ano. Ela sabe, hoje, quantos sinistros uma apólice específica vai gerar este ano?
+> Se não sabe o valor exato, o que ela sabe, e por que isso já é suficiente para fixar um prêmio?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Da probabilidade de eventos aos números
+
+A Unidade 2 tratou de probabilidades de **eventos**. Agora: associar um **número** a cada
+resultado de um experimento aleatório, permitindo calcular médias e variâncias de quantidades
+ainda incertas, como fizemos no Cap. 1 para dados já observados.
+
+--
+
+## Variável aleatória discreta
+
+Uma **variável aleatória (VA)** \(X\) associa um número real a cada resultado \(\omega\in\Omega\). É
+**discreta** quando assume valores em um conjunto finito ou enumerável.
+
+$$
+p(x_i) = P(X=x_i), \qquad p(x_i)\ge 0, \qquad \sum_i p(x_i) = 1
+$$
+
+`\(p(\cdot)\)` é a **função de probabilidade** (massa de probabilidade).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Número de sinistros em uma apólice
+
+```{r sinistros}
+sinistros <- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01))
+sum(sinistros$p)
+sinistros
+```
+
+```{r grafico-fmp, fig.height=3.3, echo=FALSE}
+ggplot(sinistros, aes(factor(x), p)) + geom_col(fill="#0d3b54") +
+  labs(x="Nº de sinistros", y="p(x)") + theme_minimal(base_size=13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte à pergunta de abertura. Depois de ver a tabela de \(p(x)\), formule sua resposta: o que,
+exatamente, a seguradora "sabe" sobre uma apólice específica antes do ano terminar?
+
+**2.** \(P(X=0)=0{,}60\): 60% das apólices não registram nenhum sinistro no ano. Isso significa que
+60% dos segurados "não precisavam" do seguro? Que erro de raciocínio essa conclusão cometeria,
+pensando no papel de um seguro?
+
+---
+
+## Rodada 2: generalizando
+
+**3.** Dê um exemplo de VA discreta em Economia/Finanças que assuma **infinitos** valores possíveis
+(não um conjunto finito, como número de tentativas até um evento ocorrer). O que muda na condição
+\(\sum_i p(x_i)=1\) nesse caso, a soma ainda precisa dar exatamente 1, mesmo com infinitos termos?
+
+**4.** Por que "número de sinistros de uma apólice" é discreta, mas "valor total pago em sinistros"
+(em R\$) normalmente é tratado como contínua? A resposta prepara o terreno para o Capítulo 4.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (11/05)
+
+## Esperança e variância

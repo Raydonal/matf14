@@ -1,0 +1,161 @@
+---
+title: "Esperança e Variância (VA discreta)"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "11/05/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 18: Esperança e variância
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um valor que \(X\) nunca assume, mas que "resume" \(X\)
+
+> \(E(X)=0{,}56\) sinistros por ano, mas nenhuma apólice jamais registra "0,56 sinistros". Se
+> \(E(X)\) não é o valor mais provável nem um valor possível, o que ele representa, exatamente?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Esperança (valor esperado)
+
+$$
+E(X) = \mu = \sum_i x_i\, p(x_i)
+$$
+
+Uma **média ponderada** dos valores possíveis, pesada pela probabilidade, análogo probabilístico
+da média aritmética do Cap. 1, mas ponderada por \(p(x_i)\), não por frequência observada.
+
+--
+
+## Variância
+
+$$
+\mathrm{Var}(X) = \sigma^2 = \sum_i (x_i-\mu)^2\, p(x_i) \qquad \sigma = \sqrt{\mathrm{Var}(X)}
+$$
+
+---
+
+## Propriedades (memorize estas!)
+
+$$
+E(aX+b) = aE(X)+b \qquad \mathrm{Var}(aX+b) = a^2\mathrm{Var}(X)
+$$
+
+$$
+E(X+Y) = E(X)+E(Y) \quad \text{sempre}
+$$
+
+$$
+\mathrm{Var}(X+Y) = \mathrm{Var}(X)+\mathrm{Var}(Y) \quad \text{se } X,Y \text{ independentes}
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Precificação de seguro
+
+```{r esperanca-sinistros}
+sinistros <- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01))
+mu <- sum(sinistros$x * sinistros$p)
+var_x <- sum((sinistros$x - mu)^2 * sinistros$p)
+c(E_X = mu, Var_X = var_x, dp_X = sqrt(var_x))
+```
+
+\(E(X)\approx 0{,}56\) sinistros/ano é o número usado para calcular o **prêmio puro**: cobrando
+proporcionalmente a esse valor, no agregado de milhares de apólices, as mensalidades cobrem, em
+média, o custo dos sinistros pagos.
+
+---
+
+## Custo total esperado
+
+Se cada sinistro custa em média R\\( 4.000 à seguradora, e \)C = 4000\,X$ é o custo total anual:
+
+```{r custo-total}
+E_C   <- 4000 * mu          # E(aX) = a*E(X)
+Var_C <- 4000^2 * var_x     # Var(aX) = a²*Var(X)
+c(E_custo = E_C, dp_custo = sqrt(Var_C))
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** \(E(X)=0{,}56\) nunca é um valor que \(X\) de fato assume (os valores possíveis são
+0,1,2,3,4). O que \(E(X)\) representa, então? (Dica: pense no que aconteceria se você somasse os
+sinistros reais de 10.000 apólices semelhantes e dividisse por 10.000, a "Lei dos Grandes Números"
+da Aula 13 é exatamente essa ponte entre \(E(X)\) teórico e a média observada.)
+
+**2.** Uma seguradora com 10.000 apólices idênticas usa \(E(X+Y)=E(X)+E(Y)\) para somar o número
+esperado total de sinistros. Por que essa soma vale mesmo que as apólices não sejam independentes
+entre si (por exemplo, todas sofrerem mais sinistros num ano de crise econômica)?
+
+---
+
+## Rodada 2: indo além
+
+**3.** E a *variância* do total, no mesmo cenário de dependência do item anterior, a fórmula
+\(\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)\) continua válida? O que isso implica sobre o
+risco real da carteira em anos de crise?
+
+**4.** Retomando o Capítulo 1: \(E(X)\) e \(\bar x\) (média amostral) parecem a mesma fórmula com pesos
+diferentes (\(p(x_i)\) vs. \(f_i/n\)). Em que sentido um é uma "previsão" e o outro é um "resumo do
+passado"? Essa distinção é a mesma discutida na Seção de população vs. amostra.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+x <- 0:4; p <- c(0.60, 0.25, 0.10, 0.04, 0.01)
+
+E_X   <- sum(x * p)
+Var_X <- sum((x - E_X)^2 * p)
+```
+
+Não existe uma função nativa "esperanca()" no R, a soma ponderada é sempre escrita diretamente,
+como acima; é importante saber fazer essa conta na mão, pois é o que cai em prova.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (13/05)
+
+## Função de distribuição acumulada

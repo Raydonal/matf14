@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 10: Bernoulli, Binomial e Poisson}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 10}{Distribuições de Bernoulli, Binomial e Poisson (Cap. 3, Aulas 20--21)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito10.pdf}.}
+
+\begin{questao}{1} \textbf{(Binomial: carteira de investidores)}
+
+Uma corretora observa que 30\% de seus clientes de varejo realizam pelo menos uma operação por
+semana, de forma independente entre clientes. Em um grupo de 12 clientes sorteados:
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual é a probabilidade de exatamente 4 realizarem operação na semana?
+  \item Qual é a probabilidade de \emph{no máximo} 2 realizarem operação?
+  \item Calcule $E(X)$ e $dp(X)$, o número esperado e o desvio padrão de clientes ativos no grupo.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Binomial: controle de qualidade)}
+
+Um lote de peças tem 4\% de defeito, independente entre peças. Um comprador aceita o lote se, em
+uma amostra de 25 peças testadas, houver \textbf{no máximo 1} defeituosa.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de o lote ser aceito?
+  \item Se a taxa de defeito real do fornecedor subir para 10\% (sem o comprador saber), qual
+    passa a ser a probabilidade de aceitação do mesmo plano de amostragem? O plano de amostragem
+    ficou mais ou menos eficaz em rejeitar lotes ruins?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Poisson: fila de atendimento)}
+
+Uma agência bancária recebe, em média, 6 clientes por hora em um determinado horário do dia,
+seguindo uma distribuição de Poisson.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de a agência receber exatamente 4 clientes em uma hora?
+  \item Qual a probabilidade de receber mais de 8 clientes em uma hora?
+  \item Qual a probabilidade de receber exatamente 2 clientes em \textbf{meia hora}? (Dica: a taxa média
+    de uma Poisson é proporcional ao tamanho do intervalo de tempo considerado.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Aproximação Binomial $\to$ Poisson: fraude rara)}
+
+Uma financeira processa 5.000 transações por dia; cada uma tem probabilidade $0{,}0006$ de ser
+fraudulenta, independentemente das demais.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(X=3)$ usando o modelo Binomial exato, com $X\sim\text{Bin}(5000;\,0{,}0006)$.
+  \item Calcule $P(X=3)$ usando a aproximação de Poisson, com $\lambda=np$.
+  \item Compare os dois resultados. Por que a aproximação funciona bem neste caso? (Relacione com
+    as condições vistas em aula: $n$ grande, $p$ pequeno.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: esperança da Binomial a partir da soma de Bernoullis)}
+
+Seja $X\sim\text{Bin}(n,p)$, escrita como $X=X_1+X_2+\cdots+X_n$, onde cada $X_i$ é
+Bernoulli($p$) independente, com $E(X_i)=p$ e $\mathrm{Var}(X_i)=p(1-p)$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Usando a propriedade $E(X_1+\cdots+X_n) = E(X_1)+\cdots+E(X_n)$ (válida sempre, mesmo sem
+    independência), mostre que $E(X)=np$.
+  \item Usando a propriedade $\mathrm{Var}(X_1+\cdots+X_n)=\mathrm{Var}(X_1)+\cdots+
+    \mathrm{Var}(X_n)$ (válida sob independência), mostre que $\mathrm{Var}(X)=np(1-p)$.
+  \item Essa dedução mostra por que a condição de \textbf{independência} entre as tentativas é
+    essencial para a fórmula $\mathrm{Var}(X)=np(1-p)$, mas não é necessária para $E(X)=np$. Onde,
+    exatamente, na dedução de (a) e (b), a independência é usada (ou não)?
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato: fecha a primeira metade da Unidade 3 e é para discussão em grupo ou por escrito.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Escolha uma variável de contagem do seu interesse (número de clientes que cancelam um serviço por
+mês, número de acidentes de trabalho por trimestre em uma empresa, número de transações
+fraudulentas por dia). Argumente, por escrito, se Binomial ou Poisson é o modelo mais defensável
+para essa variável, explicitando quais das condições de cada modelo você julga razoavelmente
+satisfeitas e quais são mais frágeis na prática.
+\end{questao}
+
+\end{document}

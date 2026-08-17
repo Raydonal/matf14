@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Aula de exercícios: Unidades 1 e 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Aula de exercícios: Unidades 1 e 2
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 27/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 15: Exercícios resolvidos
+
+## Estatística descritiva + Probabilidade
+
+---
+
+## Roteiro da aula
+
+Quatro problemas, resolvidos passo a passo, cobrindo os pontos mais cobrados em prova nas duas
+unidades. Tente resolver cada um por conta própria antes de ver a solução no slide seguinte
+(clique para avançar), e, mais importante: para cada um, tente antecipar *qual erro conceitual*
+um colega desatento cometeria antes de olhar a solução.
+
+1. Média/mediana/assimetria com dado agrupado.
+2. Coeficiente de variação, comparação entre variáveis.
+3. Probabilidade condicional com tabela de dupla entrada.
+4. Teorema de Bayes, dois estágios.
+
+---
+
+## Problema 1
+
+Os prêmios pagos (em R\$ mil) por uma seguradora em 7 sinistros do mês foram:
+\(12, 15, 14, 13, 16, 14, 95\). Calcule média e mediana, e diga o que a comparação entre elas revela.
+
+--
+
+**Solução.** Soma \(=179\), \(n=7\), \(\bar x = 179/7\approx 25{,}57\). Ordenados:
+\(12,13,14,14,15,16,95\), mediana (4º valor) \(=14\).
+
+--
+
+Média \(\gg\) mediana \(\Rightarrow\) assimetria forte à direita: um sinistro atípico (R\$ 95 mil,
+possivelmente um evento raro de grande porte) puxa a média muito acima do "sinistro típico" do mês
+(mediana R\$ 14 mil).
+
+**Erro comum a evitar**: reportar só a média ("prêmio médio pago: R\$ 25,57 mil") sem checar a
+mediana, dá uma falsa impressão de que sinistros "grandes" são o padrão, não a exceção.
+
+---
+
+## Problema 2
+
+Uma corretora compara dois ativos: Ativo X (retorno médio 8%, dp 2%) e Ativo Y (retorno médio 20%,
+dp 4%). Qual ativo é relativamente mais arriscado?
+
+--
+
+**Solução.** Desvio padrão bruto sugere Y (4% &gt; 2%), mas as médias são muito diferentes, então
+compare via \(CV\):
+
+$$
+CV_X = 2/8 = 0{,}25 \qquad CV_Y = 4/20 = 0{,}20
+$$
+
+X é **relativamente** mais arriscado (maior dispersão por unidade de retorno esperado), mesmo com
+desvio padrão absoluto menor que Y.
+
+**Erro comum a evitar**: comparar diretamente os desvios padrão (4% vs. 2%) sem normalizar pela
+média, é o erro mais frequente de prova nesse tipo de questão.
+
+---
+
+## Problema 3
+
+De 300 clientes de um banco, 180 têm conta poupança, 90 têm cartão de crédito, e 50 têm ambos.
+Escolhendo um cliente ao acaso, qual a probabilidade de ter cartão de crédito, dado que tem
+poupança?
+
+--
+
+**Solução.** \(B=\)"poupança" (\(P(B)=180/300\)), \(A=\)"cartão" (\(P(A\cap B)=50/300\), a interseção
+"ambos"):
+
+$$
+P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{50/300}{180/300} = \frac{50}{180} \approx 0{,}278
+$$
+
+**Erro comum a evitar**: usar \(90/300\) (a probabilidade não condicional de ter cartão) em vez de
+condicionar corretamente ao subconjunto "tem poupança".
+
+---
+
+## Problema 4
+
+Uma fábrica recebe peças de dois fornecedores: 70% do fornecedor A (taxa de defeito 2%) e 30% do
+fornecedor B (taxa de defeito 8%). Uma peça é sorteada e está defeituosa. Qual a probabilidade de
+ter vindo do fornecedor B?
+
+--
+
+**Solução.** \(P(A)=0{,}7\), \(P(B)=0{,}3\), \(P(D\mid A)=0{,}02\), \(P(D\mid B)=0{,}08\).
+
+
+``` r
+p_D &lt;- 0.02*0.7 + 0.08*0.3
+p_B_dado_D &lt;- (0.08*0.3)/p_D
+round(p_B_dado_D, 3)
+```
+
+```
+## [1] 0.632
+```
+
+Apesar de o fornecedor B fornecer só 30% das peças, ele responde por
+63% das peças defeituosas, sua taxa de defeito 4x maior pesa
+mais que sua participação menor.
+
+**Erro comum a evitar**: esquecer de calcular \(P(D)\) (probabilidade total) antes de aplicar Bayes,
+ou confundir \(P(D\mid B)\) com \(P(B\mid D)\) (a própria pergunta do problema).
+
+---
+
+## Discussão: antes de ir para casa
+
+**1.** Dos quatro "erros comuns a evitar" listados, qual você mais reconheceu em si mesmo ao tentar
+resolver antes de ver a solução? Anote, é provavelmente o ponto que mais vale revisar antes de P2
+(Unidades 2 e 3).
+
+**2.** Escolha um dos quatro problemas e reformule o enunciado trocando o contexto (seguro por
+mercado de trabalho, crédito por eleição, etc.), mantendo a mesma estrutura matemática. Isso ajuda
+a confirmar que você entendeu a lógica, não decorou o contexto específico.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (29/04)
+
+## Revisão intermediária: Unidades 1 e 2
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

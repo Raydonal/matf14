@@ -1,0 +1,115 @@
+---
+title: "Aula de exercícios: Unidade 4"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "17/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 29: Exercícios resolvidos (VA contínua)
+
+---
+
+## Problema 1: Uniforme
+
+O tempo de processamento de um saque em um caixa eletrônico é uniforme entre 10 e 40 segundos.
+Qual a probabilidade de um saque levar mais de 30 segundos?
+
+--
+
+**Solução.** \(X\sim\text{Unif}(10,40)\).
+$$
+P(X>30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
+$$
+
+```{r problema1}
+1 - punif(30, 10, 40)
+```
+
+---
+
+## Problema 2: Normal, padronização
+
+O tempo de entrega de um e-commerce é \(X\sim N(5,\ 1{,}5^2)\) dias. Qual a probabilidade de a
+entrega demorar mais de 8 dias?
+
+--
+
+**Solução.** \(Z=\frac{8-5}{1{,}5}=2\); \(P(X>8)=P(Z>2)\).
+
+```{r problema2}
+1 - pnorm(8, mean = 5, sd = 1.5)
+1 - pnorm(2)   # mesma conta, via padronização
+```
+
+---
+
+## Problema 3: Integral direta
+
+\(X\) tem densidade \(f(x)=3x^2\), \(0\le x\le1\) (e \(f(x)=0\) fora desse intervalo).
+
+**(a)** Confirme que \(f\) é uma densidade válida. **(b)** Calcule \(P(X\le 0{,}5)\).
+
+--
+
+**Solução (a).** \(\int_0^1 3x^2\,dx = [x^3]_0^1 = 1-0=1\) ✓
+
+**Solução (b).** \(F(x)=x^3\); \(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\).
+
+```{r problema3}
+integrate(function(x) 3*x^2, 0, 1)
+0.5^3
+```
+
+---
+
+## Problema 4: combinando Cap. 3 e Cap. 4
+
+Uma seguradora modela o número de sinistros/ano como \(N\sim\text{Poisson}(2)\) e, dado que houve ao
+menos 1 sinistro, o valor de cada sinistro como \(V\sim N(5000, 1200^2)\). Qual a probabilidade de
+haver pelo menos 1 sinistro **e** o próximo sinistro (se ocorrer) custar mais de R\$ 7.000?
+
+--
+
+**Solução.** Os dois eventos são tratados como independentes aqui (frequência de sinistro e valor
+de um sinistro individual):
+
+```{r problema4}
+p_pelo_menos_1 <- 1 - dpois(0, 2)
+p_valor_alto   <- 1 - pnorm(7000, 5000, 1200)
+p_pelo_menos_1 * p_valor_alto
+```
+
+---
+
+## Discussão: antes da revisão final
+
+**1.** O Problema 4 combina uma VA discreta (número de sinistros) com uma VA contínua (valor de
+cada sinistro) num mesmo modelo. Em que outras situações econômicas você imagina precisar combinar
+os dois tipos, por exemplo, "número de clientes que compram" (discreto) e "valor de cada compra"
+(contínuo)?
+
+**2.** No Problema 3, a densidade \(f(x)=3x^2\) cresce à medida que \(x\) se aproxima de 1. O que isso
+significa, em termos de onde a probabilidade está mais concentrada dentro do intervalo \([0,1]\)? Sem
+calcular, você esperaria \(E(X)\) maior ou menor que \(0{,}5\) (o ponto médio do intervalo)?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (22/06)
+
+## Revisão geral pré-Prova 3

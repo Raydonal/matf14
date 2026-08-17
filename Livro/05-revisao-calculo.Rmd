@@ -1,0 +1,175 @@
+# (APPENDIX) Apêndices {-}
+
+# Revisão de Cálculo {#revisao-de-calculo}
+
+```{r setup-apA, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center")
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+O Capítulo \@ref(variaveis-aleatorias-continuas) generaliza esperança, variância e função de
+distribuição acumulada para variáveis aleatórias contínuas, e isso exige trocar somatórios
+($\sum$) por integrais ($\int$). Este apêndice revisa o mínimo de cálculo diferencial e integral
+necessário para acompanhar esse capítulo, sem pressupor um curso de Cálculo prévio completo.
+
+## Por que integrais aparecem em probabilidade
+
+No caso discreto, $P(X\in A) = \sum_{x_i\in A} p(x_i)$: soma-se a "massa" de probabilidade em cada
+ponto. No caso contínuo, um único ponto tem probabilidade zero ($P(X=x)=0$ para todo $x$, um fato
+formalizado no Capítulo 4), a probabilidade só se acumula em **intervalos**, e a ferramenta natural
+para "somar uma quantidade que varia continuamente ao longo de um intervalo" é a integral.
+
+## Derivadas: o essencial
+
+A **derivada** de $f$ em $x$, $f'(x)$, mede a taxa de variação instantânea de $f$ naquele ponto,
+a inclinação da reta tangente ao gráfico de $f$ em $x$.
+
+```{r tabela-derivadas, echo=FALSE}
+tibble(
+  Função = c("$f(x)=c$ (constante)", "$f(x)=x^n$", "$f(x)=e^x$", "$f(x)=\\ln(x)$",
+             "$f(x)=c\\cdot g(x)$", "$f(x)=g(x)+h(x)$"),
+  Derivada = c("$f'(x)=0$", "$f'(x)=nx^{n-1}$", "$f'(x)=e^x$", "$f'(x)=1/x$",
+               "$f'(x)=c\\cdot g'(x)$", "$f'(x)=g'(x)+h'(x)$")
+) |> knitr::kable(caption = "Regras de derivação usadas neste curso")
+```
+
+```{=html}
+<div class="caixa-economia"><strong>Leitura econômica</strong>, em Economia, a derivada é a
+formalização de "marginal": receita marginal é a derivada da função de receita; custo marginal, a
+derivada da função de custo. A mesma ferramenta usada aqui para variáveis aleatórias contínuas é a
+que sustenta praticamente todo o vocabulário de otimização em microeconomia.</div>
+```
+
+```{=html}
+<div class="caixa-discussao"><strong>Para discutir</strong>
+
+<p><strong>1.</strong> Se o custo marginal de produzir uma unidade adicional é a derivada da
+função custo, o que significa, em termos econômicos, o ponto onde essa derivada é igual a zero?
+Isso é sempre um "bom" ponto de operação para uma empresa?</p>
+
+<p><strong>2.</strong> No Capítulo 4, a derivada de $F$ (FDA) será a própria densidade $f$. Antes
+de chegar lá: por que faz sentido que a \emph{taxa de variação} da probabilidade acumulada em um
+ponto seja interpretada como "quão concentrada" a probabilidade está ali? Pense no que significa
+$F$ crescer rápido versus devagar em torno de um ponto $x$.</p>
+</div>
+```
+
+## Integrais: o essencial
+
+A **integral definida** $\int_a^b f(x)\,dx$ é, geometricamente, a área **líquida** (positiva
+acima do eixo $x$, negativa abaixo) entre o gráfico de $f$ e o eixo $x$, no intervalo $[a,b]$.
+
+```{r area-exemplo, echo=FALSE, fig.height=4.2, fig.width=5}
+f <- function(x) 0.15*(x-1)^3 + 2
+a <- 1; b <- 5
+x <- seq(a, b, length = 500)
+y <- f(x)
+ylim <- c(0, max(y) + 1)
+
+plot(0, 0, type = "n", xlim = c(-0.5, 6), ylim = ylim, xlab = "", ylab = "", axes = FALSE)
+arrows(-0.3, 0, 5.8, 0, length = 0.08)
+arrows(0, -0.2, 0, ylim[2], length = 0.08)
+polygon(c(a, x, b), c(0, y, 0), col = "#d8bfd8", border = NA)
+lines(x, y, col = "purple4", lwd = 2)
+segments(a, 0, a, f(a), lwd = 1.5, col = "gray30")
+segments(b, 0, b, f(b), lwd = 1.5, col = "gray30")
+text(a, -0.2, "a"); text(b, -0.2, "b")
+text(b + 0.2, f(b), "f(x)")
+text(5.9, -0.1, "x"); text(-0.1, ylim[2], "y")
+text((a+b)/2, 1.8, "A")
+```
+
+A área sombreada é exatamente $\int_a^b f(x)\,dx$, o mesmo desenho, refeito aqui com a mesma
+paleta usada nas aulas em sala (área sob a curva entre $a$ e $b$, com a região $A$ identificada).
+
+### Soma de Riemann: de onde vem a integral
+
+A integral é definida como o limite de uma **soma de retângulos** cada vez mais finos aproximando
+a área sob a curva:
+
+```{r riemann, echo=FALSE, fig.height=4.2, fig.width=5.2}
+f <- function(x) 0.06*x^2 + 1.5
+a <- 1; b <- 10; n <- 12
+x <- seq(a, b, length.out = n + 1)
+h <- f(x[-(n+1)])
+xc <- seq(a, b, length = 500)
+yc <- f(xc)
+
+plot(0, 0, type = "n", xlim = c(-0.8, 11), ylim = c(-0.5, max(yc) + 2),
+     xlab = "", ylab = "", axes = FALSE)
+arrows(0, 0, 10.8, 0, length = 0.08)
+arrows(0, 0, 0, max(yc) + 1.7, length = 0.08)
+lines(xc, yc, col = "purple4", lwd = 2)
+for (i in 1:n) {
+  rect(x[i], 0, x[i+1], h[i], border = "gray30", col = rgb(0.85, 0.75, 0.85, 0.35))
+  segments(x[i+1], 0, x[i+1], h[i], lty = 2, col = "gray50")
+  segments(x[i], h[i], x[i+1], h[i], lwd = 1.2)
+}
+text(a, -0.25, expression(x[0] == a), cex = 0.9)
+text(x[2], -0.25, expression(x[1]), cex = 0.9)
+text(b + 0.1, -0.25, expression(x[n] == b), cex = 0.9)
+text(10.9, -0.05, "x"); text(-0.1, max(yc) + 1.8, "y")
+text(9.2, f(9.2) + 0.6, "f(x)")
+```
+
+Cada retângulo tem base $\Delta x = x_{i}-x_{i-1}$ e altura $f(x_{i-1})$, a soma das áreas dos
+retângulos aproxima $\int_a^b f(x)\,dx$, e a aproximação melhora à medida que $n$ (o número de
+retângulos) cresce e $\Delta x$ encolhe.
+
+$$
+\int_a^b f(x)\,dx = \lim_{n\to\infty} \sum_{i=1}^n f(x_i^*)\,\Delta x, \qquad \Delta x = \frac{b-a}{n}.
+$$
+
+Quanto mais fina a partição (mais retângulos, $\Delta x$ menor), melhor a soma de retângulos
+aproxima a área exata sob a curva, a mesma lógica intuitiva por trás do histograma com classes
+cada vez mais estreitas se aproximando de uma curva de densidade suave (retomado no Cap. 4).
+
+### Teorema Fundamental do Cálculo (versão prática)
+
+Se $F$ é uma **primitiva** de $f$ (isto é, $F'(x)=f(x)$), então
+
+$$
+\int_a^b f(x)\,dx = F(b) - F(a).
+$$
+
+```{r tabela-integrais, echo=FALSE}
+tibble(
+  Função = c("$f(x)=c$", "$f(x)=x^n$ ($n\\ne -1$)", "$f(x)=e^{\\lambda x}$"),
+  Primitiva = c("$F(x)=cx$", "$F(x)=\\dfrac{x^{n+1}}{n+1}$", "$F(x)=\\dfrac{1}{\\lambda}e^{\\lambda x}$")
+) |> knitr::kable(caption = "Primitivas usadas nos modelos do Capítulo 4")
+```
+
+```{r integral-exemplo}
+# integral de f(x) = x^2 entre 0 e 2, pelo Teorema Fundamental
+F <- function(x) x^3 / 3
+F(2) - F(0)
+
+# conferindo numericamente
+integrate(function(x) x^2, lower = 0, upper = 2)
+```
+
+```{=html}
+<div class="caixa-r"><strong>Uso do R</strong>, <code>integrate()</code> calcula integrais
+definidas numericamente, sem precisar encontrar a primitiva à mão, útil para conferir contas do
+Capítulo 4, mas o exame ainda exige saber calcular as primitivas simples da tabela acima
+manualmente.</div>
+```
+
+### Integrais impróprias (intervalo infinito)
+
+Algumas distribuições contínuas (como a Normal, Capítulo 4) têm suporte em toda a reta real. A
+integral correspondente é uma **integral imprópria**:
+
+$$
+\int_{-\infty}^{\infty} f(x)\,dx = \lim_{a\to-\infty}\lim_{b\to\infty} \int_a^b f(x)\,dx.
+$$
+
+Para as funções de densidade que usaremos, esse limite sempre existe e vale exatamente 1, a
+versão contínua de $\sum_i p(x_i)=1$.
+
+## Exercício de fixação
+
+Calcule $\displaystyle\int_0^1 3x^2\,dx$ e confira com `integrate()` em R. (Resposta: a primitiva de
+$3x^2$ é $x^3$, logo o valor é $1^3-0^3=1$, não por coincidência, essa é exatamente a integral que
+confirma que $f(x)=3x^2$, $0\le x\le 1$, é uma densidade de probabilidade válida, um exemplo
+retomado no Capítulo 4.)

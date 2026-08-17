@@ -1,0 +1,129 @@
+---
+title: "Variável aleatória contínua: conceituação"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "01/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Início da Unidade 4
+
+# Aula 24: Variável aleatória contínua
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Um paradoxo aparente
+
+> Toda variável aleatória contínua tem \(P(X=x)=0\) para qualquer valor específico \(x\). Mas
+> obviamente \(X\) assume *algum* valor quando o experimento acontece. Como um evento de
+> probabilidade zero pode, ainda assim, ocorrer?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Do discreto ao contínuo
+
+\(X\) é **contínua** quando assume qualquer valor em um intervalo da reta. Diferença crucial: para
+\(X\) contínua, \(P(X=x)=0\) para **todo** \(x\), a probabilidade só se acumula em intervalos.
+
+--
+
+## Função densidade de probabilidade (fdp)
+
+$$
+P(a\le X\le b) = \int_a^b f(x)\,dx, \qquad f(x)\ge0, \qquad \int_{-\infty}^{\infty}f(x)\,dx=1
+$$
+
+\(f(x)\) **não é probabilidade**, é densidade. Geometricamente: \(f\) é a curva, \(P(a\le X\le b)\) é a
+**área** sob ela entre \(a\) e \(b\).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Tempo de espera em uma fila
+
+\(X=\) tempo de espera (minutos), \(f(x)=0{,}2\,e^{-0{,}2x}\), \(x\ge0\) (Exponencial).
+
+```{r fdp-fila, fig.height=3.8}
+f <- function(x) 0.2*exp(-0.2*x)
+df <- tibble(x = seq(0,30,length.out=300), y = f(x))
+ggplot(df, aes(x,y)) + geom_line(color="#0d3b54") +
+  geom_area(data = filter(df, x>=5, x<=15), fill="#c9971e", alpha=.5) +
+  labs(x="minutos", y="f(x)") + theme_minimal(base_size=13)
+```
+
+---
+
+## Calculando uma probabilidade por integral
+
+$$
+P(5\le X\le 15) = \int_5^{15} 0{,}2\,e^{-0{,}2x}\,dx
+$$
+
+```{r integral-fila}
+integrate(f, lower = 5, upper = 15)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo o paradoxo da abertura
+
+**1.** Ofereça uma resposta ao paradoxo: se \(P(X=x)=0\) para todo \(x\), como \(X\) ainda "assume" algum
+valor com probabilidade total 1? (Dica: pense em quantos valores diferentes existem entre 0 e 1,
+o intervalo é "infinito" de um jeito diferente da lista de números naturais.)
+
+**2.** Compare com o caso discreto: lá, \(\sum_i p(x_i)=1\) com uma soma de (possivelmente) infinitos
+termos, mas cada termo positivo. Aqui, a "soma" vira integral e cada "termo" individual é zero. Por
+que a integral ainda pode dar 1 mesmo com "termos individuais nulos"? Essa é a mesma sutileza da
+integral imprópria do Apêndice A.
+
+---
+
+## Rodada 2: quando tratar como contínua
+
+**3.** Por que "renda familiar mensal exata, em centavos" costuma ser tratada como VA contínua,
+mesmo sabendo que, tecnicamente, o menor incremento monetário é discreto (1 centavo)? O que se
+ganha nessa aproximação matemática?
+
+**4.** Dê um exemplo de variável econômica que é claramente contínua (sem nenhuma ressalva como a
+da renda), e outro que é discreta mas às vezes aproximada por um modelo contínuo por conveniência.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (03/06)
+
+## Esperança e variância (VA contínua)

@@ -1,0 +1,153 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Lista 3 de exercícios \\
+	\end{Large}	
+%	Prazo de entrega: 4/11/2024
+\end{center}
+
+%\fbox{\begin{minipage}{30em}
+%		Nome:
+%\end{minipage}}
+%\hspace{2em} Nota: 
+
+%\vspace{2em}
+
+
+
+\vspace{2em}
+
+\begin{enumerate}
+
+    
+    \item Considere uma variável aleatória discreta $T$ cuja distribuição de probabilidade é apresentada a seguir:
+    \begin{center}
+    \begin{tabular}{c|cccccc}
+    \hline
+    $t$ & 2 & 3 & 4 & 5 & 6 & 7 \\
+    \hline
+    $P(T=t)$ & 1/10 & 1/10 & 4/10 & 2/10 & 1/10 & 1/10 \\
+    \hline
+    \end{tabular}\\
+    \end{center}
+    \begin{enumerate}
+    	\item Calcule a probabilidade $P(|T-4|>2)$. 
+    	\item Calcule o valor esperado e a variância de $T$.
+    	\item Faça uma tabela com a função de distribuição acumulada de $T$.
+    \end{enumerate}
+    
+% Ross, p 216, q 4.13    
+    \item Um vendedor agendou duas visitas para vender um certo eletrodoméstico. Sua primeira visita resultará em venda com probabilidade de 0,3, e sua segunda visita resultará em venda com probabilidade 0,6, sendo ambas probabilidades de vendas independentes. Qualquer venda realizada tem a mesma probabilidade de ser do modelo de luxo, que custa R\$ 1.000, ou do modelo padrão, que custa R\$ 500.
+        \begin{enumerate}
+    	\item Determine a função de probabilidade do valor total de vendas em reais.
+    	\item Qual é o valor esperado do valor total de vendas?
+    \end{enumerate}
+    
+    
+% Hoffmann, p 90, q 7.2    
+    \item Admite-se que um terço dos adultos de certa região sejam alfabetizados. Nessas condições, qual é a probabilidade de que, dentre 5 adultos escolhidos ao acaso neste local:
+    \begin{enumerate}
+    	\item dois sejam alfabetizados e três sejam analfabetos?
+    	
+    	\item mais de dois sejam alfabetizados?
+    \end{enumerate}
+    
+% Hoffmann, p 90, q 7.4
+	\item Um exame é constituído de 10 questões do tipo verdadeiro-falso. Um aluno nada sabe sobre a matéria e seleciona aleatoriamente as respostas para as questões.
+	\begin{enumerate}
+		\item Qual é a probabilidade deste aluno acertas exatamente 7 destas 10 questões?
+		
+		\item Qual é a média e o desvio padrão do número de questões corretamente respondidas pelo aluno?
+	\end{enumerate}	    
+    
+    
+    \item Considere são realizadas tentativas \underline{independentes} de um experimento aleatório com probabilidade de sucesso $p$ e probabilidade de fracasso $1-p$, em que $0<p<1$ é um número fixado. Seja $X$ a variável aleatória representando o número de tentativas até o primeiro sucesso. Note que $X\in\{1,2,3,\ldots\}$. Dizemos nesse caso que $X$ possui uma \underline{distribuição geométrica} com parâmetro $p$. Dica: use a distribuição geométrica da questão anterior.
+    \begin{enumerate}
+    	\item Qual é a probabilidade de $X=2$, ou seja, do primeiro sucesso ocorrer na segunda tentativa?
+    	\item Qual é a probabilidade de $X=3$, ou seja, do primeiro sucesso ocorrer na terceira tentativa?
+    	\item Seja agora $k$ algum número em $\{1,2,3, \ldots\}$. Qual é a probabilidade de $X=k$, ou seja, do primeiro sucesso ocorrer na $k$-ésima tentativa?
+    \end{enumerate}
+    
+    
+    
+    \item Um banco de sangue necessita sangue do tipo O-Rh negativo. Suponha que a proporção de indivíduos na população com esse tipo de sangue é 9\%. Considere que as pessoas são escolhidas da população ao acaso para serem examinadas, uma de cada vez, se tem esse tipo de sangue. Seja $N$ o número de indivíduos examinados antes de se encontrar a primeira pessoa com esse tipo de sangue.
+    \begin{enumerate}
+    	\item Qual é a probabilidade de que o primeiro indivíduo a ser encontrado com esse tipo de sangue seja a sexta pessoa examinada?
+    	\item Em média, quantas pessoas precisam ser examinadas até encontrar o primeiro indivíduo com sangue do tipo O-Rh negativo?
+    \end{enumerate}
+    
+% Ross, p 221, q 4.54
+	\item Suponha que o número médio de carros abandonados semanalmente em certa autoestrada seja igual a 2,2. Utilizando o modelo Poisson, obtenha uma aproximação para a probabilidade de que:
+	\begin{enumerate}
+		\item nenhum carro seja abandonado na semana seguinte.
+		
+		\item pelo menos 2 carros sejam abandonados na semana seguinte.
+	\end{enumerate}
+    
+% Ross, p 221, q 4.64
+	\item A taxa de suicídio em um certo estado é de 1 suicídio por 100.000 habitantes por mês. Considere que estamos interessados em uma cidade de 400.000 habitantes no interior desse estado. Utilizando o modelo Poisson para o número de suicídios nesta cidade, determine a probabilidade de que num determinado mês:
+	\begin{enumerate}
+		\item não ocorra nenhum suicídio nesta cidade.
+		
+		\item ocorram 3 suicídios ou mais.
+	\end{enumerate}
+    
+    \item Sabe-se que os parafusos produzidos por uma certa companhia são defeituosos com probabilidade 2\%, independentemente uns dos outros. A companhia vende os parafusos em pacotes de dez unidades, selecionadas ao acaso, e oferece uma garantia de devolução do dinheiro caso existam dois ou mais parafusos defeituosos no pacote.
+    \begin{enumerate}
+    	\item Qual é a probabilidade da companhia precisar devolver o dinheiro da compra de um pacote escolhido ao acaso?
+    	\item Supondo que o número de parafusos defeituosos num determinado pacote é independente dos demais pacotes, qual é a probabilidade de que uma pessoa que compra dez pacotes de parafusos tenha que retornar à companhia para receber algum dinheiro de volta? 
+    \end{enumerate}
+    
+
+	
+		
+	
+\end{enumerate}
+
+
+\end{document}

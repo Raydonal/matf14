@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Distribuição de Bernoulli e Distribuição Binomial</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Distribuição de Bernoulli e Distribuição Binomial
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 18/05/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 20: Bernoulli e Binomial
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Quatro suposições escondidas em toda Binomial
+
+&gt; Toda vez que alguém usa a distribuição Binomial, está assumindo, em silêncio, quatro coisas: um
+&gt; número fixo de tentativas, só dois resultados por tentativa, mesma probabilidade em todas, e
+&gt; independência entre elas. Quantas situações econômicas reais você acha que satisfazem as quatro
+&gt; ao mesmo tempo, sem nenhuma ressalva?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Bernoulli(\(p\))
+
+Dois resultados: sucesso (\(X=1\), prob. \(p\)) ou fracasso (\(X=0\), prob. \(1-p\)).
+
+$$
+p(x) = p^x(1-p)^{1-x}, \ x\in\{0,1\} \qquad E(X)=p \qquad \mathrm{Var}(X)=p(1-p)
+$$
+
+--
+
+## Binomial(\(n,p\))
+
+Soma de \(n\) Bernoulli(\(p\)) **independentes**: \(X=\) número de sucessos em \(n\) tentativas.
+
+$$
+p(x) = \binom{n}{x}p^x(1-p)^{n-x}, \ x=0,\ldots,n \qquad E(X)=np \qquad \mathrm{Var}(X)=np(1-p)
+$$
+
+**Condições**: (i) \(n\) tentativas fixo; (ii) só 2 resultados por tentativa; (iii) \(p\) constante;
+(iv) tentativas independentes.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Garantia de qualidade
+
+Peças com 1% de defeito, independentes. Pacotes de 10 peças; devolve-se o dinheiro se **mais de
+1** peça for defeituosa. Qual a probabilidade de ter que devolver?
+
+
+``` r
+X_maior_1 &lt;- 1 - pbinom(1, size = 10, prob = 0.01)
+X_maior_1
+```
+
+```
+## [1] 0.0042662
+```
+
+\(X\sim\text{Bin}(10;\,0{,}01)\); devolve-se se \(X&gt;1\), ou seja, \(P(X&gt;1)=1-P(X\le 1)=1-F(1)\).
+
+---
+
+## Tamanho de amostra para detectar defeito
+
+Itens com 1% de defeito. Que tamanho de amostra \(n\) garante $P(\text{pelo menos 1 defeituoso})\ge
+0{,}95$?
+
+$$
+P(X\ge 1) = 1-P(X=0) = 1-0{,}99^n \ge 0{,}95 \ \Leftrightarrow\ 0{,}99^n\le 0{,}05
+$$
+$$
+n\ge \frac{\log(0{,}05)}{\log(0{,}99)} \approx 298{,}07 \ \Rightarrow\ n=299
+$$
+
+
+``` r
+which(1 - dbinom(0, size = 1:400, prob = .01) &gt;= .95)[1]
+```
+
+```
+## [1] 299
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Das quatro condições da Binomial (n fixo, dois resultados, p constante, independência), qual
+é a mais provável de ser violada ao modelar "número de clientes que cancelam o plano este mês",
+entre 1.000 clientes de uma operadora? (Pense: um concorrente lança uma promoção agressiva no meio
+do mês, isso afeta \(p\) constante, ou independência, ou ambos?)
+
+**2.** O que aconteceria com a variância *real* da carteira de cancelamentos se essa condição
+falhar, comparado ao que a fórmula \(\mathrm{Var}(X)=np(1-p)\) prevê? A variância real tenderia a ser
+maior ou menor que a prevista?
+
+---
+
+## Rodada 2: sensibilidade dos parâmetros
+
+**3.** \(E(X)=np\): dobrar \(n\) dobra o número esperado de sucessos; dobrar \(p\) também dobra \(E(X)\).
+O efeito sobre \(\mathrm{Var}(X)=np(1-p)\) é o mesmo nos dois casos? Calcule para \(n=10,p=0{,}1\) vs.
+\(n=20,p=0{,}1\) vs. \(n=10,p=0{,}2\) e compare.
+
+**4.** No exemplo do "tamanho de amostra para detectar defeito", \(n=299\) garante 95% de chance de
+achar pelo menos 1 defeituoso. Se a taxa de defeito real fosse metade (0,5%), você esperaria que o
+\(n\) necessário dobrasse, mais que dobrasse, ou menos que dobrasse? Teste no gráfico da Aula 22 para
+confirmar.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+dbinom(x, size = n, prob = p)   # p(x) = P(X = x)
+pbinom(x, size = n, prob = p)   # F(x) = P(X &lt;= x)
+rbinom(m, size = n, prob = p)   # m valores simulados de Bin(n,p)
+```
+
+Bernoulli é só `dbinom(x, size = 1, prob = p)`, não há função dedicada no R.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (20/05)
+
+## Distribuição de Poisson
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

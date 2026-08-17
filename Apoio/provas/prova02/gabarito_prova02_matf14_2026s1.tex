@@ -1,0 +1,277 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{arydshln}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Prova 2 {\color{blue} -- Gabarito } \\
+	\end{Large}	
+%	Data: 14/05/2025
+\end{center}
+
+\fbox{\begin{minipage}{30em}
+		Nome:\\
+		\\
+\end{minipage}}
+\hspace{2em} Nota: 
+
+\vspace{1em}
+
+\begin{flushleft}
+\begin{small}
+
+\begin{itemize}
+	\item Todas as respostas devem estar escritas à caneta azul ou preta. Mantenha a sua letra legível.
+	\item Escreva o seu nome em todas as folhas com respostas.
+	\item Justifique as suas respostas e apresente os devidos cálculos.
+\end{itemize}
+
+\end{small}
+\end{flushleft}
+
+\vspace{1em}
+
+
+\begin{enumerate}
+
+
+
+% 
+\item Considere uma variável aleatória discreta $X$ cuja distribuição de probabilidade é apresentada a seguir:
+    \begin{center}
+    \begin{tabular}{c|cccccc}
+    \hline
+    $k$ & 1 & 2 & 3 & 4 & 5 \\
+    \hline
+    $P(X=k)$ & 1/10 & 1/10 & 4/10 & 3/10 & 1/10 \\
+    \hline
+    \end{tabular}\\
+    \end{center}
+    \begin{enumerate}
+    \item (1 ponto) Calcule a probabilidade $P(|X-3|>1)$.\\{\color{blue}  
+	Note que $|X-3|<1$ se $X>4$ ou $X<2$. Logo,
+	$$
+	P(|X-3|>1) = P(X>4) + P(X<2) = \frac{1}{10} + \frac{1}{10} = \frac{1}{5}.
+	$$	
+	}
+	
+    \item (1 ponto) Calcule a variância de $X$.\\{\color{blue}  
+	A esperança de $X$ é
+	$$
+	E(X) = 1\cdot\frac{1}{10} + 2\cdot\frac{1}{10} + 3\cdot\frac{4}{10} + 4\cdot\frac{3}{10} + 5\cdot\frac{1}{10}
+	= \frac{1 + 2 +12 + 12 + 5}{10} = \frac{32}{10} = 3,2.
+	$$
+	A esperança de $X^2$ é
+	$$
+	E(X^2) = 1\cdot\frac{1}{10} + 4\cdot\frac{1}{10} + 9\cdot\frac{4}{10} + 16\cdot\frac{3}{10} + 25\cdot\frac{1}{10}
+	= \frac{1 + 4 + 36 + 48 + 25}{10} = \frac{114}{10} = 11,4.
+	$$
+	Logo, a variância de $X$ é $Var(X) = 11,4 - 3,2^2 = 11,4 - 10,24 = 1,16$.
+	}
+	
+    \item (1 ponto) Calcule a função de distribuição acumulada de $X$.\\{\color{blue}  
+	A função de distribuição acumulada de $X$ é:
+	$$
+	F(t) = \begin{cases}
+	0, & t<1, \\
+	1/10, & 1\leq t<2, \\
+	2/10, & 2\leq t<3, \\
+	6/10, & 3\leq t<4, \\
+	9/10, & 4\leq t<5, \\
+	1, & t \geq 5 .
+	\end{cases}
+	$$	
+	}
+    \end{enumerate}
+
+% questao de va discreta feita no lab
+\item Considere que a probabilidade de um certo produto apresentar defeito é de 0,01. Queremos calcular a probabilidade de que uma amostra de 200 cópias independentes deste produto contenha no máximo dois defeituosos. Mostre como o cálculo é feito:
+\begin{enumerate}
+	\item (1 ponto) através da distribuição Binomial.\\{\color{blue}  
+	Seja $X$ a v.a. representando o número de peças defeituosas em uma amostra com 200 peças independentes. Então $X \sim Bin(200; 0,01)$. Logo
+	$$
+	P(X \leq 2) = \binom{200}{0}0,99^{200}0,01^{0} + \binom{200}{1}0,99^{199}0,01^{1} + \binom{200}{2}0,99^{198}0,01^{2}
+	\approx 0,6766.
+	$$
+	}
+	
+	\item (1 ponto) através da aproximação da Binomial pela Poisson.\\{\color{blue}  
+	Note que $E(X) = 200 \cdot 0,01 = 2$. Aproximando a distribuição de $X$ pela distribuição Poisson(2), temos
+	$$
+	P(X\leq 2) \approx \frac{e^{-2}2^0}{0!} + \frac{e^{-2}2^1}{1!} + \frac{e^{-2}2^2}{2!} = 5 e^{-2} \approx 0,6766.
+	$$
+	}
+\end{enumerate}
+
+
+% questao de achar a constante feita em sala
+\item Seja $C > 0$ uma constante e seja $X$ uma variável aleatória cuja função densidade de probabilidade é 
+\begin{align*}
+f(x) = \begin{cases}
+C x^{-3}, & x \geq 10, \\
+0, & x < 10.
+\end{cases}
+\end{align*}
+\begin{enumerate}
+	\item (1 ponto) Encontre o valor de $C$ para $f(x)$ ser uma legítima função densidade de probabilidade.\\{\color{blue}  
+	PAra $f(x)$ ser uma função densidade de probabilidade é necessário que $f(x)\geq 0$ para todo $x$ e $\int_{-\infty}^{\infty} f(x) dx = 1$. Logo, devemos ter $C>0$ e
+	\begin{align*}
+	1 = \int_{-\infty}^{\infty} f(x) dx = \int_{-\infty}^{\infty} C x^{-3} dx = C\left( \frac{x^{-2}}{(-2)} \Big|_{10}^{\infty} \right) = \frac{C}{200},
+	\end{align*}
+	ou seja, devemos ter $C=200$.	
+	}
+
+	\item (1 ponto) Calcule a função de distribuição acumulada de $X$.\\{\color{blue}  
+	Seja $t\geq 10$, então
+	\begin{align*}
+	F(t) = \int^{t}_{10} 200 x^{-3}dx = 200 \frac{x^{-2}}{(-2)} \Big|_{10}^{t} 
+	= 100 \frac{1}{x^2} \Big|_{10}^{t}
+	= 100 (\frac{1}{100} - \frac{1}{t^2})
+	= 1 - \frac{100}{t^2}.
+	\end{align*}
+	Logo, a função de distribuição acumulada de $X$ é
+	\begin{align*}
+	F(t) = \left\{\begin{array}{ll}
+	0, & t<10 \\
+	1 - 100/t^2 , & t\geq 10.
+	\end{array}\right.
+	\end{align*}
+	}
+	
+	\item (1 ponto) Calcule $P(X > 20)$.\\{\color{blue}  
+	Pelo item anterior,
+	\begin{align*}
+	P(X>20) = 1 - P(X \leq 20) = 1 - (1 - 100/20^2) = 100/400 = 1/4.
+	\end{align*}
+	}
+\end{enumerate}
+
+% questao de normal
+% Levin Q 27, pag 152
+\item Considere que o retorno anual de um certo fundo de investimentos é normalmente distribuído com média de 8\% e desvio padrão de 20\%.
+\begin{enumerate}
+  	\item (1 ponto) Calcule a probabilidade do retorno em um ano qualquer ser maior que 10\%.\\{\color{blue}  
+	Seja $X$ a variável aleatória representando o retorno anual do fundo de investimento. Temos que $X\sim N(8, 20^2)$. Logo, a probabilidade do retorno ficar acima de 10\% é:
+	$$
+	P(X > 10) = 1 - P(X\leq 10) = 1 - P\left( Z \leq \frac{10-8}{20} \right)
+	= 1 - P(Z \leq 0,1)
+	= 1 - 0,5398
+	= 0,4602.
+	$$	
+	}
+	
+   	\item (1 ponto) Calcule a probabilidade do retorno em um ano qualquer ser menor que $-5$\%.\\{\color{blue}  
+	A probabilidade do retorno ficar abaixo de -5\% é
+	$$
+	P(X<-5) = P\left( Z \leq \frac{-5-8}{20} \right)
+	= P(Z \leq -0,65)
+	= 0,2578.
+	$$	
+	}
+\end{enumerate} 
+
+
+\end{enumerate}
+
+
+
+\vspace{1cm}
+
+%\newpage
+\begin{center}
+	\Large{\textbf{Formulário}}
+\end{center}
+
+\begin{small}
+\begin{itemize}
+%	\item A média aritmética é $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$. Para dados agregados, $\bar{x} = \frac{1}{n} \sum_{i=1}^{k} n_i * x_i$, em que $n_i$ é a frequência absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$.
+%	\item Com valores ordenados $x_{(1)} \leq \cdots \leq x_{(n)}$, a mediana é $x_{((n+1)/2)}$ se $n$ for ímpar e $\frac{x_{(n/2)} + x_{((n/2) + 1)}}{2}$ se $n$ for par.
+%	\item A variância é $Var(X) = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2$. Para dados agregados, $Var(X) = \frac{1}{n} \sum_{i=1}^k n_i * (x_i - \bar{x})^2$, em que $n_i$ é a freq. absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$. Desvio padrão é $dp(X) = \sqrt{Var(X)}$ e o coeficiente de variação é $dp(X)/\bar{x}$.
+%%	\item O coeficiente de Yule é $Q = (n_{11}n_{22} - n_{12}n_{21})/(n_{11}n_{22} + n_{12}n_{21})$, em que $n_{ij}$ são frequências absolutas da tabela de dupla entrada correspondente.
+%	\item O coeficiente de correlação é $cor(X,Y) = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{dp(X)} \right) \left( \frac{y_i - \bar{y}}{dp(Y)} \right)$.
+%	
+%	\item O espaço amostral $S$ é o conjunto de todos resultados possíveis de um experimento aleatório. Um evento $A$ é qualquer sub-conjunto desse espaço amostral $S$.
+%	\item Probabilidade: $P(A) = \frac{\text{número de elementos de $A$}}{\text{número de elementos do espaço amostral}}$
+%	\item Probabilidade complementar: $P(A^c) = 1 - P(A)$
+%	\item Se $A$ e $B$ são eventos disjuntos, ou seja, $A\cap B = \emptyset$, então $P(A \cup B) = P(A) + P(B)$.
+%	\item Probabilidade condicional: se $P(A)>0$, então $P(B|A) = \frac{P(B \cap A)}{P(A)}$.
+%	\item Independência: se $A$ e $B$ são eventos independentes, então $P(A \cap B) = P(A) P(B)$.
+%%	\item Se $A$ e $B$ são eventos independentes e $P(A)>0$, então $P(B | A) = P(B)$.
+%	\item Teorema da probabilidade total: se $\{B_i\}_{i=1}^n$ é partição de $S$, então $P(A) = \sum_{i=1}^n P(A|B_i) P(B_i)$
+%	\item Teorema de Bayes: se $\{B_i\}_{i=1}^n$ é partição de $S$ e $P(A)>0$, então $P(B_i | A) = \frac{P(A|B_i) P(B_i)}{\sum_{j=1}^n P(A|B_j) P(B_j)} $
+\item Se $X$ é uma variável aleatória contínua, então $E(X) = \int x \cdot f(x)dx$. Se $X$ for uma variável aleatória discreta, $E(X) = \sum_k  k \cdot P(X=k)$.  Além disso, $Var(X) = E(X^2) - E(X)^2$ e $dp(X) = \sqrt{Var(X)}$.
+\item Se $X\sim Bernoulli(p)$, então $P(X=k) = p^k (1 - p)^{1 - k}$ com $k\in\{0, 1\}$. $E(X) = p$ e $Var(X) = p(1 - p)$.
+\item Se $X\sim Bin(n, p)$, então $P(X=k) = \binom{n}{k} p^k (1 - p)^{n - k}$ com $k\in\{0, 1, \ldots, n\}$. $E(X) = n p$ e $Var(X) = n p(1 - p)$.
+\item Se $X\sim Pois(\lambda)$, então $P(X=k)=e^{-\lambda}\lambda^k/k!$, com $k\in\{0,1,2,\ldots\}$. $E(X)=Var(X)=\lambda$.
+\item Se $X\sim Exp(\lambda)$, então $f(x) = \lambda e^{-\lambda x}$ para $x>0$, $E(X) = 1/\lambda$ e $Var(X) = 1/\lambda^2$.
+\item Se $X\sim N(\mu, \sigma^2)$, então $E(X) = \mu$ e $Var(X) = \sigma^2$. Em particular, $Z = (X - \mu)/\sigma \sim N(0,1)$.
+\item Se $X\sim Unif(\alpha, \beta)$ com $\beta>\alpha$, então $f(x)=1/(\beta - \alpha)$ para $\alpha\leq x \leq \beta$. $E(X) = (\beta + \alpha)/2$ e $Var(X) = (\beta - \alpha)^2/12$.
+\item $\int x^n dx = \frac{x^{n+1}}{n+1} + c$, $n\neq -1$ e $\int \frac{1}{x} dx = \ln(x) + c$.
+\item $\int e^{ax} dx = \frac{1}{a} e^{ax} + c$.	
+\end{itemize}
+\end{small}
+
+
+\newpage
+\begin{center}
+	\noindent\rule{15cm}{0.4pt}
+	\Large{\textbf{Rascunho}}
+\end{center}
+
+\newpage
+\begin{center}
+	\noindent\rule{15cm}{0.4pt}
+	\Large{\textbf{Rascunho}}
+\end{center}
+
+
+\end{document}
+
+
+
+
+\end{enumerate}
+
+

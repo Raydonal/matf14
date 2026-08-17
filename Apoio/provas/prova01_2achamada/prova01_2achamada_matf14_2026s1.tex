@@ -1,0 +1,207 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{arydshln}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Segunda chamada da prova 1 \\
+	\end{Large}	
+%	Data: 14/05/2025
+\end{center}
+
+\fbox{\begin{minipage}{30em}
+		Nome:\\
+		\\
+\end{minipage}}
+\hspace{2em} Nota: 
+
+\vspace{1em}
+
+\begin{flushleft}
+\begin{small}
+
+\begin{itemize}
+	\item Todas as respostas devem estar escritas à caneta azul ou preta. Mantenha a sua letra legível.
+	\item Escreva o seu nome em todas as folhas com respostas.
+	\item Justifique as suas respostas e apresente os devidos cálculos.
+\end{itemize}
+
+\end{small}
+\end{flushleft}
+
+\vspace{1em}
+
+% Hoffmann, p. 41, tabela 4.7
+% Hoffmann, p. 52, q. 5.1
+% questao de correlacao feita em sala
+% Hoffmann, p. 19, q. 2.24
+% questao sobre nacionalidade com tabela
+
+\begin{enumerate}
+
+
+\item A probabilidade de uma pessoa $A$ resolver um problema é de $2/3$, e a probabilidade de que uma pessoa $B$ o resolva é de $3/4$. Se ambas pessoas tentarem independentemente resolver o problema, qual é a probabilidade de:
+\begin{enumerate}
+	\item (1 ponto) ambas resolverem o problema?
+	
+	\item (1 ponto) a pessoa $A$ resolver o problema e a pessoa $B$ não conseguir resolver o problema?
+
+\end{enumerate}
+
+
+	\begin{table}[thp]
+	\caption{Resultados de um experimento de competição de híbridos de milho para a região de Chapecó-SC, safra 1987/1988.}
+	\label{t:milho}
+	\centering
+	\begin{tabular}{cccc}
+		\hline
+		\# & Altura da espiga (cm) & Tipo de grão & Resistência à ferrugem \\
+		\hline
+		1 & 103 & dentado & resistente \\
+		2 & 134 & semidentado & resistente \\
+		3 & 104 & semidentado & susceptível \\
+		4 & 108 & semidentado & susceptível \\
+		5 & 128 & dentado & moderadamente susceptível \\
+		6 & 108 & semidentado & susceptível \\
+		7 & 108 & dentado & resistente \\
+		8 & 103 & dentado & susceptível \\
+		9 & 123 & dentado & moderadamente susceptível \\
+		10 & 117 & semidentado & moderadamente susceptível \\
+		\hline
+	\end{tabular}
+\end{table}	
+\vspace{-1em}
+{\footnotesize Fonte: Andrade, D. F., e Ogliari, P. J. Estatística para ciências agrárias e biológicas. 2a edição. Florianópolis: Editora UFSC. 2007. Pág. 62.}\\
+
+\item Os itens desta questão são referentes aos dados na Tabela \ref{t:milho}.
+\begin{enumerate}
+	\item (1 ponto) Monte uma tabela de frequências  (absoluta e relativa) para a variável Tipo de grão.
+	\item (1 ponto) Monte uma tabela de frequências (absoluta e relativa) para a variável altura da espiga. Agrupe as alturas entre 100 e 140 cm em quatro faixas com amplitudes iguais.
+\end{enumerate}   
+
+
+\item Uma amostra de dez casais e seus respectivos salários anuais foi colhida num certo bairro conforme apresentado na Tabela~\ref{t:salarios} abaixo.
+
+\begin{table}[h]
+	\centering
+	\caption{Salário anual (em salários mínimos) de homens e mulheres em casais de um certo bairro.}
+	\label{t:salarios}
+\begin{tabular}{c|cccccccccc}
+	\hline
+	Casal n$^\circ$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+	\hline        
+	Homem & 10 & 10 & 10 & 15 & 15 & 15 & 15 & 20 & 20 & 20 \\
+	Mulher & 5 & 10 & 10 & 5 & 10 & 10 & 15 & 10 & 10 & 15 \\
+	\hline
+\end{tabular}	
+\end{table}
+
+Calcule, separadamente para homens e mulheres, as seguintes estatísticas descritivas:
+
+\begin{enumerate}
+	\item (1 ponto) A média, moda e mediana dos salários anuais observados na amostra.
+	\item (1 ponto) O desvio padrão dos salários anuais observados na amostra.
+	\item (1 ponto) Há indícios de diferença nos salários de homens e mulheres?
+\end{enumerate}
+
+
+    \item Três máquinas A, B e C produzem 60\%, 30\% e 10\%, respectivamente, do total de peças de uma fábrica. As porcentagens de produção defeituosa das máquinas A, B e C são, respectivamente, 3\%, 4\% e 5\%. Suponha que uma peça desta fábrica é selecionada aleatoriamente. 
+\begin{enumerate}
+    \item (1 ponto) Qual é a probabilidade da peça \underline{não} ser defeituosa?
+    
+    \item (1 ponto) Qual é a probabilidade da peça ter sido produzida pela fábrica A ou B?
+    
+   	\item (1 ponto) Se a peça selecionada é defeituosa, qual é a probabilidade dela ter sido produzida pela máquina A?    
+\end{enumerate}
+
+
+
+\end{enumerate}
+
+
+
+\vspace{2cm}
+
+%\newpage
+\begin{center}
+	\Large{\textbf{Formulário}}
+\end{center}
+
+\begin{small}
+\begin{itemize}
+	\item A média aritmética é $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$. Para dados agregados, $\bar{x} = \frac{1}{n} \sum_{i=1}^{k} n_i * x_i$, em que $n_i$ é a frequência absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$.
+	\item Com valores ordenados $x_{(1)} \leq \cdots \leq x_{(n)}$, a mediana é $x_{((n+1)/2)}$ se $n$ for ímpar e $\frac{x_{(n/2)} + x_{((n/2) + 1)}}{2}$ se $n$ for par.
+	\item A variância é $Var(X) = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2$. Para dados agregados, $Var(X) = \frac{1}{n} \sum_{i=1}^k n_i * (x_i - \bar{x})^2$, em que $n_i$ é a freq. absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$. Desvio padrão é $dp(X) = \sqrt{Var(X)}$ e o coeficiente de variação é $dp(X)/\bar{x}$.
+%	\item O coeficiente de Yule é $Q = (n_{11}n_{22} - n_{12}n_{21})/(n_{11}n_{22} + n_{12}n_{21})$, em que $n_{ij}$ são frequências absolutas da tabela de dupla entrada correspondente.
+	\item O coeficiente de correlação é $cor(X,Y) = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{dp(X)} \right) \left( \frac{y_i - \bar{y}}{dp(Y)} \right)$.
+	
+	\item O espaço amostral $S$ é o conjunto de todos resultados possíveis de um experimento aleatório. Um evento $A$ é qualquer sub-conjunto desse espaço amostral $S$.
+	\item Probabilidade: $P(A) = \frac{\text{número de elementos de $A$}}{\text{número de elementos do espaço amostral}}$
+	\item Probabilidade complementar: $P(A^c) = 1 - P(A)$
+	\item Se $A$ e $B$ são eventos disjuntos, ou seja, $A\cap B = \emptyset$, então $P(A \cup B) = P(A) + P(B)$.
+	\item Probabilidade condicional: se $P(A)>0$, então $P(B|A) = \frac{P(B \cap A)}{P(A)}$.
+	\item Independência: se $A$ e $B$ são eventos independentes, então $P(A \cap B) = P(A) P(B)$.
+%	\item Se $A$ e $B$ são eventos independentes e $P(A)>0$, então $P(B | A) = P(B)$.
+	\item Teorema da probabilidade total: se $\{B_i\}_{i=1}^n$ é partição de $S$, então $P(A) = \sum_{i=1}^n P(A|B_i) P(B_i)$
+	\item Teorema de Bayes: se $\{B_i\}_{i=1}^n$ é partição de $S$ e $P(A)>0$, então $P(B_i | A) = \frac{P(A|B_i) P(B_i)}{\sum_{j=1}^n P(A|B_j) P(B_j)} $
+\end{itemize}
+\end{small}
+
+
+\newpage
+\begin{center}
+	\noindent\rule{15cm}{0.4pt}
+	\Large{\textbf{Rascunho}}
+\end{center}
+
+
+\end{document}
+
+
+
+
+\end{enumerate}
+
+

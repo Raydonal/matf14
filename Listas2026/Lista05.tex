@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 05: Espaço amostral, eventos e contagem}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 05}{Espaço amostral, eventos, axiomas de probabilidade e métodos de contagem (Cap. 2, Aulas 09--10)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito05.pdf}.}
+
+\begin{questao}{1} \textbf{(Espaço amostral e eventos: carteira de dois ativos)}
+
+Um investidor classifica o desempenho mensal de cada um de dois ativos, X e Y, como Alta (A),
+Estável (E) ou Baixa (B).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Escreva o espaço amostral $\Omega$ para o par (desempenho de X, desempenho de Y) em um
+    mês. Quantos resultados possui?
+  \item Escreva, como subconjunto de $\Omega$, o evento $C=$ "os dois ativos têm o mesmo
+    desempenho no mês".
+  \item Escreva o evento $D=$ "pelo menos um dos ativos está em Alta". $C$ e $D$ são mutuamente
+    exclusivos? Justifique.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Axiomas e regra da adição: risco cambial e de juros)}
+
+Uma empresa exportadora estima $P(\text{alta do dólar no trimestre})=0{,}45$,
+$P(\text{alta de juros no trimestre})=0{,}30$, e $P(\text{ambos ocorrerem})=0{,}20$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a probabilidade de pelo menos um dos dois eventos (alta do dólar \emph{ou} alta de
+    juros) ocorrer no trimestre.
+  \item Calcule a probabilidade de \emph{nenhum} dos dois ocorrer.
+  \item Um analista júnior calcula a resposta de (a) somando $0{,}45+0{,}30=0{,}75$, sem subtrair a
+    interseção. Que evento está sendo contado duas vezes nesse cálculo errado, e por quê isso é um
+    erro?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Contagem: formação de carteira de ações)}
+
+Um gestor de fundos escolhe 4 ações para compor uma carteira, dentre 12 ações pré-aprovadas pelo
+comitê de risco. A ordem da escolha não importa.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Quantas carteiras diferentes de 4 ações são possíveis?
+  \item Das 12 ações, 3 são do setor bancário. Quantas carteiras de 4 ações contêm \emph{exatamente}
+    2 ações do setor bancário?
+  \item Qual é a probabilidade de uma carteira de 4 ações, sorteada aleatoriamente entre as
+    $\binom{12}{4}$ possíveis, conter exatamente 2 ações do setor bancário?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Princípio multiplicativo: senhas de acesso a um sistema bancário)}
+
+Um sistema de internet banking exige uma senha numérica de 4 dígitos (cada dígito de 0 a 9, com
+repetição permitida) seguida de uma pergunta de segurança escolhida entre 5 opções disponíveis.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Quantas combinações possíveis de (senha, pergunta) existem?
+  \item Se o banco proibir dígitos repetidos na senha (todos os 4 dígitos diferentes entre si),
+    quantas senhas de 4 dígitos são possíveis? A proibição aumenta ou diminui a segurança contra
+    tentativa aleatória de acesso? Justifique numericamente.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: a regra da adição geral)}
+
+Sejam $A$ e $B$ dois eventos quaisquer (não necessariamente mutuamente exclusivos) em um espaço
+amostral $\Omega$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que $A\cup B$ pode ser escrito como a união de três conjuntos mutuamente
+    exclusivos: $A\cap B^c$, $A\cap B$, e $A^c\cap B$.
+  \item Mostre também que $A = (A\cap B^c)\cup(A\cap B)$, uma união de dois conjuntos mutuamente
+    exclusivos, e portanto $P(A) = P(A\cap B^c) + P(A\cap B)$.
+  \item Usando os axiomas de aditividade para eventos mutuamente exclusivos e os itens (a)--(b),
+    deduza a regra da adição geral: $P(A\cup B) = P(A) + P(B) - P(A\cap B)$. (Dica: escreva
+    $P(A\cup B)$ usando o item (a), depois substitua $P(A\cap B^c)$ usando o item (b).)
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Escolha um espaço amostral de um experimento econômico do seu interesse (por exemplo, resultado de
+uma decisão de política monetária, desempenho trimestral de uma empresa, resultado de uma disputa
+eleitoral). Defina $\Omega$ com um nível de detalhe que você julgue razoável, e depois argumente,
+por escrito, por que uma definição mais grosseira (menos categorias) ou mais fina (mais categorias)
+mudaria a análise que se pode fazer a partir dela.
+\end{questao}
+
+\end{document}

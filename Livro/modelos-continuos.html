@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.4 Alguns modelos probabilísticos | Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.4 Alguns modelos probabilísticos | Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.4 Alguns modelos probabilísticos | Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="va-continua-fda.html"/>
+<link rel="next" href="fechando-o-capítulo-3.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><strong>Estatística Econômica I</strong></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path="para-quem-é-este-livro.html"><a href="para-quem-é-este-livro.html"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><a href="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path="como-o-material-está-organizado.html"><a href="como-o-material-está-organizado.html"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><a href="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path="convenções-tipográficas.html"><a href="convenções-tipográficas.html"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path="agradecimentos.html"><a href="agradecimentos.html"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a></li>
+<li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-frequência"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas de frequência</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.2</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.3</b> Gráficos para variáveis qualitativas</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis quantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.1</b> Um exemplo com dados da própria turma</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#quantis-distância-interquartílica-e-boxplot"><i class="fa fa-check"></i><b>1.5.1</b> Quantis, distância interquartílica e boxplot</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.2</b> Desvio padrão, variância e coeficiente de variação</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a></li>
+<li class="chapter" data-level="1.8" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.8</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Introdução: o que significa “probabilidade”</a></li>
+<li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#operações-com-eventos-revisão-de-teoria-de-conjuntos"><i class="fa fa-check"></i><b>2.2.1</b> Operações com eventos (revisão de teoria de conjuntos)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Conceitos e propriedades de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#modelo-de-espaço-equiprovável-e-métodos-de-contagem"><i class="fa fa-check"></i><b>2.3.1</b> Modelo de espaço equiprovável e métodos de contagem</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.4</b> Probabilidade condicional</a></li>
+<li class="chapter" data-level="2.5" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.5</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.5.1</b> Teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.6</b> Independência estatística</a></li>
+<li class="chapter" data-level="2.7" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.7</b> Teorema de Bayes</a></li>
+<li class="chapter" data-level="2.8" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.8</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
+<li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#definição"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperança-e-da-variância"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.5</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a></li>
+<li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
+<li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
+<li class="chapter" data-level="4.4.3" data-path="modelos-continuos.html"><a href="modelos-continuos.html#a-regra-empírica-6895997"><i class="fa fa-check"></i><b>4.4.3</b> A regra empírica (68–95–99,7)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.5</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apêndices</b></span></li>
+<li class="chapter" data-level="A" data-path="revisao-de-calculo.html"><a href="revisao-de-calculo.html"><i class="fa fa-check"></i><b>A</b> Revisão de Cálculo</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="por-que-integrais-aparecem-em-probabilidade.html"><a href="por-que-integrais-aparecem-em-probabilidade.html"><i class="fa fa-check"></i><b>A.1</b> Por que integrais aparecem em probabilidade</a></li>
+<li class="chapter" data-level="A.2" data-path="derivadas-o-essencial.html"><a href="derivadas-o-essencial.html"><i class="fa fa-check"></i><b>A.2</b> Derivadas: o essencial</a></li>
+<li class="chapter" data-level="A.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>A.3</b> Integrais: o essencial</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>A.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
+<li class="chapter" data-level="A.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-cálculo-versão-prática"><i class="fa fa-check"></i><b>A.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="A.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impróprias-intervalo-infinito"><i class="fa fa-check"></i><b>A.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>A.4</b> Exercício de fixação</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="formulario.html"><a href="formulario.html"><i class="fa fa-check"></i><b>B</b> Fórmulário e tabelas de referência</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="capítulo-1-estatística-descritiva.html"><a href="capítulo-1-estatística-descritiva.html"><i class="fa fa-check"></i><b>B.1</b> Capítulo 1: Estatística Descritiva</a></li>
+<li class="chapter" data-level="B.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>B.2</b> Capítulo 2: Probabilidade</a></li>
+<li class="chapter" data-level="B.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>B.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
+<li class="chapter" data-level="B.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>B.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
+<li class="chapter" data-level="B.5" data-path="apêndice-a-cálculo-resumo.html"><a href="apêndice-a-cálculo-resumo.html"><i class="fa fa-check"></i><b>B.5</b> Apêndice A: Cálculo (resumo)</a></li>
+<li class="chapter" data-level="B.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>B.6</b> Tabela: valores selecionados da Normal padrão</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modelos-continuos" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Alguns modelos probabilísticos<a href="modelos-continuos.html#modelos-continuos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="distribuição-uniforme" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Distribuição Uniforme<a href="modelos-continuos.html#distribuição-uniforme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A VA mais simples: densidade <strong>constante</strong> em um intervalo <span class="math inline">\([a,b]\)</span>, zero fora dele, “todos os
+valores no intervalo são igualmente prováveis” (no sentido de densidade).</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{b-a}, \quad a\le x\le b
+\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}.
+\]</span></p>
+<div class="caixa-aplicacao"><strong>Aplicação</strong>, o instante, dentro de uma hora, em que um
+cliente entra em uma loja (sem padrão de horário de pico) pode ser modelado como
+$X\sim\text{Unif}(0,60)$ (minutos após o início da hora).</div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="modelos-continuos.html#cb50-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb50-2"><a href="modelos-continuos.html#cb50-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">E_X =</span> (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, <span class="at">Var_X =</span> (b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">12</span>)</span></code></pre></div>
+<pre><code>##   E_X Var_X 
+##    30   300</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="modelos-continuos.html#cb52-1" tabindex="-1"></a><span class="fu">punif</span>(<span class="dv">20</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)   <span class="co"># P(X &lt;= 20)</span></span></code></pre></div>
+<pre><code>## [1] 0.3333333</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="modelos-continuos.html#cb54-1" tabindex="-1"></a><span class="fu">dunif</span>(<span class="dv">30</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)   <span class="co"># densidade em x=30 (constante = 1/60)</span></span></code></pre></div>
+<pre><code>## [1] 0.01666667</code></pre>
+</div>
+<div id="distribuição-normal" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Distribuição Normal<a href="modelos-continuos.html#distribuição-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O modelo contínuo mais importante em Estatística e Economia, descreve bem fenômenos que resultam
+da soma de muitos pequenos efeitos independentes (erros de medição, retornos agregados de muitos
+fatores). Densidade em forma de sino, simétrica em torno da média:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x\in\mathbb{R}
+\qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2.
+\]</span></p>
+<p>Notação: <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. Quando <span class="math inline">\(\mu=0\)</span> e <span class="math inline">\(\sigma=1\)</span>, chama-se <strong>Normal padrão</strong>, <span class="math inline">\(Z\sim N(0,1)\)</span>, qualquer Normal pode ser convertida em padrão pela <strong>padronização</strong>:</p>
+<p><span class="math display">\[
+Z = \frac{X-\mu}{\sigma}.
+\]</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-black-scholes"></span>
+<img src="images/black_scholes.jpg" alt="'Fórmula de Midas': a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal)." width="70%" />
+<p class="caption">
+Figure 4.2: ‘Fórmula de Midas’: a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal).
+</p>
+</div>
+<div class="caixa-economia"><strong>Leitura econômica</strong>, a fórmula de Black-Scholes-Merton
+(1973), um dos resultados mais influentes das finanças modernas, precifica opções assumindo que o
+log-retorno de um ativo segue uma distribuição Normal. A reportagem acima resume um fato histórico
+importante: essa mesma suposição, quando os mercados se afastam dela (crises, "caudas gordas",
+Capítulo 1), contribuiu para perdas catastróficas, como a quebra do fundo LTCM em 1998. A lição não
+é "não use a Normal", é a mesma do Capítulo 1: todo modelo é uma simplificação, e usá-lo bem
+exige saber em que condições ele deixa de valer.</div>
+<div class="caixa-aplicacao"><strong>Aplicação: retorno mensal de um fundo de ações</strong>,
+histórico sugere retorno mensal aproximadamente $X\sim N(1{,}2\%,\ (4{,}5\%)^2)$.</div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="modelos-continuos.html#cb56-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">1.2</span>; sigma <span class="ot">&lt;-</span> <span class="fl">4.5</span></span>
+<span id="cb56-2"><a href="modelos-continuos.html#cb56-2" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="modelos-continuos.html#cb56-3" tabindex="-1"></a><span class="co"># probabilidade de retorno negativo no mês</span></span>
+<span id="cb56-4"><a href="modelos-continuos.html#cb56-4" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div>
+<pre><code>## [1] 0.3948629</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="modelos-continuos.html#cb58-1" tabindex="-1"></a><span class="co"># probabilidade de retorno entre 0% e 5%</span></span>
+<span id="cb58-2"><a href="modelos-continuos.html#cb58-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>, mu, sigma) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">0</span>, mu, sigma)</span></code></pre></div>
+<pre><code>## [1] 0.4059265</code></pre>
+<p><img src="04-va-continuas_files/figure-html/grafico-normal-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div class="caixa-economia"><strong>Leitura econômica</strong>, a probabilidade de retorno mensal
+negativo (área sombreada) é o tipo de número que um gestor de risco reporta como parte da
+caracterização de um fundo, junto de uma ressalva importante, retomada da discussão de curtose no
+Capítulo 1: retornos financeiros reais frequentemente têm caudas mais pesadas que a Normal
+(curtose $>3$), de modo que a probabilidade Normal tende a \emph{subestimar} a frequência real de
+perdas extremas, a Normal é um ponto de partida útil, não a palavra final em modelagem de
+risco.</div>
+</div>
+<div id="a-regra-empírica-6895997" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> A regra empírica (68–95–99,7)<a href="modelos-continuos.html#a-regra-empírica-6895997" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para qualquer <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>:</p>
+<p><span class="math display">\[
+P(\mu-\sigma &lt; X &lt; \mu+\sigma)\approx 0{,}683 \quad
+P(\mu-2\sigma &lt; X &lt; \mu+2\sigma)\approx 0{,}954 \quad
+P(\mu-3\sigma &lt; X &lt; \mu+3\sigma)\approx 0{,}997
+\]</span></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="modelos-continuos.html#cb60-1" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">2</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">2</span>)   <span class="co"># P(-2 &lt; Z &lt; 2) na Normal padrão</span></span></code></pre></div>
+<pre><code>## [1] 0.9544997</code></pre>
+<div class="caixa-r"><strong>Uso do R</strong>, <code>pnorm</code>/<code>dnorm</code>/
+<code>qnorm</code>/<code>rnorm</code> seguem o mesmo padrão das demais distribuições do R.
+<code>qnorm(p, mean, sd)</code> é a função inversa da FDA, devolve o valor $x$ tal que
+$F(x)=p$, útil para "qual é o retorno que só é superado (ou não superado) por p% dos
+casos?".</div>
+<div class="caixa-discussao"><strong>Para discutir: síntese do capítulo e do curso</strong>
+
+<p><strong>1.</strong> A regra empírica é uma consequência direta da Normal, não uma suposição
+extra. Se retornos financeiros reais têm curtose maior que 3 (Capítulo 1), a probabilidade real de
+um retorno cair fora de $\mu\pm2\sigma$ é maior ou menor que os 4,6\% previstos pela regra
+empírica? Que consequência prática isso tem para um gestor que usa "2 desvios padrão" como limite
+de alerta de risco?</p>
+
+<p><strong>2.</strong> Por que a soma de "muitos pequenos efeitos independentes" tende a gerar uma
+distribuição aproximadamente Normal? Não é preciso provar, dê uma intuição, pensando no que
+acontece ao somar vários erros de medição pequenos e aleatórios, cada um podendo ser positivo ou
+negativo.</p>
+
+<p><strong>3.</strong> Volte à primeira pergunta do Prefácio do livro ("vale a pena trocar a
+poupança por um fundo multimercado?"). Com o vocabulário completo dos Capítulos 1 a 4 agora
+disponível, escreva um parágrafo respondendo, não com uma resposta definitiva ("sim" ou "não"),
+mas listando que informações estatísticas (medidas de posição, dispersão, forma, um modelo de
+distribuição para o retorno) você exigiria antes de decidir.</p>
+
+<p><strong>4.</strong> Ao longo do curso, cada capítulo teve um bloco de discussão insistindo no
+mesmo ponto: um número sozinho raramente basta, é preciso saber sua origem, seu condicionamento e
+seus limites. Escolha, dentre todas as discussões do semestre, a que mais mudou sua forma de ler um
+número em uma notícia econômica, e explique por quê.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="va-continua-fda.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fechando-o-capítulo-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

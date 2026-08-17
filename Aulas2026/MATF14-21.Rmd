@@ -1,0 +1,152 @@
+---
+title: "Distribuição de Poisson"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "20/05/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+```
+
+class: inverse, center, middle
+
+# Aula 21: Distribuição de Poisson
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Uma distribuição sem "\(n\)" nem "\(p\)"
+
+> A Binomial precisa de \(n\) (tentativas) e \(p\) (probabilidade de sucesso). A Poisson só precisa de
+> um número, \(\lambda\). Como pode um modelo de contagem funcionar sem saber quantas "tentativas"
+> existem? (Pense em "número de chamadas por minuto", quantas "tentativas de ligar" existem num
+> minuto?)
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Poisson(\(\lambda\))
+
+Número de ocorrências de um evento raro, em taxa média constante \(\lambda\), em um intervalo fixo:
+
+$$
+p(x) = \frac{e^{-\lambda}\lambda^x}{x!}, \ x=0,1,2,\ldots \qquad E(X)=\lambda \qquad \mathrm{Var}(X)=\lambda
+$$
+
+**Média = variância**, propriedade notável, e um diagnóstico rápido: se a variância observada de
+uma contagem for bem maior que a média (superdispersão), Poisson puro tende a ser inadequado.
+
+--
+
+## Aproximação Poisson \(\approx\) Binomial
+
+Quando \(n\) grande, \(p\) pequeno, \(\lambda=np\) moderado: $\text{Bin}(n,p) \approx
+\text{Poisson}(np)$, a resposta à provocação inicial: a Poisson é o "limite" de uma Binomial com
+infinitas tentativas minúsculas de probabilidade infinitesimal, um número fixo \(\lambda=np\)
+sobrevive a esse limite mesmo que \(n\) e \(p\) individualmente "desapareçam".
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Estimando \(\lambda\) a partir de dados: mortes por doença
+
+Número de mortes/ano nos últimos 7 anos: \(2,3,3,2,2,1,1\).
+
+```{r estimar-lambda}
+mortes <- c(2,3,3,2,2,1,1)
+lambda_hat <- mean(mortes)
+lambda_hat
+```
+
+\(\lambda\) é a própria média da Poisson, a estimativa natural é a média amostral,
+\(\hat\lambda=\bar x=2\). Probabilidade de 4 ou mais mortes no ano seguinte, sob esse modelo:
+
+```{r prob-4-mais}
+1 - ppois(3, lambda_hat)
+```
+
+---
+
+## Poisson aproximando Binomial
+
+Produto com 1% de defeito; amostra de 200 unidades; \(P(\text{no máximo 2 defeituosos})\)?
+
+```{r binom-vs-poisson}
+pbinom(2, size = 200, prob = 0.01)     # exato, Binomial
+ppois(2, lambda = 200*0.01)             # aproximação, Poisson(2)
+```
+
+As duas contas praticamente coincidem, a aproximação já é excelente com \(n=200\), \(p=0{,}01\).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Reformule sua resposta à pergunta de abertura agora que viu a aproximação Poisson ≈
+Binomial: por que "número de chamadas por minuto" não precisa de um "\(n\) de tentativas" explícito
+para ser modelado?
+
+**2.** O número de saques em caixas eletrônicos de uma agência por hora seria bem modelado por
+Poisson? Em que condição (horário de pico vs. madrugada) essa suposição de "taxa constante" seria
+mais frágil?
+
+---
+
+## Rodada 2: diagnóstico e limites do modelo
+
+**3.** Se a variância observada do número de sinistros mensais de uma seguradora for muito maior
+que a média, o que isso sugere sobre a suposição de "taxa constante \(\lambda\)" ao longo do tempo?
+Dê um cenário econômico plausível que geraria essa superdispersão (por exemplo, meses de exceção
+com eventos climáticos extremos).
+
+**4.** No exemplo de estimar \(\lambda\) pela média amostral (mortes por doença), quantos anos de
+dado você julgaria necessários para confiar nessa estimativa? O que poderia dar errado ao usar
+\(\hat\lambda=2\) com base em apenas 7 observações?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+dpois(x, lambda)   # p(x)
+ppois(x, lambda)   # F(x)
+rpois(m, lambda)   # m valores simulados
+
+mean(dados)         # estimar lambda a partir de uma amostra
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (25/05): Laboratório
+
+## Simulação de VA discretas em R

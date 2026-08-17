@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>[Laboratório] Simulação de probabilidade em R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# [Laboratório] Simulação de probabilidade em R
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 20/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 13: Laboratório
+
+## Simulação de Monte Carlo em R
+
+### Verificando probabilidade com repetição massiva
+
+---
+
+## Ideia central: a definição frequentista, na prática
+
+A probabilidade de um evento é o limite da frequência relativa se o experimento fosse repetido
+infinitas vezes. Em R, não repetimos infinitas vezes, mas repetimos **muitas** vezes
+(`replicate()`), e observamos a frequência relativa se aproximar do valor teórico.
+
+
+``` r
+lancamentos &lt;- sample(c("cara", "coroa"), size = 10, replace = TRUE)
+lancamentos
+```
+
+```
+##  [1] "cara"  "cara"  "cara"  "coroa" "cara"  "coroa" "coroa" "coroa" "coroa"
+## [10] "coroa"
+```
+
+``` r
+mean(lancamentos == "cara")
+```
+
+```
+## [1] 0.4
+```
+
+Com só 10 lançamentos, a frequência de "cara" está longe de 0,5. O que acontece com mais
+repetições?
+
+---
+
+## Lei dos grandes números, visualmente
+
+
+``` r
+set.seed(1)
+n_max &lt;- 5000
+lanc &lt;- sample(c(1,0), n_max, replace = TRUE)   # 1 = cara, 0 = coroa
+freq_acumulada &lt;- cumsum(lanc) / seq_len(n_max)
+
+ggplot(tibble(n = 1:n_max, freq = freq_acumulada), aes(n, freq)) +
+  geom_line(color = "#0d3b54") +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "#c9971e") +
+  labs(x = "Número de lançamentos", y = "Frequência relativa de \"cara\"",
+       title = "Convergência da frequência relativa para P(cara) = 0,5") +
+  theme_minimal(base_size = 13)
+```
+
+&lt;img src="MATF14-13_files/figure-html/lgn-1.png" alt="" width="504" /&gt;
+
+---
+
+## Estimando uma probabilidade por simulação
+
+Probabilidade de, em 3 lançamentos de moeda, sair **pelo menos 2 caras**:
+
+
+``` r
+simular_experimento &lt;- function() {
+  lanc &lt;- sample(c(1,0), size = 3, replace = TRUE)
+  sum(lanc) &gt;= 2
+}
+
+resultados &lt;- replicate(100000, simular_experimento())
+mean(resultados)   # estimativa por simulação
+```
+
+```
+## [1] 0.50081
+```
+
+Valor teórico (contagem, Aula 10): \(\binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 4/8 = 0{,}5\).
+
+---
+
+class: inverse, center, middle
+
+# O problema de Monty Hall
+
+## Probabilidade condicional, contraintuitiva
+
+---
+
+## O problema
+
+Um jogo tem 3 portas: atrás de uma há um carro, atrás das outras duas, nada. Você escolhe uma
+porta. O apresentador, que sabe onde está o carro, **abre uma das outras duas portas sem o
+prêmio**. Ele oferece: trocar de porta ou manter a escolha original?
+
+--
+
+**Intuição comum (errada)**: "sobraram 2 portas, tanto faz, 50-50".
+
+**Resposta correta**: trocar dobra a chance de vitória, de \(1/3\) para \(2/3\), vamos comprovar por
+simulação (mais fácil que a conta analítica de probabilidade condicional aqui).
+
+---
+
+## Simulando Monty Hall
+
+
+``` r
+jogar_monty_hall &lt;- function(trocar) {
+  portas &lt;- 1:3
+  premio &lt;- sample(portas, 1)
+  escolha &lt;- sample(portas, 1)
+  # apresentador abre uma porta sem prêmio, diferente da escolhida
+  disponiveis &lt;- setdiff(portas, c(escolha, premio))
+  aberta &lt;- if (length(disponiveis) == 1) disponiveis else sample(disponiveis, 1)
+  if (trocar) {
+    escolha_final &lt;- setdiff(portas, c(escolha, aberta))
+  } else {
+    escolha_final &lt;- escolha
+  }
+  escolha_final == premio
+}
+
+mean(replicate(50000, jogar_monty_hall(trocar = TRUE)))
+```
+
+```
+## [1] 0.67042
+```
+
+``` r
+mean(replicate(50000, jogar_monty_hall(trocar = FALSE)))
+```
+
+```
+## [1] 0.33164
+```
+
+---
+
+## Por que isso importa para condicional e Bayes
+
+A chave: a ação do apresentador (abrir uma porta *sem* o prêmio, *sabendo* onde ele está) **não é
+aleatória**, ela carrega informação. A probabilidade da porta não escolhida e não aberta passa a
+ser condicional a essa ação, não mais \(1/3\) "isolada". É o mesmo tipo de raciocínio (atualizar uma
+probabilidade à luz de uma evidência) que formaliza o Teorema de Bayes, na próxima aula.
+
+---
+
+class: inverse, center, middle
+
+# Discussão do laboratório
+
+---
+
+## Antes do exercício guiado
+
+**1.** Mesmo depois de ver a simulação confirmar \(2/3\) vs. \(1/3\), muita gente continua achando que
+"deveria ser 50-50". Tente articular, com suas próprias palavras (sem fórmula), por que a ação do
+apresentador não é neutra, o que ele "sabe" que você não sabia antes de escolher.
+
+**2.** Refaça mentalmente o Monty Hall com 100 portas em vez de 3: você escolhe 1, o apresentador
+abre 98 sem prêmio, sobrando a sua e mais uma. Isso deveria deixar sua intuição sobre "trocar" mais
+ou menos convincente que com 3 portas? Por quê?
+
+**3.** A Lei dos Grandes Números (gráfico acima) mostra a frequência convergindo para 0,5 mesmo
+começando longe dele em poucos lançamentos. Isso significa que, depois de uma sequência de "caras"
+muito acima do esperado, a moeda fica "devendo" coroas para compensar? (Esse erro de raciocínio
+tem nome, a "falácia do apostador", e é diretamente relevante para investidores que acreditam
+que uma ação "está devendo" uma alta depois de vários dias de queda.)
+
+---
+
+## Exercício guiado
+
+1. Modifique `jogar_monty_hall()` para 4 portas (1 prêmio, apresentador abre 2 sem prêmio).
+   Simule e compare a probabilidade de vitória trocando vs. mantendo a escolha.
+2. Simule a probabilidade condicional da Aula 11 (escolaridade × desemprego): gere uma população
+   sintética de 500 pessoas com as proporções da tabela vista em aula e confira, por simulação, que
+   \(P(\text{desempregado}\mid\text{superior}) \approx 0{,}16\).
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (22/04)
+
+## Teorema de Bayes
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

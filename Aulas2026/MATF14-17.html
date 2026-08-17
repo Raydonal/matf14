@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Variável aleatória discreta: conceituação</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-06-05" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Variável aleatória discreta: conceituação
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 06/05/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Início da Unidade 3
+
+# Aula 17: Variável aleatória discreta
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## A seguradora sabe o futuro?
+
+&gt; Uma seguradora conhece, do histórico, a distribuição de probabilidade do número de sinistros por
+&gt; apólice em um ano. Ela sabe, hoje, quantos sinistros uma apólice específica vai gerar este ano?
+&gt; Se não sabe o valor exato, o que ela sabe, e por que isso já é suficiente para fixar um prêmio?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Da probabilidade de eventos aos números
+
+A Unidade 2 tratou de probabilidades de **eventos**. Agora: associar um **número** a cada
+resultado de um experimento aleatório, permitindo calcular médias e variâncias de quantidades
+ainda incertas, como fizemos no Cap. 1 para dados já observados.
+
+--
+
+## Variável aleatória discreta
+
+Uma **variável aleatória (VA)** \(X\) associa um número real a cada resultado \(\omega\in\Omega\). É
+**discreta** quando assume valores em um conjunto finito ou enumerável.
+
+$$
+p(x_i) = P(X=x_i), \qquad p(x_i)\ge 0, \qquad \sum_i p(x_i) = 1
+$$
+
+`\(p(\cdot)\)` é a **função de probabilidade** (massa de probabilidade).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Número de sinistros em uma apólice
+
+
+``` r
+sinistros &lt;- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01))
+sum(sinistros$p)
+```
+
+```
+## [1] 1
+```
+
+``` r
+sinistros
+```
+
+```
+## # A tibble: 5 × 2
+##       x     p
+##   &lt;int&gt; &lt;dbl&gt;
+## 1     0  0.6 
+## 2     1  0.25
+## 3     2  0.1 
+## 4     3  0.04
+## 5     4  0.01
+```
+
+&lt;img src="MATF14-17_files/figure-html/grafico-fmp-1.png" alt="" width="504" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte à pergunta de abertura. Depois de ver a tabela de \(p(x)\), formule sua resposta: o que,
+exatamente, a seguradora "sabe" sobre uma apólice específica antes do ano terminar?
+
+**2.** \(P(X=0)=0{,}60\): 60% das apólices não registram nenhum sinistro no ano. Isso significa que
+60% dos segurados "não precisavam" do seguro? Que erro de raciocínio essa conclusão cometeria,
+pensando no papel de um seguro?
+
+---
+
+## Rodada 2: generalizando
+
+**3.** Dê um exemplo de VA discreta em Economia/Finanças que assuma **infinitos** valores possíveis
+(não um conjunto finito, como número de tentativas até um evento ocorrer). O que muda na condição
+\(\sum_i p(x_i)=1\) nesse caso, a soma ainda precisa dar exatamente 1, mesmo com infinitos termos?
+
+**4.** Por que "número de sinistros de uma apólice" é discreta, mas "valor total pago em sinistros"
+(em R\$) normalmente é tratado como contínua? A resposta prepara o terreno para o Capítulo 4.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (11/05)
+
+## Esperança e variância
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

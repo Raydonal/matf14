@@ -1,0 +1,187 @@
+---
+title: "Propriedades de probabilidade. Métodos de contagem"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "08/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 10: Propriedades de probabilidade e contagem
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Uma armadilha clássica
+
+> Um analista calcula a probabilidade de "alta do dólar" ou "alta de juros" no trimestre somando
+> diretamente as duas probabilidades individuais: \(0{,}45+0{,}30=0{,}75\). Ele está contando algo
+> duas vezes, o quê?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Axiomas de Kolmogorov
+
+$$
+P(A)\ge 0 \qquad P(\Omega)=1 \qquad A\cap B=\emptyset \Rightarrow P(A\cup B)=P(A)+P(B)
+$$
+
+--
+
+Consequências imediatas:
+
+$$
+P(A^c) = 1-P(A) \qquad P(\emptyset)=0 \qquad P(A\cup B) = P(A)+P(B)-P(A\cap B)
+$$
+
+A última é a **regra da adição geral**, subtrai a interseção para não contar duas vezes.
+
+---
+
+## Espaço equiprovável e contagem
+
+Quando todo resultado de \(\Omega\) (finito) é igualmente provável:
+
+$$
+P(A) = \frac{\#A}{\#\Omega}
+$$
+
+--
+
+| Regra | Fórmula | Quando usar |
+|---|---|---|
+| Multiplicativa | \(k_1\times k_2\times\cdots\) | escolhas sucessivas independentes |
+| Permutação | \(n!\) | ordenar \(n\) objetos distintos |
+| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) | escolher \(k\) de \(n\), ordem não importa |
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Caindo na malha fina
+
+A Receita Federal cruza renda declarada e resultado do cruzamento (dados em milhares de
+declarações, 80,2 milhões no total):
+
+| Faixa de renda | Malha fina | Não caiu | Total |
+|---|---|---|---|
+| D, abaixo de 25 mil | 90 | 14010 | 14100 |
+| C, 25 a 49.999 | 71 | 30629 | 30700 |
+| B, 50 a 99.999 | 69 | 24631 | 24700 |
+| A, acima de 100 mil | 80 | 10620 | 10700 |
+| **Total** | **310** | **79890** | **80200** |
+
+```{r malha-fina}
+P_Z  <- 310/80200                    # caiu na malha fina
+P_Y  <- 10700/80200                  # faixa A (renda mais alta)
+P_ZY <- 80/80200                     # os dois juntos
+P_Y + P_Z - P_ZY                     # regra da adição: P(Y ∪ Z)
+```
+
+---
+
+## Auditoria por amostragem
+
+Um auditor escolhe 3 contratos, de 10, para checagem, a ordem não importa.
+
+```{r combinacoes}
+choose(10, 3)   # total de amostras possíveis de tamanho 3
+```
+
+Se 2 dos 10 contratos têm um problema real, qual a probabilidade de a amostra sorteada pegar
+**pelo menos um** deles?
+
+```{r pelo-menos-um}
+p_nenhum <- choose(8, 3) / choose(10, 3)   # nenhum dos 2 problemáticos entra
+1 - p_nenhum
+```
+
+---
+
+## Resolvendo a armadilha da abertura
+
+Probabilidade de uma empresa ser afetada por "alta de juros" (\(J\)) **ou** "desvalorização
+cambial" (\(C\)) no trimestre, com \(P(J)=0{,}4\), \(P(C)=0{,}3\), \(P(J\cap C)=0{,}15\) (não são
+mutuamente exclusivos, o Banco Central às vezes sobe juros em resposta à pressão cambial):
+
+$$
+P(J\cup C) = 0{,}4 + 0{,}3 - 0{,}15 = 0{,}55
+$$
+
+O erro do analista da abertura: contar duas vezes o cenário em que **ambos** ocorrem juntos.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1
+
+**1.** No exemplo de juros e câmbio, explique, em palavras, não em símbolos, por que
+\(P(J)+P(C)\) conta o cenário "os dois ocorrem" duas vezes, e por que subtrair \(P(J\cap C)\) uma única
+vez corrige isso.
+
+**2.** Recalcule a probabilidade da auditoria por amostragem se, em vez de 2, houvesse 4 dos 10
+contratos problemáticos. A probabilidade de pegar pelo menos um cresce muito? Antes de calcular,
+arrisque um palpite sobre a direção do efeito.
+
+---
+
+## Rodada 2
+
+**3.** Em que situação prática você usaria permutação (ordem importa) em vez de combinação (ordem
+não importa) para contar possibilidades? Dê um exemplo econômico de cada, por exemplo, formar uma
+carteira de ações vs. definir a ordem de execução de um conjunto de operações.
+
+**4.** Um concurso público tem 200 candidatos disputando 3 vagas idênticas. Isso é um problema de
+permutação ou de combinação? E se as 3 vagas fossem para cargos diferentes (1º, 2º, 3º lugar com
+funções distintas)?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+choose(10, 3)      # combinações C(10,3)
+factorial(5)        # permutações 5!
+choose(8, 3) / choose(10, 3)   # probabilidade via razão de contagens
+```
+
+`choose(n, k)` calcula \(\binom{n}{k}\) diretamente, evita overflow de calcular \(n!\), \(k!\) e
+\((n-k)!\) separadamente para \(n\) grande.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (13/04)
+
+## Probabilidade condicional

@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 12: Distribuições Uniforme e Normal}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 12}{Distribuições Uniforme e Normal (Cap. 4, Aulas 27--28)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito12.pdf}.}
+
+\begin{questao}{1} \textbf{(Uniforme: horário de chegada de um ônibus)}
+
+Um ônibus passa em um ponto a cada 15 minutos, sem horário fixo divulgado. O tempo de espera $X$
+de um passageiro que chega ao ponto em um instante aleatório é $X\sim\text{Unif}(0,15)$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(X)$ e interprete: por que faz sentido que o tempo médio de espera seja metade
+    do intervalo entre ônibus?
+  \item Calcule $P(X>10)$.
+  \item Calcule $dp(X)$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Normal: notas de uma prova)}
+
+As notas de uma prova de estatística em um curso de 200 alunos seguem aproximadamente
+$X\sim N(6{,}5,\ 1{,}2^2)$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a proporção esperada de alunos com nota abaixo de 5,0 (nota mínima para aprovação)?
+  \item O professor quer dar menção "Excelência" aos 10\% com nota mais alta. Qual nota mínima
+    corresponde a esse corte?
+  \item Estime quantos alunos, dos 200, devem ficar abaixo da média da turma. Esse número deveria
+    surpreender alguém que já conhece a propriedade de simetria da Normal? Justifique.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Padronização: comparando desempenho em escalas diferentes)}
+
+Um candidato obteve 720 pontos em uma prova de matemática, cuja distribuição na população de
+candidatos é $N(650, 80^2)$, e 78 pontos em uma prova de redação, com distribuição $N(70, 10^2)$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule o escore padronizado ($z$) do candidato em cada prova.
+  \item Em qual das duas provas o candidato teve um desempenho relativamente melhor frente aos
+    demais candidatos? Justifique usando os escores padronizados, não as notas brutas.
+  \item Por que comparar diretamente 720 e 78 (as notas brutas) seria uma comparação sem sentido?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Regra empírica: controle de qualidade de peso)}
+
+O peso de pacotes de um produto alimentício é $X\sim N(500\text{g},\ 5^2)$ (rótulo indica 500g).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Usando a regra empírica (68-95-99,7), em que intervalo de peso está aproximadamente 95\%
+    dos pacotes, sem usar `pnorm`/tabela, só a regra?
+  \item Calcule $P(490 < X < 510)$ exatamente (via padronização) e compare com o valor
+    aproximado do item (a).
+  \item Um órgão de defesa do consumidor reclama de pacotes "muito abaixo do rótulo". Calcule
+    $P(X<485)$ e avalie se essa reclamação parece estatisticamente justificada, dado o modelo.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: esperança e variância da Uniforme)}
+
+Seja $X\sim\text{Unif}(a,b)$, com densidade $f(x)=\frac{1}{b-a}$ para $a\le x\le b$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre, por integração direta, que $E(X) = \dfrac{a+b}{2}$.
+  \item Mostre, por integração direta, que $\mathrm{Var}(X) = \dfrac{(b-a)^2}{12}$. (Dica: use a
+    fórmula alternativa $\mathrm{Var}(X)=E(X^2)-[E(X)]^2$, calculando primeiro
+    $E(X^2)=\int_a^b x^2\cdot\frac{1}{b-a}dx$.)
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato: fecha a Unidade 4 e é para discussão em grupo ou por escrito.}
+
+\begin{questao}{6 (discussão: síntese do curso)} \textbf{(Sem resposta única)}
+
+Retornos financeiros reais costumam ter curtose maior que 3 (caudas mais pesadas que a Normal,
+Capítulo 1). Escreva um parágrafo explicando, para um investidor não técnico, por que usar a
+distribuição Normal para estimar a probabilidade de uma perda extrema pode ser perigoso, e o que
+"caudas gordas" significam em termos práticos de risco.
+\end{questao}
+
+\end{document}

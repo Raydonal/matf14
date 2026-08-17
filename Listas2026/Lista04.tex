@@ -1,0 +1,100 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 04: Correlação, assimetria e curtose}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 04}{Coeficiente de correlação, assimetria e curtose: fecha a Unidade 1 (Cap. 1, Aula 08)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito04.pdf}.}
+
+\begin{questao}{1} \textbf{(Interpretação de $r$: gastos com propaganda e vendas)}
+
+Uma rede de varejo mediu, em 8 lojas, o gasto mensal com propaganda local (em R\$ mil) e o
+faturamento do mês seguinte (em R\$ mil), obtendo $r = 0{,}86$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Interprete o valor $r=0{,}86$ em palavras, sem usar jargão técnico.
+  \item O gerente de marketing conclui: "isso prova que gastar mais em propaganda causa mais
+    vendas". Aponte uma explicação alternativa (não causal) plausível para essa correlação.
+  \item Proponha um desenho de coleta de dados (não precisa ser sofisticado) que ajudaria a
+    distinguir a hipótese causal da alternativa que você deu em (b).
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Correlação quase nula não é ausência de relação)}
+
+Um analista calcula a correlação entre a taxa de juros básica (Selic) e o volume de vendas de
+imóveis ao longo de 3 anos e obtém $r \approx 0{,}03$, praticamente zero. Ele conclui que "juros
+não afetam o mercado imobiliário".
+
+\begin{enumerate}[label=(\alph*)]
+  \item $r$ mede associação de que tipo especificamente? Isso limita a conclusão do analista?
+  \item Descreva (em palavras, sem fórmula) um padrão nos dados, envolvendo juros e vendas de
+    imóveis, que produziria $r\approx 0$ mesmo havendo uma relação forte e sistemática entre as
+    duas variáveis. (Dica: pense em uma relação que não seja uma linha reta.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Assimetria: comparando duas distribuições salariais)}
+
+Duas empresas, X e Y, têm a mesma média salarial (R\$ 5.000) e o mesmo desvio padrão (R\$ 1.500).
+A empresa X tem assimetria $\approx 0$; a empresa Y tem assimetria $\approx +1{,}8$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Descreva, em palavras, a diferença esperada no formato do histograma de salários entre X e
+    Y, mesmo com média e desvio padrão idênticos.
+  \item Em qual das duas empresas a mediana salarial provavelmente está mais abaixo da média?
+    Justifique.
+  \item Um sindicato de trabalhadores da empresa Y, ao negociar reajuste geral em R\$ (valor fixo
+    igual para todos), quer saber se isso reduz ou aumenta a assimetria da distribuição salarial.
+    Justifique sua resposta.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Curtose e risco financeiro)}
+
+Os retornos diários de duas ações, P e Q, têm a mesma média e o mesmo desvio padrão histórico. A
+ação P tem curtose $\approx 3$ (próxima da Normal); a ação Q tem curtose $\approx 7$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Um gestor de risco que assume (erroneamente) que os retornos de Q seguem uma distribuição
+    Normal está superestimando ou subestimando a frequência de quedas bruscas ("caudas gordas")?
+  \item Explique, em uma frase, por que curtose alta é uma preocupação maior para quem administra
+    risco de uma carteira do que para quem só olha a média de retorno.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: invariância de $r$ à mudança de unidade)}
+
+O coeficiente de correlação entre $X$ e $Y$ é
+$$
+r_{XY} = \frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\sqrt{\sum_i (y_i-\bar y)^2}}.
+$$
+Suponha que $X$ seja medida em uma nova unidade, $X' = aX + b$, com $a>0$ (por exemplo,
+$X$ em dólares e $X'=5X$ em reais, a uma cotação fixa de 5).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que $\overline{X'} = a\bar x + b$ e que $x_i' - \overline{X'} = a(x_i - \bar x)$.
+  \item Usando o item (a), mostre que $r_{X'Y} = r_{XY}$, ou seja, o coeficiente de correlação
+    \textbf{não muda} quando se troca a unidade de medida de uma das variáveis (desde que a
+    transformação seja linear com $a>0$). Isso justifica por que $r$ entre "gasto em dólares" e
+    "vendas" é o mesmo que entre "gasto em reais" e "vendas", à mesma cotação.
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, fecha a Unidade 1 e é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão: síntese da Unidade 1)} \textbf{(Sem resposta única)}
+
+Escolha uma das duas bases do curso (\texttt{empresas} ou \texttt{dados\_prefeitos}) e, sem usar
+nenhuma fórmula nova, escreva um parágrafo de meia página descrevendo a variável de sua escolha
+usando \emph{todo} o vocabulário da Unidade 1: tipo de variável, tabela ou gráfico apropriado,
+tendência central, dispersão, e, se fizer sentido para a variável escolhida, assimetria e
+correlação com outra variável da base. O objetivo é praticar a integração dos conceitos, não
+calcular algo novo.
+\end{questao}
+
+\end{document}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Probabilidade condicional</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Probabilidade condicional
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 13/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 11: Probabilidade condicional
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## A pergunta que muda tudo: condicional a quê?
+
+&gt; "A probabilidade de reeleição de um prefeito bem avaliado é de 80%." Essa frase já é uma
+&gt; afirmação sobre probabilidade condicional. Quem é o evento condicionante, e o que aconteceria com
+&gt; o número "80%" se ele não estivesse ali?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definição
+
+$$
+P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \qquad P(B)&gt;0
+$$
+
+Condicionar em \(B\) = restringir o espaço amostral aos resultados em que \(B\) ocorre.
+
+--
+
+## Regra do produto
+
+Da definição, isolando \(P(A\cap B)\):
+
+$$
+P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A)
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Escolaridade e desemprego
+
+
+``` r
+tabela &lt;- tribble(
+  ~Escolaridade, ~Empregado, ~Desempregado, ~Total,
+  "Fund/Médio", 180, 70, 250,
+  "Superior", 210, 40, 250,
+  "Total", 390, 110, 500
+)
+tabela
+```
+
+```
+## # A tibble: 3 × 4
+##   Escolaridade Empregado Desempregado Total
+##   &lt;chr&gt;            &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1 Fund/Médio         180           70   250
+## 2 Superior           210           40   250
+## 3 Total              390          110   500
+```
+
+\(B=\) "ensino superior", \(A=\) "desempregado". \(P(A\mid B) = \frac{40/500}{250/500} = 0{,}16\).
+
+Compare com \(P(A)=110/500=0{,}22\) (não condicional): saber a escolaridade muda a probabilidade de
+desemprego, de 22% para 16%.
+
+---
+
+## Sequência de eventos: regra do produto
+
+Uma urna de crédito tem 8 empréstimos bons e 2 ruins. Sorteiam-se 2, sem reposição. Qual a
+probabilidade de os dois serem bons?
+
+
+``` r
+p_primeiro_bom  &lt;- 8/10
+p_segundo_bom_dado_primeiro &lt;- 7/9   # sobrou 1 bom a menos, 1 total a menos
+p_ambos_bons &lt;- p_primeiro_bom * p_segundo_bom_dado_primeiro
+p_ambos_bons
+```
+
+```
+## [1] 0.6222222
+```
+
+$$
+P(1^\circ\text{ bom} \cap 2^\circ\text{ bom}) = P(1^\circ\text{ bom})\times P(2^\circ\text{ bom}\mid 1^\circ\text{ bom}) = \tfrac{8}{10}\times\tfrac{7}{9}
+$$
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte à frase de abertura sobre reeleição. Escreva explicitamente \(P(A\mid B)\) com \(A=\)
+"reeleito" e \(B=\) "bem avaliado". Se a mesma pesquisa dissesse apenas "80% dos prefeitos são
+reeleitos" (sem a condição "bem avaliados"), essa seria a mesma afirmação? Por quê?
+
+**2.** No exemplo do crédito, por que a segunda probabilidade é \(7/9\) e não \(8/10\)? O que mudaria
+se o sorteio fosse **com** reposição? Refaça a conta para o caso com reposição.
+
+---
+
+## Rodada 2: a falácia da inversão
+
+**3.** Calcule \(P(\text{superior}\mid\text{desempregado})\) a partir da mesma tabela do exemplo
+(dica: você precisa da coluna "Desempregado", não da linha "Superior"). Compare com
+\(P(\text{desempregado}\mid\text{superior})=0{,}16\). São iguais? O erro de supor que são iguais tem
+um nome, pesquise ou arrisque um palpite sobre por que ele é perigoso em contextos jurídicos
+("dado que a evidência bate com o suspeito, ele é culpado" vs. "dado que é culpado, a evidência
+bateria").
+
+**4.** Se \(B\subseteq A\) (todo resultado de \(B\) também está em \(A\)), o que se pode concluir sobre
+\(P(A\mid B)\) sem fazer nenhuma conta numérica? Justifique só com a definição.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (15/04)
+
+## Independência estatística
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

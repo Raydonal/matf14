@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>População e amostra. Tipos de variáveis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-11-03" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# População e amostra. Tipos de variáveis
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 11/03/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 02: População e amostra. Tipos de variáveis
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Antes da teoria: três casos para pensar
+
+&gt; O Censo Demográfico tenta visitar todo domicílio do país, população ou amostra?
+
+--
+
+&gt; A PNAD Contínua entrevista ~211 mil domicílios por trimestre, de mais de 70 milhões no Brasil,
+&gt; e vira manchete nacional sobre "o desemprego no Brasil". É uma generalização legítima?
+
+--
+
+&gt; Uma corretora usa os 200 clientes que fecharam negócio no mês passado para decidir sua política
+&gt; de crédito do mês seguinte. Quem ela está *deixando de observar* nessa análise?
+
+--
+
+Guarde suas intuições, vamos formalizar a seguir.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## População vs. amostra
+
+- **População**: conjunto de todas as unidades sobre as quais se quer concluir algo.
+- **Amostra**: subconjunto da população efetivamente observado.
+
+--
+
+A diferença não é de *tamanho*, é de *papel*. Os 5.568 municípios brasileiros com eleição em 2020
+são a **população** de municípios (dado censitário, todos observados). Já 200 empresas de uma base
+comercial são uma **amostra** de um universo muito maior de empresas brasileiras.
+
+---
+
+## Parâmetro vs. estatística
+
+| | População | Amostra |
+|---|---|---|
+| Resumo numérico | **Parâmetro** (\(\mu\), \(\sigma\)) | **Estatística** (\(\bar x\), \(s\)) |
+| Natureza | Fato (sem incerteza de amostragem) | Estimativa (varia entre amostras) |
+
+--
+
+Quando o IBGE divulga a taxa de desemprego trimestral pela PNAD Contínua, ele **não** entrevista
+toda a força de trabalho, entrevista uma amostra de domicílios e generaliza. É por isso que a taxa
+vem sempre acompanhada de um intervalo de confiança nos relatórios técnicos, mesmo que a manchete
+mostre só o número central.
+
+---
+
+## Discussão intermediária: antes de seguir para tipos de variável
+
+**1.** Retome o caso da PNAD Contínua: se a amostra fosse recrutada só em capitais (mais barato
+entrevistar), que tipo de erro isso introduziria, de *tamanho* de amostra, ou de outra natureza?
+
+**2.** Uma enquete informal em rede social recebe 50 mil respostas em um dia sobre uma pauta
+econômica. Compare, em confiabilidade, com uma pesquisa profissional de 2 mil pessoas por
+amostragem probabilística. Por que "mais respostas" não é "amostra melhor"?
+
+**3.** O Boletim Focus do Banco Central usa a mediana das expectativas de mais de 100 instituições
+financeiras. Essas instituições são população ou amostra de "todo mundo que tem uma opinião sobre
+inflação"? Isso muda como você lê o número publicado?
+
+---
+
+## Tipos de variáveis: visão geral
+
+.pull-left[
+**Qualitativas (categóricas)**
+- Nominais, sem ordem (setor, região, sexo)
+- Ordinais, com ordem (escolaridade, porte)
+]
+
+.pull-right[
+**Quantitativas (numéricas)**
+- Discretas, contagem (nº de empregados)
+- Contínuas, mensuráveis (faturamento, renda)
+]
+
+--
+
+A pergunta prática: *dá para fazer conta com isso, e a conta significa alguma coisa?*
+Média de "setor" (Comércio, Indústria, Serviços) não significa nada. Média de faturamento, sim.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Classificando uma base real de empresas
+
+
+``` r
+empresas &lt;- read.csv("empresas.csv")
+str(empresas[, c("porte", "empregados99", "faturamento99", "regiao")])
+```
+
+```
+## 'data.frame':	106 obs. of  4 variables:
+##  $ porte        : chr  "Pequena" "Média" "Grande" "Média" ...
+##  $ empregados99 : int  9 31 119 35 6 46 23 162 7 6 ...
+##  $ faturamento99: int  74392 251488 369409 230843 98436 408905 226582 395680 120310 121765 ...
+##  $ regiao       : chr  "sudeste" "sudeste" "nordeste" "nordeste" ...
+```
+
+--
+
+| Variável | Tipo |
+|---|---|
+| `porte` | Qualitativa ordinal (Pequena &lt; Média &lt; Grande) |
+| `regiao` | Qualitativa nominal |
+| `empregados99` | Quantitativa discreta |
+| `faturamento99` | Quantitativa contínua |
+
+---
+
+## Um segundo exemplo: prefeitos eleitos em 2020
+
+
+``` r
+prefeitos &lt;- read.csv("dados_prefeitos.csv")
+table(prefeitos$escolaridade) |&gt; head(4)
+```
+
+```
+## 
+##                               Doutorado  Ensino fundamental ( 1º Grau) completo 
+##                                      55                                     226 
+## Ensino fundamental (1º Grau) incompleto         Ensino médio (2º Grau) completo 
+##                                     257                                    1283
+```
+
+`escolaridade` é **ordinal**: sabemos que "Ensino superior completo" é mais que "Ensino médio", mas
+não que a distância entre dois níveis consecutivos seja sempre "igual" em algum sentido numérico.
+Já `sexo` e `raca` são **nominais**: não há ordem natural entre as categorias.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão final (a mais longa da aula)
+
+---
+
+## Para discutir em grupo: 10 minutos
+
+**1.** O IBGE registra "faixa de renda domiciliar" cortando uma variável contínua (renda em R\$)
+em intervalos. A variável derivada é discreta, contínua ou qualitativa? O que se ganha e o que se
+perde nessa transformação?
+
+**2.** Um índice de "nota de bem-estar" de 0 a 10, atribuído por uma pesquisa a cada município, é
+ordinal ou quantitativo? De que depende a resposta?
+
+**3.** Se você tivesse acesso à população *inteira* de contribuintes do imposto de renda do Brasil,
+ainda faria sentido falar em "amostra" em algum ponto da sua análise? Em que ponto?
+
+**4.** Volte à sua base de dados trazida de casa: classifique cada variável dela (nominal, ordinal,
+discreta, contínua) e identifique se a base é população ou amostra em relação à pergunta que você
+tinha em mente ao coletá-la.
+
+**5.** Um erro clássico de prova: tratar uma variável ordinal (como classe social A/B/C/D/E) como
+se fosse quantitativa e calcular sua "média". Explique, com um exemplo numérico pequeno, por que o
+resultado dessa conta pode ser literalmente qualquer número, dependendo de como você codificar as
+categorias, e por que isso já mostra que a operação não tem significado.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (16/03)
+
+## Apresentação tabular e principais tipos de representação gráfica
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

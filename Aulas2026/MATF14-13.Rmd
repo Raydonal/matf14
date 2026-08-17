@@ -1,0 +1,179 @@
+---
+title: "[Laboratório] Simulação de probabilidade em R"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "20/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+set.seed(14)
+```
+
+class: inverse, center, middle
+
+# Aula 13: Laboratório
+
+## Simulação de Monte Carlo em R
+
+### Verificando probabilidade com repetição massiva
+
+---
+
+## Ideia central: a definição frequentista, na prática
+
+A probabilidade de um evento é o limite da frequência relativa se o experimento fosse repetido
+infinitas vezes. Em R, não repetimos infinitas vezes, mas repetimos **muitas** vezes
+(`replicate()`), e observamos a frequência relativa se aproximar do valor teórico.
+
+```{r moeda-simples}
+lancamentos <- sample(c("cara", "coroa"), size = 10, replace = TRUE)
+lancamentos
+mean(lancamentos == "cara")
+```
+
+Com só 10 lançamentos, a frequência de "cara" está longe de 0,5. O que acontece com mais
+repetições?
+
+---
+
+## Lei dos grandes números, visualmente
+
+```{r lgn, fig.height=4}
+set.seed(1)
+n_max <- 5000
+lanc <- sample(c(1,0), n_max, replace = TRUE)   # 1 = cara, 0 = coroa
+freq_acumulada <- cumsum(lanc) / seq_len(n_max)
+
+ggplot(tibble(n = 1:n_max, freq = freq_acumulada), aes(n, freq)) +
+  geom_line(color = "#0d3b54") +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "#c9971e") +
+  labs(x = "Número de lançamentos", y = "Frequência relativa de \"cara\"",
+       title = "Convergência da frequência relativa para P(cara) = 0,5") +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## Estimando uma probabilidade por simulação
+
+Probabilidade de, em 3 lançamentos de moeda, sair **pelo menos 2 caras**:
+
+```{r pelo-menos-2}
+simular_experimento <- function() {
+  lanc <- sample(c(1,0), size = 3, replace = TRUE)
+  sum(lanc) >= 2
+}
+
+resultados <- replicate(100000, simular_experimento())
+mean(resultados)   # estimativa por simulação
+```
+
+Valor teórico (contagem, Aula 10): \(\binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 4/8 = 0{,}5\).
+
+---
+
+class: inverse, center, middle
+
+# O problema de Monty Hall
+
+## Probabilidade condicional, contraintuitiva
+
+---
+
+## O problema
+
+Um jogo tem 3 portas: atrás de uma há um carro, atrás das outras duas, nada. Você escolhe uma
+porta. O apresentador, que sabe onde está o carro, **abre uma das outras duas portas sem o
+prêmio**. Ele oferece: trocar de porta ou manter a escolha original?
+
+--
+
+**Intuição comum (errada)**: "sobraram 2 portas, tanto faz, 50-50".
+
+**Resposta correta**: trocar dobra a chance de vitória, de \(1/3\) para \(2/3\), vamos comprovar por
+simulação (mais fácil que a conta analítica de probabilidade condicional aqui).
+
+---
+
+## Simulando Monty Hall
+
+```{r monty-hall}
+jogar_monty_hall <- function(trocar) {
+  portas <- 1:3
+  premio <- sample(portas, 1)
+  escolha <- sample(portas, 1)
+  # apresentador abre uma porta sem prêmio, diferente da escolhida
+  disponiveis <- setdiff(portas, c(escolha, premio))
+  aberta <- if (length(disponiveis) == 1) disponiveis else sample(disponiveis, 1)
+  if (trocar) {
+    escolha_final <- setdiff(portas, c(escolha, aberta))
+  } else {
+    escolha_final <- escolha
+  }
+  escolha_final == premio
+}
+
+mean(replicate(50000, jogar_monty_hall(trocar = TRUE)))
+mean(replicate(50000, jogar_monty_hall(trocar = FALSE)))
+```
+
+---
+
+## Por que isso importa para condicional e Bayes
+
+A chave: a ação do apresentador (abrir uma porta *sem* o prêmio, *sabendo* onde ele está) **não é
+aleatória**, ela carrega informação. A probabilidade da porta não escolhida e não aberta passa a
+ser condicional a essa ação, não mais \(1/3\) "isolada". É o mesmo tipo de raciocínio (atualizar uma
+probabilidade à luz de uma evidência) que formaliza o Teorema de Bayes, na próxima aula.
+
+---
+
+class: inverse, center, middle
+
+# Discussão do laboratório
+
+---
+
+## Antes do exercício guiado
+
+**1.** Mesmo depois de ver a simulação confirmar \(2/3\) vs. \(1/3\), muita gente continua achando que
+"deveria ser 50-50". Tente articular, com suas próprias palavras (sem fórmula), por que a ação do
+apresentador não é neutra, o que ele "sabe" que você não sabia antes de escolher.
+
+**2.** Refaça mentalmente o Monty Hall com 100 portas em vez de 3: você escolhe 1, o apresentador
+abre 98 sem prêmio, sobrando a sua e mais uma. Isso deveria deixar sua intuição sobre "trocar" mais
+ou menos convincente que com 3 portas? Por quê?
+
+**3.** A Lei dos Grandes Números (gráfico acima) mostra a frequência convergindo para 0,5 mesmo
+começando longe dele em poucos lançamentos. Isso significa que, depois de uma sequência de "caras"
+muito acima do esperado, a moeda fica "devendo" coroas para compensar? (Esse erro de raciocínio
+tem nome, a "falácia do apostador", e é diretamente relevante para investidores que acreditam
+que uma ação "está devendo" uma alta depois de vários dias de queda.)
+
+---
+
+## Exercício guiado
+
+1. Modifique `jogar_monty_hall()` para 4 portas (1 prêmio, apresentador abre 2 sem prêmio).
+   Simule e compare a probabilidade de vitória trocando vs. mantendo a escolha.
+2. Simule a probabilidade condicional da Aula 11 (escolaridade × desemprego): gere uma população
+   sintética de 500 pessoas com as proporções da tabela vista em aula e confira, por simulação, que
+   \(P(\text{desempregado}\mid\text{superior}) \approx 0{,}16\).
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (22/04)
+
+## Teorema de Bayes

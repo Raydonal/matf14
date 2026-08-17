@@ -1,0 +1,198 @@
+---
+title: "Apresentação tabular e representação gráfica"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "16/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+suppressPackageStartupMessages(library(tidyverse))
+empresas <- read.csv("empresas.csv")
+```
+
+class: inverse, center, middle
+
+# Aula 03: Tabelas e gráficos
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um gráfico pode enganar sem uma única mentira
+
+> Um relatório de vendas mostra um gráfico de barras com o eixo y começando em R\$ 40.000 (não em
+> zero). Diferenças de poucos milhares parecem enormes. Nenhum número no gráfico está errado, o
+> que está errado, então?
+
+--
+
+> Um jornal usa um gráfico de pizza com 9 fatias para mostrar participação setorial no PIB. Duas
+> fatias vizinhas têm 9% e 11%. É fácil dizer qual é maior só olhando?
+
+--
+
+Hoje: as regras que separam "gráfico correto" de "gráfico tecnicamente correto, mas enganoso".
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Tabela de frequências
+
+Para \(f_i\) casos na categoria \(i\), de um total \(n=\sum_i f_i\):
+
+$$
+\text{Proporção}_i = \frac{f_i}{n}, \qquad \text{Porcentagem}_i = 100\times\frac{f_i}{n}\,\%
+$$
+
+--
+
+## Tabela de dupla entrada
+
+Cruza duas variáveis qualitativas. Dividir pelo total da **linha** (não do total geral) dá a
+composição condicional daquele grupo, essencial para comparar grupos de tamanhos diferentes.
+
+---
+
+## Gráfico certo para cada tipo de variável
+
+| Variável | Gráfico típico |
+|---|---|
+| Qualitativa (poucas categorias) | Barras, setores (pizza) |
+| Quantitativa discreta (poucos valores) | Barras |
+| Quantitativa contínua | Histograma |
+| Série temporal (qualquer tipo) | Linha, respeitando a ordem no tempo |
+
+--
+
+**Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
+tendência que não existe.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Um histograma que já é uma tabela de frequências
+
+```{r fig-gender-pay, echo=FALSE, out.width="75%"}
+knitr::include_graphics("images/gender_pay_gap.png")
+```
+
+78% das empresas britânicas pagam mais aos homens, a notícia usa exatamente uma tabela de
+frequências (900 empresas, agrupadas por faixa de diferença salarial), não uma média isolada.
+
+---
+
+## Tabela de frequências: setor de atividade
+
+```{r tab-setor}
+empresas |> count(setor, sort = TRUE) |>
+  mutate(pct = round(100*n/sum(n), 1))
+```
+
+---
+
+## Gráfico de barras
+
+```{r grafico-barras}
+ggplot(empresas, aes(x = fct_infreq(setor))) +
+  geom_bar(fill = "#0d3b54") + coord_flip() +
+  labs(x = NULL, y = "Nº de empresas") + theme_minimal(base_size = 13)
+```
+
+---
+
+## Histograma
+
+```{r histograma}
+ggplot(empresas, aes(x = faturamento99)) +
+  geom_histogram(bins = 20, fill = "#c9971e", color = "white") +
+  labs(x = "Faturamento 1999 (R$ mil)", y = "Frequência") + theme_minimal(base_size = 13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (responda antes de ver o próximo bloco)
+
+---
+
+## Primeira rodada
+
+**1.** Volte às duas perguntas de abertura do slide (eixo cortado; pizza de 9 fatias). Para cada
+uma, proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que
+resolve.
+
+**2.** Uma revista noticia "consumo médio de refrigerante por brasileiro" com um único gráfico de
+barras por região. Que informação um histograma da distribuição *dentro* de cada região
+acrescentaria que a barra do valor médio esconde?
+
+**3.** Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo,
+que conclusão errada um leitor apressado poderia tirar?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+---
+
+## Tabela + gráfico, do dado bruto ao resultado
+
+```{r r-completo, eval=FALSE}
+library(tidyverse)
+empresas <- read.csv("empresas.csv")
+
+# tabela de frequências
+empresas |> count(setor, sort = TRUE) |>
+  mutate(pct = round(100*n/sum(n), 1))
+
+# gráfico de barras ordenado por frequência
+ggplot(empresas, aes(x = fct_infreq(setor))) +
+  geom_bar(fill = "#0d3b54") + coord_flip()
+
+# histograma com número de classes ajustado
+ggplot(empresas, aes(x = faturamento99)) +
+  geom_histogram(bins = 20, fill = "#c9971e", color = "white")
+```
+
+`fct_infreq()` reordena os níveis de um fator pela frequência, essencial para gráficos de barra
+legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor.
+
+---
+
+## Discussão final: trazendo tudo junto
+
+**4.** Escolha entre as duas bases do curso (`empresas` ou `prefeitos`) uma variável e diga: (i)
+que tabela você construiria, (ii) que gráfico acompanharia essa tabela, e (iii) uma manchete
+enganosa que alguém *poderia* construir com o mesmo dado, mas um gráfico mal desenhado.
+
+**5.** É possível que dois analistas, ambos "tecnicamente corretos", cheguem a gráficos que sugerem
+conclusões opostas sobre o mesmo conjunto de dados? Dê um exemplo baseado no que foi visto hoje.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (18/03)
+
+## Medidas de tendência central e suas relações

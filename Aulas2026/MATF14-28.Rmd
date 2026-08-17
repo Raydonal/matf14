@@ -1,0 +1,181 @@
+---
+title: "Distribuição Normal"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "15/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 28: Distribuição Normal
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## A distribuição mais usada: e mais mal-usada
+
+> A Normal é o modelo padrão para tudo, de notas de prova a retornos financeiros. Mas ela também é
+> a distribuição mais aplicada sem checagem prévia em toda a Estatística, inclusive em finanças,
+> onde caudas pesadas (Cap. 1) tornam essa suposição arriscada. Hoje: como usá-la bem, e como saber
+> quando desconfiar dela.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Normal(\(\mu,\sigma^2\))
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \ x\in\mathbb{R}
+\qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2
+$$
+
+Simétrica, em forma de sino, em torno de \(\mu\). O modelo contínuo mais usado, surge naturalmente
+da soma de muitos pequenos efeitos independentes.
+
+--
+
+## Padronização
+
+$$
+Z = \frac{X-\mu}{\sigma} \ \sim \ N(0,1) \quad \text{(Normal padrão)}
+$$
+
+Converte qualquer Normal em uma referência comum, tabelada.
+
+---
+
+## Regra empírica (68-95-99,7)
+
+$$
+P(\mu-\sigma<X<\mu+\sigma)\approx68{,}3\% \quad
+P(\mu-2\sigma<X<\mu+2\sigma)\approx95{,}4\% \quad
+P(\mu-3\sigma<X<\mu+3\sigma)\approx99{,}7\%
+$$
+
+```{r regra-empirica, fig.height=3.5, echo=FALSE}
+df <- tibble(x=seq(-4,4,length.out=300), y=dnorm(x))
+ggplot(df, aes(x,y)) + geom_line(color="#0d3b54") +
+  geom_area(data=filter(df,x>=-1,x<=1), fill="#c9971e", alpha=.5) +
+  geom_area(data=filter(df,x>=-2,x<=2), fill="#c9971e", alpha=.2) +
+  labs(x="z", y="densidade") + theme_minimal(base_size=13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## A "Fórmula de Midas"
+
+```{r fig-black-scholes, echo=FALSE, out.width="55%"}
+knitr::include_graphics("images/black_scholes.jpg")
+```
+
+Black-Scholes-Merton (1973) precifica opções assumindo retornos aproximadamente Normais. Quando os
+mercados se afastam dessa suposição (caudas gordas, Cap. 1), o modelo pode falhar de forma
+catastrófica, como na quebra do fundo LTCM em 1998.
+
+---
+
+## Retorno mensal de um fundo
+
+\(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\).
+
+```{r retorno-fundo}
+mu <- 1.2; sigma <- 4.5
+
+pnorm(0, mu, sigma)                      # P(retorno < 0)
+pnorm(5, mu, sigma) - pnorm(0, mu, sigma) # P(0 < retorno < 5)
+```
+
+```{r grafico-retorno, echo=FALSE, fig.height=3.5}
+df <- tibble(x=seq(mu-4*sigma, mu+4*sigma, length.out=300), y=dnorm(x,mu,sigma))
+ggplot(df, aes(x,y)) + geom_line(color="#0d3b54") +
+  geom_area(data=filter(df,x<=0), fill="#c9971e", alpha=.6) +
+  labs(x="retorno (%)", y="densidade") + theme_minimal(base_size=13)
+```
+
+---
+
+## Quantis: "o pior cenário de 5%"
+
+Qual retorno só é superado (para baixo) por 5% dos meses (Value-at-Risk simplificado)?
+
+```{r var-quantil}
+qnorm(0.05, mu, sigma)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (a mais longa da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** A Normal tem curtose exatamente 3 (Cap. 1). Retornos financeiros reais costumam ter curtose
+maior, "caudas gordas". A probabilidade de retorno muito negativo calculada com o modelo Normal
+tende a subestimar ou superestimar o risco real de perdas extremas? Que implicação prática isso
+tem para o cálculo de Value-at-Risk feito acima?
+
+**2.** Um gestor de risco usa exclusivamente a regra empírica (2 desvios padrão \(\approx\) 95%) para
+definir seus limites de alerta. Em que tipo de mercado (calmo vs. em crise) essa prática seria mais
+perigosa?
+
+---
+
+## Rodada 2: de onde vem a Normal
+
+**3.** Por que a soma de "muitos pequenos efeitos independentes" tende a gerar uma distribuição
+aproximadamente Normal? Dê uma intuição (não uma prova), pensando no que acontece ao somar vários
+erros de medição pequenos e aleatórios, cada um podendo ser positivo ou negativo.
+
+**4.** Cite uma variável econômica que você esperaria ser bem aproximada pela Normal (por exemplo,
+por resultar da soma de muitos fatores pequenos) e outra que você esperaria claramente **não**
+Normal (por ter cauda pesada, ser sempre positiva, ou ser fortemente assimétrica, retome o
+Capítulo 1).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+dnorm(x, mean = mu, sd = sigma)   # densidade
+pnorm(x, mean = mu, sd = sigma)   # FDA
+qnorm(p, mean = mu, sd = sigma)   # quantil (inverso da FDA)
+rnorm(m, mean = mu, sd = sigma)   # m valores simulados
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (17/06)
+
+## Aula de exercícios: Unidade 4

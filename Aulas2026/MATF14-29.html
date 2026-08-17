@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Aula de exercícios: Unidade 4</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Aula de exercícios: Unidade 4
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 17/06/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 29: Exercícios resolvidos (VA contínua)
+
+---
+
+## Problema 1: Uniforme
+
+O tempo de processamento de um saque em um caixa eletrônico é uniforme entre 10 e 40 segundos.
+Qual a probabilidade de um saque levar mais de 30 segundos?
+
+--
+
+**Solução.** \(X\sim\text{Unif}(10,40)\).
+$$
+P(X&gt;30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
+$$
+
+
+``` r
+1 - punif(30, 10, 40)
+```
+
+```
+## [1] 0.3333333
+```
+
+---
+
+## Problema 2: Normal, padronização
+
+O tempo de entrega de um e-commerce é \(X\sim N(5,\ 1{,}5^2)\) dias. Qual a probabilidade de a
+entrega demorar mais de 8 dias?
+
+--
+
+**Solução.** \(Z=\frac{8-5}{1{,}5}=2\); \(P(X&gt;8)=P(Z&gt;2)\).
+
+
+``` r
+1 - pnorm(8, mean = 5, sd = 1.5)
+```
+
+```
+## [1] 0.02275013
+```
+
+``` r
+1 - pnorm(2)   # mesma conta, via padronização
+```
+
+```
+## [1] 0.02275013
+```
+
+---
+
+## Problema 3: Integral direta
+
+\(X\) tem densidade \(f(x)=3x^2\), \(0\le x\le1\) (e \(f(x)=0\) fora desse intervalo).
+
+**(a)** Confirme que \(f\) é uma densidade válida. **(b)** Calcule \(P(X\le 0{,}5)\).
+
+--
+
+**Solução (a).** \(\int_0^1 3x^2\,dx = [x^3]_0^1 = 1-0=1\) ✓
+
+**Solução (b).** \(F(x)=x^3\); \(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\).
+
+
+``` r
+integrate(function(x) 3*x^2, 0, 1)
+```
+
+```
+## 1 with absolute error &lt; 1.1e-14
+```
+
+``` r
+0.5^3
+```
+
+```
+## [1] 0.125
+```
+
+---
+
+## Problema 4: combinando Cap. 3 e Cap. 4
+
+Uma seguradora modela o número de sinistros/ano como \(N\sim\text{Poisson}(2)\) e, dado que houve ao
+menos 1 sinistro, o valor de cada sinistro como \(V\sim N(5000, 1200^2)\). Qual a probabilidade de
+haver pelo menos 1 sinistro **e** o próximo sinistro (se ocorrer) custar mais de R\$ 7.000?
+
+--
+
+**Solução.** Os dois eventos são tratados como independentes aqui (frequência de sinistro e valor
+de um sinistro individual):
+
+
+``` r
+p_pelo_menos_1 &lt;- 1 - dpois(0, 2)
+p_valor_alto   &lt;- 1 - pnorm(7000, 5000, 1200)
+p_pelo_menos_1 * p_valor_alto
+```
+
+```
+## [1] 0.04132263
+```
+
+---
+
+## Discussão: antes da revisão final
+
+**1.** O Problema 4 combina uma VA discreta (número de sinistros) com uma VA contínua (valor de
+cada sinistro) num mesmo modelo. Em que outras situações econômicas você imagina precisar combinar
+os dois tipos, por exemplo, "número de clientes que compram" (discreto) e "valor de cada compra"
+(contínuo)?
+
+**2.** No Problema 3, a densidade \(f(x)=3x^2\) cresce à medida que \(x\) se aproxima de 1. O que isso
+significa, em termos de onde a probabilidade está mais concentrada dentro do intervalo \([0,1]\)? Sem
+calcular, você esperaria \(E(X)\) maior ou menor que \(0{,}5\) (o ponto médio do intervalo)?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (22/06)
+
+## Revisão geral pré-Prova 3
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

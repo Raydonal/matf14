@@ -1,0 +1,103 @@
+---
+title: "Revisão geral pré-Prova 3"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "22/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 30: Revisão geral
+
+## Rumo à Prova 3: Unidade 4 (VA contínuas)
+
+---
+
+## Lembrete rápido: Unidade 3 (já avaliada em P2)
+
+| Tópico | Fórmula-chave |
+|---|---|
+| Esperança | \(E(X)=\sum_i x_i p(x_i)\) |
+| Variância | \(\mathrm{Var}(X)=\sum_i(x_i-\mu)^2p(x_i)\) |
+| FDA | \(F(x)=\sum_{x_i\le x}p(x_i)\), em escada |
+| Bernoulli(\(p\)) | \(E=p\), \(\mathrm{Var}=p(1-p)\) |
+| Binomial(\(n,p\)) | \(p(x)=\binom{n}{x}p^x(1-p)^{n-x}\); \(E=np\), \(\mathrm{Var}=np(1-p)\) |
+| Poisson(\(\lambda\)) | \(p(x)=\frac{e^{-\lambda}\lambda^x}{x!}\); \(E=\mathrm{Var}=\lambda\) |
+
+---
+
+## Mapa da Unidade 4 (o que P3 cobre): VA contínua
+
+| Tópico | Fórmula-chave |
+|---|---|
+| Densidade | \(P(a\le X\le b)=\int_a^b f(x)dx\); \(\int_{-\infty}^\infty f=1\) |
+| Esperança | \(E(X)=\int x f(x)dx\) |
+| FDA | \(F(x)=\int_{-\infty}^x f(t)dt\); \(F'=f\); contínua (sem saltos) |
+| Uniforme(\(a,b\)) | \(f=\frac{1}{b-a}\); \(E=\frac{a+b}{2}\), \(\mathrm{Var}=\frac{(b-a)^2}{12}\) |
+| Normal(\(\mu,\sigma^2\)) | \(Z=\frac{X-\mu}\sigma\sim N(0,1)\); regra 68-95-99,7 |
+
+---
+
+## Os 5 erros mais comuns em prova (Unidade 4)
+
+1. Usar \(\binom{n}{x}\) na Poisson (não existe, é fórmula da Binomial, já não cai mais em P3).
+2. Esquecer que, em VA contínua, \(P(X\le x)=P(X<x)\) (diferente do caso discreto).
+3. Confundir \(f(x)\) (densidade, pode ser \(>1\)) com probabilidade.
+4. Errar o sinal ao padronizar: \(Z=(X-\mu)/\sigma\), não \((\mu-X)/\sigma\).
+5. Esquecer de verificar que \(\int f(x)dx=1\) antes de usar uma densidade "nova" dada em um
+   problema.
+
+---
+
+## Discussão final: o curso inteiro em quatro perguntas
+
+**1.** Se uma questão de prova pedir para você calcular \(E(X)\) de uma variável contínua com
+densidade dada, e você não souber de cabeça a fórmula pronta (se houver uma), que dois passos
+gerais (do Apêndice A e do Capítulo 4) sempre funcionam, custe o que custar?
+
+**2.** Um resultado de prova envolvendo a distribuição Normal pede para você calcular uma
+probabilidade "extrema" (muito à esquerda ou à direita da média). Que ferramenta do Capítulo 1
+(assimetria e curtose) você usaria para questionar se o modelo Normal é mesmo razoável para essa
+variável, antes de confiar cegamente no número calculado?
+
+**3.** Ao longo do semestre, cada capítulo teve blocos de discussão insistindo que um número
+sozinho raramente basta. Escreva, de memória, um exemplo (de qualquer unidade) em que essa lição
+mudaria a forma como você leria uma manchete de jornal econômico.
+
+**4.** Última pergunta do curso: releia as cinco perguntas de abertura da Aula 01 (fundo de
+investimento, pesquisa eleitoral, inflação, escore de crédito, seguro para jovens). Escolha uma e
+escreva a resposta mais completa que você seria capaz de dar hoje, usando qualquer ferramenta das
+quatro unidades.
+
+---
+
+## Checklist de estudo
+
+- P3 cobre **apenas** a Unidade 4: refaça, sem consultar o gabarito, as Listas 11-13
+  (`Listas2026/`).
+- Pratique alternar entre \(F\) e \(f\) nos dois sentidos (derivar e integrar), é a habilidade mais
+  cobrada de cálculo na prova.
+- Revise o Apêndice A (revisão de cálculo) se ainda tiver dúvida nas primitivas básicas.
+- Nota final do semestre: \(NF=(P_1+P_2+P_3)/3\).
+
+---
+
+class: inverse, center, middle
+
+# Prova 3
+
+## Unidade 4 completa
+
+### Bom estudo, e bom fim de semestre!

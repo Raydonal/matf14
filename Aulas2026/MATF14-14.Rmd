@@ -1,0 +1,189 @@
+---
+title: "Teorema de Bayes"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "22/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 14: Teorema de Bayes
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Um sistema "de 95% de acerto" pode estar quase sempre errado
+
+> Um sistema antifraude detecta 95% das fraudes reais e erra (falso alarme) em apenas 3% das
+> transações legítimas. Fraudes são raras: 0,2% de todas as transações. Quando o sistema aponta uma
+> transação como "suspeita", qual é a chance de ser mesmo uma fraude, 95%? 50%? Bem menos que
+> isso? Guarde seu palpite.
+
+---
+
+```{r fig-bayes-neon, echo=FALSE, out.width="60%"}
+knitr::include_graphics("images/bayes_teorema.jpg")
+```
+
+O Teorema de Bayes virou regra essencial da computação moderna, filtros de spam, sistemas de
+recomendação, diagnóstico por IA. Hoje vemos por que ele resolve exatamente a provocação acima.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Teorema da probabilidade total
+
+Se \(B_1,\ldots,B_k\) particionam \(\Omega\):
+
+$$
+P(A) = \sum_{i=1}^k P(A\mid B_i)\,P(B_i)
+$$
+
+--
+
+## Teorema de Bayes
+
+Combinando a regra do produto nos dois sentidos:
+
+$$
+P(B_i\mid A) = \frac{P(A\mid B_i)\,P(B_i)}{\sum_{j=1}^k P(A\mid B_j)\,P(B_j)}
+$$
+
+\(P(B_i)\): probabilidade **a priori**. \(P(B_i\mid A)\): probabilidade **a posteriori**, depois de
+observar a evidência \(A\).
+
+---
+
+## Por que isso importa
+
+Frequentemente sabemos \(P(\text{evidência}\mid\text{causa})\) (fácil de medir por frequência
+histórica) e queremos \(P(\text{causa}\mid\text{evidência})\) (o que realmente importa, mas é difícil
+de medir direto). Bayes é a ponte entre as duas.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Resolvendo a provocação inicial
+
+\(P(\text{suspeito}\mid\text{fraude})=0{,}95\); \(P(\text{suspeito}\mid\text{legítima})=0{,}03\);
+\(P(\text{fraude})=0{,}002\).
+
+```{r bayes-fraude}
+p_fraude <- 0.002; p_legit <- 1 - p_fraude
+p_susp_dado_fraude <- 0.95; p_susp_dado_legit <- 0.03
+
+p_susp <- p_susp_dado_fraude*p_fraude + p_susp_dado_legit*p_legit
+p_fraude_dado_susp <- (p_susp_dado_fraude*p_fraude) / p_susp
+round(p_fraude_dado_susp, 3)
+```
+
+Mesmo com um teste "bom", só **`r scales::percent(p_fraude_dado_susp, accuracy=0.1)`** das
+transações suspeitas são fraudes reais, muito abaixo do que a maioria das pessoas chuta. Compare
+com o palpite que você registrou na abertura do slide.
+
+---
+
+## O mesmo raciocínio em testes de doença rara
+
+```{r bayes-doenca}
+p_doenca <- 0.001
+p_pos_dado_doente <- 0.99   # sensibilidade
+p_pos_dado_sadio  <- 0.05   # 1 - especificidade
+
+p_pos <- p_pos_dado_doente*p_doenca + p_pos_dado_sadio*(1-p_doenca)
+p_doente_dado_pos <- (p_pos_dado_doente*p_doenca)/p_pos
+round(p_doente_dado_pos, 3)
+```
+
+Um teste com 99% de sensibilidade ainda deixa a maioria dos "positivos" sendo falsos positivos,
+quando a doença é rara, a mesma matemática de risco de crédito, antifraude, e diagnóstico médico.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (a mais longa da Unidade 2)
+
+---
+
+## Rodada 1: a provocação inicial, revisitada
+
+**1.** Compare o resultado calculado (`r round(p_fraude_dado_susp, 3)`) com o palpite que você
+registrou no início da aula. Se você chutou um número bem mais alto, tente articular por que a
+intuição humana costuma superestimar \(P(\text{causa}\mid\text{evidência})\) nesses casos, o que ela
+está "esquecendo" de levar em conta?
+
+**2.** Um gestor de risco vê a taxa de detecção (95%) do sistema antifraude e conclui "o sistema é
+confiável". Reformule a frase dele de forma tecnicamente correta, usando o resultado calculado.
+
+---
+
+## Rodada 2: sensibilidade ao cenário
+
+**3.** Se a taxa de fraude na base **subisse** de 0,2% para 5% (um período de fraudes em massa), o
+que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo o mesmo sistema de detecção?
+Refaça a conta e confirme sua intuição antes de calcular.
+
+**4.** Um banco decide usar o mesmo sistema antifraude, mas agora aplicado só a transações acima de
+R\$ 10.000 (onde a taxa de fraude histórica é bem maior, digamos 3% em vez de 0,2%). Sem refazer a
+conta completa, você espera que \(P(\text{fraude}\mid\text{suspeito})\) suba ou desça em relação ao
+caso original? Depois, confirme calculando.
+
+---
+
+## Síntese
+
+**5.** Escreva, em uma frase, a lição central do Teorema de Bayes para qualquer sistema de
+triagem/alarme (antifraude, exame médico, detector de metais em aeroporto): por que a taxa de
+acerto do teste, sozinha, nunca é suficiente para avaliar sua utilidade prática?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+p_fraude <- 0.002; p_legit <- 1 - p_fraude
+p_susp_dado_fraude <- 0.95; p_susp_dado_legit <- 0.03
+
+# probabilidade total (denominador de Bayes)
+p_susp <- p_susp_dado_fraude*p_fraude + p_susp_dado_legit*p_legit
+
+# Bayes
+p_fraude_dado_susp <- (p_susp_dado_fraude*p_fraude) / p_susp
+```
+
+Sempre calcule o denominador (probabilidade total) **antes**, como uma variável separada, reduz
+erro de digitação em fórmulas longas de Bayes com muitas categorias.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (27/04)
+
+## Aula de exercícios: Unidades 1 e 2

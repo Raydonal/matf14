@@ -1,0 +1,132 @@
+---
+title: "Função de distribuição acumulada (discreta)"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "13/05/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 19: FDA de variável discreta
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Um ponto a menos que faz toda a diferença
+
+> \(P(X\ge2)\) e \(P(X>2)\) soam quase iguais em português. Para uma variável discreta que só assume
+> valores inteiros, elas são a mesma coisa? E se \(X\) fosse contínua?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definição
+
+$$
+F(x) = P(X\le x) = \sum_{x_i\le x} p(x_i)
+$$
+
+Para VA discreta, \(F\) é **função em escada**: constante entre valores possíveis, com salto de
+tamanho \(p(x_i)\) em cada \(x_i\).
+
+--
+
+## Cuidado com \(\le\) vs. \(<\)
+
+$$
+P(X > x) = 1-F(x) \qquad P(X\ge x) = 1-F(x-1) \ \text{(para $X$ inteira)}
+$$
+
+A diferença de um ponto **importa** no caso discreto, ao contrário do caso contínuo (Cap. 4).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## FDA do número de sinistros
+
+```{r fda}
+sinistros <- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01)) |>
+  mutate(F = cumsum(p))
+sinistros
+```
+
+```{r grafico-fda, fig.height=3.3, echo=FALSE}
+ggplot(sinistros, aes(x, F)) + geom_step(color="#0d3b54", linewidth=1) +
+  geom_point(color="#c9971e", size=2) +
+  labs(x="x", y="F(x)") + theme_minimal(base_size=13)
+```
+
+---
+
+## Lendo probabilidades da FDA
+
+$$
+P(X\le 2) = F(2) = 0{,}95 \qquad P(X>2) = 1-F(2) = 0{,}05
+$$
+$$
+P(X\ge 2) = 1-F(1) = 1-0{,}85 = 0{,}15
+$$
+
+```{r leituras}
+sinistros$F[sinistros$x == 2]         # F(2)
+1 - sinistros$F[sinistros$x == 1]     # P(X >= 2) = 1 - F(1)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Volte à pergunta de abertura: \(P(X\ge2)\) e \(P(X>2)\) são iguais para \(X\) discreta? Calcule as
+duas usando a tabela e confirme numericamente.
+
+**2.** Por que \(P(X\ge2)\) usa \(F(1)\) (não \(F(2)\)) na fórmula? Em que ponto exatamente \(1-F(2)\) e
+\(1-F(1)\) diferem, e o que cada expressão representa em termos do gráfico em escada?
+
+---
+
+## Rodada 2: indo além
+
+**3.** Se você só tivesse a FDA \(F(x)\) (não a tabela \(p(x)\)), como recuperaria \(p(x_i)\) a partir
+dela? Escreva a fórmula geral usando a diferença de dois valores de \(F\).
+
+**4.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um
+segundo contrato paga o mesmo bônus se "o segurado tiver menos de 2 sinistros". Para uma variável
+discreta como esta, os dois contratos pagam exatamente nas mesmas condições? Formalize com \(F\).
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (18/05)
+
+## Distribuição de Bernoulli e Distribuição Binomial

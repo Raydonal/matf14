@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 06: Probabilidade condicional e independência}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 06}{Probabilidade condicional e independência estatística (Cap. 2, Aulas 11--12)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito06.pdf}.}
+
+\begin{questao}{1} \textbf{(Condicional: inadimplência por faixa de renda)}
+
+Uma financeira tem 1.000 clientes classificados por faixa de renda e situação de pagamento:
+
+\begin{center}
+\begin{tabular}{l|cc|c}
+\toprule
+ & Em dia & Inadimplente & Total \\
+\midrule
+Renda baixa  & 320 & 80  & 400 \\
+Renda média  & 380 & 20  & 400 \\
+Renda alta   & 195 & 5   & 200 \\
+\midrule
+Total        & 895 & 105 & 1000\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(\text{inadimplente}\mid\text{renda baixa})$.
+  \item Calcule $P(\text{inadimplente}\mid\text{renda alta})$.
+  \item A situação de pagamento é independente da faixa de renda nesta base? Justifique
+    comparando as probabilidades condicionais entre si e com $P(\text{inadimplente})$ geral.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Regra do produto: sorteio sem reposição)}
+
+Um comitê de auditoria tem 15 processos para revisar, dos quais 4 têm irregularidades. Dois
+processos são sorteados, sem reposição, para revisão detalhada nesta semana.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de que os dois processos sorteados tenham irregularidades?
+  \item Qual a probabilidade de que \emph{nenhum} dos dois tenha irregularidade?
+  \item Refaça o item (a) supondo, em vez disso, que o sorteio fosse \emph{com} reposição (o
+    primeiro processo sorteado volta para o conjunto antes do segundo sorteio). Compare com o
+    resultado original e explique a diferença.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Independência: verificação numérica)}
+
+Em uma pesquisa com 200 pequenas empresas, 120 são do setor de comércio e 60 relataram ter
+acessado alguma linha de crédito subsidiado no último ano. Dessas 60, 36 são do setor de comércio.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(\text{comércio})$, $P(\text{acessou crédito})$ e
+    $P(\text{comércio}\cap\text{acessou crédito})$.
+  \item Verifique se $P(\text{comércio}\cap\text{acessou crédito}) = P(\text{comércio}) \times
+    P(\text{acessou crédito})$. Setor e acesso a crédito são independentes nesta amostra?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Mutuamente exclusivos vs. independentes: discussão numérica)}
+
+Considere dois eventos $A$ e $B$, com $P(A)=0{,}4$ e $P(B)=0{,}5$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Se $A$ e $B$ forem mutuamente exclusivos, qual é $P(A\cap B)$? E $P(A\mid B)$?
+  \item Se $A$ e $B$ forem independentes, qual é $P(A\cap B)$? E $P(A\mid B)$?
+  \item É possível que $A$ e $B$, com essas probabilidades individuais, sejam \emph{ao mesmo
+    tempo} mutuamente exclusivos e independentes? (Dica: compare os dois valores de $P(A\cap B)$
+    encontrados acima e o que a definição de independência exigiria de $P(A\mid B)$ se
+    $P(A\cap B)=0$.)
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: independência é simétrica)}
+
+Suponha $P(A\cap B) = P(A)P(B)$ (definição de independência), com $P(A)>0$ e $P(B)>0$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que $P(A\mid B) = P(A)$.
+  \item Mostre que $P(B\mid A) = P(B)$ (ou seja, a independência é uma relação simétrica: se $A$
+    é independente de $B$, então $B$ também é independente de $A$, não é preciso verificar as
+    duas direções separadamente na prática).
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Um analista de crédito assume, por conveniência de cálculo, que a inadimplência de diferentes
+tomadores de um mesmo banco é independente entre si. Escreva um parágrafo explicando por que essa
+suposição pode ser razoável em tempos normais, mas perigosa durante uma crise econômica
+generalizada, e que tipo de risco para o banco fica escondido quando essa suposição é usada sem
+qualificação.
+\end{questao}
+
+\end{document}

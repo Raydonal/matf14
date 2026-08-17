@@ -1,0 +1,16 @@
+book_filename: "livro-matf14"
+delete_merged_file: true
+output_dir: "."
+new_session: yes
+rmd_files: [
+  "index.Rmd",
+  "01-descritiva.Rmd",
+  "02-probabilidade.Rmd",
+  "03-va-discretas.Rmd",
+  "04-va-continuas.Rmd",
+  "05-revisao-calculo.Rmd",
+  "06-formulario.Rmd"
+]
+language:
+  ui:
+    chapter_name: "Capítulo "

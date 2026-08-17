@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 05: Espaço amostral, eventos e contagem}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 05}{Espaço amostral, eventos, axiomas de probabilidade e métodos de contagem (Cap. 2, Aulas 09--10)}
+
+\begin{questao}{1} \textbf{(Espaço amostral e eventos: carteira de dois ativos)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $\Omega = \{A,E,B\}\times\{A,E,B\} = \{(A,A),(A,E),(A,B),(E,A),(E,E),(E,B),(B,A),(B,E),(B,B)\}$,
+    com $\#\Omega = 3\times 3 = 9$ resultados.
+  \item $C = \{(A,A),(E,E),(B,B)\}$ (mesmo desempenho para os dois).
+  \item $D = \{(A,A),(A,E),(A,B),(E,A),(B,A)\}$ (pelo menos um em Alta). $C\cap D = \{(A,A)\}
+    \ne\emptyset$: $C$ e $D$ \textbf{não} são mutuamente exclusivos (o resultado $(A,A)$ pertence a
+    ambos).
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Axiomas e regra da adição: risco cambial e de juros)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $P(D\cup J) = P(D)+P(J)-P(D\cap J) = 0{,}45+0{,}30-0{,}20 = 0{,}55$.
+  \item $P((D\cup J)^c) = 1 - P(D\cup J) = 1-0{,}55 = 0{,}45$.
+  \item O evento contado duas vezes é a interseção $D\cap J$ ("os dois ocorrem juntos"), ao somar
+    $P(D)+P(J)$ diretamente, os cenários em que ambos ocorrem são contabilizados uma vez dentro de
+    $P(D)$ e novamente dentro de $P(J)$, inflando o resultado; por isso a interseção precisa ser
+    subtraída uma vez.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Contagem: formação de carteira de ações)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $\binom{12}{4} = \dfrac{12!}{4!\,8!} = 495$.
+  \item Escolher 2 das 3 bancárias, $\binom{3}{2}=3$, e 2 das 9 não bancárias, $\binom{9}{2}=36$;
+    pelo princípio multiplicativo, $3\times 36 = 108$ carteiras.
+  \item $P = \dfrac{108}{495} \approx 0{,}218$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Princípio multiplicativo: senhas de acesso a um sistema bancário)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Senha: $10\times10\times10\times10=10^4=10.000$ possibilidades (repetição permitida).
+    Pergunta: 5 opções. Total: $10.000\times 5 = 50.000$ combinações.
+  \item Sem repetição: $10\times 9\times 8\times 7 = 5.040$ senhas possíveis (permutação de 4 entre
+    10 dígitos). A proibição \textbf{diminui} a segurança contra tentativa aleatória: há menos
+    senhas possíveis ($5.040 < 10.000$), então um atacante testando ao acaso tem, em média, mais
+    chance de acertar em menos tentativas.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: a regra da adição geral)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Todo resultado $\omega\in A\cup B$ está em $A$ ou em $B$ (ou ambos). Se $\omega\in A$ e
+    $\omega\notin B$, então $\omega\in A\cap B^c$. Se $\omega\in A$ e $\omega\in B$, então
+    $\omega\in A\cap B$. Se $\omega\notin A$ e $\omega\in B$, então $\omega\in A^c\cap B$. Esses
+    três casos são exaustivos e mutuamente exclusivos entre si (nenhum resultado satisfaz dois
+    deles ao mesmo tempo, pois "$\omega\in A$" e "$\omega\notin A$" são mutuamente exclusivos), logo
+    $A\cup B = (A\cap B^c)\cup(A\cap B)\cup(A^c\cap B)$, união disjunta.
+  \item Todo $\omega\in A$ está em $B$ ou não está: se $\omega\in B$, $\omega\in A\cap B$; se
+    $\omega\notin B$, $\omega\in A\cap B^c$. Esses dois casos são mutuamente exclusivos e cobrem
+    todo $A$, logo $A=(A\cap B^c)\cup(A\cap B)$, disjunta, e pelo axioma de aditividade,
+    $P(A)=P(A\cap B^c)+P(A\cap B)$, ou seja, $P(A\cap B^c) = P(A) - P(A\cap B)$.
+  \item Pelo item (a), $A\cup B$ é união disjunta de três eventos, logo, pelo axioma de
+    aditividade,
+    $$
+    P(A\cup B) = P(A\cap B^c) + P(A\cap B) + P(A^c\cap B).
+    $$
+    Por simetria com o item (b) (trocando os papéis de $A$ e $B$), $P(A^c\cap B) = P(B)-P(A\cap
+    B)$. Substituindo $P(A\cap B^c)=P(A)-P(A\cap B)$ (item b) e $P(A^c\cap B)=P(B)-P(A\cap B)$:
+    $$
+    P(A\cup B) = \big[P(A)-P(A\cap B)\big] + P(A\cap B) + \big[P(B)-P(A\cap B)\big]
+    = P(A)+P(B)-P(A\cap B),
+    $$
+    como queríamos demonstrar.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

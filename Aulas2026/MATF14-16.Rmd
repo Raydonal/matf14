@@ -1,0 +1,105 @@
+---
+title: "Revisão intermediária: Unidades 1 e 2"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "29/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 16: Revisão intermediária
+
+## Unidade 1 (já avaliada em P1) e Unidade 2 (entra em P2, junto com a Unidade 3)
+
+---
+
+## Mapa da Unidade 1: Estatística Descritiva
+
+| Tópico | Fórmula-chave |
+|---|---|
+| Média | \(\bar x = \frac1n\sum_i x_i\) |
+| Mediana | valor central dos dados ordenados |
+| Quartis / IQR | \(Q_1,Q_2,Q_3\); \(IQR=Q_3-Q_1\) |
+| Variância | \(\mathrm{Var}(X)=\frac1n\sum_i(x_i-\bar x)^2\) |
+| Desvio padrão | \(dp(X)=\sqrt{\mathrm{Var}(X)}\) |
+| CV | \(dp(X)/\bar x\) |
+| Correlação | \(r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2}\sqrt{\sum(y_i-\bar y)^2}}\) |
+| Assimetria | 3º momento padronizado |
+
+---
+
+## Mapa da Unidade 2: Probabilidade
+
+| Tópico | Fórmula-chave |
+|---|---|
+| Axiomas | \(P(A)\ge0\), \(P(\Omega)=1\), aditividade |
+| Adição geral | \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\) |
+| Equiprovável | \(P(A)=\#A/\#\Omega\) |
+| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) |
+| Condicional | \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\) |
+| Independência | \(P(A\cap B)=P(A)P(B)\) |
+| Prob. total | \(P(A)=\sum_i P(A\mid B_i)P(B_i)\) |
+| Bayes | \(P(B_i\mid A)=\frac{P(A\mid B_i)P(B_i)}{\sum_j P(A\mid B_j)P(B_j)}\) |
+
+---
+
+## Os 5 erros mais comuns em prova (edições anteriores)
+
+1. Confundir divisor \(n\) (descritiva, usado neste curso) com \(n-1\) (o `var()` do R).
+2. Aplicar \(P(A\cup B)=P(A)+P(B)\) sem checar se \(A,B\) são mutuamente exclusivos.
+3. Confundir "mutuamente exclusivos" com "independentes" (são opostos, não sinônimos, quando
+   ambas têm probabilidade positiva).
+4. Esquecer de calcular \(P(A)\) (probabilidade total) antes de aplicar Bayes.
+5. Interpretar \(r\approx 0\) como "não há relação nenhuma", ignorando que \(r\) só mede relação
+   **linear**.
+
+---
+
+## Discussão: a prova não é só conta
+
+Nas provas anteriores desta disciplina, a diferença entre uma resposta de nota alta e uma de nota
+mediana raramente está no cálculo em si: está na **interpretação** que acompanha o número.
+Reserve um tempo para responder, sem consultar nada, cada uma destas perguntas de síntese:
+
+**1.** Se uma questão pedir para você calcular uma correlação e depois perguntar "isso prova que
+\(X\) causa \(Y\)?", que resposta em uma frase você daria, e que exemplo alternativo (variável de
+confusão) você citaria para justificá-la?
+
+**2.** Se uma questão de Bayes pedir a probabilidade de uma "causa" dado um "sintoma"/"evidência",
+e você só tiver \(P(\text{sintoma}\mid\text{causa})\), que passo intermediário você **precisa**
+calcular antes de aplicar a fórmula final?
+
+**3.** Escolha, de memória, uma das cinco perguntas de abertura da Aula 01 (fundo de investimento,
+pesquisa eleitoral, inflação, escore de crédito, seguro para jovens) e escreva, em três frases,
+como você a responderia hoje, usando pelo menos dois conceitos das Unidades 1-2.
+
+---
+
+## Checklist de estudo
+
+- P1 (Unidade 1) já foi aplicada: use as Listas 01-04 para revisão de erros, não mais para
+  preparação.
+- P2 cobrirá as Unidades 2 **e** 3 juntas: continue as Listas 05-08 (Probabilidade) e, ao final da
+  Unidade 3, as Listas 09-10 (VA discretas), antes da data oficial de P2.
+- Revise os exemplos "leitura econômica" e os blocos de discussão dos Capítulos 1-2 do livro-texto:
+  a prova cobra interpretação, não só cálculo.
+
+---
+
+class: inverse, center, middle
+
+# Seguimos para a Unidade 3
+
+## P2 (Unidades 2 e 3) só acontece ao final dela: aproveite para consolidar Probabilidade agora

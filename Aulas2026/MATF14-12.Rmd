@@ -1,0 +1,143 @@
+---
+title: "Independência estatística"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "15/04/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+```
+
+class: inverse, center, middle
+
+# Aula 12: Independência estatística
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Duas afirmações parecidas, com significados opostos
+
+> "Esses dois eventos nunca acontecem juntos" (mutuamente exclusivos) e "esses dois eventos não
+> têm nada a ver um com o outro" (independentes) soam parecidas em português, mas matematicamente
+> são quase opostas. Guarde essa tensão para o fim do bloco de teoria.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definição
+
+\(A\) e \(B\) são **independentes** se
+
+$$
+P(A\cap B) = P(A)\,P(B)
+$$
+
+equivalente a \(P(A\mid B)=P(A)\) (saber que \(B\) ocorreu não muda a probabilidade de \(A\)).
+
+--
+
+## Independência \(\ne\) mutuamente exclusivos
+
+Se \(A\cap B=\emptyset\) e \(P(A),P(B)>0\): saber que \(A\) ocorreu implica \(P(B\mid A)=0\ne P(B)\),
+**o oposto** de independência. São conceitos frequentemente confundidos, mas incompatíveis (com
+probabilidades positivas), exatamente a tensão da provocação inicial.
+
+---
+
+## Independência \(\ne\) ausência de causa
+
+Independência estatística é uma propriedade de **probabilidades**, não de mecanismos causais.
+Dois eventos podem ser dependentes sem que um cause o outro (confundidor comum); e a definição
+\(P(A\cap B)=P(A)P(B)\) é o que entra nas contas, não uma noção intuitiva de causalidade.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Testando independência com dados
+
+Dois lançamentos de moeda (justa) são independentes por construção física. Já a escolaridade e o
+desemprego (Aula 11) **não são** independentes:
+
+```{r teste-independencia}
+p_desemp <- 110/500
+p_superior <- 250/500
+p_desemp_e_superior_indep <- p_desemp * p_superior   # se fossem independentes
+p_desemp_e_superior_real  <- 40/500                    # valor real observado
+
+c(esperado_sob_independencia = p_desemp_e_superior_indep,
+  observado = p_desemp_e_superior_real)
+```
+
+Os valores diferem (\(0{,}11\) vs. \(0{,}08\)), evidência de dependência entre escolaridade e situação
+ocupacional nesta população.
+
+---
+
+## Independência em séries de eventos
+
+Se \(A_1,\ldots,A_n\) são mutuamente independentes,
+
+$$
+P(A_1\cap A_2\cap\cdots\cap A_n) = P(A_1)\times P(A_2)\times\cdots\times P(A_n)
+$$
+
+Base da distribuição **Binomial** (Cap. 3): \(n\) tentativas independentes, mesma probabilidade de
+sucesso em cada uma.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a tensão da abertura
+
+**1.** Explique, com suas palavras e sem símbolos, por que "mutuamente exclusivos" e
+"independentes" são conceitos quase opostos, não sinônimos, mesmo soando parecidos em linguagem
+comum.
+
+**2.** Dê um exemplo de dois eventos econômicos que você esperaria ser aproximadamente
+independentes, e outro par que você esperaria fortemente dependente. Justifique sua intuição em
+cada caso.
+
+---
+
+## Rodada 2: dependência que muda por subgrupo
+
+**3.** É possível dois eventos serem independentes *em uma população* e dependentes *em outra*? Dê
+um exemplo (pode ser hipotético envolvendo faixa de renda ou região).
+
+**4.** Um analista de crédito assume, por conveniência, que a inadimplência de dois empréstimos
+diferentes do mesmo tomador é independente. Em uma crise econômica generalizada, essa suposição
+continua razoável? Que risco para o banco essa suposição incorreta esconde, mesmo que cada
+inadimplência individual pareça pouco provável?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (20/04): Laboratório
+
+## Simulação de probabilidade em R

@@ -1,0 +1,99 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 04: Correlação, assimetria e curtose}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 04}{Coeficiente de correlação, assimetria e curtose: fecha a Unidade 1 (Cap. 1, Aula 08)}
+
+\begin{questao}{1} \textbf{(Interpretação de $r$: gastos com propaganda e vendas)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Existe uma associação linear forte e positiva entre gasto em propaganda e faturamento do
+    mês seguinte: lojas que gastaram mais tenderam a faturar mais no mês seguinte, e essa
+    tendência é bastante consistente (próxima de uma reta).
+  \item Lojas maiores (mais movimento, mais clientes de base) podem gastar mais em propaganda \emph{e}
+    faturar mais, simplesmente por serem maiores, sem que a propaganda seja a causa do
+    faturamento adicional. Porte da loja é uma variável de confusão plausível.
+  \item Um experimento simples: sortear aleatoriamente, entre as lojas, quais recebem um aumento
+    no orçamento de propaganda e quais mantêm o orçamento atual, e comparar o faturamento
+    subsequente entre os dois grupos. Ao aleatorizar quem recebe o "tratamento" (mais propaganda),
+    o porte da loja fica balanceado entre os grupos, permitindo isolar o efeito da propaganda.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Correlação quase nula não é ausência de relação)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $r$ mede exclusivamente associação \textbf{linear}. Sim, isso limita a conclusão: $r\approx 0$
+    só permite concluir que não há uma tendência de reta entre as duas variáveis, não permite
+    concluir ausência de qualquer relação, inclusive relações fortes porém não lineares.
+  \item Por exemplo, se vendas de imóveis caem quando os juros sobem \emph{ou} quando os juros caem
+    demais (por sinalizar recessão/instabilidade), e sobem quando os juros estão em um patamar
+    intermediário "saudável", uma relação em forma de "U invertido", os pontos altos e baixos de
+    juros associados a vendas baixas cancelariam a inclinação de uma reta ajustada aos dados,
+    produzindo $r$ próximo de zero mesmo com uma relação sistemática e previsível (só que curva,
+    não linear).
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Assimetria: comparando duas distribuições salariais)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item X: histograma aproximadamente simétrico, em formato de sino, centrado em R\$ 5.000. Y:
+    histograma com um pico concentrado em valores mais baixos e uma cauda longa se estendendo
+    para a direita (poucos salários muito altos), mesmo com média e desvio padrão idênticos aos
+    de X.
+  \item Na empresa Y (assimetria positiva forte): como vimos na Aula 04/Cap. 1, em distribuições
+    assimétricas à direita a relação usual é moda $<$ mediana $<$ média, a mediana fica abaixo da
+    média, puxada para baixo pela concentração de valores menores, enquanto a média é puxada para
+    cima pela cauda de salários altos.
+  \item Um reajuste fixo (somar a mesma constante $k$ a todos os salários) desloca toda a
+    distribuição para a direita, mas \textbf{não altera sua forma}: a assimetria, que mede o
+    desequilíbrio da distribuição em torno da própria média (uma quantidade adimensional,
+    normalizada pelo desvio padrão ao cubo), permanece a mesma, um reajuste fixo não torna a
+    distribuição salarial mais nem menos assimétrica.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Curtose e risco financeiro)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Está \textbf{subestimando}: curtose 7 (bem acima de 3) indica caudas mais pesadas que a Normal, eventos extremos (quedas ou altas bruscas) ocorrem com frequência maior do que um modelo
+    Normal preveria. Assumir Normal para Q leva a subestimar o risco de eventos extremos.
+  \item Porque a curtose afeta diretamente a frequência esperada de perdas muito grandes (o que
+    interessa à gestão de risco, como no cálculo de um Value-at-Risk), enquanto a média de retorno
+    sozinha nada diz sobre a probabilidade desses eventos raros e extremos.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: invariância de $r$ à mudança de unidade)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Por definição, $\overline{X'} = \frac{1}{n}\sum_{i=1}^n x_i' = \frac{1}{n}\sum_{i=1}^n
+    (ax_i+b) = a\left(\frac{1}{n}\sum_i x_i\right) + b = a\bar x + b$. Logo,
+    $$
+    x_i' - \overline{X'} = (ax_i+b) - (a\bar x + b) = a(x_i-\bar x).
+    $$
+  \item Substituindo $x_i'-\overline{X'} = a(x_i-\bar x)$ na definição de $r_{X'Y}$:
+    $$
+    r_{X'Y} = \frac{\sum_i a(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i a^2(x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}}
+    = \frac{a\sum_i (x_i-\bar x)(y_i-\bar y)}{a\sqrt{\sum_i (x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}},
+    $$
+    usando que $a>0 \Rightarrow \sqrt{a^2} = a$, que sai do somatório do denominador (é constante em
+    $i$). Como $a>0$ aparece multiplicando tanto o numerador quanto o denominador, ele se cancela:
+    $$
+    r_{X'Y} = \frac{\sum_i (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}} = r_{XY}.
+    $$
+    Portanto $r$ é invariante a mudanças lineares de escala com coeficiente positivo, trocar
+    dólares por reais (multiplicando por uma cotação fixa positiva) não altera o valor da
+    correlação medida.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

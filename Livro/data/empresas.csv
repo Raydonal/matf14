@@ -1,0 +1,107 @@
+Empresa,constituicao,porte,empregados99,faturamento98,faturamento99,idade,cidade,atividade,setor,regiao
+1,Ltda.,Pequena,9,64302,74392,15,São Paulo,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+2,S.A.,Média,31,177330,251488,5,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+3,Ltda.,Grande,119,449546,369409,21,Salvador,Outros artigos de material plástico,Outros ,nordeste
+4,Ltda.,Média,35,200223,230843,12,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+5,Ltda.,Pequena,6,86559,98436,18,Salvador,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",nordeste
+6,S.A.,Grande,46,413846,408905,25,Salvador,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",nordeste
+7,Individual,Média,23,208081,226582,12,São Paulo,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+8,Ltda.,Grande,162,433488,395680,19,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+9,Individual,Pequena,7,98232,120310,24,Porto Alegre,Outros artigos de material plástico,Outros ,sul
+10,Ltda.,Pequena,6,174097,121765,9,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+11,Ltda.,Média,34,246168,191222,35,Salvador,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",nordeste
+12,S.A.,Grande,243,376339,453692,3,São Paulo,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+13,Ltda.,Média,35,182871,255486,37,Rio de Janeiro,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+14,Individual,Pequena,7,136102,197355,3,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+15,S.A.,Grande,130,386430,447856,42,Salvador,Laminados plásticos,Laminados plásticos,nordeste
+16,Individual,Pequena,8,147440,211125,4,Salvador,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,nordeste
+17,S.A.,Grande,194,446120,398433,5,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+18,S.A.,Média,35,210984,235375,15,São Paulo,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+19,S.A.,Média,13,238367,222794,18,Curitiba,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sul
+20,S.A.,Grande,225,430256,425462,23,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+21,Ltda.,Pequena,3,170758,190567,29,São Paulo,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+22,S.A.,Grande,145,410329,456073,18,São Paulo,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+23,Ltda.,Média,11,236743,241167,4,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+24,Individual,Pequena,7,174148,188445,5,Rio de Janeiro,Outros artigos de material plástico,Outros ,sudeste
+25,Ltda.,Pequena,2,182319,190834,27,São Paulo,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+26,S.A.,Grande,146,463107,405445,23,Curitiba,Artigos para embalagens e acondicionamento,Embalagens ,sul
+27,S.A.,Média,39,252804,232567,22,Salvador,Outros artigos de material plástico,Outros ,nordeste
+28,Individual,Pequena,4,161013,232450,4,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+29,S.A.,Grande,177,415383,455877,18,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+30,Ltda.,Média,34,233940,256063,3,Salvador,Laminados plásticos,Laminados plásticos,nordeste
+31,S.A.,Grande,174,434627,474724,16,Salvador,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,nordeste
+32,Ltda.,Média,30,234434,256733,30,Belo Horizonte,Laminados plásticos,Laminados plásticos,sudeste
+33,S.A.,Média,39,245942,255101,10,Salvador,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,nordeste
+34,S.A.,Grande,167,425721,492244,3,São Paulo,Outros artigos de material plástico,Outros ,sudeste
+35,Individual,Média,43,209321,317034,14,São Paulo,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+36,S.A.,Grande,122,453339,478053,14,Belo Horizonte,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+37,S.A.,Média,32,229458,307489,19,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+38,S.A.,Grande,91,472682,475937,12,São Paulo,Outros artigos de material plástico,Outros ,sudeste
+39,S.A.,Média,29,291238,253350,28,Belo Horizonte,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+40,S.A.,Grande,220,497160,457824,10,Salvador,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",nordeste
+41,S.A.,Média,44,283963,260987,24,Salvador,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,nordeste
+42,Ltda.,Grande,206,483025,488012,4,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+43,S.A.,Grande,206,466743,516386,10,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+44,Individual,Média,50,291847,255665,19,Belo Horizonte,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+45,Individual,Média,11,243888,324430,28,Belo Horizonte,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+46,Ltda.,Média,30,283705,288154,10,Porto Alegre,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sul
+47,S.A.,Média,18,271651,300492,11,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+48,S.A.,Média,23,274984,300945,19,Porto Alegre,Artigos para embalagens e acondicionamento,Embalagens ,sul
+49,S.A.,Média,22,273963,307433,21,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+50,Ltda.,Média,38,267098,318066,8,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+51,S.A.,Média,23,321492,264055,3,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+52,Individual,Média,42,307483,281512,12,São Paulo,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+53,S.A.,Média,32,316176,276904,27,Curitiba,Artigos de material plástico para uso industrial,Industrial,sul
+54,S.A.,Média,27,360921,232339,8,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+55,Ltda.,Média,30,348566,249779,29,Salvador,Laminados plásticos,Laminados plásticos,nordeste
+56,S.A.,Média,44,326889,273815,16,Belo Horizonte,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+57,S.A.,Média,36,272753,331536,10,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+58,S.A.,Média,42,259690,350229,39,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+59,Ltda.,Média,35,326039,284077,25,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+60,S.A.,Média,38,272090,345876,20,São Paulo,Outros artigos de material plástico,Outros ,sudeste
+61,S.A.,Média,24,289796,328605,15,Curitiba,Laminados plásticos,Laminados plásticos,sul
+62,Individual,Média,28,260877,359387,3,Porto Alegre,Artigos de material plástico para uso industrial,Industrial,sul
+63,S.A.,Média,17,264334,356993,22,Belo Horizonte,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+64,Ltda.,Média,25,320095,315930,29,São Paulo,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+65,S.A.,Média,23,313234,326302,4,Belo Horizonte,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+66,S.A.,Média,35,348585,294432,27,Salvador,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,nordeste
+67,S.A.,Média,47,356503,305449,3,Rio de Janeiro,Outros artigos de material plástico,Outros ,sudeste
+68,S.A.,Média,23,299018,366239,7,Rio de Janeiro,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+69,S.A.,Média,21,370828,301754,25,Belo Horizonte,Artigos de material plástico para uso industrial,Industrial,sudeste
+70,S.A.,Média,60,383832,290869,26,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+71,Ltda.,Média,20,315350,360052,15,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+72,S.A.,Média,17,368456,307607,30,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+73,Ltda.,Média,56,335385,340748,9,Curitiba,Artigos para embalagens e acondicionamento,Embalagens ,sul
+74,S.A.,Média,46,310372,370264,5,São Paulo,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+75,Ltda.,Média,41,319726,370787,15,Porto Alegre,Laminados plásticos,Laminados plásticos,sul
+76,Ltda.,Média,24,360593,349335,21,Rio de Janeiro,Laminados plásticos,Laminados plásticos,sudeste
+77,Ltda.,Média,28,348508,362067,2,Porto Alegre,Artigos para embalagens e acondicionamento,Embalagens ,sul
+78,S.A.,Média,30,386554,328146,2,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+79,Ltda.,Média,46,344680,375665,15,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+80,Ltda.,Média,21,368768,351818,18,Salvador,Outros artigos de material plástico,Outros ,nordeste
+81,Individual,Média,46,398047,326364,9,Porto Alegre,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sul
+82,Ltda.,Média,24,295054,432277,34,Porto Alegre,Artigos de material plástico para uso industrial,Industrial,sul
+83,S.A.,Média,16,400795,327650,17,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+84,Ltda.,Média,29,367105,362665,14,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+85,S.A.,Média,27,413024,320310,8,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+86,S.A.,Média,53,383459,352395,5,Salvador,Artigos para embalagens e acondicionamento,Embalagens ,nordeste
+87,S.A.,Média,45,321329,415487,10,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+88,Ltda.,Média,31,407572,330483,25,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+89,S.A.,Média,44,346294,398469,17,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+90,S.A.,Média,40,327276,420185,29,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+91,S.A.,Média,34,327275,430286,10,São Paulo,Outros artigos de material plástico,Outros ,sudeste
+92,Individual,Média,37,353203,407508,22,Salvador,Artigos de material plástico para uso industrial,Industrial,nordeste
+93,S.A.,Média,20,434709,339250,11,Rio de Janeiro,Artigos de material plástico para uso industrial,Industrial,sudeste
+94,S.A.,Média,34,434240,347966,8,Belo Horizonte,Outros artigos de material plástico,Outros ,sudeste
+95,S.A.,Média,21,398195,388490,19,São Paulo,Artigos de material plástico para uso domiciliar e pessoal,Domiciliar e pessoal,sudeste
+96,Ltda.,Média,34,410251,379857,20,Rio de Janeiro,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+97,S.A.,Média,32,400894,389499,29,Salvador,Outros artigos de material plástico,Outros ,nordeste
+98,S.A.,Grande,206,531233,472608,24,São Paulo,Artigos de material plástico para uso industrial,Industrial,sudeste
+99,S.A.,Grande,176,526883,550845,4,São Paulo,Laminados plásticos,Laminados plásticos,sudeste
+100,S.A.,Grande,320,569711,521585,3,Salvador,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",nordeste
+101,S.A.,Grande,230,503201,560760,6,Rio de Janeiro,Outros artigos de material plástico,Outros ,sudeste
+102,S.A.,Grande,189,569803,589700,5,Belo Horizonte,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste
+103,Individual,Pequena,15,238903,257606,9,Belo Horizonte,Laminados plásticos,Laminados plásticos,sudeste
+104,Individual,Pequena,10,197500,213456,4,Belo Horizonte,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+105,Individual,Pequena,13,235643,243221,7,Belo Horizonte,Artigos para embalagens e acondicionamento,Embalagens ,sudeste
+102,S.A.,Grande,200,674067,685430,8,Rio de Janeiro,"Manilhas, canos e conexões de material plástico","Manilhas, canos e conexões ",sudeste

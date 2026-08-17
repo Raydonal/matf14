@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.3 Apresentação tabular e principais tipos de representação gráfica | Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.3 Apresentação tabular e principais tipos de representação gráfica | Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.3 Apresentação tabular e principais tipos de representação gráfica | Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tipos-variaveis.html"/>
+<link rel="next" href="tendencia-central.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><strong>Estatística Econômica I</strong></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path="para-quem-é-este-livro.html"><a href="para-quem-é-este-livro.html"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><a href="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path="como-o-material-está-organizado.html"><a href="como-o-material-está-organizado.html"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><a href="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path="convenções-tipográficas.html"><a href="convenções-tipográficas.html"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path="agradecimentos.html"><a href="agradecimentos.html"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a></li>
+<li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-frequência"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas de frequência</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.2</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.3</b> Gráficos para variáveis qualitativas</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis quantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.1</b> Um exemplo com dados da própria turma</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#quantis-distância-interquartílica-e-boxplot"><i class="fa fa-check"></i><b>1.5.1</b> Quantis, distância interquartílica e boxplot</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.2</b> Desvio padrão, variância e coeficiente de variação</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a></li>
+<li class="chapter" data-level="1.8" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.8</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Introdução: o que significa “probabilidade”</a></li>
+<li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#operações-com-eventos-revisão-de-teoria-de-conjuntos"><i class="fa fa-check"></i><b>2.2.1</b> Operações com eventos (revisão de teoria de conjuntos)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Conceitos e propriedades de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#modelo-de-espaço-equiprovável-e-métodos-de-contagem"><i class="fa fa-check"></i><b>2.3.1</b> Modelo de espaço equiprovável e métodos de contagem</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.4</b> Probabilidade condicional</a></li>
+<li class="chapter" data-level="2.5" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.5</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.5.1</b> Teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.6</b> Independência estatística</a></li>
+<li class="chapter" data-level="2.7" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.7</b> Teorema de Bayes</a></li>
+<li class="chapter" data-level="2.8" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.8</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
+<li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#definição"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperança-e-da-variância"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.5</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a></li>
+<li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
+<li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
+<li class="chapter" data-level="4.4.3" data-path="modelos-continuos.html"><a href="modelos-continuos.html#a-regra-empírica-6895997"><i class="fa fa-check"></i><b>4.4.3</b> A regra empírica (68–95–99,7)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.5</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apêndices</b></span></li>
+<li class="chapter" data-level="A" data-path="revisao-de-calculo.html"><a href="revisao-de-calculo.html"><i class="fa fa-check"></i><b>A</b> Revisão de Cálculo</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="por-que-integrais-aparecem-em-probabilidade.html"><a href="por-que-integrais-aparecem-em-probabilidade.html"><i class="fa fa-check"></i><b>A.1</b> Por que integrais aparecem em probabilidade</a></li>
+<li class="chapter" data-level="A.2" data-path="derivadas-o-essencial.html"><a href="derivadas-o-essencial.html"><i class="fa fa-check"></i><b>A.2</b> Derivadas: o essencial</a></li>
+<li class="chapter" data-level="A.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>A.3</b> Integrais: o essencial</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>A.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
+<li class="chapter" data-level="A.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-cálculo-versão-prática"><i class="fa fa-check"></i><b>A.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="A.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impróprias-intervalo-infinito"><i class="fa fa-check"></i><b>A.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>A.4</b> Exercício de fixação</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="formulario.html"><a href="formulario.html"><i class="fa fa-check"></i><b>B</b> Fórmulário e tabelas de referência</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="capítulo-1-estatística-descritiva.html"><a href="capítulo-1-estatística-descritiva.html"><i class="fa fa-check"></i><b>B.1</b> Capítulo 1: Estatística Descritiva</a></li>
+<li class="chapter" data-level="B.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>B.2</b> Capítulo 2: Probabilidade</a></li>
+<li class="chapter" data-level="B.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>B.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
+<li class="chapter" data-level="B.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>B.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
+<li class="chapter" data-level="B.5" data-path="apêndice-a-cálculo-resumo.html"><a href="apêndice-a-cálculo-resumo.html"><i class="fa fa-check"></i><b>B.5</b> Apêndice A: Cálculo (resumo)</a></li>
+<li class="chapter" data-level="B.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>B.6</b> Tabela: valores selecionados da Normal padrão</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tabelas-graficos" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Apresentação tabular e principais tipos de representação gráfica<a href="tabelas-graficos.html#tabelas-graficos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="tabelas-de-frequência" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Tabelas de frequência<a href="tabelas-graficos.html#tabelas-de-frequência" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para uma variável qualitativa (ou quantitativa discreta com poucos valores), a <strong>tabela de
+frequências</strong> conta quantas unidades caem em cada categoria.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tabelas-graficos.html#cb3-1" tabindex="-1"></a>tab_setor <span class="ot">&lt;-</span> empresas <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="tabelas-graficos.html#cb3-2" tabindex="-1"></a>  <span class="fu">count</span>(setor, <span class="at">name =</span> <span class="st">&quot;f&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="tabelas-graficos.html#cb3-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="tabelas-graficos.html#cb3-4" tabindex="-1"></a>    <span class="st">`</span><span class="at">f (%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> f <span class="sc">/</span> <span class="fu">sum</span>(f), <span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="tabelas-graficos.html#cb3-5" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="tabelas-graficos.html#cb3-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(f))</span>
+<span id="cb3-7"><a href="tabelas-graficos.html#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="tabelas-graficos.html#cb3-8" tabindex="-1"></a>tab_setor <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="tabelas-graficos.html#cb3-9" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&quot;Distribuição de frequências das empresas por setor&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="tabelas-graficos.html#cb3-10" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tabela-freq-setor">Table 1.2: </span>Distribuição de frequências das empresas por setor
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+setor
+</th>
+<th style="text-align:right;">
+f
+</th>
+<th style="text-align:right;">
+f (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Embalagens
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+29.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Industrial
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laminados plásticos
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Domiciliar e pessoal
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+15.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Outros
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+12.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Manilhas, canos e conexões
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sendo <span class="math inline">\(f_i\)</span> o número de casos na categoria <span class="math inline">\(i\)</span> e <span class="math inline">\(n = \sum_i f_i\)</span> o total de casos, a <strong>frequência
+relativa</strong> (proporção) e a <strong>porcentagem</strong> da categoria <span class="math inline">\(i\)</span> são</p>
+<p><span class="math display">\[
+p_i = \frac{f_i}{n}, \qquad \%_i = 100 \times \frac{f_i}{n}\,\%.
+\]</span></p>
+</div>
+<div id="tabelas-de-dupla-entrada" class="section level3 hasAnchor" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Tabelas de dupla entrada<a href="tabelas-graficos.html#tabelas-de-dupla-entrada" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Quando se quer estudar a relação entre duas variáveis qualitativas, usa-se uma <strong>tabela de
+contingência</strong> (dupla entrada).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tabelas-graficos.html#cb4-1" tabindex="-1"></a>tab_dupla <span class="ot">&lt;-</span> prefeitos <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="tabelas-graficos.html#cb4-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(sexo), <span class="sc">!</span><span class="fu">is.na</span>(Regiao)) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="tabelas-graficos.html#cb4-3" tabindex="-1"></a>  <span class="fu">count</span>(Regiao, sexo) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="tabelas-graficos.html#cb4-4" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sexo, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>)</span>
+<span id="cb4-5"><a href="tabelas-graficos.html#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="tabelas-graficos.html#cb4-6" tabindex="-1"></a>tab_dupla <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="tabelas-graficos.html#cb4-7" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&quot;Prefeitos eleitos em 2020, por região e sexo&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="tabelas-graficos.html#cb4-8" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tabela-contingencia">Table 1.3: </span>Prefeitos eleitos em 2020, por região e sexo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Regiao
+</th>
+<th style="text-align:right;">
+Feminino
+</th>
+<th style="text-align:right;">
+Masculino
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 - Norte
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+349
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2 - Nordeste
+</td>
+<td style="text-align:right;">
+297
+</td>
+<td style="text-align:right;">
+1427
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3 - Sudeste
+</td>
+<td style="text-align:right;">
+118
+</td>
+<td style="text-align:right;">
+1394
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4 - Sul
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+1041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5 - Centro-Oeste
+</td>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:right;">
+386
+</td>
+</tr>
+</tbody>
+</table>
+<div class="caixa-economia"><strong>Leitura econômica</strong>, essa tabela é, sozinha, uma
+evidência quantitativa do desequilíbrio de gênero na representação política municipal brasileira:
+em toda região, o número de prefeitas eleitas é uma fração pequena do de prefeitos. É o mesmo tipo
+de leitura usada para discutir a diferença salarial entre homens e mulheres ("gender pay gap") no
+mercado de trabalho, uma tabela de dupla entrada simples, lida com cuidado, já comunica uma
+assimetria estrutural, antes de qualquer teste estatístico mais sofisticado.</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-gender-pay-gap"></span>
+<img src="images/gender_pay_gap.png" alt="78% das empresas britânicas pagam mais aos homens, distribuição da diferença salarial mediana por hora. Fonte: BBC, a partir de dados de 10.016 empresas." width="85%" />
+<p class="caption">
+Figure 1.1: 78% das empresas britânicas pagam mais aos homens, distribuição da diferença salarial mediana por hora. Fonte: BBC, a partir de dados de 10.016 empresas.
+</p>
+</div>
+<p>Note que essa notícia real não usa uma média nem uma mediana isoladas, usa exatamente uma tabela
+de frequências (um histograma da diferença salarial entre 900 empresas), o mesmo instrumento desta
+seção. É por isso que “78% das empresas pagam mais aos homens” é uma afirmação mais defensável do
+que “a mulher ganha X% menos, em média”: a distribuição completa mostra que a maioria das empresas
+está do mesmo lado, não apenas que a média está deslocada.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-forca-trabalho"></span>
+<img src="images/forca_trabalho_raca_sexo.jpg" alt="Taxa de participação na força de trabalho por sexo e raça, Brasil, 2012-2022. Fonte: BBC News Brasil, a partir da PNAD Contínua/IBGE." width="85%" />
+<p class="caption">
+Figure 1.2: Taxa de participação na força de trabalho por sexo e raça, Brasil, 2012-2022. Fonte: BBC News Brasil, a partir da PNAD Contínua/IBGE.
+</p>
+</div>
+<p>Esse segundo gráfico cruza <strong>três</strong> variáveis qualitativas ao mesmo tempo (sexo, raça, e o ano,
+tratado como uma sequência temporal): a tabela de dupla entrada da Seção anterior generaliza
+diretamente para mais de duas variáveis, ao custo de precisar de um gráfico de linhas múltiplas (uma
+linha por combinação sexo×raça) em vez de uma única tabela.</p>
+<p>Quando se divide cada célula pelo total da <em>linha</em> (em vez do total geral), obtém-se a frequência
+relativa <strong>condicional</strong> àquela linha, útil para comparar composições entre grupos de tamanhos
+diferentes:</p>
+<p><span class="math display">\[
+\text{Tabela: Distribuição segundo curso e sexo, \% em relação ao curso}
+\]</span></p>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+Curso
+</th>
+<th style="text-align:center;">
+Masculino
+</th>
+<th style="text-align:center;">
+Feminino
+</th>
+<th style="text-align:center;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Física
+</td>
+<td style="text-align:center;">
+100 (71%)
+</td>
+<td style="text-align:center;">
+20 (33%)
+</td>
+<td style="text-align:center;">
+120 (60%)
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Geografia
+</td>
+<td style="text-align:center;">
+40 (29%)
+</td>
+<td style="text-align:center;">
+40 (67%)
+</td>
+<td style="text-align:center;">
+80 (40%)
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Total
+</td>
+<td style="text-align:center;">
+140 (100%)
+</td>
+<td style="text-align:center;">
+60 (100%)
+</td>
+<td style="text-align:center;">
+200 (100%)
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sem essa normalização por linha, a comparação “Física tem mais homens que Geografia” mistura duas
+coisas: o curso é maior <em>e</em> mais desbalanceado por sexo. A versão condicional isola a segunda
+informação, o mesmo raciocínio, formalizado, reaparece no Capítulo 2 como probabilidade
+condicional.</p>
+</div>
+<div id="gráficos-para-variáveis-qualitativas" class="section level3 hasAnchor" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Gráficos para variáveis qualitativas<a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tabelas-graficos.html#cb5-1" tabindex="-1"></a><span class="fu">ggplot</span>(tab_setor, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(setor, f), <span class="at">y =</span> f)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="tabelas-graficos.html#cb5-2" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#0d3b54&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="tabelas-graficos.html#cb5-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb5-4"><a href="tabelas-graficos.html#cb5-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Número de empresas&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Empresas por setor de atividade&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="tabelas-graficos.html#cb5-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="01-descritiva_files/figure-html/grafico-barras-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>Gráficos de barras (ou de setores/pizza, para poucas categorias e ênfase em “fatia do total”) são
+adequados para variáveis qualitativas e discretas com poucos valores. Um erro comum em relatórios
+econômicos é usar gráfico de <strong>linha</strong> para conectar categorias sem ordem numérica (por exemplo,
+“faturamento médio por setor”, em ordem alfabética de setor), a linha sugere uma tendência
+contínua entre categorias que é pura ilusão visual.</p>
+<div class="caixa-aplicacao"><strong>Aplicação: comparação entre países</strong>: uma reportagem
+recente comparou o consumo médio de refrigerante por domicílio em quatro países: México
+(270,9 litros/ano), Brasil (76,6), Reino Unido (114) e Portugal (40).</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-refri"></span>
+<img src="images/refri_estatisticas.png" alt="Consumo médio de refrigerante por domicílio/ano, segundo pesquisa Worldpanel by Numerator." width="70%" />
+<p class="caption">
+Figure 1.3: Consumo médio de refrigerante por domicílio/ano, segundo pesquisa Worldpanel by Numerator.
+</p>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tabelas-graficos.html#cb6-1" tabindex="-1"></a>refri <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-2"><a href="tabelas-graficos.html#cb6-2" tabindex="-1"></a>  <span class="at">pais =</span> <span class="fu">c</span>(<span class="st">&quot;México&quot;</span>, <span class="st">&quot;Reino Unido&quot;</span>, <span class="st">&quot;Brasil&quot;</span>, <span class="st">&quot;Portugal&quot;</span>),</span>
+<span id="cb6-3"><a href="tabelas-graficos.html#cb6-3" tabindex="-1"></a>  <span class="at">litros =</span> <span class="fu">c</span>(<span class="fl">270.9</span>, <span class="dv">114</span>, <span class="fl">76.6</span>, <span class="dv">40</span>)</span>
+<span id="cb6-4"><a href="tabelas-graficos.html#cb6-4" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="tabelas-graficos.html#cb6-5" tabindex="-1"></a><span class="fu">ggplot</span>(refri, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(pais, litros), <span class="at">y =</span> litros)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="tabelas-graficos.html#cb6-6" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#c9971e&quot;</span>) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-7"><a href="tabelas-graficos.html#cb6-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Litros por domicílio/ano&quot;</span>,</span>
+<span id="cb6-8"><a href="tabelas-graficos.html#cb6-8" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Consumo médio de refrigerante&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="tabelas-graficos.html#cb6-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="01-descritiva_files/figure-html/grafico-refri-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
+<p>País é uma variável qualitativa nominal, e “litros por domicílio/ano” é quantitativa contínua, o
+gráfico de barras compara a variável contínua <strong>entre</strong> categorias, o mesmo papel que cumpriu o
+gráfico de empresas por setor. Note que a notícia já converteu quatro números brutos em um gráfico
+ordenado por magnitude, exatamente a regra de bom senso vista acima (<code>fct_reorder</code>), não uma
+coincidência de bom design.</p>
+</div>
+<div id="gráficos-para-variáveis-quantitativas" class="section level3 hasAnchor" number="1.3.4">
+<h3><span class="header-section-number">1.3.4</span> Gráficos para variáveis quantitativas<a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para variáveis contínuas, o <strong>histograma</strong> agrupa os valores em classes (intervalos) e mostra a
+frequência (ou densidade) em cada uma:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tabelas-graficos.html#cb7-1" tabindex="-1"></a><span class="fu">ggplot</span>(empresas, <span class="fu">aes</span>(<span class="at">x =</span> faturamento99)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="tabelas-graficos.html#cb7-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">&quot;#c9971e&quot;</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="tabelas-graficos.html#cb7-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Faturamento em 1999 (R$ mil)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de empresas&quot;</span>,</span>
+<span id="cb7-4"><a href="tabelas-graficos.html#cb7-4" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribuição do faturamento das empresas&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="tabelas-graficos.html#cb7-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="01-descritiva_files/figure-html/histograma-faturamento-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>O número de classes altera a leitura do histograma, poucas classes escondem estrutura, muitas
+introduzem ruído. Uma regra prática (não a única) é a <strong>regra de Sturges</strong>: número de classes
+<span class="math inline">\(k \approx 1 + \log_2(n)\)</span>.</p>
+<div class="caixa-r"><strong>Uso do R: bases de dados prontas para praticar</strong>, o R já vem
+com dezenas de bases de dados reais embutidas, ótimas para praticar sem precisar carregar nenhum
+arquivo externo. Uma clássica é <code>chickwts</code>: peso de pintinhos após seis semanas,
+segundo o tipo de ração recebida.</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="tabelas-graficos.html#cb8-1" tabindex="-1"></a><span class="fu">data</span>(chickwts)</span>
+<span id="cb8-2"><a href="tabelas-graficos.html#cb8-2" tabindex="-1"></a><span class="fu">hist</span>(chickwts<span class="sc">$</span>weight, <span class="at">main =</span> <span class="st">&quot;Peso de pintinhos após 6 semanas&quot;</span>,</span>
+<span id="cb8-3"><a href="tabelas-graficos.html#cb8-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Peso (gramas)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Frequência&quot;</span>, <span class="at">col =</span> <span class="st">&quot;#0d3b54&quot;</span>)</span></code></pre></div>
+<p><img src="01-descritiva_files/figure-html/chickwts-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
+<p><code>?chickwts</code> no console do R mostra a documentação completa, uma boa base para checar rapidamente
+se o número de classes escolhido “esconde” ou “inventa” estrutura, antes de aplicar a mesma
+checagem em dados econômicos reais, como o faturamento das empresas.</p>
+<p>Para séries temporais econômicas (inflação mês a mês, PIB trimestral), o gráfico natural é o
+<strong>gráfico de linha/sequência</strong>, que preserva a ordem temporal, nunca se resume uma série temporal
+a um histograma sem antes decidir se a ordem no tempo é ou não relevante para a pergunta (quase
+sempre é). O R também traz séries temporais reais prontas para uso, como <code>AirPassengers</code> (número
+mensal de passageiros de linhas aéreas nos EUA, 1949–1960), vale explorá-la com <code>plot(AirPassengers)</code>
+como exercício adicional de leitura de série temporal.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="tabelas-graficos.html#cb9-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb9-2"><a href="tabelas-graficos.html#cb9-2" tabindex="-1"></a>ipca <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-3"><a href="tabelas-graficos.html#cb9-3" tabindex="-1"></a>  <span class="at">mes =</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2024-01-01&quot;</span>), <span class="fu">as.Date</span>(<span class="st">&quot;2025-12-01&quot;</span>), <span class="at">by =</span> <span class="st">&quot;month&quot;</span>),</span>
+<span id="cb9-4"><a href="tabelas-graficos.html#cb9-4" tabindex="-1"></a>  <span class="at">variacao_pct =</span> <span class="fu">pmax</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">24</span>, <span class="at">mean =</span> <span class="fl">0.40</span>, <span class="at">sd =</span> <span class="fl">0.25</span>), <span class="dv">2</span>), <span class="sc">-</span><span class="fl">0.10</span>)</span>
+<span id="cb9-5"><a href="tabelas-graficos.html#cb9-5" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="tabelas-graficos.html#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="tabelas-graficos.html#cb9-7" tabindex="-1"></a><span class="fu">ggplot</span>(ipca, <span class="fu">aes</span>(<span class="at">x =</span> mes, <span class="at">y =</span> variacao_pct)) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="tabelas-graficos.html#cb9-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;#0d3b54&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="tabelas-graficos.html#cb9-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;#c9971e&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="tabelas-graficos.html#cb9-10" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;grey50&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="tabelas-graficos.html#cb9-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Variação mensal do IPCA (%)&quot;</span>,</span>
+<span id="cb9-12"><a href="tabelas-graficos.html#cb9-12" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;IPCA mensal, série ilustrativa (2024–2025, simulada)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="tabelas-graficos.html#cb9-13" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="01-descritiva_files/figure-html/ipca-simulado-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div class="caixa-r"><strong>Uso do R</strong>, <code>geom_histogram()</code> escolhe o número de
+classes automaticamente (30 por padrão); sempre ajuste com o argumento <code>bins</code> e compare
+mais de uma escolha antes de tirar conclusões sobre a forma da distribuição. Para séries no tempo,
+<code>geom_line()</code> exige que o eixo x já seja um tipo de data (<code>Date</code>), não texto,
+caso contrário o R ordena alfabeticamente, não cronologicamente.</div>
+<div class="caixa-discussao"><strong>Para discutir</strong>
+
+<p><strong>1.</strong> Um jornal publica um gráfico de pizza com 11 fatias representando a
+participação de 11 setores no PIB nacional. Duas fatias adjacentes têm 9% e 11%. É fácil, olhando
+o gráfico, dizer qual é maior? Que gráfico alternativo resolveria esse problema, e por quê?</p>
+
+<p><strong>2.</strong> Um relatório de uma rede de lojas de conveniência apresenta um gráfico de
+barras do "faturamento médio mensal" em cada uma de suas 6 filiais, com o eixo vertical começando
+em R\$ 40.000 (não em zero), fazendo diferenças de poucos milhares de reais parecerem enormes
+visualmente. Explique, formalmente, por que cortar o eixo y distorce a leitura de um gráfico de
+barras, e descreva como o mesmo gráfico ficaria, e o que mudaria na conclusão do leitor, com o
+eixo começando em zero.</p>
+
+<p><strong>3.</strong> Compare o histograma de faturamento acima com um possível gráfico de barras
+do faturamento *médio* por setor. Que informação o histograma mostra que o gráfico de barras por
+setor esconde completamente?</p>
+
+<p><strong>4.</strong> A regra de Sturges sugere $k\approx1+\log_2(n)$ classes. Para $n=200$
+(o tamanho de <code>empresas</code>), quantas classes ela sugere? Teste no histograma acima
+alterando <code>bins</code> para esse valor e para valores bem menores e bem maiores, em que ponto
+o histograma começa a "esconder" ou a "inventar" estrutura que não existe nos dados?</p>
+
+<p><strong>5.</strong> Um analista de política monetária precisa decidir entre publicar o IPCA
+mensal como (i) uma tabela de 24 números, (ii) um gráfico de barras, ou (iii) um gráfico de linha
+como o exibido acima. Argumente a favor da opção (iii) usando um critério que não seja apenas
+"estética".</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tipos-variaveis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tendencia-central.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

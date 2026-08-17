@@ -1,0 +1,163 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Lista 5 de exercícios \\
+	\end{Large}	
+%	Prazo de entrega: 4/11/2024
+\end{center}
+
+%\fbox{\begin{minipage}{30em}
+%		Nome:
+%\end{minipage}}
+%\hspace{2em} Nota: 
+
+%\vspace{2em}
+
+
+
+\vspace{2em}
+
+\begin{enumerate}
+
+    \item Uma variável aleatória $X$ tem distribuição triangular no intervalor $[0,1]$ se a sua função densidade for dada por
+    \begin{align*}
+    	f(x) = \left\{\begin{array}{ll}
+    		0, & x<0, \\
+    		Cx, & 0 \leq x \leq 1/2, \\
+    		C(1-x), & 1/2 < x \leq 1, \\
+    		0, & x>1.
+    	\end{array}\right.
+    \end{align*}    	
+    \begin{enumerate}
+    	\item Calcule qual deve ser o valor da constante C.
+    	\item Esboçe o gráfico de $f(x)$.
+    	\item Calcule $P(X \leq 1/2)$ e $P(1/4 \leq X \leq 3/4)$.
+    \end{enumerate}
+	
+	\item Seja $X$ uma variável aleatória contínua com a seguinte função densidade de probabilidade:
+	$$
+	f(x) = 
+	\begin{cases}
+	C\cdot(1 - x^2), & -1 \leq x \leq 1, \\
+	0, & \text{caso contrário}.
+	\end{cases}	
+	$$
+	\begin{enumerate}
+		\item Identifique o valor da constante $C$.
+		
+		\item Calcule $E(X)$.
+		
+		\item Calcule $Var(X)$.
+	\end{enumerate}
+	
+	\item Sejam $a$ e $\theta$ números positivos fixados. Considere uma variável aleatória $Y$ com a seguinte função densidade de probabilidade:
+	$$
+	g(y) = 
+	\begin{cases}
+	\frac{1}{\theta}, & a \leq y \leq a + \theta, \\
+	0, & \text{caso contrário}.
+	\end{cases}	
+	$$
+	\begin{enumerate}
+		\item Identifique a distribuição de $Y$.
+		
+		\item Calcule $E(Y)$ e $Var(Y)$.
+		
+		\item Note que $\theta$ representa o comprimento do intervalo em que $Y$ tem probabilidade positiva e $a$ indica o início deste intervalo. No índice anterior, vimos que $Var(Y)$ depende de $\theta$ mas não depende de $a$. Interprete tal resultado.
+	\end{enumerate}
+	
+	\item Seja $\lambda > 0$. Considere uma variável aleatória $X$ contínua com a seguinte função densidade de probabilidade:    
+    \begin{align*}
+	f(x) = \left\{\begin{array}{ll}
+		\lambda e^{ - \lambda x}, & x \geq 0, \\
+		0, & x<0.
+	\end{array}\right.
+	\end{align*}  
+	Nesse caso, dizemos que $X$ segue uma {\em distribuição exponencial} com parâmetro $\lambda$, denotada por $X\sim Exp(\lambda)$. Essa distribuição é bastante aplicada em modelagem de dados positivos.
+    \begin{enumerate}
+		\item Calcule a fórmula da função de distribuição acumulada de $X$.
+		\item Qual é a probabilidade de $X>10$?
+		\item (Mais difícil) Mostre que o valor esperado de $X$ é $1/\lambda$.
+	\end{enumerate}
+
+	\item A mediana de uma variável aleatória contínua com função de distribuição acumulada $F$ é o valor real $m$ tal que $F(m) = 1/2$. Determine a mediana da variável aleatória nos seguintes casos:
+	\begin{enumerate}
+		\item $X \sim Unif(\alpha, \beta)$, em que $\alpha < \beta$;
+		\item $X \sim Exp(\lambda)$.
+		\item $X \sim N(\mu, \sigma^2)$, em que $\mu\in\mathbb{R}$ e $\sigma > 0$;
+	\end{enumerate}
+
+	\item As vendas de determinado produto têm distribuição normal com média de 500 unidades e desvio padrão de 50 unidades. Se a empresa decide fabricar 600 unidades em um mês específico, qual é a probabilidade de que não possa atender a todos os pedidos desse mês por ficar com a produção esgotada?    
+   
+% Levin Q 22, pag 151
+    \item O teste de avaliação acadêmica utilizado nos Estados Unidos chama-se SAT, um exame equivalente ao ENEM no Brasil. O SAT é padronizado para ser normalmente distribuído com média $\mu=500$ e um desvio padrão $\sigma=100$. Qual porcentagem de notas do SAT está:
+    \begin{enumerate}
+    	\item entre 500 e 600?
+    	\item entre 400 e 600?
+    	\item acima de 600?
+    	\item abaixo de 300?
+    \end{enumerate}  
+
+
+
+% Levin Q 27, pag 152
+    \item Suponha que a carga de trabalho média para um agente de condicional seja de 115 casos e que o desvio padrão seja 10. Presumindo que os tamanhos das cargas de trabalho sejam distribuídos normalmente, determine:
+    \begin{enumerate}
+    	\item a probabilidade de que um agente de condicional tenha uma carga de trabalho entre 90 e 105 casos.
+    	\item a probabilidade de que um agente de condicional tenha uma carga de trabalho de mais de 135 casos.
+    	\item a probabilidade de que quatro agentes de condicional independentes tenham cargas de trabalho de mais de 135 casos.
+    \end{enumerate} 
+
+
+	
+		
+	
+\end{enumerate}
+
+
+\end{document}

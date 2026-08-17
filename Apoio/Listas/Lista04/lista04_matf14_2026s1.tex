@@ -1,0 +1,139 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{multicol}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Lista 4 de exercícios \\
+	\end{Large}	
+%	Prazo de entrega: 4/11/2024
+\end{center}
+
+%\fbox{\begin{minipage}{30em}
+%		Nome:
+%\end{minipage}}
+%\hspace{2em} Nota: 
+
+%\vspace{2em}
+
+\vspace{1em}
+
+\section*{Conceitos elementares de cálculo}
+
+\paragraph{Derivada da função constante:} $f(x) = c \Rightarrow f'(x) = 0$
+
+\paragraph{Derivada da função potência:} $f(x) = x^n \Rightarrow f'(x) = n x^{n-1}$
+
+\paragraph{Derivada da função exponencial:} $f(x) = e^x \Rightarrow f'(x) = e^x$
+
+\paragraph{Derivada da função logarítmica:} para $x>0$, $f(x) = \ln x \Rightarrow f'(x) = 1/x$
+
+\paragraph{Derivada da soma:} $f(x) = u(x) + v(x) \Rightarrow f'(x) = u'(x) + v'(x)$
+
+\paragraph{Derivada do produto:} $f(x) = u(x) v(x) \Rightarrow f'(x) = u'(x)v(x) + u(x) v'(x)$
+
+\paragraph{Derivada da função vezes uma constante:} $f(x) = c \cdot u(x) \Rightarrow f'(x) = c \cdot u'(x)$
+
+\paragraph{Regra da cadeia:} $f(x) = g(u(x)) \Rightarrow f'(x) = g'(u(x)) \cdot u'(x)$
+
+\paragraph{Cálculo de integrais:} $F$ é a {\em primitiva} de $f$ se $F'(x) = f(x)$. Assim, dado um intervalo $(a,b)$, 
+$$
+\int_a^b f(x)dx = F(b) - F(a)
+$$
+
+
+\vspace{1em}
+
+\section*{Exercícios}
+
+\begin{enumerate}
+
+    
+\item Obtenha a derivada das seguintes funções:\\
+$f(x) = 5, \quad g(x)=x^6, \quad h(x)=x^{15}$
+   
+\item Calcule a derivada de cada uma das seguintes funções:
+\begin{enumerate}
+\begin{multicols}{2}
+\item $f(x) = 8 x^{11}$
+\item $f(x) = -\frac{7}{5}x^3 - \frac{\sqrt{3}}{7}$
+\item $f(x) = 5 + x + 3x^2$
+\item $f(x) = 3 + 2x^n + x^{2n}$, com $n\in\mathbb{N}$ fixado
+\item $f(x) = e^{-3x}$
+\item $f(x) = e^{7x^2 - 2x}$
+\end{multicols}
+\end{enumerate}
+
+   
+\item Determine a primitiva das seguintes funções:
+\begin{enumerate}
+\begin{multicols}{3}
+\item $f(x) = \sqrt{x}$
+\item $f(x) = \frac{1}{x^3}$
+\item $f(x) = x^{-2/5}$
+\end{multicols}
+\end{enumerate}
+
+   
+\item Calcule as integrais definidas abaixo:
+\begin{enumerate}
+\begin{multicols}{3}
+\item $\int_0^1 7 dx$
+\item $\int_1^2 x^3 dx$
+\item $\int_0^1 (-x^2) dx$
+\item $\int_0^2 (x^2 - 3x + 5) dx$
+\item $\int_0^2 x(x^5 - 1) dx$
+\item $\int_0^3 e^{2x} dx$
+\end{multicols}
+\end{enumerate}
+
+	
+		
+	
+\end{enumerate}
+
+
+\end{document}

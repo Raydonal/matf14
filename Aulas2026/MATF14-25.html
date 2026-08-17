@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Esperança e Variância (VA contínua)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-03-06" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Esperança e Variância (VA contínua)
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 03/06/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 25: Esperança e variância contínuas
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## A média esconde a maioria
+
+&gt; O tempo médio de espera em uma fila é 5 minutos. Isso significa que a maioria dos clientes espera
+&gt; "perto de 5 minutos"? Guarde a resposta para depois de ver o gráfico da fdp Exponencial.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Definições: soma vira integral
+
+$$
+E(X) = \mu = \int_{-\infty}^{\infty} x\,f(x)\,dx
+\qquad
+\mathrm{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx
+$$
+
+--
+
+## As mesmas propriedades do Cap. 3, sem alteração
+
+$$
+E(aX+b)=aE(X)+b \qquad \mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)
+$$
+$$
+E(X+Y)=E(X)+E(Y) \ \text{sempre} \qquad \mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y) \ \text{se indep.}
+$$
+
+Só a ferramenta de cálculo mudou (soma → integral); a interpretação é idêntica.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Tempo médio de espera
+
+\(f(x)=0{,}2e^{-0{,}2x}\), \(x\ge0\).
+
+$$
+E(X) = \int_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
+$$
+
+
+``` r
+integrand &lt;- function(x) x * 0.2*exp(-0.2*x)
+integrate(integrand, lower = 0, upper = Inf)
+```
+
+```
+## 5 with absolute error &lt; 3.8e-05
+```
+
+\(E(X)=5\) minutos de espera média, número usado para dimensionar guichês de atendimento.
+
+---
+
+## Custo de superlotação
+
+Se cada minuto de espera acima de 5 custa R\$ 2 em satisfação do cliente perdida (métrica
+interna), qual o "custo esperado" simplificado \(2\times E(X)\)?
+
+
+``` r
+2 * 5
+```
+
+```
+## [1] 10
+```
+
+Ilustra como \(E(\cdot)\) vira insumo direto de decisões operacionais, não só uma curiosidade
+teórica.
+
+---
+
+## \(E(X)\) fora da economia: engenharia aeronáutica
+
+&lt;img src="images/peso_esperado_aviao.jpg" alt="" width="70%" /&gt;
+
+Companhias aéreas projetam cabines com base no **peso esperado** por passageiro. Quando o peso real
+passa a exceder sistematicamente o peso de projeto, a estrutura precisa ser refeita, o mesmo
+problema de uma seguradora recalculando \(E(X)\) quando o perfil de sinistros muda.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** A distribuição Exponencial é assimétrica à direita (Capítulo 1). Isso significa que grande
+parte dos clientes espera *menos* que 5 minutos, com uma minoria esperando bem mais e puxando a
+média para cima, assim como faturamento e renda no Capítulo 1. Calcule \(P(X&lt;5)\) com
+`pexp(5, rate=0.2)` (ou espere até a Aula 26, FDA) para confirmar se mais ou menos da metade dos
+clientes espera menos que a média.
+
+**2.** O que isso implica para a gestão de expectativa do cliente ("tempo médio de espera: 5 min")
+comparado à experiência real da *maioria*? Como um gerente de agência poderia comunicar essa
+informação de forma menos enganosa?
+
+---
+
+## Rodada 2: generalizando
+
+**3.** As fórmulas de \(E(aX+b)\) e \(\mathrm{Var}(aX+b)\) são idênticas às do Cap. 3. Por que isso não
+é surpreendente, dado que a integral é só o "análogo contínuo" da soma? Articule a resposta usando
+o Apêndice A (soma de Riemann → integral).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+f &lt;- function(x) 0.2*exp(-0.2*x)
+integrand &lt;- function(x) x * f(x)
+integrate(integrand, lower = 0, upper = Inf)   # calcula E(X) numericamente
+```
+
+`integrate()` sempre precisa dos limites de integração corretos, inclusive `Inf` quando o suporte
+é ilimitado, omitir isso é um erro comum.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (08/06)
+
+## Função de distribuição acumulada (contínua)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

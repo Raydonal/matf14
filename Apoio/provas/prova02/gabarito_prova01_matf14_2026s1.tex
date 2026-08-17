@@ -1,0 +1,300 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+%\usepackage[english,portuguese]{babel}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath,amsthm,amsfonts,float}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{arydshln}
+
+%\newenvironment{namebox}
+%{\begin{flushleft}Nome: \underline{\hspace{6cm}}\end{flushleft}} % Adjust the length of the underline as needed
+
+\newcommand{\na}{\mathbb{N}} % Set of integers
+\newcommand{\naz}{\mathbb{N}_0} % Set of integers
+\newcommand{\Z}{\mathbb{Z}} % Set of integers
+\newcommand{\re}{\mathbb{R}} % Set of real numbers
+\newcommand{\sinal}{\mathrm{sinal}} % Signal operador
+
+\newcommand{\vp}{{\mathbf p}}
+\newcommand{\vP}{{\mathbf P}}
+
+\newcommand{\vpi}{{\boldsymbol \pi}}
+%\newcommand{\Pr}{{\mathbb P}}
+
+\date{--/--/----} % Removendo a data
+
+\begin{document}
+
+\begin{flushleft}
+	Universidade Federal da Bahia\\
+	Instituto de Matemática e Estatística\\
+	Departamento de Estatística\\
+	MATF14 - Estatística Econômica I - 2026.1\\
+	Professor: Rodney Fonseca \\
+%	Data: 24/09/2024
+\end{flushleft}
+
+\begin{center}
+	\begin{Large}
+		Prova 1 {\color{blue} - GABARITO} \\
+	\end{Large}	
+%	Data: 14/05/2025
+\end{center}
+
+\fbox{\begin{minipage}{30em}
+		Nome:\\
+		\\
+\end{minipage}}
+\hspace{2em} Nota: 
+
+\vspace{1em}
+
+\begin{flushleft}
+\begin{small}
+
+\begin{itemize}
+	\item Todas as respostas devem estar escritas à caneta azul ou preta. Mantenha a sua letra legível.
+	\item Escreva o seu nome em todas as folhas com respostas.
+	\item Justifique as suas respostas e apresente os devidos cálculos.
+\end{itemize}
+
+\end{small}
+\end{flushleft}
+
+\vspace{1em}
+
+% Hoffmann, p. 41, tabela 4.7
+% Hoffmann, p. 52, q. 5.1
+% questao de correlacao feita em sala
+% Hoffmann, p. 19, q. 2.24
+% questao sobre nacionalidade com tabela
+
+\begin{enumerate}
+
+% Hoffmann, p. 19, q. 2.21
+\item {\color{red} Questão cancelada, pois faltou informar que a interseção deveria ser vazia. Pontos serão redistribuídos e os pontos dessa questão ficarão como bônus.}Num certo país existem dois bancos: Alfa e Beta. O banco Alfa tem três vezes mais clientes do que o banco Beta. Dentre os clientes do banco Alfa, 20\% são aposentados, e dentre os clientes do banco Beta, apenas 10\% são aposentados. Um cliente desses bancos será sorteado.
+\begin{enumerate}
+	\item (1 ponto) Sem saber nada sobre o cliente, qual é a probabilidade dele ser do banco Beta?\\{
+	\color{red}
+	Sejam $A$ e $B$ os eventos em que o cliente sorteado é dos bancos Alfa e Beta, respectivamente. Assumindo que $A \cap B = \emptyset$, temos
+	\begin{align*}
+	P(B) = \frac{\#B}{\#\Omega} = \frac{\#B}{\# A + \# B} = \frac{\# B}{3\# B + \# B} = \frac{1}{4}. 
+	\end{align*}
+	}
+	
+	\item (1 ponto) Sabendo que o cliente é aposentado, qual é a probabilidade dele ser do banco Beta?\\{
+	\color{red}
+	Seja $C$ o evento em que o sorteado é aposentado. Assumindo que $A \cap B = \emptyset$, temos que $P(C|A) = 0,2$ e $P(C|B) = 0,1$. Pelo teorema de Bayes,
+	\begin{align*}
+	P(C|B) = \frac{P(C|B)P(B)}{P(C|B)P(B) + P(C|A)P(A)} = \frac{0,1 \cdot 1/4}{0,1 \cdot 1/4 + 0,2 \cdot 3/4} = \frac{0,025}{0,175} = \frac{1}{1 + 6} = \frac{1}{7} \approx 0,1428.
+	\end{align*}
+	}
+
+\end{enumerate}
+
+
+	\begin{table}[thp]
+	\caption{Resultados de um experimento de competição de híbridos de milho para a região de Chapecó-SC, safra 1987/1988.}
+	\centering
+	\begin{tabular}{cccc}
+		\hline
+		\# & Altura da espiga (cm) & Tipo de grão & Resistência à ferrugem \\
+		\hline
+		1 & 103 & dentado & resistente \\
+		2 & 134 & semidentado & resistente \\
+		3 & 104 & semidentado & susceptível \\
+		4 & 108 & semidentado & susceptível \\
+		5 & 128 & dentado & moderadamente susceptível \\
+		6 & 108 & semidentado & susceptível \\
+		7 & 108 & dentado & resistente \\
+		8 & 103 & dentado & susceptível \\
+		9 & 123 & dentado & moderadamente susceptível \\
+		10 & 117 & semidentado & moderadamente susceptível \\
+		\hline
+	\end{tabular}
+	\label{t:milho}
+\end{table}	
+\vspace{-1em}
+{\footnotesize Fonte: Andrade, D. F., e Ogliari, P. J. Estatística para ciências agrárias e biológicas. 2a edição. Florianópolis: Editora UFSC. 2007. Pág. 62.}\\
+
+\item Os itens desta questão são referentes aos dados na Tabela \ref{t:milho}.
+\begin{enumerate}
+	\item (1 ponto) Monte uma tabela de frequências  (absoluta e relativa) para a variável resistência à ferrugem.\\{
+	\color{blue}
+	\begin{tabular}{c|cc}
+	\hline
+	Resistência a ferrugem & Freq. absoluta & Fre. relativa \\
+	\hline
+	susceptível & 4 & 40\% \\
+	moderadamente susceptível & 3 & 30\% \\
+	resistente & 3 & 30\% \\
+	\hline
+	Total & 10 & 100\% \\
+	\hline
+	\end{tabular}
+	
+	}
+	
+	\item (1 ponto) Monte uma tabela de frequências (absoluta e relativa) para a variável altura da espiga. Agrupe as alturas entre 100 e 140 cm em quatro faixas com amplitudes iguais.\\{
+	\color{blue}
+	\begin{tabular}{c|cc}
+	\hline
+	Altura da espiga (cm) & Freq. absoluta & Fre. relativa \\
+	\hline
+	$100 \vdash 110$ & 6 & 60\% \\
+	$110 \vdash 120$ & 1 & 10\% \\
+	$120 \vdash 130$ & 2 & 20\% \\
+	$130 \vdash 140$ & 1 & 10\% \\
+	\hline
+	Total & 10 & 100\% \\
+	\hline
+	\end{tabular}	
+	}
+\end{enumerate}   
+
+
+\item Uma amostra de dez casais e seus respectivos salários anuais foi colhida num certo bairro conforme apresentado na Tabela~\ref{t:salarios} abaixo.
+
+\begin{table}[h]
+	\centering
+	\caption{Salário anual (em salários mínimos) de homens e mulheres em casais de um certo bairro.}
+\begin{tabular}{c|cccccccccc}
+	\hline
+	Casal n$^\circ$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+	\hline        
+	Homem & 10 & 10 & 10 & 15 & 15 & 15 & 15 & 20 & 20 & 20 \\
+	Mulher & 5 & 10 & 10 & 5 & 10 & 10 & 15 & 10 & 10 & 15 \\
+	\hline
+\end{tabular}	
+	\label{t:salarios}
+\end{table}
+
+Calcule, separadamente para homens e mulheres, as seguintes estatísticas descritivas:
+
+\begin{enumerate}
+	\item (1 ponto) A média, moda e mediana dos salários anuais observados na amostra.\\{
+	\color{blue}
+	Os salários dos homens ordenado é: 10,10,10,15,15,15,15,20,20 e 20.\\ 
+	O salário médio dos homens é $\frac{150}{10} = 15$. O salário mediano dos homens é $\frac{15 + 15}{2} = 15$. O salário modal dos homens é 15.
+	
+	Os salários das mulheres ordenado é: 5,5,10,10,10,10,10,10,15 e 15.\\ 
+	O salário médio das mulheres é $\frac{100}{10} = 10$. O salário mediano das mulheres é $\frac{10 + 10}{2} = 10$. O salário modal das mulheres é 10.	
+	}
+	
+	\item (1 ponto) A variância dos salários anuais observados na amostra.\\{
+	\color{blue}
+	A variância do salário dos homens é:
+	$$
+	\frac{3(10-15)^2 + 4(15-15)^2 + 3(20-15)^2}{10}
+	= \frac{3 \cdot 25 + 3\cdot 25}{10}
+	= \frac{150}{10} = 15.
+	$$
+	A variância do salário das mulheres é:
+	$$
+	\frac{2 \cdot (5-10)^2 + 6 \cdot (10-10)^2 + 2 \cdot (15-10)^2}{10}
+	= \frac{2 \cdot 25 + 2\cdot 25}{10}
+	= \frac{100}{10} = 10.
+	$$	
+	}
+	
+	\item (1 ponto) Interprete os valores obtidos nos itens anteriores.\\{
+	\color{blue}
+	Os homens ganham em média 5 salários mínimos a mais que as mulheres. Os salários mediano e modal dos homens também são mais altos que os valores correspondentes para as mulheres. A variabilidade dos salários das mulheres é menor do que a variabilidade do salário dos homens.	
+	}
+	
+\end{enumerate}
+
+
+\item Uma empresa farmacêutica de um certo país está considerando produzir e comercializar uma pílula que ajudará no controle de pressão e colesterol altos. 
+Essa empresa deseja conhecer a demanda no país para um produto desse tipo. 
+A Tabela \ref{t:pressao_colesterol} abaixo apresenta as proporções de adultos desse país que apresentam tais problemas.
+\begin{table}[htp]
+\centering
+\caption{Distribuição dos adultos segundo estado da pressão e do colesterol.}
+\begin{tabular}{c|cc}
+\hline
+  & Pressão & Pressão  \\
+ & Alta & OK \\
+\hline
+Colesterol alto & 0,10 & 0,25 \\
+Colesterol OK   & 0,15 & 0,50 \\
+\hline
+\end{tabular}
+\label{t:pressao_colesterol}
+\end{table}\\
+Se um adulto desse país for selecionado aleatoriamente, qual é a probabilidade do sorteado:
+\begin{enumerate}
+	\item (1 ponto) ter os dois problemas de saúde, ou seja, ter pressão alta e colesterol alto?\\{
+	\color{blue}
+	$P(\{\text{pressão alta}\} \cap \{\text{colesterol alto}\}) = 0,10$.
+	}
+	
+	\item (1 ponto) ter pressão alta?\\{
+	\color{blue}
+	$P(\{\text{pressão alta}\} \}) = 0,25$.	
+	}
+	
+	\item (1 ponto) ter pressão alta dado que ele tem colesterol alto?\\{
+	\color{blue}
+	$P(\{\text{pressão alta}\} | \{\text{colesterol alto}\}) = \frac{ P(\{\text{pressão alta}\} \cap \{\text{colesterol alto}\}) }{P( \{\text{colesterol alto}\} )} = \frac{0,10}{0,35} = \frac{2}{7} \approx 0,28$.	
+	}
+	
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+\vspace{2cm}
+
+%\newpage
+\begin{center}
+	\Large{\textbf{Formulário}}
+\end{center}
+
+\begin{small}
+\begin{itemize}
+	\item A média aritmética é $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$. Para dados agregados, $\bar{x} = \frac{1}{n} \sum_{i=1}^{k} n_i * x_i$, em que $n_i$ é a frequência absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$.
+	\item Com valores ordenados $x_{(1)} \leq \cdots \leq x_{(n)}$, a mediana é $x_{((n+1)/2)}$ se $n$ for ímpar e $\frac{x_{(n/2)} + x_{((n/2) + 1)}}{2}$ se $n$ for par.
+	\item A variância é $Var(X) = \frac{1}{n} \sum_{i=1}^n (x_i - \bar{x})^2$. Para dados agregados, $Var(X) = \frac{1}{n} \sum_{i=1}^k n_i * (x_i - \bar{x})^2$, em que $n_i$ é a freq. absoluta de $x_i$ e $n=\sum_{i=1}^k n_i$. Desvio padrão é $dp(X) = \sqrt{Var(X)}$ e o coeficiente de variação é $dp(X)/\bar{x}$.
+%	\item O coeficiente de Yule é $Q = (n_{11}n_{22} - n_{12}n_{21})/(n_{11}n_{22} + n_{12}n_{21})$, em que $n_{ij}$ são frequências absolutas da tabela de dupla entrada correspondente.
+	\item O coeficiente de correlação é $cor(X,Y) = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i - \bar{x}}{dp(X)} \right) \left( \frac{y_i - \bar{y}}{dp(Y)} \right)$.
+	
+	\item O espaço amostral $S$ é o conjunto de todos resultados possíveis de um experimento aleatório. Um evento $A$ é qualquer sub-conjunto desse espaço amostral $S$.
+	\item Probabilidade: $P(A) = \frac{\text{número de elementos de $A$}}{\text{número de elementos do espaço amostral}}$
+	\item Probabilidade complementar: $P(A^c) = 1 - P(A)$
+	\item Se $A$ e $B$ são eventos disjuntos, ou seja, $A\cap B = \emptyset$, então $P(A \cup B) = P(A) + P(B)$.
+	\item Probabilidade condicional: se $P(A)>0$, então $P(B|A) = \frac{P(B \cap A)}{P(A)}$.
+	\item Independência: se $A$ e $B$ são eventos independentes, então $P(A \cap B) = P(A) P(B)$.
+%	\item Se $A$ e $B$ são eventos independentes e $P(A)>0$, então $P(B | A) = P(B)$.
+	\item Teorema da probabilidade total: se $\{B_i\}_{i=1}^n$ é partição de $S$, então $P(A) = \sum_{i=1}^n P(A|B_i) P(B_i)$
+	\item Teorema de Bayes: se $\{B_i\}_{i=1}^n$ é partição de $S$ e $P(A)>0$, então $P(B_i | A) = \frac{P(A|B_i) P(B_i)}{\sum_{j=1}^n P(A|B_j) P(B_j)} $
+\end{itemize}
+\end{small}
+
+
+\newpage
+\begin{center}
+	\noindent\rule{15cm}{0.4pt}
+	\Large{\textbf{Rascunho}}
+\end{center}
+
+
+\end{document}
+
+
+
+
+\end{enumerate}
+
+

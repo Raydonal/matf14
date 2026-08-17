@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Espaço amostral e eventos. Revisão de conjuntos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-06-04" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Espaço amostral e eventos. Revisão de conjuntos
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 06/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Início da Unidade 2: Probabilidade
+
+# Aula 09: Espaço amostral e eventos
+
+### Provocação · Teoria · Aplicação · Discussão
+
+---
+
+## Diariamente você decide sob incerteza
+
+&gt; Devo investir na bolsa este mês?
+
+--
+
+&gt; Vale a pena contratar um seguro para o carro novo?
+
+--
+
+&gt; Devo levar guarda-chuva hoje, mesmo sem certeza de chuva?
+
+--
+
+&gt; Devo me matricular numa disciplina eletiva com alta taxa de reprovação?
+
+--
+
+Todas essas perguntas têm a mesma estrutura formal por trás: um **experimento aleatório**, um
+**espaço de resultados possíveis**, e um **evento** de interesse dentro desse espaço. Hoje
+construímos esse vocabulário.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Por que probabilidade, depois de estatística descritiva?
+
+O Capítulo 1 resumiu dados **já observados**. Agora: como quantificar incerteza sobre um resultado
+que **ainda não ocorreu**? Um investidor não sabe se uma ação sobe amanhã; um banco não sabe se um
+cliente específico vai inadimplir. Probabilidade é a linguagem formal para essas perguntas.
+
+--
+
+## Experimento aleatório, espaço amostral, evento
+
+- **Experimento aleatório**: processo cujo resultado não pode ser previsto com certeza.
+- **Espaço amostral** \(\Omega\): conjunto de todos os resultados possíveis.
+- **Evento** \(A\subseteq\Omega\): um subconjunto de resultados de interesse.
+
+---
+
+## Revisão de teoria de conjuntos
+
+Como eventos são conjuntos, valem as operações usuais:
+
+| Operação | Notação | Significado |
+|---|---|---|
+| União | \(A\cup B\) | \(A\) ou \(B\) ocorre |
+| Interseção | \(A\cap B\) | \(A\) e \(B\) ocorrem juntos |
+| Complemento | \(A^c\) | \(A\) não ocorre |
+
+--
+
+**Mutuamente exclusivos**: \(A\cap B=\emptyset\), não podem ocorrer juntos.
+
+Exemplo: "inflação do mês acima da meta" e "inflação do mês abaixo do piso da meta", mutuamente
+exclusivos (não podem ocorrer no mesmo mês).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Classificação de risco de crédito
+
+Um banco classifica cada empréstimo em uma de quatro categorias:
+
+$$
+\Omega = \{AA, A, B, C\}
+$$
+
+Evento "risco elevado": \(R = \{B, C\}\). Evento "risco baixo": \(L=\{AA,A\}\).
+
+--
+
+\(R\) e \(L\) são mutuamente exclusivos (\(R\cap L=\emptyset\)) e \(R\cup L=\Omega\), formam uma
+**partição** do espaço amostral (conceito que retomamos na Aula 14, Teorema de Bayes).
+
+---
+
+## Um espaço amostral maior: dois empréstimos
+
+Se o banco observa 2 empréstimos, cada um classificado em \(\{AA,A,B,C\}\):
+
+
+``` r
+risco &lt;- c("AA","A","B","C")
+Omega &lt;- expand.grid(emp1 = risco, emp2 = risco)
+nrow(Omega)
+```
+
+```
+## [1] 16
+```
+
+``` r
+head(Omega, 4)
+```
+
+```
+##   emp1 emp2
+## 1   AA   AA
+## 2    A   AA
+## 3    B   AA
+## 4    C   AA
+```
+
+\(\#\Omega = 4\times 4 = 16\) resultados possíveis, o princípio multiplicativo de contagem
+(retomado na Aula 10) já aparece aqui.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: voltando à provocação inicial
+
+**1.** Escolha uma das quatro perguntas de abertura (investir na bolsa, seguro do carro, guarda-
+chuva, disciplina eletiva). Defina explicitamente: qual é o experimento aleatório, qual é um
+espaço amostral razoável \(\Omega\), e qual evento \(A\) representa a "consequência ruim" que você quer
+evitar.
+
+**2.** Dê um exemplo de dois eventos econômicos que sejam mutuamente exclusivos, e outro de dois
+eventos que possam ocorrer simultaneamente (não exclusivos).
+
+---
+
+## Rodada 2: granularidade do espaço amostral
+
+**3.** O evento "a Selic sobe na próxima reunião" e o evento "a Selic sobe mais de 0,5 p.p. na
+próxima reunião" têm alguma relação de subconjunto entre si? Qual?
+
+**4.** Um analista define \(\Omega\) do PIB do próximo trimestre como \(\{\)crescimento, recessão\(\}\).
+Outro define com 5 categorias mais finas. Nenhum dos dois está "errado", mas o que se perde ao
+escolher a versão mais grosseira?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (08/04)
+
+## Propriedades de probabilidade. Métodos de contagem
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

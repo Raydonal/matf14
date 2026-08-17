@@ -1,0 +1,100 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 09: VA discreta, esperança, variância e FDA}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 09}{Variável aleatória discreta, esperança, variância e função de distribuição acumulada (Cap. 3, Aulas 17--19)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito09.pdf}.}
+
+\begin{questao}{1} \textbf{(Função de probabilidade: número de ações de um fundo)}
+
+Um fundo de investimento pode comprar, a cada mês, 0, 1 ou 2 lotes adicionais de uma ação, com a
+seguinte função de probabilidade:
+
+\begin{center}
+\begin{tabular}{c|ccc}
+\toprule
+$x$ & 0 & 1 & 2 \\
+\midrule
+$p(x)$ & $0{,}5$ & $k$ & $0{,}2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Determine o valor de $k$ para que $p(\cdot)$ seja uma função de probabilidade válida.
+  \item Calcule $E(X)$ e $\mathrm{Var}(X)$.
+  \item Se cada lote custa R\$ 2.000, calcule a esperança e o desvio padrão do gasto mensal
+    $C=2000X$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(FDA: número de atrasos de pagamento)}
+
+O número de parcelas em atraso ($X$) de um cliente de financiamento, ao longo de um ano, tem a
+seguinte distribuição: $p(0)=0{,}70$, $p(1)=0{,}20$, $p(2)=0{,}07$, $p(3)=0{,}03$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Construa a tabela da FDA $F(x)$ para $x=0,1,2,3$.
+  \item Calcule $P(X\le 1)$, $P(X>1)$ e $P(X\ge 2)$ usando a FDA.
+  \item Um cliente é considerado "de risco alto" se tiver 2 ou mais parcelas em atraso. Qual a
+    proporção esperada de clientes de risco alto na carteira?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Propriedades de $E$ e $\mathrm{Var}$: taxas e impostos)}
+
+Uma corretora cobra uma taxa fixa de R\$ 15 mais 2\% do valor de cada operação. Se $X$ é o valor
+(em R\$) de uma operação, com $E(X)=8.000$ e $dp(X)=3.000$, e $C=15+0{,}02X$ é o custo total da
+operação para o cliente:
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(C)$.
+  \item Calcule $dp(C)$ (não a variância, atenção às unidades).
+  \item Um cliente propõe negociar sem a taxa fixa de R\$ 15 (só os 2\%). Isso muda o desvio
+    padrão do custo? Justifique usando a propriedade de $\mathrm{Var}(aX+b)$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Soma de variáveis independentes: carteira de dois ativos)}
+
+Dois ativos, $X$ e $Y$, têm $E(X)=100$, $\mathrm{Var}(X)=400$, $E(Y)=150$, $\mathrm{Var}(Y)=900$, e
+são independentes. Um investidor detém os dois: $W=X+Y$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(W)$ e $\mathrm{Var}(W)$.
+  \item Calcule $dp(W)$ e compare com $dp(X)+dp(Y)$. Eles são iguais? O que isso revela sobre o
+    efeito de diversificação (ter os dois ativos juntos, em vez de só um)?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$)}
+
+Seja $X$ uma VA discreta com $E(X)=\mu$, e sejam $a,b$ constantes.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que $E(aX+b) = a\mu+b$. (Dica: $E(aX+b)=\sum_i (ax_i+b)p(x_i)$; separe a soma em
+    duas partes e use $\sum_i p(x_i)=1$ e $\sum_i x_i p(x_i)=\mu$.)
+  \item Usando o item (a), mostre que $(aX+b) - E(aX+b) = a(X-\mu)$.
+  \item Usando o item (b) e a definição $\mathrm{Var}(Y)=E[(Y-E(Y))^2]$ aplicada a $Y=aX+b$, mostre
+    que $\mathrm{Var}(aX+b) = a^2\,\mathrm{Var}(X)$. Em particular, note que $b$ \emph{não aparece}
+    no resultado final, explique, em palavras, por que somar uma constante não deveria afetar a
+    dispersão de uma variável aleatória.
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato: é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+$E(X)$ quase nunca é um valor que $X$ de fato assume. Escreva um parágrafo explicando, para um
+leitor sem formação em estatística, o que $E(X)$ representa e por que ainda é útil para decisões de
+negócio (precificação de seguro, dimensionamento de estoque, etc.), mesmo sem ser "o valor mais
+provável".
+\end{questao}
+
+\end{document}

@@ -1,0 +1,105 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 02: Tendência central, quantis e boxplot}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 02}{Medidas de tendência central, quantis, IQR e boxplot (Cap. 1, Aulas 04--05)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito02.pdf}.}
+
+\begin{questao}{1} \textbf{(Cálculo direto: salários de uma pequena empresa)}
+
+Os salários mensais (em R\$ mil) de 9 funcionários de uma pequena empresa são:
+$$
+3, \ 3, \ 3{,}5, \ 4, \ 4, \ 4{,}5, \ 5, \ 6, \ 22
+$$
+(o último valor é o salário do sócio-diretor).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a média, a mediana e a moda dos salários.
+  \item Qual medida representa melhor "o salário típico" desta empresa? Justifique com base na
+    comparação entre média e mediana.
+  \item Se o sócio-diretor tivesse um salário de R\$ 8 mil em vez de R\$ 22 mil, qual das três
+    medidas mudaria mais? Qual mudaria menos, ou nada?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Assimetria e ordenação das medidas)}
+
+Em uma pesquisa sobre patrimônio líquido de 1.000 famílias de um município, obteve-se
+média $=$ R\$ 340 mil e mediana $=$ R\$ 210 mil.
+
+\begin{enumerate}[label=(\alph*)]
+  \item A distribuição de patrimônio é aproximadamente simétrica, assimétrica à direita ou
+    assimétrica à esquerda? Justifique formalmente, usando a relação entre média e mediana vista
+    em aula.
+  \item Esboce (descreva em palavras a forma de) um histograma compatível com essa relação entre
+    média e mediana.
+  \item Um órgão de pesquisa quer comunicar "quanto tem uma família típica deste município" para o
+    público em geral, em uma única frase. Qual medida você recomendaria usar, e por quê?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Quantis: tempo de espera em atendimento bancário)}
+
+O tempo de espera (em minutos) de 12 clientes em uma agência bancária, já ordenado, foi:
+$$
+2, \ 3, \ 3, \ 5, \ 6, \ 7, \ 8, \ 9, \ 10, \ 12, \ 15, \ 30
+$$
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $Q_1$, $Q_2$ (mediana) e $Q_3$.
+  \item Calcule o $IQR$.
+  \item Usando o critério $Q_3 + 1{,}5\times IQR$, o valor 30 minutos deve ser classificado como
+    outlier? Mostre a conta.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Leitura de boxplot: comparação entre grupos)}
+
+Uma consultoria compara o tempo (em dias) que propostas de crédito levam para ser aprovadas em
+duas agências, A e B, por meio de boxplots lado a lado. A agência A tem caixa mais estreita e
+mediana em 5 dias; a agência B tem caixa mais larga, mediana em 4 dias, mas com vários pontos
+marcados como outliers acima de 20 dias.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Qual agência tem processo de aprovação mais consistente (previsível)? Justifique usando o
+    conceito de $IQR$.
+  \item A agência B tem mediana menor que A. Isso significa que, em geral, B é mais rápida que A?
+    O que os outliers acrescentam a essa conclusão?
+  \item Que decisão gerencial diferente essa consultoria recomendaria para A e para B, com base
+    apenas nesses dois boxplots?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: robustez da mediana)}
+
+Considere um conjunto de dados $x_1 \le x_2 \le \cdots \le x_n$ ($n$ ímpar), com mediana
+$x_{((n+1)/2)}$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que, se o maior valor $x_n$ for substituído por um valor arbitrariamente grande
+    (mantendo-o ainda o maior da lista), a mediana \textbf{não se altera}. (Dica: pela definição, a
+    mediana depende apenas da posição central da lista ordenada, não do valor exato dos elementos
+    fora dessa posição.)
+  \item Mostre, por meio de um contraexemplo numérico com $n=5$, que a \textbf{média} se altera nessa
+    mesma situação.
+  \item Com base em (a) e (b), explique por que a mediana é chamada de medida \textbf{robusta} a
+    valores extremos, e a média não.
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Procure (num relatório público, notícia ou site de estatísticas oficiais) um caso em que média e
+mediana de uma mesma variável são divulgadas juntas. Se só uma das duas for divulgada, explique por
+escrito qual você suspeita que esteja faltando e por quê a instituição pode ter escolhido divulgar
+apenas uma delas.
+\end{questao}
+
+\end{document}

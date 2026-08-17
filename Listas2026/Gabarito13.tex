@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 13: Simulado Prova 2 (Unidades 3 e 4)}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 13: Simulado}{Revisão geral, no formato e no nível da Prova 2 (Cap. 3--4, Aulas 29--30)}
+
+\begin{questao}{1} \textbf{(VA discreta)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $|X-3|\ge2 \Leftrightarrow X\le1 \text{ ou } X\ge5$. $P(X=1)+P(X=5) = 2/10+2/10=4/10=0{,}4$.
+  \item $E(X) = 1(0{,}2)+2(0{,}1)+3(0{,}3)+4(0{,}2)+5(0{,}2) = 0{,}2+0{,}2+0{,}9+0{,}8+1{,}0=3{,}1$.
+    $E(X^2) = 1(0{,}2)+4(0{,}1)+9(0{,}3)+16(0{,}2)+25(0{,}2) = 0{,}2+0{,}4+2{,}7+3{,}2+5{,}0=11{,}5$.
+    $\mathrm{Var}(X) = 11{,}5-3{,}1^2 = 11{,}5-9{,}61=1{,}89$.
+  \item $F(1)=0{,}2$; $F(2)=0{,}3$; $F(3)=0{,}6$; $F(4)=0{,}8$; $F(5)=1{,}0$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Binomial e aproximação Poisson)}
+\begin{solucao}
+$X\sim\text{Bin}(150;\,0{,}02)$.
+\begin{enumerate}[label=(\alph*)]
+  \item $P(X\le3) = \sum_{k=0}^3 \binom{150}{k}(0{,}02)^k(0{,}98)^{150-k} \approx 0{,}6472$.
+  \item $\lambda=150\times0{,}02=3$. $P(X\le3)\approx\sum_{k=0}^3 \frac{e^{-3}3^k}{k!} \approx
+    0{,}6472$. (Os valores coincidem, ou ficam muito próximos, até a 3ª/4ª casa decimal, a
+    aproximação é excelente para $n$ grande e $p$ pequeno.)
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Densidade em potência)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $\int_5^\infty Cx^{-2}\,dx = C\left[-x^{-1}\right]_5^\infty = C\left(0-(-1/5)\right) =
+    C/5 = 1 \Rightarrow C=5$.
+  \item $F(x) = \int_5^x 5t^{-2}\,dt = 5\left[-t^{-1}\right]_5^x = 5\left(-\frac1x+\frac15\right)
+    = 1-\frac5x$, para $x\ge5$.
+  \item $P(X>10) = 1-F(10) = 1-\left(1-\frac{5}{10}\right) = \frac{5}{10}=0{,}5$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Normal: retorno de fundo)}
+\begin{solucao}
+$X\sim N(10\%,\ 18\%^2)$.
+\begin{enumerate}[label=(\alph*)]
+  \item $Z=\frac{15-10}{18}=0{,}278$. $P(X>15)=P(Z>0{,}278)\approx1-0{,}6094=0{,}3906$.
+  \item $Z=\frac{-8-10}{18}=-1{,}0$. $P(X<-8)=P(Z<-1{,}0)\approx0{,}1587$.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

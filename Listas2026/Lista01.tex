@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 01: Tipos de variável, tabelas e gráficos}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 01}{Tipos de variável, tabelas de frequência e gráficos (Cap. 1, Aulas 02--03)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito01.pdf}.}
+
+\begin{questao}{1} \textbf{(Classificação de variáveis: pesquisa domiciliar)}
+
+Uma pesquisa domiciliar registra, para cada família entrevistada: (i) número de pessoas no
+domicílio; (ii) faixa de renda familiar mensal (até 2 salários mínimos, de 2 a 5, de 5 a 10, acima
+de 10); (iii) região do país; (iv) valor exato da renda familiar mensal, em reais; (v) escolaridade
+do chefe da família (sem instrução, fundamental, médio, superior).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Classifique cada uma das cinco variáveis (qualitativa nominal, qualitativa ordinal,
+    quantitativa discreta ou quantitativa contínua).
+  \item A variável (ii) foi construída a partir da variável (iv). Que informação se perde nessa
+    transformação? Cite uma vantagem prática de trabalhar com faixas em vez do valor exato.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Tabela de frequências: setor de atividade)}
+
+Uma amostra de 40 pequenas empresas de um município foi classificada por setor:
+
+\begin{center}
+Comércio, Serviços, Comércio, Indústria, Serviços, Comércio, Serviços, Serviços, Comércio,
+Indústria, Serviços, Comércio, Comércio, Serviços, Indústria, Comércio, Serviços, Comércio,
+Serviços, Indústria, Comércio, Serviços, Comércio, Indústria, Serviços, Comércio, Serviços,
+Comércio, Indústria, Serviços, Comércio, Serviços, Comércio, Indústria, Serviços, Comércio,
+Serviços, Comércio, Indústria, Serviços
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Construa a tabela de frequências absolutas e relativas (em \%) por setor.
+  \item Qual setor é a moda desta amostra?
+  \item Que tipo de gráfico você recomendaria para apresentar esses resultados a uma associação
+    comercial? Justifique a escolha frente a pelo menos uma alternativa descartada.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Tabela de dupla entrada: mercado de trabalho)}
+
+A tabela abaixo cruza nível de escolaridade e situação ocupacional de 500 pessoas economicamente
+ativas de uma cidade:
+
+\begin{center}
+\begin{tabular}{l|cc|c}
+\toprule
+ & Empregado & Desempregado & Total \\
+\midrule
+Fundamental/Médio & 180 & 70 & 250 \\
+Superior          & 210 & 40 & 250 \\
+\midrule
+Total             & 390 & 110 & 500 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a taxa de desemprego (\% desempregados) em cada grupo de escolaridade
+    separadamente.
+  \item Um jornal publica a manchete "500 pessoas pesquisadas: 110 desempregadas (22\%)", sem
+    discriminar por escolaridade. Que informação relevante essa manchete esconde?
+  \item Calcule a distribuição percentual de escolaridade \textbf{dentro} do grupo de desempregados (ou
+    seja, condicional à coluna "Desempregado"). Ela é igual à distribuição de escolaridade da
+    população total (linha "Total")? O que isso sugere?
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Escolha de gráfico: série temporal vs. categorias)}
+
+Um analista tem duas variáveis para apresentar em um relatório: (i) a taxa de câmbio USD/BRL de
+fechamento em cada um dos últimos 24 meses; (ii) o número de empresas abertas em cada uma das 5
+regiões do Brasil no último ano.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Para cada variável, indique o tipo de gráfico mais adequado e justifique.
+  \item Um colega sugere usar um único gráfico de linhas, ligando os pontos das 5 regiões em ordem
+    alfabética, para representar a variável (ii). Aponte o problema dessa escolha.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: frequências relativas somam 1)}
+
+Considere uma variável qualitativa com $k$ categorias mutuamente exclusivas e exaustivas (toda
+unidade pertence a exatamente uma categoria), com frequências absolutas $f_1, f_2, \ldots, f_k$ e
+$n = \sum_{i=1}^k f_i$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre, a partir da definição $p_i = f_i/n$, que $\sum_{i=1}^k p_i = 1$.
+  \item Mostre que a frequência relativa $p_i$ não depende da unidade de medida usada para contar
+    $n$ (por exemplo, se $n$ dobra porque a amostra é medida em duplicidade, mas cada $f_i$ também
+    dobra na mesma proporção, $p_i$ permanece o mesmo). Isso justifica por que \% é preferível a
+    contagens absolutas ao comparar grupos de tamanhos diferentes.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{6} \textbf{(Leitura crítica: gráfico enganoso)}
+
+Um relatório de uma rede de lojas de conveniência apresenta um gráfico de barras do "faturamento
+médio mensal" em cada uma de suas 6 filiais, com o eixo vertical começando em R\$ 40.000 (não em
+zero), fazendo diferenças de poucos milhares de reais parecerem enormes visualmente.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Explique, formalmente, por que cortar o eixo y distorce a leitura visual de uma variável
+    quantitativa contínua num gráfico de barras.
+  \item Refaça mentalmente (descreva em palavras) como o mesmo gráfico ficaria com o eixo
+    começando em zero, e o que isso muda na conclusão do leitor.
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato, é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{7 (discussão)} \textbf{(Sem resposta única)}
+
+Escolha uma notícia econômica recente (jornal, portal, rede social) que apresente pelo menos uma
+tabela ou um gráfico. Responda por escrito: (a) que tipo(s) de variável estão envolvidos; (b) se o
+gráfico escolhido é adequado ao tipo de variável, nos termos discutidos nesta lista; (c) uma
+pergunta que você faria ao autor da notícia antes de aceitar a conclusão apresentada.
+\end{questao}
+
+\end{document}

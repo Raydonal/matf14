@@ -1,0 +1,194 @@
+---
+title: "[Laboratório] R para estatística descritiva"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "30/03/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+```
+
+class: inverse, center, middle
+
+# Aula 07: Laboratório
+
+## Carregar dados, resumir e visualizar em R
+
+### Do CSV bruto ao boxplot e à correlação
+
+---
+
+## Plano da aula prática
+
+1. Carregar `empresas.csv` em R (`read.csv()`), inspecionar o *dataframe*.
+2. Frequências de variáveis qualitativas.
+3. Medidas de posição e dispersão de variáveis quantitativas.
+4. Quantis e boxplot.
+5. Correlação entre faturamento 1998 e 1999.
+6. Exercício guiado com `dados_prefeitos.csv`.
+
+---
+
+## 1. Carregar e inspecionar
+
+```{r carregar}
+empresas <- read.csv("empresas.csv", header = TRUE)
+class(empresas)
+dim(empresas)
+names(empresas)
+```
+
+---
+
+## Primeiros valores e tipos de coluna
+
+```{r inspecao}
+str(empresas[, c("porte", "empregados99", "faturamento99")])
+```
+
+`read.csv()` já reconhece números como `numeric`/`integer` e texto como `character`, mas cabe a
+você decidir se uma coluna de texto deveria virar `factor` (variável ordinal, por exemplo).
+
+---
+
+## 2. Frequências de variável qualitativa
+
+```{r freq}
+table(empresas$constituicao)
+```
+
+```{r freq-pct}
+prop.table(table(empresas$porte)) |> round(3)
+```
+
+---
+
+## 3. Medidas de posição central
+
+```{r posicao}
+mean(empresas$idade)
+median(empresas$idade)
+summary(empresas$idade)
+```
+
+`summary()` já devolve mínimo, quartis, média e máximo de uma vez, ótimo primeiro diagnóstico.
+
+---
+
+## Histograma da idade das empresas
+
+```{r hist-idade}
+hist(empresas$idade, main = "Idade das empresas", xlab = "Anos", ylab = "Frequência",
+     col = "#c9971e")
+```
+
+---
+
+## 4. Quantis e boxplot
+
+```{r quantis}
+Q1 <- quantile(empresas$idade, 0.25)
+Q2 <- quantile(empresas$idade, 0.50)
+Q3 <- quantile(empresas$idade, 0.75)
+c(Q1 = Q1, Q2 = Q2, Q3 = Q3)
+```
+
+```{r boxplot-idade, fig.height=3.3}
+boxplot(empresas$idade, ylab = "Idade da empresa", col = "#cfe8ef", horizontal = TRUE)
+```
+
+---
+
+## Medidas de dispersão
+
+```{r dispersao}
+max(empresas$idade) - min(empresas$idade)   # amplitude total
+sd(empresas$idade)                          # desvio padrão (R usa divisor n-1)
+sd(empresas$idade) / mean(empresas$idade)   # coeficiente de variação
+```
+
+---
+
+## 5. Comparando 1998 e 1999: faturamento
+
+```{r f98f99}
+f98 <- empresas$faturamento98
+f99 <- empresas$faturamento99
+summary(f98); summary(f99)
+```
+
+```{r boxplot-f98f99, fig.height=3.3}
+boxplot(f98, f99, names = c("1998", "1999"), ylab = "Faturamento", col = c("#0d3b54", "#c9971e"))
+```
+
+---
+
+## Correlação entre os dois faturamentos
+
+```{r cor, fig.height=3.6}
+cor(f98, f99)
+plot(f98, f99, xlab = "Faturamento 1998", ylab = "Faturamento 1999", pch = 19,
+     col = adjustcolor("#0d3b54", alpha.f = 0.5))
+```
+
+Correlação bem próxima de 1: empresas que faturavam mais em 1998 seguem, em geral, faturando mais
+em 1999, o *ranking* entre empresas é bastante estável de um ano para o outro.
+
+---
+
+class: inverse, center, middle
+
+# 6. Exercício guiado
+
+## Base `dados_prefeitos.csv`
+
+---
+
+## Enunciado
+
+Carregue `dados_prefeitos.csv` e responda em R:
+
+1. Quantas pessoas de cada sexo foram eleitas prefeitas/prefeitos em 2020?
+2. Qual foi o nível de escolaridade mais comum entre os prefeitos eleitos?
+3. Qual é a população média e mediana dos municípios da base?
+4. Como é a distribuição (histograma) das idades dos prefeitos eleitos?
+5. Qual é a correlação entre a idade do prefeito e a população estimada do município?
+
+--
+
+Dica: as colunas relevantes são `sexo`, `escolaridade`, `Pop.estimada.2021` e `idade`.
+
+---
+
+## Discussão do laboratório
+
+**1.** Depois de rodar o item 1 do exercício guiado, você tem uma tabela de frequências por sexo.
+Que gráfico você faria a partir dela, e por que esse gráfico já é, sozinho, uma peça de evidência
+sobre representatividade política?
+
+**2.** No item 5, se a correlação entre idade do prefeito e população do município for próxima de
+zero, isso permite concluir que não existe *nenhuma* relação sistemática entre as duas variáveis?
+Releia a Aula 08 (que você verá em breve) antes de responder, ou arrisque um palpite agora e
+confira depois.
+
+**3.** Compare o `cor(f98, f99)` calculado nesta aula com o gráfico de dispersão correspondente.
+O valor numérico, sozinho, teria sido suficiente para você confiar que a relação é bem
+aproximadamente linear (e não, por exemplo, uma curva)? Por que olhar o gráfico continua sendo
+necessário mesmo depois de calcular \(r\)?
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (01/04)
+
+## Coeficiente de correlação. Medidas de assimetria e curtose

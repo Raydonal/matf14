@@ -1,0 +1,87 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Gabarito 08: Simulado Prova 1 (Unidade 1)}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Gabarito 08: Simulado}{Revisão geral, no formato e no nível da Prova 1: Estatística Descritiva (Cap. 1, Aulas 01--08)}
+
+\begin{questao}{1} \textbf{(Setor de atividade e porte)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item "Setor de atividade" é qualitativa nominal (sem ordem natural entre Comércio, Indústria,
+    Serviços). "Porte" é qualitativa ordinal (Pequena $<$ Média $<$ Grande).
+  \item
+  \begin{center}
+  \begin{tabular}{lcc}
+  \toprule
+  Setor & $f$ & \% \\
+  \midrule
+  Comércio  & 28 & 70,0 \\
+  Indústria & 8  & 20,0 \\
+  Serviços  & 4  & 10,0 \\
+  \midrule
+  Total     & 40 & 100,0 \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \item Um gráfico de barras (ordenado por frequência) é a escolha adequada: 3 categorias
+    nominais, comparação de magnitude é o objetivo. Um gráfico de pizza também seria aceitável,
+    mas com uma fatia dominante (70\%) e duas pequenas, a comparação entre Indústria e Serviços
+    fica mais difícil de julgar visualmente em um círculo do que em barras de mesma base.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Reclamações mensais)}
+\begin{solucao}
+Dados: $3,5,4,20,6,4,5,7,3,6,5,4$ ($n=12$). Soma $=72$.
+\begin{enumerate}[label=(\alph*)]
+  \item $\bar x = 72/12 = 6{,}0$. Ordenados: $3,3,4,4,4,5,5,5,6,6,7,20$, mediana
+    $=(5+5)/2=5{,}0$ (6º e 7º valores). Moda: $4$ e $5$ aparecem 3 vezes cada, bimodal.
+  \item Desvios ao quadrado (usando $\bar x=6$): $(3-6)^2{=}9$ (×2), $(4-6)^2{=}4$ (×3),
+    $(5-6)^2{=}1$ (×3), $(6-6)^2{=}0$ (×2), $(7-6)^2{=}1$ (×1), $(20-6)^2{=}196$ (×1). Soma
+    $=18+12+3+0+1+196=230$. $\mathrm{Var} = 230/12\approx 19{,}17$; $dp\approx 4{,}38$.
+  \item A loja com 20 reclamações puxa a média para cima (de um valor mais próximo de 4--5, sem
+    ela, para 6,0 com ela) e infla fortemente o desvio padrão (a maior parcela isolada da soma de
+    quadrados, 196 de 230, vem só dessa loja). A mediana (5,0) e a moda (4 e 5) são bem menos
+    afetadas, descrevem melhor "a loja típica"; recomenda-se usar a \textbf{mediana} para
+    caracterizar a rede, tratando a loja com 20 reclamações como um caso à parte a ser investigado,
+    não como representativo.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{3} \textbf{(Marketing e novos clientes)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item $\bar x = 54/8 = 6{,}75$; $\bar y = 153/8 = 19{,}125$. Calculando
+    $\sum(x_i-\bar x)(y_i-\bar y) \approx 84{,}25$, $\sum(x_i-\bar x)^2 \approx 27{,}5$,
+    $\sum(y_i-\bar y)^2 \approx 258{,}875$, obtém-se
+    $$
+    r = \frac{84{,}25}{\sqrt{27{,}5}\sqrt{258{,}875}} \approx \frac{84{,}25}{84{,}35} \approx 0{,}999.
+    $$
+    Correlação linear positiva praticamente perfeita: meses com mais gasto em marketing tendem,
+    de forma muito consistente, a captar mais clientes no mês seguinte.
+  \item Meses de maior movimento geral da corretora (sazonalidade, lançamento de um novo produto,
+    campanha externa) poderiam levar simultaneamente a mais investimento em marketing \emph{e} a
+    mais clientes novos, sem que um cause diretamente o outro, uma variável de confusão comum
+    explicando os dois.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Faturamento de microempresas)}
+\begin{solucao}
+\begin{enumerate}[label=(\alph*)]
+  \item Como média (42) $>$ mediana (31), a distribuição é assimétrica à \textbf{direita}: uma
+    cauda de empresas com faturamento bem mais alto puxa a média para cima, enquanto a mediana
+    permanece próxima da maioria das empresas.
+  \item A \textbf{mediana} (R\$ 31 mil): por não ser distorcida pela cauda de faturamentos altos,
+    ela descreve melhor a experiência da microempresa "do meio" da distribuição, mais representativa
+    do "típico" para um público leigo do que a média, inflada por poucos casos atípicos.
+\end{enumerate}
+\end{solucao}
+\end{questao}
+
+\end{document}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Aula de exercícios + Revisão de cálculo</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Aula de exercícios + Revisão de cálculo
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 27/05/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 23: Exercícios de VA discreta + revisão de cálculo
+
+## Preparando o terreno para a Unidade 4
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: Exercícios resolvidos (VA discreta)
+
+---
+
+## Problema 1
+
+Uma linha de crédito pessoal aprova, historicamente, 60% das solicitações, de forma independente
+entre clientes. Em um dia com 8 solicitações, qual a probabilidade de exatamente 5 serem
+aprovadas?
+
+--
+
+**Solução.** \(X\sim\text{Bin}(8;\,0{,}6)\).
+$$
+P(X=5) = \binom{8}{5}(0{,}6)^5(0{,}4)^3
+$$
+
+
+``` r
+dbinom(5, size = 8, prob = 0.6)
+```
+
+```
+## [1] 0.2786918
+```
+
+---
+
+## Problema 2
+
+Um call center recebe, em média, 4 chamadas por minuto (Poisson). Qual a probabilidade de, em um
+minuto escolhido ao acaso, receber no máximo 1 chamada?
+
+--
+
+**Solução.** \(X\sim\text{Poisson}(4)\).
+
+
+``` r
+ppois(1, lambda = 4)
+```
+
+```
+## [1] 0.09157819
+```
+
+Note como esse valor é pequeno, com taxa média 4, receber 0 ou 1 chamada é um evento raro.
+
+---
+
+## Problema 3
+
+Uma seguradora modela \(X=\) número de sinistros/ano com \(E(X)=0{,}8\) e \(\mathrm{Var}(X)=0{,}9\).
+Se o custo por sinistro é fixo em R\\( 3.500, calcule \)E\( e \)dp\( do custo total anual \)C=3500X$.
+
+--
+
+**Solução.** \(E(C)=3500\times E(X)=3500\times 0{,}8=2800\).
+\(\mathrm{Var}(C)=3500^2\times\mathrm{Var}(X)=3500^2\times0{,}9\); \(dp(C)=3500\times\sqrt{0{,}9}\).
+
+
+``` r
+3500 * sqrt(0.9)
+```
+
+```
+## [1] 3320.392
+```
+
+---
+
+## Discussão: antes da revisão de cálculo
+
+**1.** Nos três problemas, identifique qual condição de aplicabilidade (Bernoulli/Binomial vs.
+Poisson) foi decisiva para escolher o modelo. O que no enunciado sinalizou "Binomial" no Problema 1
+e "Poisson" no Problema 2?
+
+**2.** No Problema 3, por que a fórmula usa \(3500^2\) na variância, mas só \(3500\) (sem elevar ao
+quadrado) na esperança? Relacione com as propriedades \(E(aX)=aE(X)\) e $\mathrm{Var}(aX)=a^2
+\mathrm{Var}(X)$ vistas na Aula 18.
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: Revisão de cálculo
+
+## Preparando a Unidade 4 (VA contínuas)
+
+---
+
+## Por que cálculo, agora?
+
+No caso discreto, somamos (\(\sum\)) para obter \(E(X)\), \(\mathrm{Var}(X)\), \(F(x)\). No caso contínuo
+(a partir da próxima aula), a ferramenta análoga é a **integral** (\(\int\)), porque um único ponto
+tem probabilidade zero, e só intervalos acumulam probabilidade.
+
+---
+
+## Derivadas: tabela mínima
+
+| \(f(x)\) | \(f'(x)\) |
+|---|---|
+| \(c\) | \(0\) |
+| \(x^n\) | \(nx^{n-1}\) |
+| \(e^x\) | \(e^x\) |
+
+## Integrais (primitivas): tabela mínima
+
+| \(f(x)\) | Primitiva \(F(x)\) |
+|---|---|
+| \(c\) | \(cx\) |
+| \(x^n\) (\(n\ne-1\)) | \(\dfrac{x^{n+1}}{n+1}\) |
+| \(e^{\lambda x}\) | \(\dfrac{1}{\lambda}e^{\lambda x}\) |
+
+Teorema Fundamental: \(\displaystyle\int_a^b f(x)\,dx = F(b)-F(a)\).
+
+---
+
+## Exercício de fixação
+
+Calcule \(\displaystyle\int_0^1 3x^2\,dx\) à mão, depois confira em R.
+
+
+``` r
+F &lt;- function(x) x^3
+F(1) - F(0)
+```
+
+```
+## [1] 1
+```
+
+``` r
+integrate(function(x) 3*x^2, lower = 0, upper = 1)
+```
+
+```
+## 1 with absolute error &lt; 1.1e-14
+```
+
+Esse valor (exatamente 1) não é coincidência, no Capítulo 4/Aula 24, veremos que essa integral
+confirma que \(f(x)=3x^2\) em \([0,1]\) é uma densidade de probabilidade válida.
+
+---
+
+## Discussão final
+
+**3.** No caso discreto, "somar a probabilidade de todos os valores possíveis" dá exatamente 1. O
+exercício de fixação sugere que, no caso contínuo, "integrar a densidade sobre todo o suporte"
+também dá 1. Por que essas duas afirmações são, na verdade, a mesma ideia expressa em duas
+linguagens diferentes (soma discreta vs. integral)?
+
+**4.** Se você já entendeu por que \(\int_0^1 3x^2\,dx=1\) confirma uma densidade válida, tente prever
+(sem calcular): \(f(x)=2x\) para \(0\le x\le 1\) também seria uma densidade válida? Confira com
+`integrate()`.
+
+---
+
+class: inverse, center, middle
+
+# Fim das Unidades 2 e 3
+
+## Prova 2 cobre Probabilidade e VA discretas juntas
+
+### Revise as Listas 05-10 antes da data oficial de P2
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (01/06)
+
+## Variável aleatória contínua: conceituação
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

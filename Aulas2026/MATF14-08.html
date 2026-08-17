@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Correlação. Assimetria e curtose</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-01-04" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Correlação. Assimetria e curtose
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 01/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 08: Correlação, assimetria e curtose
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R · Fechando a Unidade 1
+
+---
+
+## Sorvete, afogamento e a última peça do quebra-cabeça
+
+&gt; Ao longo do século XX, vendas de sorvete e número de afogamentos em praias estão fortemente
+&gt; correlacionados. O sorvete causa afogamento?
+
+--
+
+&gt; Duas distribuições salariais podem ter a mesma média e o mesmo desvio padrão e ainda parecerem
+&gt; completamente diferentes num histograma. O que mais falta medir?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Coeficiente de correlação de Pearson
+
+$$
+r = \frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}},
+\qquad -1 \le r \le 1
+$$
+
+Mede força e sentido da associação **linear** entre duas variáveis quantitativas. \(r\approx 0\) não
+implica ausência de qualquer relação, só de relação linear.
+
+--
+
+## Assimetria
+
+$$
+\text{Assimetria} = \frac{\frac1n\sum_i (x_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
+$$
+
+Positiva \(\Rightarrow\) cauda longa à direita (renda, faturamento). Negativa \(\Rightarrow\) cauda
+longa à esquerda. Zero \(\Rightarrow\) simetria.
+
+---
+
+## Curtose
+
+$$
+\text{Curtose} = \frac{\frac1n\sum_i (x_i-\bar x)^4}{\mathrm{Var}(X)^{2}}
+$$
+
+Referência: Normal tem curtose \(=3\). Maior que 3 (leptocúrtica) \(\Rightarrow\) caudas mais pesadas,
+mais eventos extremos que sob normalidade, relevante para gestão de risco financeiro.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Correlação: empregados × faturamento
+
+
+``` r
+r &lt;- cor(empresas$empregados99, empresas$faturamento99)
+ggplot(empresas, aes(empregados99, faturamento99)) +
+  geom_point(alpha=.6, color="#0d3b54") + geom_smooth(method="lm", se=FALSE, color="#c9971e") +
+  labs(title = paste0("r = ", round(r,2)), x = "Empregados", y = "Faturamento (R$ mil)") +
+  theme_minimal(base_size=13)
+```
+
+&lt;img src="MATF14-08_files/figure-html/cor-emp-1.png" alt="" width="504" /&gt;
+
+---
+
+## Assimetria e curtose do faturamento
+
+
+``` r
+empresas |&gt; summarise(
+  assimetria = assimetria(faturamento99),
+  curtose    = curtose(faturamento99)
+)
+```
+
+```
+##   assimetria curtose
+## 1  0.3574092  3.5838
+```
+
+Assimetria bem positiva (cauda à direita) e curtose alta, coerente com o que já vimos: poucas
+empresas muito grandes, muitas pequenas.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (a mais longa da aula: fecha a Unidade 1)
+
+---
+
+## Rodada 1: a provocação do sorvete
+
+**1.** Identifique a variável de confusão que explica a correlação sorvete×afogamento sem que uma
+cause a outra.
+
+**2.** O número de empregados de uma empresa poderia *causar* maior faturamento, o faturamento
+poderia causar o número de empregados, ou uma terceira variável (porte, setor) poderia causar
+ambos. Os dados de correlação, sozinhos, distinguem essas três histórias? Que dado adicional
+ajudaria?
+
+**3.** Construa mentalmente um exemplo em que \(X\) e \(Y\) têm relação forte e previsível (para cada
+\(x\) existe um único \(y\)), mas \(r\approx0\). (Dica: pense numa relação em forma de "U".)
+
+---
+
+## Rodada 2: forma da distribuição
+
+**4.** Retornos diários de ações costumam ter curtose bem acima de 3. Um modelo de risco que
+assume distribuição Normal (curtose 3) para esses retornos erra para mais ou para menos na
+frequência esperada de quedas bruscas?
+
+**5.** Duas distribuições salariais têm a mesma média e o mesmo desvio padrão, mas assimetrias
+muito diferentes (uma quase zero, outra fortemente positiva). Explique por que essas duas empresas
+poderiam demandar políticas de RH bem diferentes, mesmo com os "dois primeiros números" idênticos.
+
+---
+
+## Síntese: fechando a Unidade 1
+
+**6.** Volte à primeira aula do semestre e às cinco perguntas de abertura (fundo de investimento,
+pesquisa eleitoral, inflação "dentro da meta", escore de crédito, seguro para jovens). Para cada
+uma, identifique qual ferramenta da Unidade 1 (tipo de variável, tabela, gráfico, posição,
+dispersão, correlação, assimetria) você usaria primeiro para começar a responder com rigor.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+library(tidyverse)
+empresas &lt;- read.csv("empresas.csv")
+
+cor(empresas$empregados99, empresas$faturamento99)
+
+var_n &lt;- function(x) mean((x - mean(x))^2)
+assimetria &lt;- function(x) mean((x-mean(x))^3) / var_n(x)^{3/2}
+curtose    &lt;- function(x) mean((x-mean(x))^4) / var_n(x)^2
+
+empresas |&gt; summarise(assimetria(faturamento99), curtose(faturamento99))
+```
+
+R não tem funções nativas de assimetria/curtose no pacote base, vêm de pacotes como `e1071` ou
+`moments`, mas escrever a fórmula direto (como acima) ajuda a fixar a definição.
+
+---
+
+class: inverse, center, middle
+
+# Fim da Unidade 1: Estatística Descritiva
+
+## Prova 1 cobre exatamente esta unidade
+
+### Revise as Listas 01-04 antes da data oficial de P1
+
+---
+
+class: inverse, center, middle
+
+## Próxima aula (06/04): início da Unidade 2: Probabilidade
+
+### Espaço amostral e eventos. Revisão de teoria de conjuntos
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

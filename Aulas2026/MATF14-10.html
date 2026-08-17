@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Propriedades de probabilidade. Métodos de contagem</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
+    <meta name="date" content="2026-08-04" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom-styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Propriedades de probabilidade. Métodos de contagem
+]
+.subtitle[
+## MATF14: Estatística Econômica I
+]
+.author[
+### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
+]
+.date[
+### 08/04/2026
+]
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Aula 10: Propriedades de probabilidade e contagem
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## Uma armadilha clássica
+
+&gt; Um analista calcula a probabilidade de "alta do dólar" ou "alta de juros" no trimestre somando
+&gt; diretamente as duas probabilidades individuais: \(0{,}45+0{,}30=0{,}75\). Ele está contando algo
+&gt; duas vezes, o quê?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Axiomas de Kolmogorov
+
+$$
+P(A)\ge 0 \qquad P(\Omega)=1 \qquad A\cap B=\emptyset \Rightarrow P(A\cup B)=P(A)+P(B)
+$$
+
+--
+
+Consequências imediatas:
+
+$$
+P(A^c) = 1-P(A) \qquad P(\emptyset)=0 \qquad P(A\cup B) = P(A)+P(B)-P(A\cap B)
+$$
+
+A última é a **regra da adição geral**, subtrai a interseção para não contar duas vezes.
+
+---
+
+## Espaço equiprovável e contagem
+
+Quando todo resultado de \(\Omega\) (finito) é igualmente provável:
+
+$$
+P(A) = \frac{\#A}{\#\Omega}
+$$
+
+--
+
+| Regra | Fórmula | Quando usar |
+|---|---|---|
+| Multiplicativa | \(k_1\times k_2\times\cdots\) | escolhas sucessivas independentes |
+| Permutação | \(n!\) | ordenar \(n\) objetos distintos |
+| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) | escolher \(k\) de \(n\), ordem não importa |
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Caindo na malha fina
+
+A Receita Federal cruza renda declarada e resultado do cruzamento (dados em milhares de
+declarações, 80,2 milhões no total):
+
+| Faixa de renda | Malha fina | Não caiu | Total |
+|---|---|---|---|
+| D, abaixo de 25 mil | 90 | 14010 | 14100 |
+| C, 25 a 49.999 | 71 | 30629 | 30700 |
+| B, 50 a 99.999 | 69 | 24631 | 24700 |
+| A, acima de 100 mil | 80 | 10620 | 10700 |
+| **Total** | **310** | **79890** | **80200** |
+
+
+``` r
+P_Z  &lt;- 310/80200                    # caiu na malha fina
+P_Y  &lt;- 10700/80200                  # faixa A (renda mais alta)
+P_ZY &lt;- 80/80200                     # os dois juntos
+P_Y + P_Z - P_ZY                     # regra da adição: P(Y ∪ Z)
+```
+
+```
+## [1] 0.1362843
+```
+
+---
+
+## Auditoria por amostragem
+
+Um auditor escolhe 3 contratos, de 10, para checagem, a ordem não importa.
+
+
+``` r
+choose(10, 3)   # total de amostras possíveis de tamanho 3
+```
+
+```
+## [1] 120
+```
+
+Se 2 dos 10 contratos têm um problema real, qual a probabilidade de a amostra sorteada pegar
+**pelo menos um** deles?
+
+
+``` r
+p_nenhum &lt;- choose(8, 3) / choose(10, 3)   # nenhum dos 2 problemáticos entra
+1 - p_nenhum
+```
+
+```
+## [1] 0.5333333
+```
+
+---
+
+## Resolvendo a armadilha da abertura
+
+Probabilidade de uma empresa ser afetada por "alta de juros" (\(J\)) **ou** "desvalorização
+cambial" (\(C\)) no trimestre, com \(P(J)=0{,}4\), \(P(C)=0{,}3\), \(P(J\cap C)=0{,}15\) (não são
+mutuamente exclusivos, o Banco Central às vezes sobe juros em resposta à pressão cambial):
+
+$$
+P(J\cup C) = 0{,}4 + 0{,}3 - 0{,}15 = 0{,}55
+$$
+
+O erro do analista da abertura: contar duas vezes o cenário em que **ambos** ocorrem juntos.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1
+
+**1.** No exemplo de juros e câmbio, explique, em palavras, não em símbolos, por que
+\(P(J)+P(C)\) conta o cenário "os dois ocorrem" duas vezes, e por que subtrair \(P(J\cap C)\) uma única
+vez corrige isso.
+
+**2.** Recalcule a probabilidade da auditoria por amostragem se, em vez de 2, houvesse 4 dos 10
+contratos problemáticos. A probabilidade de pegar pelo menos um cresce muito? Antes de calcular,
+arrisque um palpite sobre a direção do efeito.
+
+---
+
+## Rodada 2
+
+**3.** Em que situação prática você usaria permutação (ordem importa) em vez de combinação (ordem
+não importa) para contar possibilidades? Dê um exemplo econômico de cada, por exemplo, formar uma
+carteira de ações vs. definir a ordem de execução de um conjunto de operações.
+
+**4.** Um concurso público tem 200 candidatos disputando 3 vagas idênticas. Isso é um problema de
+permutação ou de combinação? E se as 3 vagas fossem para cargos diferentes (1º, 2º, 3º lugar com
+funções distintas)?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+
+``` r
+choose(10, 3)      # combinações C(10,3)
+factorial(5)        # permutações 5!
+choose(8, 3) / choose(10, 3)   # probabilidade via razão de contagens
+```
+
+`choose(n, k)` calcula \(\binom{n}{k}\) diretamente, evita overflow de calcular \(n!\), \(k!\) e
+\((n-k)!\) separadamente para \(n\) grande.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (13/04)
+
+## Probabilidade condicional
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

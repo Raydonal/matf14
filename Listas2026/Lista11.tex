@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 11: VA contínua, esperança, variância e FDA}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 11}{Variável aleatória contínua, densidade, esperança, variância e FDA (Cap. 4, Aulas 24--26)}
+
+\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito11.pdf}.}
+
+\begin{questao}{1} \textbf{(Densidade válida: tempo de vida de um equipamento)}
+
+O tempo de vida útil $X$ (em anos) de um equipamento industrial tem densidade
+$$
+f(x) = k\,x, \quad 0\le x\le 4, \qquad f(x)=0 \text{ caso contrário.}
+$$
+
+\begin{enumerate}[label=(\alph*)]
+  \item Determine o valor de $k$ para que $f$ seja uma densidade de probabilidade válida.
+  \item Calcule $P(X\le 2)$.
+  \item Calcule $P(1\le X\le 3)$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{2} \textbf{(Esperança e variância: receita de um posto de vendas)}
+
+A receita diária $X$ (em milhares de reais) de um pequeno posto de vendas de artesanato tem
+densidade $f(x) = \frac{1}{8}$ para $2\le x\le 10$ (Uniforme), e $f(x)=0$ fora desse intervalo.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(X)$ usando a fórmula geral $E(X)=\int x f(x)\,dx$ (não a fórmula pronta da
+    Uniforme, o objetivo aqui é praticar a integral).
+  \item Calcule $\mathrm{Var}(X)$, também pela definição via integral.
+  \item Confira os dois resultados usando as fórmulas prontas $E(X)=\frac{a+b}{2}$ e
+    $\mathrm{Var}(X)=\frac{(b-a)^2}{12}$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{3} \textbf{(FDA a partir da densidade: desconto em uma promoção)}
+
+O percentual de desconto $X$ (entre 0 e 20\%) oferecido em um cupom promocional aleatório tem
+densidade $f(x) = \frac{3}{8000}x^2$, $0\le x\le 20$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Encontre a FDA $F(x)$ para $0\le x\le 20$ (calcule a primitiva de $f$).
+  \item Use $F$ para calcular a probabilidade de um cliente receber um desconto de pelo menos 15\%.
+  \item Calcule a mesma probabilidade do item (b) diretamente por integração de $f$, e confirme
+    que os dois métodos dão o mesmo resultado.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{4} \textbf{(Propriedades: conversão de moeda)}
+
+O preço $X$ (em dólares) de um insumo importado tem $E(X)=50$ e $dp(X)=8$. Um importador converte
+para reais a uma cotação fixa de R\$ 5,20/dólar mais uma taxa fixa de desembaraço de R\$ 30:
+$C = 5{,}20X + 30$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(C)$.
+  \item Calcule $dp(C)$.
+  \item Se a cotação subir para R\$ 5,50/dólar (mantendo a mesma taxa fixa), o desvio padrão de
+    $C$ aumenta, diminui ou permanece igual? Justifique sem recalcular tudo, só usando a
+    propriedade de $\mathrm{Var}(aX+b)$.
+\end{enumerate}
+\end{questao}
+
+\begin{questao}{5} \textbf{(Dedução: $P(X=x)=0$ para VA contínua)}
+
+Seja $X$ uma VA contínua com FDA $F$ contínua (sem saltos) em todo $\mathbb{R}$.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Para $\varepsilon>0$ pequeno, escreva $P(x-\varepsilon < X \le x)$ em termos de $F$.
+  \item Argumente que, como $F$ é contínua, $\displaystyle\lim_{\varepsilon\to0^+}
+    \big[F(x)-F(x-\varepsilon)\big] = 0$.
+  \item Usando (a) e (b), justifique por que $P(X=x)=0$ para todo $x$, quando $X$ é uma VA
+    contínua. (Note que isso \emph{não} valeria se $F$ tivesse um salto em $x$, é exatamente essa
+    ausência de saltos, no caso contínuo, que garante o resultado.)
+\end{enumerate}
+\end{questao}
+
+\bigskip
+\noindent\textit{A questão a seguir não tem resposta única e não é cobrada em prova no mesmo
+formato: é para discussão em grupo ou por escrito, antes da próxima aula.}
+
+\begin{questao}{6 (discussão)} \textbf{(Sem resposta única)}
+
+Se $P(X=x)=0$ para todo valor específico $x$ de uma variável aleatória contínua, escreva, para um
+colega que ainda não cursou esta disciplina, uma explicação de por que isso não é uma
+contradição com o fato de $X$ certamente assumir \emph{algum} valor quando o experimento
+acontece. Evite fórmulas, o objetivo é uma explicação em português comum.
+\end{questao}
+
+\end{document}

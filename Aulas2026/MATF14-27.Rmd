@@ -1,0 +1,145 @@
+---
+title: "Distribuição Uniforme"
+subtitle: "MATF14: Estatística Econômica I"
+author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+date: "10/06/2026"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Aula 27: Distribuição Uniforme
+
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
+
+---
+
+## A distribuição "sem opinião"
+
+> A Uniforme diz "todo valor no intervalo é igualmente provável", é a distribuição que representa
+> a ausência total de informação adicional sobre onde, dentro do intervalo, o valor deve cair. Você
+> consegue pensar em uma variável econômica real para a qual isso seria uma suposição defensável, e
+> outra para a qual seria claramente ingênua?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Teoria
+
+---
+
+## Uniforme(\(a,b\))
+
+Densidade **constante** em \([a,b]\), zero fora, todos os subintervalos de mesmo comprimento têm a
+mesma probabilidade.
+
+$$
+f(x) = \frac{1}{b-a}, \ a\le x\le b
+\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}
+$$
+
+--
+
+Verificação rápida: \(\int_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\) ✓, a densidade é
+válida por construção.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Aplicação
+
+---
+
+## Chegada de clientes em uma hora
+
+\(X=\) minuto de chegada de um cliente dentro de uma hora, sem padrão de horário de pico:
+\(X\sim\text{Unif}(0,60)\).
+
+```{r uniforme-parametros}
+a <- 0; b <- 60
+c(E_X = (a+b)/2, Var_X = (b-a)^2/12, dp_X = sqrt((b-a)^2/12))
+```
+
+```{r prob-uniforme}
+punif(20, min=a, max=b)              # P(X <= 20)
+punif(45, a, b) - punif(30, a, b)    # P(30 <= X <= 45)
+```
+
+---
+
+## Visualizando
+
+```{r grafico-uniforme, fig.height=3.8}
+ggplot(tibble(x = c(-5,0,0,60,60,65), y = c(0,0,1/60,1/60,0,0)), aes(x,y)) +
+  geom_line(color = "#0d3b54") +
+  geom_area(data = tibble(x=c(30,30,45,45), y=c(0,1/60,1/60,0)), fill="#c9971e", alpha=.6) +
+  labs(x = "minuto da hora", y = "f(x)", title = "P(30 ≤ X ≤ 45)") +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão (bloco central da aula)
+
+---
+
+## Rodada 1: resolvendo a provocação inicial
+
+**1.** Retome a pergunta de abertura. Dê um exemplo econômico em que a Uniforme é defensável
+(genuína ausência de padrão dentro do intervalo) e outro em que seria ingênuo assumir uniformidade
+(por exemplo, existe claramente um "horário de pico"). O que muda no segundo caso, que tipo de
+modelo (ainda não visto, mas você pode arriscar) capturaria melhor esse padrão?
+
+**2.** \(\mathrm{Var}(X)=(b-a)^2/12\) cresce com o **quadrado** do comprimento do intervalo. Compare
+mentalmente Uniforme(0,10) com Uniforme(0,100), a segunda tem 10x mais amplitude, mas quantas
+vezes mais variância?
+
+---
+
+## Rodada 2
+
+**3.** Um analista financeiro, sem nenhuma informação sobre a distribuição real de um preço futuro,
+decide modelá-lo como Uniforme entre o mínimo e o máximo histórico. Isso é uma escolha
+conservadora, otimista, ou nenhuma das duas? Que suposição implícita essa escolha carrega sobre
+"quão informativo" é o histórico de preços?
+
+**4.** Compare a Uniforme com a Exponencial das Aulas 24–26. As duas são contínuas, mas uma é
+simétrica (constante) e outra é assimétrica à direita. Que tipo de fenômeno cada uma modela melhor
+, "tempo até um evento raro" ou "posição aleatória sem preferência dentro de um intervalo fixo"?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+```{r uso-r, eval=FALSE}
+dunif(x, min = a, max = b)   # densidade
+punif(x, min = a, max = b)   # FDA
+qunif(p, min = a, max = b)   # quantil
+runif(m, min = a, max = b)   # m valores simulados
+```
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (15/06)
+
+## Distribuição Normal
