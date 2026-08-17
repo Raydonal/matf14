@@ -1,10 +1,10 @@
 \documentclass[11pt]{article}
-\newcommand{\ListaTitulo}{Gabarito 13: Simulado Prova 2 (Unidades 3 e 4)}
+\newcommand{\ListaTitulo}{Gabarito 13: Simulado Prova 2 (Unidades 2 e 3)}
 \input{preamble}
 
 \begin{document}
 
-\cabecalho{Gabarito 13: Simulado}{Revisão geral, no formato e no nível da Prova 2 (Cap. 3--4, Aulas 29--30)}
+\cabecalho{Gabarito 13: Simulado}{Revisão geral, no formato e no nível da Prova 2: Probabilidade e VA discretas (Cap. 2--3, Aulas 09--23)}
 
 \begin{questao}{1} \textbf{(VA discreta)}
 \begin{solucao}
@@ -30,24 +30,28 @@ $X\sim\text{Bin}(150;\,0{,}02)$.
 \end{solucao}
 \end{questao}
 
-\begin{questao}{3} \textbf{(Densidade em potência)}
+\begin{questao}{3} \textbf{(Renda e inadimplência)}
 \begin{solucao}
 \begin{enumerate}[label=(\alph*)]
-  \item $\int_5^\infty Cx^{-2}\,dx = C\left[-x^{-1}\right]_5^\infty = C\left(0-(-1/5)\right) =
-    C/5 = 1 \Rightarrow C=5$.
-  \item $F(x) = \int_5^x 5t^{-2}\,dt = 5\left[-t^{-1}\right]_5^x = 5\left(-\frac1x+\frac15\right)
-    = 1-\frac5x$, para $x\ge5$.
-  \item $P(X>10) = 1-F(10) = 1-\left(1-\frac{5}{10}\right) = \frac{5}{10}=0{,}5$.
+  \item $P(\text{inad}) = 100/600 \approx 0{,}167$.
+  \item $P(\text{inad}\mid\text{renda baixa}) = 60/240 = 0{,}25$.
+  \item Não são independentes: $P(\text{inad}\mid\text{renda baixa})=0{,}25$ é bem diferente de
+    $P(\text{inad})\approx0{,}167$ geral (e de $P(\text{inad}\mid\text{renda alta})=40/360\approx
+    0{,}111$), a faixa de renda carrega informação relevante sobre a probabilidade de
+    inadimplência nesta amostra.
 \end{enumerate}
 \end{solucao}
 \end{questao}
 
-\begin{questao}{4} \textbf{(Normal: retorno de fundo)}
+\begin{questao}{4} \textbf{(Exame laboratorial: Bayes)}
 \begin{solucao}
-$X\sim N(10\%,\ 18\%^2)$.
+$P(\text{doente})=0{,}01$, $P(+\mid\text{doente})=0{,}95$, $P(+\mid\text{sadio})=1-0{,}92=0{,}08$.
 \begin{enumerate}[label=(\alph*)]
-  \item $Z=\frac{15-10}{18}=0{,}278$. $P(X>15)=P(Z>0{,}278)\approx1-0{,}6094=0{,}3906$.
-  \item $Z=\frac{-8-10}{18}=-1{,}0$. $P(X<-8)=P(Z<-1{,}0)\approx0{,}1587$.
+  \item $P(+) = 0{,}95\times0{,}01 + 0{,}08\times0{,}99 = 0{,}0095+0{,}0792=0{,}0887$.
+  \item $P(\text{doente}\mid+) = \dfrac{0{,}0095}{0{,}0887} \approx 0{,}107$ (10,7\%). Mesmo com um
+    exame de boa sensibilidade e especificidade, a maioria dos testes positivos ainda é falso
+    positivo, porque a doença é rara na população testada, o mesmo raciocínio de base rate visto
+    no Cap. 2, Aula 14.
 \end{enumerate}
 \end{solucao}
 \end{questao}

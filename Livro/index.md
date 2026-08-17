@@ -53,7 +53,9 @@ tabela de frequências ao Teorema de Bayes, de uma variância amostral à distri
 imediatamente testado contra um problema real da área: preços, renda, câmbio, desemprego, mercado
 financeiro, pesquisas de opinião, política pública.
 
-**Avaliação da disciplina:** duas provas (P1 e P2), com nota final $NF=(P_1+P_2)/2$. As listas de
+**Avaliação da disciplina:** três provas (P1, P2 e P3), com nota final $NF=(P_1+P_2+P_3)/3$. P1
+cobre a Unidade 1 (Estatística Descritiva); P2 cobre as Unidades 2 e 3 (Probabilidade e Variáveis
+Aleatórias Discretas); P3 cobre a Unidade 4 (Variáveis Aleatórias Contínuas). As listas de
 exercícios **não valem nota**, mas são o principal instrumento de preparação, cada lista de
 `Listas2026/` traz gabarito completo para autoavaliação. Não há projetos nesta disciplina: o
 objetivo é dominar os conceitos com profundidade suficiente para resolvê-los sob prova, sem
@@ -82,14 +84,14 @@ a fórmula, mas em saber quando ela se aplica e o que ela deixa de fora.
 O livro segue **exatamente** a numeração da ementa oficial da disciplina, para que o aluno consiga
 localizar qualquer tópico cobrado em prova diretamente pelo número da seção:
 
-| Capítulo | Tópico | Seções da ementa | Aulas correspondentes |
-|---|---|---|---|
-| 1 | Estatística Descritiva e Exploratória de Dados | 1.1 – 1.6 | Aulas 01–08 |
-| 2 | Introdução à Teoria das Probabilidades | 2.1 – 2.7 | Aulas 09–16 |
-| 3 | Variáveis Aleatórias Discretas | 3.1 – 3.4 | Aulas 17–23 |
-| 4 | Variáveis Aleatórias Contínuas | 4.1 – 4.4 | Aulas 24–30 |
-| Apêndice A | Revisão de Cálculo (derivadas e integrais) | - | apoio ao Cap. 4 |
-| Apêndice B | Fórmulário e tabelas de referência | - | consulta para as provas |
+| Capítulo | Tópico | Seções da ementa | Aulas correspondentes | Prova |
+|---|---|---|---|---|
+| 1 | Estatística Descritiva e Exploratória de Dados | 1.1 – 1.6 | Aulas 01–08 | P1 |
+| 2 | Introdução à Teoria das Probabilidades | 2.1 – 2.7 | Aulas 09–16 | P2 |
+| 3 | Variáveis Aleatórias Discretas | 3.1 – 3.4 | Aulas 17–23 | P2 |
+| 4 | Variáveis Aleatórias Contínuas | 4.1 – 4.4 | Aulas 24–30 | P3 |
+| Apêndice A | Revisão de Cálculo (derivadas e integrais) | - | apoio ao Cap. 4 | - |
+| Apêndice B | Fórmulário e tabelas de referência | - | consulta para as provas | - |
 
 Os slides de aula (`Aulas2026/`) seguem o cronograma **dia a dia** do semestre (uma aula, um
 deck); as listas (`Listas2026/`) agrupam esses dias em blocos temáticos maiores, com questões

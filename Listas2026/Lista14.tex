@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+\newcommand{\ListaTitulo}{Lista 14: Simulado Prova 3 (Unidade 4)}
+\input{preamble}
+
+\begin{document}
+
+\cabecalho{Lista de Exercícios 14: Simulado}{Revisão geral, no formato e no nível da Prova 3: Variáveis Aleatórias Contínuas (Cap. 4, Aulas 24--30)}
+
+\noindent \textit{Simulado de 10 pontos, no mesmo formato da prova oficial. Resolva com tempo
+cronometrado (sugestão: 100 minutos, sem consulta) antes de olhar o gabarito em
+\texttt{Gabarito14.pdf}.}
+
+\begin{enumerate}
+
+\item Seja $C>0$ uma constante e $X$ uma variável aleatória contínua com densidade
+$$
+f(x) = \begin{cases} Cx^{-2}, & x\ge 5 \\ 0, & x<5 \end{cases}
+$$
+\begin{enumerate}
+  \item (1 ponto) Encontre o valor de $C$ para que $f$ seja uma densidade de probabilidade válida.
+  \item (1 ponto) Calcule a função de distribuição acumulada $F(x)$, para $x\ge5$.
+  \item (1 ponto) Calcule $P(X>10)$.
+\end{enumerate}
+
+\item O tempo de espera (em minutos) para atendimento em uma agência bancária é
+$X\sim\text{Unif}(0,20)$.
+\begin{enumerate}
+  \item (1 ponto) Calcule $E(X)$ e $\mathrm{Var}(X)$.
+  \item (1 ponto) Calcule a probabilidade de um cliente esperar entre 5 e 12 minutos.
+\end{enumerate}
+
+\item O retorno anual de um fundo multimercado é aproximadamente Normal, com média $10\%$ e
+desvio padrão $18\%$.
+\begin{enumerate}
+  \item (1 ponto) Calcule a probabilidade do retorno em um ano ser maior que $15\%$.
+  \item (1 ponto) Calcule a probabilidade do retorno em um ano ser menor que $-8\%$.
+\end{enumerate}
+
+\item O peso (em kg) de pacotes de um produto tem densidade
+$$
+f(x) = \begin{cases} \frac{3}{8}x^2, & 0\le x\le 2 \\ 0, & \text{caso contrário} \end{cases}
+$$
+\begin{enumerate}
+  \item (1 ponto) Confirme que $f$ é uma densidade válida.
+  \item (1 ponto) Calcule $E(X)$.
+  \item (1 ponto) Calcule $P(X\le 1)$.
+\end{enumerate}
+
+\end{enumerate}
+
+\vspace{1cm}
+\begin{center}
+\Large\textbf{Formulário}
+\end{center}
+\begin{small}
+\begin{itemize}
+  \item $P(a\le X\le b)=\int_a^b f(x)dx$; $\int_{-\infty}^{\infty} f(x)dx=1$.
+  \item $E(X)=\int xf(x)dx$; $\mathrm{Var}(X)=E(X^2)-[E(X)]^2$; $dp(X)=\sqrt{\mathrm{Var}(X)}$.
+  \item $F(x)=\int_{-\infty}^x f(t)dt$; $F'(x)=f(x)$.
+  \item $X\sim\text{Unif}(\alpha,\beta)$: $f(x)=1/(\beta-\alpha)$; $E(X)=(\alpha+\beta)/2$,
+    $\mathrm{Var}(X)=(\beta-\alpha)^2/12$.
+  \item $X\sim N(\mu,\sigma^2)$: $E(X)=\mu$, $\mathrm{Var}(X)=\sigma^2$; $Z=(X-\mu)/\sigma\sim
+    N(0,1)$.
+  \item $\int x^n\,dx = \dfrac{x^{n+1}}{n+1}+c$ ($n\ne-1$); $\displaystyle\int e^{ax}\,dx =
+    \dfrac1a e^{ax}+c$.
+\end{itemize}
+\end{small}
+
+\end{document}

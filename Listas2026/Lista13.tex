@@ -1,10 +1,10 @@
 \documentclass[11pt]{article}
-\newcommand{\ListaTitulo}{Lista 13: Simulado Prova 2 (Unidades 3 e 4)}
+\newcommand{\ListaTitulo}{Lista 13: Simulado Prova 2 (Unidades 2 e 3)}
 \input{preamble}
 
 \begin{document}
 
-\cabecalho{Lista de Exercícios 13: Simulado}{Revisão geral, no formato e no nível da Prova 2 (Cap. 3--4, Aulas 29--30)}
+\cabecalho{Lista de Exercícios 13: Simulado}{Revisão geral, no formato e no nível da Prova 2: Probabilidade e VA discretas (Cap. 2--3, Aulas 09--23)}
 
 \noindent \textit{Simulado de 10 pontos, no mesmo formato da prova oficial. Resolva com tempo
 cronometrado (sugestão: 100 minutos, sem consulta) antes de olhar o gabarito em
@@ -35,21 +35,36 @@ Deseja-se a probabilidade de que uma amostra de 150 peças contenha no máximo 3
   \item (1 ponto) Calcule a mesma probabilidade usando a aproximação pela distribuição Poisson.
 \end{enumerate}
 
-\item Seja $C>0$ uma constante e $X$ uma variável aleatória contínua com densidade
-$$
-f(x) = \begin{cases} Cx^{-2}, & x\ge 5 \\ 0, & x<5 \end{cases}
-$$
+\item Uma financeira tem 600 clientes classificados por faixa de renda e situação de pagamento:
+
+\begin{center}
+\begin{tabular}{l|cc|c}
+\toprule
+ & Em dia & Inadimplente & Total \\
+\midrule
+Renda baixa & 180 & 60 & 240 \\
+Renda alta  & 320 & 40 & 360 \\
+\midrule
+Total       & 500 & 100 & 600 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 \begin{enumerate}
-  \item (1 ponto) Encontre o valor de $C$ para que $f$ seja uma densidade de probabilidade válida.
-  \item (1 ponto) Calcule a função de distribuição acumulada $F(x)$, para $x\ge5$.
-  \item (1 ponto) Calcule $P(X>10)$.
+  \item (1 ponto) Qual é a probabilidade de um cliente sorteado estar inadimplente?
+  \item (1 ponto) Qual é a probabilidade de um cliente sorteado estar inadimplente, dado que é de
+    renda baixa?
+  \item (1 ponto) Situação de pagamento e faixa de renda são independentes nesta base? Justifique
+    numericamente.
 \end{enumerate}
 
-\item O retorno anual de um fundo multimercado é aproximadamente Normal, com média $10\%$ e
-desvio padrão $18\%$.
+\item Um exame laboratorial para uma doença tem 95\% de sensibilidade (detecta a doença quando ela
+existe) e 92\% de especificidade (dá negativo quando o paciente é saudável). A prevalência da
+doença na população testada é de 1\%.
 \begin{enumerate}
-  \item (1 ponto) Calcule a probabilidade do retorno em um ano ser maior que $15\%$.
-  \item (1 ponto) Calcule a probabilidade do retorno em um ano ser menor que $-8\%$.
+  \item (1 ponto) Calcule a probabilidade de um paciente sorteado ao acaso testar positivo.
+  \item (1 ponto) Dado que o teste deu positivo, calcule a probabilidade de o paciente
+    verdadeiramente ter a doença.
 \end{enumerate}
 
 \end{enumerate}
@@ -60,19 +75,16 @@ desvio padrão $18\%$.
 \end{center}
 \begin{small}
 \begin{itemize}
-  \item Se $X$ é contínua, $E(X)=\int xf(x)dx$; se discreta, $E(X)=\sum_k k\,P(X=k)$.
-    $\mathrm{Var}(X)=E(X^2)-[E(X)]^2$; $dp(X)=\sqrt{\mathrm{Var}(X)}$.
-  \item $X\sim\text{Bernoulli}(p)$: $P(X=k)=p^k(1-p)^{1-k}$, $k\in\{0,1\}$; $E(X)=p$,
-    $\mathrm{Var}(X)=p(1-p)$.
+  \item Se $X$ é discreta, $E(X)=\sum_k k\,P(X=k)$; $\mathrm{Var}(X)=E(X^2)-[E(X)]^2$;
+    $dp(X)=\sqrt{\mathrm{Var}(X)}$.
   \item $X\sim\text{Bin}(n,p)$: $P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}$; $E(X)=np$,
     $\mathrm{Var}(X)=np(1-p)$.
-  \item $X\sim\text{Pois}(\lambda)$: $P(X=k)=e^{-\lambda}\lambda^k/k!$; $E(X)=\mathrm{Var}(X)=\lambda$.
-  \item $X\sim N(\mu,\sigma^2)$: $E(X)=\mu$, $\mathrm{Var}(X)=\sigma^2$; $Z=(X-\mu)/\sigma\sim
-    N(0,1)$.
-  \item $X\sim\text{Unif}(\alpha,\beta)$: $f(x)=1/(\beta-\alpha)$; $E(X)=(\alpha+\beta)/2$,
-    $\mathrm{Var}(X)=(\beta-\alpha)^2/12$.
-  \item $\int x^n\,dx = \dfrac{x^{n+1}}{n+1}+c$ ($n\ne-1$); $\displaystyle\int e^{ax}\,dx =
-    \dfrac1a e^{ax}+c$.
+  \item $X\sim\text{Pois}(\lambda)$: $P(X=k)=e^{-\lambda}\lambda^k/k!$; $E(X)=\mathrm{Var}(X)=\lambda$;
+    aproxima Bin$(n,p)$ com $\lambda=np$.
+  \item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$; $P(B\mid A)=P(A\cap B)/P(A)$, se $P(A)>0$.
+    Independência: $P(A\cap B)=P(A)P(B)$.
+  \item Prob. total: $P(A)=\sum_i P(A\mid B_i)P(B_i)$. Bayes: $P(B_i\mid A)=\dfrac{P(A\mid
+    B_i)P(B_i)}{\sum_j P(A\mid B_j)P(B_j)}$.
 \end{itemize}
 \end{small}
 
