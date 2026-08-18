@@ -60,9 +60,34 @@ $$
 
 ---
 
+## A área é a probabilidade
+
+```{r fig-fdp-exemplo-mao, echo=FALSE, out.width="65%"}
+knitr::include_graphics("images/fdp_exemplo_mao.jpg")
+```
+
+---
+
 class: inverse, center, middle
 
 # Bloco 2: Aplicação
+
+---
+
+## Chuva acumulada: uma variável contínua real
+
+```{r fig-chuva-salvador, echo=FALSE, out.width="75%"}
+knitr::include_graphics("images/chuva_salvador.jpg")
+```
+
+---
+
+## Chuva acumulada: uma variável contínua real (cont.)
+
+Volume de chuva acumulado (mm) pode assumir qualquer valor não negativo, não é uma contagem como
+no Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo: \(P(X\ge x_{obs})\), a
+probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
+chuva de novembro para a cidade.
 
 ---
 

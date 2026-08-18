@@ -396,6 +396,37 @@ A Poisson também aproxima bem a Binomial quando $n$ é grande, $p$ é pequeno, 
 moderado, útil quando se conhece a taxa média de um evento raro, mas não o "$n$" e o "$p$"
 separadamente que o gerariam.
 
+<div class="figure" style="text-align: center">
+<img src="images/noticia_acidentes.jpg" alt="PRF registra 165 mortes em rodovias federais na semana do Natal de 2024, ante 90 mortes no mesmo período de 2023." width="65%" />
+<p class="caption">(\#fig:fig-noticia-acidentes)PRF registra 165 mortes em rodovias federais na semana do Natal de 2024, ante 90 mortes no mesmo período de 2023.</p>
+</div>
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: mortes no trânsito como contagem Poisson</strong>.
+O número de mortes em rodovias federais durante uma semana específica é uma contagem de eventos
+raros ocorrendo de forma aproximadamente independente ao longo do tempo, exatamente o retrato de
+uma Poisson. A notícia contrasta 165 mortes na semana do Natal de 2024 com 90 no mesmo período de
+2023, quase o dobro: sob um modelo Poisson com taxa $\lambda$ estimada pelo histórico da própria
+semana em anos anteriores, esse salto exige perguntar se $\lambda$ de fato mudou (mais tráfego,
+menos fiscalização) ou se é apenas variação natural em torno de uma mesma taxa média, a mesma
+lógica de diagnóstico de superdispersão discutida acima.</div>
+```
+
+<div class="figure" style="text-align: center">
+<img src="images/noticia_gols.jpg" alt="PSG 5 x 4 Bayern: recorde de gols em uma partida de ida de semifinal da Champions League (abril de 2026)." width="65%" />
+<p class="caption">(\#fig:fig-noticia-gols)PSG 5 x 4 Bayern: recorde de gols em uma partida de ida de semifinal da Champions League (abril de 2026).</p>
+</div>
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: gols em uma partida</strong>. O número de gols de
+um time em uma partida é outro exemplo clássico de contagem Poisson: muitas chances raras de gol ao
+longo de 90 minutos, cada uma com probabilidade pequena de se concretizar, somando-se numa taxa
+média $\lambda$ (gols esperados) que depende da qualidade ofensiva dos times. Uma partida com 9
+gols somados é um evento na cauda direita dessa distribuição, raro, mas não surpreendente o
+suficiente para descartar o modelo: é justamente esse tipo de evento extremo que os modelos de "gols
+esperados" (xG), usados por clubes e casas de apostas, tentam calibrar a partir de $\lambda$.</div>
+```
+
 
 ``` r
 lambda <- 3.2   # nº médio de chamadas por minuto numa central

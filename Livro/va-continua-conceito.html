@@ -320,6 +320,26 @@ f(x)\ge 0 \ \text{para todo } x, \qquad \int_{-\infty}^{\infty} f(x)\,dx = 1.
 <p><span class="math inline">\(f(x)\)</span> <strong>não é</strong> uma probabilidade, pode até ser maior que 1 em algum ponto, é uma <strong>densidade</strong>:
 a probabilidade “por unidade de comprimento” em torno de <span class="math inline">\(x\)</span>. Geometricamente, <span class="math inline">\(f(x)\)</span> é a curva, e
 <span class="math inline">\(P(a\le X\le b)\)</span> é a <strong>área</strong> sob essa curva entre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-fdp-exemplo-mao"></span>
+<img src="images/fdp_exemplo_mao.jpg" alt="Densidade $f(x)$ genérica: a área sob a curva entre $a$ e $b$ é $P(a&lt;X\le b)$; a área total sob toda a curva vale 1." width="60%" />
+<p class="caption">
+Figure 4.1: Densidade <span class="math inline">\(f(x)\)</span> genérica: a área sob a curva entre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> é <span class="math inline">\(P(a&lt;X\le b)\)</span>; a área total sob toda a curva vale 1.
+</p>
+</div>
+<div class="caixa-aplicacao"><strong>Aplicação: chuva acumulada é uma variável contínua</strong>. A
+manchete abaixo diz que Salvador registrou, em menos de um dia, 76% do acumulado de chuva esperado
+para todo o mês de novembro. O volume de chuva acumulado (em mm) é um exemplo típico de variável
+contínua: pode assumir qualquer valor não negativo, ao contrário das contagens discretas do
+Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo é $P(X\ge x_{obs})$, a
+probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
+chuva de novembro para a cidade, é essa probabilidade, não o número bruto de milímetros, que separa
+um dia "chuvoso, mas normal" de um evento estatisticamente extremo.</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-chuva-salvador"></span>
+<img src="images/chuva_salvador.jpg" alt="Chuva acumulada em Salvador ultrapassa 76% do esperado para novembro em menos de 24 horas (G1, 12/11/2025)." width="70%" />
+<p class="caption">
+Figure 4.2: Chuva acumulada em Salvador ultrapassa 76% do esperado para novembro em menos de 24 horas (G1, 12/11/2025).
+</p>
+</div>
 <div class="caixa-aplicacao"><strong>Aplicação: tempo de espera em uma fila de atendimento</strong>
 , o tempo $X$ (em minutos) que um cliente espera em uma fila de banco tem densidade
 $f(x) = 0{,}2\,e^{-0{,}2x}$, $x\ge 0$ (distribuição Exponencial, com taxa $0{,}2$).</div>

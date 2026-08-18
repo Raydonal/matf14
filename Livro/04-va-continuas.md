@@ -47,6 +47,27 @@ $f(x)$ **não é** uma probabilidade, pode até ser maior que 1 em algum ponto, 
 a probabilidade "por unidade de comprimento" em torno de $x$. Geometricamente, $f(x)$ é a curva, e
 $P(a\le X\le b)$ é a **área** sob essa curva entre $a$ e $b$.
 
+<div class="figure" style="text-align: center">
+<img src="images/fdp_exemplo_mao.jpg" alt="Densidade $f(x)$ genérica: a área sob a curva entre $a$ e $b$ é $P(a&lt;X\le b)$; a área total sob toda a curva vale 1." width="60%" />
+<p class="caption">(\#fig:fig-fdp-exemplo-mao)Densidade $f(x)$ genérica: a área sob a curva entre $a$ e $b$ é $P(a<X\le b)$; a área total sob toda a curva vale 1.</p>
+</div>
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: chuva acumulada é uma variável contínua</strong>. A
+manchete abaixo diz que Salvador registrou, em menos de um dia, 76% do acumulado de chuva esperado
+para todo o mês de novembro. O volume de chuva acumulado (em mm) é um exemplo típico de variável
+contínua: pode assumir qualquer valor não negativo, ao contrário das contagens discretas do
+Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo é $P(X\ge x_{obs})$, a
+probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
+chuva de novembro para a cidade, é essa probabilidade, não o número bruto de milímetros, que separa
+um dia "chuvoso, mas normal" de um evento estatisticamente extremo.</div>
+```
+
+<div class="figure" style="text-align: center">
+<img src="images/chuva_salvador.jpg" alt="Chuva acumulada em Salvador ultrapassa 76% do esperado para novembro em menos de 24 horas (G1, 12/11/2025)." width="70%" />
+<p class="caption">(\#fig:fig-chuva-salvador)Chuva acumulada em Salvador ultrapassa 76% do esperado para novembro em menos de 24 horas (G1, 12/11/2025).</p>
+</div>
+
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: tempo de espera em uma fila de atendimento</strong>
 , o tempo $X$ (em minutos) que um cliente espera em uma fila de banco tem densidade
@@ -180,6 +201,30 @@ ter a fórmula de $f$ em mãos? Use a relação $F'(x)=f(x)$ para deduzir.</p>
 
 ## Alguns modelos probabilísticos {#modelos-continuos}
 
+Antes dos modelos nomeados a seguir, vale reforçar que "densidade válida" é um conceito mais amplo
+que os nomes consagrados (Uniforme, Normal etc.): qualquer função não negativa com área total 1
+serve.
+
+<div class="figure" style="text-align: center">
+<img src="images/fdp_triangular.jpg" alt="Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R." width="50%" />
+<p class="caption">(\#fig:fig-fdp-triangular)Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R.</p>
+</div>
+
+```{=html}
+<div class="caixa-discussao"><strong>Para discutir</strong>
+
+<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em $x=0$) até 1 (em $x=1$) e desce
+de volta a 0 (em $x=2$), formando dois triângulos-retângulos. Usando a fórmula da área de um
+triângulo, confirme que a área total sob a curva é de fato 1, condição necessária para ser uma
+densidade válida.</p>
+
+<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: $P(X\le 1)$ é maior, menor
+ou igual a $P(X>1)$? E $E(X)$, o desenho sugere que vale exatamente 1? (Aqui a densidade é
+simétrica em torno de $x=1$, mas o racional geral vale para qualquer densidade: quando existe um
+ponto de simetria, ele é sempre igual a $E(X)$.)</p>
+</div>
+```
+
 ### Distribuição Uniforme
 
 A VA mais simples: densidade **constante** em um intervalo $[a,b]$, zero fora dele, "todos os
@@ -222,6 +267,17 @@ dunif(30, min = a, max = b)   # densidade em x=30 (constante = 1/60)
 ```
 ## [1] 0.01666667
 ```
+
+<div class="figure" style="text-align: center">
+<img src="images/hist_fdp_unif01.png" alt="Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho." width="65%" />
+<p class="caption">(\#fig:fig-hist-unif)Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho.</p>
+</div>
+
+É a lei dos grandes números (fora do escopo formal deste curso, mas já intuída no Capítulo 1) que
+garante essa aproximação: quanto maior a amostra simulada, mais o histograma se aproxima da
+densidade teórica constante $f(x)=1$ em $[0,1]$, e mais a média amostral se aproxima de
+$E(X)=0{,}5$, a mesma lógica por trás de qualquer simulação Monte Carlo usada para verificar um
+resultado teórico.
 
 ### Distribuição Normal
 

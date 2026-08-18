@@ -378,6 +378,33 @@ sinistralidade em seguros (número de sinistros por apólice, retomando o exempl
 <p>A Poisson também aproxima bem a Binomial quando <span class="math inline">\(n\)</span> é grande, <span class="math inline">\(p\)</span> é pequeno, e <span class="math inline">\(np=\lambda\)</span> é
 moderado, útil quando se conhece a taxa média de um evento raro, mas não o “<span class="math inline">\(n\)</span>” e o “<span class="math inline">\(p\)</span>”
 separadamente que o gerariam.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-noticia-acidentes"></span>
+<img src="images/noticia_acidentes.jpg" alt="PRF registra 165 mortes em rodovias federais na semana do Natal de 2024, ante 90 mortes no mesmo período de 2023." width="65%" />
+<p class="caption">
+Figure 3.3: PRF registra 165 mortes em rodovias federais na semana do Natal de 2024, ante 90 mortes no mesmo período de 2023.
+</p>
+</div>
+<div class="caixa-aplicacao"><strong>Aplicação: mortes no trânsito como contagem Poisson</strong>.
+O número de mortes em rodovias federais durante uma semana específica é uma contagem de eventos
+raros ocorrendo de forma aproximadamente independente ao longo do tempo, exatamente o retrato de
+uma Poisson. A notícia contrasta 165 mortes na semana do Natal de 2024 com 90 no mesmo período de
+2023, quase o dobro: sob um modelo Poisson com taxa $\lambda$ estimada pelo histórico da própria
+semana em anos anteriores, esse salto exige perguntar se $\lambda$ de fato mudou (mais tráfego,
+menos fiscalização) ou se é apenas variação natural em torno de uma mesma taxa média, a mesma
+lógica de diagnóstico de superdispersão discutida acima.</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-noticia-gols"></span>
+<img src="images/noticia_gols.jpg" alt="PSG 5 x 4 Bayern: recorde de gols em uma partida de ida de semifinal da Champions League (abril de 2026)." width="65%" />
+<p class="caption">
+Figure 3.4: PSG 5 x 4 Bayern: recorde de gols em uma partida de ida de semifinal da Champions League (abril de 2026).
+</p>
+</div>
+<div class="caixa-aplicacao"><strong>Aplicação: gols em uma partida</strong>. O número de gols de
+um time em uma partida é outro exemplo clássico de contagem Poisson: muitas chances raras de gol ao
+longo de 90 minutos, cada uma com probabilidade pequena de se concretizar, somando-se numa taxa
+média $\lambda$ (gols esperados) que depende da qualidade ofensiva dos times. Uma partida com 9
+gols somados é um evento na cauda direita dessa distribuição, raro, mas não surpreendente o
+suficiente para descartar o modelo: é justamente esse tipo de evento extremo que os modelos de "gols
+esperados" (xG), usados por clubes e casas de apostas, tentam calibrar a partir de $\lambda$.</div>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="modelos-discretos.html#cb42-1" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">3.2</span>   <span class="co"># nº médio de chamadas por minuto numa central</span></span>
 <span id="cb42-2"><a href="modelos-discretos.html#cb42-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">12</span></span>
 <span id="cb42-3"><a href="modelos-discretos.html#cb42-3" tabindex="-1"></a>fmp_pois <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x, lambda)</span>

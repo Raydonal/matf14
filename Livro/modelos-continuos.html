@@ -292,6 +292,27 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="modelos-continuos" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Alguns modelos probabilísticos<a href="modelos-continuos.html#modelos-continuos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Antes dos modelos nomeados a seguir, vale reforçar que “densidade válida” é um conceito mais amplo
+que os nomes consagrados (Uniforme, Normal etc.): qualquer função não negativa com área total 1
+serve.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-fdp-triangular"></span>
+<img src="images/fdp_triangular.jpg" alt="Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R." width="50%" />
+<p class="caption">
+Figure 4.4: Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R.
+</p>
+</div>
+<div class="caixa-discussao"><strong>Para discutir</strong>
+
+<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em $x=0$) até 1 (em $x=1$) e desce
+de volta a 0 (em $x=2$), formando dois triângulos-retângulos. Usando a fórmula da área de um
+triângulo, confirme que a área total sob a curva é de fato 1, condição necessária para ser uma
+densidade válida.</p>
+
+<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: $P(X\le 1)$ é maior, menor
+ou igual a $P(X>1)$? E $E(X)$, o desenho sugere que vale exatamente 1? (Aqui a densidade é
+simétrica em torno de $x=1$, mas o racional geral vale para qualquer densidade: quando existe um
+ponto de simetria, ele é sempre igual a $E(X)$.)</p>
+</div>
 <div id="distribuição-uniforme" class="section level3 hasAnchor" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> Distribuição Uniforme<a href="modelos-continuos.html#distribuição-uniforme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A VA mais simples: densidade <strong>constante</strong> em um intervalo <span class="math inline">\([a,b]\)</span>, zero fora dele, “todos os
@@ -311,6 +332,17 @@ $X\sim\text{Unif}(0,60)$ (minutos após o início da hora).</div>
 <pre><code>## [1] 0.3333333</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="modelos-continuos.html#cb54-1" tabindex="-1"></a><span class="fu">dunif</span>(<span class="dv">30</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)   <span class="co"># densidade em x=30 (constante = 1/60)</span></span></code></pre></div>
 <pre><code>## [1] 0.01666667</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hist-unif"></span>
+<img src="images/hist_fdp_unif01.png" alt="Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho." width="65%" />
+<p class="caption">
+Figure 4.5: Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho.
+</p>
+</div>
+<p>É a lei dos grandes números (fora do escopo formal deste curso, mas já intuída no Capítulo 1) que
+garante essa aproximação: quanto maior a amostra simulada, mais o histograma se aproxima da
+densidade teórica constante <span class="math inline">\(f(x)=1\)</span> em <span class="math inline">\([0,1]\)</span>, e mais a média amostral se aproxima de
+<span class="math inline">\(E(X)=0{,}5\)</span>, a mesma lógica por trás de qualquer simulação Monte Carlo usada para verificar um
+resultado teórico.</p>
 </div>
 <div id="distribuição-normal" class="section level3 hasAnchor" number="4.4.2">
 <h3><span class="header-section-number">4.4.2</span> Distribuição Normal<a href="modelos-continuos.html#distribuição-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -329,7 +361,7 @@ Z = \frac{X-\mu}{\sigma}.
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-black-scholes"></span>
 <img src="images/black_scholes.jpg" alt="'Fórmula de Midas': a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal)." width="70%" />
 <p class="caption">
-Figure 4.2: ‘Fórmula de Midas’: a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal).
+Figure 4.6: ‘Fórmula de Midas’: a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal).
 </p>
 </div>
 <div class="caixa-economia"><strong>Leitura econômica</strong>, a fórmula de Black-Scholes-Merton

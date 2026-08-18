@@ -137,6 +137,27 @@ As duas contas praticamente coincidem, a aproximação já é excelente com \(n=
 
 ---
 
+## Mortes no trânsito como contagem Poisson
+
+&lt;img src="images/noticia_acidentes.jpg" alt="" width="65%" /&gt;
+
+165 mortes na semana do Natal de 2024 vs. 90 no mesmo período de 2023: sob um modelo Poisson com
+\(\lambda\) estimado pelo histórico da própria semana em anos anteriores, esse salto exige
+perguntar se \(\lambda\) mudou (mais tráfego, menos fiscalização) ou se é apenas variação natural
+em torno da mesma taxa média.
+
+---
+
+## Gols em uma partida
+
+&lt;img src="images/noticia_gols.jpg" alt="" width="65%" /&gt;
+
+PSG 5 x 4 Bayern: 9 gols somados é um evento na cauda direita da distribuição de gols de uma
+partida, raro, mas não a ponto de descartar o modelo Poisson, é justamente esse tipo de evento
+extremo que os modelos de "gols esperados" (xG) tentam calibrar a partir de \(\lambda\).
+
+---
+
 class: inverse, center, middle
 
 # Bloco 3: Discussão (bloco central da aula)
