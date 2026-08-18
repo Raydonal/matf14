@@ -2,7 +2,7 @@
 title: "Estatística Econômica I"
 subtitle: "Notas de curso: MATF14"
 author: "Raydonal Ospina"
-date: "17 de August de 2026"
+date: "18 de August de 2026"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: refs.bib

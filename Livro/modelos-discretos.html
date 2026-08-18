@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -302,6 +303,18 @@ p(x) = p^x(1-p)^{1-x}, \quad x\in\{0,1\} \qquad E(X)=p \qquad \mathrm{Var}(X)=p(
 <div class="caixa-aplicacao"><strong>Aplicação</strong>, "um cliente aprovado para crédito
 inadimple no primeiro ano" é uma Bernoulli com $p=$ taxa de inadimplência histórica daquele
 segmento.</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pesquisa-celular"></span>
+<img src="images/pesquisa_celular.jpg" alt="86% dos brasileiros apoiam restrição de celular nas escolas, segundo pesquisa Datafolha/Agência Brasil." width="70%" />
+<p class="caption">
+Figure 3.2: 86% dos brasileiros apoiam restrição de celular nas escolas, segundo pesquisa Datafolha/Agência Brasil.
+</p>
+</div>
+<div class="caixa-aplicacao"><strong>Aplicação: de pesquisa de opinião a Binomial</strong>. Se
+86% da população realmente apoia a medida ($p=0{,}86$), e uma nova amostra de 20 pessoas for
+entrevistada, o número $X$ de entrevistados favoráveis segue $X\sim\text{Bin}(20;\,0{,}86)$: soma
+de 20 Bernoullis independentes, uma por entrevistado, cada uma valendo 1 se a pessoa apoia e 0 caso
+contrário. É exatamente essa Binomial que, mais adiante em disciplinas de inferência, permite
+calcular a margem de erro de uma pesquisa de opinião a partir do tamanho da amostra.</div>
 </div>
 <div id="distribuição-binomial" class="section level3 hasAnchor" number="3.4.2">
 <h3><span class="header-section-number">3.4.2</span> Distribuição Binomial<a href="modelos-discretos.html#distribuição-binomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>

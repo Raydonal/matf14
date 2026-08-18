@@ -251,6 +251,16 @@ $P(X > 2) = 1 - F(2) = 0{,}05$; $P(X \ge 2) = 1 - F(1) = 1-0{,}85=0{,}15$ (aten�
 "$>$" em variáveis discretas, a diferença de um ponto importa, ao contrário do caso contínuo do
 Capítulo 4).
 
+<div class="figure" style="text-align: center">
+<img src="images/fda_lancamento_dado.png" alt="FDA do resultado do lançamento de um dado honesto: seis saltos de tamanho 1/6, uma escada perfeitamente regular." width="65%" />
+<p class="caption">(\#fig:fig-fda-dado)FDA do resultado do lançamento de um dado honesto: seis saltos de tamanho 1/6, uma escada perfeitamente regular.</p>
+</div>
+
+O caso mais simples de FDA em escada é o de um dado honesto: seis saltos, todos do mesmo tamanho
+$1/6$, refletindo a distribuição uniforme discreta $p(x)=1/6$ para $x\in\{1,\ldots,6\}$. Compare
+com a FDA dos sinistros acima: lá, os saltos têm tamanhos diferentes (proporcionais a cada
+$p(x_i)$), porque a distribuição não é uniforme.
+
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
@@ -279,6 +289,20 @@ $$
 <div class="caixa-aplicacao"><strong>Aplicação</strong>, "um cliente aprovado para crédito
 inadimple no primeiro ano" é uma Bernoulli com $p=$ taxa de inadimplência histórica daquele
 segmento.</div>
+```
+
+<div class="figure" style="text-align: center">
+<img src="images/pesquisa_celular.jpg" alt="86% dos brasileiros apoiam restrição de celular nas escolas, segundo pesquisa Datafolha/Agência Brasil." width="70%" />
+<p class="caption">(\#fig:fig-pesquisa-celular)86% dos brasileiros apoiam restrição de celular nas escolas, segundo pesquisa Datafolha/Agência Brasil.</p>
+</div>
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: de pesquisa de opinião a Binomial</strong>. Se
+86% da população realmente apoia a medida ($p=0{,}86$), e uma nova amostra de 20 pessoas for
+entrevistada, o número $X$ de entrevistados favoráveis segue $X\sim\text{Bin}(20;\,0{,}86)$: soma
+de 20 Bernoullis independentes, uma por entrevistado, cada uma valendo 1 se a pessoa apoia e 0 caso
+contrário. É exatamente essa Binomial que, mais adiante em disciplinas de inferência, permite
+calcular a margem de erro de uma pesquisa de opinião a partir do tamanho da amostra.</div>
 ```
 
 ### Distribuição Binomial
