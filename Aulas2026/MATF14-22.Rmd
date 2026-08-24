@@ -1,12 +1,13 @@
 ---
 title: "[Laboratório] Simulação de VA discretas em R"
 subtitle: "MATF14: Estatística Econômica I"
-author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+author: "Raydonal Ospina"
 date: "11/11/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
     lib_dir: libs
+    seal: false
     nature:
       highlightStyle: github
       highlightLines: true

@@ -1,12 +1,13 @@
 ---
 title: "Apresentação da disciplina · População e amostra · Tipos de variáveis"
 subtitle: "MATF14: Estatística Econômica I"
-author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
+author: "Raydonal Ospina"
 date: "24/08/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
     lib_dir: libs
+    seal: false
     nature:
       highlightStyle: github
       highlightLines: true
@@ -32,7 +33,7 @@ Encontros às **2ª e 4ª-feira, 10:40–12:30**
 
 ---
 
-## Você já decide com números incertos: mesmo sem perceber
+## Você já decide com números incertos (1/2)
 
 > Vale a pena trocar a poupança por um fundo multimercado, sabendo que o retorno pode ser maior,
 > mas também negativo em algum mês?
@@ -47,7 +48,31 @@ Encontros às **2ª e 4ª-feira, 10:40–12:30**
 > O IBGE diz que a inflação veio "dentro da meta", meta de quem, medida em que amostra, com que
 > margem de erro?
 
+---
+
+## A segunda pergunta, em figura
+
+```{r fig-poll, echo=FALSE, out.width="72%", fig.width=7, fig.height=4}
+poll <- tibble(candidato = c("A", "B"), pct = c(52, 48), erro = c(3, 3))
+ggplot(poll, aes(candidato, pct, fill = candidato)) +
+  geom_col(width = 0.45, alpha = 0.9) +
+  geom_errorbar(aes(ymin = pct - erro, ymax = pct + erro), width = 0.12, linewidth = 1) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "grey40") +
+  scale_fill_manual(values = c(A = "#3b5bdb", B = "#c9971e")) +
+  labs(x = NULL, y = "% das intenções de voto") +
+  theme_minimal(base_size = 17) +
+  theme(legend.position = "none")
+```
+
 --
+
+Os intervalos (52%±3 e 48%±3) se **sobrepõem** entre 49% e 55%: com a incerteza da amostragem, os
+dois candidatos podem estar empatados, ou até B na frente. "52% contra 48%" isolado esconde essa
+sobreposição, é exatamente essa leitura que a Unidade 2 (Probabilidade) vai formalizar.
+
+---
+
+## Você já decide com números incertos (2/2)
 
 > Um banco oferece crédito porque seu escore está "acima da média", acima de que distribuição,
 > exatamente?
@@ -59,10 +84,31 @@ Encontros às **2ª e 4ª-feira, 10:40–12:30**
 
 --
 
-> "O brasileiro médio ganha R\$ 3.100 por mês", essa frase descreve alguém que realmente existe,
+> "O brasileiro médio ganha R$ 3.100 por mês", essa frase descreve alguém que realmente existe,
 > ou é uma conta que nenhum brasileiro em particular corresponde?
 
+---
+
+## A última pergunta, em figura
+
+```{r fig-skew, echo=FALSE, out.width="72%", fig.width=7, fig.height=4, warning=FALSE}
+media_fat <- mean(empresas$faturamento99)
+mediana_fat <- median(empresas$faturamento99)
+ggplot(empresas, aes(faturamento99)) +
+  geom_histogram(bins = 22, fill = "#2e8b57", alpha = 0.85) +
+  geom_vline(xintercept = media_fat, color = "#c0392b", linewidth = 1) +
+  geom_vline(xintercept = mediana_fat, color = "#2980b9", linewidth = 1, linetype = "dashed") +
+  labs(x = "Faturamento 1999 (R$)", y = "Nº de empresas") +
+  theme_minimal(base_size = 16)
+```
+
 --
+
+Faturamento de `r nrow(empresas)` empresas. A linha vermelha é a **média**; a azul tracejada, a
+**mediana**, mais baixa, puxada para a esquerda pelas poucas empresas de faturamento muito alto.
+"Faturamento médio" descreve bem uma empresa *típica* desta amostra? Guarde a pergunta.
+
+---
 
 Esta disciplina constrói o vocabulário formal, e o hábito de rigor, por trás de cada uma dessas
 perguntas. As fórmulas em si são poucas; a dificuldade real está em saber **qual pergunta cada
@@ -185,6 +231,12 @@ Cada bloco de aula traz perguntas abertas, **não são preenchimento de tempo**:
 diferença entre nota alta e mediana quase sempre está aqui, não em saber a fórmula, mas em saber
 quando ela se aplica e o que ela deixa de fora. Espere ser chamado a responder, não só a ouvir.
 
+--
+
+O formato é flexível, sozinho, em dupla, em grupo pequeno, ou como discussão coletiva conduzida
+por mim, o que funcionar melhor no dia e no tamanho da turma. O que não muda é o hábito: parar e
+responder por escrito ou em voz alta, antes de ver a resposta pronta.
+
 ---
 
 ## Avaliação
@@ -234,7 +286,7 @@ class: inverse, center, middle
 
 ---
 
-## Para discutir agora, em grupo
+## Para discutir agora
 
 **1.** Cite uma manchete de jornal ou rede social recente que usou (bem ou mal) um número
 estatístico para embasar uma afirmação econômica.
@@ -242,7 +294,7 @@ estatístico para embasar uma afirmação econômica.
 **2.** O que precisaria ser verdade sobre *como aquele número foi calculado* para que a afirmação
 fosse confiável? Liste ao menos duas condições.
 
-**3.** Retome as seis perguntas do início do slide. Escolha uma e tente, sem nenhum conceito
+**3.** Retome as seis perguntas do início da aula. Escolha uma e tente, sem nenhum conceito
 formal ainda, esboçar em uma frase por que ela é difícil de responder "no olho".
 
 **4.** Você conhece alguém (familiar, colega, você mesmo) que já tomou uma decisão financeira
@@ -442,7 +494,7 @@ class: inverse, center, middle
 
 ---
 
-## Para discutir em grupo: 15 minutos
+## Para discutir: 15 minutos (1/2)
 
 **1.** O IBGE registra "faixa de renda domiciliar" cortando uma variável contínua (renda em R\$)
 em intervalos. A variável derivada é discreta, contínua ou qualitativa? O que se ganha e o que se
@@ -451,18 +503,24 @@ perde nessa transformação?
 **2.** Um índice de "nota de bem-estar" de 0 a 10, atribuído por uma pesquisa a cada município, é
 ordinal ou quantitativo? De que depende a resposta?
 
+--
+
 **3.** Um aplicativo de delivery classifica cada pedido em uma "nota de satisfação" de 1 a 5
 estrelas, e a empresa calcula e divulga a "nota média". Isso é defensável? Sob que condição bem
 específica faria mais sentido tratar essa variável como quantitativa em vez de ordinal?
 
---
-
 **4.** Se você tivesse acesso à população *inteira* de contribuintes do imposto de renda do Brasil,
 ainda faria sentido falar em "amostra" em algum ponto da sua análise? Em que ponto?
+
+---
+
+## Para discutir: 15 minutos (2/2)
 
 **5.** Volte à sua base de dados trazida de casa: classifique cada variável dela (nominal, ordinal,
 discreta, contínua) e identifique se a base é população ou amostra em relação à pergunta que você
 tinha em mente ao coletá-la.
+
+--
 
 **6.** Um erro clássico de prova: tratar uma variável ordinal (como classe social A/B/C/D/E) como
 se fosse quantitativa e calcular sua "média". Reproduza, como fizemos com `porte`, esse erro com
