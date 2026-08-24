@@ -10,3 +10,15 @@
 .remark-slide-content h1 {
   font-size: 1.8rem;
 }
+
+/* Caixas de destaque, mesma paleta do livro-texto (Livro/style.css) */
+div.caixa-aplicacao, div.caixa-discussao, div.caixa-r, div.caixa-economia {
+  border-radius: 6px;
+  padding: 0.5em 0.9em;
+  margin: 0.6em 0;
+  font-size: 0.85em;
+}
+div.caixa-aplicacao { background: #eef7f1; border-left: 5px solid #2e8b57; }
+div.caixa-discussao { background: #fdf3e7; border-left: 5px solid #d98324; }
+div.caixa-r         { background: #eef3fb; border-left: 5px solid #3b5bdb; }
+div.caixa-economia  { background: #fdf8ee; border-left: 5px solid #c9971e; }

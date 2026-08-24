@@ -1,7 +1,8 @@
 # matf14
 
-MATF14: Estatística Econômica I (UFBA, Departamento de Estatística, 2026.1).
-Material elaborado por Raydonal Ospina, com colaboração de Rodney Vasconcelos Fonseca.
+MATF14: Estatística Econômica I (UFBA, Departamento de Estatística, código MATF14, 60h,
+pré-requisito MAT047). Turma 2026.2, encontros às 2ª e 4ª-feira, 10:40–12:30, início em
+24/08/2026. Material elaborado por Raydonal Ospina, com colaboração de Rodney Vasconcelos Fonseca.
 
 Disciplina de serviço para os cursos de Economia e Estatística. Ementa: estatística descritiva,
 probabilidade, variáveis aleatórias discretas e contínuas. Avaliação: três provas (P1, P2, P3),
@@ -15,8 +16,12 @@ projetos; listas de exercícios não valem nota.
 - `Livro/`: livro-texto em [bookdown](https://bookdown.org/) (gitbook), com a mesma numeração da
   ementa oficial (Capítulos 1-4) mais dois apêndices (revisão de cálculo e fórmulário). Renderizar
   com `bookdown::render_book("Livro/index.Rmd")`.
-- `Aulas2026/`: slides de aula em [xaringan](https://slides.yihui.org/xaringan/), um deck por data
-  do cronograma oficial (30 aulas, incluindo 3 aulas de laboratório em R). Renderizar cada deck com
+- `Aulas2026/`: slides de aula em [xaringan](https://slides.yihui.org/xaringan/), um deck por
+  encontro do cronograma oficial. As aulas 01 e 02 do cronograma original (apresentação da
+  disciplina; população/amostra e tipos de variáveis) foram fundidas em um único deck
+  (`MATF14-01.Rmd`), já que o novo horário reúne em um só encontro (1h50) o conteúdo que antes
+  ocupava dois dias separados; a renumeração completa dos demais decks para o calendário 2026.2
+  fica para uma próxima revisão. Renderizar cada deck com
   `rmarkdown::render("Aulas2026/MATF14-NN.Rmd")`.
 - `Listas2026/`: listas de exercícios em LaTeX, contextualizadas em cenários de economia e
   estatística (mercado de trabalho, inflação, finanças, pesquisas eleitorais), organizadas por

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Estatística Econômica I</title>
+    <title>Apresentação da disciplina · População e amostra · Tipos de variáveis</title>
     <meta charset="utf-8" />
     <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
-    <meta name="date" content="2026-09-03" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
@@ -16,16 +15,16 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Estatística Econômica I
+# Apresentação da disciplina · População e amostra · Tipos de variáveis
 ]
 .subtitle[
-## Apresentação da disciplina, metodologia e calendário
+## MATF14: Estatística Econômica I
 ]
 .author[
 ### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
 ]
 .date[
-### 09/03/2026
+### 24/08/2026
 ]
 
 ---
@@ -37,15 +36,11 @@ class: inverse, center, middle
 
 # MATF14: Estatística Econômica I
 
-### Aula 01: Apresentação, metodologia, calendário
+### Aula 01: Apresentação, metodologia, calendário · População e amostra · Tipos de variáveis
 
-Prof. colaborador: Raydonal Ospina · Depto. de Estatística, UFBA, 2026.1
+Prof. colaborador: Raydonal Ospina · Depto. de Estatística, UFBA, 2026.2
 
----
-
-class: inverse, center, middle
-
-# Antes de começar, cinco perguntas
+Encontros às **2ª e 4ª-feira, 10:40–12:30**
 
 ---
 
@@ -76,35 +71,131 @@ class: inverse, center, middle
 
 --
 
-Esta disciplina constrói o vocabulário formal por trás de cada uma dessas perguntas.
+&gt; "O brasileiro médio ganha R\$ 3.100 por mês", essa frase descreve alguém que realmente existe,
+&gt; ou é uma conta que nenhum brasileiro em particular corresponde?
+
+--
+
+Esta disciplina constrói o vocabulário formal, e o hábito de rigor, por trás de cada uma dessas
+perguntas. As fórmulas em si são poucas; a dificuldade real está em saber **qual pergunta cada
+uma responde, e qual não responde**.
 
 ---
 
-## Ementa oficial
+## Identificação do componente curricular
 
-1. **Estatística Descritiva e Exploratória de Dados**
-, população/amostra, tipos de variável, tabelas, gráficos, medidas de posição, dispersão,
-   assimetria e curtose.
-2. **Introdução à Teoria das Probabilidades**
-, espaço amostral, probabilidade condicional, independência, Teorema de Bayes.
-3. **Variáveis Aleatórias Discretas**
-, esperança, variância, FDA, Bernoulli, Binomial, Poisson.
-4. **Variáveis Aleatórias Contínuas**
-, esperança, variância, FDA, Uniforme, Normal.
+| | |
+|---|---|
+| **Código** | MATF14 |
+| **Nome** | Estatística Econômica I |
+| **Departamento** | Estatística, UFBA |
+| **Carga horária** | 60h (teórico-prática) |
+| **Pré-requisito** | MAT047 (Cálculo I) |
+| **Modalidade** | Presencial, quadro + slides + laboratório de informática |
+| **Horário** | 2ª e 4ª-feira, 10:40 – 12:30 |
+| **Início** | 24/08/2026 |
+
+--
+
+Disciplina de serviço para os cursos de **Economia** e **Estatística**: o objetivo não é treinar
+matemáticos, é dar a quem vai trabalhar com dados econômicos (preços, renda, câmbio, desemprego,
+pesquisas de opinião) o ferramental para ler um número com rigor antes de opinar sobre ele.
+
+---
+
+## Propósito e objetivos
+
+**Propósito.** A Economia é feita quase inteiramente de inferências a partir de dados
+incompletos e ruidosos: séries curtas, amostras enviesadas, choques que não se repetem
+exatamente. A Estatística é o ferramental que formaliza *o que dá e o que não dá* para concluir a
+partir desse tipo de evidência.
+
+--
+
+**Objetivo geral.** Proporcionar o conhecimento teórico-prático de Estatística Descritiva,
+Probabilidade e Variáveis Aleatórias necessário para uso em situações da área de Economia e
+Estatística, e como base para disciplinas subsequentes (Econometria, Microeconomia, Inferência
+Estatística).
+
+--
+
+**Objetivos específicos.** Ao final da disciplina, o aluno deve ser capaz de: (i) resumir e
+representar corretamente um conjunto de dados, respeitando o tipo de cada variável; (ii)
+calcular e interpretar probabilidades, inclusive condicionais; (iii) modelar fenômenos discretos
+e contínuos com as principais distribuições de probabilidade; (iv) **reconhecer os limites** de
+cada uma dessas ferramentas diante de um caso concreto, não só aplicar a fórmula.
+
+---
+
+## Ementa oficial: Unidades 1 e 2
+
+**Unidade 1 · Estatística Descritiva e Exploratória de Dados**
+- População e amostra; tipos de variáveis.
+- Apresentação tabular e principais tipos de representação gráfica.
+- Medidas de tendência central e suas relações.
+- Medidas de dispersão: amplitude total e interquartílica; desvio padrão; variância; coeficiente
+  de variação.
+- Medidas de assimetria e curtose.
+
+--
+
+**Unidade 2 · Introdução à Teoria das Probabilidades**
+- Espaço amostral e eventos; conceitos e propriedades de probabilidade.
+- Probabilidade condicional; independência estatística.
+- Teoremas básicos de probabilidade; Teorema de Bayes.
+
+---
+
+## Ementa oficial: Unidades 3 e 4
+
+**Unidade 3 · Variáveis Aleatórias Discretas**
+- Conceituação; esperança e variância (definição e propriedades).
+- Função de distribuição acumulada.
+- Modelos: Bernoulli, Binomial, Poisson.
+
+--
+
+**Unidade 4 · Variáveis Aleatórias Contínuas**
+- Conceituação; esperança e variância; função de distribuição acumulada.
+- Modelos: Uniforme, Normal.
+
+--
+
+O livro-texto (`Livro/`) segue **exatamente** essa numeração, capítulo a capítulo, seção a seção,
+para que qualquer tópico cobrado em prova seja localizável diretamente pelo número da ementa.
 
 ---
 
 ## Como as aulas funcionam
 
-- Aulas **teóricas** (quadro + slides) e aulas **práticas** de laboratório em R (3 ao longo do
-  semestre) e de exercícios (4 ao longo do semestre).
+- Aulas **teóricas** (quadro + slides) e aulas **práticas**: laboratório em R (3 ao longo do
+  semestre) e aulas de exercícios/revisão.
 - Material de apoio: livro-texto (`Livro/`), slides de cada aula (`Aulas2026/`) e listas de
   exercícios com gabarito (`Listas2026/`).
-- **As discussões em sala valem tanto quanto as contas.** Cada bloco de aula traz perguntas
-  abertas, não são preenchimento de tempo, são o critério que mais separa quem entende a matéria
-  de quem só decorou fórmula. Espere ser chamado a responder, não só a ouvir.
-- As listas de exercícios **não valem nota**, mas cobrem exatamente o estilo de questão cobrado nas
-  provas, a forma mais eficiente de estudar é resolver a lista antes de olhar o gabarito.
+- O livro cobre **com mais vagar** o que o slide de cada bloco apresenta de forma resumida em
+  sala, é a referência para estudar depois da aula, não durante.
+- As listas de exercícios **não valem nota**, mas cobrem exatamente o estilo de questão cobrado
+  nas provas, resolver a lista antes de olhar o gabarito é a forma mais eficiente de estudar.
+
+---
+
+## Por que as discussões valem tanto quanto as contas
+
+Um erro comum de quem estuda Estatística pela primeira vez é tratar cada aula como uma coleção de
+fórmulas a decorar e aplicar. As fórmulas deste curso são, de fato, poucas e simples, a
+dificuldade real está em **saber qual pergunta cada fórmula responde, e qual não responde**.
+
+--
+
+Uma correlação de 0,86 entre gasto em propaganda e vendas prova que a propaganda *causa* as
+vendas? Um teste de fraude com 95% de acerto significa que 95% dos alarmes são fraudes de
+verdade? Uma média salarial de R\$ 6.000 descreve bem o "trabalhador típico" de uma categoria?
+
+--
+
+Cada bloco de aula traz perguntas abertas, **não são preenchimento de tempo**: nas provas, a
+diferença entre nota alta e mediana quase sempre está aqui, não em saber a fórmula, mas em saber
+quando ela se aplica e o que ela deixa de fora. Espere ser chamado a responder, não só a ouvir.
 
 ---
 
@@ -120,9 +211,14 @@ $$
 | P2 | Unidades 2 e 3 (Probabilidade e VA discretas) |
 | P3 | Unidade 4 (VA contínuas) |
 
-Datas oficiais conforme calendário divulgado em sala; segunda chamada ao final do semestre.
+Datas oficiais conforme calendário divulgado em sala.
 
-- Aprovação: frequência \(\ge 75\%\) **e** \(NF \ge 5{,}0\).
+--
+
+- Aprovação: frequência `\(\ge 75\%\)` **e** `\(NF \ge 5{,}0\)`.
+- **2ª chamada**, destinada exclusivamente a quem não realizou **uma** das provas por motivo
+  comprovável (atestado médico ou de trabalho); cobre **todo** o conteúdo da disciplina, não só a
+  unidade da prova perdida.
 - Sem projetos nesta disciplina, o foco é dominar os conceitos e resolver problemas sob prova.
 
 ---
@@ -158,7 +254,7 @@ estatístico para embasar uma afirmação econômica.
 **2.** O que precisaria ser verdade sobre *como aquele número foi calculado* para que a afirmação
 fosse confiável? Liste ao menos duas condições.
 
-**3.** Retome as cinco perguntas do início do slide. Escolha uma e tente, sem nenhum conceito
+**3.** Retome as seis perguntas do início do slide. Escolha uma e tente, sem nenhum conceito
 formal ainda, esboçar em uma frase por que ela é difícil de responder "no olho".
 
 **4.** Você conhece alguém (familiar, colega, você mesmo) que já tomou uma decisão financeira
@@ -174,12 +270,268 @@ formos construindo as ferramentas para avaliá-lo com rigor.
 
 class: inverse, center, middle
 
-# Próxima aula (11/03)
+# Bloco 1: População e amostra
 
-## População e amostra. Tipos de variáveis.
+---
+
+## Antes da teoria: três casos para pensar
+
+&gt; O Censo Demográfico tenta visitar todo domicílio do país, população ou amostra?
+
+--
+
+&gt; A PNAD Contínua entrevista ~211 mil domicílios por trimestre, de mais de 70 milhões no Brasil,
+&gt; e vira manchete nacional sobre "o desemprego no Brasil". É uma generalização legítima?
+
+--
+
+&gt; Uma corretora usa os 106 clientes que fecharam negócio no mês passado para
+&gt; decidir sua política de crédito do mês seguinte. Quem ela está *deixando de observar* nessa
+&gt; análise?
+
+--
+
+Guarde suas intuições, vamos formalizar a seguir.
+
+---
+
+## População vs. amostra
+
+- **População**: conjunto de **todas** as unidades (pessoas, empresas, municípios, transações)
+  sobre as quais se quer concluir algo.
+- **Amostra**: subconjunto da população efetivamente observado.
+
+--
+
+A diferença não é de *tamanho*, é de *papel*.
+
+&lt;div class="caixa-aplicacao"&gt;&lt;strong&gt;Aplicação: as duas bases desta aula&lt;/strong&gt;&lt;br&gt;
+&lt;code&gt;prefeitos&lt;/code&gt;: 5232 municípios brasileiros com eleição em
+2020, é dado &lt;strong&gt;censitário&lt;/strong&gt;, todos foram observados, é a &lt;strong&gt;população&lt;/strong&gt;
+de municípios.&lt;br&gt;
+&lt;code&gt;empresas&lt;/code&gt;: 106 empresas brasileiras, é uma
+&lt;strong&gt;amostra&lt;/strong&gt; de um universo muito maior de empresas do país.&lt;/div&gt;
+
+
+``` r
+nrow(prefeitos)  # população: municípios com eleição em 2020
+```
+
+```
+## [1] 5232
+```
+
+``` r
+nrow(empresas)   # amostra: empresas observadas
+```
+
+```
+## [1] 106
+```
+
+Repare que esses números vêm do próprio código, não de memória, é assim que se evita repetir um
+dado desatualizado numa apresentação.
+
+---
+
+## Parâmetro vs. estatística
+
+| | População | Amostra |
+|---|---|---|
+| Resumo numérico | **Parâmetro** (`\(\mu\)`, `\(\sigma\)`) | **Estatística** (`\(\bar x\)`, `\(s\)`) |
+| Natureza | Fato (sem incerteza de amostragem) | Estimativa (varia entre amostras) |
+
+--
+
+Quando o IBGE divulga a taxa de desemprego trimestral pela PNAD Contínua, ele **não** entrevista
+toda a força de trabalho, entrevista uma amostra de domicílios e generaliza. É por isso que a taxa
+vem sempre acompanhada de um intervalo de confiança nos relatórios técnicos, mesmo que a manchete
+mostre só o número central.
+
+--
+
+A Estatística Descritiva desta unidade **não trata dessa incerteza**: ela resume o que foi
+observado, seja população ou amostra. A pergunta "o que esse número diria se eu tivesse coletado
+outra amostra?" é o assunto da Inferência Estatística, fora do escopo desta disciplina, mas que se
+apoia inteiramente no vocabulário construído aqui.
+
+---
+
+## Discussão intermediária: antes de seguir para tipos de variável
+
+**1.** Retome o caso da PNAD Contínua: se a amostra fosse recrutada só em capitais (mais barato
+entrevistar), que tipo de erro isso introduziria, de *tamanho* de amostra, ou de outra natureza?
+
+**2.** Uma enquete informal em rede social recebe 50 mil respostas em um dia sobre uma pauta
+econômica. Compare, em confiabilidade, com uma pesquisa profissional de 2 mil pessoas por
+amostragem probabilística. Por que "mais respostas" não é "amostra melhor"?
+
+**3.** O Boletim Focus do Banco Central usa a mediana das expectativas de mais de 100 instituições
+financeiras. Essas instituições são população ou amostra de "todo mundo que tem uma opinião sobre
+inflação"? Isso muda como você lê o número publicado?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Tipos de variáveis
+
+---
+
+## Tipos de variáveis: visão geral
+
+.pull-left[
+**Qualitativas (categóricas)**
+- Nominais, sem ordem (setor, região, sexo)
+- Ordinais, com ordem (escolaridade, porte)
+]
+
+.pull-right[
+**Quantitativas (numéricas)**
+- Discretas, contagem (nº de empregados)
+- Contínuas, mensuráveis (faturamento, renda)
+]
+
+--
+
+A pergunta prática: *dá para fazer conta com isso, e a conta significa alguma coisa?*
+Média de "setor" (Comércio, Indústria, Serviços) não significa nada. Média de faturamento, sim.
+
+---
+
+## Por que a classificação importa: um experimento
+
+Suponha que você codifique `porte` como número: Pequena, Média, Grande viram 1, 2, 3, e calcula a
+"média do porte". Parece inofensivo. Vamos testar duas codificações igualmente "razoáveis":
+
+
+``` r
+mean(as.numeric(factor(empresas$porte)))  # ordem alfabética: Grande=1, Média=2, Pequena=3
+```
+
+```
+## [1] 1.90566
+```
+
+
+``` r
+mean(as.numeric(factor(empresas$porte,
+                        levels = c("Pequena", "Média", "Grande"))))  # ordem lógica
+```
+
+```
+## [1] 2.09434
+```
+
+--
+
+&lt;div class="caixa-r"&gt;&lt;strong&gt;O que aconteceu&lt;/strong&gt;: a mesma variável, a mesma amostra, dois
+resultados numéricos diferentes, só porque o R escolheu uma ordem de categorias diferente em cada
+codificação. Um número que muda de valor dependendo de uma escolha arbitrária de codificação
+&lt;strong&gt;não é uma medida de nada&lt;/strong&gt;, é um artefato de programação. É exatamente esse tipo de
+erro, calcular a "nota média" de algo ordinal, que aparece com frequência em relatórios (e em
+provas) sem que ninguém perceba.&lt;/div&gt;
+
+---
+
+## Classificando uma base real de empresas
+
+
+``` r
+str(empresas[, c("porte", "empregados99", "faturamento99", "regiao")])
+```
+
+```
+## 'data.frame':	106 obs. of  4 variables:
+##  $ porte        : chr  "Pequena" "Média" "Grande" "Média" ...
+##  $ empregados99 : int  9 31 119 35 6 46 23 162 7 6 ...
+##  $ faturamento99: int  74392 251488 369409 230843 98436 408905 226582 395680 120310 121765 ...
+##  $ regiao       : chr  "sudeste" "sudeste" "nordeste" "nordeste" ...
+```
+
+--
+
+| Variável | Tipo |
+|---|---|
+| `porte` | Qualitativa ordinal (Pequena &lt; Média &lt; Grande) |
+| `regiao` | Qualitativa nominal |
+| `empregados99` | Quantitativa discreta |
+| `faturamento99` | Quantitativa contínua |
+
+---
+
+## Um segundo exemplo: prefeitos eleitos em 2020
+
+
+``` r
+table(prefeitos$escolaridade) |&gt; head(4)
+```
+
+```
+## 
+##                               Doutorado  Ensino fundamental ( 1º Grau) completo 
+##                                      55                                     226 
+## Ensino fundamental (1º Grau) incompleto         Ensino médio (2º Grau) completo 
+##                                     257                                    1283
+```
+
+`escolaridade` é **ordinal**: sabemos que "Ensino superior completo" é mais que "Ensino médio", mas
+não que a distância entre dois níveis consecutivos seja sempre "igual" em algum sentido numérico.
+Já `sexo` e `raca` são **nominais**: não há ordem natural entre as categorias.
+
+--
+
+O código IBGE do município (ex.: 2927408 para Salvador) **parece** um número, mas não é uma
+variável quantitativa: somar ou tirar a média de dois códigos de município não produz nada
+interpretável. O que importa não é a variável "ser um número", é se as operações aritméticas sobre
+ela fazem sentido.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Discussão final (a mais longa da aula)
+
+---
+
+## Para discutir em grupo: 15 minutos
+
+**1.** O IBGE registra "faixa de renda domiciliar" cortando uma variável contínua (renda em R\$)
+em intervalos. A variável derivada é discreta, contínua ou qualitativa? O que se ganha e o que se
+perde nessa transformação?
+
+**2.** Um índice de "nota de bem-estar" de 0 a 10, atribuído por uma pesquisa a cada município, é
+ordinal ou quantitativo? De que depende a resposta?
+
+**3.** Um aplicativo de delivery classifica cada pedido em uma "nota de satisfação" de 1 a 5
+estrelas, e a empresa calcula e divulga a "nota média". Isso é defensável? Sob que condição bem
+específica faria mais sentido tratar essa variável como quantitativa em vez de ordinal?
+
+--
+
+**4.** Se você tivesse acesso à população *inteira* de contribuintes do imposto de renda do Brasil,
+ainda faria sentido falar em "amostra" em algum ponto da sua análise? Em que ponto?
+
+**5.** Volte à sua base de dados trazida de casa: classifique cada variável dela (nominal, ordinal,
+discreta, contínua) e identifique se a base é população ou amostra em relação à pergunta que você
+tinha em mente ao coletá-la.
+
+**6.** Um erro clássico de prova: tratar uma variável ordinal (como classe social A/B/C/D/E) como
+se fosse quantitativa e calcular sua "média". Reproduza, como fizemos com `porte`, esse erro com
+duas codificações diferentes e mostre que o resultado muda, isso já é a prova de que a operação
+não tem significado.
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (26/08)
+
+## Apresentação tabular e representação gráfica
 
 Traga um exemplo de base de dados (uma planilha, uma tabela de um relatório) que você já tenha
-visto na sua área de interesse, vamos classificar as variáveis dela juntos.
+visto na sua área de interesse, vamos classificar as variáveis dela e começar a resumi-la em
+tabelas e gráficos.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
