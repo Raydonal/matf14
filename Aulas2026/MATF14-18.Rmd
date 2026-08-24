@@ -2,7 +2,7 @@
 title: "Esperança e Variância (VA discreta)"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "11/05/2026"
+date: "26/10/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -156,6 +156,8 @@ como acima; é importante saber fazer essa conta na mão, pois é o que cai em p
 
 class: inverse, center, middle
 
-# Próxima aula (13/05)
+# Próxima aula (28/10)
 
 ## Função de distribuição acumulada
+
+### 28/10 é ponto facultativo (Dia do Servidor Público Federal); aula mantida salvo aviso em contrário

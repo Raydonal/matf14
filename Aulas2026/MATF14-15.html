@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Aula de exercícios: Unidades 1 e 2</title>
+    <title>Revisão intermediária + exercícios: Unidades 1 e 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
@@ -15,7 +15,7 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Aula de exercícios: Unidades 1 e 2
+# Revisão intermediária + exercícios: Unidades 1 e 2
 ]
 .subtitle[
 ## MATF14: Estatística Econômica I
@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ### Raydonal Ospina · colaboração: Rodney Vasconcelos Fonseca
 ]
 .date[
-### 27/04/2026
+### 19/10/2026
 ]
 
 ---
@@ -34,18 +34,67 @@ class: center, middle, inverse, title-slide
 
 class: inverse, center, middle
 
-# Aula 15: Exercícios resolvidos
+# Aula 15: Revisão intermediária + exercícios
 
-## Estatística descritiva + Probabilidade
+## Unidade 1 (já avaliada em P1) e Unidade 2 (entra em P2, junto com a Unidade 3)
 
 ---
 
-## Roteiro da aula
+## Mapa da Unidade 1: Estatística Descritiva
 
-Quatro problemas, resolvidos passo a passo, cobrindo os pontos mais cobrados em prova nas duas
-unidades. Tente resolver cada um por conta própria antes de ver a solução no slide seguinte
-(clique para avançar), e, mais importante: para cada um, tente antecipar *qual erro conceitual*
-um colega desatento cometeria antes de olhar a solução.
+| Tópico | Fórmula-chave |
+|---|---|
+| Média | \(\bar x = \frac1n\sum_i x_i\) |
+| Mediana | valor central dos dados ordenados |
+| Quartis / IQR | \(Q_1,Q_2,Q_3\); \(IQR=Q_3-Q_1\) |
+| Variância | \(\mathrm{Var}(X)=\frac1n\sum_i(x_i-\bar x)^2\) |
+| Desvio padrão | \(dp(X)=\sqrt{\mathrm{Var}(X)}\) |
+| CV | \(dp(X)/\bar x\) |
+| Correlação | \(r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2}\sqrt{\sum(y_i-\bar y)^2}}\) |
+| Assimetria | 3º momento padronizado |
+
+---
+
+## Mapa da Unidade 2: Probabilidade
+
+| Tópico | Fórmula-chave |
+|---|---|
+| Axiomas | \(P(A)\ge0\), \(P(\Omega)=1\), aditividade |
+| Adição geral | \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\) |
+| Equiprovável | \(P(A)=\#A/\#\Omega\) |
+| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) |
+| Condicional | \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\) |
+| Independência | \(P(A\cap B)=P(A)P(B)\) |
+| Prob. total | \(P(A)=\sum_i P(A\mid B_i)P(B_i)\) |
+| Bayes | \(P(B_i\mid A)=\frac{P(A\mid B_i)P(B_i)}{\sum_j P(A\mid B_j)P(B_j)}\) |
+
+---
+
+## Os 5 erros mais comuns em prova (edições anteriores)
+
+1. Confundir divisor \(n\) (descritiva, usado neste curso) com \(n-1\) (o `var()` do R).
+2. Aplicar \(P(A\cup B)=P(A)+P(B)\) sem checar se \(A,B\) são mutuamente exclusivos.
+3. Confundir "mutuamente exclusivos" com "independentes" (são opostos, não sinônimos, quando
+   ambas têm probabilidade positiva).
+4. Esquecer de calcular \(P(A)\) (probabilidade total) antes de aplicar Bayes.
+5. Interpretar \(r\approx 0\) como "não há relação nenhuma", ignorando que \(r\) só mede relação
+   **linear**.
+
+---
+
+class: inverse, center, middle
+
+# Agora, quatro problemas resolvidos
+
+## Cobrindo os pontos mais cobrados em prova nas duas unidades
+
+---
+
+## Roteiro dos exercícios
+
+Tente resolver cada um por conta própria antes de ver a solução no slide seguinte (clique para
+avançar), e, mais importante: para cada um, tente antecipar *qual erro conceitual*, dos cinco
+listados acima, um colega desatento cometeria antes de olhar a solução.
 
 1. Média/mediana/assimetria com dado agrupado.
 2. Coeficiente de variação, comparação entre variáveis.
@@ -147,23 +196,47 @@ ou confundir \(P(D\mid B)\) com \(P(B\mid D)\) (a própria pergunta do problema)
 
 ---
 
-## Discussão: antes de ir para casa
+## Discussão: a prova não é só conta
 
-**1.** Dos quatro "erros comuns a evitar" listados, qual você mais reconheceu em si mesmo ao tentar
-resolver antes de ver a solução? Anote, é provavelmente o ponto que mais vale revisar antes de P2
-(Unidades 2 e 3).
+Nas provas anteriores desta disciplina, a diferença entre uma resposta de nota alta e uma de nota
+mediana raramente está no cálculo em si: está na **interpretação** que acompanha o número.
+Reserve um tempo para responder, sem consultar nada, cada uma destas perguntas de síntese:
 
-**2.** Escolha um dos quatro problemas e reformule o enunciado trocando o contexto (seguro por
-mercado de trabalho, crédito por eleição, etc.), mantendo a mesma estrutura matemática. Isso ajuda
-a confirmar que você entendeu a lógica, não decorou o contexto específico.
+**1.** Dos cinco erros comuns listados no início da aula, qual você mais reconheceu em si mesmo ao
+tentar resolver os quatro problemas antes de ver a solução?
+
+**2.** Se uma questão pedir para calcular uma correlação e depois perguntar "isso prova que \(X\)
+causa \(Y\)?", que resposta em uma frase você daria, e que exemplo alternativo (variável de
+confusão) você citaria para justificá-la?
+
+**3.** Se uma questão de Bayes pedir a probabilidade de uma "causa" dado um "sintoma"/"evidência",
+e você só tiver \(P(\text{sintoma}\mid\text{causa})\), que passo intermediário você **precisa**
+calcular antes de aplicar a fórmula final?
+
+**4.** Escolha um dos quatro problemas resolvidos e reformule o enunciado trocando o contexto
+(seguro por mercado de trabalho, crédito por eleição, etc.), mantendo a mesma estrutura matemática.
+Isso ajuda a confirmar que você entendeu a lógica, não decorou o contexto específico.
+
+---
+
+## Checklist de estudo
+
+- P1 (Unidade 1) já foi aplicada: use as Listas 01-04 para revisão de erros, não mais para
+  preparação.
+- P2 cobrirá as Unidades 2 **e** 3 juntas: continue as Listas 05-08 (Probabilidade) e, ao final da
+  Unidade 3, as Listas 09-10 (VA discretas), antes da data oficial de P2.
+- Revise os exemplos "leitura econômica" e os blocos de discussão dos Capítulos 1-2 do livro-texto:
+  a prova cobra interpretação, não só cálculo.
 
 ---
 
 class: inverse, center, middle
 
-# Próxima aula (29/04)
+# Próxima aula (21/10)
 
-## Revisão intermediária: Unidades 1 e 2
+## Variável aleatória discreta: conceituação
+
+### P2 (Unidades 2 e 3) só acontece ao final da Unidade 3: aproveite para consolidar Probabilidade agora
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

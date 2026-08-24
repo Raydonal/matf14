@@ -2,7 +2,7 @@
 title: "Quantis, distância interquartílica e boxplots"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "23/03/2026"
+date: "02/09/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -166,6 +166,6 @@ ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
 
 class: inverse, center, middle
 
-# Próxima aula (25/03)
+# Próxima aula (09/09)
 
 ## Medidas de dispersão: amplitude total, desvio padrão, variância e coeficiente de variação

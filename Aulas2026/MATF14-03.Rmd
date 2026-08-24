@@ -2,7 +2,7 @@
 title: "Apresentação tabular e representação gráfica"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "16/03/2026"
+date: "26/08/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -193,6 +193,6 @@ conclusões opostas sobre o mesmo conjunto de dados? Dê um exemplo baseado no q
 
 class: inverse, center, middle
 
-# Próxima aula (18/03)
+# Próxima aula (31/08)
 
 ## Medidas de tendência central e suas relações

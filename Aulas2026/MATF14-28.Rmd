@@ -2,7 +2,7 @@
 title: "Distribuição Normal"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "15/06/2026"
+date: "07/12/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -176,6 +176,6 @@ rnorm(m, mean = mu, sd = sigma)   # m valores simulados
 
 class: inverse, center, middle
 
-# Próxima aula (17/06)
+# Próxima aula (09/12)
 
 ## Aula de exercícios: Unidade 4

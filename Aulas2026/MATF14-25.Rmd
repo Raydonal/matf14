@@ -2,7 +2,7 @@
 title: "Esperança e Variância (VA contínua)"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "03/06/2026"
+date: "25/11/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -155,6 +155,6 @@ integrate(integrand, lower = 0, upper = Inf)   # calcula E(X) numericamente
 
 class: inverse, center, middle
 
-# Próxima aula (08/06)
+# Próxima aula (30/11)
 
 ## Função de distribuição acumulada (contínua)

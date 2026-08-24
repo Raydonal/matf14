@@ -2,7 +2,7 @@
 title: "[Laboratório] Simulação de VA discretas em R"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "25/05/2026"
+date: "11/11/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -166,6 +166,6 @@ o código bateu com o resultado?
 
 class: inverse, center, middle
 
-# Próxima aula (27/05)
+# Próxima aula (16/11)
 
 ## Aula de exercícios + revisão de cálculo (para a Unidade 4)

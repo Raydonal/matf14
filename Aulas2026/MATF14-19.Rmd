@@ -2,7 +2,7 @@
 title: "Função de distribuição acumulada (discreta)"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "13/05/2026"
+date: "28/10/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -127,6 +127,6 @@ discreta como esta, os dois contratos pagam exatamente nas mesmas condições? F
 
 class: inverse, center, middle
 
-# Próxima aula (18/05)
+# Próxima aula (04/11)
 
 ## Distribuição de Bernoulli e Distribuição Binomial

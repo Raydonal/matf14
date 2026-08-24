@@ -2,7 +2,7 @@
 title: "Medidas de dispersão: AT, DP e CV"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "25/03/2026"
+date: "09/09/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -170,6 +170,6 @@ var(empresas$faturamento99)   # ATENÇÃO: usa divisor n-1, não n
 
 class: inverse, center, middle
 
-# Próxima aula (30/03): Laboratório
+# Próxima aula (14/09): Laboratório
 
 ## R para estatística descritiva: carregar dados, tabelas e gráficos

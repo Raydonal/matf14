@@ -2,7 +2,7 @@
 title: "Distribuição Uniforme"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "10/06/2026"
+date: "02/12/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -140,6 +140,6 @@ runif(m, min = a, max = b)   # m valores simulados
 
 class: inverse, center, middle
 
-# Próxima aula (15/06)
+# Próxima aula (07/12)
 
 ## Distribuição Normal

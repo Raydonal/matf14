@@ -2,7 +2,7 @@
 title: "Espaço amostral e eventos. Revisão de conjuntos"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "06/04/2026"
+date: "23/09/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -162,6 +162,6 @@ escolher a versão mais grosseira?
 
 class: inverse, center, middle
 
-# Próxima aula (08/04)
+# Próxima aula (28/09)
 
 ## Propriedades de probabilidade. Métodos de contagem

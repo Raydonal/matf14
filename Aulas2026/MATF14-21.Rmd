@@ -2,7 +2,7 @@
 title: "Distribuição de Poisson"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "20/05/2026"
+date: "09/11/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -172,6 +172,6 @@ mean(dados)         # estimar lambda a partir de uma amostra
 
 class: inverse, center, middle
 
-# Próxima aula (25/05): Laboratório
+# Próxima aula (11/11): Laboratório
 
 ## Simulação de VA discretas em R

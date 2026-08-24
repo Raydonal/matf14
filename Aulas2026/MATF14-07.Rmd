@@ -2,7 +2,7 @@
 title: "[Laboratório] R para estatística descritiva"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "30/03/2026"
+date: "14/09/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -189,6 +189,6 @@ necessário mesmo depois de calcular \(r\)?
 
 class: inverse, center, middle
 
-# Próxima aula (01/04)
+# Próxima aula (16/09)
 
 ## Coeficiente de correlação. Medidas de assimetria e curtose

@@ -2,7 +2,7 @@
 title: "Variável aleatória discreta: conceituação"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "06/05/2026"
+date: "21/10/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -114,6 +114,6 @@ pensando no papel de um seguro?
 
 class: inverse, center, middle
 
-# Próxima aula (11/05)
+# Próxima aula (26/10)
 
 ## Esperança e variância

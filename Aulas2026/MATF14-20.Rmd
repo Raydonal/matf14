@@ -2,7 +2,7 @@
 title: "Distribuição de Bernoulli e Distribuição Binomial"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "18/05/2026"
+date: "04/11/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -168,6 +168,6 @@ Bernoulli é só `dbinom(x, size = 1, prob = p)`, não há função dedicada no 
 
 class: inverse, center, middle
 
-# Próxima aula (20/05)
+# Próxima aula (09/11)
 
 ## Distribuição de Poisson

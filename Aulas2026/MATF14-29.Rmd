@@ -2,7 +2,7 @@
 title: "Aula de exercícios: Unidade 4"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina  ·  colaboração: Rodney Vasconcelos Fonseca"
-date: "17/06/2026"
+date: "09/12/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -110,6 +110,6 @@ calcular, você esperaria \(E(X)\) maior ou menor que \(0{,}5\) (o ponto médio 
 
 class: inverse, center, middle
 
-# Próxima aula (22/06)
+# Próxima aula (14/12)
 
 ## Revisão geral pré-Prova 3
