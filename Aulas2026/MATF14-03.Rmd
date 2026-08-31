@@ -42,18 +42,20 @@ class: inverse, center, middle
 
 Faturamento médio de 1999 (`empresas.csv`), por região, eixo começando em **zero**:
 
-```{r fig-eixo-zero, echo=FALSE, fig.height=3.4}
+```{r fig-eixo-zero, echo=FALSE, fig.height=3.6}
 ggplot(fat_regiao, aes(x = fct_reorder(regiao, faturamento_medio), y = faturamento_medio)) +
   geom_col(fill = "#0d3b54") +
   labs(x = NULL, y = "Faturamento médio (R$)") +
   theme_minimal(base_size = 13)
 ```
 
---
+---
+
+## Provocação 1: a mesma base, eixo cortado
 
 Exatamente os **mesmos três números**, eixo começando perto do menor valor:
 
-```{r fig-eixo-cortado, echo=FALSE, fig.height=3.4}
+```{r fig-eixo-cortado, echo=FALSE, fig.height=3.6}
 ggplot(fat_regiao, aes(x = fct_reorder(regiao, faturamento_medio), y = faturamento_medio)) +
   geom_col(fill = "#c9971e") +
   coord_cartesian(ylim = c(315000, 345000)) +
@@ -143,12 +145,13 @@ fração pequena do de prefeitos.
 **Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
 tendência que não existe.
 
---
+---
 
-**Uso correto**, três variáveis ao mesmo tempo (sexo, raça e o ano, esse sim uma sequência
-temporal):
+## Uso correto de linha: três variáveis ao mesmo tempo
 
-```{r fig-forca-trabalho, echo=FALSE, out.width="60%"}
+Sexo, raça e o ano (esse sim uma sequência temporal):
+
+```{r fig-forca-trabalho, echo=FALSE, out.width="58%"}
 knitr::include_graphics("images/forca_trabalho_raca_sexo.jpg")
 ```
 
@@ -162,15 +165,17 @@ class: inverse, center, middle
 
 ## O "gender pay gap" é um histograma disfarçado de notícia
 
-```{r fig-gender-pay, echo=FALSE, out.width="65%"}
+```{r fig-gender-pay, echo=FALSE, out.width="52%"}
 knitr::include_graphics("images/gender_pay_gap.png")
 ```
 
-Eixo x = classes de diferença salarial (de ">50% mulheres ganham mais" a ">50% homens ganham
-mais"); eixo y = número de empresas naquela classe. **É a mesma ideia da tabela de frequências**,
-com barras no lugar de números: por isso "78% das empresas pagam mais aos homens" (a maioria das
-barras está do lado roxo) é mais defensável que uma média isolada, ela usa a distribuição inteira,
-não um único número resumo.
+Eixo x = classes de diferença salarial; eixo y = número de empresas naquela classe. **É a mesma
+ideia da tabela de frequências**, com barras no lugar de números.
+
+--
+
+Por isso "78% das empresas pagam mais aos homens" (a maioria das barras está do lado roxo) é mais
+defensável que uma média isolada: usa a distribuição inteira, não um único número resumo.
 
 ---
 
@@ -212,18 +217,24 @@ class: inverse, center, middle
 
 ---
 
-## Primeira rodada
+## Primeira rodada — Questão 1
 
-**1.** Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma,
-proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
+Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma, proponha
+o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
 
-**2.** Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+---
 
-```{r fig-refri, echo=FALSE, out.width="55%"}
+## Primeira rodada — Questão 2
+
+Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+
+```{r fig-refri, echo=FALSE, out.width="50%"}
 knitr::include_graphics("images/refri_estatisticas.png")
 ```
 
-```{r fig-refri-grafico, echo=FALSE, fig.height=2.8, fig.width=5}
+--
+
+```{r fig-refri-grafico, echo=FALSE, fig.height=2.4, fig.width=5}
 refri <- tibble(
   pais = c("México", "Reino Unido", "Brasil", "Portugal"),
   litros = c(270.9, 114, 76.6, 40)
@@ -236,8 +247,12 @@ ggplot(refri, aes(x = fct_reorder(pais, litros), y = litros)) +
 Esse gráfico compara **médias entre países**. Que informação um histograma da distribuição de
 consumo *dentro* de um único país acrescentaria, que a barra do valor médio esconde?
 
-**3.** Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo,
-que conclusão errada um leitor apressado poderia tirar?
+---
+
+## Primeira rodada — Questão 3
+
+Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo, que
+conclusão errada um leitor apressado poderia tirar?
 
 ---
 

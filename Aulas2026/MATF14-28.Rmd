@@ -90,7 +90,7 @@ class: inverse, center, middle
 
 ## A "Fórmula de Midas"
 
-```{r fig-black-scholes, echo=FALSE, out.width="55%"}
+```{r fig-black-scholes, echo=FALSE, out.width="46%"}
 knitr::include_graphics("images/black_scholes.jpg")
 ```
 

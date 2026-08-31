@@ -188,7 +188,8 @@ cronograma %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 14) %>%
   column_spec(1, width = "10%") %>%
   column_spec(4, width = "32%") %>%
-  row_spec(c(8, 23, 31), color = "red")
+  row_spec(c(8, 23, 31), color = "red") %>%
+  scroll_box(width = "100%")
 ```
 
 ***

@@ -30,7 +30,9 @@ Faturamento médio de 1999 (`empresas.csv`), por região, eixo começando em **z
 
 &lt;img src="MATF14-03_files/figure-html/fig-eixo-zero-1.png" alt="" width="504" /&gt;
 
---
+---
+
+## Provocação 1: a mesma base, eixo cortado
 
 Exatamente os **mesmos três números**, eixo começando perto do menor valor:
 
@@ -115,12 +117,13 @@ fração pequena do de prefeitos.
 **Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
 tendência que não existe.
 
---
+---
 
-**Uso correto**, três variáveis ao mesmo tempo (sexo, raça e o ano, esse sim uma sequência
-temporal):
+## Uso correto de linha: três variáveis ao mesmo tempo
 
-&lt;img src="images/forca_trabalho_raca_sexo.jpg" alt="" width="60%" /&gt;
+Sexo, raça e o ano (esse sim uma sequência temporal):
+
+&lt;img src="images/forca_trabalho_raca_sexo.jpg" alt="" width="58%" /&gt;
 
 ---
 
@@ -132,13 +135,15 @@ class: inverse, center, middle
 
 ## O "gender pay gap" é um histograma disfarçado de notícia
 
-&lt;img src="images/gender_pay_gap.png" alt="" width="65%" /&gt;
+&lt;img src="images/gender_pay_gap.png" alt="" width="52%" /&gt;
 
-Eixo x = classes de diferença salarial (de "&gt;50% mulheres ganham mais" a "&gt;50% homens ganham
-mais"); eixo y = número de empresas naquela classe. **É a mesma ideia da tabela de frequências**,
-com barras no lugar de números: por isso "78% das empresas pagam mais aos homens" (a maioria das
-barras está do lado roxo) é mais defensável que uma média isolada, ela usa a distribuição inteira,
-não um único número resumo.
+Eixo x = classes de diferença salarial; eixo y = número de empresas naquela classe. **É a mesma
+ideia da tabela de frequências**, com barras no lugar de números.
+
+--
+
+Por isso "78% das empresas pagam mais aos homens" (a maioria das barras está do lado roxo) é mais
+defensável que uma média isolada: usa a distribuição inteira, não um único número resumo.
 
 ---
 
@@ -197,22 +202,32 @@ class: inverse, center, middle
 
 ---
 
-## Primeira rodada
+## Primeira rodada — Questão 1
 
-**1.** Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma,
-proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
+Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma, proponha
+o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
 
-**2.** Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+---
 
-&lt;img src="images/refri_estatisticas.png" alt="" width="55%" /&gt;
+## Primeira rodada — Questão 2
+
+Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+
+&lt;img src="images/refri_estatisticas.png" alt="" width="50%" /&gt;
+
+--
 
 &lt;img src="MATF14-03_files/figure-html/fig-refri-grafico-1.png" alt="" width="360" /&gt;
 
 Esse gráfico compara **médias entre países**. Que informação um histograma da distribuição de
 consumo *dentro* de um único país acrescentaria, que a barra do valor médio esconde?
 
-**3.** Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo,
-que conclusão errada um leitor apressado poderia tirar?
+---
+
+## Primeira rodada — Questão 3
+
+Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo, que
+conclusão errada um leitor apressado poderia tirar?
 
 ---
 

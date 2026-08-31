@@ -101,7 +101,7 @@ teórica.
 
 ## \(E(X)\) fora da economia: engenharia aeronáutica
 
-```{r fig-peso-esperado, echo=FALSE, out.width="70%"}
+```{r fig-peso-esperado, echo=FALSE, out.width="58%"}
 knitr::include_graphics("images/peso_esperado_aviao.jpg")
 ```
 

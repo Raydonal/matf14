@@ -130,7 +130,7 @@ duas usando a tabela e confirme numericamente.
 
 ## Rodada 2: leia outra FDA
 
-```{r fig-fda-exercicio, echo=FALSE, out.width="55%"}
+```{r fig-fda-exercicio, echo=FALSE, out.width="50%"}
 knitr::include_graphics("images/fda_exercicio.png")
 ```
 
@@ -138,9 +138,13 @@ knitr::include_graphics("images/fda_exercicio.png")
 o círculo **aberto** marca o valor que a escada está deixando para trás no salto seguinte. Leia
 \(F(2)\), \(P(X>2)\) e \(P(X=3)\) diretamente do gráfico.
 
-**4.** A partir só desse gráfico (sem nenhuma tabela de \(p(x)\)), como você recuperaria \(p(x_i)\)
-para cada \(x_i\)? Escreva a fórmula geral usando a diferença de dois valores de \(F\), e confira
-aplicando-a aos saltos que você acabou de ler.
+---
+
+## Rodada 2: continuação
+
+**4.** A partir só do gráfico anterior (sem nenhuma tabela de \(p(x)\)), como você recuperaria
+\(p(x_i)\) para cada \(x_i\)? Escreva a fórmula geral usando a diferença de dois valores de \(F\), e
+confira aplicando-a aos saltos que você acabou de ler.
 
 **5.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um
 segundo contrato paga o mesmo bônus se "o segurado tiver menos de 2 sinistros". Para uma variável

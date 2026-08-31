@@ -40,7 +40,9 @@ class: inverse, center, middle
 > E se eu disser que o desvio padrão de "faturamento em R\$ mil" de uma empresa é maior que o de
 > "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
 
---
+---
+
+## As duas ações da provocação, ano a ano
 
 Exatamente as duas ações da provocação, ano a ano:
 
