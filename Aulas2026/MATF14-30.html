@@ -28,9 +28,9 @@ class: inverse, center, middle
 
 | Tópico | Fórmula-chave |
 |---|---|
-| Esperança | \(E(X)=\sum_i x_i p(x_i)\) |
-| Variância | \(\mathrm{Var}(X)=\sum_i(x_i-\mu)^2p(x_i)\) |
-| FDA | \(F(x)=\sum_{x_i\le x}p(x_i)\), em escada |
+| Esperança | \(E(X)=\sum\_i x\_i p(x\_i)\) |
+| Variância | \(\mathrm{Var}(X)=\sum\_i(x\_i-\mu)^2p(x\_i)\) |
+| FDA | \(F(x)=\sum\_{x\_i\le x}p(x\_i)\), em escada |
 | Bernoulli(\(p\)) | \(E=p\), \(\mathrm{Var}=p(1-p)\) |
 | Binomial(\(n,p\)) | \(p(x)=\binom{n}{x}p^x(1-p)^{n-x}\); \(E=np\), \(\mathrm{Var}=np(1-p)\) |
 | Poisson(\(\lambda\)) | \(p(x)=\frac{e^{-\lambda}\lambda^x}{x!}\); \(E=\mathrm{Var}=\lambda\) |
@@ -41,9 +41,9 @@ class: inverse, center, middle
 
 | Tópico | Fórmula-chave |
 |---|---|
-| Densidade | \(P(a\le X\le b)=\int_a^b f(x)dx\); \(\int_{-\infty}^\infty f=1\) |
+| Densidade | \(P(a\le X\le b)=\int\_a^b f(x)dx\); \(\int\_{-\infty}^\infty f=1\) |
 | Esperança | \(E(X)=\int x f(x)dx\) |
-| FDA | \(F(x)=\int_{-\infty}^x f(t)dt\); \(F'=f\); contínua (sem saltos) |
+| FDA | \(F(x)=\int\_{-\infty}^x f(t)dt\); \(F'=f\); contínua (sem saltos) |
 | Uniforme(\(a,b\)) | \(f=\frac{1}{b-a}\); \(E=\frac{a+b}{2}\), \(\mathrm{Var}=\frac{(b-a)^2}{12}\) |
 | Normal(\(\mu,\sigma^2\)) | \(Z=\frac{X-\mu}\sigma\sim N(0,1)\); regra 68-95-99,7 |
 
@@ -52,8 +52,8 @@ class: inverse, center, middle
 ## Os 5 erros mais comuns em prova (Unidade 4)
 
 1. Usar \(\binom{n}{x}\) na Poisson (não existe, é fórmula da Binomial, já não cai mais em P3).
-2. Esquecer que, em VA contínua, \(P(X\le x)=P(X&lt;x)\) (diferente do caso discreto).
-3. Confundir \(f(x)\) (densidade, pode ser \(&gt;1\)) com probabilidade.
+2. Esquecer que, em VA contínua, \(P(X\le x)=P(X&amp;lt;x)\) (diferente do caso discreto).
+3. Confundir \(f(x)\) (densidade, pode ser \(&amp;gt;1\)) com probabilidade.
 4. Errar o sinal ao padronizar: \(Z=(X-\mu)/\sigma\), não \((\mu-X)/\sigma\).
 5. Esquecer de verificar que \(\int f(x)dx=1\) antes de usar uma densidade "nova" dada em um
    problema.
@@ -89,7 +89,7 @@ quatro unidades.
 - Pratique alternar entre \(F\) e \(f\) nos dois sentidos (derivar e integrar), é a habilidade mais
   cobrada de cálculo na prova.
 - Revise o Apêndice A (revisão de cálculo) se ainda tiver dúvida nas primitivas básicas.
-- Nota final do semestre: \(NF=(P_1+P_2+P_3)/3\).
+- Nota final do semestre: \(NF=(P\_1+P\_2+P\_3)/3\).
 
 ---
 

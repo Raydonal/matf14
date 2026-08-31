@@ -54,7 +54,7 @@ $$
 
 --
 
-Verificação rápida: \(\int_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\) ✓, a densidade é
+Verificação rápida: \(\int\_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\) ✓, a densidade é
 válida por construção.
 
 ---

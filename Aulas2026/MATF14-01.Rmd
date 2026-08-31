@@ -242,7 +242,7 @@ responder por escrito ou em voz alta, antes de ver a resposta pronta.
 ## Avaliação
 
 $$
-NF = \frac{P_1 + P_2 + P_3}{3}
+NF = \frac{P\_1 + P\_2 + P\_3}{3}
 $$
 
 | Prova | Cobertura |

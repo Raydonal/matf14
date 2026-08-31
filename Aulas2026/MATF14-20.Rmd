@@ -99,7 +99,7 @@ X_maior_1 <- 1 - pbinom(1, size = 10, prob = 0.01)
 X_maior_1
 ```
 
-\(X\sim\text{Bin}(10;\,0{,}01)\); devolve-se se \(X>1\), ou seja, \(P(X>1)=1-P(X\le 1)=1-F(1)\).
+\(X\sim\text{Bin}(10;\,0{,}01)\); devolve-se se \(X&gt;1\), ou seja, \(P(X&gt;1)=1-P(X\le 1)=1-F(1)\).
 
 ---
 

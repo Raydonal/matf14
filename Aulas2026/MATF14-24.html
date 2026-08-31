@@ -50,7 +50,7 @@ class: inverse, center, middle
 ## Função densidade de probabilidade (fdp)
 
 $$
-P(a\le X\le b) = \int_a^b f(x)\,dx, \qquad f(x)\ge0, \qquad \int_{-\infty}^{\infty}f(x)\,dx=1
+P(a\le X\le b) = \int\_a^b f(x)\,dx, \qquad f(x)\ge0, \qquad \int\_{-\infty}^{\infty}f(x)\,dx=1
 $$
 
 \(f(x)\) **não é probabilidade**, é densidade. Geometricamente: \(f\) é a curva, \(P(a\le X\le b)\) é a
@@ -63,7 +63,7 @@ $$
 &lt;img src="images/fdp_exemplo_mao.jpg" alt="" width="65%" /&gt;
 
 Leia a figura devagar: a curva é \(f(x)\), a região hachurada entre \(a\) e \(b\) é
-\(P(a&lt; X\le b)\), e a área sob a curva **inteira** vale 1. É a mesma figura, com \(f\), \(a\) e
+\(P(a&amp;lt; X\le b)\), e a área sob a curva **inteira** vale 1. É a mesma figura, com \(f\), \(a\) e
 \(b\) diferentes, que vai reaparecer em toda distribuição contínua deste capítulo, inclusive nos
 dois exemplos a seguir.
 
@@ -104,7 +104,7 @@ integrate(f, lower = 228, upper = Inf)
 ```
 
 Uma probabilidade desse tamanho é exatamente o que torna o evento **notícia**: sob o modelo, um dia
-assim é raro, o mesmo raciocínio de \(P(X\ge x_{obs})\) que vamos reaplicar (com uma variável
+assim é raro, o mesmo raciocínio de \(P(X\ge x\_{obs})\) que vamos reaplicar (com uma variável
 diferente) na fila de espera a seguir.
 
 ---
@@ -129,7 +129,7 @@ ggplot(df, aes(x,y)) + geom_line(color="#0d3b54") +
 ## Calculando uma probabilidade por integral
 
 $$
-P(5\le X\le 15) = \int_5^{15} 0{,}2\,e^{-0{,}2x}\,dx
+P(5\le X\le 15) = \int\_5^{15} 0{,}2\,e^{-0{,}2x}\,dx
 $$
 
 
@@ -155,7 +155,7 @@ class: inverse, center, middle
 valor com probabilidade total 1? (Dica: pense em quantos valores diferentes existem entre 0 e 1,
 o intervalo é "infinito" de um jeito diferente da lista de números naturais.)
 
-**2.** Compare com o caso discreto: lá, \(\sum_i p(x_i)=1\) com uma soma de (possivelmente) infinitos
+**2.** Compare com o caso discreto: lá, \(\sum\_i p(x\_i)=1\) com uma soma de (possivelmente) infinitos
 termos, mas cada termo positivo. Aqui, a "soma" vira integral e cada "termo" individual é zero. Por
 que a integral ainda pode dar 1 mesmo com "termos individuais nulos"? Essa é a mesma sutileza da
 integral imprópria do Apêndice A.

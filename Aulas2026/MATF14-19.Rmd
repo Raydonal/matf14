@@ -29,7 +29,7 @@ class: inverse, center, middle
 
 ## Um ponto a menos que faz toda a diferença
 
-> \(P(X\ge2)\) e \(P(X>2)\) soam quase iguais em português. Para uma variável discreta que só assume
+> \(P(X\ge2)\) e \(P(X&gt;2)\) soam quase iguais em português. Para uma variável discreta que só assume
 > valores inteiros, elas são a mesma coisa? E se \(X\) fosse contínua?
 
 ---
@@ -43,18 +43,18 @@ class: inverse, center, middle
 ## Definição
 
 $$
-F(x) = P(X\le x) = \sum_{x_i\le x} p(x_i)
+F(x) = P(X\le x) = \sum\_{x\_i\le x} p(x\_i)
 $$
 
 Para VA discreta, \(F\) é **função em escada**: constante entre valores possíveis, com salto de
-tamanho \(p(x_i)\) em cada \(x_i\).
+tamanho \(p(x\_i)\) em cada \(x\_i\).
 
 --
 
-## Cuidado com \(\le\) vs. \(<\)
+## Cuidado com \(\le\) vs. \(&lt;\)
 
 $$
-P(X > x) = 1-F(x) \qquad P(X\ge x) = 1-F(x-1) \ \text{(para $X$ inteira)}
+P(X &gt; x) = 1-F(x) \qquad P(X\ge x) = 1-F(x-1) \ \text{(para $X$ inteira)}
 $$
 
 A diferença de um ponto **importa** no caso discreto, ao contrário do caso contínuo (Cap. 4).
@@ -86,7 +86,7 @@ ggplot(sinistros, aes(x, F)) + geom_step(color="#0d3b54", linewidth=1) +
 ## Lendo probabilidades da FDA
 
 $$
-P(X\le 2) = F(2) = 0{,}95 \qquad P(X>2) = 1-F(2) = 0{,}05
+P(X\le 2) = F(2) = 0{,}95 \qquad P(X&gt;2) = 1-F(2) = 0{,}05
 $$
 $$
 P(X\ge 2) = 1-F(1) = 1-0{,}85 = 0{,}15
@@ -107,7 +107,7 @@ knitr::include_graphics("images/fda_lancamento_dado.png")
 
 Lançamento de um dado honesto: seis saltos, todos de tamanho \(1/6\) (distribuição uniforme
 discreta). Na FDA dos sinistros, os saltos têm tamanhos diferentes, proporcionais a cada
-\(p(x_i)\), porque ali a distribuição não é uniforme. Mesma definição de \(F\), formato da escada
+\(p(x\_i)\), porque ali a distribuição não é uniforme. Mesma definição de \(F\), formato da escada
 diferente porque \(p(x)\) é diferente.
 
 ---
@@ -120,7 +120,7 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo a provocação inicial
 
-**1.** Volte à pergunta de abertura: \(P(X\ge2)\) e \(P(X>2)\) são iguais para \(X\) discreta? Calcule as
+**1.** Volte à pergunta de abertura: \(P(X\ge2)\) e \(P(X&gt;2)\) são iguais para \(X\) discreta? Calcule as
 duas usando a tabela e confirme numericamente.
 
 **2.** Por que \(P(X\ge2)\) usa \(F(1)\) (não \(F(2)\)) na fórmula? Em que ponto exatamente \(1-F(2)\) e
@@ -136,14 +136,14 @@ knitr::include_graphics("images/fda_exercicio.png")
 
 **3.** Nesse gráfico, o círculo **cheio** marca o ponto que pertence à escada (o valor de \(F\) ali),
 o círculo **aberto** marca o valor que a escada está deixando para trás no salto seguinte. Leia
-\(F(2)\), \(P(X>2)\) e \(P(X=3)\) diretamente do gráfico.
+\(F(2)\), \(P(X&gt;2)\) e \(P(X=3)\) diretamente do gráfico.
 
 ---
 
 ## Rodada 2: continuação
 
 **4.** A partir só do gráfico anterior (sem nenhuma tabela de \(p(x)\)), como você recuperaria
-\(p(x_i)\) para cada \(x_i\)? Escreva a fórmula geral usando a diferença de dois valores de \(F\), e
+\(p(x\_i)\) para cada \(x\_i\)? Escreva a fórmula geral usando a diferença de dois valores de \(F\), e
 confira aplicando-a aos saltos que você acabou de ler.
 
 **5.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um

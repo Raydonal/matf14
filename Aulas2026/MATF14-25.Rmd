@@ -42,9 +42,9 @@ class: inverse, center, middle
 ## Definições: soma vira integral
 
 $$
-E(X) = \mu = \int_{-\infty}^{\infty} x\,f(x)\,dx
+E(X) = \mu = \int\_{-\infty}^{\infty} x\,f(x)\,dx
 \qquad
-\mathrm{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx
+\mathrm{Var}(X) = \sigma^2 = \int\_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx
 $$
 
 --
@@ -73,7 +73,7 @@ class: inverse, center, middle
 \(f(x)=0{,}2e^{-0{,}2x}\), \(x\ge0\).
 
 $$
-E(X) = \int_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
+E(X) = \int\_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
 $$
 
 ```{r esperanca-fila}
@@ -121,7 +121,7 @@ class: inverse, center, middle
 
 **1.** A distribuição Exponencial é assimétrica à direita (Capítulo 1). Isso significa que grande
 parte dos clientes espera *menos* que 5 minutos, com uma minoria esperando bem mais e puxando a
-média para cima, assim como faturamento e renda no Capítulo 1. Calcule \(P(X<5)\) com
+média para cima, assim como faturamento e renda no Capítulo 1. Calcule \(P(X&lt;5)\) com
 `pexp(5, rate=0.2)` (ou espere até a Aula 26, FDA) para confirmar se mais ou menos da metade dos
 clientes espera menos que a média.
 

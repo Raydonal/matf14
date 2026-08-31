@@ -33,7 +33,7 @@ Qual a probabilidade de um saque levar mais de 30 segundos?
 
 **Solução.** \(X\sim\text{Unif}(10,40)\).
 $$
-P(X>30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
+P(X&gt;30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
 $$
 
 ```{r problema1}
@@ -49,7 +49,7 @@ entrega demorar mais de 8 dias?
 
 --
 
-**Solução.** \(Z=\frac{8-5}{1{,}5}=2\); \(P(X>8)=P(Z>2)\).
+**Solução.** \(Z=\frac{8-5}{1{,}5}=2\); \(P(X&gt;8)=P(Z&gt;2)\).
 
 ```{r problema2}
 1 - pnorm(8, mean = 5, sd = 1.5)
@@ -66,7 +66,7 @@ entrega demorar mais de 8 dias?
 
 --
 
-**Solução (a).** \(\int_0^1 3x^2\,dx = [x^3]_0^1 = 1-0=1\) ✓
+**Solução (a).** \(\int\_0^1 3x^2\,dx = [x^3]\_0^1 = 1-0=1\) ✓
 
 **Solução (b).** \(F(x)=x^3\); \(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\).
 

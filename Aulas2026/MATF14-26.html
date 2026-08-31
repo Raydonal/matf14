@@ -40,7 +40,7 @@ class: inverse, center, middle
 ## Definição
 
 $$
-F(x) = P(X\le x) = \int_{-\infty}^x f(t)\,dt
+F(x) = P(X\le x) = \int\_{-\infty}^x f(t)\,dt
 $$
 
 **Contínua** (sem saltos), ao contrário do caso discreto, reflexo de \(P(X=x)=0\).
@@ -50,7 +50,7 @@ $$
 ## Consequência importante
 
 $$
-P(X\le x)=P(X&lt;x) \qquad P(X\ge x)=P(X&gt;x)
+P(X\le x)=P(X&amp;lt;x) \qquad P(X\ge x)=P(X&amp;gt;x)
 $$
 
 Ao contrário do Cap. 3 (discreto), aqui **não importa** incluir ou não o extremo do intervalo.
@@ -89,7 +89,7 @@ ggplot(tibble(x=seq(0,30,length.out=300), F=Fx(x)), aes(x,F)) +
 ## Respondendo a dúvida da Aula 25
 
 $$
-P(X &lt; 5) = F(5) = 1-e^{-1} \approx 0{,}632
+P(X &amp;lt; 5) = F(5) = 1-e^{-1} \approx 0{,}632
 $$
 
 
@@ -115,7 +115,7 @@ class: inverse, center, middle
 
 ## Rodada 1
 
-**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\(P(X&gt;10)\))? Esse número
+**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\(P(X&amp;gt;10)\))? Esse número
 é pequeno ou grande o suficiente para preocupar um gerente de atendimento, mesmo com uma média
 "aceitável" de 5 minutos?
 

@@ -86,7 +86,7 @@ class: inverse, center, middle
 ## Coeficiente de correlação de Pearson
 
 $$
-r = \frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i (x_i-\bar x)^2}\ \sqrt{\sum_i (y_i-\bar y)^2}},
+r = \frac{\sum\_{i=1}^n (x\_i-\bar x)(y\_i-\bar y)}{\sqrt{\sum\_i (x\_i-\bar x)^2}\ \sqrt{\sum\_i (y\_i-\bar y)^2}},
 \qquad -1 \le r \le 1
 $$
 
@@ -98,7 +98,7 @@ implica ausência de qualquer relação, só de relação linear.
 ## Assimetria
 
 $$
-\text{Assimetria} = \frac{\frac1n\sum_i (x_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
+\text{Assimetria} = \frac{\frac1n\sum\_i (x\_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
 $$
 
 Positiva \(\Rightarrow\) cauda longa à direita (renda, faturamento). Negativa \(\Rightarrow\) cauda
@@ -109,7 +109,7 @@ longa à esquerda. Zero \(\Rightarrow\) simetria.
 ## Curtose
 
 $$
-\text{Curtose} = \frac{\frac1n\sum_i (x_i-\bar x)^4}{\mathrm{Var}(X)^{2}}
+\text{Curtose} = \frac{\frac1n\sum\_i (x\_i-\bar x)^4}{\mathrm{Var}(X)^{2}}
 $$
 
 Referência: Normal tem curtose \(=3\). Maior que 3 (leptocúrtica) \(\Rightarrow\) caudas mais pesadas,

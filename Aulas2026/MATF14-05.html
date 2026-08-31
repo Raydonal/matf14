@@ -30,7 +30,7 @@ class: inverse, center, middle
 &gt; Uma consultoria compara o tempo de aprovação de crédito em duas agências bancárias. A agência A
 &gt; tem tempos entre 3 e 8 dias. A agência B tem quase todos entre 2 e 6 dias, exceto um caso isolado
 &gt; de 45 dias (um processo travado no jurídico). Qual das duas parece "mais lenta" se você olhar só
-&gt; a amplitude total (\(x_{max}-x_{min}\))?
+&gt; a amplitude total (\(x\_{max}-x\_{min}\))?
 
 --
 
@@ -47,11 +47,11 @@ class: inverse, center, middle
 
 ## Quantis
 
-O **quantil de ordem \(p\)**, \(Q_p\) (\(0&lt;p&lt;1\)), é o valor abaixo do qual está uma proporção \(p\) dos
+O **quantil de ordem \(p\)**, \(Q\_p\) (\(0&amp;lt;p&amp;lt;1\)), é o valor abaixo do qual está uma proporção \(p\) dos
 dados ordenados. Os **quartis** dividem a amostra em 4 partes iguais:
 
 $$
-Q_1 = Q_{0{,}25}, \qquad Q_2 = Q_{0{,}50} = \text{mediana}, \qquad Q_3 = Q_{0{,}75}
+Q\_1 = Q\_{0{,}25}, \qquad Q\_2 = Q\_{0{,}50} = \text{mediana}, \qquad Q\_3 = Q\_{0{,}75}
 $$
 
 --
@@ -59,20 +59,20 @@ $$
 ## Distância interquartílica
 
 $$
-IQR = Q_3 - Q_1
+IQR = Q\_3 - Q\_1
 $$
 
 Mede a dispersão dos 50% centrais, **robusta** a valores extremos, ao contrário da amplitude total
-\(AT = x_{\max}-x_{\min}\), que depende só de 2 pontos.
+\(AT = x\_{\max}-x\_{\min}\), que depende só de 2 pontos.
 
 ---
 
 ## Boxplot
 
-Representa \(Q_1\), \(Q_2\), \(Q_3\) e sinaliza como **outlier** qualquer ponto além de
+Representa \(Q\_1\), \(Q\_2\), \(Q\_3\) e sinaliza como **outlier** qualquer ponto além de
 
 $$
-Q_1 - 1{,}5\times IQR \qquad \text{ou} \qquad Q_3 + 1{,}5\times IQR
+Q\_1 - 1{,}5\times IQR \qquad \text{ou} \qquad Q\_3 + 1{,}5\times IQR
 $$
 
 &lt;img src="MATF14-05_files/figure-html/boxplot-exemplo-1.png" alt="" width="504" /&gt;

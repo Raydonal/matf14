@@ -54,7 +54,7 @@ equivalente a \(P(A\mid B)=P(A)\) (saber que \(B\) ocorreu não muda a probabili
 
 ## Independência \(\ne\) mutuamente exclusivos
 
-Se \(A\cap B=\emptyset\) e \(P(A),P(B)>0\): saber que \(A\) ocorreu implica \(P(B\mid A)=0\ne P(B)\),
+Se \(A\cap B=\emptyset\) e \(P(A),P(B)&gt;0\): saber que \(A\) ocorreu implica \(P(B\mid A)=0\ne P(B)\),
 **o oposto** de independência. São conceitos frequentemente confundidos, mas incompatíveis (com
 probabilidades positivas), exatamente a tensão da provocação inicial.
 
@@ -96,10 +96,10 @@ ocupacional nesta população.
 
 ## Independência em séries de eventos
 
-Se \(A_1,\ldots,A_n\) são mutuamente independentes,
+Se \(A\_1,\ldots,A\_n\) são mutuamente independentes,
 
 $$
-P(A_1\cap A_2\cap\cdots\cap A_n) = P(A_1)\times P(A_2)\times\cdots\times P(A_n)
+P(A\_1\cap A\_2\cap\cdots\cap A\_n) = P(A\_1)\times P(A\_2)\times\cdots\times P(A\_n)
 $$
 
 Base da distribuição **Binomial** (Cap. 3): \(n\) tentativas independentes, mesma probabilidade de

@@ -52,10 +52,10 @@ class: inverse, center, middle
 
 ## Teorema da probabilidade total
 
-Se \(B_1,\ldots,B_k\) particionam \(\Omega\):
+Se \(B\_1,\ldots,B\_k\) particionam \(\Omega\):
 
 $$
-P(A) = \sum_{i=1}^k P(A\mid B_i)\,P(B_i)
+P(A) = \sum\_{i=1}^k P(A\mid B\_i)\,P(B\_i)
 $$
 
 --
@@ -65,10 +65,10 @@ $$
 Combinando a regra do produto nos dois sentidos:
 
 $$
-P(B_i\mid A) = \frac{P(A\mid B_i)\,P(B_i)}{\sum_{j=1}^k P(A\mid B_j)\,P(B_j)}
+P(B\_i\mid A) = \frac{P(A\mid B\_i)\,P(B\_i)}{\sum\_{j=1}^k P(A\mid B\_j)\,P(B\_j)}
 $$
 
-\(P(B_i)\): probabilidade **a priori**. \(P(B_i\mid A)\): probabilidade **a posteriori**, depois de
+\(P(B\_i)\): probabilidade **a priori**. \(P(B\_i\mid A)\): probabilidade **a posteriori**, depois de
 observar a evidência \(A\).
 
 ---
