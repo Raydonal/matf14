@@ -31,6 +31,14 @@ suppressPackageStartupMessages({
 Tudo listado no [cronograma](#programa-da-disciplina) abaixo.
 </div>
 
+<div style="background:#eef3fb;border-left:5px solid #3b5bdb;border-radius:6px;padding:0.9em 1.2em;margin-bottom:1.2em;">
+💻 <strong>Antes da Aula 07 (primeiro laboratório): <a href="Aulas2026/MATF14-02.html">instale R e Python</a></strong>.
+Material extra, sem data fixa no cronograma, com instalação passo a passo (R/RStudio e
+Python/Anaconda), leitura de dados e funções nas duas linguagens lado a lado, e uma lista de
+cursos e livros gratuitos para quem quiser ir além do curso (R for Data Science, swirl, Kaggle
+Learn, Automate the Boring Stuff, entre outros).
+</div>
+
 <h4>
 # PLANO DE ENSINO - APRENDIZAGEM DO COMPONENTE CURRICULAR
 ### Semestre 2026.2

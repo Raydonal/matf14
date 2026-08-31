@@ -1,0 +1,218 @@
+---
+title: "Ferramentas de trabalho: R e Python"
+subtitle: "MATF14: Estatística Econômica I — material extra, autoestudo"
+author: "Raydonal Ospina"
+date: "Material de apoio (sem data fixa no cronograma)"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+class: inverse, center, middle
+
+# Ferramentas de trabalho: R e Python
+
+### Material extra · Autoestudo, sem data fixa no cronograma
+
+Instalação · Primeiros passos · Leitura de dados · Funções · Para onde ir depois
+
+---
+
+## Por que R **e** Python?
+
+O curso usa R nos laboratórios (Aulas 07, 13 e 22) porque é o padrão histórico em Estatística e
+Economia aplicada, tabelas, gráficos, simulação, os pacotes do "tidyverse" tornam isso direto.
+Python aparece aqui porque é o padrão em ciência de dados e machine learning fora da academia, e
+porque a sintaxe das duas linguagens é parecida o bastante para aprender uma acelerar a outra.
+
+--
+
+Este material **não substitui** os laboratórios do curso, ele existe para você chegar neles já
+sabendo instalar, abrir e rodar um script, sem perder tempo de aula com isso.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: Instalação
+
+---
+
+## Instalando R e RStudio
+
+R é a linguagem, RStudio é o programa (IDE) onde você escreve e roda código R, precisa dos dois,
+nessa ordem:
+
+1. **R**: [cran.r-project.org](https://cran.r-project.org) → "Download R for Windows/macOS/Linux".
+2. **RStudio Desktop** (gratuito): [posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/).
+
+--
+
+Depois de instalar os dois, abra o RStudio (não o R sozinho). No console (canto inferior esquerdo),
+teste:
+
+```{r teste-r, eval=FALSE}
+2 + 2
+install.packages("tidyverse")  # roda uma vez só, baixa os pacotes usados no curso
+```
+
+---
+
+## Instalando Python
+
+Para quem está começando, a forma mais simples é instalar o **Anaconda**, que já vem com Python,
+Jupyter Notebook e os pacotes mais usados em ciência de dados (`pandas`, `numpy`, `matplotlib`)
+juntos:
+
+* **Anaconda** (gratuito): [anaconda.com/download](https://www.anaconda.com/download).
+
+--
+
+Alternativa mais enxuta (sem os pacotes pré-instalados): [python.org/downloads](https://www.python.org/downloads/),
+e depois instalar o que precisar com `pip install pandas numpy matplotlib`.
+
+--
+
+Depois de instalar o Anaconda, abra o **Jupyter Notebook** (procure no menu iniciar/launchpad) e
+teste, numa célula:
+
+```python
+2 + 2
+```
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Primeiros passos
+
+---
+
+## Script vs. console, em R e em Python
+
+| | R (RStudio) | Python (Jupyter) |
+|---|---|---|
+| Rodar uma linha | `Ctrl+Enter` no script | `Shift+Enter` na célula |
+| Instalar um pacote | `install.packages("readr")` | `pip install pandas` (uma vez, no terminal) |
+| Carregar um pacote | `library(readr)` | `import pandas as pd` |
+| Salvar o trabalho | arquivo `.R` ou `.Rmd` | arquivo `.ipynb` |
+
+--
+
+**Boa prática, nas duas linguagens**: crie uma pasta só para o curso, salve seus scripts nela, e
+sempre abra o RStudio/Jupyter *a partir dessa pasta* (evita o erro mais comum de iniciante: "não
+acho o arquivo").
+
+---
+
+## Leitura de dados: o mesmo `empresas.csv` nas duas linguagens
+
+```{r leitura-r}
+library(tidyverse)
+empresas <- read_csv("empresas.csv", show_col_types = FALSE)
+glimpse(empresas)
+```
+
+--
+
+O equivalente em Python, com `pandas`:
+
+```python
+import pandas as pd
+empresas = pd.read_csv("empresas.csv")
+empresas.info()
+```
+
+`read_csv`/`read.csv` (R) e `pd.read_csv` (Python) fazem exatamente o mesmo trabalho: abrir um
+arquivo de texto separado por vírgulas e organizar em uma tabela (`data.frame` em R,
+`DataFrame` em Python).
+
+---
+
+## Funções: a mesma ideia, duas sintaxes
+
+Uma função que calcula o coeficiente de variação (Aula 06), em R:
+
+```{r funcao-r}
+cv <- function(x) {
+  100 * sd(x) / mean(x)
+}
+cv(empresas$faturamento99)
+```
+
+--
+
+A mesma função em Python:
+
+```python
+import numpy as np
+
+def cv(x):
+    return 100 * np.std(x, ddof=1) / np.mean(x)
+
+cv(empresas["faturamento99"])
+```
+
+--
+
+Em ambas: um nome (`cv`), um ou mais argumentos entre parênteses (`x`), um corpo que calcula algo
+e devolve (`return` em Python é explícito; em R, o valor da última linha já é o retorno).
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Para continuar estudando, de graça
+
+---
+
+## R: cursos e material gratuito
+
+* **[R for Data Science (r4ds.hadley.nz)](https://r4ds.hadley.nz/)** — o livro-texto de referência
+  do tidyverse, gratuito, online, em inglês.
+* **[swirl](https://swirlstats.com/)** — aprende R *dentro* do próprio R, respondendo exercícios no
+  console (`install.packages("swirl")`).
+* **Curso-R** ([curso-r.com](https://curso-r.com/)) — comunidade brasileira, material introdutório
+  em português.
+* **[Coursera: R Programming (Johns Hopkins)](https://www.coursera.org/learn/r-programming)** —
+  pode ser feito de graça no modo "somente assistir" (audit).
+
+---
+
+## Python: cursos e material gratuito
+
+* **[Kaggle Learn](https://www.kaggle.com/learn)** — micro-cursos gratuitos e práticos: Python,
+  Pandas, introdução a Machine Learning, SQL.
+* **[Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)** — livro completo
+  gratuito online, ótimo para quem nunca programou.
+* **[Coursera: Python for Everybody (Univ. Michigan)](https://www.coursera.org/specializations/python)**
+  — também disponível em modo "somente assistir" (audit), de graça.
+* **freeCodeCamp** (canal no YouTube) tem cursos completos de Python e de R, gravados, gratuitos,
+  do zero ao avançado.
+
+--
+
+**Plataformas pagas** (Udemy, cursos com certificado no Coursera): funcionam bem como
+complemento, mas **não são necessárias** para acompanhar o curso, tudo que você precisa está nos
+laboratórios (Aulas 07, 13, 22) e nos links gratuitos acima.
+
+---
+
+class: inverse, center, middle
+
+# Fechando
+
+## Instale antes da Aula 07 (primeiro laboratório)
+
+Traga dúvidas de instalação para o início daquela aula, não para o meio dela.
