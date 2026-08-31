@@ -1,8 +1,9 @@
 # matf14
 
 MATF14: Estatística Econômica I (UFBA, Departamento de Estatística, código MATF14, 60h,
-pré-requisito MAT047). Turma 2026.2, encontros às 2ª e 4ª-feira, 10:40–12:30, início em
-24/08/2026. Material elaborado por Raydonal Ospina, com colaboração de Rodney Vasconcelos Fonseca.
+pré-requisito MAT047). Turma 2026.2, encontros às 2ª e 4ª-feira, 10:40–12:30, Sala 22, PAF I,
+início em 24/08/2026. Material elaborado por Raydonal Ospina, com colaboração de Rodney
+Vasconcelos Fonseca. Página do curso: <https://raydonal.github.io/matf14/>.
 
 Disciplina de serviço para os cursos de Economia e Estatística. Ementa: estatística descritiva,
 probabilidade, variáveis aleatórias discretas e contínuas. Avaliação: três provas (P1, P2, P3),
