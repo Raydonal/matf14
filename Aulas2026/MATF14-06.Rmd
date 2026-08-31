@@ -40,6 +40,33 @@ class: inverse, center, middle
 > E se eu disser que o desvio padrão de "faturamento em R\$ mil" de uma empresa é maior que o de
 > "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
 
+--
+
+Exatamente as duas ações da provocação, ano a ano:
+
+```{r fig-duas-acoes, echo=FALSE, fig.height=3.4}
+acoes <- tibble(
+  ano    = rep(1:5, 2),
+  retorno = c(8, 10, 12, 14, 16, -30, 5, 15, 25, 45),
+  acao    = rep(c("A (8% a 16%)", "B (-30% a 45%)"), each = 5)
+)
+ggplot(acoes, aes(ano, retorno, color = acao)) +
+  geom_line(linewidth = 1) + geom_point(size = 2) +
+  geom_hline(yintercept = 12, linetype = "dashed", color = "grey40") +
+  scale_color_manual(values = c("#0d3b54", "#c9971e")) +
+  labs(x = "Ano", y = "Retorno anual (%)", color = NULL) +
+  theme_minimal(base_size = 13)
+```
+
+--
+
+```{r resumo-acoes, echo=FALSE}
+acoes |> group_by(acao) |> summarise(media = mean(retorno), dp = round(dp_n(retorno), 1))
+```
+
+Mesma linha tracejada (média = 12% nas duas), desvios padrão completamente diferentes, essa é
+exatamente a informação que a média sozinha esconde.
+
 ---
 
 class: inverse, center, middle
@@ -105,7 +132,6 @@ muito diferentes: um desvio padrão de R\\( 5 é enorme para uma ação de R\\) 
 para uma de R\$ 500 (CV baixo).
 
 ```{r acao, echo=FALSE}
-set.seed(7)
 tibble(
   Ação = c("A (preço baixo)", "B (preço alto)"),
   `Preço médio` = c(10, 500),
@@ -124,9 +150,9 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo a provocação inicial
 
-**1.** Volte às duas ações da abertura (mesma média 12%, faixas 8-16% e -30-45%). Estime
-mentalmente qual delas tem desvio padrão maior. Um investidor avesso a risco, olhando só a média,
-cometeria que erro?
+**1.** Volte ao gráfico das duas ações da abertura: mesma média (12%), desvios padrão bem
+diferentes. Um investidor avesso a risco, olhando só a média divulgada por um banco, cometeria que
+erro?
 
 **2.** Um gestor de risco reporta apenas "desvio padrão mensal de 2%" para um fundo. Isso basta
 para saber se há meses de perdas catastróficas raras escondidos numa distribuição majoritariamente

@@ -35,6 +35,26 @@ class: inverse, center, middle
 &gt; E se eu disser que o desvio padrão de "faturamento em R\$ mil" de uma empresa é maior que o de
 &gt; "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
 
+--
+
+Exatamente as duas ações da provocação, ano a ano:
+
+&lt;img src="MATF14-06_files/figure-html/fig-duas-acoes-1.png" alt="" width="504" /&gt;
+
+--
+
+
+```
+## # A tibble: 2 × 3
+##   acao           media    dp
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;
+## 1 A (8% a 16%)      12   2.8
+## 2 B (-30% a 45%)    12  24.8
+```
+
+Mesma linha tracejada (média = 12% nas duas), desvios padrão completamente diferentes, essa é
+exatamente a informação que a média sozinha esconde.
+
 ---
 
 class: inverse, center, middle
@@ -121,9 +141,9 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo a provocação inicial
 
-**1.** Volte às duas ações da abertura (mesma média 12%, faixas 8-16% e -30-45%). Estime
-mentalmente qual delas tem desvio padrão maior. Um investidor avesso a risco, olhando só a média,
-cometeria que erro?
+**1.** Volte ao gráfico das duas ações da abertura: mesma média (12%), desvios padrão bem
+diferentes. Um investidor avesso a risco, olhando só a média divulgada por um banco, cometeria que
+erro?
 
 **2.** Um gestor de risco reporta apenas "desvio padrão mensal de 2%" para um fundo. Isso basta
 para saber se há meses de perdas catastróficas raras escondidos numa distribuição majoritariamente

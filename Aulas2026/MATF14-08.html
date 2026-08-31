@@ -34,6 +34,26 @@ class: inverse, center, middle
 &gt; Duas distribuições salariais podem ter a mesma média e o mesmo desvio padrão e ainda parecerem
 &gt; completamente diferentes num histograma. O que mais falta medir?
 
+--
+
+Duas distribuições simuladas, forçadas a ter **exatamente** a mesma média e o mesmo desvio padrão:
+
+&lt;img src="MATF14-08_files/figure-html/fig-mesma-media-dp-1.png" alt="" width="504" /&gt;
+
+--
+
+
+```
+## # A tibble: 2 × 3
+##   grupo       media    dp
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Assimétrica  99.8  15.1
+## 2 Simétrica    99.8  15.1
+```
+
+Média e desvio padrão, até a casa decimal, são os mesmos nas duas. A resposta para "o que mais
+falta medir" é exatamente o assunto de hoje: assimetria e curtose.
+
 ---
 
 class: inverse, center, middle
@@ -114,6 +134,22 @@ empresas |&gt; summarise(
 
 Assimetria bem positiva (cauda à direita) e curtose alta, coerente com o que já vimos: poucas
 empresas muito grandes, muitas pequenas.
+
+---
+
+## Fechando a provocação inicial
+
+
+```
+## # A tibble: 2 × 3
+##   grupo       assimetria curtose
+##   &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Assimétrica       1.38    5.79
+## 2 Simétrica        -0.01    3.07
+```
+
+Média e desvio padrão idênticos (slide de abertura), assimetria e curtose bem diferentes: essas
+duas medidas enxergam exatamente a diferença de forma que o histograma já mostrava a olho nu.
 
 ---
 

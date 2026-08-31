@@ -17,7 +17,17 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
 suppressPackageStartupMessages(library(tidyverse))
-empresas <- read.csv("empresas.csv")
+empresas  <- read.csv("empresas.csv")
+prefeitos <- read.csv("dados_prefeitos.csv")
+
+setor_pct <- empresas |>
+  mutate(setor = trimws(setor)) |>
+  count(setor, sort = TRUE) |>
+  mutate(pct = round(100 * n / sum(n), 1))
+
+fat_regiao <- empresas |>
+  group_by(regiao) |>
+  summarise(faturamento_medio = mean(faturamento99), .groups = "drop")
 ```
 
 class: inverse, center, middle
@@ -28,20 +38,53 @@ class: inverse, center, middle
 
 ---
 
-## Um gráfico pode enganar sem uma única mentira
+## Provocação 1: o mesmo dado, duas leituras
 
-> Um relatório de vendas mostra um gráfico de barras com o eixo y começando em R\$ 40.000 (não em
-> zero). Diferenças de poucos milhares parecem enormes. Nenhum número no gráfico está errado, o
-> que está errado, então?
+Faturamento médio de 1999 (`empresas.csv`), por região, eixo começando em **zero**:
+
+```{r fig-eixo-zero, echo=FALSE, fig.height=3.4}
+ggplot(fat_regiao, aes(x = fct_reorder(regiao, faturamento_medio), y = faturamento_medio)) +
+  geom_col(fill = "#0d3b54") +
+  labs(x = NULL, y = "Faturamento médio (R$)") +
+  theme_minimal(base_size = 13)
+```
 
 --
 
-> Um jornal usa um gráfico de pizza com 9 fatias para mostrar participação setorial no PIB. Duas
-> fatias vizinhas têm 9% e 11%. É fácil dizer qual é maior só olhando?
+Exatamente os **mesmos três números**, eixo começando perto do menor valor:
+
+```{r fig-eixo-cortado, echo=FALSE, fig.height=3.4}
+ggplot(fat_regiao, aes(x = fct_reorder(regiao, faturamento_medio), y = faturamento_medio)) +
+  geom_col(fill = "#c9971e") +
+  coord_cartesian(ylim = c(315000, 345000)) +
+  labs(x = NULL, y = "Faturamento médio (R$)") +
+  theme_minimal(base_size = 13)
+```
 
 --
 
-Hoje: as regras que separam "gráfico correto" de "gráfico tecnicamente correto, mas enganoso".
+Nenhum número está errado nos dois gráficos. O que muda, e por que isso importa para quem decide
+com base neles?
+
+---
+
+## Provocação 2: qual fatia é maior?
+
+```{r fig-pizza-setor, echo=FALSE, fig.height=4.6, fig.width=6}
+ggplot(setor_pct, aes(x = "", y = pct, fill = setor)) +
+  geom_col(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = paste0(pct, "%")), position = position_stack(vjust = 0.5), size = 3.5) +
+  scale_fill_brewer(palette = "Blues", direction = -1) +
+  labs(fill = "Setor", x = NULL, y = NULL) +
+  theme_void(base_size = 12)
+```
+
+--
+
+**Setor de atividade das 106 empresas da base.** "Industrial" e "Laminados plásticos" parecem do
+mesmo tamanho? "Outros" e "Manilhas, canos e conexões"? Olhando só a pizza, dá para responder com
+confiança?
 
 ---
 
@@ -61,10 +104,28 @@ $$
 
 --
 
+Guarde essa definição, ela é exatamente o que está por trás da pizza do slide anterior, e é o que
+o Bloco 2 vai reconstruir como tabela.
+
+---
+
 ## Tabela de dupla entrada
 
-Cruza duas variáveis qualitativas. Dividir pelo total da **linha** (não do total geral) dá a
-composição condicional daquele grupo, essencial para comparar grupos de tamanhos diferentes.
+Cruza duas variáveis qualitativas. Exemplo real: prefeitos eleitos em 2020, por região e sexo
+(`dados_prefeitos.csv`).
+
+```{r tab-dupla-prefeitos, echo=FALSE}
+prefeitos |>
+  filter(!is.na(sexo), !is.na(Regiao)) |>
+  count(Regiao, sexo) |>
+  pivot_wider(names_from = sexo, values_from = n, values_fill = 0)
+```
+
+--
+
+Dividir pelo total da **linha** (não do total geral) dá a composição condicional daquela região,
+essencial para comparar regiões de tamanhos diferentes: em toda linha, o número de prefeitas é uma
+fração pequena do de prefeitos.
 
 ---
 
@@ -82,6 +143,15 @@ composição condicional daquele grupo, essencial para comparar grupos de tamanh
 **Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
 tendência que não existe.
 
+--
+
+**Uso correto**, três variáveis ao mesmo tempo (sexo, raça e o ano, esse sim uma sequência
+temporal):
+
+```{r fig-forca-trabalho, echo=FALSE, out.width="60%"}
+knitr::include_graphics("images/forca_trabalho_raca_sexo.jpg")
+```
+
 ---
 
 class: inverse, center, middle
@@ -90,18 +160,24 @@ class: inverse, center, middle
 
 ---
 
-## Um histograma que já é uma tabela de frequências
+## O "gender pay gap" é um histograma disfarçado de notícia
 
-```{r fig-gender-pay, echo=FALSE, out.width="75%"}
+```{r fig-gender-pay, echo=FALSE, out.width="65%"}
 knitr::include_graphics("images/gender_pay_gap.png")
 ```
 
-78% das empresas britânicas pagam mais aos homens, a notícia usa exatamente uma tabela de
-frequências (900 empresas, agrupadas por faixa de diferença salarial), não uma média isolada.
+Eixo x = classes de diferença salarial (de ">50% mulheres ganham mais" a ">50% homens ganham
+mais"); eixo y = número de empresas naquela classe. **É a mesma ideia da tabela de frequências**,
+com barras no lugar de números: por isso "78% das empresas pagam mais aos homens" (a maioria das
+barras está do lado roxo) é mais defensável que uma média isolada, ela usa a distribuição inteira,
+não um único número resumo.
 
 ---
 
 ## Tabela de frequências: setor de atividade
+
+A mesma base da pizza da Provocação 2, agora como tabela, dá para comparar "Industrial" e
+"Laminados plásticos" sem adivinhar:
 
 ```{r tab-setor}
 empresas |> count(setor, sort = TRUE) |>
@@ -138,13 +214,27 @@ class: inverse, center, middle
 
 ## Primeira rodada
 
-**1.** Volte às duas perguntas de abertura do slide (eixo cortado; pizza de 9 fatias). Para cada
-uma, proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que
-resolve.
+**1.** Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma,
+proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
 
-**2.** Uma revista noticia "consumo médio de refrigerante por brasileiro" com um único gráfico de
-barras por região. Que informação um histograma da distribuição *dentro* de cada região
-acrescentaria que a barra do valor médio esconde?
+**2.** Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+
+```{r fig-refri, echo=FALSE, out.width="55%"}
+knitr::include_graphics("images/refri_estatisticas.png")
+```
+
+```{r fig-refri-grafico, echo=FALSE, fig.height=2.8, fig.width=5}
+refri <- tibble(
+  pais = c("México", "Reino Unido", "Brasil", "Portugal"),
+  litros = c(270.9, 114, 76.6, 40)
+)
+ggplot(refri, aes(x = fct_reorder(pais, litros), y = litros)) +
+  geom_col(fill = "#c9971e") + coord_flip() +
+  labs(x = NULL, y = "Litros/domicílio/ano") + theme_minimal(base_size = 12)
+```
+
+Esse gráfico compara **médias entre países**. Que informação um histograma da distribuição de
+consumo *dentro* de um único país acrescentaria, que a barra do valor médio esconde?
 
 **3.** Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo,
 que conclusão errada um leitor apressado poderia tirar?
@@ -169,15 +259,21 @@ empresas |> count(setor, sort = TRUE) |>
 
 # gráfico de barras ordenado por frequência
 ggplot(empresas, aes(x = fct_infreq(setor))) +
-  geom_bar(fill = "#0d3b54") + coord_flip()
+  geom_col(fill = "#0d3b54") + coord_flip()
 
 # histograma com número de classes ajustado
 ggplot(empresas, aes(x = faturamento99)) +
   geom_histogram(bins = 20, fill = "#c9971e", color = "white")
+
+# pizza (Provocação 2): por que é mais difícil de ler que a barra acima
+ggplot(empresas, aes(x = "", fill = setor)) +
+  geom_bar(position = "fill") + coord_polar(theta = "y")
 ```
 
 `fct_infreq()` reordena os níveis de um fator pela frequência, essencial para gráficos de barra
-legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor.
+legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor. `coord_cartesian(ylim
+= ...)` (Provocação 1) muda o que se vê sem mudar nenhum número, use com responsabilidade, ou
+melhor, nunca em um gráfico de barras.
 
 ---
 

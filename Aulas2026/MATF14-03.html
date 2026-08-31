@@ -24,20 +24,34 @@ class: inverse, center, middle
 
 ---
 
-## Um gráfico pode enganar sem uma única mentira
+## Provocação 1: o mesmo dado, duas leituras
 
-&gt; Um relatório de vendas mostra um gráfico de barras com o eixo y começando em R\$ 40.000 (não em
-&gt; zero). Diferenças de poucos milhares parecem enormes. Nenhum número no gráfico está errado, o
-&gt; que está errado, então?
+Faturamento médio de 1999 (`empresas.csv`), por região, eixo começando em **zero**:
 
---
-
-&gt; Um jornal usa um gráfico de pizza com 9 fatias para mostrar participação setorial no PIB. Duas
-&gt; fatias vizinhas têm 9% e 11%. É fácil dizer qual é maior só olhando?
+&lt;img src="MATF14-03_files/figure-html/fig-eixo-zero-1.png" alt="" width="504" /&gt;
 
 --
 
-Hoje: as regras que separam "gráfico correto" de "gráfico tecnicamente correto, mas enganoso".
+Exatamente os **mesmos três números**, eixo começando perto do menor valor:
+
+&lt;img src="MATF14-03_files/figure-html/fig-eixo-cortado-1.png" alt="" width="504" /&gt;
+
+--
+
+Nenhum número está errado nos dois gráficos. O que muda, e por que isso importa para quem decide
+com base neles?
+
+---
+
+## Provocação 2: qual fatia é maior?
+
+&lt;img src="MATF14-03_files/figure-html/fig-pizza-setor-1.png" alt="" width="432" /&gt;
+
+--
+
+**Setor de atividade das 106 empresas da base.** "Industrial" e "Laminados plásticos" parecem do
+mesmo tamanho? "Outros" e "Manilhas, canos e conexões"? Olhando só a pizza, dá para responder com
+confiança?
 
 ---
 
@@ -57,10 +71,33 @@ $$
 
 --
 
+Guarde essa definição, ela é exatamente o que está por trás da pizza do slide anterior, e é o que
+o Bloco 2 vai reconstruir como tabela.
+
+---
+
 ## Tabela de dupla entrada
 
-Cruza duas variáveis qualitativas. Dividir pelo total da **linha** (não do total geral) dá a
-composição condicional daquele grupo, essencial para comparar grupos de tamanhos diferentes.
+Cruza duas variáveis qualitativas. Exemplo real: prefeitos eleitos em 2020, por região e sexo
+(`dados_prefeitos.csv`).
+
+
+```
+## # A tibble: 5 × 3
+##   Regiao           Feminino Masculino
+##   &lt;chr&gt;               &lt;int&gt;     &lt;int&gt;
+## 1 1 - Norte              67       349
+## 2 2 - Nordeste          297      1427
+## 3 3 - Sudeste           118      1394
+## 4 4 - Sul                97      1041
+## 5 5 - Centro-Oeste       56       386
+```
+
+--
+
+Dividir pelo total da **linha** (não do total geral) dá a composição condicional daquela região,
+essencial para comparar regiões de tamanhos diferentes: em toda linha, o número de prefeitas é uma
+fração pequena do de prefeitos.
 
 ---
 
@@ -78,6 +115,13 @@ composição condicional daquele grupo, essencial para comparar grupos de tamanh
 **Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
 tendência que não existe.
 
+--
+
+**Uso correto**, três variáveis ao mesmo tempo (sexo, raça e o ano, esse sim uma sequência
+temporal):
+
+&lt;img src="images/forca_trabalho_raca_sexo.jpg" alt="" width="60%" /&gt;
+
 ---
 
 class: inverse, center, middle
@@ -86,16 +130,22 @@ class: inverse, center, middle
 
 ---
 
-## Um histograma que já é uma tabela de frequências
+## O "gender pay gap" é um histograma disfarçado de notícia
 
-&lt;img src="images/gender_pay_gap.png" alt="" width="75%" /&gt;
+&lt;img src="images/gender_pay_gap.png" alt="" width="65%" /&gt;
 
-78% das empresas britânicas pagam mais aos homens, a notícia usa exatamente uma tabela de
-frequências (900 empresas, agrupadas por faixa de diferença salarial), não uma média isolada.
+Eixo x = classes de diferença salarial (de "&gt;50% mulheres ganham mais" a "&gt;50% homens ganham
+mais"); eixo y = número de empresas naquela classe. **É a mesma ideia da tabela de frequências**,
+com barras no lugar de números: por isso "78% das empresas pagam mais aos homens" (a maioria das
+barras está do lado roxo) é mais defensável que uma média isolada, ela usa a distribuição inteira,
+não um único número resumo.
 
 ---
 
 ## Tabela de frequências: setor de atividade
+
+A mesma base da pizza da Provocação 2, agora como tabela, dá para comparar "Industrial" e
+"Laminados plásticos" sem adivinhar:
 
 
 ``` r
@@ -149,13 +199,17 @@ class: inverse, center, middle
 
 ## Primeira rodada
 
-**1.** Volte às duas perguntas de abertura do slide (eixo cortado; pizza de 9 fatias). Para cada
-uma, proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que
-resolve.
+**1.** Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma,
+proponha o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
 
-**2.** Uma revista noticia "consumo médio de refrigerante por brasileiro" com um único gráfico de
-barras por região. Que informação um histograma da distribuição *dentro* de cada região
-acrescentaria que a barra do valor médio esconde?
+**2.** Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
+
+&lt;img src="images/refri_estatisticas.png" alt="" width="55%" /&gt;
+
+&lt;img src="MATF14-03_files/figure-html/fig-refri-grafico-1.png" alt="" width="360" /&gt;
+
+Esse gráfico compara **médias entre países**. Que informação um histograma da distribuição de
+consumo *dentro* de um único país acrescentaria, que a barra do valor médio esconde?
 
 **3.** Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo,
 que conclusão errada um leitor apressado poderia tirar?
@@ -181,15 +235,21 @@ empresas |&gt; count(setor, sort = TRUE) |&gt;
 
 # gráfico de barras ordenado por frequência
 ggplot(empresas, aes(x = fct_infreq(setor))) +
-  geom_bar(fill = "#0d3b54") + coord_flip()
+  geom_col(fill = "#0d3b54") + coord_flip()
 
 # histograma com número de classes ajustado
 ggplot(empresas, aes(x = faturamento99)) +
   geom_histogram(bins = 20, fill = "#c9971e", color = "white")
+
+# pizza (Provocação 2): por que é mais difícil de ler que a barra acima
+ggplot(empresas, aes(x = "", fill = setor)) +
+  geom_bar(position = "fill") + coord_polar(theta = "y")
 ```
 
 `fct_infreq()` reordena os níveis de um fator pela frequência, essencial para gráficos de barra
-legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor.
+legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor. `coord_cartesian(ylim
+= ...)` (Provocação 1) muda o que se vê sem mudar nenhum número, use com responsabilidade, ou
+melhor, nunca em um gráfico de barras.
 
 ---
 

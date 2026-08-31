@@ -116,6 +116,17 @@ sinistros$F[sinistros$x == 2]         # F(2)
 
 ---
 
+## Contraste: uma FDA com saltos iguais
+
+&lt;img src="images/fda_lancamento_dado.png" alt="" width="55%" /&gt;
+
+Lançamento de um dado honesto: seis saltos, todos de tamanho \(1/6\) (distribuição uniforme
+discreta). Na FDA dos sinistros, os saltos têm tamanhos diferentes, proporcionais a cada
+\(p(x_i)\), porque ali a distribuição não é uniforme. Mesma definição de \(F\), formato da escada
+diferente porque \(p(x)\) é diferente.
+
+---
+
 class: inverse, center, middle
 
 # Bloco 3: Discussão (bloco central da aula)
@@ -132,12 +143,19 @@ duas usando a tabela e confirme numericamente.
 
 ---
 
-## Rodada 2: indo além
+## Rodada 2: leia outra FDA
 
-**3.** Se você só tivesse a FDA \(F(x)\) (não a tabela \(p(x)\)), como recuperaria \(p(x_i)\) a partir
-dela? Escreva a fórmula geral usando a diferença de dois valores de \(F\).
+&lt;img src="images/fda_exercicio.png" alt="" width="55%" /&gt;
 
-**4.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um
+**3.** Nesse gráfico, o círculo **cheio** marca o ponto que pertence à escada (o valor de \(F\) ali),
+o círculo **aberto** marca o valor que a escada está deixando para trás no salto seguinte. Leia
+\(F(2)\), \(P(X&gt;2)\) e \(P(X=3)\) diretamente do gráfico.
+
+**4.** A partir só desse gráfico (sem nenhuma tabela de \(p(x)\)), como você recuperaria \(p(x_i)\)
+para cada \(x_i\)? Escreva a fórmula geral usando a diferença de dois valores de \(F\), e confira
+aplicando-a aos saltos que você acabou de ler.
+
+**5.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um
 segundo contrato paga o mesmo bônus se "o segurado tiver menos de 2 sinistros". Para uma variável
 discreta como esta, os dois contratos pagam exatamente nas mesmas condições? Formalize com \(F\).
 

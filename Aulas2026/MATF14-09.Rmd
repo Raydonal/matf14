@@ -112,7 +112,12 @@ Evento "risco elevado": \(R = \{B, C\}\). Evento "risco baixo": \(L=\{AA,A\}\).
 --
 
 \(R\) e \(L\) são mutuamente exclusivos (\(R\cap L=\emptyset\)) e \(R\cup L=\Omega\), formam uma
-**partição** do espaço amostral (conceito que retomamos na Aula 14, Teorema de Bayes).
+**partição** do espaço amostral: pedaços que não se sobrepõem e cobrem tudo, como neste diagrama
+(conceito que retomamos na Aula 14, Teorema de Bayes):
+
+```{r fig-particao, echo=FALSE, out.width="45%"}
+knitr::include_graphics("images/particao.png")
+```
 
 ---
 

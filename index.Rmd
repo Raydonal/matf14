@@ -1,0 +1,227 @@
+---
+title: "ESTATÍSTICA ECONÔMICA I (MATF14)"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+header-includes:
+    geometry: margin = 1.0in
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(kableExtra)
+})
+```
+
+<div style="background:#eef7f1;border-left:5px solid #2e8b57;border-radius:6px;padding:0.9em 1.2em;margin-bottom:1.2em;">
+<strong>Turma 2026.2.</strong> O material do curso está organizado em três frentes:
+
+* 📘 **[Livro-texto](Livro/index.html)** — quatro capítulos (a mesma numeração da ementa oficial:
+  descritiva, probabilidade, VA discretas, VA contínuas), mais dois apêndices (revisão de cálculo e
+  fórmulário), com exemplos contextualizados em **economia** (inflação, mercado de trabalho,
+  finanças, eleições).
+* 🎓 **Slides de aula (`Aulas2026/`)** — um deck por encontro do cronograma abaixo, estruturado em
+  Provocação → Teoria → Aplicação → Discussão → Uso do R.
+* 📝 **Listas de exercícios (`Listas2026/`)** — organizadas por bloco temático, incluindo três
+  simulados no formato oficial de prova (um por P1/P2/P3). **Não valem nota** e o gabarito **não é
+  publicado neste repositório** (respostas ficam em repositório privado separado).
+
+Tudo listado no [cronograma](#programa-da-disciplina) abaixo.
+</div>
+
+<h4>
+# PLANO DE ENSINO - APRENDIZAGEM DO COMPONENTE CURRICULAR
+### Semestre 2026.2
+</h4>
+
+* **Professor colaborador:** Raydonal Ospina Martínez
+* **Homepage do curso:** [https://raydonal.github.io/matf14/](https://raydonal.github.io/matf14/)
+* **Contato:** raydonalmartinez@ufba.br
+* **Ementa do curso:** Estatística descritiva. Probabilidade. Variáveis aleatórias discretas e
+  contínuas.
+* **Local e horário da disciplina:** PAF I (Pavilhão de Aulas da Federação I — Av. Barão de
+  Geremoabo, s/n, Ondina, Campus de Ondina) — **Sala 22** — **Segunda e Quarta**, 10:40 às 12:30.
+* **Atenção aos estudantes:** Reunião virtual via Google Meet ou reunião presencial com prévio
+  agendamento. O local de atendimento presencial será em alguma sala disponível no Departamento de
+  Estatística da UFBA.
+
+* *<font color="red">Nota:</font> O atendimento somente será realizado com agendamento prévio. Caro
+  aluno, eu sou uma pessoa bastante ocupada e meu tempo, assim como o seu, é muito valioso. Use o
+  tempo que você gastar comigo de forma eficiente. De preferência já traga anotações e perguntas já
+  elaboradas. Seja pontual. Sempre.*
+
+* **Início das aulas:** 24 de agosto de 2026. **Sem aula em 07/09 (Independência), 12/10 (N. Sra.
+  Aparecida) e 02/11 (Finados).** 28/10 é ponto facultativo, mas a aula é mantida.
+* **Término das aulas:** 16 de dezembro de 2026 (Prova 3, último dia letivo do semestre).
+* **Pré-requisito:** MAT047.
+
+* **Propósito da disciplina:** Disciplina de serviço para os cursos de Economia e Estatística.
+  Constrói o vocabulário formal, dado, variável, distribuição, probabilidade condicional, valor
+  esperado, necessário para interpretar com rigor afirmações que aparecem rotineiramente na
+  imprensa econômica: taxas de inflação, pesquisas de opinião, indicadores de mercado de trabalho,
+  retorno e risco de investimentos.
+* **Objetivos da disciplina:** Classificar corretamente tipos de variáveis e construir tabelas e
+  gráficos apropriados a cada tipo. Calcular e interpretar medidas de posição, dispersão,
+  correlação, assimetria e curtose. Dominar os axiomas de probabilidade, contagem, probabilidade
+  condicional, independência e o Teorema de Bayes. Caracterizar variáveis aleatórias discretas e
+  contínuas (FDA, esperança, variância) e os principais modelos probabilísticos usados em economia
+  (Bernoulli, Binomial, Poisson, Uniforme, Normal).
+
+***
+<h4>
+
+## Critério de aprovação
+
+</h4>
+
+A avaliação é composta por três provas (**P1**, **P2**, **P3**), cada uma cobrindo um bloco do
+programa. As listas de exercícios são material de prática e **não valem nota**.
+
+```{r criterios, echo=FALSE}
+tibble(
+  Prova = c("P1", "P2", "P3"),
+  Cobertura = c("Unidade 1 (Estatística Descritiva)",
+                "Unidades 2 e 3 (Probabilidade; VA Discretas)",
+                "Unidade 4 (VA Contínuas)"),
+  Data = c("21/09/2026", "18/11/2026", "16/12/2026")
+) %>%
+  kable(align = "c") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+```
+
+A nota final é a média aritmética simples das três provas:
+
+<center>
+<h3>
+    NF = (P1 + P2 + P3) / 3
+</h3>
+</center>
+
+* **Nota:** Não há projetos nesta disciplina. Segunda chamada fica a combinar ao final do
+  semestre. Os dias de prova não têm slide próprio, são a continuação natural do deck anterior.
+
+***
+
+# Programa da disciplina
+
+Cronograma alinhado ao [calendário acadêmico oficial da UFBA para 2026.2](https://supac.ufba.br/sites/supac.ufba.br/files/calendario_academico_2026.2_08.06.26.pdf).
+Aulas às **segundas e quartas, 10:40–12:30, Sala 22, PAF I**. O cronograma usa todos os encontros
+disponíveis entre 24/08 e 16/12 sem folga, qualquer feriado não previsto aqui empurra as datas
+seguintes.
+
+```{r cronograma, echo=FALSE}
+cronograma <- tribble(
+  ~Data, ~Aula, ~Tópico, ~Material,
+  "24/08", "01", "Apresentação da disciplina · População e amostra · Tipos de variáveis",
+    "[Aula](Aulas2026/MATF14-01.html) · [Cap. 1](Livro/populacao-amostra.html)",
+  "26/08", "03", "Apresentação tabular e representação gráfica",
+    "[Aula](Aulas2026/MATF14-03.html) · [Cap. 1](Livro/tabelas-graficos.html) · [Lista 01](Listas2026/Lista01.pdf)",
+  "31/08", "04", "Medidas de tendência central e suas relações",
+    "[Aula](Aulas2026/MATF14-04.html) · [Cap. 1](Livro/tendencia-central.html)",
+  "02/09", "05", "Quantis, distância interquartílica e boxplots",
+    "[Aula](Aulas2026/MATF14-05.html) · [Cap. 1](Livro/dispersao.html) · [Lista 02](Listas2026/Lista02.pdf)",
+  "09/09", "06", "Medidas de dispersão: AT, DP e CV",
+    "[Aula](Aulas2026/MATF14-06.html) · [Cap. 1](Livro/dispersao.html) · [Lista 03](Listas2026/Lista03.pdf)",
+  "14/09", "07", "[Laboratório] R para estatística descritiva",
+    "[Aula](Aulas2026/MATF14-07.html) · [Cap. 1](Livro/capítulo-1-estatística-descritiva.html)",
+  "16/09", "08", "Correlação. Assimetria e curtose",
+    "[Aula](Aulas2026/MATF14-08.html) · [Cap. 1](Livro/correlacao.html), [assimetria/curtose](Livro/assimetria-curtose.html) · [Lista 04](Listas2026/Lista04.pdf)",
+  "**21/09**", "—", "**Prova 1** (Unidade 1)", "[Simulado — Lista 08](Listas2026/Lista08.pdf)",
+  "23/09", "09", "Espaço amostral e eventos. Revisão de conjuntos",
+    "[Aula](Aulas2026/MATF14-09.html) · [Cap. 2](Livro/espaco-amostral-eventos.html)",
+  "28/09", "10", "Propriedades de probabilidade. Métodos de contagem",
+    "[Aula](Aulas2026/MATF14-10.html) · [Cap. 2](Livro/conceitos-probabilidade.html) · [Lista 05](Listas2026/Lista05.pdf)",
+  "30/09", "11", "Probabilidade condicional",
+    "[Aula](Aulas2026/MATF14-11.html) · [Cap. 2](Livro/probabilidade-condicional.html)",
+  "05/10", "12", "Independência estatística",
+    "[Aula](Aulas2026/MATF14-12.html) · [Cap. 2](Livro/independencia.html) · [Lista 06](Listas2026/Lista06.pdf)",
+  "07/10", "13", "[Laboratório] Simulação de probabilidade em R",
+    "[Aula](Aulas2026/MATF14-13.html) · [Cap. 2](Livro/prob-introducao.html)",
+  "14/10", "14", "Teorema de Bayes",
+    "[Aula](Aulas2026/MATF14-14.html) · [Cap. 2](Livro/teorema-de-bayes.html) · [Lista 07](Listas2026/Lista07.pdf)",
+  "19/10", "15", "Revisão intermediária + exercícios: Unidades 1 e 2",
+    "[Aula](Aulas2026/MATF14-15.html)",
+  "21/10", "17", "Variável aleatória discreta: conceituação",
+    "[Aula](Aulas2026/MATF14-17.html) · [Cap. 3](Livro/va-discreta-conceito.html)",
+  "26/10", "18", "Esperança e Variância (VA discreta)",
+    "[Aula](Aulas2026/MATF14-18.html) · [Cap. 3](Livro/va-discreta-esperanca-variancia.html)",
+  "28/10 *(facultativo)*", "19", "Função de distribuição acumulada (discreta)",
+    "[Aula](Aulas2026/MATF14-19.html) · [Cap. 3](Livro/va-discreta-fda.html) · [Lista 09](Listas2026/Lista09.pdf)",
+  "04/11", "20", "Distribuição de Bernoulli e Distribuição Binomial",
+    "[Aula](Aulas2026/MATF14-20.html) · [Cap. 3](Livro/modelos-discretos.html)",
+  "09/11", "21", "Distribuição de Poisson",
+    "[Aula](Aulas2026/MATF14-21.html) · [Cap. 3](Livro/modelos-discretos.html) · [Lista 10](Listas2026/Lista10.pdf)",
+  "11/11", "22", "[Laboratório] Simulação de VA discretas em R",
+    "[Aula](Aulas2026/MATF14-22.html) · [Cap. 3](Livro/modelos-discretos.html)",
+  "16/11", "23", "Aula de exercícios + Revisão de cálculo",
+    "[Aula](Aulas2026/MATF14-23.html) · [Apêndice](Livro/revisao-de-calculo.html)",
+  "**18/11**", "—", "**Prova 2** (Unidades 2 e 3)", "[Simulado — Lista 13](Listas2026/Lista13.pdf)",
+  "23/11", "24", "Variável aleatória contínua: conceituação",
+    "[Aula](Aulas2026/MATF14-24.html) · [Cap. 4](Livro/va-continua-conceito.html)",
+  "25/11", "25", "Esperança e Variância (VA contínua)",
+    "[Aula](Aulas2026/MATF14-25.html) · [Cap. 4](Livro/va-continua-esperanca-variancia.html)",
+  "30/11", "26", "Função de distribuição acumulada (contínua)",
+    "[Aula](Aulas2026/MATF14-26.html) · [Cap. 4](Livro/va-continua-fda.html) · [Lista 11](Listas2026/Lista11.pdf)",
+  "02/12", "27", "Distribuição Uniforme",
+    "[Aula](Aulas2026/MATF14-27.html) · [Cap. 4](Livro/modelos-continuos.html)",
+  "07/12", "28", "Distribuição Normal",
+    "[Aula](Aulas2026/MATF14-28.html) · [Cap. 4](Livro/modelos-continuos.html) · [Lista 12](Listas2026/Lista12.pdf)",
+  "09/12", "29", "Aula de exercícios: Unidade 4",
+    "[Aula](Aulas2026/MATF14-29.html)",
+  "14/12", "30", "Revisão geral pré-Prova 3",
+    "[Aula](Aulas2026/MATF14-30.html) · [Fórmulário](Livro/formulario.html)",
+  "**16/12**", "—", "**Prova 3** (Unidade 4) — último dia letivo", "[Simulado — Lista 14](Listas2026/Lista14.pdf)"
+)
+
+cronograma %>%
+  kable(escape = FALSE, align = c("l", "c", "l", "l")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 14) %>%
+  column_spec(1, width = "10%") %>%
+  column_spec(4, width = "32%") %>%
+  row_spec(c(8, 23, 31), color = "red")
+```
+
+***
+#### Dados
+
+Bases usadas no livro-texto e nos slides (`Aulas2026/`, `Livro/data/`):
+
+* [Empresas](Aulas2026/empresas.csv) — 106 empresas brasileiras: faturamento, empregados, setor,
+  região, porte.
+* [Prefeitos](Aulas2026/dados_prefeitos.csv) — perfil sociodemográfico dos prefeitos eleitos em
+  todos os municípios brasileiros em 2020.
+
+#### Referências bibliográficas (Principal)
+
+1. Hoffmann, R. (2006). **Estatística para Economistas**. Cengage Learning.
+2. Morettin, P. A., & Bussab, W. O. (2012). **Estatística Básica**. Saraiva.
+3. Magalhães, M. N. (2004). **Probabilidade e Variáveis Aleatórias**. EdUSP.
+
+#### Referências bibliográficas (Complementar)
+
+* Ross, S. (2010). *Probabilidade: Um Curso Moderno com Aplicações*. Bookman.
+* Dantas, C. A. B. (1997). *Probabilidade: Um Curso Introdutório*. EdUSP.
+* Triola, M. F. (2007). *Introdução à Estatística*. LTC.
+* Hogg, R. V., McKean, J. W., & Craig, A. T. (2013). *Introduction to Mathematical Statistics*.
+  Pearson.
+* Wooldridge, J. M. (2016). *Introdução à Econometria: Uma Abordagem Moderna*. Cengage Learning.
+
+***
+
+#### Software
+
+1. [An Introduction to R](http://cran.r-project.org)
+2. [RStudio](https://www.rstudio.com)
+3. [Python](http://www.python.org/)
+
+***
+
+### Material de apoio
+
+O material de apoio principal de 2026 é o [livro-texto](Livro/index.html), os slides em
+`Aulas2026/` e as listas em `Listas2026/`, todos listados no cronograma acima.
+
+***
+###### Content Copyright &copy; 2026 Raydonal Ospina Martínez. All Rights Reserved.

@@ -41,6 +41,38 @@ class: inverse, center, middle
 > Duas distribuições salariais podem ter a mesma média e o mesmo desvio padrão e ainda parecerem
 > completamente diferentes num histograma. O que mais falta medir?
 
+--
+
+Duas distribuições simuladas, forçadas a ter **exatamente** a mesma média e o mesmo desvio padrão:
+
+```{r fig-mesma-media-dp, echo=FALSE, fig.height=3.4}
+set.seed(42)
+n <- 3000
+sim_simetrica <- rnorm(n, mean = 100, sd = 15)
+sim_bruta     <- rgamma(n, shape = 2, rate = 1)
+sim_assimetrica <- (sim_bruta - mean(sim_bruta)) / sd(sim_bruta) * sd(sim_simetrica) + mean(sim_simetrica)
+
+sim_dist <- tibble(
+  valor = c(sim_simetrica, sim_assimetrica),
+  grupo = rep(c("Simétrica", "Assimétrica"), each = n)
+)
+ggplot(sim_dist, aes(valor, fill = grupo)) +
+  geom_histogram(bins = 40, alpha = 0.75, position = "identity") +
+  scale_fill_manual(values = c(Simétrica = "#0d3b54", Assimétrica = "#c9971e")) +
+  labs(x = "Valor simulado", y = "Frequência", fill = NULL) +
+  theme_minimal(base_size = 13)
+```
+
+--
+
+```{r resumo-mesma-media-dp, echo=FALSE}
+sim_dist |> group_by(grupo) |>
+  summarise(media = round(mean(valor), 1), dp = round(sd(valor), 1))
+```
+
+Média e desvio padrão, até a casa decimal, são os mesmos nas duas. A resposta para "o que mais
+falta medir" é exatamente o assunto de hoje: assimetria e curtose.
+
 ---
 
 class: inverse, center, middle
@@ -112,6 +144,18 @@ empresas |> summarise(
 
 Assimetria bem positiva (cauda à direita) e curtose alta, coerente com o que já vimos: poucas
 empresas muito grandes, muitas pequenas.
+
+---
+
+## Fechando a provocação inicial
+
+```{r assim-curt-sim, echo=FALSE}
+sim_dist |> group_by(grupo) |>
+  summarise(assimetria = round(assimetria(valor), 2), curtose = round(curtose(valor), 2))
+```
+
+Média e desvio padrão idênticos (slide de abertura), assimetria e curtose bem diferentes: essas
+duas medidas enxergam exatamente a diferença de forma que o histograma já mostrava a olho nu.
 
 ---
 

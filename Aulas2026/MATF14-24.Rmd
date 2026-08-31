@@ -67,6 +67,11 @@ $$
 knitr::include_graphics("images/fdp_exemplo_mao.jpg")
 ```
 
+Leia a figura devagar: a curva é \(f(x)\), a região hachurada entre \(a\) e \(b\) é
+\(P(a< X\le b)\), e a área sob a curva **inteira** vale 1. É a mesma figura, com \(f\), \(a\) e
+\(b\) diferentes, que vai reaparecer em toda distribuição contínua deste capítulo, inclusive nos
+dois exemplos a seguir.
+
 ---
 
 class: inverse, center, middle
@@ -81,14 +86,28 @@ class: inverse, center, middle
 knitr::include_graphics("images/chuva_salvador.jpg")
 ```
 
+Volume de chuva acumulado (mm) pode assumir qualquer valor não negativo, não é uma contagem como
+no Capítulo 3. A manchete: em **menos de um dia**, Salvador já tinha acumulado 76% de todo o
+volume de chuva *esperado* (climatologicamente) para o mês inteiro de novembro.
+
 ---
 
-## Chuva acumulada: uma variável contínua real (cont.)
+## Colocando o "76%" em números
 
-Volume de chuva acumulado (mm) pode assumir qualquer valor não negativo, não é uma contagem como
-no Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo: \(P(X\ge x_{obs})\), a
-probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
-chuva de novembro para a cidade.
+Suponha, só para exercitar a ferramenta (números ilustrativos, não a série real da Defesa Civil),
+que o acumulado esperado para novembro seja \(\mu=300\)mm e que o acumulado diário em dias de
+frente fria siga uma Exponencial com média 40mm, \(f(x)=0{,}025\,e^{-0{,}025x}\), \(x\ge0\). A
+manchete equivale a um único dia acumulando \(0{,}76\times300\approx228\)mm. Qual a probabilidade
+de isso acontecer, \(P(X\ge228)\)?
+
+```{r prob-chuva}
+f <- function(x) 0.025*exp(-0.025*x)
+integrate(f, lower = 228, upper = Inf)
+```
+
+Uma probabilidade desse tamanho é exatamente o que torna o evento **notícia**: sob o modelo, um dia
+assim é raro, o mesmo raciocínio de \(P(X\ge x_{obs})\) que vamos reaplicar (com uma variável
+diferente) na fila de espera a seguir.
 
 ---
 
