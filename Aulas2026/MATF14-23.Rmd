@@ -71,7 +71,7 @@ Note como esse valor é pequeno, com taxa média 4, receber 0 ou 1 chamada é um
 ## Problema 3
 
 Uma seguradora modela \(X=\) número de sinistros/ano com \(E(X)=0{,}8\) e \(\mathrm{Var}(X)=0{,}9\).
-Se o custo por sinistro é fixo em R\\( 3.500, calcule \)E\( e \)dp\( do custo total anual \)C=3500X$.
+Se o custo por sinistro é fixo em R$ 3.500, calcule \(E\) e \(dp\) do custo total anual \(C=3500X\).
 
 --
 

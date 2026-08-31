@@ -349,7 +349,7 @@ $p=0{,}08$. $X=$ número de inadimplentes na carteira segue $\text{Bin}(20; 0{,}
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="modelos-discretos.html#cb40-1" tabindex="-1"></a><span class="co"># probabilidade de mais de 3 inadimplentes</span></span>
 <span id="cb40-2"><a href="modelos-discretos.html#cb40-2" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> n, <span class="at">prob =</span> p)</span></code></pre></div>
 <pre><code>## [1] 0.07061518</code></pre>
-<p><img src="03-va-discretas_files/figure-html/grafico-binomial-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/grafico-binomial-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p><code>dbinom()</code> calcula <span class="math inline">\(p(x)\)</span>; <code>pbinom()</code> calcula <span class="math inline">\(F(x)=P(X\le x)\)</span>, funções análogas existem para
 todas as distribuições nativas do R (prefixo <code>d</code> para densidade/massa, <code>p</code> para acumulada, <code>q</code> para
 quantil, <code>r</code> para gerar valores aleatórios).</p>
@@ -422,7 +422,7 @@ esperados" (xG), usados por clubes e casas de apostas, tentam calibrar a partir 
 <span id="cb42-5"><a href="modelos-discretos.html#cb42-5" tabindex="-1"></a><span class="co"># probabilidade de receber mais de 6 chamadas em um minuto</span></span>
 <span id="cb42-6"><a href="modelos-discretos.html#cb42-6" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">6</span>, lambda)</span></code></pre></div>
 <pre><code>## [1] 0.0446191</code></pre>
-<p><img src="03-va-discretas_files/figure-html/grafico-poisson-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/grafico-poisson-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <div class="caixa-r"><strong>Uso do R</strong>, para as três distribuições desta seção, o R segue
 o mesmo padrão de nomes: <code>dbinom/pbinom/qbinom/rbinom</code> e
 <code>dpois/ppois/qpois/rpois</code> (e, para Bernoulli, basta usar

@@ -87,7 +87,7 @@ integrate(integrand, lower = 0, upper = Inf)
 
 ## Custo de superlotação
 
-Se cada minuto de espera acima de 5 custa R\$ 2 em satisfação do cliente perdida (métrica
+Se cada minuto de espera acima de 5 custa R$ 2 em satisfação do cliente perdida (métrica
 interna), qual o "custo esperado" simplificado \(2\times E(X)\)?
 
 ```{r custo-esperado}

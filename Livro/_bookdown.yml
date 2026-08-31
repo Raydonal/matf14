@@ -1,7 +1,7 @@
 book_filename: "livro-matf14"
 delete_merged_file: true
 output_dir: "."
-new_session: yes
+new_session: no
 rmd_files: [
   "index.Rmd",
   "01-descritiva.Rmd",

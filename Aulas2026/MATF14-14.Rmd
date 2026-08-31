@@ -149,7 +149,7 @@ que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo o mesmo si
 Refaça a conta e confirme sua intuição antes de calcular.
 
 **4.** Um banco decide usar o mesmo sistema antifraude, mas agora aplicado só a transações acima de
-R\$ 10.000 (onde a taxa de fraude histórica é bem maior, digamos 3% em vez de 0,2%). Sem refazer a
+R$ 10.000 (onde a taxa de fraude histórica é bem maior, digamos 3% em vez de 0,2%). Sem refazer a
 conta completa, você espera que \(P(\text{fraude}\mid\text{suspeito})\) suba ou desça em relação ao
 caso original? Depois, confirme calculando.
 

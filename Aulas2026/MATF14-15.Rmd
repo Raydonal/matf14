@@ -91,7 +91,7 @@ listados acima, um colega desatento cometeria antes de olhar a solução.
 
 ## Problema 1
 
-Os prêmios pagos (em R\$ mil) por uma seguradora em 7 sinistros do mês foram:
+Os prêmios pagos (em R$ mil) por uma seguradora em 7 sinistros do mês foram:
 \(12, 15, 14, 13, 16, 14, 95\). Calcule média e mediana, e diga o que a comparação entre elas revela.
 
 --
@@ -101,11 +101,11 @@ Os prêmios pagos (em R\$ mil) por uma seguradora em 7 sinistros do mês foram:
 
 --
 
-Média \(\gg\) mediana \(\Rightarrow\) assimetria forte à direita: um sinistro atípico (R\$ 95 mil,
+Média \(\gg\) mediana \(\Rightarrow\) assimetria forte à direita: um sinistro atípico (R$ 95 mil,
 possivelmente um evento raro de grande porte) puxa a média muito acima do "sinistro típico" do mês
-(mediana R\$ 14 mil).
+(mediana R$ 14 mil).
 
-**Erro comum a evitar**: reportar só a média ("prêmio médio pago: R\$ 25,57 mil") sem checar a
+**Erro comum a evitar**: reportar só a média ("prêmio médio pago: R$ 25,57 mil") sem checar a
 mediana, dá uma falsa impressão de que sinistros "grandes" são o padrão, não a exceção.
 
 ---

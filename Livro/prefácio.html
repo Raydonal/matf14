@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path=""><a href="#prefácio"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path=""><a href="#para-quem-é-este-livro"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#por-que-as-discussões-importam-tanto-quanto-as-contas"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#como-o-material-está-organizado"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#um-fio-condutor-três-lentes-sobre-os-mesmos-dados"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#convenções-tipográficas"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#bibliografia"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#agradecimentos"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Estatística Econômica I</h1>
+<h2 class="subtitle"><em>Notas de curso: MATF14</em></h2>
+<p class="author"><em>Raydonal Ospina</em></p>
+<p class="date"><em>31 de August de 2026</em></p>
+</div>
+<div id="prefácio" class="section level1 unnumbered hasAnchor">
+<h1>Prefácio<a href="#prefácio" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Todo dia você já decide sob incerteza, mesmo sem chamar isso de Estatística:</p>
+<blockquote>
+<p>Vale a pena trocar o investimento em poupança por um fundo multimercado, sabendo que o retorno
+pode ser maior, mas também pode ser negativo em algum mês?</p>
+</blockquote>
+<blockquote>
+<p>Uma pesquisa de opinião mostra o candidato A com 52% e o candidato B com 48%, com margem de erro
+de 3 pontos, a eleição já está decidida?</p>
+</blockquote>
+<blockquote>
+<p>O IBGE divulga que a inflação do mês veio “dentro da meta”, dentro da meta de quem, medida em
+que amostra, com que margem de erro?</p>
+</blockquote>
+<blockquote>
+<p>Um banco te oferece crédito pré-aprovado porque seu escore está “acima da média”, acima de que
+distribuição, exatamente, esse escore está sendo comparado?</p>
+</blockquote>
+<blockquote>
+<p>Uma seguradora de automóveis cobra um prêmio mais alto para condutores jovens, essa diferença
+reflete um risco real, mensurado como, ou é só um estereótipo com aparência de número?</p>
+</blockquote>
+<p>Nenhuma dessas perguntas se responde bem sem o vocabulário formal que este livro constrói: dado,
+variável, distribuição, probabilidade condicional, valor esperado. <strong>MATF14, Estatística
+Econômica I</strong> é a disciplina do Departamento de Estatística da Universidade Federal da Bahia (UFBA)
+que constrói esse vocabulário para quem vai lidar com essas perguntas profissionalmente, economistas
+e estatísticos. Este livro acompanha os slides de aula (<code>Aulas2026/</code>) e as listas de exercícios
+(<code>Listas2026/</code>), formando um material único de apoio.</p>
+<div id="para-quem-é-este-livro" class="section level2 unnumbered hasAnchor">
+<h2>Para quem é este livro<a href="#para-quem-é-este-livro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para estudantes de Economia e de Estatística que estão tendo o primeiro contato sério com dados,
+não como um exercício de sala de aula, mas como a matéria-prima de decisões reais: um banco central
+decidindo a taxa de juros, um fundo de pensão calibrando risco, uma prefeitura decidindo onde
+investir com base em indicadores sociais. A Economia, como disciplina, é feita quase inteiramente de
+inferências a partir de dados incompletos e ruidosos, séries curtas, amostras enviesadas, choques
+que nunca se repetem exatamente. A Estatística é o único ferramental que formaliza <em>o que dá e o que
+não dá</em> para concluir a partir desse tipo de evidência. Cada conceito formal deste livro, de uma
+tabela de frequências ao Teorema de Bayes, de uma variância amostral à distribuição Normal, é
+imediatamente testado contra um problema real da área: preços, renda, câmbio, desemprego, mercado
+financeiro, pesquisas de opinião, política pública.</p>
+<p><strong>Avaliação da disciplina:</strong> três provas (P1, P2 e P3), com nota final <span class="math inline">\(NF=(P_1+P_2+P_3)/3\)</span>. P1
+cobre a Unidade 1 (Estatística Descritiva); P2 cobre as Unidades 2 e 3 (Probabilidade e Variáveis
+Aleatórias Discretas); P3 cobre a Unidade 4 (Variáveis Aleatórias Contínuas). As listas de
+exercícios <strong>não valem nota</strong>, mas são o principal instrumento de preparação, cada lista de
+<code>Listas2026/</code> traz gabarito completo para autoavaliação. Não há projetos nesta disciplina: o
+objetivo é dominar os conceitos com profundidade suficiente para resolvê-los sob prova, sem
+consulta, e para reconhecê-los quando reaparecerem, e vão reaparecer, em Econometria,
+Microeconomia e qualquer leitura crítica de dados que você fizer depois de formado.</p>
+</div>
+<div id="por-que-as-discussões-importam-tanto-quanto-as-contas" class="section level2 unnumbered hasAnchor">
+<h2>Por que as discussões importam tanto quanto as contas<a href="#por-que-as-discussões-importam-tanto-quanto-as-contas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um erro comum de quem estuda Estatística pela primeira vez é tratar cada capítulo como uma coleção
+de fórmulas a decorar e aplicar. As fórmulas deste curso são, de fato, poucas e simples, a
+dificuldade real está em <strong>saber qual pergunta cada fórmula responde, e qual não responde</strong>. Uma
+correlação de 0,86 entre gasto em propaganda e vendas prova que a propaganda causa as vendas? Um
+teste de fraude com 95% de acerto significa que 95% dos alarmes são fraudes de verdade? Uma média
+salarial de R$ 6.000 descreve bem o “trabalhador típico” de uma categoria profissional?</p>
+<p>As respostas a essas perguntas não vêm de uma fórmula a mais, vêm de entender os <strong>limites</strong> de
+cada ferramenta, e isso só se constrói discutindo casos concretos, de preferência antes de ver a
+resposta pronta. Por isso, cada seção deste livro e cada bloco dos slides de aula trazem blocos de
+discussão <strong>substanciais</strong>, não uma pergunta decorativa ao final, mas várias perguntas
+interligadas, que você deveria tentar responder por escrito, sozinho ou em grupo, antes de seguir
+adiante. Nas provas, a diferença entre nota alta e nota mediana quase sempre está aqui: não em saber
+a fórmula, mas em saber quando ela se aplica e o que ela deixa de fora.</p>
+</div>
+<div id="como-o-material-está-organizado" class="section level2 unnumbered hasAnchor">
+<h2>Como o material está organizado<a href="#como-o-material-está-organizado" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O livro segue <strong>exatamente</strong> a numeração da ementa oficial da disciplina, para que o aluno consiga
+localizar qualquer tópico cobrado em prova diretamente pelo número da seção:</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capítulo</th>
+<th>Tópico</th>
+<th>Seções da ementa</th>
+<th>Aulas correspondentes</th>
+<th>Prova</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Estatística Descritiva e Exploratória de Dados</td>
+<td>1.1 – 1.6</td>
+<td>Aulas 01–08</td>
+<td>P1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Introdução à Teoria das Probabilidades</td>
+<td>2.1 – 2.7</td>
+<td>Aulas 09–16</td>
+<td>P2</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Variáveis Aleatórias Discretas</td>
+<td>3.1 – 3.4</td>
+<td>Aulas 17–23</td>
+<td>P2</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Variáveis Aleatórias Contínuas</td>
+<td>4.1 – 4.4</td>
+<td>Aulas 24–30</td>
+<td>P3</td>
+</tr>
+<tr class="odd">
+<td>Apêndice A</td>
+<td>Revisão de Cálculo (derivadas e integrais)</td>
+<td>-</td>
+<td>apoio ao Cap. 4</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Apêndice B</td>
+<td>Fórmulário e tabelas de referência</td>
+<td>-</td>
+<td>consulta para as provas</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Os slides de aula (<code>Aulas2026/</code>) seguem o cronograma <strong>dia a dia</strong> do semestre (uma aula, um
+deck); as listas (<code>Listas2026/</code>) agrupam esses dias em blocos temáticos maiores, com questões
+contextualizadas e gabarito à parte. O livro é a versão de referência mais completa: cada capítulo
+cobre com mais vagar, e com mais discussão, o que os slides do bloco correspondente apresentam de
+forma resumida em sala.</p>
+</div>
+<div id="um-fio-condutor-três-lentes-sobre-os-mesmos-dados" class="section level2 unnumbered hasAnchor">
+<h2>Um fio condutor: três lentes sobre os mesmos dados<a href="#um-fio-condutor-três-lentes-sobre-os-mesmos-dados" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ao longo do livro, os exemplos giram em torno de três domínios que qualquer economista ou
+estatístico vai encontrar na prática:</p>
+<ul>
+<li><strong>Macroeconomia e política econômica</strong>, inflação (IPCA), taxa de câmbio, taxa de desemprego
+(PNAD Contínua), crescimento do PIB. Séries <strong>simuladas</strong>, mas construídas para reproduzir a
+ordem de grandeza e o comportamento real dessas variáveis no Brasil recente, sempre identificadas
+como ilustrativas quando não vierem de fonte primária citada.</li>
+<li><strong>Mercado de trabalho e distribuição de renda</strong>, salários, desigualdade, escolaridade,
+informalidade, representatividade política, incluindo <code>dados_prefeitos.csv</code>, base <strong>real</strong> com
+características sociodemográficas de prefeitos eleitos em todos os municípios brasileiros.</li>
+<li><strong>Empresas e mercado financeiro</strong>, faturamento, porte, setor, retorno de ações, incluindo
+<code>empresas.csv</code>, base <strong>real</strong> de 200 empresas brasileiras (porte, faturamento, setor, região),
+usada como fio condutor do Capítulo 1.</li>
+</ul>
+</div>
+<div id="convenções-tipográficas" class="section level2 unnumbered hasAnchor">
+<h2>Convenções tipográficas<a href="#convenções-tipográficas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="caixa-aplicacao"><strong>Aplicação</strong>, um exemplo completo, com dados reais ou
+simulados e a pergunta econômica/estatística que motiva a técnica em questão.</div>
+<div class="caixa-discussao"><strong>Para discutir</strong>, bloco estendido de perguntas abertas,
+sem resposta única, pensado para debate em sala ou resolução escrita antes de seguir adiante. É,
+deliberadamente, a seção mais longa de cada capítulo.</div>
+<div class="caixa-r"><strong>Uso do R</strong>, código comentado, sempre reprodutível a partir do
+próprio capítulo.</div>
+<div class="caixa-economia"><strong>Leitura econômica</strong>, o que o resultado numérico
+significa fora da estatística: para um formulador de política, um investidor, um gestor.</div>
+<p>Todo o código usa o pacote <code>tidyverse</code> para manipulação de dados e <code>ggplot2</code> para gráficos. Sempre
+que um resultado tiver uma leitura formal (somatório, definição, propriedade), ela aparece antes do
+exemplo numérico, o objetivo é que o aluno saiba <em>de onde</em> o número do R vem, não só copiar o
+comando.</p>
+</div>
+<div id="bibliografia" class="section level2 unnumbered hasAnchor">
+<h2>Bibliografia<a href="#bibliografia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A bibliografia básica segue as referências oficiais do plano de ensino: <span class="citation">Hoffmann (<a href="#ref-hoffmann2006estatistica">2006</a>)</span>,
+<span class="citation">Morettin &amp; Bussab (<a href="#ref-morettinbussab2012">2012</a>)</span>, <span class="citation">Magalhães (<a href="#ref-magalhaes2004probabilidade">2004</a>)</span> e <span class="citation">Ross (<a href="#ref-ross2010probabilidade">2010</a>)</span>. Como complementares:
+<span class="citation">Dantas (<a href="#ref-dantas1997probabilidade">1997</a>)</span>, <span class="citation">Hogg et al. (<a href="#ref-hoggmckeancraig2013">2013</a>)</span> e <span class="citation">Triola (<a href="#ref-triola2007introducao">2007</a>)</span>.</p>
+</div>
+<div id="agradecimentos" class="section level2 unnumbered hasAnchor">
+<h2>Agradecimentos<a href="#agradecimentos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Este material foi elaborado por <strong>Raydonal Ospina</strong>, com a colaboração de <strong>Rodney Vasconcelos
+Fonseca</strong>, docente responsável pela turma de MATF14 no semestre 2026.1, cujo material de aula
+original (slides por unidade, laboratórios em R, listas e provas já aplicadas em sala) serviu de
+referência de conteúdo, cronograma e nível de exigência para a construção deste livro, dos slides
+e das listas de exercícios aqui reunidos.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div class="csl-entry">
+Dantas, C. A. B. (1997). <em>Probabilidade: Um curso introdutório</em>. EDUSP.
+</div>
+<div class="csl-entry">
+Hoffmann, R. (2006). <em>Estatística para economistas</em> (4th ed.). Thomson.
+</div>
+<div class="csl-entry">
+Hogg, R. V., McKean, J. W., &amp; Craig, A. T. (2013). <em>Introduction to mathematical statistics</em> (7th ed.). Pearson.
+</div>
+<div class="csl-entry">
+Magalhães, M. N. (2004). <em>Probabilidade e variáveis aleatórias</em> (3rd ed.). Editora da Universidade de São Paulo (EDUSP).
+</div>
+<div class="csl-entry">
+Morettin, P. A., &amp; Bussab, W. de O. (2012). <em>Estatística básica</em> (6th ed.). Saraiva.
+</div>
+<div class="csl-entry">
+Ross, S. (2010). <em>Probabilidade: Um curso moderno com aplicações</em> (8th ed.). Bookman.
+</div>
+<div class="csl-entry">
+Triola, M. F. (2007). <em>Introdução à estatística</em> (10th ed., p. 659). LTC.
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-dantas1997probabilidade" class="csl-entry">
+Dantas, C. A. B. (1997). <em>Probabilidade: Um curso introdutório</em>. EDUSP.
+</div>
+<div id="ref-hoffmann2006estatistica" class="csl-entry">
+Hoffmann, R. (2006). <em>Estatística para economistas</em> (4th ed.). Thomson.
+</div>
+<div id="ref-hoggmckeancraig2013" class="csl-entry">
+Hogg, R. V., McKean, J. W., &amp; Craig, A. T. (2013). <em>Introduction to mathematical statistics</em> (7th ed.). Pearson.
+</div>
+<div id="ref-magalhaes2004probabilidade" class="csl-entry">
+Magalhães, M. N. (2004). <em>Probabilidade e variáveis aleatórias</em> (3rd ed.). Editora da Universidade de São Paulo (EDUSP).
+</div>
+<div id="ref-morettinbussab2012" class="csl-entry">
+Morettin, P. A., &amp; Bussab, W. de O. (2012). <em>Estatística básica</em> (6th ed.). Saraiva.
+</div>
+<div id="ref-ross2010probabilidade" class="csl-entry">
+Ross, S. (2010). <em>Probabilidade: Um curso moderno com aplicações</em> (8th ed.). Bookman.
+</div>
+<div id="ref-triola2007introducao" class="csl-entry">
+Triola, M. F. (2007). <em>Introdução à estatística</em> (10th ed., p. 659). LTC.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": false,
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

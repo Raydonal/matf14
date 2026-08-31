@@ -602,7 +602,7 @@ condicional.</p>
 <span id="cb5-3"><a href="tabelas-graficos.html#cb5-3" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb5-4"><a href="tabelas-graficos.html#cb5-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Número de empresas&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Empresas por setor de atividade&quot;</span>) <span class="sc">+</span></span>
 <span id="cb5-5"><a href="tabelas-graficos.html#cb5-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><img src="01-descritiva_files/figure-html/grafico-barras-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/grafico-barras-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>Gráficos de barras (ou de setores/pizza, para poucas categorias e ênfase em “fatia do total”) são
 adequados para variáveis qualitativas e discretas com poucos valores. Um erro comum em relatórios
 econômicos é usar gráfico de <strong>linha</strong> para conectar categorias sem ordem numérica (por exemplo,
@@ -626,7 +626,7 @@ Figure 1.3: Consumo médio de refrigerante por domicílio/ano, segundo pesquisa 
 <span id="cb6-7"><a href="tabelas-graficos.html#cb6-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Litros por domicílio/ano&quot;</span>,</span>
 <span id="cb6-8"><a href="tabelas-graficos.html#cb6-8" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Consumo médio de refrigerante&quot;</span>) <span class="sc">+</span></span>
 <span id="cb6-9"><a href="tabelas-graficos.html#cb6-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><img src="01-descritiva_files/figure-html/grafico-refri-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/grafico-refri-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>País é uma variável qualitativa nominal, e “litros por domicílio/ano” é quantitativa contínua, o
 gráfico de barras compara a variável contínua <strong>entre</strong> categorias, o mesmo papel que cumpriu o
 gráfico de empresas por setor. Note que a notícia já converteu quatro números brutos em um gráfico
@@ -642,7 +642,7 @@ frequência (ou densidade) em cada uma:</p>
 <span id="cb7-3"><a href="tabelas-graficos.html#cb7-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Faturamento em 1999 (R$ mil)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Número de empresas&quot;</span>,</span>
 <span id="cb7-4"><a href="tabelas-graficos.html#cb7-4" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribuição do faturamento das empresas&quot;</span>) <span class="sc">+</span></span>
 <span id="cb7-5"><a href="tabelas-graficos.html#cb7-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><img src="01-descritiva_files/figure-html/histograma-faturamento-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/histograma-faturamento-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>O número de classes altera a leitura do histograma, poucas classes escondem estrutura, muitas
 introduzem ruído. Uma regra prática (não a única) é a <strong>regra de Sturges</strong>: número de classes
 <span class="math inline">\(k \approx 1 + \log_2(n)\)</span>.</p>
@@ -653,7 +653,7 @@ segundo o tipo de ração recebida.</div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="tabelas-graficos.html#cb8-1" tabindex="-1"></a><span class="fu">data</span>(chickwts)</span>
 <span id="cb8-2"><a href="tabelas-graficos.html#cb8-2" tabindex="-1"></a><span class="fu">hist</span>(chickwts<span class="sc">$</span>weight, <span class="at">main =</span> <span class="st">&quot;Peso de pintinhos após 6 semanas&quot;</span>,</span>
 <span id="cb8-3"><a href="tabelas-graficos.html#cb8-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Peso (gramas)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Frequência&quot;</span>, <span class="at">col =</span> <span class="st">&quot;#0d3b54&quot;</span>)</span></code></pre></div>
-<p><img src="01-descritiva_files/figure-html/chickwts-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/chickwts-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p><code>?chickwts</code> no console do R mostra a documentação completa, uma boa base para checar rapidamente
 se o número de classes escolhido “esconde” ou “inventa” estrutura, antes de aplicar a mesma
 checagem em dados econômicos reais, como o faturamento das empresas.</p>
@@ -676,7 +676,7 @@ como exercício adicional de leitura de série temporal.</p>
 <span id="cb9-11"><a href="tabelas-graficos.html#cb9-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Variação mensal do IPCA (%)&quot;</span>,</span>
 <span id="cb9-12"><a href="tabelas-graficos.html#cb9-12" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;IPCA mensal, série ilustrativa (2024–2025, simulada)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb9-13"><a href="tabelas-graficos.html#cb9-13" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><img src="01-descritiva_files/figure-html/ipca-simulado-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/ipca-simulado-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <div class="caixa-r"><strong>Uso do R</strong>, <code>geom_histogram()</code> escolhe o número de
 classes automaticamente (30 por padrão); sempre ajuste com o argumento <code>bins</code> e compare
 mais de uma escolha antes de tirar conclusões sobre a forma da distribuição. Para séries no tempo,

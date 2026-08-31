@@ -304,14 +304,14 @@ div.csl-indent {
 <h2><span class="header-section-number">B.3</span> Integrais: o essencial<a href="integrais-o-essencial.html#integrais-o-essencial" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A <strong>integral definida</strong> <span class="math inline">\(\int_a^b f(x)\,dx\)</span> é, geometricamente, a área <strong>líquida</strong> (positiva
 acima do eixo <span class="math inline">\(x\)</span>, negativa abaixo) entre o gráfico de <span class="math inline">\(f\)</span> e o eixo <span class="math inline">\(x\)</span>, no intervalo <span class="math inline">\([a,b]\)</span>.</p>
-<p><img src="06-revisao-calculo_files/figure-html/area-exemplo-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/area-exemplo-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>A área sombreada é exatamente <span class="math inline">\(\int_a^b f(x)\,dx\)</span>, o mesmo desenho, refeito aqui com a mesma
 paleta usada nas aulas em sala (área sob a curva entre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>, com a região <span class="math inline">\(A\)</span> identificada).</p>
 <div id="soma-de-riemann-de-onde-vem-a-integral" class="section level3 hasAnchor" number="6.3.1">
 <h3><span class="header-section-number">B.3.1</span> Soma de Riemann: de onde vem a integral<a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A integral é definida como o limite de uma <strong>soma de retângulos</strong> cada vez mais finos aproximando
 a área sob a curva:</p>
-<p><img src="06-revisao-calculo_files/figure-html/riemann-1.png" alt="" width="499.2" style="display: block; margin: auto;" /></p>
+<p><img src="livro-matf14_files/figure-html/riemann-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
 <p>Cada retângulo tem base <span class="math inline">\(\Delta x = x_{i}-x_{i-1}\)</span> e altura <span class="math inline">\(f(x_{i-1})\)</span>, a soma das áreas dos
 retângulos aproxima <span class="math inline">\(\int_a^b f(x)\,dx\)</span>, e a aproximação melhora à medida que <span class="math inline">\(n\)</span> (o número de
 retângulos) cresce e <span class="math inline">\(\Delta x\)</span> encolhe.</p>
@@ -357,7 +357,7 @@ cada vez mais estreitas se aproximando de uma curva de densidade suave (retomado
 <pre><code>## [1] 2.666667</code></pre>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="integrais-o-essencial.html#cb99-1" tabindex="-1"></a><span class="co"># conferindo numericamente</span></span>
 <span id="cb99-2"><a href="integrais-o-essencial.html#cb99-2" tabindex="-1"></a><span class="fu">integrate</span>(<span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span>, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## 2.666667 with absolute error &lt; 3e-14</code></pre>
+<pre><code>## 2.666667 with absolute error &lt; 0.00000000000003</code></pre>
 <div class="caixa-r"><strong>Uso do R</strong>, <code>integrate()</code> calcula integrais
 definidas numericamente, sem precisar encontrar a primitiva à mão, útil para conferir contas do
 Capítulo 4, mas o exame ainda exige saber calcular as primitivas simples da tabela acima
