@@ -8,8 +8,9 @@ rmd_files: [
   "02-probabilidade.Rmd",
   "03-va-discretas.Rmd",
   "04-va-continuas.Rmd",
-  "05-revisao-calculo.Rmd",
-  "06-formulario.Rmd"
+  "05-ferramentas-rpython.Rmd",
+  "06-revisao-calculo.Rmd",
+  "07-formulario.Rmd"
 ]
 language:
   ui:

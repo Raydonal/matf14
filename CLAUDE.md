@@ -28,10 +28,13 @@ source files (R Markdown, LaTeX) via rendering commands.
 bookdown::render_book("Livro/index.Rmd")
 ```
 Output config lives in `Livro/_bookdown.yml` (chapter order, `output_dir: "."`) and
-`Livro/_output.yml` (gitbook options). Chapters are numbered `01-`..`06-` but the *rendered*
-numbering is Capítulo 1–4 plus two unnumbered appendices (`05-revisao-calculo.Rmd` starts an
-`(APPENDIX)` block, `06-formulario.Rmd` is the reference formulary) — the file-number prefix and
-the in-book chapter number intentionally diverge.
+`Livro/_output.yml` (gitbook options). Chapters are numbered `01-`..`07-` but the *rendered*
+numbering is Capítulo 1–4 plus three unnumbered (A/B/C) appendices (`05-ferramentas-rpython.Rmd`
+starts the `(APPENDIX)` block — R/Python tooling reference, mirrors `Aulas2026/MATF14-02.Rmd`;
+`06-revisao-calculo.Rmd` and `07-formulario.Rmd` follow) — the file-number prefix and the in-book
+chapter/appendix number intentionally diverge. Only `05-ferramentas-rpython.Rmd` should contain the
+`# (APPENDIX) Apêndices {-}` marker line — bookdown errors ("more than one appendix title") if it
+appears in more than one file.
 
 **One slide deck** (from repo root, in R):
 ```r

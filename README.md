@@ -15,7 +15,8 @@ projetos; listas de exercícios não valem nota.
 - `Apoio/`: material original do professor (slides `.odp` por unidade, laboratórios em R,
   listas e provas já aplicadas no semestre 2026.1). Não é alterado por este projeto.
 - `Livro/`: livro-texto em [bookdown](https://bookdown.org/) (gitbook), com a mesma numeração da
-  ementa oficial (Capítulos 1-4) mais dois apêndices (revisão de cálculo e fórmulário). Renderizar
+  ementa oficial (Capítulos 1-4) mais três apêndices (ferramentas de trabalho em R e Python,
+  revisão de cálculo, fórmulário). Renderizar
   com `bookdown::render_book("Livro/index.Rmd")`.
 - `Aulas2026/`: slides de aula em [xaringan](https://slides.yihui.org/xaringan/), um deck por
   encontro do cronograma oficial. As aulas 01 e 02 do cronograma original (apresentação da

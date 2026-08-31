@@ -1,11 +1,6 @@
-# (APPENDIX) Apêndices {-}
-
 # Revisão de Cálculo {#revisao-de-calculo}
 
-```{r setup-apA, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center")
-suppressPackageStartupMessages(library(tidyverse))
-```
+
 
 O Capítulo \@ref(variaveis-aleatorias-continuas) generaliza esperança, variância e função de
 distribuição acumulada para variáveis aleatórias contínuas, e isso exige trocar somatórios
@@ -24,14 +19,17 @@ para "somar uma quantidade que varia continuamente ao longo de um intervalo" é 
 A **derivada** de $f$ em $x$, $f'(x)$, mede a taxa de variação instantânea de $f$ naquele ponto,
 a inclinação da reta tangente ao gráfico de $f$ em $x$.
 
-```{r tabela-derivadas, echo=FALSE}
-tibble(
-  Função = c("$f(x)=c$ (constante)", "$f(x)=x^n$", "$f(x)=e^x$", "$f(x)=\\ln(x)$",
-             "$f(x)=c\\cdot g(x)$", "$f(x)=g(x)+h(x)$"),
-  Derivada = c("$f'(x)=0$", "$f'(x)=nx^{n-1}$", "$f'(x)=e^x$", "$f'(x)=1/x$",
-               "$f'(x)=c\\cdot g'(x)$", "$f'(x)=g'(x)+h'(x)$")
-) |> knitr::kable(caption = "Regras de derivação usadas neste curso")
-```
+
+Table: (\#tab:tabela-derivadas)Regras de derivação usadas neste curso
+
+|Função               |Derivada             |
+|:--------------------|:--------------------|
+|$f(x)=c$ (constante) |$f'(x)=0$            |
+|$f(x)=x^n$           |$f'(x)=nx^{n-1}$     |
+|$f(x)=e^x$           |$f'(x)=e^x$          |
+|$f(x)=\ln(x)$        |$f'(x)=1/x$          |
+|$f(x)=c\cdot g(x)$   |$f'(x)=c\cdot g'(x)$ |
+|$f(x)=g(x)+h(x)$     |$f'(x)=g'(x)+h'(x)$  |
 
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, em Economia, a derivada é a
@@ -59,25 +57,7 @@ $F$ crescer rápido versus devagar em torno de um ponto $x$.</p>
 A **integral definida** $\int_a^b f(x)\,dx$ é, geometricamente, a área **líquida** (positiva
 acima do eixo $x$, negativa abaixo) entre o gráfico de $f$ e o eixo $x$, no intervalo $[a,b]$.
 
-```{r area-exemplo, echo=FALSE, fig.height=4.2, fig.width=5}
-f <- function(x) 0.15*(x-1)^3 + 2
-a <- 1; b <- 5
-x <- seq(a, b, length = 500)
-y <- f(x)
-ylim <- c(0, max(y) + 1)
-
-plot(0, 0, type = "n", xlim = c(-0.5, 6), ylim = ylim, xlab = "", ylab = "", axes = FALSE)
-arrows(-0.3, 0, 5.8, 0, length = 0.08)
-arrows(0, -0.2, 0, ylim[2], length = 0.08)
-polygon(c(a, x, b), c(0, y, 0), col = "#d8bfd8", border = NA)
-lines(x, y, col = "purple4", lwd = 2)
-segments(a, 0, a, f(a), lwd = 1.5, col = "gray30")
-segments(b, 0, b, f(b), lwd = 1.5, col = "gray30")
-text(a, -0.2, "a"); text(b, -0.2, "b")
-text(b + 0.2, f(b), "f(x)")
-text(5.9, -0.1, "x"); text(-0.1, ylim[2], "y")
-text((a+b)/2, 1.8, "A")
-```
+<img src="06-revisao-calculo_files/figure-html/area-exemplo-1.png" alt="" width="480" style="display: block; margin: auto;" />
 
 A área sombreada é exatamente $\int_a^b f(x)\,dx$, o mesmo desenho, refeito aqui com a mesma
 paleta usada nas aulas em sala (área sob a curva entre $a$ e $b$, com a região $A$ identificada).
@@ -87,30 +67,7 @@ paleta usada nas aulas em sala (área sob a curva entre $a$ e $b$, com a região
 A integral é definida como o limite de uma **soma de retângulos** cada vez mais finos aproximando
 a área sob a curva:
 
-```{r riemann, echo=FALSE, fig.height=4.2, fig.width=5.2}
-f <- function(x) 0.06*x^2 + 1.5
-a <- 1; b <- 10; n <- 12
-x <- seq(a, b, length.out = n + 1)
-h <- f(x[-(n+1)])
-xc <- seq(a, b, length = 500)
-yc <- f(xc)
-
-plot(0, 0, type = "n", xlim = c(-0.8, 11), ylim = c(-0.5, max(yc) + 2),
-     xlab = "", ylab = "", axes = FALSE)
-arrows(0, 0, 10.8, 0, length = 0.08)
-arrows(0, 0, 0, max(yc) + 1.7, length = 0.08)
-lines(xc, yc, col = "purple4", lwd = 2)
-for (i in 1:n) {
-  rect(x[i], 0, x[i+1], h[i], border = "gray30", col = rgb(0.85, 0.75, 0.85, 0.35))
-  segments(x[i+1], 0, x[i+1], h[i], lty = 2, col = "gray50")
-  segments(x[i], h[i], x[i+1], h[i], lwd = 1.2)
-}
-text(a, -0.25, expression(x[0] == a), cex = 0.9)
-text(x[2], -0.25, expression(x[1]), cex = 0.9)
-text(b + 0.1, -0.25, expression(x[n] == b), cex = 0.9)
-text(10.9, -0.05, "x"); text(-0.1, max(yc) + 1.8, "y")
-text(9.2, f(9.2) + 0.6, "f(x)")
-```
+<img src="06-revisao-calculo_files/figure-html/riemann-1.png" alt="" width="499.2" style="display: block; margin: auto;" />
 
 Cada retângulo tem base $\Delta x = x_{i}-x_{i-1}$ e altura $f(x_{i-1})$, a soma das áreas dos
 retângulos aproxima $\int_a^b f(x)\,dx$, e a aproximação melhora à medida que $n$ (o número de
@@ -132,20 +89,33 @@ $$
 \int_a^b f(x)\,dx = F(b) - F(a).
 $$
 
-```{r tabela-integrais, echo=FALSE}
-tibble(
-  Função = c("$f(x)=c$", "$f(x)=x^n$ ($n\\ne -1$)", "$f(x)=e^{\\lambda x}$"),
-  Primitiva = c("$F(x)=cx$", "$F(x)=\\dfrac{x^{n+1}}{n+1}$", "$F(x)=\\dfrac{1}{\\lambda}e^{\\lambda x}$")
-) |> knitr::kable(caption = "Primitivas usadas nos modelos do Capítulo 4")
-```
 
-```{r integral-exemplo}
+Table: (\#tab:tabela-integrais)Primitivas usadas nos modelos do Capítulo 4
+
+|Função                 |Primitiva                              |
+|:----------------------|:--------------------------------------|
+|$f(x)=c$               |$F(x)=cx$                              |
+|$f(x)=x^n$ ($n\ne -1$) |$F(x)=\dfrac{x^{n+1}}{n+1}$            |
+|$f(x)=e^{\lambda x}$   |$F(x)=\dfrac{1}{\lambda}e^{\lambda x}$ |
+
+
+``` r
 # integral de f(x) = x^2 entre 0 e 2, pelo Teorema Fundamental
 F <- function(x) x^3 / 3
 F(2) - F(0)
+```
 
+```
+## [1] 2.666667
+```
+
+``` r
 # conferindo numericamente
 integrate(function(x) x^2, lower = 0, upper = 2)
+```
+
+```
+## 2.666667 with absolute error < 3e-14
 ```
 
 ```{=html}

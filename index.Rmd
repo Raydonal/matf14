@@ -19,9 +19,9 @@ suppressPackageStartupMessages({
 <strong>Turma 2026.2.</strong> O material do curso está organizado em três frentes:
 
 * 📘 **[Livro-texto](Livro/index.html)** — quatro capítulos (a mesma numeração da ementa oficial:
-  descritiva, probabilidade, VA discretas, VA contínuas), mais dois apêndices (revisão de cálculo e
-  fórmulário), com exemplos contextualizados em **economia** (inflação, mercado de trabalho,
-  finanças, eleições).
+  descritiva, probabilidade, VA discretas, VA contínuas), mais três apêndices ([ferramentas de
+  trabalho em R e Python](Livro/ferramentas-rpython.html), revisão de cálculo, fórmulário), com
+  exemplos contextualizados em **economia** (inflação, mercado de trabalho, finanças, eleições).
 * 🎓 **Slides de aula (`Aulas2026/`)** — um deck por encontro do cronograma abaixo, estruturado em
   Provocação → Teoria → Aplicação → Discussão → Uso do R.
 * 📝 **Listas de exercícios (`Listas2026/`)** — organizadas por bloco temático, incluindo três
@@ -34,9 +34,11 @@ Tudo listado no [cronograma](#programa-da-disciplina) abaixo.
 <div style="background:#eef3fb;border-left:5px solid #3b5bdb;border-radius:6px;padding:0.9em 1.2em;margin-bottom:1.2em;">
 💻 <strong>Antes da Aula 07 (primeiro laboratório): <a href="Aulas2026/MATF14-02.html">instale R e Python</a></strong>.
 Material extra, sem data fixa no cronograma, com instalação passo a passo (R/RStudio e
-Python/Anaconda), leitura de dados e funções nas duas linguagens lado a lado, e uma lista de
-cursos e livros gratuitos para quem quiser ir além do curso (R for Data Science, swirl, Kaggle
-Learn, Automate the Boring Stuff, entre outros).
+Python/Anaconda), leitura de dados, funções, loops, números aleatórios e gráficos básicos nas duas
+linguagens lado a lado, e uma lista de cursos e livros gratuitos para quem quiser ir além do curso
+(R for Data Science, swirl, Kaggle Learn, Automate the Boring Stuff, entre outros). O mesmo
+conteúdo, em formato de referência de consulta, também está no
+<a href="Livro/ferramentas-rpython.html">Apêndice A do livro-texto</a>.
 </div>
 
 <h4>
