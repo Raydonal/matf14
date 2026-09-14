@@ -1,155 +1,116 @@
-# Retomada — MATF14 2026.2 (revisão de slides, livro e página do curso)
+# Retomada — MATF14 2026.2 (revisão profunda: exemplos do Rodney + renderização)
 
-**Última atualização:** 2026-08-31, ~20:10 (horário local). Tudo commitado e empurrado para o
-`main` (`git@github.com:Raydonal/matf14.git`, HEAD = `8350d52`). Página do curso já está no ar em
-<https://raydonal.github.io/matf14/> (o professor ativou o GitHub Pages: Settings → Pages →
-Deploy from branch → `main` → `/`). Este arquivo existe para retomar o trabalho sem precisar
-reconstruir o contexto do zero.
+**Última atualização:** 2026-09-13, ~21:45 (horário local). Tudo commitado e empurrado para o
+`main` (`git@github.com:Raydonal/matf14.git`, HEAD = `89875dc`). Página do curso no ar em
+<https://raydonal.github.io/matf14/>. Este arquivo existe para retomar o trabalho sem precisar
+reconstruir o contexto do zero — para os detalhes técnicos de cada bug de renderização, o lugar
+certo é `CLAUDE.md` (seções "Rendering pitfalls..."), que já documenta tudo isso para qualquer
+sessão futura ler antes de editar. Este arquivo é mais a narrativa: o que motivou a sessão, o que
+foi feito, o que ainda falta.
 
-## Backup
+## Por que esta sessão aconteceu
 
-Snapshot completo do projeto (fora do git, seguro para qualquer experimento) em:
-`/home/raydonal/Github/Cursos/matf14-backups/matf14_backup_20260831-2010.tar.gz` (35 MB, 533
-arquivos, integridade de gzip verificada). Gere um novo antes de qualquer mudança grande futura:
+O professor revisou o material (já tinha passado por uma rodada de correção de renderização em
+2026-08-31, ver histórico do git) e ficou insatisfeito com **profundidade de conteúdo**, não só
+renderização: livro e slides subaproveitavam o material original de aula do Prof. Rodney Fonseca
+(`Apoio/aulas/unidade_0{1-4}/*.odp`, ~230 slides só na Unidade 1, mais 3 R labs e uma folha de
+fórmulas — tudo lido/convertido nesta sessão), tinham exemplos pouco desenvolvidos (fórmula →
+direto para o resultado do R, sem conta na mão) para alunos com base matemática fraca, e exemplos
+de R rasos. Pediu revisão profunda com múltiplos agentes para validar tudo: livro, slides, página
+do curso, listas de exercícios.
 
-```bash
-TS=$(date +%Y%m%d-%H%M)
-cd /home/raydonal/Github/Cursos
-tar --exclude='matf14/.git' -czf "matf14-backups/matf14_backup_${TS}.tar.gz" matf14
-gzip -t "matf14-backups/matf14_backup_${TS}.tar.gz" && echo OK
-```
+No meio do processo, o professor também levantou dois pontos novos: **ritmo de aula** (cada
+encontro tem ~100 min, "duas sessões de 50 min" — alguns decks não tinham material suficiente) e
+**não há laboratório de informática presencial neste semestre** (os 3 decks `[Laboratório]`
+precisavam de um formato virtual/reproduzível em casa).
 
-## Estado atual (git — tudo limpo e commitado)
+## Estado atual (git — tudo limpo e commitado e empurrado)
 
-`git status` sem pendências. Working tree = remote = `main` (`8350d52`). Não há branches
-divergentes nem stash pendente.
+`git status` sem pendências. Working tree = remote = `main` (`89875dc`). Sem branches divergentes
+nem stash pendente.
 
-## Estrutura atual — o que existe hoje
+## O que foi feito nesta sessão
 
-1. **`Livro/`** — bookdown, 4 capítulos (mesma numeração da ementa: descritiva, probabilidade, VA
-   discretas, VA contínuas) + **3 apêndices**: A) `05-ferramentas-rpython.Rmd` (novo — instalação,
-   calculadora, dados, funções, loops, aleatórios, gráficos em R e Python lado a lado), B)
-   `06-revisao-calculo.Rmd`, C) `07-formulario.Rmd`. `_bookdown.yml` tem `new_session: no` (mudado
-   de `yes` — ver bug #1 abaixo).
-2. **`Aulas2026/`** — 31 decks xaringan: `MATF14-01` a `30` (pulando 02 e 16 no cronograma oficial)
-   mais `MATF14-02` como **material extra sem data** (mesmo conteúdo do Apêndice A, em slides).
-   Todos revisados nesta sessão quanto a clareza (provocações com gráfico/dado real em vez de só
-   texto) e quanto aos bugs #2/#3 abaixo.
-3. **`Listas2026/`** — 14 listas em LaTeX, sem gabarito neste repositório (nem nunca deve ter,
-   `.gitignore` bloqueia `Gabarito*`).
-4. **`index.Rmd`/`index.html`** — página do curso na raiz, no padrão do curso irmão
-   [matd48](https://github.com/Raydonal/matd48): plano de ensino, critério de aprovação
-   (NF = (P1+P2+P3)/3), cronograma completo linkando aula/capítulo do livro/lista.
-5. **`CLAUDE.md`** — atualizado com a estrutura de apêndices e o aviso sobre `new_session`/marcador
-   `(APPENDIX)` único (bug #1).
+1. **Conteúdo**: as 4 unidades (livro + decks correspondentes) foram revisadas em paralelo,
+   incorporando exemplos do material do Rodney — contas na mão antes de cada chamada de R, o
+   padrão "simulado vs. teórico" (`rbinom`/`rpois` comparados a `dbinom`/`dpois`) que faltava no
+   Cap. 3/decks de VA discreta, seções novas no Cap. 1 (razão/taxa de variação, ligada à
+   inflação/IPCA; algoritmo geral de percentil; tabela de contingência de Yule 1912), correção de
+   um erro factual (`empresas.csv` tem 106 linhas, não 200 como o texto antigo dizia).
+2. **Sem laboratório presencial**: `MATF14-07`, `13`, `22` ganharam seção de setup no **Google
+   Colab** (screenshots copiados de `Apoio/aulas/lab0{1,2}_*`, renomeados `colab-07-NN-*.png` em
+   `Aulas2026/`), espelhando como o próprio Rodney já resolvia isso.
+3. **Ritmo de aula**: decks identificados como curtos demais para ~100 min (`06`, `09`, `26`,
+   `29`) foram expandidos com mais exemplos/discussão do material do Rodney. `MATF14-30` (revisão
+   geral pré-Prova 3) ficou curto de propósito, não foi mexido.
+4. **Renderização — verificação visual real, não só render sem erro** (lição que já vinha da
+   sessão anterior, reforçada nesta: `rmarkdown::render()`/`bookdown::render_book()` sempre saem
+   com exit 0, mesmo quebrados). Usado `chromote` com uma receita corrigida nesta sessão (ver
+   `CLAUDE.md` — a receita antiga, que esperava `Page$loadEventFired()`, trava para sempre nestas
+   páginas; a nova navega uma vez e dirige os slides via `slideshow.gotoSlide(i)`). Bugs achados e
+   corrigidos, todos agora documentados em `CLAUDE.md` para não precisarem ser redescobertos:
+   - Matemática dentro das caixas `{=html}` do livro (`caixa-aplicacao`, `caixa-economia`, ...)
+     nunca era processada pelo pandoc — `$...$`, `\@ref(...)` e `@citação` todos ficavam como
+     texto literal, e as citações **sumiam até da bibliografia**. Bug pré-existente, não
+     introduzido nesta sessão, afetava o livro inteiro.
+   - Matemática inline `\(...\)` com barra simples nos slides é engolida pelo parser do
+     `remark.js` antes do MathJax rodar — precisa de `\\(...\\)` (barra dupla). Achado depois de
+     descobrir que **o `MATF14-05` inteiro** (29 fórmulas) estava assim, mais 2 casos no `04` e 6
+     no `03`.
+   - "Bloco 4: Uso do R" sem quebra de slide (`---`) depois do divisor de fundo escuro deixava o
+     código ilegível (12 decks).
+   - Duas páginas HTML órfãs do livro (sobras de renomeações antigas) removidas; rótulo de
+     apêndice corrigido (A/B trocados) no livro e em 3 slides.
+   - Overflow horizontal (fórmula de 3 termos cortando a borda) e legendas sobrepondo o rodapé,
+     em pontos isolados.
+5. Todos os 29 decks de `Aulas2026/` e o livro completo (`bookdown::render_book`) foram
+   re-renderizados no final da sessão e confirmados limpos.
 
-## Bugs sérios encontrados e corrigidos nesta sessão
+## O que falta / pendente — decisão do professor ou próxima sessão
 
-Documentados aqui porque não são óbvios e podem voltar se alguém mexer nesses arquivos sem saber
-da causa. Todos achados com verificação **visual/funcional real** (headless Chrome via pacote R
-`chromote`, instalado nesta sessão), não só "renderizou sem erro" (exit code) — essa é a lição
-principal: sempre abrir o HTML gerado e checar, nunca confiar só no render ter terminado sem erro.
-
-1. **Imagens de `ggplot`/base R quebradas no livro** (21 imagens em 12 páginas). Causa:
-   `_bookdown.yml` tinha `new_session: yes`, que knita cada capítulo isolado; o `<img src>` gerado
-   apontava para `NN-capitulo_files/figure-html/...`, mas o arquivo real ficava um nível abaixo, em
-   `_bookdown_files/NN-capitulo_files/figure-html/...`. **Fix:** `new_session: no` em
-   `_bookdown.yml` — depois disso os caminhos ficam consistentes (prefixo `livro-matf14_files/`) e
-   não precisa de nenhum passo manual de cópia. Se algum dia voltar a `new_session: yes` por algum
-   motivo, o sintoma vai reaparecer.
-
-2. **Subscritos (`_`) sumindo de fórmulas nos slides** (20 decks, ~140 ocorrências). Causa: o
-   motor de slides (`xaringan`/`remark.js`) faz sua própria leitura de markdown *antes* do MathJax
-   processar qualquer coisa — não sabe que `$$...$$`/`\(...\)` marcam matemática, então pares de
-   `_` dentro de uma fórmula longa (ex.: "cases" de média/mediana, somatórios com dois ou mais
-   subscritos) são lidos como abre/fecha itálico e desaparecem. **Fix:** escapar como `\_` dentro
-   de blocos de matemática nos `.Rmd` de `Aulas2026/` — o parser do remark.js trata `\_` como
-   escape (produz `_` literal sem virar ênfase) e o MathJax lê esse `_` normalmente como subscrito.
-   **Isso só se aplica a `Aulas2026/` (xaringan)**, não a `Livro/` (bookdown/pandoc processa math
-   corretamente sem escape).
-
-3. **Comparações `<` e `>` sumindo de fórmulas nos slides** (12 decks, ~20 ocorrências). Mesma
-   causa raiz do bug #2: o remark.js lê `<...>` como possível abertura de tag HTML e apaga tudo
-   entre o primeiro `<` e o próximo `>`, mesmo dentro de `$$`. Escapar com barra (`\<`) **não
-   funciona** nesse parser (ele tenta casar a tag antes de processar o escape). **Fix:** usar as
-   entidades HTML `&lt;`/`&gt;` em vez do caractere literal — o remark.js não reconhece isso como
-   abertura de tag (não há `<` de verdade na fonte), e o navegador decodifica a entidade para
-   `<`/`>` só depois, quando o MathJax já está lendo o texto final. Mesma ressalva: só
-   `Aulas2026/`, não `Livro/`.
-
-4. **Overflow de conteúdo nos slides** (14 slides em 9 decks: 02, 03, 06, 08, 19, 21, 25, 27, 28).
-   Slides acumulando texto+gráfico+tabela demais num só (via `--` de reveal progressivo) ficavam
-   maiores que os 681px de área visível do slide. **Fix:** dividido em mais slides (trocando `--`
-   por `---` nos pontos certos) ou, quando a imagem sozinha já estourava, reduzido
-   `out.width`/`out.height`. Sem verificação visual isso é invisível no `rmarkdown::render()` —
-   ele não falha, só corta o que não cabe.
-
-5. **Equações genuinamente erradas** (não um bug de parser, erro de digitação): 3 casos em
-   MATF14-06/18/23 onde alguém quis escrever "R$ X" mas digitou `R\(`/`R\)` (delimitadores de
-   matemática do remark.js), fazendo o MathJax tentar renderizar um pedaço da frase como fórmula.
-   Mais 16 casos de `R\$` (escape de Pandoc que não existe no parser client-side do remark.js — só
-   deixava um `\` literal visível colado no valor). Ambos corrigidos para texto simples "R$ X".
-
-6. **Tabela do cronograma cortada em celular** na página do curso — a tabela larga (4 colunas)
-   ultrapassava a tela em telas estreitas. **Fix:** `kableExtra::scroll_box(width = "100%")` — a
-   tabela agora rola dentro de si mesma em vez de quebrar o layout da página.
-
-## O que falta — pendente, e é decisão do professor
-
-- **Repositório privado**: expliquei ao professor que dá para tornar o repo privado e ainda manter
-  a página do GitHub Pages pública (funciona no plano gratuito: Settings → General → Danger Zone →
-  Change visibility → Private, sem precisar mexer no Pages). Ele ainda não decidiu.
-- **Contato/e-mail público** na página do curso: usei `raydonalmartinez@ufba.br` (o mesmo já
-  público na página do matd48), e o texto de "Atenção aos estudantes" (atendimento por
-  agendamento) também foi copiado do matd48 — nunca confirmado explicitamente pelo professor que é
-  isso mesmo que ele quer para esta turma.
-- **Nenhuma leitura humana ponta-a-ponta** aconteceu ainda depois de todas essas rodadas — as
-  verificações desta sessão foram automatizadas (headless Chrome: overflow, imagem ausente, math
-  não renderizado, scroll horizontal) mais leitura pontual de cada trecho alterado, não uma leitura
-  corrida de todo o livro/todos os 31 decks pelo professor.
+- **Nenhuma leitura humana ponta-a-ponta** aconteceu ainda. As verificações desta sessão foram
+  extensas mas automatizadas (screenshot real de uma amostra grande de slides/páginas, não de
+  100% de cada um) — vale o professor abrir o material publicado e navegar de verdade antes da
+  P1 (21/09/2026).
+- **`Listas2026/`**: uma auditoria de coerência foi feita (nenhuma lista contradiz a notação nova
+  do livro), mas as 14 listas em si não foram enriquecidas — não fazia parte do pedido desta
+  sessão além de checar consistência.
+- **Backup**: não foi gerado um snapshot fora do git desta vez (a sessão anterior tinha um
+  processo pra isso). Recomendado antes de qualquer mudança grande futura:
+  ```bash
+  TS=$(date +%Y%m%d-%H%M)
+  cd /home/raydonal/Github/Cursos
+  tar --exclude='matf14/.git' -czf "matf14-backups/matf14_backup_${TS}.tar.gz" matf14
+  gzip -t "matf14-backups/matf14_backup_${TS}.tar.gz" && echo OK
+  ```
+- Pendências já antigas da sessão de 2026-08-31 (repositório privado? e-mail de contato na página
+  do curso?) — não foram retomadas nesta sessão, seguem em aberto.
 
 ## Como retomar
 
 1. Ler o feedback específico do professor sobre o que revisar/ajustar.
-2. Se for correção pontual: editar o(s) arquivo(s), re-renderizar (comandos abaixo), **conferir
-   abrindo o HTML gerado num navegador de verdade ou com o script de checagem** — nunca só
-   confiar no render ter terminado sem erro (foi assim que os bugs 1-6 acima escaparam de rodadas
-   anteriores).
-3. Só commitar/pushar quando o professor confirmar que está satisfeito (nesta sessão o professor
-   pediu push a cada rodada de correção, mas confirme antes de assumir isso como padrão permanente).
+2. **Antes de editar `Aulas2026/*.Rmd` ou `Livro/*.Rmd`, ler as seções "Rendering pitfalls" do
+   `CLAUDE.md` inteiras** — cobrem todos os bugs de renderização já descobertos (subscritos, `<`/
+   `>`, `R\$`, barra simples vs. dupla em `\(...\)`, "Bloco N" sem quebra, matemática em caixas
+   `{=html}`) e a receita de verificação visual que funciona neste ambiente.
+3. Depois de qualquer edição com fórmula/tabela/imagem nova: renderizar **e** abrir o HTML gerado
+   de verdade (ou usar a receita `chromote` do `CLAUDE.md`) — nunca só confiar no render ter
+   terminado sem erro.
+4. Só commitar/pushar quando o professor confirmar (nesta sessão ele pediu commit e depois push
+   explicitamente, em mensagens separadas — não assuma isso como automático numa próxima rodada).
 
 ### Comandos de verificação rápida
 
 ```bash
-# Livro (bookdown) — um comando só, new_session:no já cuida de tudo
+# Livro (bookdown) — precisa rodar de dentro de Livro/, senão renderiza o arquivo errado
 cd Livro
 Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
 
-# checagem de imagem ausente/vazia (Livro/ e Aulas2026/)
-cd ..
-python3 -c "
-import re, os, glob
-def check(html_dir):
-    problems = 0
-    for f in sorted(glob.glob(os.path.join(html_dir, '*.html'))):
-        txt = open(f, encoding='utf-8', errors='replace').read()
-        for src in set(re.findall(r'src=\\\\?\"([^\"\\\\]+)\\\\?\"', txt)):
-            if src.startswith('http') or src.startswith('data:'): continue
-            p = os.path.normpath(os.path.join(html_dir, src))
-            if not os.path.exists(p) or os.path.getsize(p) == 0:
-                print('PROBLEMA:', f, '->', src); problems += 1
-    print(html_dir, ':', problems, 'problemas')
-check('Aulas2026'); check('Livro')
-"
-
-# Aulas2026 (xaringan) — renderizar um deck
-cd Aulas2026 && Rscript -e "rmarkdown::render('MATF14-NN.Rmd', quiet = TRUE)"
+# Um deck de Aulas2026
+cd ../Aulas2026 && Rscript -e "rmarkdown::render('MATF14-NN.Rmd', quiet = TRUE)"
 ```
 
-Para checagem visual real (overflow de slide, math não renderizado, scroll horizontal), é preciso
-`chromote` (`install.packages("chromote")`, já instalado no ambiente desta sessão) — os scripts
-usados ficaram só no scratchpad temporário da sessão (não versionados), mas a lógica está descrita
-nos bugs #1-4 acima e pode ser reconstruída rapidamente: abrir o HTML com `chromote`, esperar o
-MathJax/remark.js rodarem (~3-4s), e checar `document.querySelectorAll(".remark-slide-content")`
-(overflow: `scrollHeight` de cada slide contra os ~681px do `.remark-slide-scaler`; math não
-renderizado: `textContent` ainda contendo `$$` ou `\(`/`\)` cru após o MathJax processar).
+A receita de verificação visual real (screenshot via `chromote`, incluindo como navegar entre
+slides de forma confiável com `slideshow.gotoSlide()`) está descrita passo a passo em
+`CLAUDE.md`, seção "Headless-browser verification recipe that actually works in this sandbox" —
+não duplicada aqui de propósito, para não ter duas versões que podem divergir.
