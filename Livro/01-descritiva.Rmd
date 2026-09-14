@@ -32,7 +32,7 @@ Duas bases reais acompanham o capítulo inteiro:
 
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: as duas bases do capítulo</strong><br>
-<code>empresas</code>: 200 empresas brasileiras, com porte, natureza jurídica, faturamento em 1998
+<code>empresas</code>: 106 empresas brasileiras, com porte, natureza jurídica, faturamento em 1998
 e 1999, número de empregados, idade, cidade, setor e região.<br>
 <code>prefeitos</code>: perfil sociodemográfico dos prefeitos eleitos em todos os municípios
 brasileiros, sexo, idade, raça, escolaridade, se disputava reeleição, população do município.
@@ -41,6 +41,19 @@ brasileiros, sexo, idade, raça, escolaridade, se disputava reeleição, popula�
 
 ```{r glimpse-dados}
 glimpse(empresas)
+```
+
+```{=html}
+<div class="caixa-r"><strong>Uso do R: decimais brasileiros ao ler um CSV</strong>, o arquivo
+<code>empresas.csv</code> deste capítulo já vem com separador decimal em ponto, por isso
+<code>readr::read_csv()</code> funciona sem ajuste. Mas é comum baixar planilhas de fontes
+brasileiras (Moodle, sites de governo, exportações de Excel em pt-BR) em que casas decimais são
+separadas por <strong>vírgula</strong> (<code>74392,50</code> em vez de <code>74392.50</code>).
+Nesse caso, a função-base <code>read.csv()</code> precisa do argumento <code>dec = ","</code>:
+<code>read.csv("empresas.csv", header = TRUE, dec = ",")</code>. Sem esse argumento, R lê a coluna
+inteira como texto (<code>character</code>), e todas as contas de média, variância etc. falham
+silenciosamente ou geram <code>NA</code>, um dos erros mais comuns e mais difíceis de notar em
+quem está começando a carregar dados reais.</div>
 ```
 
 ## População e amostra {#populacao-amostra}
@@ -71,7 +84,7 @@ inteira (um **parâmetro**, geralmente denotado por letras gregas, como $\mu$ pa
 populacional) é um fato, não tem incerteza associada, a não ser erro de medição ou de registro. Um
 resumo calculado sobre uma amostra (uma **estatística**, geralmente denotado por letras latinas,
 como $\bar{x}$) é uma *estimativa* do parâmetro correspondente, e portanto carrega incerteza: outra
-amostra das mesmas 200 empresas provavelmente daria um faturamento médio um pouco diferente. A
+amostra das mesmas 106 empresas provavelmente daria um faturamento médio um pouco diferente. A
 Estatística Descritiva deste capítulo não trata dessa incerteza: ela resume o que foi observado,
 seja população ou amostra. A pergunta "o que esse número diria se eu tivesse coletado outra
 amostra?" é o assunto da Inferência Estatística, fora do escopo desta disciplina, mas que se apoia
@@ -81,7 +94,7 @@ inteiramente no vocabulário construído aqui.
 <div class="caixa-economia"><strong>Leitura econômica</strong>, quando o IBGE divulga a taxa de
 desemprego trimestral pela PNAD Contínua, ele não entrevista toda a força de trabalho brasileira:
 entrevista uma amostra de domicílios e generaliza para a população
-(@ibge2024pnad). É por isso que a taxa vem sempre acompanhada de um intervalo de confiança
+(IBGE (<a href="#ref-ibge2024pnad">2024</a>)). É por isso que a taxa vem sempre acompanhada de um intervalo de confiança
 nos relatórios técnicos, mesmo que o número que estampa a manchete seja só o ponto central. A
 manchete raramente cita o intervalo, o profissional que sabe ler dados sabe que ele existe e o
 procura na nota metodológica.</div>
@@ -163,7 +176,7 @@ com cinco categorias (branca, preta, parda, amarela, indígena). É nominal ou o
 com a definição formal, não com intuição.</p>
 
 <p><strong>2.</strong> "Faixa de renda" (até 2 salários mínimos, de 2 a 5, de 5 a 10, acima de 10)
-é construída a partir de uma variável contínua (renda em R\$) cortada em intervalos. A variável
+é construída a partir de uma variável contínua (renda em R$) cortada em intervalos. A variável
 derivada é discreta, contínua ou qualitativa? O que se ganha e o que se perde nessa
 transformação, pense tanto em termos de informação estatística quanto de facilidade de
 comunicação a um público não técnico.</p>
@@ -210,6 +223,86 @@ relativa** (proporção) e a **porcentagem** da categoria $i$ são
 $$
 p_i = \frac{f_i}{n}, \qquad \%_i = 100 \times \frac{f_i}{n}\,\%.
 $$
+
+### Razão e taxa de variação
+
+Duas operações simples sobre frequências (ou sobre qualquer par de valores da mesma variável
+observados em momentos diferentes) aparecem o tempo todo em manchetes de economia, mas raramente
+ganham um nome formal na sala de aula: a **razão** e a **taxa de variação**. As quatro frases de
+abertura do capítulo têm, escondidas nelas, exatamente essas duas contas.
+
+**Razão.** Se uma categoria tem $f_1$ casos e outra tem $f_2$ casos, a razão da categoria 1 para a
+categoria 2 é
+
+$$
+\text{razão}_{1:2} = \frac{f_1}{f_2}.
+$$
+
+Tomando um número $n$ como base de comparação, a leitura é: *para cada $n$ elementos da categoria
+2, há $n \times f_1/f_2$ elementos da categoria 1*.
+
+```{r razao-porte}
+tab_porte <- empresas |> count(porte, name = "f")
+tab_porte |> kbl(caption = "Número de empresas por porte") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+
+f_grande  <- tab_porte$f[tab_porte$porte == "Grande"]
+f_pequena <- tab_porte$f[tab_porte$porte == "Pequena"]
+razao_grande_pequena <- f_grande / f_pequena
+razao_grande_pequena
+```
+
+Com $f_1=$ `r f_grande` empresas Grandes e $f_2=$ `r f_pequena` Pequenas, a razão é
+$23/13 \approx$ `r round(razao_grande_pequena, 2)`. Usando $n=10$ como base: para cada 10 empresas
+Pequenas nesta amostra, há aproximadamente $10\times 1{,}77\approx 18$ Grandes, uma forma de
+comparar categorias que evita a armadilha de comparar apenas as contagens brutas (23 contra 13
+parece uma diferença pequena; "18 para cada 10" deixa a desproporção mais concreta).
+
+**Taxa de variação.** Se uma variável vale $f_1$ no tempo 1 e $f_2$ no tempo 2, a taxa de variação
+do tempo 1 para o tempo 2 é
+
+$$
+\text{taxa de variação} = 100 \times \frac{f_2 - f_1}{f_1}\,\%.
+$$
+
+Essa é, literalmente, a fórmula por trás de "o IPCA do mês veio a 0,3%" ou de "o salário médio
+subiu 3% no último ano": $f_1$ é o valor do mês (ou ano) anterior, $f_2$ é o valor atual.
+
+```{r taxa-variacao-empresa1}
+empresa1 <- empresas |> filter(Empresa == 1)
+fat98_emp1 <- empresa1$faturamento98
+fat99_emp1 <- empresa1$faturamento99
+taxa_emp1 <- 100 * (fat99_emp1 - fat98_emp1) / fat98_emp1
+c(faturamento98 = fat98_emp1, faturamento99 = fat99_emp1,
+  taxa_variacao_pct = round(taxa_emp1, 2))
+```
+
+A Empresa 1 faturou R\$ `r format(fat98_emp1, big.mark=".", decimal.mark=",")` mil em 1998 e
+R\$ `r format(fat99_emp1, big.mark=".", decimal.mark=",")` mil em 1999, uma taxa de variação de
+$100\times(74392-64302)/64302 \approx$
+`r round(taxa_emp1, 1)`\%. Compare com a taxa de variação da *média* do faturamento de todas as
+`r nrow(empresas)` empresas entre os dois anos:
+
+```{r taxa-variacao-media}
+taxa_media <- 100 * (mean(empresas$faturamento99) - mean(empresas$faturamento98)) /
+  mean(empresas$faturamento98)
+round(taxa_media, 2)
+```
+
+A média cresceu apenas `r round(taxa_media, 1)`\%, bem menos que os `r round(taxa_emp1, 1)`\% da
+Empresa 1 isoladamente. Isso ilustra exatamente a segunda frase de abertura do capítulo, "a empresa
+X teve faturamento recorde, puxado por um crescimento médio de 40%": uma taxa de variação
+espetacular de **um** caso não implica uma taxa de variação parecida na média do conjunto, o
+crescimento de uma empresa específica pode conviver com estagnação generalizada nas demais.
+
+```{=html}
+<div class="caixa-economia"><strong>Leitura econômica</strong>, toda vez que o Banco Central ou o
+IBGE divulgam o IPCA mensal (Banco Central do Brasil (<a href="#ref-bacen2024ipca">2024</a>)), estão publicando uma taxa de variação: o índice de
+preços de um mês (\(f_2\)) comparado ao mês anterior (\(f_1\)). A "inflação acumulada em 12 meses" é a
+mesma fórmula aplicada com \(f_1\) = índice de 12 meses atrás. Entender a taxa de variação como uma
+única fórmula simples, em vez de memorizar "inflação mensal" e "inflação acumulada" como conceitos
+separados, é o tipo de economia de esforço que a Estatística Descritiva costuma proporcionar.</div>
+```
 
 ### Tabelas de dupla entrada
 
@@ -278,6 +371,32 @@ Sem essa normalização por linha, a comparação "Física tem mais homens que G
 coisas: o curso é maior *e* mais desbalanceado por sexo. A versão condicional isola a segunda
 informação, o mesmo raciocínio, formalizado, reaparece no Capítulo 2 como probabilidade
 condicional.
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação histórica: a tabela de Yule (1912)</strong></div>
+```
+
+Uma das tabelas de dupla entrada mais citadas na história da Estatística vem de um estudo de
+G. Udny Yule sobre a eficácia da vacinação contra a varíola (@yule1912association), publicado
+décadas antes de qualquer teste clínico randomizado moderno:
+
+```{r tabela-yule, echo=FALSE}
+tribble(
+  ~Grupo, ~Recuperados, ~Mortes, ~Total,
+  "Vacinados", "197", "2", "199",
+  "Não-vacinados", "139", "19", "158",
+  "Total", "336", "21", "357"
+) |>
+  kbl(caption = "Yule (1912): recuperação de pacientes com varíola, segundo vacinação (n = 357)") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+Aplicando a frequência relativa condicional (por linha) que acabamos de definir: entre os
+vacinados, a proporção de mortes é $2/199 \approx 1{,}0\%$; entre os não-vacinados, é
+$19/158 \approx 12{,}0\%$. A razão entre essas duas proporções (quantas vezes maior é o risco de
+morte entre não-vacinados) é $12{,}0/1{,}0 \approx 12$, uma tabela de dupla entrada simples, com
+apenas quatro células, já contém a evidência quantitativa central do argumento a favor da
+vacinação, mais de um século antes de esta ser uma discussão de saúde pública recorrente.
 
 ### Gráficos para variáveis qualitativas
 
@@ -397,7 +516,7 @@ o gráfico, dizer qual é maior? Que gráfico alternativo resolveria esse proble
 
 <p><strong>2.</strong> Um relatório de uma rede de lojas de conveniência apresenta um gráfico de
 barras do "faturamento médio mensal" em cada uma de suas 6 filiais, com o eixo vertical começando
-em R\$ 40.000 (não em zero), fazendo diferenças de poucos milhares de reais parecerem enormes
+em R$ 40.000 (não em zero), fazendo diferenças de poucos milhares de reais parecerem enormes
 visualmente. Explique, formalmente, por que cortar o eixo y distorce a leitura de um gráfico de
 barras, e descreva como o mesmo gráfico ficaria, e o que mudaria na conclusão do leitor, com o
 eixo começando em zero.</p>
@@ -406,7 +525,7 @@ eixo começando em zero.</p>
 do faturamento *médio* por setor. Que informação o histograma mostra que o gráfico de barras por
 setor esconde completamente?</p>
 
-<p><strong>4.</strong> A regra de Sturges sugere $k\approx1+\log_2(n)$ classes. Para $n=200$
+<p><strong>4.</strong> A regra de Sturges sugere \(k\approx1+\log_2(n)\) classes. Para \(n=106\)
 (o tamanho de <code>empresas</code>), quantas classes ela sugere? Teste no histograma acima
 alterando <code>bins</code> para esse valor e para valores bem menores e bem maiores, em que ponto
 o histograma começa a "esconder" ou a "inventar" estrutura que não existe nos dados?</p>
@@ -444,6 +563,89 @@ em que $x_{(k)}$ denota o $k$-ésimo valor da amostra **ordenada**.
 **Moda.** É o valor (ou categoria) que ocorre com maior frequência, a única medida de tendência
 central que faz sentido para variáveis qualitativas nominais.
 
+```{=html}
+<div class="caixa-r"><strong>Uso do R: achando a moda com <code>which.max()</code></strong>, o R
+não tem uma função <code>moda()</code> pronta, e a função <code>mode()</code> que existe faz outra
+coisa completamente diferente, retorna o <em>modo de armazenamento</em> do objeto
+(<code>"numeric"</code>, <code>"character"</code> etc.), não a moda estatística. Um jeito simples e
+direto de achar a moda de uma variável qualitativa é contar com <code>table()</code> e localizar o
+maior valor com <code>which.max()</code>:</div>
+```
+
+```{r moda-setor}
+mode(empresas$faturamento99)      # "numeric": modo de ARMAZENAMENTO, não a moda!
+
+tab_freq_setor <- table(empresas$setor)
+tab_freq_setor[which.max(tab_freq_setor)]   # categoria mais frequente e sua contagem
+```
+
+O mesmo truque funciona para achar a **classe modal** de uma variável contínua já agrupada em um
+histograma, usando o objeto que `hist()` devolve quando `plot = FALSE`:
+
+```{r moda-histograma}
+h_fat <- hist(empresas$faturamento99, plot = FALSE)
+h_fat$mids[which.max(h_fat$counts)]   # ponto médio da classe mais frequente
+```
+
+### Média a partir de uma tabela de frequências
+
+Quando os dados já vêm resumidos em uma tabela de frequências (valor $x_i$ ocorrendo $n_i$ vezes),
+recalcular a média a partir dos dados brutos seria redundante, a mesma fórmula da média pode ser
+reescrita diretamente em termos de $n_i$ e da frequência relativa $f_i = n_i/n$:
+
+$$
+\bar X = \frac{1}{n}\sum_{i=1}^k n_i x_i = \sum_{i=1}^k f_i x_i,
+$$
+
+em que a soma agora percorre os $k$ valores **distintos** da tabela (não mais os $n$ valores
+brutos). É a mesma média de sempre, só que ponderada pela frequência de cada valor em vez de somar
+observação por observação.
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: número de funcionários em 80 microempresas</strong>
+</div>
+```
+
+Uma pesquisa com 80 microempresas registrou o número de funcionários $x$ de cada uma, resumido
+nesta tabela de frequências:
+
+```{r tabela-microempresas, echo=FALSE}
+microempresas <- tibble(
+  x  = 0:5,
+  n_i = c(8, 15, 22, 18, 12, 5)
+) |>
+  mutate(f_i = round(n_i / sum(n_i), 3), n_i_x_i = n_i * x)
+
+microempresas |>
+  kbl(col.names = c("$x_i$ (funcionários)", "$n_i$", "$f_i=n_i/n$", "$n_i x_i$"),
+      caption = "80 microempresas, por número de funcionários", escape = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+Somando a última coluna, $\sum_i n_i x_i = 0(8)+1(15)+2(22)+3(18)+4(12)+5(5) = 186$, e como
+$n=\sum_i n_i = 80$,
+
+$$
+\bar X = \frac{186}{80} = 2{,}325 \approx 2{,}33 \text{ funcionários}.
+$$
+
+Confira com R, reconstruindo o vetor bruto de 80 valores a partir da tabela (com `rep()`) e
+comparando as duas formas de calcular a mesma média:
+
+```{r verifica-microempresas}
+x_bruto <- rep(microempresas$x, times = microempresas$n_i)   # os 80 valores individuais
+length(x_bruto)                            # confirma n = 80
+mean(x_bruto)                              # média "clássica", 1/n * sum(x_i)
+sum(microempresas$f_i * microempresas$x)   # média ponderada, sum(f_i * x_i)
+```
+
+A **mediana** também sai direto da tabela, somando frequências acumuladas até passar da metade de
+$n=80$ (a 40ª e a 41ª posição, em ordem): a classe $x=0$ acumula 8 casos, $x=1$ acumula $8+15=23$,
+$x=2$ acumula $23+22=45$. Como $23<40\le 45$ e $23<41\le45$, tanto a 40ª quanto a 41ª observação
+ordenada caem na classe $x=2$, logo a mediana é $2$. A **moda** é o $x_i$ de maior $n_i$, que é
+$x=2$ (com $n_i=22$). Note que média ($2{,}33$), mediana ($2$) e moda ($2$) ficam bem próximas,
+consistente com uma distribuição pouco assimétrica.
+
 ```{r medidas-tendencia}
 resumo_faturamento <- empresas |>
   summarise(
@@ -457,8 +659,8 @@ resumo_faturamento |> kbl(digits = 1) |> kable_styling(full_width = FALSE)
 
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, a média de faturamento
-(R$ `r format(round(resumo_faturamento$media,0), big.mark=".")` mil) fica bem acima da mediana
-(R$ `r format(round(resumo_faturamento$mediana,0), big.mark=".")` mil). Isso é a assinatura de uma
+(R$ `r format(round(resumo_faturamento$media,0), big.mark=".", decimal.mark=",")` mil) fica bem acima da mediana
+(R$ `r format(round(resumo_faturamento$mediana,0), big.mark=".", decimal.mark=",")` mil). Isso é a assinatura de uma
 distribuição assimétrica à direita: um pequeno número de empresas muito grandes "puxa" a média para
 cima, enquanto a mediana, insensível a esses valores extremos, continua descrevendo a empresa
 "típica". É exatamente o mesmo fenômeno da distribuição de renda de um país: a renda média nacional
@@ -504,28 +706,80 @@ distribuição inteira só pelas medidas de tendência central?</p>
 
 As melhores bases de dados para praticar Estatística Descritiva, às vezes, são as mais simples de
 coletar, inclusive os dados da própria turma. Duas ilustrações de turmas reais de MATF14 em
-semestres anteriores:
+semestres anteriores, lidas diretamente do histograma e resolvidas com a **fórmula da média a
+partir de uma tabela de frequências** da seção anterior, exatamente o tipo de situação em que ela é
+indispensável: não há mais acesso à nota individual de cada aluno, só à contagem por faixa.
 
 ```{r fig-notas-prova1, echo=FALSE, out.width="75%", fig.cap="Distribuição das notas da Prova 1 em uma turma real de MATF14 (2025.2)."}
 knitr::include_graphics("images/notas_prova1_matf14.png")
 ```
 
+Lendo a altura de cada barra do histograma (classes de amplitude 1, de 0 a 10), obtém-se a tabela
+de frequências abaixo, com o ponto médio de cada classe como representante $x_i$:
+
+```{r tabela-notas-turma}
+notas_turma <- tibble(
+  classe = c("[0,1)", "[1,2)", "[2,3)", "[3,4)", "[4,5)", "[5,6)",
+             "[6,7)", "[7,8)", "[8,9)", "[9,10)"),
+  x_i  = seq(0.5, 9.5, by = 1),
+  n_i  = c(0, 1, 1, 3, 3, 5, 2, 5, 5, 7)
+)
+n_turma <- sum(notas_turma$n_i)
+media_turma   <- sum(notas_turma$n_i * notas_turma$x_i) / n_turma
+n_turma; round(media_turma, 2)
+```
+
+Com $n=$ `r n_turma` alunos, a média é $\bar X = \sum n_i x_i / n \approx$
+`r round(media_turma, 2)`. Para a mediana, acumulam-se as frequências até passar de $n/2=16$: a 16ª
+e a 17ª observação (ordenadas) caem ambas na classe $[7,8)$ (frequência acumulada sobe de 15 para
+20 nessa classe), logo a mediana $\approx 7{,}5$. A moda é a classe de maior frequência, $[9,10)$
+(7 alunos), representada por $9{,}5$. Como **média ($\approx 6{,}7$) $<$ mediana ($7{,}5$) $<$ moda
+($9{,}5$)**, a distribuição é **assimétrica à esquerda**: uma cauda de notas baixas (a barra
+zerada em $[6,7)$, um "vale" entre dois grupos de alunos) puxa a média para baixo, mesmo com a
+maior concentração de alunos nas notas mais altas, o oposto do padrão visto no faturamento das
+empresas (cauda à *direita*). É a assinatura típica de uma prova em que a maioria da turma foi bem,
+mas um grupo minoritário teve desempenho bem abaixo do restante.
+
 ```{r fig-letras-nomes, echo=FALSE, out.width="75%", fig.cap="Número de letras no nome completo dos alunos de uma turma real de MATF14 (2025.2)."}
 knitr::include_graphics("images/letras_nomes_matf14.png")
 ```
 
+O mesmo procedimento aplicado ao histograma do número de letras no nome completo (classes de
+amplitude 4, exceto a última):
+
+```{r tabela-letras-turma}
+letras_turma <- tibble(
+  x_i  = c(16, 20, 24, 28, 32, 36, 39),
+  n_i  = c(2, 4, 9, 15, 4, 2, 1)
+)
+n_letras   <- sum(letras_turma$n_i)
+media_letras   <- sum(letras_turma$n_i * letras_turma$x_i) / n_letras
+n_letras; round(media_letras, 2)
+```
+
+Com $n=$ `r n_letras` alunos, $\bar X \approx$ `r round(media_letras, 2)` letras. A mediana está na
+19ª posição (de `r n_letras`), que cai na classe $[26,30)$ (frequência acumulada sobe de 15 para 30
+nessa classe), a mesma classe da moda (15 alunos, a maior frequência). Aqui média ($\approx26{,}7$),
+mediana e moda ($28$) ficam próximas, uma distribuição quase simétrica, um exercício quase lúdico
+(contar letras em nomes) que ainda assim segue exatamente o mesmo ferramental estatístico de uma
+variável econômica séria.
+
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> Olhando só o histograma de notas, estime visualmente se a média está acima
-ou abaixo da mediana. A distribuição é mais parecida com a de faturamento das empresas (Seção
-anterior) ou com uma distribuição aproximadamente simétrica? O que isso sugere sobre a prova ter
-sido "fácil demais", "difícil demais", ou razoavelmente bem calibrada?</p>
+<p><strong>1.</strong> A distribuição das notas é assimétrica à esquerda, a das letras nos nomes é
+aproximadamente simétrica. Se você fosse o professor da disciplina e só pudesse olhar essas duas
+estatísticas (média e mediana) da prova, o que a diferença entre elas (mediana \(2{,}5\) pontos acima
+da média) sugere sobre calibrar a prova para a próxima aplicação?</p>
 
-<p><strong>2.</strong> O histograma do número de letras nos nomes é um exercício quase lúdico,
-mas ainda assim uma variável quantitativa discreta real, com média, mediana, dispersão e forma
-bem definidas. Seria possível repetir esse exercício com a sua própria turma nesta disciplina?
-Qual forma você esperaria ver: simétrica, assimétrica à direita, ou outra?</p>
+<p><strong>2.</strong> Seria possível repetir o exercício do número de letras nos nomes com a sua
+própria turma nesta disciplina? Qual forma você esperaria ver, simétrica, assimétrica à direita, ou
+outra, e por quê?</p>
+
+<p><strong>3.</strong> Ao ler os valores de um histograma já pronto (em vez dos dados brutos),
+usa-se o ponto médio de cada classe como \(x_i\). Que tipo de erro (para mais ou para menos) essa
+aproximação pode introduzir na média calculada, comparada com a média exata que só seria possível
+com a nota individual de cada aluno?</p>
 </div>
 ```
 
@@ -549,13 +803,46 @@ AT = x_{\max} - x_{\min}.
 $$
 
 É simples, mas extremamente sensível a um único valor extremo, uma única empresa atípica infla a
-$AT$ inteira sem dizer nada sobre as outras 199.
+$AT$ inteira sem dizer nada sobre as outras 105.
 
 ### Quantis, distância interquartílica e boxplot
 
-O **quantil de ordem $p$** ($0<p<1$), $Q_p$, é o valor abaixo do qual está uma proporção $p$ dos
-dados. Os **quartis** ($Q_1=Q_{0{,}25}$, $Q_2=Q_{0{,}50}=$ mediana, $Q_3=Q_{0{,}75}$) dividem a
-amostra ordenada em quatro partes iguais. A **distância (ou amplitude) interquartílica**
+O **quantil (ou percentil) de ordem $p$** ($0<p<1$), $Q_p$, é o valor abaixo do qual está uma
+proporção $p$ dos dados. Os **quartis** ($Q_1=Q_{0{,}25}$, $Q_2=Q_{0{,}50}=$ mediana,
+$Q_3=Q_{0{,}75}$) dividem a amostra ordenada em quatro partes iguais. A mediana (Seção
+\@ref(tendencia-central)) é só o caso particular $p=0{,}5$ de um **algoritmo geral**, válido para
+qualquer percentil, que vale a pena registrar em três passos:
+
+1. Ordene os $n$ valores em ordem crescente.
+2. Calcule $k = \dfrac{P \cdot n}{100}$, em que $P$ é o percentil desejado (por exemplo, $P=25$
+   para $Q_1$).
+3. Se $k$ for inteiro, o percentil é a **média** entre o $k$-ésimo e o $(k+1)$-ésimo valor
+   ordenado; se $k$ **não** for inteiro, arredonde $k$ para cima e o percentil é o valor que ocupa
+   essa posição.
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Aplicação: calculando \(Q_{25}\) e \(Q_{50}\) na mão</strong>
+</div>
+```
+
+Para os dados já ordenados $18, 21, 23, 24, 28$ ($n=5$):
+
+- $Q_{50}$: $k = 50\times5/100 = 2{,}5$, não inteiro, arredonda para cima $\to$ posição 3
+  $\to Q_{50}=23$ (a mediana, coerente com a fórmula da Seção \@ref(tendencia-central)).
+- $Q_{25}$: $k = 25\times5/100 = 1{,}25$, não inteiro, arredonda para cima $\to$ posição 2
+  $\to Q_{25}=21$.
+
+```{r percentil-manual}
+x_pct <- c(18, 21, 23, 24, 28)
+quantile(x_pct, probs = c(0.25, 0.5), type = 2)  # type=2: replica o algoritmo dos 3 passos
+```
+
+Algumas leituras equivalentes de quartil, úteis como checagem rápida na hora da prova: "$Q_1$ é o
+valor abaixo do qual estão 25% dos dados" é o mesmo que dizer "acima de $Q_1$ estão 75% dos dados";
+"entre $Q_1$ e $Q_3$ estão os 50% centrais dos dados" é o mesmo que dizer que $Q_1$ e $Q_3$ marcam,
+respectivamente, onde termina o primeiro quarto e onde começa o último quarto da amostra ordenada.
+
+A **distância (ou amplitude) interquartílica**
 
 $$
 IQR = Q_3 - Q_1
@@ -575,7 +862,8 @@ $Q_3 + 1{,}5 \times IQR$:
 ```{r boxplot-faturamento, fig.width=6, fig.height=4}
 ggplot(empresas, aes(x = porte, y = faturamento99, fill = porte)) +
   geom_boxplot(show.legend = FALSE) +
-  scale_fill_manual(values = c("Pequena" = "#cfe8ef", "Média" = "#7fb8cf", "Grande" = "#0d3b54")) +
+  scale_fill_manual(values = c("Pequena" = "#cfe8ef", "Média" = "#7fb8cf",
+                                "Grande" = "#0d3b54")) +
   labs(x = "Porte", y = "Faturamento em 1999 (R$ mil)",
        title = "Faturamento por porte da empresa") +
   theme_minimal(base_size = 12)
@@ -587,6 +875,68 @@ uma pergunta de política de crédito: a variabilidade de faturamento dentro do 
 muito maior que dentro de "Pequena", um banco que usa "porte" como critério único de risco está
 ignorando uma dispersão substancial dentro da própria categoria.</div>
 ```
+
+### Quando AT e IQR não bastam: cidades A e B
+
+Duas cidades registraram a temperatura (°C) em 5 dias:
+
+$$
+\text{Cidade A: } 24,\ 26,\ 32,\ 28,\ 25 \qquad\qquad \text{Cidade B: } 20,\ 26,\ 36,\ 28,\ 25
+$$
+
+Ambas têm a **mesma média**: $\bar x_A = (24+26+32+28+25)/5 = 135/5 = 27$ e
+$\bar x_B = (20+26+36+28+25)/5 = 135/5 = 27$. Se a análise parasse na média, as duas cidades
+seriam indistinguíveis. Tentando a amplitude total: $AT_A = 32-24=8$ e $AT_B=36-20=16$, já sugere
+B mais dispersa. Mas o $IQR$, calculado com o algoritmo de três passos da seção anterior sobre cada
+cidade ordenada ($A: 24,25,26,28,32$; $B: 20,25,26,28,36$, ambas com $n=5$), dá $Q_1=25$, $Q_3=28$
+em **ambas**, logo $IQR_A=IQR_B=3$: o $IQR$, por olhar só para o "miolo" da distribuição, não
+enxerga a diferença que a $AT$ já tinha detectado. É hora de uma medida que use **todas** as
+observações, não só duas posições.
+
+O primeiro instinto é somar os desvios de cada valor em relação à média, $x_i - \bar x$:
+
+```{r desvios-cidades}
+temp_A <- c(24, 26, 32, 28, 25); temp_B <- c(20, 26, 36, 28, 25)
+desvios_A <- temp_A - mean(temp_A); desvios_B <- temp_B - mean(temp_B)
+desvios_A; sum(desvios_A)
+desvios_B; sum(desvios_B)
+```
+
+Em ambas, os desvios somam **exatamente zero**, e isso não é coincidência: $\sum_i(x_i-\bar x)=
+\sum_i x_i - n\bar x = n\bar x - n\bar x = 0$ sempre, para qualquer conjunto de dados. A média dos
+desvios brutos é, por construção, uma medida inútil de dispersão, ela é sempre zero, tanto para
+dados concentrados quanto espalhados. É exatamente para contornar esse cancelamento que a variância
+**eleva os desvios ao quadrado** antes de somar, o que também tem o efeito colateral de penalizar
+desvios grandes proporcionalmente mais que desvios pequenos:
+
+```{r desvios-quadrado-cidades}
+desvios2_A <- desvios_A^2; desvios2_B <- desvios_B^2
+desvios2_A; mean(desvios2_A)
+desvios2_B; mean(desvios2_B)
+```
+
+Os desvios quadráticos de A são $(-3)^2,(-1)^2,5^2,1^2,(-2)^2 = 9,1,25,1,4$, que somam $40$ e dão
+média $8$; os de B são $(-7)^2,(-1)^2,9^2,1^2,(-2)^2=49,1,81,1,4$, que somam $136$ e dão média
+$27{,}2$. Logo
+
+$$
+\mathrm{Var}(A) = 8 \quad\Rightarrow\quad dp(A) = \sqrt{8} \approx 2{,}83\ ^\circ\text{C}.
+$$
+
+$$
+\mathrm{Var}(B) = 27{,}2 \quad\Rightarrow\quad dp(B) = \sqrt{27{,}2} \approx 5{,}22\ ^\circ\text{C}.
+$$
+
+```{r variancia-cidades}
+c(var_A = mean(desvios2_A), dp_A = sqrt(mean(desvios2_A)),
+  var_B = mean(desvios2_B), dp_B = sqrt(mean(desvios2_B)))
+```
+
+O desvio padrão de B é quase o dobro do de A, exatamente o que a $AT$ já indicava e o $IQR$ havia
+escondido: a cidade B tem dias muito mais extremos (mínima de 20°C, máxima de 36°C) intercalados
+com dias parecidos com A, enquanto a cidade A oscila de forma mais comportada em torno da mesma
+média. Duas cidades com o "clima médio" idêntico podem ter uma completamente mais arriscada para
+quem planeja, por exemplo, uma agenda de eventos ao ar livre, e só a variância revela isso.
 
 ### Desvio padrão, variância e coeficiente de variação
 
@@ -604,14 +954,14 @@ $$
 
 ```{=html}
 <div class="caixa-economia"><strong>Nota técnica: duas convenções de variância</strong><br>
-A fórmula acima, com divisor $n$, é a <strong>variância descritiva</strong> (às vezes chamada
+A fórmula acima, com divisor \(n\), é a <strong>variância descritiva</strong> (às vezes chamada
 populacional): resume a dispersão dos dados que você tem em mãos, sem pretender estimar nada além
-deles. Quando os mesmos $n$ valores são vistos como uma <em>amostra</em> de uma população maior e o
-objetivo é <strong>estimar</strong> a variância populacional, usa-se o divisor $n-1$ (correção de
-Bessel), $s^2 = \frac{1}{n-1}\sum_i (x_i-\bar x)^2$, o padrão da Inferência Estatística, e também o
+deles. Quando os mesmos \(n\) valores são vistos como uma <em>amostra</em> de uma população maior e o
+objetivo é <strong>estimar</strong> a variância populacional, usa-se o divisor \(n-1\) (correção de
+Bessel), \(s^2 = \frac{1}{n-1}\sum_i (x_i-\bar x)^2\), o padrão da Inferência Estatística, e também o
 default da função <code>var()</code> do R. Nesta disciplina, que é de estatística descritiva e
-probabilidade, o divisor $n$ é o usado nas provas e listas, seguindo o fórmulário oficial; fique
-atento a essa diferença em disciplinas futuras de inferência/econometria (@wooldridge2016introducao).</div>
+probabilidade, o divisor \(n\) é o usado nas provas e listas, seguindo o fórmulário oficial; fique
+atento a essa diferença em disciplinas futuras de inferência/econometria (Wooldridge (<a href="#ref-wooldridge2016introducao">2016</a>)).</div>
 ```
 
 ```{r var-manual}
@@ -642,8 +992,8 @@ empresas |>
 
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, não faz sentido comparar
-diretamente o desvio padrão de "faturamento em R\$ mil" (ordem de centenas de milhares) com o de
-"número de empregados" (ordem de dezenas): são unidades incomparáveis. O $CV$, por ser adimensional,
+diretamente o desvio padrão de "faturamento em R$ mil" (ordem de centenas de milhares) com o de
+"número de empregados" (ordem de dezenas): são unidades incomparáveis. O \(CV\), por ser adimensional,
 permite afirmar qual das duas variáveis é <em>relativamente</em> mais dispersa em torno de sua
 própria média, uma pergunta genuinamente comparável entre variáveis, moedas ou países. É a mesma
 lógica usada para comparar a volatilidade de duas ações com preços médios muito diferentes.</div>
@@ -666,7 +1016,7 @@ pode arriscar um palpite) ajudaria a responder isso?</p>
 mostrasse a média de faturamento por porte, sem nenhuma medida de dispersão. Que decisão de
 política de crédito mudaria ao ver o boxplot completo, em vez de só as três médias?</p>
 
-<p><strong>4.</strong> O $IQR$ e o desvio padrão respondem, ambos, "quão dispersos são os dados",
+<p><strong>4.</strong> O \(IQR\) e o desvio padrão respondem, ambos, "quão dispersos são os dados",
 mas de formas diferentes. Construa (mentalmente ou em papel) um conjunto de dados pequeno em que os
 dois discordem bastante sobre qual de dois grupos é "mais disperso". O que causa essa discordância?</p>
 
@@ -679,7 +1029,7 @@ quê) seria indispensável para essa afirmação fazer sentido?</p>
 ## Coeficiente de correlação {#correlacao}
 
 Quando duas variáveis quantitativas são observadas nas mesmas unidades, como `empregados99` e
-`faturamento99`, nas mesmas 200 empresas, é natural perguntar se elas variam *juntas*. O
+`faturamento99`, nas mesmas 106 empresas, é natural perguntar se elas variam *juntas*. O
 **coeficiente de correlação linear de Pearson** mede a força e o sentido dessa associação
 **linear**:
 
@@ -693,6 +1043,71 @@ $r$ próximo de $+1$ indica associação linear positiva forte (quando um sobe, 
 subir); próximo de $-1$, associação negativa forte; próximo de $0$, ausência de associação
 **linear** (não necessariamente ausência de qualquer relação, $r$ é cego a relações não lineares,
 um ponto retomado adiante).
+
+### Aplicação: o faturamento das empresas cresceu de 1998 para 1999?
+
+A pergunta "a empresa X teve faturamento recorde, puxado por um crescimento médio de 40%" da
+abertura do capítulo pede uma comparação **entre dois anos da mesma variável**, exatamente o que
+`faturamento98` e `faturamento99` permitem fazer diretamente em `empresas`. Três gráficos, na
+sequência, respondem três perguntas diferentes sobre a mesma comparação.
+
+Primeiro, os histogramas sobrepostos mostram se a **forma inteira** da distribuição mudou, não só
+a média:
+
+```{r fat-hist-sobreposto, fig.width=7, fig.height=4}
+empresas |>
+  select(faturamento98, faturamento99) |>
+  pivot_longer(everything(), names_to = "ano", values_to = "faturamento") |>
+  mutate(ano = recode(ano, faturamento98 = "1998", faturamento99 = "1999")) |>
+  ggplot(aes(x = faturamento, fill = ano)) +
+  geom_histogram(position = "identity", alpha = 0.55, bins = 20) +
+  scale_fill_manual(values = c("1998" = "#0d3b54", "1999" = "#c9971e")) +
+  labs(x = "Faturamento (R$ mil)", y = "Número de empresas", fill = "Ano",
+       title = "Faturamento das empresas: 1998 vs. 1999") +
+  theme_minimal(base_size = 12)
+```
+
+Segundo, o boxplot lado a lado responde à mesma pergunta de forma mais compacta, comparando
+posição e dispersão de uma vez:
+
+```{r fat-boxplot-anos, fig.width=6, fig.height=4}
+empresas |>
+  select(faturamento98, faturamento99) |>
+  pivot_longer(everything(), names_to = "ano", values_to = "faturamento") |>
+  mutate(ano = recode(ano, faturamento98 = "1998", faturamento99 = "1999")) |>
+  ggplot(aes(x = ano, y = faturamento, fill = ano)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = c("1998" = "#0d3b54", "1999" = "#c9971e")) +
+  labs(x = NULL, y = "Faturamento (R$ mil)",
+       title = "Faturamento por ano") +
+  theme_minimal(base_size = 12)
+```
+
+Terceiro, o gráfico de dispersão entre os dois anos, empresa por empresa, responde a uma pergunta
+diferente das duas primeiras: não "a distribuição mudou de forma", mas "quem faturava mais em 1998
+também fatura mais em 1999?", ou seja, o quanto a **posição relativa** de cada empresa se manteve:
+
+```{r fat-scatter-anos, fig.width=6, fig.height=4}
+r_fat <- cor(empresas$faturamento98, empresas$faturamento99)
+
+ggplot(empresas, aes(x = faturamento98, y = faturamento99)) +
+  geom_point(alpha = 0.6, color = "#0d3b54") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey50") +
+  labs(x = "Faturamento 1998 (R$ mil)", y = "Faturamento 1999 (R$ mil)",
+       title = paste0("Faturamento 1998 × 1999 (r = ", round(r_fat, 2), ")")) +
+  theme_minimal(base_size = 12)
+```
+
+A correlação `r round(r_fat, 2)` é forte e positiva, a linha tracejada marca onde ficaria uma
+empresa cujo faturamento não mudou entre os dois anos ($y=x$), pontos acima dela cresceram, abaixo
+dela encolheram. Lembrando o resultado calculado com razão e taxa de variação: a **média** do
+faturamento cresceu pouco (`r round(taxa_media, 1)`\%), mas a forte correlação mostra que a
+posição *relativa* das empresas mudou pouco, quem já era grande em 1998 seguiu grande em 1999,
+mesmo com faturamentos individuais subindo ou descendo. Três perguntas (forma da distribuição,
+posição relativa, magnitude média da mudança) exigiram três ferramentas diferentes, nenhuma
+substitui a outra.
+
+### Aplicação: número de empregados versus faturamento
 
 ```{r correlacao-emp, fig.width=6, fig.height=4}
 r_emp <- cor(empresas$empregados99, empresas$faturamento99)
@@ -738,14 +1153,14 @@ vendidos e o número de afogamentos em praias estão fortemente correlacionados.
 variável de confusão (a terceira variável) que explica essa correlação sem que uma cause a
 outra.</p>
 
-<p><strong>3.</strong> Construa mentalmente um exemplo em que $X$ e $Y$ têm uma relação forte e
-perfeitamente previsível (para cada $x$, existe exatamente um $y$ correspondente), mas
-$r\approx0$. (Dica: pense em uma relação em forma de "U" ou parábola.) O que esse exemplo ensina
+<p><strong>3.</strong> Construa mentalmente um exemplo em que \(X\) e \(Y\) têm uma relação forte e
+perfeitamente previsível (para cada \(x\), existe exatamente um \(y\) correspondente), mas
+\(r\approx0\). (Dica: pense em uma relação em forma de "U" ou parábola.) O que esse exemplo ensina
 sobre os limites do coeficiente de correlação?</p>
 
 <p><strong>4.</strong> Um analista de mercado imobiliário calcula a correlação entre "número de
 metros quadrados" e "preço do imóvel" numa amostra de apartamentos de um único bairro e obtém
-$r=0{,}9$. Ele generaliza a conclusão "área é o principal determinante de preço" para toda a
+\(r=0{,}9\). Ele generaliza a conclusão "área é o principal determinante de preço" para toda a
 cidade, incluindo bairros muito diferentes. O que pode dar errado nessa generalização?</p>
 
 <p><strong>5.</strong> No gráfico PIB×CO<sub>2</sub>, países desenvolvidos (azul) aparecem
@@ -783,8 +1198,11 @@ $$
 =\frac{\frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^4}{\left(\frac{1}{n}\sum_{i=1}^n (x_i-\bar x)^2\right)^{2}}.
 $$
 
-Curtose $>3$ (leptocúrtica) indica caudas mais pesadas que a Normal, mais eventos extremos que o
-"esperado" sob normalidade; curtose $<3$ (platicúrtica) indica caudas mais leves.
+Os três regimes de curtose têm nome próprio, herdado do grego (*lepto* = fino/afunilado,
+*platy* = achatado, *meso* = meio): curtose $>3$ é **leptocúrtica** (pico afunilado, caudas mais
+pesadas que a Normal, mais eventos extremos que o "esperado" sob normalidade); curtose
+$\approx 3$ é **mesocúrtica** (achatamento comparável ao da própria Normal, o "sino" de
+referência); curtose $<3$ é **platicúrtica** (pico mais achatado, caudas mais leves que a Normal).
 
 ```{r assimetria-curtose-calc}
 assimetria <- function(x) {
@@ -827,7 +1245,7 @@ curtose alta (poucos super-ricos raros), e a outra tem assimetria próxima de ze
 poderiam demandar políticas públicas bem diferentes, mesmo tendo os "quatro primeiros números"
 idênticos.</p>
 
-<p><strong>3.</strong> Assimetria e curtose são medidas normalizadas (adimensionais, como o $CV$).
+<p><strong>3.</strong> Assimetria e curtose são medidas normalizadas (adimensionais, como o \(CV\)).
 Por que essa normalização é necessária para comparar a forma de distribuições de variáveis em
 escalas ou unidades diferentes, por exemplo, comparar a assimetria da distribuição de faturamento
 de <code>empresas</code> com a assimetria da distribuição etária de <code>prefeitos</code>?</p>

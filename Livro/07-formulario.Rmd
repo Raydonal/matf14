@@ -16,12 +16,25 @@ $$
 p_i = \frac{f_i}{n} \qquad \%_i = 100\times\frac{f_i}{n}\,\%
 $$
 
+**Razão e taxa de variação.** Para categorias com $f_1$ e $f_2$ casos, ou para o valor de uma
+variável em dois instantes $f_1$ (tempo 1) e $f_2$ (tempo 2):
+$$
+\text{razão}_{1:2} = \frac{f_1}{f_2} \qquad
+\text{taxa de variação} = 100\times\frac{f_2-f_1}{f_1}\,\%
+$$
+
 **Tendência central.**
 $$
-\bar x = \frac1n\sum_{i=1}^n x_i \qquad
+\bar x = \frac1n\sum_{i=1}^n x_i = \sum_{i=1}^k f_i x_i\ \text{(tabela de frequências, } f_i=n_i/n)
+$$
+$$
 \text{Mediana} = \begin{cases} x_{((n+1)/2)}, & n \text{ ímpar} \\
 \dfrac{x_{(n/2)}+x_{(n/2+1)}}{2}, & n \text{ par}\end{cases}
 $$
+
+**Percentil de ordem $P$** ($0<P<100$), dados ordenados $x_{(1)}\le\cdots\le x_{(n)}$, $k=Pn/100$:
+se $k$ inteiro, percentil $=\dfrac{x_{(k)}+x_{(k+1)}}{2}$; se $k$ não inteiro, arredonde $k$ para
+cima e percentil $=x_{(k)}$.
 
 **Dispersão.**
 $$
@@ -32,10 +45,25 @@ $$
 CV(X) = \frac{dp(X)}{\bar x} \qquad \text{outlier (boxplot): } x < Q_1-1{,}5\,IQR \text{ ou } x>Q_3+1{,}5\,IQR
 $$
 
+**Curtose, três regimes:** leptocúrtica ($>3$, caudas pesadas) $\quad$ mesocúrtica
+($\approx3$, referência Normal) $\quad$ platicúrtica ($<3$, caudas leves).
+
+**Tabela de contingência de referência (Yule, 1912):**
+
+```{r tabela-yule-formulario, echo=FALSE}
+tibble::tribble(
+  ~Grupo, ~Recuperados, ~Mortes, ~Total,
+  "Vacinados", "197", "2", "199",
+  "Não-vacinados", "139", "19", "158",
+  "Total", "336", "21", "357"
+) |> knitr::kable(caption = "Yule (1912), vacinação × recuperação (n = 357)")
+```
+
 **Correlação, assimetria, curtose.**
 $$
 r = \frac{\sum_i (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i(x_i-\bar x)^2}\sqrt{\sum_i(y_i-\bar y)^2}}
-\qquad
+$$
+$$
 \text{Assimetria} = \frac{\frac1n\sum_i(x_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
 \qquad
 \text{Curtose} = \frac{\frac1n\sum_i(x_i-\bar x)^4}{\mathrm{Var}(X)^2}
@@ -102,7 +130,7 @@ tibble::tribble(
 **Regra empírica (Normal):** $P(\mu\pm\sigma)\approx68{,}3\%$;
 $P(\mu\pm2\sigma)\approx95{,}4\%$; $P(\mu\pm3\sigma)\approx99{,}7\%$.
 
-## Apêndice A: Cálculo (resumo)
+## Apêndice B: Cálculo (resumo)
 
 $$
 \frac{d}{dx}c=0 \quad \frac{d}{dx}x^n=nx^{n-1} \quad \frac{d}{dx}e^x=e^x

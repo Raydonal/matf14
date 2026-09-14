@@ -31,7 +31,7 @@ Qual a probabilidade de um saque levar mais de 30 segundos?
 
 --
 
-**Solução.** \(X\sim\text{Unif}(10,40)\).
+**Solução.** \\(X\sim\text{Unif}(10,40)\\).
 $$
 P(X&gt;30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
 $$
@@ -44,12 +44,12 @@ $$
 
 ## Problema 2: Normal, padronização
 
-O tempo de entrega de um e-commerce é \(X\sim N(5,\ 1{,}5^2)\) dias. Qual a probabilidade de a
+O tempo de entrega de um e-commerce é \\(X\sim N(5,\ 1{,}5^2)\\) dias. Qual a probabilidade de a
 entrega demorar mais de 8 dias?
 
 --
 
-**Solução.** \(Z=\frac{8-5}{1{,}5}=2\); \(P(X&gt;8)=P(Z&gt;2)\).
+**Solução.** \\(Z=\frac{8-5}{1{,}5}=2\\); \\(P(X&gt;8)=P(Z&gt;2)\\).
 
 ```{r problema2}
 1 - pnorm(8, mean = 5, sd = 1.5)
@@ -60,27 +60,28 @@ entrega demorar mais de 8 dias?
 
 ## Problema 3: Integral direta
 
-\(X\) tem densidade \(f(x)=3x^2\), \(0\le x\le1\) (e \(f(x)=0\) fora desse intervalo).
+\\(X\\) tem densidade \\(f(x)=3x^2\\), \\(0\le x\le1\\) (e \\(f(x)=0\\) fora desse intervalo).
 
-**(a)** Confirme que \(f\) é uma densidade válida. **(b)** Calcule \(P(X\le 0{,}5)\).
+**(a)** Confirme que \\(f\\) é uma densidade válida. **(b)** Calcule \\(P(X\le 0{,}5)\\).
 
 --
 
-**Solução (a).** \(\int\_0^1 3x^2\,dx = [x^3]\_0^1 = 1-0=1\) ✓
+**Solução (a).** \\(\int\_0^1 3x^2\,dx = [x^3]\_0^1 = 1-0=1\\) ✓
 
-**Solução (b).** \(F(x)=x^3\); \(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\).
+**Solução (b).** \\(F(x)=x^3\\); \\(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\\).
 
 ```{r problema3}
-integrate(function(x) 3*x^2, 0, 1)
-0.5^3
+integrate(function(x) 3*x^2, 0, 1)     # confirma o item (a): integral total = 1
+0.5^3                                   # F(0,5) pela primitiva
+integrate(function(x) 3*x^2, 0, 0.5)   # mesmo valor, por integração numérica direta
 ```
 
 ---
 
 ## Problema 4: combinando Cap. 3 e Cap. 4
 
-Uma seguradora modela o número de sinistros/ano como \(N\sim\text{Poisson}(2)\) e, dado que houve ao
-menos 1 sinistro, o valor de cada sinistro como \(V\sim N(5000, 1200^2)\). Qual a probabilidade de
+Uma seguradora modela o número de sinistros/ano como \\(N\sim\text{Poisson}(2)\\) e, dado que houve ao
+menos 1 sinistro, o valor de cada sinistro como \\(V\sim N(5000, 1200^2)\\). Qual a probabilidade de
 haver pelo menos 1 sinistro **e** o próximo sinistro (se ocorrer) custar mais de R$ 7.000?
 
 --
@@ -96,6 +97,63 @@ p_pelo_menos_1 * p_valor_alto
 
 ---
 
+## Problema 5: retorno de um fundo de investimento
+
+O retorno anual de um fundo tem distribuição \\(X\sim N(7{,}98\%,\ (21{,}13\%)^2)\\). Encontre a
+probabilidade do retorno em um ano qualquer ser **(a)** maior que 10% e **(b)** menor que -5%.
+
+--
+
+**Solução (a).** Padronizando: \\(z=\dfrac{10-7{,}98}{21{,}13}\approx0{,}10\\), logo
+\\(P(X&gt;10)=P(Z&gt;0{,}10)=1-\Phi(0{,}10)\\).
+
+**Solução (b).** \\(z=\dfrac{-5-7{,}98}{21{,}13}\approx-0{,}61\\), logo
+\\(P(X&lt;-5)=\Phi(-0{,}61)\\).
+
+```{r problema5}
+mu_f <- 7.98; sigma_f <- 21.13
+
+z_a <- (10 - mu_f) / sigma_f
+z_a
+1 - pnorm(z_a)              # via padronização
+1 - pnorm(10, mu_f, sigma_f) # direto na escala original, mesmo resultado
+
+z_b <- (-5 - mu_f) / sigma_f
+z_b
+pnorm(z_b)
+pnorm(-5, mu_f, sigma_f)
+```
+
+Note que os dois caminhos (padronizar e olhar \\(Z\\), ou usar `pnorm(x, mu, sigma)` direto) sempre
+dão o mesmo número, é só uma questão de qual é mais conveniente calcular à mão.
+
+---
+
+## Problema 6: achando a constante normalizadora
+
+\\(X\\) tem densidade \\(f(x) = C\cdot x\\), \\(0\le x&lt;1\\) (e \\(f(x)=0\\) fora desse intervalo). **(a)**
+Determine \\(C\\). **(b)** Calcule a FDA \\(F(x)\\). **(c)** Calcule \\(P(0{,}2&lt;X\le0{,}4)\\).
+
+--
+
+**Solução (a).** \\(\int\_0^1 C x\,dx = C\left[\dfrac{x^2}{2}\right]\_0^1 = \dfrac{C}{2} = 1
+\Rightarrow C=2\\). Diferente dos problemas anteriores (onde \\(f\\) já vinha pronta), aqui a
+condição \\(\int f = 1\\) é o que **define** a constante.
+
+**Solução (b).** \\(F(x) = \int\_0^x 2t\,dt = x^2\\), para \\(0\le x&lt;1\\) (\\(F(x)=0\\) antes, \\(F(x)=1\\)
+depois).
+
+**Solução (c).** \\(P(0{,}2&lt;X\le0{,}4) = F(0{,}4)-F(0{,}2) = 0{,}4^2-0{,}2^2 = 0{,}12\\).
+
+```{r problema6}
+C <- 1 / integrate(function(x) x, 0, 1)$value
+C
+Fx6 <- function(x) x^2
+Fx6(0.4) - Fx6(0.2)
+```
+
+---
+
 ## Discussão: antes da revisão final
 
 **1.** O Problema 4 combina uma VA discreta (número de sinistros) com uma VA contínua (valor de
@@ -103,9 +161,9 @@ cada sinistro) num mesmo modelo. Em que outras situações econômicas você ima
 os dois tipos, por exemplo, "número de clientes que compram" (discreto) e "valor de cada compra"
 (contínuo)?
 
-**2.** No Problema 3, a densidade \(f(x)=3x^2\) cresce à medida que \(x\) se aproxima de 1. O que isso
-significa, em termos de onde a probabilidade está mais concentrada dentro do intervalo \([0,1]\)? Sem
-calcular, você esperaria \(E(X)\) maior ou menor que \(0{,}5\) (o ponto médio do intervalo)?
+**2.** No Problema 3, a densidade \\(f(x)=3x^2\\) cresce à medida que \\(x\\) se aproxima de 1. O que isso
+significa, em termos de onde a probabilidade está mais concentrada dentro do intervalo \\([0,1]\\)? Sem
+calcular, você esperaria \\(E(X)\\) maior ou menor que \\(0{,}5\\) (o ponto médio do intervalo)?
 
 ---
 

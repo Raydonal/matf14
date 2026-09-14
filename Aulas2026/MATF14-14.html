@@ -48,7 +48,7 @@ class: inverse, center, middle
 
 ## Teorema da probabilidade total
 
-Se \(B\_1,\ldots,B\_k\) particionam \(\Omega\):
+Se \\(B\_1,\ldots,B\_k\\) particionam \\(\Omega\\):
 
 $$
 P(A) = \sum\_{i=1}^k P(A\mid B\_i)\,P(B\_i)
@@ -64,16 +64,43 @@ $$
 P(B\_i\mid A) = \frac{P(A\mid B\_i)\,P(B\_i)}{\sum\_{j=1}^k P(A\mid B\_j)\,P(B\_j)}
 $$
 
-\(P(B\_i)\): probabilidade **a priori**. \(P(B\_i\mid A)\): probabilidade **a posteriori**, depois de
-observar a evidência \(A\).
+\\(P(B\_i)\\): probabilidade **a priori**. \\(P(B\_i\mid A)\\): probabilidade **a posteriori**, depois de
+observar a evidência \\(A\\).
 
 ---
 
 ## Por que isso importa
 
-Frequentemente sabemos \(P(\text{evidência}\mid\text{causa})\) (fácil de medir por frequência
-histórica) e queremos \(P(\text{causa}\mid\text{evidência})\) (o que realmente importa, mas é difícil
+Frequentemente sabemos \\(P(\text{evidência}\mid\text{causa})\\) (fácil de medir por frequência
+histórica) e queremos \\(P(\text{causa}\mid\text{evidência})\\) (o que realmente importa, mas é difícil
 de medir direto). Bayes é a ponte entre as duas.
+
+---
+
+## Fixando o mecanismo com números simples
+
+Uma corretora avalia \\(P(B)=0{,}10\\) (a priori) de a bolsa cair amanhã. Surge a notícia de que o
+dólar subiu hoje, evento \\(A\\). Historicamente: nos dias em que a bolsa caiu no dia seguinte, o
+dólar tinha subido no dia anterior em 20% dos casos (\\(P(A\mid B)=0{,}20\\)); nos dias em que a bolsa
+subiu, o dólar tinha subido em apenas 5% dos casos (\\(P(A\mid B^c)=0{,}05\\)).
+
+--
+
+Como \\(B\\) e \\(B^c\\) formam uma partição, com \\(P(B^c)=1-0{,}10=0{,}90\\), a conta é feita **à mão**,
+fração por fração, antes de qualquer código:
+
+$$
+P(B\mid A) = \frac{P(A\mid B)\,P(B)}{P(A\mid B)\,P(B) + P(A\mid B^c)\,P(B^c)}
+= \frac{0{,}20\times 0{,}10}{0{,}20\times 0{,}10 + 0{,}05\times 0{,}90}
+$$
+
+$$
+= \frac{0{,}020}{0{,}020+0{,}045} = \frac{0{,}020}{0{,}065} \approx 0{,}308
+$$
+
+A notícia da alta do dólar quase **triplicou** a probabilidade de queda da bolsa, de 10% (a priori)
+para cerca de 30,8% (a posteriori). O exemplo a seguir repete exatamente esse mecanismo, num
+contexto com consequências práticas mais imediatas.
 
 ---
 
@@ -85,8 +112,18 @@ class: inverse, center, middle
 
 ## Resolvendo a provocação inicial
 
-\(P(\text{suspeito}\mid\text{fraude})=0{,}95\); \(P(\text{suspeito}\mid\text{legítima})=0{,}03\);
-\(P(\text{fraude})=0{,}002\).
+\\(P(\text{suspeito}\mid\text{fraude})=0{,}95\\); \\(P(\text{suspeito}\mid\text{legítima})=0{,}03\\);
+\\(P(\text{fraude})=0{,}002\\), logo \\(P(\text{legítima})=0{,}998\\). Antes do R, plugando os números
+diretamente na fórmula, fração por fração, como no slide anterior:
+
+$$
+P(\text{fraude}\mid\text{susp.}) = \frac{0{,}95\times 0{,}002}{0{,}95\times 0{,}002 + 0{,}03\times 0{,}998}
+= \frac{0{,}0019}{0{,}0019+0{,}02994} = \frac{0{,}0019}{0{,}03184} \approx 0{,}0597
+$$
+
+--
+
+Conferindo com R (a mesma conta, sem risco de erro de digitação nas casas decimais):
 
 
 ``` r
@@ -140,7 +177,7 @@ class: inverse, center, middle
 
 **1.** Compare o resultado calculado (0.06) com o palpite que você
 registrou no início da aula. Se você chutou um número bem mais alto, tente articular por que a
-intuição humana costuma superestimar \(P(\text{causa}\mid\text{evidência})\) nesses casos, o que ela
+intuição humana costuma superestimar \\(P(\text{causa}\mid\text{evidência})\\) nesses casos, o que ela
 está "esquecendo" de levar em conta?
 
 **2.** Um gestor de risco vê a taxa de detecção (95%) do sistema antifraude e conclui "o sistema é
@@ -151,12 +188,12 @@ confiável". Reformule a frase dele de forma tecnicamente correta, usando o resu
 ## Rodada 2: sensibilidade ao cenário
 
 **3.** Se a taxa de fraude na base **subisse** de 0,2% para 5% (um período de fraudes em massa), o
-que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo o mesmo sistema de detecção?
+que aconteceria com \\(P(\text{fraude}\mid\text{suspeito})\\), mantendo o mesmo sistema de detecção?
 Refaça a conta e confirme sua intuição antes de calcular.
 
 **4.** Um banco decide usar o mesmo sistema antifraude, mas agora aplicado só a transações acima de
 R$ 10.000 (onde a taxa de fraude histórica é bem maior, digamos 3% em vez de 0,2%). Sem refazer a
-conta completa, você espera que \(P(\text{fraude}\mid\text{suspeito})\) suba ou desça em relação ao
+conta completa, você espera que \\(P(\text{fraude}\mid\text{suspeito})\\) suba ou desça em relação ao
 caso original? Depois, confirme calculando.
 
 ---
@@ -172,6 +209,8 @@ acerto do teste, sozinha, nunca é suficiente para avaliar sua utilidade prátic
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 
 ``` r

@@ -67,8 +67,31 @@ cliente específico vai inadimplir. Probabilidade é a linguagem formal para ess
 ## Experimento aleatório, espaço amostral, evento
 
 - **Experimento aleatório**: processo cujo resultado não pode ser previsto com certeza.
-- **Espaço amostral** \(\Omega\): conjunto de todos os resultados possíveis.
-- **Evento** \(A\subseteq\Omega\): um subconjunto de resultados de interesse.
+- **Espaço amostral** \\(\Omega\\): conjunto de todos os resultados possíveis.
+- **Evento** \\(A\subseteq\Omega\\): um subconjunto de resultados de interesse.
+
+---
+
+## Nem todo espaço amostral é pequeno
+
+\\(\Omega\\) pode ser **finito** (as quatro categorias de risco de crédito que vemos daqui a pouco),
+mas também pode ser:
+
+--
+
+**Enumerável (infinito contável)**: número de sinistros que um segurado reporta em um ano,
+\\(\Omega = \\{0, 1, 2, 3, \ldots\\}\\). Não há limite superior fixo, mas dá para contar um por um.
+
+--
+
+**Não enumerável (contínuo)**: o retorno percentual de uma ação no próximo mês,
+\\(\Omega = \\{x; x \in \mathbb{R}\\}\\). Entre quaisquer dois retornos possíveis sempre existe outro,
+não dá para "listar" os resultados um a um.
+
+--
+
+A distinção não é só formal: é a mesma que separa variável **discreta** de **contínua** (Aula 01) —
+aqui aplicada ao espaço de resultados, e não a uma variável já observada.
 
 ---
 
@@ -78,13 +101,13 @@ Como eventos são conjuntos, valem as operações usuais:
 
 | Operação | Notação | Significado |
 |---|---|---|
-| União | \(A\cup B\) | \(A\) ou \(B\) ocorre |
-| Interseção | \(A\cap B\) | \(A\) e \(B\) ocorrem juntos |
-| Complemento | \(A^c\) | \(A\) não ocorre |
+| União | \\(A\cup B\\) | \\(A\\) ou \\(B\\) ocorre |
+| Interseção | \\(A\cap B\\) | \\(A\\) e \\(B\\) ocorrem juntos |
+| Complemento | \\(A^c\\) | \\(A\\) não ocorre |
 
 --
 
-**Mutuamente exclusivos**: \(A\cap B=\emptyset\), não podem ocorrer juntos.
+**Mutuamente exclusivos**: \\(A\cap B=\emptyset\\), não podem ocorrer juntos.
 
 Exemplo: "inflação do mês acima da meta" e "inflação do mês abaixo do piso da meta", mutuamente
 exclusivos (não podem ocorrer no mesmo mês).
@@ -102,14 +125,14 @@ class: inverse, center, middle
 Um banco classifica cada empréstimo em uma de quatro categorias:
 
 $$
-\Omega = \{AA, A, B, C\}
+\Omega = \\{AA, A, B, C\\}
 $$
 
-Evento "risco elevado": \(R = \{B, C\}\). Evento "risco baixo": \(L=\{AA,A\}\).
+Evento "risco elevado": \\(R = \\{B, C\\}\\). Evento "risco baixo": \\(L=\\{AA,A\\}\\).
 
 --
 
-\(R\) e \(L\) são mutuamente exclusivos (\(R\cap L=\emptyset\)) e \(R\cup L=\Omega\), formam uma
+\\(R\\) e \\(L\\) são mutuamente exclusivos (\\(R\cap L=\emptyset\\)) e \\(R\cup L=\Omega\\), formam uma
 **partição** do espaço amostral: pedaços que não se sobrepõem e cobrem tudo, como neste diagrama
 (conceito que retomamos na Aula 14, Teorema de Bayes):
 
@@ -119,7 +142,7 @@ Evento "risco elevado": \(R = \{B, C\}\). Evento "risco baixo": \(L=\{AA,A\}\).
 
 ## Um espaço amostral maior: dois empréstimos
 
-Se o banco observa 2 empréstimos, cada um classificado em \(\{AA,A,B,C\}\):
+Se o banco observa 2 empréstimos, cada um classificado em \\(\\{AA,A,B,C\\}\\):
 
 
 ``` r
@@ -144,8 +167,41 @@ head(Omega, 4)
 ## 4    C   AA
 ```
 
-\(\#\Omega = 4\times 4 = 16\) resultados possíveis, o princípio multiplicativo de contagem
+\\(|\Omega| = 4\times 4 = 16\\) resultados possíveis, o princípio multiplicativo de contagem
 (retomado na Aula 10) já aparece aqui.
+
+---
+
+## Um evento como subconjunto de \\(\Omega\\)
+
+Evento \\(R\\) = "pelo menos um dos dois empréstimos tem risco elevado (B ou C)". Contando à mão:
+\\(R^c\\) (nenhum dos dois é B ou C) só ocorre quando **ambos** são AA ou A, \\(2\times 2=4\\) combinações,
+logo \\(|R| = 16-4=12\\). Conferindo com o código:
+
+
+``` r
+Omega$risco_elevado &lt;- Omega$emp1 %in% c("B", "C") | Omega$emp2 %in% c("B", "C")
+table(Omega$risco_elevado)
+```
+
+```
+## 
+## FALSE  TRUE 
+##     4    12
+```
+
+A contagem bate: 4 combinações fora de \\(R\\), 12 dentro, exatamente o \\(4\\) e o \\(12\\) da conta manual
+acima.
+
+---
+
+## O mesmo evento, visualmente
+
+&lt;img src="MATF14-09_files/figure-html/evento-visual-plot-1.png" alt="" width="504" /&gt;
+
+Cada quadrado é um dos 16 resultados de \\(\Omega\\); o evento \\(R\\) (dourado) é literalmente um
+subconjunto de células nessa grade, exatamente a ideia de "evento como subconjunto do espaço
+amostral" desta aula, só que agora visível.
 
 ---
 
@@ -159,7 +215,7 @@ class: inverse, center, middle
 
 **1.** Escolha uma das quatro perguntas de abertura (investir na bolsa, seguro do carro, guarda-
 chuva, disciplina eletiva). Defina explicitamente: qual é o experimento aleatório, qual é um
-espaço amostral razoável \(\Omega\), e qual evento \(A\) representa a "consequência ruim" que você quer
+espaço amostral razoável \\(\Omega\\), e qual evento \\(A\\) representa a "consequência ruim" que você quer
 evitar.
 
 **2.** Dê um exemplo de dois eventos econômicos que sejam mutuamente exclusivos, e outro de dois
@@ -172,7 +228,7 @@ eventos que possam ocorrer simultaneamente (não exclusivos).
 **3.** O evento "a Selic sobe na próxima reunião" e o evento "a Selic sobe mais de 0,5 p.p. na
 próxima reunião" têm alguma relação de subconjunto entre si? Qual?
 
-**4.** Um analista define \(\Omega\) do PIB do próximo trimestre como \(\{\)crescimento, recessão\(\}\).
+**4.** Um analista define \\(\Omega\\) do PIB do próximo trimestre como \\(\\{\\)crescimento, recessão\\(\\}\\).
 Outro define com 5 categorias mais finas. Nenhum dos dois está "errado", mas o que se perde ao
 escolher a versão mais grosseira?
 

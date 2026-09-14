@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>C.5 Apêndice A: Cálculo (resumo) | Estatística Econômica I</title>
+  <title>3.5 Da fórmula à simulação | Estatística Econômica I</title>
   <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
   <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="C.5 Apêndice A: Cálculo (resumo) | Estatística Econômica I" />
+  <meta property="og:title" content="3.5 Da fórmula à simulação | Estatística Econômica I" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="C.5 Apêndice A: Cálculo (resumo) | Estatística Econômica I" />
+  <meta name="twitter:title" content="3.5 Da fórmula à simulação | Estatística Econômica I" />
   
   <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="capítulo-4-variáveis-aleatórias-contínuas.html"/>
-<link rel="next" href="tabela-valores-selecionados-da-normal-padrão.html"/>
+<link rel="prev" href="modelos-discretos.html"/>
+<link rel="next" href="fechando-o-capítulo-2.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -180,20 +180,27 @@ div.csl-indent {
 <li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-frequência"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas de frequência</a></li>
-<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.2</b> Tabelas de dupla entrada</a></li>
-<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.3</b> Gráficos para variáveis qualitativas</a></li>
-<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis quantitativas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#razão-e-taxa-de-variação"><i class="fa fa-check"></i><b>1.3.2</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.3</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis qualitativas</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.5</b> Gráficos para variáveis quantitativas</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.1</b> Um exemplo com dados da própria turma</a></li>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#média-a-partir-de-uma-tabela-de-frequências"><i class="fa fa-check"></i><b>1.4.1</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.2</b> Um exemplo com dados da própria turma</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
 <ul>
 <li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#quantis-distância-interquartílica-e-boxplot"><i class="fa fa-check"></i><b>1.5.1</b> Quantis, distância interquartílica e boxplot</a></li>
-<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.2</b> Desvio padrão, variância e coeficiente de variação</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quando-at-e-iqr-não-bastam-cidades-a-e-b"><i class="fa fa-check"></i><b>1.5.2</b> Quando AT e IQR não bastam: cidades A e B</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.3</b> Desvio padrão, variância e coeficiente de variação</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#aplicação-o-faturamento-das-empresas-cresceu-de-1998-para-1999"><i class="fa fa-check"></i><b>1.6.1</b> Aplicação: o faturamento das empresas cresceu de 1998 para 1999?</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#aplicação-número-de-empregados-versus-faturamento"><i class="fa fa-check"></i><b>1.6.2</b> Aplicação: número de empregados versus faturamento</a></li>
+</ul></li>
 <li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a></li>
 <li class="chapter" data-level="1.8" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.8</b> Fechando o capítulo</a></li>
 </ul></li>
@@ -232,7 +239,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
 <li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.5</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
+<li class="chapter" data-level="3.6" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.6</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
 <ul>
@@ -277,7 +285,7 @@ div.csl-indent {
 <li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
 <li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
 <li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
-<li class="chapter" data-level="C.5" data-path="apêndice-a-cálculo-resumo.html"><a href="apêndice-a-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Apêndice A: Cálculo (resumo)</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Apêndice B: Cálculo (resumo)</a></li>
 <li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -300,22 +308,60 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="apêndice-a-cálculo-resumo" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">C.5</span> Apêndice A: Cálculo (resumo)<a href="apêndice-a-cálculo-resumo.html#apêndice-a-cálculo-resumo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><span class="math display">\[
-\frac{d}{dx}c=0 \quad \frac{d}{dx}x^n=nx^{n-1} \quad \frac{d}{dx}e^x=e^x
-\]</span>
-<span class="math display">\[
-\int c\,dx=cx+k \quad \int x^n dx=\frac{x^{n+1}}{n+1}+k\ (n\ne-1) \quad \int e^{\lambda x}dx=\frac{1}{\lambda}e^{\lambda x}+k
-\]</span></p>
+<div id="va-discreta-simulacao" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Da fórmula à simulação<a href="va-discreta-simulacao.html#va-discreta-simulacao" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Até aqui, cada distribuição foi tratada apenas analiticamente: uma fórmula para <span class="math inline">\(p(x)\)</span>, calculada
+via <code>dbinom()</code>/<code>dpois()</code>. Há uma segunda forma, complementar, de entender essas distribuições:
+<strong>simular</strong> milhares de repetições do experimento aleatório e comparar as estatísticas simuladas
+(média, variância amostral) com os valores teóricos <span class="math inline">\(E(X)\)</span> e <span class="math inline">\(\mathrm{Var}(X)\)</span>. Essa é a mesma
+lógica por trás de qualquer simulação de Monte Carlo, mencionada informalmente no Capítulo
+<a href="variaveis-aleatorias-continuas.html#variaveis-aleatorias-continuas">4</a>, e que colocamos em prática aqui pela primeira vez.</p>
+<p>A função mais básica para isso é <code>sample()</code>, que sorteia valores de um conjunto com probabilidades
+dadas. Uma Bernoulli(<span class="math inline">\(p\)</span>) nada mais é que <code>sample(c(0,1), n, prob = c(1-p, p), replace = TRUE)</code>:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="va-discreta-simulacao.html#cb106-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb106-2"><a href="va-discreta-simulacao.html#cb106-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb106-3"><a href="va-discreta-simulacao.html#cb106-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">size =</span> <span class="dv">1000</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> p, p), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb106-4"><a href="va-discreta-simulacao.html#cb106-4" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media_simulada =</span> <span class="fu">mean</span>(x), <span class="at">media_teorica =</span> p)</span></code></pre></div>
+<pre><code>## media_simulada  media_teorica 
+##          0.293          0.300</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="va-discreta-simulacao.html#cb108-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_simulada =</span> <span class="fu">var</span>(x), <span class="at">var_teorica =</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p))</span></code></pre></div>
+<pre><code>## var_simulada  var_teorica 
+##    0.2073584    0.2100000</code></pre>
+<p>Para Binomial e Poisson, o R já tem geradores dedicados, <code>rbinom()</code> e <code>rpois()</code>, que fazem
+internamente algo equivalente a somar <span class="math inline">\(n\)</span> Bernoullis (Binomial) ou sortear contagens raras
+(Poisson):</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="va-discreta-simulacao.html#cb110-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> <span class="fl">0.08</span>)   <span class="co"># carteira de microcrédito, seção anterior</span></span>
+<span id="cb110-2"><a href="va-discreta-simulacao.html#cb110-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media_simulada =</span> <span class="fu">mean</span>(y), <span class="at">media_teorica =</span> <span class="dv">20</span> <span class="sc">*</span> <span class="fl">0.08</span>)</span></code></pre></div>
+<pre><code>## media_simulada  media_teorica 
+##            1.6            1.6</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="va-discreta-simulacao.html#cb112-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_simulada =</span> <span class="fu">var</span>(y), <span class="at">var_teorica =</span> <span class="dv">20</span> <span class="sc">*</span> <span class="fl">0.08</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.08</span>))</span></code></pre></div>
+<pre><code>## var_simulada  var_teorica 
+##     1.597598     1.472000</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="va-discreta-simulacao.html#cb114-1" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">1000</span>, <span class="at">lambda =</span> <span class="fl">3.2</span>)                 <span class="co"># central de atendimento</span></span>
+<span id="cb114-2"><a href="va-discreta-simulacao.html#cb114-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media_simulada =</span> <span class="fu">mean</span>(z), <span class="at">media_teorica =</span> <span class="fl">3.2</span>)</span></code></pre></div>
+<pre><code>## media_simulada  media_teorica 
+##          3.227          3.200</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="va-discreta-simulacao.html#cb116-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_simulada =</span> <span class="fu">var</span>(z), <span class="at">var_teorica =</span> <span class="fl">3.2</span>)</span></code></pre></div>
+<pre><code>## var_simulada  var_teorica 
+##     3.202674     3.200000</code></pre>
+<p>Em todos os três casos, média e variância simuladas ficam próximas dos valores teóricos, mas não
+idênticas: a diferença encolhe à medida que o número de repetições simuladas cresce, a mesma
+lógica de estabilização de frequências relativas discutida no Capítulo 2. Essa é a ideia central de
+qualquer simulação de Monte Carlo: usar sorteios aleatórios repetidos como substituto
+computacional para um cálculo teórico, útil sobretudo quando o cálculo exato é difícil ou
+impossível de obter analiticamente.</p>
+<div class="caixa-r"><strong>Uso do R</strong>: o padrão <code>r</code> + nome da distribuição
+(<code>rbinom</code>, <code>rpois</code> e, de forma mais genérica, <code>sample()</code>) gera
+valores aleatórios; combinado com <code>mean()</code> e <code>var()</code>, permite checar
+empiricamente qualquer fórmula teórica de \(E(X)\) e \(\mathrm{Var}(X)\) vista neste capítulo.</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="capítulo-4-variáveis-aleatórias-contínuas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tabela-valores-selecionados-da-normal-padrão.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modelos-discretos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fechando-o-capítulo-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

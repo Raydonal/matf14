@@ -98,7 +98,7 @@ class: inverse, center, middle
 
 ## Tabela de frequências
 
-Para \(f\_i\) casos na categoria \(i\), de um total \(n=\sum\_i f\_i\):
+Para \\(f\_i\\) casos na categoria \\(i\\), de um total \\(n=\sum\_i f\_i\\):
 
 $$
 \text{Proporção}\_i = \frac{f\_i}{n}, \qquad \text{Porcentagem}\_i = 100\times\frac{f\_i}{n}\,\%
@@ -108,6 +108,31 @@ $$
 
 Guarde essa definição, ela é exatamente o que está por trás da pizza do slide anterior, e é o que
 o Bloco 2 vai reconstruir como tabela.
+
+---
+
+## Razão e taxa de variação
+
+**Razão**: para \\(f\_1\\) casos numa categoria e \\(f\_2\\) em outra, razão\\(\_{1:2} = f\_1/f\_2\\)
+(lida como "para cada \\(n\\) da categoria 2, há \\(n\times f\_1/f\_2\\) da categoria 1").
+
+--
+
+**Taxa de variação**: para o valor de uma variável em dois instantes, \\(f\_1\\) e \\(f\_2\\),
+
+$$
+\text{taxa de variação} = 100\times\frac{f\_2-f\_1}{f\_1}\,\%
+$$
+
+--
+
+É **literalmente** a fórmula do IPCA mês a mês: \\(f\_1\\) é o índice do mês anterior, \\(f\_2\\) o
+atual.
+
+```{r taxa-variacao-empresa1}
+e1 <- empresas |> filter(Empresa == 1)
+100 * (e1$faturamento99 - e1$faturamento98) / e1$faturamento98   # taxa de variação, empresa 1
+```
 
 ---
 
@@ -128,6 +153,24 @@ prefeitos |>
 Dividir pelo total da **linha** (não do total geral) dá a composição condicional daquela região,
 essencial para comparar regiões de tamanhos diferentes: em toda linha, o número de prefeitas é uma
 fração pequena do de prefeitos.
+
+---
+
+## Aplicação histórica: a tabela de Yule (1912)
+
+| | Recuperados | Mortes | Total |
+|---|---|---|---|
+| Vacinados | 197 | 2 | 199 |
+| Não-vacinados | 139 | 19 | 158 |
+| Total | 336 | 21 | 357 |
+
+Yule, G. U. (1912), estudo sobre vacinação contra a varíola, uma das tabelas de dupla entrada mais
+citadas da história da Estatística.
+
+--
+
+Proporção de mortes: vacinados \\(2/199\approx1{,}0\%\\); não-vacinados \\(19/158\approx12{,}0\%\\).
+Quatro células já carregam a evidência quantitativa central do argumento a favor da vacinação.
 
 ---
 

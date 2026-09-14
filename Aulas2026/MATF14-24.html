@@ -28,8 +28,8 @@ class: inverse, center, middle
 
 ## Um paradoxo aparente
 
-&gt; Toda variável aleatória contínua tem \(P(X=x)=0\) para qualquer valor específico \(x\). Mas
-&gt; obviamente \(X\) assume *algum* valor quando o experimento acontece. Como um evento de
+&gt; Toda variável aleatória contínua tem \\(P(X=x)=0\\) para qualquer valor específico \\(x\\). Mas
+&gt; obviamente \\(X\\) assume *algum* valor quando o experimento acontece. Como um evento de
 &gt; probabilidade zero pode, ainda assim, ocorrer?
 
 ---
@@ -42,8 +42,8 @@ class: inverse, center, middle
 
 ## Do discreto ao contínuo
 
-\(X\) é **contínua** quando assume qualquer valor em um intervalo da reta. Diferença crucial: para
-\(X\) contínua, \(P(X=x)=0\) para **todo** \(x\), a probabilidade só se acumula em intervalos.
+\\(X\\) é **contínua** quando assume qualquer valor em um intervalo da reta. Diferença crucial: para
+\\(X\\) contínua, \\(P(X=x)=0\\) para **todo** \\(x\\), a probabilidade só se acumula em intervalos.
 
 --
 
@@ -53,8 +53,8 @@ $$
 P(a\le X\le b) = \int\_a^b f(x)\,dx, \qquad f(x)\ge0, \qquad \int\_{-\infty}^{\infty}f(x)\,dx=1
 $$
 
-\(f(x)\) **não é probabilidade**, é densidade. Geometricamente: \(f\) é a curva, \(P(a\le X\le b)\) é a
-**área** sob ela entre \(a\) e \(b\).
+\\(f(x)\\) **não é probabilidade**, é densidade. Geometricamente: \\(f\\) é a curva, \\(P(a\le X\le b)\\) é a
+**área** sob ela entre \\(a\\) e \\(b\\).
 
 ---
 
@@ -62,9 +62,9 @@ $$
 
 &lt;img src="images/fdp_exemplo_mao.jpg" alt="" width="65%" /&gt;
 
-Leia a figura devagar: a curva é \(f(x)\), a região hachurada entre \(a\) e \(b\) é
-\(P(a&amp;lt; X\le b)\), e a área sob a curva **inteira** vale 1. É a mesma figura, com \(f\), \(a\) e
-\(b\) diferentes, que vai reaparecer em toda distribuição contínua deste capítulo, inclusive nos
+Leia a figura devagar: a curva é \\(f(x)\\), a região hachurada entre \\(a\\) e \\(b\\) é
+\\(P(a&amp;lt; X\le b)\\), e a área sob a curva **inteira** vale 1. É a mesma figura, com \\(f\\), \\(a\\) e
+\\(b\\) diferentes, que vai reaparecer em toda distribuição contínua deste capítulo, inclusive nos
 dois exemplos a seguir.
 
 ---
@@ -88,15 +88,21 @@ volume de chuva *esperado* (climatologicamente) para o mês inteiro de novembro.
 ## Colocando o "76%" em números
 
 Suponha, só para exercitar a ferramenta (números ilustrativos, não a série real da Defesa Civil),
-que o acumulado esperado para novembro seja \(\mu=300\)mm e que o acumulado diário em dias de
-frente fria siga uma Exponencial com média 40mm, \(f(x)=0{,}025\,e^{-0{,}025x}\), \(x\ge0\). A
-manchete equivale a um único dia acumulando \(0{,}76\times300\approx228\)mm. Qual a probabilidade
-de isso acontecer, \(P(X\ge228)\)?
+que o acumulado esperado para novembro seja \\(\mu=300\\)mm e que o acumulado diário em dias de
+frente fria siga uma Exponencial com média 40mm, \\(f(x)=0{,}025\,e^{-0{,}025x}\\), \\(x\ge0\\). A
+manchete equivale a um único dia acumulando \\(0{,}76\times300\approx228\\)mm. Qual a probabilidade
+de isso acontecer, \\(P(X\ge228)\\)?
+
+**Antes de pedir ao R**: a primitiva de \\(f(x)=0{,}025\,e^{-0{,}025x}\\) é \\(F(x)=-e^{-0{,}025x}\\)
+(confira: \\(F'(x)=0{,}025\,e^{-0{,}025x}=f(x)\\)). Logo, à mão,
+$$
+P(X\ge228)=\lim\_{b\to\infty}F(b)-F(228)=0-\left(-e^{-0{,}025\times228}\right)=e^{-5{,}7}\approx0{,}0033
+$$
 
 
 ``` r
 f &lt;- function(x) 0.025*exp(-0.025*x)
-integrate(f, lower = 228, upper = Inf)
+integrate(f, lower = 228, upper = Inf)   # confirma o valor calculado à mão acima
 ```
 
 ```
@@ -104,14 +110,17 @@ integrate(f, lower = 228, upper = Inf)
 ```
 
 Uma probabilidade desse tamanho é exatamente o que torna o evento **notícia**: sob o modelo, um dia
-assim é raro, o mesmo raciocínio de \(P(X\ge x\_{obs})\) que vamos reaplicar (com uma variável
+assim é raro, o mesmo raciocínio de \\(P(X\ge x\_{obs})\\) que vamos reaplicar (com uma variável
 diferente) na fila de espera a seguir.
 
 ---
 
-## Tempo de espera em uma fila
+## Tempo de espera em uma fila (agência bancária)
 
-\(X=\) tempo de espera (minutos), \(f(x)=0{,}2\,e^{-0{,}2x}\), \(x\ge0\) (Exponencial).
+\\(X=\\) tempo de espera no caixa de uma agência (minutos), \\(f(x)=0{,}2\,e^{-0{,}2x}\\), \\(x\ge0\\)
+(Exponencial). Assim como a chuva, é uma mensuração econômica típica: tempo de atendimento,
+duração de uma ligação de call center, tempo até o próximo saque num caixa eletrônico, todos
+seguem o mesmo padrão contínuo não negativo.
 
 
 ``` r
@@ -132,9 +141,14 @@ $$
 P(5\le X\le 15) = \int\_5^{15} 0{,}2\,e^{-0{,}2x}\,dx
 $$
 
+**À mão primeiro**: a primitiva de \\(0{,}2\,e^{-0{,}2x}\\) é \\(-e^{-0{,}2x}\\), então
+$$
+\int\_5^{15} 0{,}2\,e^{-0{,}2x}\,dx = \left[-e^{-0{,}2x}\right]\_5^{15} = -e^{-3}-\left(-e^{-1}\right)=e^{-1}-e^{-3}\approx0{,}368-0{,}050=0{,}318
+$$
+
 
 ``` r
-integrate(f, lower = 5, upper = 15)
+integrate(f, lower = 5, upper = 15)   # confirma o valor calculado à mão
 ```
 
 ```
@@ -151,14 +165,14 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo o paradoxo da abertura
 
-**1.** Ofereça uma resposta ao paradoxo: se \(P(X=x)=0\) para todo \(x\), como \(X\) ainda "assume" algum
+**1.** Ofereça uma resposta ao paradoxo: se \\(P(X=x)=0\\) para todo \\(x\\), como \\(X\\) ainda "assume" algum
 valor com probabilidade total 1? (Dica: pense em quantos valores diferentes existem entre 0 e 1,
 o intervalo é "infinito" de um jeito diferente da lista de números naturais.)
 
-**2.** Compare com o caso discreto: lá, \(\sum\_i p(x\_i)=1\) com uma soma de (possivelmente) infinitos
+**2.** Compare com o caso discreto: lá, \\(\sum\_i p(x\_i)=1\\) com uma soma de (possivelmente) infinitos
 termos, mas cada termo positivo. Aqui, a "soma" vira integral e cada "termo" individual é zero. Por
 que a integral ainda pode dar 1 mesmo com "termos individuais nulos"? Essa é a mesma sutileza da
-integral imprópria do Apêndice A.
+integral imprópria do Apêndice B.
 
 ---
 

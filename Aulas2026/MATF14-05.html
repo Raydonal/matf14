@@ -30,7 +30,7 @@ class: inverse, center, middle
 &gt; Uma consultoria compara o tempo de aprovação de crédito em duas agências bancárias. A agência A
 &gt; tem tempos entre 3 e 8 dias. A agência B tem quase todos entre 2 e 6 dias, exceto um caso isolado
 &gt; de 45 dias (um processo travado no jurídico). Qual das duas parece "mais lenta" se você olhar só
-&gt; a amplitude total (\(x\_{max}-x\_{min}\))?
+&gt; a amplitude total (\\(x\_{max}-x\_{min}\\))?
 
 --
 
@@ -47,7 +47,7 @@ class: inverse, center, middle
 
 ## Quantis
 
-O **quantil de ordem \(p\)**, \(Q\_p\) (\(0&amp;lt;p&amp;lt;1\)), é o valor abaixo do qual está uma proporção \(p\) dos
+O **quantil de ordem \\(p\\)**, \\(Q\_p\\) (\\(0&amp;lt;p&amp;lt;1\\)), é o valor abaixo do qual está uma proporção \\(p\\) dos
 dados ordenados. Os **quartis** dividem a amostra em 4 partes iguais:
 
 $$
@@ -56,6 +56,35 @@ $$
 
 --
 
+## Algoritmo geral do percentil
+
+A mediana é só o caso \\(P=50\\) de um algoritmo geral, em 3 passos:
+
+**1.** Ordene os \\(n\\) valores. **2.** Calcule \\(k = P\cdot n/100\\). **3.** Se \\(k\\) for inteiro,
+o percentil é a média entre a \\(k\\)-ésima e a \\((k+1)\\)-ésima posição; senão, arredonde \\(k\\) para
+cima e use essa posição.
+
+--
+
+**Exemplo**: dados ordenados \\(18, 21, 23, 24, 28\\) (\\(n=5\\)):
+
+\\(Q\_{50}\\): \\(k=50\times5/100=2{,}5\\), não inteiro \\(\to\\) arredonda para 3 \\(\to Q\_{50}=23\\).
+
+\\(Q\_{25}\\): \\(k=25\times5/100=1{,}25\\), não inteiro \\(\to\\) arredonda para 2 \\(\to Q\_{25}=21\\).
+
+
+``` r
+x &lt;- c(18, 21, 23, 24, 28)
+quantile(x, probs = c(0.25, 0.5), type = 2)  # type=2 replica o algoritmo dos 3 passos
+```
+
+```
+## 25% 50% 
+##  21  23
+```
+
+---
+
 ## Distância interquartílica
 
 $$
@@ -63,13 +92,13 @@ IQR = Q\_3 - Q\_1
 $$
 
 Mede a dispersão dos 50% centrais, **robusta** a valores extremos, ao contrário da amplitude total
-\(AT = x\_{\max}-x\_{\min}\), que depende só de 2 pontos.
+\\(AT = x\_{\max}-x\_{\min}\\), que depende só de 2 pontos.
 
 ---
 
 ## Boxplot
 
-Representa \(Q\_1\), \(Q\_2\), \(Q\_3\) e sinaliza como **outlier** qualquer ponto além de
+Representa \\(Q\_1\\), \\(Q\_2\\), \\(Q\_3\\) e sinaliza como **outlier** qualquer ponto além de
 
 $$
 Q\_1 - 1{,}5\times IQR \qquad \text{ou} \qquad Q\_3 + 1{,}5\times IQR
@@ -132,7 +161,7 @@ class: inverse, center, middle
 ## Rodada 1: resolvendo a provocação inicial
 
 **1.** Recalcule mentalmente o caso das duas agências (A: 3–8 dias; B: 2–6 dias + um caso de 45
-dias). Compare \(AT\) e \(IQR\) para os dois cenários. Qual medida dá o veredito mais justo sobre
+dias). Compare \\(AT\\) e \\(IQR\\) para os dois cenários. Qual medida dá o veredito mais justo sobre
 "consistência do processo", e qual dá o veredito mais alarmante sobre "pior caso"? As duas
 perguntas são a mesma pergunta?
 
@@ -144,7 +173,7 @@ Que passo você tomaria antes de decidir?
 
 ## Rodada 2: o critério do outlier
 
-**3.** Por que o critério de outlier do boxplot usa \(1{,}5\times IQR\) e não, por exemplo, "3
+**3.** Por que o critério de outlier do boxplot usa \\(1{,}5\times IQR\\) e não, por exemplo, "3
 desvios padrão da média" (medida que ainda não vimos formalmente, mas você já ouviu falar)? O que
 muda quando a distribuição já é assimétrica, como faturamento?
 
@@ -154,9 +183,26 @@ estruturalmente (por exemplo, um novo sistema mais lento por padrão)?
 
 ---
 
+## Rodada 3: leitura de boxplot (ENEM/SISU/FUVEST)
+
+Um estudo real sobre bônus para bolsistas (USP) comparou, lado a lado em boxplots, as notas de
+**bolsistas** e **não-bolsistas** em dois momentos: nota do processo seletivo (SISU) e nota da
+FUVEST **sem** o bônus aplicado.
+
+**5.** Olhando só a posição da caixa (sem números, só a leitura visual do boxplot): qual par
+grupo/tipo de nota você esperaria ter a **mediana mais alta**? E o **menor percentil 25%**?
+
+**6.** Se o boxplot dos bolsistas, **depois** do bônus, aparece deslocado para cima em relação ao
+boxplot **sem** bônus do mesmo grupo, isso já responde "o bônus ajudou os bolsistas"? Que outra
+comparação (com o grupo não-bolsista) fortaleceria essa conclusão?
+
+---
+
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 
 ``` r

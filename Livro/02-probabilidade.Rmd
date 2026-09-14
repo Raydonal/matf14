@@ -79,8 +79,8 @@ que nos interessa.
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: classificação de crédito</strong>: um banco
 classifica cada novo empréstimo em uma de quatro categorias de risco:
-$\Omega = \{\text{AA}, \text{A}, \text{B}, \text{C}\}$. O evento "empréstimo de risco elevado" é
-$A = \{\text{B}, \text{C}\} \subset \Omega$.</div>
+\(\Omega = \{\text{AA}, \text{A}, \text{B}, \text{C}\}\). O evento "empréstimo de risco elevado" é
+\(A = \{\text{B}, \text{C}\} \subset \Omega\).</div>
 ```
 
 ### Operações com eventos (revisão de teoria de conjuntos)
@@ -114,10 +114,10 @@ ggplot() +
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> Um analista define $\Omega$ para o "resultado do PIB do próximo trimestre"
-como $\{\text{crescimento}, \text{recessão}\}$. Outro analista, mais cuidadoso, define
-$\Omega=\{\text{crescimento forte}, \text{crescimento fraco}, \text{estagnação},
-\text{recessão leve}, \text{recessão severa}\}$. Os dois espaços amostrais estão "errados"? O que
+<p><strong>1.</strong> Um analista define \(\Omega\) para o "resultado do PIB do próximo trimestre"
+como \(\{\text{crescimento}, \text{recessão}\}\). Outro analista, mais cuidadoso, define
+\(\Omega=\{\text{crescimento forte}, \text{crescimento fraco}, \text{estagnação},
+\text{recessão leve}, \text{recessão severa}\}\). Os dois espaços amostrais estão "errados"? O que
 muda na análise dependendo de qual granularidade se escolhe?</p>
 
 <p><strong>2.</strong> Dê um exemplo de dois eventos econômicos reais que sejam mutuamente
@@ -155,7 +155,7 @@ $$
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, a regra da adição é usada, por
 exemplo, para calcular a probabilidade de que uma empresa seja afetada por "aumento de juros
-\emph{ou} desvalorização cambial" no próximo trimestre, os dois eventos não são mutuamente
+<em>ou</em> desvalorização cambial" no próximo trimestre, os dois eventos não são mutuamente
 exclusivos (podem ocorrer juntos, e frequentemente ocorrem, já que o Banco Central às vezes sobe
 juros em resposta à pressão cambial), então subtrair a interseção evita contar duas vezes o cenário
 em que ambos acontecem.</div>
@@ -177,8 +177,9 @@ malha_fina <- tribble(
   "A, acima de 100 mil",      80,  10620, 10700,
   "Total",                    310,  79890, 80200
 )
-malha_fina |> kbl(col.names = c("Faixa de renda", "Caiu na malha fina", "Não caiu", "Total")) |>
-  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+malha_fina |>
+  kbl(col.names = c("Faixa de renda", "Caiu na malha fina", "Não caiu", "Total")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
 ```
 
 Seja $Z=$ "a declaração caiu na malha fina" e $Y=$ "a declaração é da faixa A (renda mais alta)".
@@ -230,18 +231,18 @@ factorial(5)       # 5! permutações
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: auditoria por amostragem</strong>: um auditor
 precisa escolher 3 contratos, de um total de 10, para auditoria detalhada, sem se importar com a
-ordem da escolha. O número de amostras de 3 contratos possíveis é $\binom{10}{3}=120$. Se 2 dos 10
+ordem da escolha. O número de amostras de 3 contratos possíveis é \(\binom{10}{3}=120\). Se 2 dos 10
 contratos têm um problema real, a probabilidade de a amostra sorteada aleatoriamente pegar
-\emph{pelo menos um} desses 2 é
-$1 - \binom{8}{3}/\binom{10}{3} = 1 - 56/120 \approx 53{,}3\%$, o complementar de "nenhum dos 2
+<em>pelo menos um</em> desses 2 é
+\(1 - \binom{8}{3}/\binom{10}{3} = 1 - 56/120 \approx 53{,}3\%\), o complementar de "nenhum dos 2
 problemáticos entra na amostra".</div>
 ```
 
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> Por que a regra $P(A\cup B)=P(A)+P(B)$ (sem subtrair a interseção) só vale
-quando $A$ e $B$ são mutuamente exclusivos? Construa um exemplo numérico pequeno em que aplicar
+<p><strong>1.</strong> Por que a regra \(P(A\cup B)=P(A)+P(B)\) (sem subtrair a interseção) só vale
+quando \(A\) e \(B\) são mutuamente exclusivos? Construa um exemplo numérico pequeno em que aplicar
 essa regra incorretamente (esquecendo de subtrair a interseção) leva a uma probabilidade maior que
 1, o que isso já denuncia sobre o erro?</p>
 
@@ -295,8 +296,8 @@ P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A).
 $$
 
 ```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: voltando à malha fina</strong>, a Seção
-\@ref(conceitos-probabilidade) prometeu uma pergunta mais interessante: a chance de cair na malha
+<div class="caixa-aplicacao"><strong>Aplicação: voltando à malha fina</strong>, a Seção 2.3
+prometeu uma pergunta mais interessante: a chance de cair na malha
 fina muda conforme a faixa de renda?</div>
 ```
 
@@ -304,8 +305,10 @@ fina muda conforme a faixa de renda?</div>
 malha_fina <- malha_fina |> mutate(
   P_malha_dado_faixa = Caiu_na_malha_fina / Total
 )
-malha_fina |> select(Faixa_de_renda, Caiu_na_malha_fina, Total, P_malha_dado_faixa) |>
-  kbl(digits = 4, col.names = c("Faixa", "Caiu na malha", "Total", "P(malha | faixa)")) |>
+malha_fina |>
+  select(Faixa_de_renda, Caiu_na_malha_fina, Total, P_malha_dado_faixa) |>
+  kbl(digits = 4,
+      col.names = c("Faixa", "Caiu na malha", "Total", "P(malha | faixa)")) |>
   kable_styling(full_width = FALSE)
 ```
 
@@ -318,19 +321,19 @@ de desemprego agregada, adiante, esconde a diferença por escolaridade.
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> Recalcule $P(\text{superior}\mid\text{desempregado})$ (o "outro lado" da
+<p><strong>1.</strong> Recalcule \(P(\text{superior}\mid\text{desempregado})\) (o "outro lado" da
 condicional) usando a mesma tabela. Esse valor é igual, maior ou menor que
-$P(\text{desempregado}\mid\text{superior})=0{,}16$ calculado no texto? Explique por que, em geral,
-$P(A\mid B)\neq P(B\mid A)$, essa confusão tem nome (a "falácia da probabilidade condicional
+\(P(\text{desempregado}\mid\text{superior})=0{,}16\) calculado no texto? Explique por que, em geral,
+\(P(A\mid B)\neq P(B\mid A)\), essa confusão tem nome (a "falácia da probabilidade condicional
 invertida" ou "falácia do promotor") e é um dos erros mais comuns em leitura de estatística
 jurídica e médica.</p>
 
 <p><strong>2.</strong> Um analista político diz "a probabilidade de reeleição, dado que o prefeito
-é bem avaliado, é de 80%". Identifique explicitamente quem é $A$ e quem é $B$ nessa frase, e
-escreva a expressão formal $P(A\mid B)$ correspondente.</p>
+é bem avaliado, é de 80%". Identifique explicitamente quem é \(A\) e quem é \(B\) nessa frase, e
+escreva a expressão formal \(P(A\mid B)\) correspondente.</p>
 
-<p><strong>3.</strong> Se $B\subseteq A$ (todo resultado de $B$ também está em $A$), o que se pode
-concluir sobre $P(A\mid B)$, sem fazer nenhuma conta? Justifique usando a definição.</p>
+<p><strong>3.</strong> Se \(B\subseteq A\) (todo resultado de \(B\) também está em \(A\)), o que se pode
+concluir sobre \(P(A\mid B)\), sem fazer nenhuma conta? Justifique usando a definição.</p>
 </div>
 ```
 
@@ -347,12 +350,44 @@ $$
 
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, uma seguradora de crédito
-particiona sua carteira por setor econômico ($B_1=$ indústria, $B_2=$ comércio, $B_3=$ serviços) e
-conhece a taxa de inadimplência histórica \emph{dentro} de cada setor, $P(A\mid B_i)$. O teorema da
+particiona sua carteira por setor econômico (\(B_1=\) indústria, \(B_2=\) comércio, \(B_3=\) serviços) e
+conhece a taxa de inadimplência histórica <em>dentro</em> de cada setor, \(P(A\mid B_i)\). O teorema da
 probabilidade total é exatamente a fórmula que a seguradora usa para obter a taxa de inadimplência
-\emph{global} esperada da carteira, ponderando cada taxa setorial pela participação $P(B_i)$
+<em>global</em> esperada da carteira, ponderando cada taxa setorial pela participação \(P(B_i)\)
 daquele setor na carteira total.</div>
 ```
+
+Antes do exemplo com dados reais, vale fixar o mecanismo em um caso pequeno, com números exatos.
+Um lote tem 20 peças defeituosas e 80 peças em perfeito estado. Duas peças são retiradas ao acaso,
+sem reposição. Qual é a probabilidade de a **segunda** peça retirada ser defeituosa?
+
+Seja $B=$ "a primeira peça retirada é defeituosa" e $A=$ "a segunda peça retirada é defeituosa".
+Como a primeira peça, ou é defeituosa, ou não é, $B$ e $B^c$ formam uma partição do espaço
+amostral, com $P(B)=20/100=0{,}2$ e $P(B^c)=80/100=0{,}8$. Se a primeira peça saiu defeituosa,
+restam 19 defeituosas em 99 peças; se não saiu, restam 20 defeituosas em 99 peças. Logo,
+
+$$
+\begin{aligned}
+P(A) &= P(A\mid B)\,P(B) + P(A\mid B^c)\,P(B^c) \\
+&= \frac{19}{99}\times\frac{20}{100} + \frac{20}{99}\times\frac{80}{100} \\
+&= \frac{380}{9900} + \frac{1600}{9900} = \frac{1980}{9900} = 0{,}2.
+\end{aligned}
+$$
+
+```{r prob-total-pecas}
+P_B         <- 20/100
+P_Bc        <- 80/100
+P_A_dado_B  <- 19/99
+P_A_dado_Bc <- 20/99
+P_A <- P_A_dado_B * P_B + P_A_dado_Bc * P_Bc
+P_A
+```
+
+Note que $P(A)=0{,}2$ é exatamente igual a $P(B)$, a probabilidade da **primeira** peça ser
+defeituosa. Sem observar o resultado da primeira retirada, a segunda peça carrega, a priori, a
+mesma chance marginal de ser defeituosa que a primeira, mesmo a extração sendo sem reposição, um
+resultado que surpreende quem espera que "sem reposição" sempre distinga a primeira e a segunda
+posições.
 
 ```{r fig-mapa-homicidios, echo=FALSE, out.width="70%", fig.cap="Homicídios no Brasil por 100 mil habitantes, por estado (2025). Fonte: Atlas da Violência (IPEA e FBSP)."}
 knitr::include_graphics("images/mapa_homicidios.png")
@@ -360,11 +395,11 @@ knitr::include_graphics("images/mapa_homicidios.png")
 
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: a taxa nacional é uma probabilidade total</strong>
-, o mapa acima mostra a taxa de homicídios por 100 mil habitantes em cada estado, de $6{,}4$ (São
-Paulo) a $57{,}4$ (Amapá), com uma taxa nacional agregada de $21{,}2$. Sorteando uma pessoa ao
-acaso entre todos os brasileiros, a taxa nacional $21{,}2$ por 100 mil é exatamente
-$\sum_i P(\text{homicídio}\mid\text{estado}_i)\times P(\text{estado}_i)$, uma probabilidade total
-em que a partição $B_i$ são os 27 estados e o peso $P(B_i)$ é a participação populacional de cada
+, o mapa acima mostra a taxa de homicídios por 100 mil habitantes em cada estado, de \(6{,}4\) (São
+Paulo) a \(57{,}4\) (Amapá), com uma taxa nacional agregada de \(21{,}2\). Sorteando uma pessoa ao
+acaso entre todos os brasileiros, a taxa nacional \(21{,}2\) por 100 mil é exatamente
+\(\sum_i P(\text{homicídio}\mid\text{estado}_i)\times P(\text{estado}_i)\), uma probabilidade total
+em que a partição \(B_i\) são os 27 estados e o peso \(P(B_i)\) é a participação populacional de cada
 um. Nenhum estado, isoladamente, tem taxa igual à nacional, o número agregado é sempre uma média
 ponderada de realidades estaduais muito diferentes.</div>
 ```
@@ -374,17 +409,17 @@ ponderada de realidades estaduais muito diferentes.</div>
 
 <p><strong>1.</strong> A taxa de inadimplência global calculada pelo teorema da probabilidade total
 é uma média ponderada das taxas setoriais. O que aconteceria com essa taxa global se a composição
-da carteira (a participação $P(B_i)$ de cada setor) mudasse, mesmo que \emph{nenhuma} taxa setorial
-$P(A\mid B_i)$ tivesse mudado? Dê um cenário concreto (por exemplo, crescimento do setor de maior
+da carteira (a participação \(P(B_i)\) de cada setor) mudasse, mesmo que <em>nenhuma</em> taxa setorial
+\(P(A\mid B_i)\) tivesse mudado? Dê um cenário concreto (por exemplo, crescimento do setor de maior
 risco) em que isso levaria um gestor desatento a concluir, erroneamente, que "o risco de crédito
 piorou".</p>
 
-<p><strong>2.</strong> Por que a condição "$B_1,\ldots,B_k$ formam uma partição" (mutuamente
+<p><strong>2.</strong> Por que a condição "\(B_1,\ldots,B_k\) formam uma partição" (mutuamente
 exclusivos e exaustivos) é essencial para essa fórmula funcionar? O que quebraria se os segmentos
 setoriais se sobrepusessem (uma empresa contada em dois segmentos ao mesmo tempo)?</p>
 
 <p><strong>3.</strong> Um secretário de segurança pública quer decidir onde alocar mais recursos
-policiais. A taxa nacional de $21{,}2$ por 100 mil habitantes é útil para essa decisão, ou ela
+policiais. A taxa nacional de \(21{,}2\) por 100 mil habitantes é útil para essa decisão, ou ela
 esconde exatamente a informação que mais importa? Que unidade de análise (estado, município,
 bairro) você recomendaria para uma decisão de alocação de recursos, e por quê o teorema da
 probabilidade total ajuda a formalizar essa intuição?</p>
@@ -415,7 +450,7 @@ dependência.
 <p><strong>1.</strong> Independência estatística <em>não</em> é o mesmo que "sem relação de
 causa". Dois eventos podem ser estatisticamente dependentes sem que um cause o outro (uma terceira
 variável causa ambos); e, mais sutil ainda, dois eventos causalmente conectados podem, em uma
-amostra específica, apresentar $P(A\cap B)\approx P(A)P(B)$ por coincidência numérica. Por que,
+amostra específica, apresentar \(P(A\cap B)\approx P(A)P(B)\) por coincidência numérica. Por que,
 ainda assim, é a definição matemática de independência, não uma noção intuitiva de causa, que
 entra nas contas de probabilidade e nas fórmulas de esperança/variância do Capítulo 3?</p>
 
@@ -464,13 +499,49 @@ histórica) e quer-se $P(\text{causa}\mid\text{evidência})$ (o que de fato se q
 difícil de medir diretamente). $P(B)$ é chamada **probabilidade a priori** (antes de observar $A$)
 e $P(B\mid A)$, **probabilidade a posteriori** (depois de observar $A$).
 
+Antes do exemplo mais elaborado desta seção, um caso com números mais simples fixa o mecanismo.
+Uma corretora avalia que a probabilidade de a bolsa cair amanhã é $P(B)=0{,}10$ (a priori). Surge a
+notícia de que o dólar teve alta hoje, evento $A$. O histórico mostra que, nos dias em que a bolsa
+caiu no dia seguinte, o dólar tinha subido no dia anterior em $20\%$ dos casos
+($P(A\mid B)=0{,}20$); já nos dias em que a bolsa subiu, o dólar tinha subido no dia anterior em
+apenas $5\%$ dos casos ($P(A\mid B^c)=0{,}05$). Qual é a probabilidade de a bolsa cair amanhã, agora
+que se sabe que o dólar subiu hoje?
+
+Como $B$ e $B^c$ formam uma partição de $\Omega$, com $P(B^c)=1-0{,}10=0{,}90$, o Teorema de Bayes
+dá
+
+$$
+\begin{aligned}
+P(B\mid A) &= \frac{P(A\mid B)\,P(B)}{P(A\mid B)\,P(B) + P(A\mid B^c)\,P(B^c)} \\
+&= \frac{0{,}20\times 0{,}10}{0{,}20\times 0{,}10 + 0{,}05\times 0{,}90} \\
+&= \frac{0{,}020}{0{,}020+0{,}045} = \frac{0{,}020}{0{,}065} \approx 0{,}308.
+\end{aligned}
+$$
+
+A notícia da alta do dólar quase triplicou a probabilidade de queda da bolsa, de $10\%$ (a priori)
+para cerca de $30{,}8\%$ (a posteriori). O exemplo a seguir repete exatamente esse mecanismo, num
+contexto com consequências práticas mais imediatas.
+
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: teste de fraude em transações de cartão</strong>:
-um sistema antifraude classifica uma transação como "suspeita" ($A$) com probabilidade
-$P(A\mid \text{fraude})=0{,}95$ (detecta 95\% das fraudes reais) e $P(A\mid \text{legítima})=0{,}03$
-(alarme falso em 3\% das transações legítimas). Sabe-se, historicamente, que apenas $0{,}2\%$ das
-transações são fraudulentas: $P(\text{fraude})=0{,}002$.</div>
+um sistema antifraude classifica uma transação como "suspeita" (\(A\)) com probabilidade
+\(P(A\mid \text{fraude})=0{,}95\) (detecta 95\% das fraudes reais) e \(P(A\mid \text{legítima})=0{,}03\)
+(alarme falso em 3\% das transações legítimas). Sabe-se, historicamente, que apenas \(0{,}2\%\) das
+transações são fraudulentas: \(P(\text{fraude})=0{,}002\).</div>
 ```
+
+Aplicando o Teorema de Bayes, com o denominador expandido pelo teorema da probabilidade total
+($\text{fraude}$ e $\text{legítima}$ formam uma partição), com os números plugados diretamente na
+fórmula:
+
+$$
+\begin{aligned}
+P(\text{fraude}\mid A) &= \frac{P(A\mid \text{fraude})\,P(\text{fraude})}
+{P(A\mid \text{fraude})\,P(\text{fraude}) + P(A\mid \text{legítima})\,P(\text{legítima})} \\
+&= \frac{0{,}95\times 0{,}002}{0{,}95\times 0{,}002 + 0{,}03\times 0{,}998} \\
+&= \frac{0{,}0019}{0{,}0019+0{,}02994} = \frac{0{,}0019}{0{,}03184} \approx 0{,}0597.
+\end{aligned}
+$$
 
 ```{r bayes-fraude}
 p_fraude <- 0.002
@@ -486,9 +557,9 @@ p_fraude_dado_A
 ```{=html}
 <div class="caixa-economia"><strong>Leitura econômica</strong>, mesmo com um teste que parece
 excelente (95\% de detecção, só 3\% de falso alarme), a probabilidade de uma transação marcada como
-suspeita ser \emph{de fato} uma fraude é de apenas
+suspeita ser <em>de fato</em> uma fraude é de apenas
 `r scales::percent(p_fraude_dado_A, accuracy = 0.1)`. A razão é que fraudes são raras
-($0{,}2\%$ da base): mesmo uma taxa pequena de falso alarme (3\%), aplicada à enorme massa de
+(\(0{,}2\%\) da base): mesmo uma taxa pequena de falso alarme (3\%), aplicada à enorme massa de
 transações legítimas, gera muito mais alarmes falsos em números absolutos do que fraudes reais
 detectadas. Esse é o mesmo raciocínio por trás de por que testes de doenças raras, mesmo precisos,
 têm valor preditivo positivo surpreendentemente baixo, e por que sistemas antifraude reais operam
@@ -499,7 +570,7 @@ precisa), em vez de bloquear direto no primeiro alarme.</div>
 ```{=html}
 <div class="caixa-r"><strong>Uso do R</strong>, Bayes não precisa de pacote especial: é
 manipulação direta de probabilidades, como no chunk acima. O ponto de atenção é sempre calcular
-$P(A)$ primeiro (probabilidade total), como denominador comum, antes de aplicar a fórmula de
+\(P(A)\) primeiro (probabilidade total), como denominador comum, antes de aplicar a fórmula de
 Bayes propriamente dita.</div>
 ```
 
@@ -511,7 +582,7 @@ conclui "o sistema é confiável". Que número, calculado acima, ele está ignor
 frase do gestor de forma tecnicamente correta.</p>
 
 <p><strong>2.</strong> Se a taxa de fraude na base <strong>subisse</strong> de 0,2% para 5% (um
-período de fraudes em massa), o que aconteceria com $P(\text{fraude}\mid\text{suspeito})$, mantendo
+período de fraudes em massa), o que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo
 o mesmo sistema de detecção? Refaça a conta e confirme sua intuição.</p>
 
 <p><strong>3.</strong> Volte ao início do capítulo (as cinco perguntas sobre incerteza econômica da
@@ -520,8 +591,8 @@ probabilidade condicional, teorema da probabilidade total ou Teorema de Bayes, n
 resolver numericamente, só identificar qual ferramenta do capítulo se aplica e por quê.</p>
 
 <p><strong>4.</strong> A "falácia do promotor" (Discussão da Seção
-\@ref(probabilidade-condicional)) e o exemplo do antifraude têm uma raiz comum: confundir
-$P(\text{evidência}\mid\text{hipótese})$ com $P(\text{hipótese}\mid\text{evidência})$. Escreva, com
+2.4) e o exemplo do antifraude têm uma raiz comum: confundir
+\(P(\text{evidência}\mid\text{hipótese})\) com \(P(\text{hipótese}\mid\text{evidência})\). Escreva, com
 suas palavras, uma regra prática de bolso para nunca mais cometer essa confusão.</p>
 </div>
 ```

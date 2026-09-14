@@ -27,7 +27,7 @@ class: inverse, center, middle
 ## Uma armadilha clássica
 
 &gt; Um analista calcula a probabilidade de "alta do dólar" ou "alta de juros" no trimestre somando
-&gt; diretamente as duas probabilidades individuais: \(0{,}45+0{,}30=0{,}75\). Ele está contando algo
+&gt; diretamente as duas probabilidades individuais: \\(0{,}45+0{,}30=0{,}75\\). Ele está contando algo
 &gt; duas vezes, o quê?
 
 ---
@@ -58,19 +58,19 @@ A última é a **regra da adição geral**, subtrai a interseção para não con
 
 ## Espaço equiprovável e contagem
 
-Quando todo resultado de \(\Omega\) (finito) é igualmente provável:
+Quando todo resultado de \\(\Omega\\) (finito) é igualmente provável:
 
 $$
-P(A) = \frac{\#A}{\#\Omega}
+P(A) = \frac{|A|}{|\Omega|}
 $$
 
 --
 
 | Regra | Fórmula | Quando usar |
 |---|---|---|
-| Multiplicativa | \(k\_1\times k\_2\times\cdots\) | escolhas sucessivas independentes |
-| Permutação | \(n!\) | ordenar \(n\) objetos distintos |
-| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) | escolher \(k\) de \(n\), ordem não importa |
+| Multiplicativa | \\(k\_1\times k\_2\times\cdots\\) | escolhas sucessivas independentes |
+| Permutação | \\(n!\\) | ordenar \\(n\\) objetos distintos |
+| Combinação | \\(\binom{n}{k}=\frac{n!}{k!(n-k)!}\\) | escolher \\(k\\) de \\(n\\), ordem não importa |
 
 ---
 
@@ -137,8 +137,8 @@ p_nenhum &lt;- choose(8, 3) / choose(10, 3)   # nenhum dos 2 problemáticos entr
 
 ## Resolvendo a armadilha da abertura
 
-Probabilidade de uma empresa ser afetada por "alta de juros" (\(J\)) **ou** "desvalorização
-cambial" (\(C\)) no trimestre, com \(P(J)=0{,}4\), \(P(C)=0{,}3\), \(P(J\cap C)=0{,}15\) (não são
+Probabilidade de uma empresa ser afetada por "alta de juros" (\\(J\\)) **ou** "desvalorização
+cambial" (\\(C\\)) no trimestre, com \\(P(J)=0{,}4\\), \\(P(C)=0{,}3\\), \\(P(J\cap C)=0{,}15\\) (não são
 mutuamente exclusivos, o Banco Central às vezes sobe juros em resposta à pressão cambial):
 
 $$
@@ -158,7 +158,7 @@ class: inverse, center, middle
 ## Rodada 1
 
 **1.** No exemplo de juros e câmbio, explique, em palavras, não em símbolos, por que
-\(P(J)+P(C)\) conta o cenário "os dois ocorrem" duas vezes, e por que subtrair \(P(J\cap C)\) uma única
+\\(P(J)+P(C)\\) conta o cenário "os dois ocorrem" duas vezes, e por que subtrair \\(P(J\cap C)\\) uma única
 vez corrige isso.
 
 **2.** Recalcule a probabilidade da auditoria por amostragem se, em vez de 2, houvesse 4 dos 10
@@ -183,6 +183,8 @@ class: inverse, center, middle
 
 # Bloco 4: Uso do R
 
+---
+
 
 ``` r
 choose(10, 3)      # combinações C(10,3)
@@ -190,8 +192,8 @@ factorial(5)        # permutações 5!
 choose(8, 3) / choose(10, 3)   # probabilidade via razão de contagens
 ```
 
-`choose(n, k)` calcula \(\binom{n}{k}\) diretamente, evita overflow de calcular \(n!\), \(k!\) e
-\((n-k)!\) separadamente para \(n\) grande.
+`choose(n, k)` calcula \\(\binom{n}{k}\\) diretamente, evita overflow de calcular \\(n!\\), \\(k!\\) e
+\\((n-k)!\\) separadamente para \\(n\\) grande.
 
 ---
 

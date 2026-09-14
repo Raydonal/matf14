@@ -27,6 +27,28 @@ class: inverse, center, middle
 
 ---
 
+## Antes de começar: sem laboratório presencial
+
+Como na Aula 07, este roteiro roda inteiro no **Google Colab**, no navegador, sem instalar
+nada. Sirva-se do mesmo notebook da Aula 07 (ou crie um novo, o processo é idêntico) e troque
+o ambiente de execução para **R**.
+
+--
+
+.pull-left[
+&lt;img src="colab-07-04-config-notebook.png" alt="" width="95%" /&gt;
+]
+
+.pull-right[
+&lt;img src="colab-07-05-selecionar-r.png" alt="" width="95%" /&gt;
+]
+
+Se não participou da Aula 07 ou está reproduzindo em casa, reveja os slides iniciais do
+`MATF14-07` para o passo a passo completo (criar notebook, escolher R, subir arquivos). Esta
+aula não depende de nenhum `.csv`, os experimentos de hoje são todos simulados em R.
+
+---
+
 ## Ideia central: a definição frequentista, na prática
 
 A probabilidade de um evento é o limite da frequência relativa se o experimento fosse repetido
@@ -97,7 +119,7 @@ mean(resultados)   # estimativa por simulação
 ## [1] 0.50081
 ```
 
-Valor teórico (contagem, Aula 10): \(\binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 4/8 = 0{,}5\).
+Valor teórico (contagem, Aula 10): \\(\binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 4/8 = 0{,}5\\).
 
 ---
 
@@ -119,7 +141,7 @@ prêmio**. Ele oferece: trocar de porta ou manter a escolha original?
 
 **Intuição comum (errada)**: "sobraram 2 portas, tanto faz, 50-50".
 
-**Resposta correta**: trocar dobra a chance de vitória, de \(1/3\) para \(2/3\), vamos comprovar por
+**Resposta correta**: trocar dobra a chance de vitória, de \\(1/3\\) para \\(2/3\\), vamos comprovar por
 simulação (mais fácil que a conta analítica de probabilidade condicional aqui).
 
 ---
@@ -164,7 +186,7 @@ mean(replicate(50000, jogar_monty_hall(trocar = FALSE)))
 
 A chave: a ação do apresentador (abrir uma porta *sem* o prêmio, *sabendo* onde ele está) **não é
 aleatória**, ela carrega informação. A probabilidade da porta não escolhida e não aberta passa a
-ser condicional a essa ação, não mais \(1/3\) "isolada". É o mesmo tipo de raciocínio (atualizar uma
+ser condicional a essa ação, não mais \\(1/3\\) "isolada". É o mesmo tipo de raciocínio (atualizar uma
 probabilidade à luz de uma evidência) que formaliza o Teorema de Bayes, na próxima aula.
 
 ---
@@ -177,7 +199,7 @@ class: inverse, center, middle
 
 ## Antes do exercício guiado
 
-**1.** Mesmo depois de ver a simulação confirmar \(2/3\) vs. \(1/3\), muita gente continua achando que
+**1.** Mesmo depois de ver a simulação confirmar \\(2/3\\) vs. \\(1/3\\), muita gente continua achando que
 "deveria ser 50-50". Tente articular, com suas próprias palavras (sem fórmula), por que a ação do
 apresentador não é neutra, o que ele "sabe" que você não sabia antes de escolher.
 
@@ -199,7 +221,7 @@ que uma ação "está devendo" uma alta depois de vários dias de queda.)
    Simule e compare a probabilidade de vitória trocando vs. mantendo a escolha.
 2. Simule a probabilidade condicional da Aula 11 (escolaridade × desemprego): gere uma população
    sintética de 500 pessoas com as proporções da tabela vista em aula e confira, por simulação, que
-   \(P(\text{desempregado}\mid\text{superior}) \approx 0{,}16\).
+   \\(P(\text{desempregado}\mid\text{superior}) \approx 0{,}16\\).
 
 ---
 

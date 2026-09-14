@@ -46,7 +46,7 @@ $$
 F(x) = P(X\le x) = \int\_{-\infty}^x f(t)\,dt
 $$
 
-**Contínua** (sem saltos), ao contrário do caso discreto, reflexo de \(P(X=x)=0\).
+**Contínua** (sem saltos), ao contrário do caso discreto, reflexo de \\(P(X=x)=0\\).
 
 --
 
@@ -60,7 +60,7 @@ Ao contrário do Cap. 3 (discreto), aqui **não importa** incluir ou não o extr
 
 --
 
-## Relação com \(f\)
+## Relação com \\(f\\)
 
 $$
 F'(x)=f(x) \qquad\qquad P(a\le X\le b) = F(b)-F(a)
@@ -76,7 +76,11 @@ class: inverse, center, middle
 
 ## FDA da fila de espera
 
-Primitiva de \(f(x)=0{,}2e^{-0{,}2x}\): \(F(x)=1-e^{-0{,}2x}\), \(x\ge0\).
+Retomando a Aula 25: \\(f(x)=0{,}2e^{-0{,}2x}\\), \\(x\ge0\\). Aplicando a definição \\(F(x)=\int\_{-\infty}^x
+f(t)\,dt\\):
+$$
+F(x)=\int\_0^x 0{,}2\,e^{-0{,}2t}\,dt = \left[-e^{-0{,}2t}\right]\_0^x = -e^{-0{,}2x}-(-e^0) = 1-e^{-0{,}2x}, \quad x\ge0
+$$
 
 ```{r fda-fila, fig.height=3.8}
 Fx <- function(x) 1 - exp(-0.2*x)
@@ -102,6 +106,39 @@ pela minoria que espera muito.
 
 ---
 
+## Um segundo exemplo: densidade triangular
+
+Considere \\(f(x) = 2(1-x)\\) para \\(0\le x\le1\\) (e \\(f(x)=0\\) fora desse intervalo) — por exemplo, o
+instante (padronizado em \\([0,1]\\)) da primeira negociação de um ativo após a abertura do pregão,
+concentrado logo no início.
+
+--
+
+Integrando \\(f\\) a partir de \\(0\\):
+
+$$
+F(x) = \int\_0^x 2(1-t)\,dt = \left[2t-t^2\right]\_0^x = 2x-x^2, \qquad 0\le x\le1
+$$
+
+Fora desse intervalo, \\(F(x)=0\\) para \\(x&lt;0\\) e \\(F(x)=1\\) para \\(x&gt;1\\): a mesma FDA "achatada
+nas pontas e crescente no meio" de toda variável com suporte limitado — ao contrário da fila de
+espera (suporte ilimitado) do slide anterior.
+
+---
+
+## Confirmando com R
+
+```{r fda-triangular}
+Fx2 <- function(x) 2*x - x^2
+Fx2(2/3) - Fx2(1/2)   # P(1/2 < X < 2/3) = F(2/3) - F(1/2)
+```
+
+\\(P(1/2 &lt; X &lt; 2/3) = F(2/3)-F(1/2) \approx 0{,}139\\), o mesmo resultado que sairia de integrar
+\\(f\\) diretamente nesse intervalo: outra confirmação de que \\(F(b)-F(a)\\) é sempre um atalho válido
+para uma probabilidade contínua.
+
+---
+
 class: inverse, center, middle
 
 # Bloco 3: Discussão (bloco central da aula)
@@ -110,18 +147,18 @@ class: inverse, center, middle
 
 ## Rodada 1
 
-**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\(P(X&gt;10)\))? Esse número
+**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\\(P(X&gt;10)\\))? Esse número
 é pequeno ou grande o suficiente para preocupar um gerente de atendimento, mesmo com uma média
 "aceitável" de 5 minutos?
 
-**2.** Dado \(F(x)=1-e^{-0{,}2x}\), como você recuperaria \(f(x)\) a partir dela, sem ter a fórmula de
-\(f\) em mãos? Use \(F'(x)=f(x)\).
+**2.** Dado \\(F(x)=1-e^{-0{,}2x}\\), como você recuperaria \\(f(x)\\) a partir dela, sem ter a fórmula de
+\\(f\\) em mãos? Use \\(F'(x)=f(x)\\).
 
 ---
 
 ## Rodada 2
 
-**3.** No caso discreto (Cap. 3), \(F\) tinha "degraus". Por que, no caso contínuo, uma FDA com um
+**3.** No caso discreto (Cap. 3), \\(F\\) tinha "degraus". Por que, no caso contínuo, uma FDA com um
 degrau seria logicamente impossível, que propriedade ela contradiria?
 
 **4.** Um gerente de operações decide comunicar não a média, mas "o tempo que 90% dos clientes não

@@ -40,9 +40,9 @@ class: inverse, center, middle
 
 ---
 
-## Uniforme(\(a,b\))
+## Uniforme(\\(a,b\\))
 
-Densidade **constante** em \([a,b]\), zero fora, todos os subintervalos de mesmo comprimento têm a
+Densidade **constante** em \\([a,b]\\), zero fora, todos os subintervalos de mesmo comprimento têm a
 mesma probabilidade.
 
 $$
@@ -52,7 +52,7 @@ $$
 
 --
 
-Verificação rápida: \(\int\_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\) ✓, a densidade é
+Verificação rápida: \\(\int\_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\\) ✓, a densidade é
 válida por construção.
 
 ---
@@ -65,8 +65,8 @@ class: inverse, center, middle
 
 ## Chegada de clientes em uma hora
 
-\(X=\) minuto de chegada de um cliente dentro de uma hora, sem padrão de horário de pico:
-\(X\sim\text{Unif}(0,60)\).
+\\(X=\\) minuto de chegada de um cliente dentro de uma hora, sem padrão de horário de pico:
+\\(X\sim\text{Unif}(0,60)\\).
 
 
 ``` r
@@ -79,6 +79,24 @@ c(E_X = (a+b)/2, Var_X = (b-a)^2/12, dp_X = sqrt((b-a)^2/12))
 ##  30.00000 300.00000  17.32051
 ```
 
+--
+
+Na Uniforme, a integral vira só uma razão de comprimentos, sem precisar de tabela nem de
+`integrate()`: \\(P(a'\le X\le b')=\dfrac{b'-a'}{b-a}\\). Calculando à mão
+\\(P(30\le X\le45)\\):
+
+$$
+P(30\le X\le45) = \frac{45-30}{60-0} = \frac{15}{60} = 0{,}25
+$$
+
+
+``` r
+(45 - 30) / (60 - 0)                 # a mesma conta, escrita em R
+```
+
+```
+## [1] 0.25
+```
 
 ``` r
 punif(20, min=a, max=b)              # P(X &lt;= 20)
@@ -89,7 +107,7 @@ punif(20, min=a, max=b)              # P(X &lt;= 20)
 ```
 
 ``` r
-punif(45, a, b) - punif(30, a, b)    # P(30 &lt;= X &lt;= 45)
+punif(45, a, b) - punif(30, a, b)    # P(30 &lt;= X &lt;= 45), confirmação via função pronta
 ```
 
 ```
@@ -124,7 +142,7 @@ mesma ferramenta do Capítulo 1).
 
 ## Lendo o histograma simulado
 
-A curva vermelha é a densidade teórica \(f(x)=1\); a linha azul é a média teórica, \(E(X)=0{,}5\). O
+A curva vermelha é a densidade teórica \\(f(x)=1\\); a linha azul é a média teórica, \\(E(X)=0{,}5\\). O
 histograma, mesmo com ruído amostral, já se aproxima da densidade constante prevista pela teoria,
 exatamente o elo entre "dado observado" e "modelo" que este capítulo constrói.
 
@@ -143,7 +161,7 @@ class: inverse, center, middle
 (por exemplo, existe claramente um "horário de pico"). O que muda no segundo caso, que tipo de
 modelo (ainda não visto, mas você pode arriscar) capturaria melhor esse padrão?
 
-**2.** \(\mathrm{Var}(X)=(b-a)^2/12\) cresce com o **quadrado** do comprimento do intervalo. Compare
+**2.** \\(\mathrm{Var}(X)=(b-a)^2/12\\) cresce com o **quadrado** do comprimento do intervalo. Compare
 mentalmente Uniforme(0,10) com Uniforme(0,100), a segunda tem 10x mais amplitude, mas quantas
 vezes mais variância?
 
@@ -165,6 +183,8 @@ simétrica (constante) e outra é assimétrica à direita. Que tipo de fenômeno
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 
 ``` r

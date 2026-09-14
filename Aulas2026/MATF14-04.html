@@ -74,6 +74,63 @@ class: inverse, center, middle
 
 ---
 
+## Média a partir de uma tabela de frequências
+
+Quando os dados já vêm resumidos em contagens `\(n\_i\)` para cada valor `\(x\_i\)`, não é preciso voltar
+aos dados brutos: a mesma média de sempre pode ser escrita ponderada pela frequência
+`\(f\_i = n\_i/n\)`:
+
+$$
+\bar X = \frac{1}{n}\sum\_{i=1}^k n\_i x\_i = \sum\_{i=1}^k f\_i x\_i
+$$
+
+--
+
+**Exemplo: número de funcionários em 80 microempresas**
+
+| `\(x\_i\)` (funcionários) | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|---|
+| `\(n\_i\)` | 8 | 15 | 22 | 18 | 12 | 5 |
+
+`\(n = 8+15+22+18+12+5 = 80\)`
+
+---
+
+## Resolvendo na mão
+
+$$
+\sum\_i n\_i x\_i = 0(8)+1(15)+2(22)+3(18)+4(12)+5(5) = 186
+$$
+
+$$
+\bar X = \frac{186}{80} = 2{,}325 \approx 2{,}33 \text{ funcionários}
+$$
+
+--
+
+**Mediana**: acumulando frequências, `\(8 \to 23 \to 45 \to \ldots\)`; a 40ª e a 41ª posição (de 80)
+caem na classe `\(x=2\)` (acumulado passa de 23 para 45 aí), logo mediana `\(=2\)`.
+
+**Moda**: a classe de maior `\(n\_i\)` é `\(x=2\)` (com `\(n\_i=22\)`), logo moda `\(=2\)`.
+
+--
+
+Média (`\(2{,}33\)`) `\(\approx\)` mediana (`\(2\)`) `\(\approx\)` moda (`\(2\)`): distribuição pouco assimétrica.
+
+
+``` r
+x_i &lt;- 0:5; n_i &lt;- c(8, 15, 22, 18, 12, 5)
+x_bruto &lt;- rep(x_i, times = n_i)          # reconstrói os 80 valores individuais
+c(n = length(x_bruto), media = mean(x_bruto), mediana = median(x_bruto))
+```
+
+```
+##       n   media mediana 
+##  80.000   2.325   2.000
+```
+
+---
+
 ## Faturamento das empresas: média vs. mediana
 
 
@@ -120,8 +177,8 @@ auditor fiscal avaliando concentração de riqueza?
 
 ## Rodada 2: generalizando
 
-**3.** Dê um exemplo de uma variável econômica em que você esperaria média \(\approx\) mediana
-\(\approx\) moda (distribuição aproximadamente simétrica). O que essas três variáveis "bem
+**3.** Dê um exemplo de uma variável econômica em que você esperaria média \\(\approx\\) mediana
+\\(\approx\\) moda (distribuição aproximadamente simétrica). O que essas três variáveis "bem
 comportadas" costumam ter em comum, em contraste com renda ou faturamento?
 
 **4.** É possível a moda estar **fora** do intervalo entre a média e a mediana (não seguir a ordem
@@ -137,6 +194,8 @@ faria antes de decidir investir?
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 
 ``` r
@@ -166,9 +225,30 @@ antes de resumir uma variável real.
 &lt;img src="images/letras_nomes_matf14.png" alt="" width="95%" /&gt;
 ]
 
-Duas variáveis quantitativas reais de uma turma de MATF14: notas da Prova 1, e número de letras
-no nome completo dos alunos. Estime, de cabeça, se a média está acima ou abaixo da mediana em cada
-histograma.
+Duas variáveis quantitativas reais de uma turma de MATF14: notas da Prova 1 (`\(n=32\)`), e número de
+letras no nome completo dos alunos (`\(n=37\)`).
+
+---
+
+## Resolvendo com a fórmula de tabela de frequências
+
+Lendo a altura de cada barra do histograma de notas (classes de amplitude 1) e usando o ponto
+médio de cada classe como `\(x\_i\)`:
+
+$$
+\bar X = \sum\_i f\_i x\_i \approx 6{,}72 \qquad \text{Mediana} \approx 7{,}5 \qquad \text{Moda} \approx 9{,}5
+$$
+
+--
+
+Como **média (`\(6{,}72\)`) &amp;lt; mediana (`\(7{,}5\)`) &amp;lt; moda (`\(9{,}5\)`)**, a distribuição das notas é
+**assimétrica à esquerda**: uma barra zerada em `\([6,7)\)` separa um grupo de alunos com notas baixas
+de um grupo maior com notas altas, o oposto da assimetria à direita do faturamento.
+
+--
+
+Já para o número de letras nos nomes: `\(\bar X \approx 26{,}68\)`, mediana `\(=28\)`, moda `\(=28\)`, as três
+medidas próximas, uma distribuição quase simétrica.
 
 ---
 

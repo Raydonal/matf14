@@ -25,10 +25,10 @@ se acumula sobre intervalos, nunca sobre um único ponto.
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir: antes da definição formal</strong>
 
-<p><strong>1.</strong> Se $P(X=x)=0$ para todo $x$, como é possível que $X$ assuma \emph{algum}
-valor com probabilidade total $1$? Não há contradição, mas vale a pena travar nessa pergunta antes
+<p><strong>1.</strong> Se \(P(X=x)=0\) para todo \(x\), como é possível que \(X\) assuma <em>algum</em>
+valor com probabilidade total \(1\)? Não há contradição, mas vale a pena travar nessa pergunta antes
 de seguir. (Dica: a soma de "infinitos zeros", num sentido contínuo, não é necessariamente zero,
-é o mesmo tipo de sutileza por trás da integral imprópria do Apêndice A.)</p>
+é o mesmo tipo de sutileza por trás da integral imprópria do Apêndice B.)</p>
 
 <p><strong>2.</strong> A renda mensal exata de uma família, em centavos, é tecnicamente discreta (o
 menor incremento monetário é 1 centavo). Por que, ainda assim, ela é quase sempre tratada como
@@ -52,7 +52,10 @@ $$
 
 $f(x)$ **não é** uma probabilidade, pode até ser maior que 1 em algum ponto, é uma **densidade**:
 a probabilidade "por unidade de comprimento" em torno de $x$. Geometricamente, $f(x)$ é a curva, e
-$P(a\le X\le b)$ é a **área** sob essa curva entre $a$ e $b$.
+$P(a\le X\le b)$ é a **área** sob essa curva entre $a$ e $b$. Essa área é, por definição, o que uma
+integral calcula, o limite de uma soma de retângulos cada vez mais finos aproximando a região sob a
+curva; quem quiser revisitar essa construção passo a passo (a soma de Riemann) encontra a
+demonstração completa no Apêndice \@ref(revisao-de-calculo).
 
 ```{r fig-fdp-exemplo-mao, echo=FALSE, out.width="60%", fig.cap="Densidade $f(x)$ genérica: a área sob a curva entre $a$ e $b$ é $P(a<X\\le b)$; a área total sob toda a curva vale 1."}
 knitr::include_graphics("images/fdp_exemplo_mao.jpg")
@@ -63,7 +66,7 @@ knitr::include_graphics("images/fdp_exemplo_mao.jpg")
 manchete abaixo diz que Salvador registrou, em menos de um dia, 76% do acumulado de chuva esperado
 para todo o mês de novembro. O volume de chuva acumulado (em mm) é um exemplo típico de variável
 contínua: pode assumir qualquer valor não negativo, ao contrário das contagens discretas do
-Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo é $P(X\ge x_{obs})$, a
+Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo é \(P(X\ge x_{obs})\), a
 probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
 chuva de novembro para a cidade, é essa probabilidade, não o número bruto de milímetros, que separa
 um dia "chuvoso, mas normal" de um evento estatisticamente extremo.</div>
@@ -75,8 +78,8 @@ knitr::include_graphics("images/chuva_salvador.jpg")
 
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: tempo de espera em uma fila de atendimento</strong>
-, o tempo $X$ (em minutos) que um cliente espera em uma fila de banco tem densidade
-$f(x) = 0{,}2\,e^{-0{,}2x}$, $x\ge 0$ (distribuição Exponencial, com taxa $0{,}2$).</div>
+, o tempo \(X\) (em minutos) que um cliente espera em uma fila de banco tem densidade
+\(f(x) = 0{,}2\,e^{-0{,}2x}\), \(x\ge 0\) (distribuição Exponencial, com taxa \(0{,}2\)).</div>
 ```
 
 ```{r fdp-exponencial, fig.height=3.5}
@@ -106,28 +109,45 @@ Todas as propriedades do Capítulo 3 continuam válidas sem alteração: $E(aX+b
 $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$, $E(X+Y)=E(X)+E(Y)$ sempre, e
 $\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$ sob independência.
 
+Antes de deixar o R fazer a conta pela primeira vez, vale ver como ela sai "à mão". Para a fila de
+atendimento, $f(x)=0{,}2\,e^{-0{,}2x}$, $x\ge0$, a esperança é
+
+$$
+E(X) = \int_0^\infty x\cdot 0{,}2\,e^{-0{,}2x}\,dx.
+$$
+
+Essa é uma integral por partes clássica (Apêndice \@ref(revisao-de-calculo)), mas o resultado geral
+vale a pena memorizar: para qualquer Exponencial com taxa $\lambda$, $f(x)=\lambda e^{-\lambda x}$,
+
+$$
+E(X) = \int_0^\infty x\cdot\lambda e^{-\lambda x}\,dx = \frac{1}{\lambda}.
+$$
+
+Com $\lambda=0{,}2$, $E(X) = 1/0{,}2 = 5$. Só agora confirmamos numericamente:
+
 ```{r esperanca-exponencial}
-# E(X) para a fila de atendimento: integral de x*f(x) de 0 a infinito
+# E(X) da fila: integral de x*f(x) de 0 a infinito (à mão, deu 1/lambda = 1/0,2 = 5)
 integrand <- function(x) x * 0.2*exp(-0.2*x)
 integrate(integrand, lower = 0, upper = Inf)
 ```
 
-$E(X)=5$ minutos, o tempo médio de espera na fila.
+$E(X)=5$ minutos, o tempo médio de espera na fila, exatamente o valor previsto pela fórmula
+$1/\lambda$.
 
 ```{r fig-peso-esperado, echo=FALSE, out.width="80%", fig.cap="Companhia aérea reforma aviões após o peso real dos passageiros de primeira classe superar o peso esperado usado no projeto das cabines."}
 knitr::include_graphics("images/peso_esperado_aviao.jpg")
 ```
 
 ```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: engenharia também usa $E(X)$</strong>, o caso
+<div class="caixa-aplicacao"><strong>Aplicação: engenharia também usa \(E(X)\)</strong>, o caso
 real acima não é sobre economia, mas ilustra o mesmo conceito com consequências físicas diretas:
 companhias aéreas projetam estrutura, distribuição de peso e consumo de combustível de uma
 aeronave com base no <em>peso esperado</em> por passageiro, uma média ponderada de uma
 distribuição de peso corporal mais bagagem. Quando o peso real observado passa a exceder
 sistematicamente o peso de projeto (mudança na composição populacional ao longo de décadas, mais
 bagagem de mão, assentos maiores), a estrutura precisa ser refeita. É a mesma lógica de uma
-seguradora recalculando $E(X)$ quando o perfil de sinistros muda, ou de um dimensionamento de
-capacidade de atendimento baseado no $E(X)=5$ minutos calculado acima: um valor esperado não é uma
+seguradora recalculando \(E(X)\) quando o perfil de sinistros muda, ou de um dimensionamento de
+capacidade de atendimento baseado no \(E(X)=5\) minutos calculado acima: um valor esperado não é uma
 verdade estática, é uma estimativa que precisa ser revista quando a distribuição subjacente
 muda.</div>
 ```
@@ -135,13 +155,13 @@ muda.</div>
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> $E(X)=5$ minutos é o tempo "esperado", mas, como a Exponencial é
+<p><strong>1.</strong> \(E(X)=5\) minutos é o tempo "esperado", mas, como a Exponencial é
 assimétrica à direita, grande parte dos clientes espera bem menos que 5 minutos, enquanto uma
 minoria espera bem mais. O que isso implica para uma agência que divulga "tempo médio de espera: 5
 minutos" como métrica de atendimento ao público? Que medida (do Capítulo 1) complementaria melhor
 essa informação?</p>
 
-<p><strong>2.</strong> As fórmulas de $E(aX+b)$ e $\mathrm{Var}(aX+b)$ são idênticas às do Capítulo
+<p><strong>2.</strong> As fórmulas de \(E(aX+b)\) e \(\mathrm{Var}(aX+b)\) são idênticas às do Capítulo
 3, só trocando soma por integral na definição. Por que isso não deveria ser surpreendente?</p>
 </div>
 ```
@@ -160,7 +180,7 @@ P(X\le x) = P(X<x) \qquad P(X\ge x) = P(X>x),
 $$
 
 ao contrário do caso discreto, onde a diferença entre $\le$ e $<$ importava (Capítulo 3). Pela
-relação entre $f$ e $F$ (Teorema Fundamental do Cálculo, Apêndice A):
+relação entre $f$ e $F$ (Teorema Fundamental do Cálculo, Apêndice B):
 
 $$
 F'(x) = f(x), \qquad P(a\le X\le b) = F(b) - F(a).
@@ -177,12 +197,12 @@ ggplot(tibble(x = seq(0,30,length.out=300), F = Fx(x)), aes(x,F)) +
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> No Capítulo 3, $P(X\ge x)\ne P(X>x)$ em geral (a diferença de um ponto
-importava). Aqui, $P(X\ge x)=P(X>x)$ sempre. Explique essa diferença usando o fato $P(X=x)=0$ para
+<p><strong>1.</strong> No Capítulo 3, \(P(X\ge x)\ne P(X>x)\) em geral (a diferença de um ponto
+importava). Aqui, \(P(X\ge x)=P(X>x)\) sempre. Explique essa diferença usando o fato \(P(X=x)=0\) para
 VA contínua, qual é exatamente o "ponto a mais ou a menos" que deixou de importar?</p>
 
-<p><strong>2.</strong> Dado $F(x)=1-e^{-0{,}2x}$, como você recuperaria $f(x)$ a partir dela, sem
-ter a fórmula de $f$ em mãos? Use a relação $F'(x)=f(x)$ para deduzir.</p>
+<p><strong>2.</strong> Dado \(F(x)=1-e^{-0{,}2x}\), como você recuperaria \(f(x)\) a partir dela, sem
+ter a fórmula de \(f\) em mãos? Use a relação \(F'(x)=f(x)\) para deduzir.</p>
 </div>
 ```
 
@@ -199,15 +219,15 @@ knitr::include_graphics("images/fdp_triangular.jpg")
 ```{=html}
 <div class="caixa-discussao"><strong>Para discutir</strong>
 
-<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em $x=0$) até 1 (em $x=1$) e desce
-de volta a 0 (em $x=2$), formando dois triângulos-retângulos. Usando a fórmula da área de um
+<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em \(x=0\)) até 1 (em \(x=1\)) e desce
+de volta a 0 (em \(x=2\)), formando dois triângulos-retângulos. Usando a fórmula da área de um
 triângulo, confirme que a área total sob a curva é de fato 1, condição necessária para ser uma
 densidade válida.</p>
 
-<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: $P(X\le 1)$ é maior, menor
-ou igual a $P(X>1)$? E $E(X)$, o desenho sugere que vale exatamente 1? (Aqui a densidade é
-simétrica em torno de $x=1$, mas o racional geral vale para qualquer densidade: quando existe um
-ponto de simetria, ele é sempre igual a $E(X)$.)</p>
+<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: \(P(X\le 1)\) é maior, menor
+ou igual a \(P(X>1)\)? E \(E(X)\), o desenho sugere que vale exatamente 1? (Aqui a densidade é
+simétrica em torno de \(x=1\), mas o racional geral vale para qualquer densidade: quando existe um
+ponto de simetria, ele é sempre igual a \(E(X)\).)</p>
 </div>
 ```
 
@@ -224,7 +244,7 @@ $$
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação</strong>, o instante, dentro de uma hora, em que um
 cliente entra em uma loja (sem padrão de horário de pico) pode ser modelado como
-$X\sim\text{Unif}(0,60)$ (minutos após o início da hora).</div>
+\(X\sim\text{Unif}(0,60)\) (minutos após o início da hora).</div>
 ```
 
 ```{r uniforme-r, fig.height=3.5}
@@ -263,6 +283,55 @@ $$
 Z = \frac{X-\mu}{\sigma}.
 $$
 
+A padronização por si só não calcula nada, ela só troca a pergunta original (sobre $X$) por uma
+pergunta equivalente sobre $Z$, que pode ser respondida numa tabela ou numa função como
+`pnorm()`. A relação-chave é
+
+$$
+P(X\le a) = P\!\left(Z\le \frac{a-\mu}{\sigma}\right) = \Phi\!\left(\frac{a-\mu}{\sigma}\right),
+$$
+
+em que $\Phi$ é a FDA da Normal padrão. Vale a pena fazer essa conta à mão pelo menos uma vez antes
+de confiar apenas no R.
+
+```{=html}
+<div class="caixa-aplicacao"><strong>Exemplo resolvido: padronização passo a passo</strong>, a
+renda mensal (\(X\), em R$) das famílias de uma certa cidade segue aproximadamente
+\(X\sim N(2.000,\ 1.000^2)\). Qual é a probabilidade de uma família sorteada ao acaso ganhar menos de
+R$ 1.830?</div>
+```
+
+**Passo 1 (padronizar).** Subtrai-se a média e divide-se pelo desvio padrão:
+
+$$
+z = \frac{1.830-2.000}{1.000} = \frac{-170}{1.000} = -0{,}17.
+$$
+
+**Passo 2 (reescrever o evento em termos de $Z$).**
+
+$$
+P(X<1.830) = P\!\left(Z < \frac{1.830-2.000}{1.000}\right) = P(Z<-0{,}17) = \Phi(-0{,}17).
+$$
+
+**Passo 3 (consultar a tabela ou calcular $\Phi$).** Na tabela da Normal padrão, a linha $-0{,}1$
+com a coluna $0{,}07$ fornece $\Phi(-0{,}17)\approx 0{,}4325$: cerca de **43,25%** das famílias
+ganham menos de R\$ 1.830. Só agora, com o valor já obtido à mão, confirmamos com `pnorm()`:
+
+```{r padronizacao-mao}
+mu_renda <- 2000; sigma_renda <- 1000
+
+z <- (1830 - mu_renda) / sigma_renda
+z                       # valor padronizado calculado à mão
+
+pnorm(z)                # Phi(z) pela Normal padrão, N(0,1)
+pnorm(1830, mu_renda, sigma_renda)  # mesma probabilidade, direto na escala de X
+```
+
+As três formas (tabela, `pnorm(z)` e `pnorm(1830, mu, sigma)`) devem coincidir, e coincidem: o
+`pnorm()` com os parâmetros originais já faz a padronização internamente, por isso adiantar o
+cálculo de $z$ à mão é redundante para o R, mas essencial para entender *o que* o R está calculando
+e para resolver questões de prova sem computador.
+
 ```{r fig-black-scholes, echo=FALSE, out.width="70%", fig.cap="'Fórmula de Midas': a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal)."}
 knitr::include_graphics("images/black_scholes.jpg")
 ```
@@ -279,18 +348,54 @@ exige saber em que condições ele deixa de valer.</div>
 
 ```{=html}
 <div class="caixa-aplicacao"><strong>Aplicação: retorno mensal de um fundo de ações</strong>,
-histórico sugere retorno mensal aproximadamente $X\sim N(1{,}2\%,\ (4{,}5\%)^2)$.</div>
+histórico sugere retorno mensal aproximadamente \(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\). Qual é a
+probabilidade do fundo ter retorno negativo em um mês qualquer?</div>
 ```
+
+Repetindo os passos do exemplo anterior, agora com $\mu=1{,}2$ e $\sigma=4{,}5$. Padronizando o
+valor de interesse ($a=0$):
+
+$$
+z = \frac{0-1{,}2}{4{,}5} = \frac{-1{,}2}{4{,}5} \approx -0{,}27,
+$$
+
+$$
+P(X<0) = P\!\left(Z<\frac{0-1{,}2}{4{,}5}\right) = P(Z<-0{,}27) = \Phi(-0{,}27) \approx 0{,}3936
+$$
+
+pela tabela (linha $-0{,}2$, coluna $0{,}07$). Para a segunda pergunta, "qual a probabilidade do
+retorno ficar entre 0% e 5% no mês?", padronizamos os dois extremos do intervalo:
+
+$$
+z_1 = \frac{0-1{,}2}{4{,}5}\approx -0{,}27, \qquad z_2 = \frac{5-1{,}2}{4{,}5}\approx 0{,}84,
+$$
+
+$$
+P(0<X<5) = \Phi(z_2)-\Phi(z_1) = \Phi(0{,}84)-\Phi(-0{,}27) \approx 0{,}7995-0{,}3936 = 0{,}4059.
+$$
 
 ```{r normal-r, fig.height=3.6}
 mu <- 1.2; sigma <- 4.5
 
-# probabilidade de retorno negativo no mês
-pnorm(0, mean = mu, sd = sigma)
+# padronização à mão, como acima, antes de qualquer chamada a pnorm()
+z0 <- (0 - mu) / sigma
+z5 <- (5 - mu) / sigma
+c(z0 = z0, z5 = z5)
 
-# probabilidade de retorno entre 0% e 5%
+# Phi(z) pela Normal padrão: deve reproduzir os valores de tabela acima
+pnorm(z0)
+pnorm(z5) - pnorm(z0)
+
+# confirmação: pnorm() com os parâmetros originais já padroniza por dentro
+pnorm(0, mean = mu, sd = sigma)
 pnorm(5, mu, sigma) - pnorm(0, mu, sigma)
 ```
+
+Note que `pnorm(z0)` usa $z_0=-0{,}2\overline{6}$ com todas as casas decimais, enquanto a consulta
+à tabela acima arredondou $z$ para $-0{,}27$ (tabelas só têm duas casas). Por isso os valores
+"batem" apenas de forma aproximada ($0{,}3936$ na tabela vs. $\approx 0{,}3949$ no R): a diferença
+é só arredondamento, não um erro de método, e é exatamente o tipo de discrepância que se espera ao
+comparar um cálculo manual com uma tabela e um cálculo numérico exato.
 
 ```{r grafico-normal, echo=FALSE, fig.height=3.8}
 df <- tibble(x = seq(mu - 4*sigma, mu + 4*sigma, length.out = 300),
@@ -310,7 +415,7 @@ ggplot(df, aes(x,y)) + geom_line(color = "#0d3b54") +
 negativo (área sombreada) é o tipo de número que um gestor de risco reporta como parte da
 caracterização de um fundo, junto de uma ressalva importante, retomada da discussão de curtose no
 Capítulo 1: retornos financeiros reais frequentemente têm caudas mais pesadas que a Normal
-(curtose $>3$), de modo que a probabilidade Normal tende a \emph{subestimar} a frequência real de
+(curtose \(>3\)), de modo que a probabilidade Normal tende a <em>subestimar</em> a frequência real de
 perdas extremas, a Normal é um ponto de partida útil, não a palavra final em modelagem de
 risco.</div>
 ```
@@ -320,9 +425,11 @@ risco.</div>
 Para qualquer $X\sim N(\mu,\sigma^2)$:
 
 $$
-P(\mu-\sigma < X < \mu+\sigma)\approx 0{,}683 \quad
-P(\mu-2\sigma < X < \mu+2\sigma)\approx 0{,}954 \quad
-P(\mu-3\sigma < X < \mu+3\sigma)\approx 0{,}997
+\begin{aligned}
+P(\mu-\sigma < X < \mu+\sigma) &\approx 0{,}683 \\
+P(\mu-2\sigma < X < \mu+2\sigma) &\approx 0{,}954 \\
+P(\mu-3\sigma < X < \mu+3\sigma) &\approx 0{,}997
+\end{aligned}
 $$
 
 ```{r regra-empirica}
@@ -332,8 +439,8 @@ pnorm(2) - pnorm(-2)   # P(-2 < Z < 2) na Normal padrão
 ```{=html}
 <div class="caixa-r"><strong>Uso do R</strong>, <code>pnorm</code>/<code>dnorm</code>/
 <code>qnorm</code>/<code>rnorm</code> seguem o mesmo padrão das demais distribuições do R.
-<code>qnorm(p, mean, sd)</code> é a função inversa da FDA, devolve o valor $x$ tal que
-$F(x)=p$, útil para "qual é o retorno que só é superado (ou não superado) por p% dos
+<code>qnorm(p, mean, sd)</code> é a função inversa da FDA, devolve o valor \(x\) tal que
+\(F(x)=p\), útil para "qual é o retorno que só é superado (ou não superado) por p% dos
 casos?".</div>
 ```
 
@@ -342,7 +449,7 @@ casos?".</div>
 
 <p><strong>1.</strong> A regra empírica é uma consequência direta da Normal, não uma suposição
 extra. Se retornos financeiros reais têm curtose maior que 3 (Capítulo 1), a probabilidade real de
-um retorno cair fora de $\mu\pm2\sigma$ é maior ou menor que os 4,6\% previstos pela regra
+um retorno cair fora de \(\mu\pm2\sigma\) é maior ou menor que os 4,6\% previstos pela regra
 empírica? Que consequência prática isso tem para um gestor que usa "2 desvios padrão" como limite
 de alerta de risco?</p>
 

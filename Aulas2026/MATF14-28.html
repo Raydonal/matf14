@@ -40,14 +40,14 @@ class: inverse, center, middle
 
 ---
 
-## Normal(\(\mu,\sigma^2\))
+## Normal(\\(\mu,\sigma^2\\))
 
 $$
 f(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \ x\in\mathbb{R}
 \qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2
 $$
 
-Simétrica, em forma de sino, em torno de \(\mu\). O modelo contínuo mais usado, surge naturalmente
+Simétrica, em forma de sino, em torno de \\(\mu\\). O modelo contínuo mais usado, surge naturalmente
 da soma de muitos pequenos efeitos independentes.
 
 --
@@ -90,15 +90,81 @@ catastrófica, como na quebra do fundo LTCM em 1998.
 
 ---
 
+## Padronização: exemplo passo a passo
+
+Renda mensal de uma cidade, \\(X\sim N(2.000,\ 1.000^2)\\) (R$). Qual é \\(P(X&amp;lt;1.830)\\)?
+
+**Passo 1 (padronizar):**
+$$
+z = \frac{1.830-2.000}{1.000} = -0{,}17
+$$
+
+**Passo 2 (reescrever em \\(Z\\) e consultar a tabela):**
+$$
+P(X&amp;lt;1.830) = P(Z&amp;lt;-0{,}17) = \Phi(-0{,}17)\approx 0{,}4325
+$$
+
+
+``` r
+mu_renda &lt;- 2000; sigma_renda &lt;- 1000
+
+z &lt;- (1830 - mu_renda) / sigma_renda
+z                                  # valor padronizado, calculado à mão
+```
+
+```
+## [1] -0.17
+```
+
+``` r
+pnorm(z)                           # Phi(z) pela Normal padrão
+```
+
+```
+## [1] 0.4325051
+```
+
+``` r
+pnorm(1830, mu_renda, sigma_renda) # mesma probabilidade, escala original de X
+```
+
+```
+## [1] 0.4325051
+```
+
+---
+
 ## Retorno mensal de um fundo
 
-\(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\).
+\\(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\\). Repetindo os mesmos passos para \\(P(X&amp;lt;0)\\) (retorno
+negativo no mês):
+
+$$
+z = \frac{0-1{,}2}{4{,}5}\approx -0{,}27 \qquad P(X&amp;lt;0)=\Phi(-0{,}27)\approx 0{,}3936
+$$
 
 
 ``` r
 mu &lt;- 1.2; sigma &lt;- 4.5
 
-pnorm(0, mu, sigma)                      # P(retorno &lt; 0)
+z0 &lt;- (0 - mu) / sigma        # padronização à mão, como no exemplo anterior
+z0
+```
+
+```
+## [1] -0.2666667
+```
+
+``` r
+pnorm(z0)                     # Phi(z0): deve bater (a menos de arredondar z) com 0,3936
+```
+
+```
+## [1] 0.3948629
+```
+
+``` r
+pnorm(0, mu, sigma)                       # P(retorno &lt; 0), confirmação direta
 ```
 
 ```
@@ -145,7 +211,7 @@ maior, "caudas gordas". A probabilidade de retorno muito negativo calculada com 
 tende a subestimar ou superestimar o risco real de perdas extremas? Que implicação prática isso
 tem para o cálculo de Value-at-Risk feito acima?
 
-**2.** Um gestor de risco usa exclusivamente a regra empírica (2 desvios padrão \(\approx\) 95%) para
+**2.** Um gestor de risco usa exclusivamente a regra empírica (2 desvios padrão \\(\approx\\) 95%) para
 definir seus limites de alerta. Em que tipo de mercado (calmo vs. em crise) essa prática seria mais
 perigosa?
 
@@ -167,6 +233,8 @@ Capítulo 1).
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 
 ``` r

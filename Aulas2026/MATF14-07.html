@@ -35,6 +35,68 @@ class: inverse, center, middle
 5. Correlação entre faturamento 1998 e 1999.
 6. Exercício guiado com `dados_prefeitos.csv`.
 
+Não há laboratório de informática presencial neste semestre: todo o roteiro roda no
+**Google Colab**, no navegador, sem instalar nada. Funciona tanto acompanhando a aula
+projetada quanto reproduzindo depois em casa, no seu próprio computador.
+
+---
+
+## Google Colab: criando um notebook
+
+&lt;img src="colab-07-01-pagina-colab.png" alt="" width="72%" style="display: block; margin: auto;" /&gt;
+
+Acesse **colab.research.google.com** com sua conta Google e clique em **Novo notebook**.
+
+---
+
+## O notebook em branco
+
+&lt;img src="colab-07-02-novo-notebook.png" alt="" width="62%" style="display: block; margin: auto;" /&gt;
+
+Dê um nome ao notebook (canto superior esquerdo) para não perdê-lo depois entre vários
+notebooks sem nome.
+
+---
+
+## Por padrão, o Colab abre em Python
+
+&lt;img src="colab-07-03-pagina-notebook.png" alt="" width="62%" style="display: block; margin: auto;" /&gt;
+
+Antes de digitar qualquer código desta aula, é preciso trocar a linguagem do ambiente de
+execução de Python para **R**.
+
+---
+
+## Trocando o ambiente de execução para R
+
+.pull-left[
+&lt;img src="colab-07-04-config-notebook.png" alt="" width="95%" /&gt;
+Menu **Ambiente de execução** → **Alterar tipo de ambiente de execução**.
+]
+
+--
+
+.pull-right[
+&lt;img src="colab-07-05-selecionar-r.png" alt="" width="95%" /&gt;
+Escolha **R** na lista de linguagens e confirme (**Salvar**).
+]
+
+---
+
+## Enviando `empresas.csv` e `dados_prefeitos.csv` para o Colab
+
+&lt;img src="colab-07-06-upload-arquivos.jpg" alt="" width="42%" style="display: block; margin: auto;" /&gt;
+
+Clique no ícone de **pasta** na barra lateral esquerda e, na aba de arquivos, arraste os dois
+`.csv` desta aula (ou use o botão de upload). Repita sempre que reabrir o notebook, o
+armazenamento de sessão do Colab **não é permanente**.
+
+--
+
+Alternativa (só funciona enquanto o repositório da disciplina estiver público, evite depender
+disso para a prova): ler direto de uma URL, sem upload manual, com
+`read.csv("https://raw.githubusercontent.com/Raydonal/matf14/main/Aulas2026/empresas.csv")`.
+
 ---
 
 ## 1. Carregar e inspecionar
@@ -85,6 +147,13 @@ str(empresas[, c("porte", "empregados99", "faturamento99")])
 
 `read.csv()` já reconhece números como `numeric`/`integer` e texto como `character`, mas cabe a
 você decidir se uma coluna de texto deveria virar `factor` (variável ordinal, por exemplo).
+
+--
+
+**Atenção com dados brasileiros**: se a planilha usa vírgula como separador decimal (comum em
+exportações de Excel em pt-BR), `read.csv()` precisa do argumento `dec = ","`:
+`read.csv("empresas.csv", header = TRUE, dec = ",")`. Sem isso, a coluna decimal vira `character`
+e toda conta com ela falha silenciosamente ou gera `NA`.
 
 ---
 
@@ -143,6 +212,32 @@ summary(empresas$idade)
 ```
 
 `summary()` já devolve mínimo, quartis, média e máximo de uma vez, ótimo primeiro diagnóstico.
+
+---
+
+## Moda: cuidado com `mode()`
+
+R não tem uma função `moda()` pronta, e `mode()` **não** é o que parece, devolve o modo de
+*armazenamento* do objeto, não a moda estatística:
+
+
+``` r
+mode(empresas$faturamento99)                     # "numeric": armazenamento, não a moda!
+```
+
+```
+## [1] "numeric"
+```
+
+``` r
+tab_setor &lt;- table(empresas$setor)
+tab_setor[which.max(tab_setor)]                  # setor mais frequente, via which.max()
+```
+
+```
+## Embalagens  
+##          31
+```
 
 ---
 
@@ -300,7 +395,7 @@ confira depois.
 **3.** Compare o `cor(f98, f99)` calculado nesta aula com o gráfico de dispersão correspondente.
 O valor numérico, sozinho, teria sido suficiente para você confiar que a relação é bem
 aproximadamente linear (e não, por exemplo, uma curva)? Por que olhar o gráfico continua sendo
-necessário mesmo depois de calcular \(r\)?
+necessário mesmo depois de calcular \\(r\\)?
 
 ---
 

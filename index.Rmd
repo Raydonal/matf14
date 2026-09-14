@@ -38,7 +38,11 @@ Python/Anaconda), leitura de dados, funções, loops, números aleatórios e gr�
 linguagens lado a lado, e uma lista de cursos e livros gratuitos para quem quiser ir além do curso
 (R for Data Science, swirl, Kaggle Learn, Automate the Boring Stuff, entre outros). O mesmo
 conteúdo, em formato de referência de consulta, também está no
-<a href="Livro/ferramentas-rpython.html">Apêndice A do livro-texto</a>.
+<a href="Livro/ferramentas-rpython.html">Apêndice A do livro-texto</a>. Não há laboratório de
+informática físico neste semestre: os três encontros marcados como "[Laboratório]" no cronograma
+(Aulas 07, 13 e 22) são atividades virtuais, executadas no navegador via Google Colab, sem
+necessidade de instalação local — a instalação de R e Python acima continua recomendada para
+acompanhar o curso como um todo, mas não é pré-requisito para esses encontros específicos.
 </div>
 
 <h4>

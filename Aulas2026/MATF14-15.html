@@ -28,13 +28,13 @@ class: inverse, center, middle
 
 | Tópico | Fórmula-chave |
 |---|---|
-| Média | \(\bar x = \frac1n\sum\_i x\_i\) |
+| Média | \\(\bar x = \frac1n\sum\_i x\_i\\) |
 | Mediana | valor central dos dados ordenados |
-| Quartis / IQR | \(Q\_1,Q\_2,Q\_3\); \(IQR=Q\_3-Q\_1\) |
-| Variância | \(\mathrm{Var}(X)=\frac1n\sum\_i(x\_i-\bar x)^2\) |
-| Desvio padrão | \(dp(X)=\sqrt{\mathrm{Var}(X)}\) |
-| CV | \(dp(X)/\bar x\) |
-| Correlação | \(r=\frac{\sum(x\_i-\bar x)(y\_i-\bar y)}{\sqrt{\sum(x\_i-\bar x)^2}\sqrt{\sum(y\_i-\bar y)^2}}\) |
+| Quartis / IQR | \\(Q\_1,Q\_2,Q\_3\\); \\(IQR=Q\_3-Q\_1\\) |
+| Variância | \\(\mathrm{Var}(X)=\frac1n\sum\_i(x\_i-\bar x)^2\\) |
+| Desvio padrão | \\(dp(X)=\sqrt{\mathrm{Var}(X)}\\) |
+| CV | \\(dp(X)/\bar x\\) |
+| Correlação | \\(r=\frac{\sum(x\_i-\bar x)(y\_i-\bar y)}{\sqrt{\sum(x\_i-\bar x)^2}\sqrt{\sum(y\_i-\bar y)^2}}\\) |
 | Assimetria | 3º momento padronizado |
 
 ---
@@ -43,25 +43,25 @@ class: inverse, center, middle
 
 | Tópico | Fórmula-chave |
 |---|---|
-| Axiomas | \(P(A)\ge0\), \(P(\Omega)=1\), aditividade |
-| Adição geral | \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\) |
-| Equiprovável | \(P(A)=\#A/\#\Omega\) |
-| Combinação | \(\binom{n}{k}=\frac{n!}{k!(n-k)!}\) |
-| Condicional | \(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\) |
-| Independência | \(P(A\cap B)=P(A)P(B)\) |
-| Prob. total | \(P(A)=\sum\_i P(A\mid B\_i)P(B\_i)\) |
-| Bayes | \(P(B\_i\mid A)=\frac{P(A\mid B\_i)P(B\_i)}{\sum\_j P(A\mid B\_j)P(B\_j)}\) |
+| Axiomas | \\(P(A)\ge0\\), \\(P(\Omega)=1\\), aditividade |
+| Adição geral | \\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\\) |
+| Equiprovável | \\(P(A)=\\#A/\\#\Omega\\) |
+| Combinação | \\(\binom{n}{k}=\frac{n!}{k!(n-k)!}\\) |
+| Condicional | \\(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\\) |
+| Independência | \\(P(A\cap B)=P(A)P(B)\\) |
+| Prob. total | \\(P(A)=\sum\_i P(A\mid B\_i)P(B\_i)\\) |
+| Bayes | \\(P(B\_i\mid A)=\frac{P(A\mid B\_i)P(B\_i)}{\sum\_j P(A\mid B\_j)P(B\_j)}\\) |
 
 ---
 
 ## Os 5 erros mais comuns em prova (edições anteriores)
 
-1. Confundir divisor \(n\) (descritiva, usado neste curso) com \(n-1\) (o `var()` do R).
-2. Aplicar \(P(A\cup B)=P(A)+P(B)\) sem checar se \(A,B\) são mutuamente exclusivos.
+1. Confundir divisor \\(n\\) (descritiva, usado neste curso) com \\(n-1\\) (o `var()` do R).
+2. Aplicar \\(P(A\cup B)=P(A)+P(B)\\) sem checar se \\(A,B\\) são mutuamente exclusivos.
 3. Confundir "mutuamente exclusivos" com "independentes" (são opostos, não sinônimos, quando
    ambas têm probabilidade positiva).
-4. Esquecer de calcular \(P(A)\) (probabilidade total) antes de aplicar Bayes.
-5. Interpretar \(r\approx 0\) como "não há relação nenhuma", ignorando que \(r\) só mede relação
+4. Esquecer de calcular \\(P(A)\\) (probabilidade total) antes de aplicar Bayes.
+5. Interpretar \\(r\approx 0\\) como "não há relação nenhuma", ignorando que \\(r\\) só mede relação
    **linear**.
 
 ---
@@ -90,16 +90,16 @@ listados acima, um colega desatento cometeria antes de olhar a solução.
 ## Problema 1
 
 Os prêmios pagos (em R$ mil) por uma seguradora em 7 sinistros do mês foram:
-\(12, 15, 14, 13, 16, 14, 95\). Calcule média e mediana, e diga o que a comparação entre elas revela.
+\\(12, 15, 14, 13, 16, 14, 95\\). Calcule média e mediana, e diga o que a comparação entre elas revela.
 
 --
 
-**Solução.** Soma \(=179\), \(n=7\), \(\bar x = 179/7\approx 25{,}57\). Ordenados:
-\(12,13,14,14,15,16,95\), mediana (4º valor) \(=14\).
+**Solução.** Soma \\(=179\\), \\(n=7\\), \\(\bar x = 179/7\approx 25{,}57\\). Ordenados:
+\\(12,13,14,14,15,16,95\\), mediana (4º valor) \\(=14\\).
 
 --
 
-Média \(\gg\) mediana \(\Rightarrow\) assimetria forte à direita: um sinistro atípico (R$ 95 mil,
+Média \\(\gg\\) mediana \\(\Rightarrow\\) assimetria forte à direita: um sinistro atípico (R$ 95 mil,
 possivelmente um evento raro de grande porte) puxa a média muito acima do "sinistro típico" do mês
 (mediana R$ 14 mil).
 
@@ -116,7 +116,7 @@ dp 4%). Qual ativo é relativamente mais arriscado?
 --
 
 **Solução.** Desvio padrão bruto sugere Y (4% &gt; 2%), mas as médias são muito diferentes, então
-compare via \(CV\):
+compare via \\(CV\\):
 
 $$
 CV\_X = 2/8 = 0{,}25 \qquad CV\_Y = 4/20 = 0{,}20
@@ -138,14 +138,14 @@ poupança?
 
 --
 
-**Solução.** \(B=\)"poupança" (\(P(B)=180/300\)), \(A=\)"cartão" (\(P(A\cap B)=50/300\), a interseção
+**Solução.** \\(B=\\)"poupança" (\\(P(B)=180/300\\)), \\(A=\\)"cartão" (\\(P(A\cap B)=50/300\\), a interseção
 "ambos"):
 
 $$
 P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{50/300}{180/300} = \frac{50}{180} \approx 0{,}278
 $$
 
-**Erro comum a evitar**: usar \(90/300\) (a probabilidade não condicional de ter cartão) em vez de
+**Erro comum a evitar**: usar \\(90/300\\) (a probabilidade não condicional de ter cartão) em vez de
 condicionar corretamente ao subconjunto "tem poupança".
 
 ---
@@ -158,7 +158,7 @@ ter vindo do fornecedor B?
 
 --
 
-**Solução.** \(P(A)=0{,}7\), \(P(B)=0{,}3\), \(P(D\mid A)=0{,}02\), \(P(D\mid B)=0{,}08\).
+**Solução.** \\(P(A)=0{,}7\\), \\(P(B)=0{,}3\\), \\(P(D\mid A)=0{,}02\\), \\(P(D\mid B)=0{,}08\\).
 
 
 ``` r
@@ -175,8 +175,8 @@ Apesar de o fornecedor B fornecer só 30% das peças, ele responde por
 63% das peças defeituosas, sua taxa de defeito 4x maior pesa
 mais que sua participação menor.
 
-**Erro comum a evitar**: esquecer de calcular \(P(D)\) (probabilidade total) antes de aplicar Bayes,
-ou confundir \(P(D\mid B)\) com \(P(B\mid D)\) (a própria pergunta do problema).
+**Erro comum a evitar**: esquecer de calcular \\(P(D)\\) (probabilidade total) antes de aplicar Bayes,
+ou confundir \\(P(D\mid B)\\) com \\(P(B\mid D)\\) (a própria pergunta do problema).
 
 ---
 
@@ -189,12 +189,12 @@ Reserve um tempo para responder, sem consultar nada, cada uma destas perguntas d
 **1.** Dos cinco erros comuns listados no início da aula, qual você mais reconheceu em si mesmo ao
 tentar resolver os quatro problemas antes de ver a solução?
 
-**2.** Se uma questão pedir para calcular uma correlação e depois perguntar "isso prova que \(X\)
-causa \(Y\)?", que resposta em uma frase você daria, e que exemplo alternativo (variável de
+**2.** Se uma questão pedir para calcular uma correlação e depois perguntar "isso prova que \\(X\\)
+causa \\(Y\\)?", que resposta em uma frase você daria, e que exemplo alternativo (variável de
 confusão) você citaria para justificá-la?
 
 **3.** Se uma questão de Bayes pedir a probabilidade de uma "causa" dado um "sintoma"/"evidência",
-e você só tiver \(P(\text{sintoma}\mid\text{causa})\), que passo intermediário você **precisa**
+e você só tiver \\(P(\text{sintoma}\mid\text{causa})\\), que passo intermediário você **precisa**
 calcular antes de aplicar a fórmula final?
 
 **4.** Escolha um dos quatro problemas resolvidos e reformule o enunciado trocando o contexto

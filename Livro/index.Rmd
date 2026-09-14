@@ -100,8 +100,9 @@ localizar qualquer tópico cobrado em prova diretamente pelo número da seção:
 | 2 | Introdução à Teoria das Probabilidades | 2.1 – 2.7 | Aulas 09–16 | P2 |
 | 3 | Variáveis Aleatórias Discretas | 3.1 – 3.4 | Aulas 17–23 | P2 |
 | 4 | Variáveis Aleatórias Contínuas | 4.1 – 4.4 | Aulas 24–30 | P3 |
-| Apêndice A | Revisão de Cálculo (derivadas e integrais) | - | apoio ao Cap. 4 | - |
-| Apêndice B | Fórmulário e tabelas de referência | - | consulta para as provas | - |
+| Apêndice A | Ferramentas de Trabalho: R e Python | - | apoio à Aula 02 e ao Cap. 1 | - |
+| Apêndice B | Revisão de Cálculo (derivadas e integrais) | - | apoio ao Cap. 4 | - |
+| Apêndice C | Fórmulário e tabelas de referência | - | consulta para as provas | - |
 
 Os slides de aula (`Aulas2026/`) seguem o cronograma **dia a dia** do semestre (uma aula, um
 deck); as listas (`Listas2026/`) agrupam esses dias em blocos temáticos maiores, com questões
@@ -122,7 +123,7 @@ estatístico vai encontrar na prática:
   informalidade, representatividade política, incluindo `dados_prefeitos.csv`, base **real** com
   características sociodemográficas de prefeitos eleitos em todos os municípios brasileiros.
 - **Empresas e mercado financeiro**, faturamento, porte, setor, retorno de ações, incluindo
-  `empresas.csv`, base **real** de 200 empresas brasileiras (porte, faturamento, setor, região),
+  `empresas.csv`, base **real** de 106 empresas brasileiras (porte, faturamento, setor, região),
   usada como fio condutor do Capítulo 1.
 
 ## Convenções tipográficas {-}
@@ -148,7 +149,9 @@ comando.
 
 A bibliografia básica segue as referências oficiais do plano de ensino: @hoffmann2006estatistica,
 @morettinbussab2012, @magalhaes2004probabilidade e @ross2010probabilidade. Como complementares:
-@dantas1997probabilidade, @hoggmckeancraig2013 e @triola2007introducao.
+@dantas1997probabilidade, @hoggmckeancraig2013 e @triola2007introducao. Fontes de dados e
+referências oficiais citadas ao longo do texto: @ibge2024pnad, @bacen2024ipca e
+@wooldridge2016introducao.
 
 ## Agradecimentos {-}
 

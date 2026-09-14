@@ -21,7 +21,7 @@ class: inverse, center, middle
 
 # Aula 12: Independência estatística
 
-### Provocação · Teoria · Aplicação · Discussão
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
 
 ---
 
@@ -41,29 +41,29 @@ class: inverse, center, middle
 
 ## Definição
 
-\(A\) e \(B\) são **independentes** se
+\\(A\\) e \\(B\\) são **independentes** se
 
 $$
 P(A\cap B) = P(A)\,P(B)
 $$
 
-equivalente a \(P(A\mid B)=P(A)\) (saber que \(B\) ocorreu não muda a probabilidade de \(A\)).
+equivalente a \\(P(A\mid B)=P(A)\\) (saber que \\(B\\) ocorreu não muda a probabilidade de \\(A\\)).
 
 --
 
-## Independência \(\ne\) mutuamente exclusivos
+## Independência \\(\ne\\) mutuamente exclusivos
 
-Se \(A\cap B=\emptyset\) e \(P(A),P(B)&amp;gt;0\): saber que \(A\) ocorreu implica \(P(B\mid A)=0\ne P(B)\),
+Se \\(A\cap B=\emptyset\\) e \\(P(A),P(B)&amp;gt;0\\): saber que \\(A\\) ocorreu implica \\(P(B\mid A)=0\ne P(B)\\),
 **o oposto** de independência. São conceitos frequentemente confundidos, mas incompatíveis (com
 probabilidades positivas), exatamente a tensão da provocação inicial.
 
 ---
 
-## Independência \(\ne\) ausência de causa
+## Independência \\(\ne\\) ausência de causa
 
 Independência estatística é uma propriedade de **probabilidades**, não de mecanismos causais.
 Dois eventos podem ser dependentes sem que um cause o outro (confundidor comum); e a definição
-\(P(A\cap B)=P(A)P(B)\) é o que entra nas contas, não uma noção intuitiva de causalidade.
+\\(P(A\cap B)=P(A)P(B)\\) é o que entra nas contas, não uma noção intuitiva de causalidade.
 
 ---
 
@@ -94,21 +94,83 @@ c(esperado_sob_independencia = p_desemp_e_superior_indep,
 ##                       0.11                       0.08
 ```
 
-Os valores diferem (\(0{,}11\) vs. \(0{,}08\)), evidência de dependência entre escolaridade e situação
+Os valores diferem (\\(0{,}11\\) vs. \\(0{,}08\\)), evidência de dependência entre escolaridade e situação
 ocupacional nesta população.
 
 ---
 
 ## Independência em séries de eventos
 
-Se \(A\_1,\ldots,A\_n\) são mutuamente independentes,
+Se \\(A\_1,\ldots,A\_n\\) são mutuamente independentes,
 
 $$
 P(A\_1\cap A\_2\cap\cdots\cap A\_n) = P(A\_1)\times P(A\_2)\times\cdots\times P(A\_n)
 $$
 
-Base da distribuição **Binomial** (Cap. 3): \(n\) tentativas independentes, mesma probabilidade de
+Base da distribuição **Binomial** (Cap. 3): \\(n\\) tentativas independentes, mesma probabilidade de
 sucesso em cada uma.
+
+---
+
+## Resolvendo com números: dois casos, três visitas
+
+Um departamento de polícia soluciona 60% dos seus casos de homicídio. Dois casos \\(A\\) e \\(B\\) são
+independentes (nada liga um ao outro). Qual é a probabilidade de **ambos** serem solucionados?
+
+$$
+P(A\cap B) = P(A)\times P(B) = 0{,}6\times 0{,}6 = 0{,}36 = 36\%
+$$
+
+--
+
+Agora com \\(n=3\\): um agente social visita, ao acaso, 3 domicílios independentes numa população em
+que 20% das visitas encontram indícios de violência doméstica. Qual é a probabilidade de encontrar
+indícios **nas três** visitas?
+
+$$
+P(V\_1\cap V\_2\cap V\_3) = P(V\_1)\times P(V\_2)\times P(V\_3) = 0{,}2\times 0{,}2\times 0{,}2 = 0{,}008
+$$
+
+Cada visita adicional multiplica a probabilidade por 0,2, a mesma lógica que sustenta a Binomial.
+
+---
+
+## Simulando independência: teórico vs. empírico
+
+A definição \\(P(A\cap B)=P(A)P(B)\\) não é só álgebra, é uma afirmação sobre frequências. Simulamos
+os dois casos de homicídio (\\(p=0{,}6\\) cada, resolvidos de forma independente) muitas vezes e
+comparamos a frequência conjunta observada com o valor teórico \\(0{,}36\\):
+
+
+``` r
+set.seed(12)
+n_sim &lt;- 100000
+p_A &lt;- 0.6   # prob. de solucionar o caso A
+p_B &lt;- 0.6   # prob. de solucionar o caso B (independente de A)
+
+caso_A &lt;- rbinom(n_sim, size = 1, prob = p_A)   # 1 = solucionado
+caso_B &lt;- rbinom(n_sim, size = 1, prob = p_B)
+
+p_ambos_simulado &lt;- mean(caso_A == 1 &amp; caso_B == 1)
+p_ambos_teorico  &lt;- p_A * p_B
+
+c(simulado = p_ambos_simulado, teorico = p_ambos_teorico)
+```
+
+```
+## simulado  teorico 
+##  0.35909  0.36000
+```
+
+---
+
+## O mesmo resultado, visualmente
+
+&lt;img src="MATF14-12_files/figure-html/sim-independencia-plot-1.png" alt="" width="504" /&gt;
+
+Como `caso_A` e `caso_B` são gerados por `rbinom()` **separadamente** (uma sorteia sem olhar para a
+outra), a construção já garante independência, é exatamente por isso que a frequência conjunta
+simulada se aproxima tanto do produto teórico \\(P(A)\times P(B)\\).
 
 ---
 
@@ -139,6 +201,32 @@ um exemplo (pode ser hipotético envolvendo faixa de renda ou região).
 diferentes do mesmo tomador é independente. Em uma crise econômica generalizada, essa suposição
 continua razoável? Que risco para o banco essa suposição incorreta esconde, mesmo que cada
 inadimplência individual pareça pouco provável?
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+---
+
+## Testando independência por simulação, na prática
+
+
+``` r
+# duas variáveis geradas de forma independente (rbinom() separado para cada uma)
+caso_A &lt;- rbinom(n_sim, size = 1, prob = p_A)
+caso_B &lt;- rbinom(n_sim, size = 1, prob = p_B)
+
+# frequência conjunta simulada vs. produto teórico
+mean(caso_A == 1 &amp; caso_B == 1)
+p_A * p_B
+```
+
+`rbinom(n, size = 1, prob = p)` simula `n` repetições de um evento com probabilidade `p`, gerar
+`caso_A` e `caso_B` em chamadas separadas é o que torna as duas sequências independentes por
+construção, útil para testar, por simulação, qualquer alegação de independência antes de assumi-la
+numa conta analítica.
 
 ---
 

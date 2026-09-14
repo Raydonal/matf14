@@ -36,6 +36,11 @@ class: inverse, center, middle
 4. `dpois/ppois/rpois`: Poisson e a aproximação Binomial→Poisson.
 5. Exercício guiado: tamanho mínimo de amostra.
 
+Como nas Aulas 07 e 13, sem laboratório presencial: use o mesmo notebook do **Google Colab**
+(ambiente de execução em R) das aulas anteriores. Se estiver reproduzindo em casa, os slides
+iniciais do `MATF14-07` têm o passo a passo (criar notebook, trocar para R). Todo o código de
+hoje é 100% simulado, nenhum `.csv` precisa ser enviado.
+
 ---
 
 ## 1. Bernoulli via `sample()`
@@ -133,8 +138,8 @@ class: inverse, center, middle
 
 ## Enunciado
 
-Peças com 1% de defeito, independentes. Você quer saber o menor \(n\) tal que, ao testar \(n\) peças,
-\(P(\text{pelo menos 1 defeituosa}) \ge 0{,}95\).
+Peças com 1% de defeito, independentes. Você quer saber o menor \\(n\\) tal que, ao testar \\(n\\) peças,
+\\(P(\text{pelo menos 1 defeituosa}) \ge 0{,}95\\).
 
 ```{r exercicio-n-min, fig.height=3.6}
 n <- 1:400
@@ -143,9 +148,9 @@ plot(n, prob, type = "l", col = "#0d3b54")
 abline(h = 0.95, col = "#c9971e", lty = 2)
 ```
 
-1. Leia no gráfico (aproximadamente) o valor mínimo de \(n\).
+1. Leia no gráfico (aproximadamente) o valor mínimo de \\(n\\).
 2. Confirme com `which(prob >= 0.95)[1]`.
-3. Refaça para uma taxa de defeito de 0,5% em vez de 1%, o \(n\) mínimo aumenta ou diminui? Por quê?
+3. Refaça para uma taxa de defeito de 0,5% em vez de 1%, o \\(n\\) mínimo aumenta ou diminui? Por quê?
 
 ---
 
@@ -156,10 +161,10 @@ abline(h = 0.95, col = "#c9971e", lty = 2)
 Números vista na Aula 13, agora aplicada a uma variável, não só a uma probabilidade de evento.
 
 **2.** No gráfico "Aproximação Binomial → Poisson", os pontos das duas distribuições quase se
-sobrepõem para \(n=100\), \(p=0{,}05\). Refaça mentalmente para \(n=10\), \(p=0{,}5\) (onde a aproximação
-é ruim), por que, nesse caso, \(p\) não é "pequeno" e a aproximação falha?
+sobrepõem para \\(n=100\\), \\(p=0{,}05\\). Refaça mentalmente para \\(n=10\\), \\(p=0{,}5\\) (onde a aproximação
+é ruim), por que, nesse caso, \\(p\\) não é "pequeno" e a aproximação falha?
 
-**3.** No exercício guiado, depois de responder ao item 3 (taxa de defeito de 0,5%): o \(n\) mínimo
+**3.** No exercício guiado, depois de responder ao item 3 (taxa de defeito de 0,5%): o \\(n\\) mínimo
 dobrou, mais que dobrou, ou menos que dobrou em relação ao caso de 1%? Sua intuição antes de rodar
 o código bateu com o resultado?
 

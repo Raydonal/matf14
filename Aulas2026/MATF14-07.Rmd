@@ -37,6 +37,80 @@ class: inverse, center, middle
 5. Correlação entre faturamento 1998 e 1999.
 6. Exercício guiado com `dados_prefeitos.csv`.
 
+Não há laboratório de informática presencial neste semestre: todo o roteiro roda no
+**Google Colab**, no navegador, sem instalar nada. Funciona tanto acompanhando a aula
+projetada quanto reproduzindo depois em casa, no seu próprio computador.
+
+---
+
+## Google Colab: criando um notebook
+
+```{r colab-pagina, echo=FALSE, out.width="72%", fig.align='center'}
+knitr::include_graphics("colab-07-01-pagina-colab.png")
+```
+
+Acesse **colab.research.google.com** com sua conta Google e clique em **Novo notebook**.
+
+---
+
+## O notebook em branco
+
+```{r colab-novo, echo=FALSE, out.width="62%", fig.align='center'}
+knitr::include_graphics("colab-07-02-novo-notebook.png")
+```
+
+Dê um nome ao notebook (canto superior esquerdo) para não perdê-lo depois entre vários
+notebooks sem nome.
+
+---
+
+## Por padrão, o Colab abre em Python
+
+```{r colab-pagina-notebook, echo=FALSE, out.width="62%", fig.align='center'}
+knitr::include_graphics("colab-07-03-pagina-notebook.png")
+```
+
+Antes de digitar qualquer código desta aula, é preciso trocar a linguagem do ambiente de
+execução de Python para **R**.
+
+---
+
+## Trocando o ambiente de execução para R
+
+.pull-left[
+```{r colab-config, echo=FALSE, out.width="95%"}
+knitr::include_graphics("colab-07-04-config-notebook.png")
+```
+Menu **Ambiente de execução** → **Alterar tipo de ambiente de execução**.
+]
+
+--
+
+.pull-right[
+```{r colab-selecionar-r, echo=FALSE, out.width="95%"}
+knitr::include_graphics("colab-07-05-selecionar-r.png")
+```
+Escolha **R** na lista de linguagens e confirme (**Salvar**).
+]
+
+---
+
+## Enviando `empresas.csv` e `dados_prefeitos.csv` para o Colab
+
+```{r colab-upload, echo=FALSE, out.width="42%", fig.align='center'}
+knitr::include_graphics("colab-07-06-upload-arquivos.jpg")
+```
+
+Clique no ícone de **pasta** na barra lateral esquerda e, na aba de arquivos, arraste os dois
+`.csv` desta aula (ou use o botão de upload). Repita sempre que reabrir o notebook, o
+armazenamento de sessão do Colab **não é permanente**.
+
+--
+
+Alternativa (só funciona enquanto o repositório da disciplina estiver público, evite depender
+disso para a prova): ler direto de uma URL, sem upload manual, com
+`read.csv("https://raw.githubusercontent.com/Raydonal/matf14/main/Aulas2026/empresas.csv")`.
+
 ---
 
 ## 1. Carregar e inspecionar
@@ -58,6 +132,13 @@ str(empresas[, c("porte", "empregados99", "faturamento99")])
 
 `read.csv()` já reconhece números como `numeric`/`integer` e texto como `character`, mas cabe a
 você decidir se uma coluna de texto deveria virar `factor` (variável ordinal, por exemplo).
+
+--
+
+**Atenção com dados brasileiros**: se a planilha usa vírgula como separador decimal (comum em
+exportações de Excel em pt-BR), `read.csv()` precisa do argumento `dec = ","`:
+`read.csv("empresas.csv", header = TRUE, dec = ",")`. Sem isso, a coluna decimal vira `character`
+e toda conta com ela falha silenciosamente ou gera `NA`.
 
 ---
 
@@ -82,6 +163,20 @@ summary(empresas$idade)
 ```
 
 `summary()` já devolve mínimo, quartis, média e máximo de uma vez, ótimo primeiro diagnóstico.
+
+---
+
+## Moda: cuidado com `mode()`
+
+R não tem uma função `moda()` pronta, e `mode()` **não** é o que parece, devolve o modo de
+*armazenamento* do objeto, não a moda estatística:
+
+```{r moda}
+mode(empresas$faturamento99)                     # "numeric": armazenamento, não a moda!
+
+tab_setor <- table(empresas$setor)
+tab_setor[which.max(tab_setor)]                  # setor mais frequente, via which.max()
+```
 
 ---
 
@@ -184,7 +279,7 @@ confira depois.
 **3.** Compare o `cor(f98, f99)` calculado nesta aula com o gráfico de dispersão correspondente.
 O valor numérico, sozinho, teria sido suficiente para você confiar que a relação é bem
 aproximadamente linear (e não, por exemplo, uma curva)? Por que olhar o gráfico continua sendo
-necessário mesmo depois de calcular \(r\)?
+necessário mesmo depois de calcular \\(r\\)?
 
 ---
 

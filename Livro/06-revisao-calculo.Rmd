@@ -45,10 +45,10 @@ que sustenta praticamente todo o vocabulário de otimização em microeconomia.<
 função custo, o que significa, em termos econômicos, o ponto onde essa derivada é igual a zero?
 Isso é sempre um "bom" ponto de operação para uma empresa?</p>
 
-<p><strong>2.</strong> No Capítulo 4, a derivada de $F$ (FDA) será a própria densidade $f$. Antes
-de chegar lá: por que faz sentido que a \emph{taxa de variação} da probabilidade acumulada em um
+<p><strong>2.</strong> No Capítulo 4, a derivada de \(F\) (FDA) será a própria densidade \(f\). Antes
+de chegar lá: por que faz sentido que a <em>taxa de variação</em> da probabilidade acumulada em um
 ponto seja interpretada como "quão concentrada" a probabilidade está ali? Pense no que significa
-$F$ crescer rápido versus devagar em torno de um ponto $x$.</p>
+\(F\) crescer rápido versus devagar em torno de um ponto \(x\).</p>
 </div>
 ```
 

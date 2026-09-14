@@ -77,7 +77,55 @@ class: inverse, center, middle
 
 ---
 
+## Amplitude total
+
+$$
+AT = x\_{\max} - x\_{\min}
+$$
+
+Simples, mas sensível a **um único** valor extremo, e cega a tudo que acontece entre os dois
+pontos.
+
+---
+
+## Construindo a variância do zero: cidades A e B
+
+Temperaturas (°C) em 5 dias: A = \\(24, 26, 32, 28, 25\\); B = \\(20, 26, 36, 28, 25\\). Ambas têm
+**média 27**. \\(AT\_A=8\\), \\(AT\_B=16\\), já sugere B mais dispersa.
+
+--
+
+Desvios em torno da média, \\(x\_i-\bar x\\):
+
+```{r desvios-cidades}
+A <- c(24, 26, 32, 28, 25); B <- c(20, 26, 36, 28, 25)
+A - mean(A); sum(A - mean(A))
+B - mean(B); sum(B - mean(B))
+```
+
+--
+
+Os desvios **sempre** somam zero (\\(\sum\_i(x\_i-\bar x) = \sum\_i x\_i - n\bar x = 0\\)), uma
+medida de dispersão baseada na soma direta dos desvios é inútil. Daí a ideia de **elevar ao
+quadrado** antes de somar.
+
+---
+
 ## Variância e desvio padrão
+
+```{r desvios2-cidades}
+c(var_A = mean((A - mean(A))^2), var_B = mean((B - mean(B))^2))
+```
+
+$$
+\mathrm{Var}(A) = 8 \Rightarrow dp(A)\approx2{,}83 \qquad
+\mathrm{Var}(B) = 27{,}2 \Rightarrow dp(B)\approx5{,}22
+$$
+
+O \\(IQR\\) das duas cidades é o **mesmo** (\\(=3\\)), só a variância revela a diferença que a
+\\(AT\\) já indicava.
+
+--
 
 $$
 \mathrm{Var}(X) = \frac{1}{n}\sum\_{i=1}^n (x\_i-\bar x)^2
@@ -89,8 +137,8 @@ O desvio padrão devolve a dispersão à unidade original dos dados (a variânci
 
 --
 
-**Atenção**: nesta disciplina, variância descritiva usa divisor \(n\). Em inferência/econometria, o
-divisor passa a ser \(n-1\) (correção de Bessel) quando os dados são vistos como amostra usada para
+**Atenção**: nesta disciplina, variância descritiva usa divisor \\(n\\). Em inferência/econometria, o
+divisor passa a ser \\(n-1\\) (correção de Bessel) quando os dados são vistos como amostra usada para
 **estimar** a variância populacional, o padrão da função `var()` do R.
 
 ---
@@ -103,6 +151,26 @@ $$
 
 Adimensional, permite comparar a dispersão **relativa** de variáveis em unidades diferentes, ou
 com médias muito diferentes (faturamento em R$ mil vs. número de empregados).
+
+---
+
+## Por que normalizar: duas naturezas bem diferentes
+
+Considere as notas de um aluno B em 5 avaliações: \\(2, 6, 10, 4, 8\\) (média \\(6\\)) e compare com a
+temperatura da cidade B desta aula (média \\(27\\), \\(dp\approx5{,}21\\)):
+
+| | Média | \\(AT\\) | \\(dp\\) | \\(CV\\) |
+|---|---|---|---|---|
+| Temp. cidade B | 27 | 16 | 5,21 | 0,19 |
+| Notas do aluno B | 6 | 8 | 2,82 | 0,47 |
+
+--
+
+Em valor absoluto, \\(dp(\text{temp. B}) = 5{,}21 > dp(\text{notas B}) = 2{,}82\\): pareceria que a
+temperatura "varia mais". O \\(CV\\) **inverte** essa conclusão: relativamente à própria média, as
+notas do aluno B são mais do que **duas vezes** mais dispersas (\\(0{,}47\\) contra \\(0{,}19\\)).
+Comparar desvios padrão de variáveis de naturezas diferentes sem normalizar pela média é um erro
+comum — e é exatamente o problema que o \\(CV\\) resolve.
 
 ---
 
@@ -122,7 +190,7 @@ empresas |> summarise(
 ```
 
 Não faz sentido comparar diretamente o desvio padrão de "faturamento" (ordem de centenas de
-milhares) com o de "nº de empregados" (ordem de dezenas), são unidades incomparáveis. O \(CV\)
+milhares) com o de "nº de empregados" (ordem de dezenas), são unidades incomparáveis. O \\(CV\\)
 resolve isso.
 
 ---
@@ -168,7 +236,7 @@ estável? Que medida, ainda não vista (mas você pode arriscar um palpite), aju
 capita dos dois países. Que medida de dispersão seria indispensável para essa afirmação ter
 qualquer sentido?
 
-**4.** O \(CV\) pode ser enganoso quando a média da variável está próxima de zero. Explique por que
+**4.** O \\(CV\\) pode ser enganoso quando a média da variável está próxima de zero. Explique por que
 (pense no que acontece com uma fração quando o denominador se aproxima de zero) e dê um exemplo
 econômico em que isso seria um problema real (por exemplo, uma variável que pode ser positiva ou
 negativa, como lucro).
@@ -178,6 +246,8 @@ negativa, como lucro).
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 ```{r uso-r, eval=FALSE}
 library(tidyverse)

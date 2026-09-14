@@ -70,36 +70,47 @@ class: inverse, center, middle
 
 ## Tempo médio de espera
 
-\(f(x)=0{,}2e^{-0{,}2x}\), \(x\ge0\).
+\\(f(x)=0{,}2e^{-0{,}2x}\\), \\(x\ge0\\).
 
 $$
 E(X) = \int\_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
 $$
 
+--
+
+Resultado geral (Exponencial de taxa \\(\lambda\\)): \\(E(X)=\int\_0^\infty x\lambda e^{-\lambda
+x}\,dx = 1/\lambda\\). Com \\(\lambda=0{,}2\\):
+
+$$
+E(X) = \frac{1}{0{,}2} = 5.
+$$
+
 ```{r esperanca-fila}
+1 / 0.2   # a fórmula fechada, calculada à mão acima
+
 integrand <- function(x) x * 0.2*exp(-0.2*x)
-integrate(integrand, lower = 0, upper = Inf)
+integrate(integrand, lower = 0, upper = Inf)   # confirmação pela integral
 ```
 
-\(E(X)=5\) minutos de espera média, número usado para dimensionar guichês de atendimento.
+\\(E(X)=5\\) minutos de espera média, número usado para dimensionar guichês de atendimento.
 
 ---
 
 ## Custo de superlotação
 
 Se cada minuto de espera acima de 5 custa R$ 2 em satisfação do cliente perdida (métrica
-interna), qual o "custo esperado" simplificado \(2\times E(X)\)?
+interna), qual o "custo esperado" simplificado \\(2\times E(X)\\)?
 
 ```{r custo-esperado}
 2 * 5
 ```
 
-Ilustra como \(E(\cdot)\) vira insumo direto de decisões operacionais, não só uma curiosidade
+Ilustra como \\(E(\cdot)\\) vira insumo direto de decisões operacionais, não só uma curiosidade
 teórica.
 
 ---
 
-## \(E(X)\) fora da economia: engenharia aeronáutica
+## \\(E(X)\\) fora da economia: engenharia aeronáutica
 
 ```{r fig-peso-esperado, echo=FALSE, out.width="58%"}
 knitr::include_graphics("images/peso_esperado_aviao.jpg")
@@ -107,7 +118,7 @@ knitr::include_graphics("images/peso_esperado_aviao.jpg")
 
 Companhias aéreas projetam cabines com base no **peso esperado** por passageiro. Quando o peso real
 passa a exceder sistematicamente o peso de projeto, a estrutura precisa ser refeita, o mesmo
-problema de uma seguradora recalculando \(E(X)\) quando o perfil de sinistros muda.
+problema de uma seguradora recalculando \\(E(X)\\) quando o perfil de sinistros muda.
 
 ---
 
@@ -121,7 +132,7 @@ class: inverse, center, middle
 
 **1.** A distribuição Exponencial é assimétrica à direita (Capítulo 1). Isso significa que grande
 parte dos clientes espera *menos* que 5 minutos, com uma minoria esperando bem mais e puxando a
-média para cima, assim como faturamento e renda no Capítulo 1. Calcule \(P(X&lt;5)\) com
+média para cima, assim como faturamento e renda no Capítulo 1. Calcule \\(P(X&lt;5)\\) com
 `pexp(5, rate=0.2)` (ou espere até a Aula 26, FDA) para confirmar se mais ou menos da metade dos
 clientes espera menos que a média.
 
@@ -133,15 +144,17 @@ informação de forma menos enganosa?
 
 ## Rodada 2: generalizando
 
-**3.** As fórmulas de \(E(aX+b)\) e \(\mathrm{Var}(aX+b)\) são idênticas às do Cap. 3. Por que isso não
+**3.** As fórmulas de \\(E(aX+b)\\) e \\(\mathrm{Var}(aX+b)\\) são idênticas às do Cap. 3. Por que isso não
 é surpreendente, dado que a integral é só o "análogo contínuo" da soma? Articule a resposta usando
-o Apêndice A (soma de Riemann → integral).
+o Apêndice B (soma de Riemann → integral).
 
 ---
 
 class: inverse, center, middle
 
 # Bloco 4: Uso do R
+
+---
 
 ```{r uso-r, eval=FALSE}
 f <- function(x) 0.2*exp(-0.2*x)

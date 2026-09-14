@@ -25,7 +25,7 @@ class: inverse, center, middle
 
 # Aula 17: Variável aleatória discreta
 
-### Provocação · Teoria · Aplicação · Discussão
+### Provocação · Teoria · Aplicação · Discussão · Uso do R
 
 ---
 
@@ -51,22 +51,187 @@ ainda incertas, como fizemos no Cap. 1 para dados já observados.
 
 --
 
-## Variável aleatória discreta
+## Notação
 
-Uma **variável aleatória (VA)** \(X\) associa um número real a cada resultado \(\omega\in\Omega\). É
-**discreta** quando assume valores em um conjunto finito ou enumerável.
+Representamos **variáveis aleatórias** por letras maiúsculas (\\(X, Y, Z, \ldots\\)) e os
+**valores que elas assumem**, uma vez observado o resultado, por letras minúsculas
+(\\(x, y, z, \ldots\\)). Por exemplo: "a variável aleatória \\(X\\) assumiu o valor \\(x=2\\)".
+
+---
+
+## Do espaço amostral à variável aleatória
+
+Uma **variável aleatória (VA)** é uma **função** que associa um número real a cada resultado
+\\(\omega\\) de um espaço amostral \\(\Omega\\). Vamos construir uma passo a passo.
+
+**Exemplo.** Lançamos duas moedas honestas. Seja \\(X\\) = número de caras obtidas.
+
+Espaço amostral: \\(\Omega = \\{CC, CK, KC, KK\\}\\), cada resultado com probabilidade \\(1/4\\).
+
+--
+
+| \\(\omega\\) | CC | CK | KC | KK |
+|---|---|---|---|---|
+| \\(X(\omega)\\) | 2 | 1 | 1 | 0 |
+
+\\(X\\) mapeia cada resultado de \\(\Omega\\) (que não é, em si, um número) para um número real. É
+exatamente isso que o nome "**variável aleatória**" quer dizer: uma função definida no espaço
+amostral.
+
+---
+
+## Da tabela de mapeamento à distribuição
+
+Note que dois resultados diferentes, \\(CK\\) e \\(KC\\), levam ao **mesmo** valor \\(X=1\\): a
+probabilidade de \\(X=1\\) soma as probabilidades dos dois.
+
+--
+
+**Solução.** Passo 1: os valores possíveis de \\(X\\) são \\(\\{0,1,2\\}\\). Passo 2: calculamos a
+probabilidade de cada um agrupando os resultados de \\(\Omega\\) que levam a ele:
 
 $$
-p(x\_i) = P(X=x\_i), \qquad p(x\_i)\ge 0, \qquad \sum\_i p(x\_i) = 1
+P(X=0)=P(KK)=\frac14
+$$
+$$
+P(X=1)=P(CK)+P(KC)=\frac14+\frac14=\frac12
+$$
+$$
+P(X=2)=P(CC)=\frac14
 $$
 
-`\(p(\cdot)\)` é a **função de probabilidade** (massa de probabilidade).
+--
+
+| \\(x\\) | 0 | 1 | 2 |
+|---|---|---|---|
+| \\(P(X=x)\\) | 1/4 | 1/2 | 1/4 |
+
+Note que \\(X=1\\) é o valor mais provável, apesar de os quatro resultados de \\(\Omega\\) serem
+igualmente prováveis: a "contagem" (número de caras) não é uniforme mesmo quando o espaço amostral
+é.
+
+---
+
+## Variável aleatória discreta: definição formal
+
+Generalizando o exemplo anterior: uma VA \\(X\\) é **discreta** quando assume valores em um conjunto
+finito ou enumerável \\(\\{x\_1, x\_2, x\_3, \ldots\\}\\). Sua **função de probabilidade** é
+
+$$
+p(x\_i) = P(X=x\_i), \qquad p(x\_i)\ge 0 \ \text{ para todo } i, \qquad \sum\_i p(x\_i) = 1.
+$$
+
+--
+
+No exemplo das duas moedas: \\(p(0)+p(1)+p(2) = \frac14+\frac12+\frac14 = 1\\). Toda distribuição de
+probabilidade válida precisa satisfazer essa soma, é o mesmo papel que a soma das frequências
+relativas somarem 1 desempenhava na Unidade 1.
+
+---
+
+## Passos para obter uma distribuição de probabilidade
+
+Em geral, para achar a distribuição de uma VA discreta:
+
+**Passo 1.** Identificar todos os valores possíveis que a variável pode assumir.
+
+**Passo 2.** Calcular a probabilidade de cada valor ocorrer.
+
+--
+
+**Observações**: toda probabilidade calculada deve estar entre 0 e 1; a soma de todas deve dar
+exatamente 1; casos simples costumam ser apresentados em uma tabela (valor, probabilidade), como
+fizemos acima.
+
+---
+
+## Discreta vs. contínua
+
+Uma VA é **discreta** quando seus valores podem ser contados/listados (mesmo que sejam infinitos).
+É **contínua** quando assume valores em um intervalo da reta real, incluindo números "quebrados".
+
+| Discreta | Contínua |
+|---|---|
+| Nº de sinistros de uma apólice | Valor total pago em sinistros (R$) |
+| Nº de clientes que cancelam um plano | Tempo até o cancelamento |
+| Nº de gols em uma partida | Peso de um recém-nascido |
+
+O Capítulo 4 do livro-texto trata do caso contínuo, hoje é só o caso discreto.
 
 ---
 
 class: inverse, center, middle
 
 # Bloco 2: Aplicação
+
+---
+
+## Exercício resolvido: dado honesto
+
+Seja \\(X\\) o resultado do lançamento de um dado honesto.
+
+**a)** Qual a distribuição de \\(X\\)? **b)** Qual \\(P(X&gt;4)\\)?
+
+--
+
+**Solução (a).** Passo 1: \\(X\in\\{1,2,3,4,5,6\\}\\). Passo 2: cada face é igualmente provável,
+\\(P(X=k)=1/6\\) para cada \\(k\\).
+
+| \\(x\\) | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| \\(P(X=x)\\) | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 |
+
+--
+
+**Solução (b).** \\(P(X&gt;4) = P(X=5)+P(X=6) = \frac16+\frac16 = \frac26 \approx 33\%\\).
+
+---
+
+## Aplicação econômica: itens defeituosos em um lote
+
+Um lote pequeno tem **2 itens**, cada um defeituoso (D) de forma independente com probabilidade
+\\(0{,}1\\), ou bom (B) com probabilidade \\(0{,}9\\). Seja \\(X\\) = número de itens defeituosos no
+lote.
+
+--
+
+**Solução.** Passo 1: enumeramos o espaço amostral e o valor de \\(X\\) em cada resultado:
+
+| \\(\omega\\) | BB | BD | DB | DD |
+|---|---|---|---|---|
+| \\(P(\omega)\\) | \\(0{,}9\times0{,}9=0{,}81\\) | \\(0{,}9\times0{,}1=0{,}09\\) | \\(0{,}1\times0{,}9=0{,}09\\) | \\(0{,}1\times0{,}1=0{,}01\\) |
+| \\(X(\omega)\\) | 0 | 1 | 1 | 2 |
+
+--
+
+Passo 2: agrupamos por valor de \\(X\\):
+
+| \\(x\\) | 0 | 1 | 2 |
+|---|---|---|---|
+| \\(P(X=x)\\) | 0,81 | 0,18 | 0,01 |
+
+Essa é exatamente a lógica que a Aula 20 vai generalizar como distribuição **Binomial**.
+
+---
+
+## Aplicação: seguradora, quanto ela paga por cliente?
+
+Uma seguradora paga R$ 100.000 se o cliente morre (probabilidade \\(1/1000\\)), R$ 50.000 se fica
+incapacitado (probabilidade \\(2/1000\\)), ou nada, caso contrário. Seja \\(X\\) = pagamento a um
+cliente em um ano.
+
+--
+
+Aqui as probabilidades já são dadas diretamente (não vêm de enumerar um espaço amostral
+equiprovável, como nos exemplos anteriores):
+
+| Pagamento (\\(x\\)) | 100.000 | 50.000 | 0 |
+|---|---|---|---|
+| \\(P(X=x)\\) | 1/1000 | 2/1000 | 997/1000 |
+
+Note que as três probabilidades somam \\(1\\): \\(\frac{1}{1000}+\frac{2}{1000}+\frac{997}{1000}=1\\).
+Voltaremos a essa distribuição na Aula 18 para calcular quanto a seguradora espera pagar, em média,
+por cliente.
 
 ---
 
@@ -93,10 +258,10 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo a provocação inicial
 
-**1.** Volte à pergunta de abertura. Depois de ver a tabela de \(p(x)\), formule sua resposta: o que,
+**1.** Volte à pergunta de abertura. Depois de ver a tabela de \\(p(x)\\), formule sua resposta: o que,
 exatamente, a seguradora "sabe" sobre uma apólice específica antes do ano terminar?
 
-**2.** \(P(X=0)=0{,}60\): 60% das apólices não registram nenhum sinistro no ano. Isso significa que
+**2.** \\(P(X=0)=0{,}60\\): 60% das apólices não registram nenhum sinistro no ano. Isso significa que
 60% dos segurados "não precisavam" do seguro? Que erro de raciocínio essa conclusão cometeria,
 pensando no papel de um seguro?
 
@@ -106,10 +271,65 @@ pensando no papel de um seguro?
 
 **3.** Dê um exemplo de VA discreta em Economia/Finanças que assuma **infinitos** valores possíveis
 (não um conjunto finito, como número de tentativas até um evento ocorrer). O que muda na condição
-\(\sum\_i p(x\_i)=1\) nesse caso, a soma ainda precisa dar exatamente 1, mesmo com infinitos termos?
+\\(\sum\_i p(x\_i)=1\\) nesse caso, a soma ainda precisa dar exatamente 1, mesmo com infinitos termos?
 
 **4.** Por que "número de sinistros de uma apólice" é discreta, mas "valor total pago em sinistros"
 (em R$) normalmente é tratado como contínua? A resposta prepara o terreno para o Capítulo 4.
+
+---
+
+## Rodada 3: voltando aos exemplos construídos
+
+**5.** No exemplo das duas moedas, dois resultados diferentes de \\(\Omega\\) (\\(CK\\) e \\(KC\\))
+levaram ao mesmo valor de \\(X\\). Isso também acontece no exemplo do lote de 2 itens? Identifique
+quais resultados "colidem" no mesmo valor de \\(X\\).
+
+**6.** No exemplo da seguradora (pagamento por cliente), a tabela de probabilidades **não** veio de
+enumerar um espaço amostral equiprovável. Isso invalida a definição de variável aleatória discreta
+vista nesta aula, ou a definição já previa esse caso desde o início? Releia a definição formal para
+responder.
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Uso do R
+
+---
+
+## Construindo e checando uma distribuição no R
+
+O lote de itens defeituosos (2 itens, \\(p=0{,}1\\)) construído à mão pode ser conferido no R:
+
+```{r lote-defeituosos}
+x <- c(0, 1, 2)
+p <- c(0.81, 0.18, 0.01)
+sum(p)                      # tem que dar 1
+data.frame(x, p)
+```
+
+---
+
+## Simulando o espaço amostral
+
+Podemos **simular** o lote de 2 itens sorteando, para cada item, "defeituoso" com probabilidade
+\\(0{,}1\\), e comparar a frequência simulada de cada valor de \\(X\\) com a tabela teórica que
+construímos à mão:
+
+```{r simula-lote}
+set.seed(123)
+n_lotes <- 2000
+defeitos_item1 <- sample(c(0, 1), n_lotes, prob = c(0.9, 0.1), replace = TRUE)
+defeitos_item2 <- sample(c(0, 1), n_lotes, prob = c(0.9, 0.1), replace = TRUE)
+X_simulado <- defeitos_item1 + defeitos_item2
+table(X_simulado) / n_lotes     # frequências simuladas
+```
+
+--
+
+Compare com a tabela teórica \\(P(X=0)=0{,}81\\), \\(P(X=1)=0{,}18\\), \\(P(X=2)=0{,}01\\): as
+frequências simuladas devem ficar próximas, mas não idênticas, o mesmo espírito de simulação que
+retomaremos com mais detalhe na Aula 22.
 
 ---
 

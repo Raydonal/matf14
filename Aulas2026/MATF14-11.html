@@ -44,13 +44,13 @@ $$
 P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \qquad P(B)&amp;gt;0
 $$
 
-Condicionar em \(B\) = restringir o espaço amostral aos resultados em que \(B\) ocorre.
+Condicionar em \\(B\\) = restringir o espaço amostral aos resultados em que \\(B\\) ocorre.
 
 --
 
 ## Regra do produto
 
-Da definição, isolando \(P(A\cap B)\):
+Da definição, isolando \\(P(A\cap B)\\):
 
 $$
 P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A)
@@ -86,10 +86,31 @@ tabela
 ## 3 Total              390          110   500
 ```
 
-\(B=\) "ensino superior", \(A=\) "desempregado". \(P(A\mid B) = \frac{40/500}{250/500} = 0{,}16\).
+\\(B=\\) "ensino superior", \\(A=\\) "desempregado". \\(P(A\mid B) = \frac{40/500}{250/500} = 0{,}16\\).
 
-Compare com \(P(A)=110/500=0{,}22\) (não condicional): saber a escolaridade muda a probabilidade de
+Compare com \\(P(A)=110/500=0{,}22\\) (não condicional): saber a escolaridade muda a probabilidade de
 desemprego, de 22% para 16%.
+
+---
+
+## Condicionar também pode aumentar a probabilidade
+
+Distribuição de 200 alunos de uma faculdade, por curso e sexo:
+
+| Curso | Mulheres | Homens | Total |
+|---|---|---|---|
+| História | 20 | 10 | 30 |
+| Outros cursos | 65 | 105 | 170 |
+| Total | 85 | 115 | 200 |
+
+\\(P(\text{mulher}) = 85/200 = 0{,}425\\). Condicionando em \\(H=\\) "cursa história":
+\\(P(\text{mulher}\mid H) = 20/30 \approx 0{,}667\\).
+
+--
+
+No exemplo anterior, condicionar **diminuiu** a probabilidade (de 22% para 16%); aqui condicionar
+**aumenta** (de 42,5% para 66,7%). A definição de \\(P(A\mid B)\\) não diz em que direção a
+probabilidade muda, isso depende inteiramente dos dados, não da fórmula.
 
 ---
 
@@ -116,6 +137,65 @@ $$
 
 ---
 
+## Simulando probabilidade condicional: teórico vs. empírico
+
+A definição \\(P(A\mid B)=P(A\cap B)/P(B)\\) também é uma afirmação sobre frequências. Recriamos a
+população da tabela de escolaridade e desemprego (500 pessoas, nas mesmas proporções) e sorteamos
+dela repetidamente, com reposição:
+
+
+``` r
+set.seed(11)
+populacao &lt;- tibble(
+  escolaridade = rep(c("Fund/Médio", "Superior"), each = 250),
+  situacao = c(rep("Empregado", 180), rep("Desempregado", 70),     # Fund/Médio
+               rep("Empregado", 210), rep("Desempregado", 40))     # Superior
+)
+
+n_sim &lt;- 100000
+sorteio &lt;- populacao[sample(nrow(populacao), n_sim, replace = TRUE), ]
+
+p_dado_superior_sim &lt;- sorteio |&gt;
+  filter(escolaridade == "Superior") |&gt;
+  summarise(mean(situacao == "Desempregado")) |&gt;
+  pull()
+
+c(simulado = p_dado_superior_sim, teorico = 40/250)
+```
+
+```
+##  simulado   teorico 
+## 0.1620736 0.1600000
+```
+
+---
+
+## Interpretando a simulação
+
+Restringir (`filter()`) o sorteio aos casos com \\(B=\\) "superior" é, em código, exatamente a mesma
+operação que restringir o espaço amostral na definição de \\(P(A\mid B)\\): a frequência relativa de
+"desempregado" **dentro** desse subconjunto converge para \\(0{,}16\\), o mesmo valor calculado à mão
+no slide anterior.
+
+---
+
+## Assimetria: \\(P(A\mid B)\\) não é \\(P(B\mid A)\\)
+
+Um dado honesto é lançado. Seja \\(A=\\) "o resultado é 2" e \\(B=\\) "o resultado é par". Como o
+único resultado par igual a 2 é o próprio 2, \\(P(A\cap B)=P(A)=1/6\\) e \\(P(B)=3/6\\):
+
+$$
+P(A\mid B) = \frac{1/6}{3/6} = \frac13, \qquad P(B\mid A) = \frac{1/6}{1/6} = 1
+$$
+
+--
+
+Saber que saiu um número par dá 1 chance em 3 de ter sido exatamente o 2; saber que saiu
+exatamente o 2 garante, com certeza, que o número é par. \\(P(A\mid B)\\) e \\(P(B\mid A)\\) respondem
+perguntas diferentes, guarde essa assimetria para a Rodada 2.
+
+---
+
 class: inverse, center, middle
 
 # Bloco 3: Discussão (bloco central da aula)
@@ -124,26 +204,26 @@ class: inverse, center, middle
 
 ## Rodada 1: resolvendo a provocação inicial
 
-**1.** Volte à frase de abertura sobre reeleição. Escreva explicitamente \(P(A\mid B)\) com \(A=\)
-"reeleito" e \(B=\) "bem avaliado". Se a mesma pesquisa dissesse apenas "80% dos prefeitos são
+**1.** Volte à frase de abertura sobre reeleição. Escreva explicitamente \\(P(A\mid B)\\) com \\(A=\\)
+"reeleito" e \\(B=\\) "bem avaliado". Se a mesma pesquisa dissesse apenas "80% dos prefeitos são
 reeleitos" (sem a condição "bem avaliados"), essa seria a mesma afirmação? Por quê?
 
-**2.** No exemplo do crédito, por que a segunda probabilidade é \(7/9\) e não \(8/10\)? O que mudaria
+**2.** No exemplo do crédito, por que a segunda probabilidade é \\(7/9\\) e não \\(8/10\\)? O que mudaria
 se o sorteio fosse **com** reposição? Refaça a conta para o caso com reposição.
 
 ---
 
 ## Rodada 2: a falácia da inversão
 
-**3.** Calcule \(P(\text{superior}\mid\text{desempregado})\) a partir da mesma tabela do exemplo
+**3.** Calcule \\(P(\text{superior}\mid\text{desempregado})\\) a partir da mesma tabela do exemplo
 (dica: você precisa da coluna "Desempregado", não da linha "Superior"). Compare com
-\(P(\text{desempregado}\mid\text{superior})=0{,}16\). São iguais? O erro de supor que são iguais tem
+\\(P(\text{desempregado}\mid\text{superior})=0{,}16\\). São iguais? O erro de supor que são iguais tem
 um nome, pesquise ou arrisque um palpite sobre por que ele é perigoso em contextos jurídicos
 ("dado que a evidência bate com o suspeito, ele é culpado" vs. "dado que é culpado, a evidência
 bateria").
 
-**4.** Se \(B\subseteq A\) (todo resultado de \(B\) também está em \(A\)), o que se pode concluir sobre
-\(P(A\mid B)\) sem fazer nenhuma conta numérica? Justifique só com a definição.
+**4.** Se \\(B\subseteq A\\) (todo resultado de \\(B\\) também está em \\(A\\)), o que se pode concluir sobre
+\\(P(A\mid B)\\) sem fazer nenhuma conta numérica? Justifique só com a definição.
 
 ---
 
