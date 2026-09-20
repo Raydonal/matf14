@@ -1,5 +1,52 @@
 # Retomada — MATF14 2026.2 (revisão profunda: exemplos do Rodney + renderização)
 
+## Sessão 2026-09-19: restringir o site público a livro/slides/listas
+
+**Estado:** commitado e empurrado (`95e47b1`, `main` = `origin/main`). Working tree limpa.
+
+**Onde as coisas estão:** esta cópia (`/home/raydonal/MEGA/Claude/matf14`, via MEGA) **não tem
+`.git`** — é uma cópia de trabalho. O repositório git real, com histórico e remoto, é
+`/home/raydonal/Github/Cursos/matf14` (`git@github.com:Raydonal/matf14.git`, branch `main`).
+Fluxo normal: editar/renderizar em uma das duas cópias, sincronizar (`rsync`, comando abaixo),
+commitar e pushar a partir do clone.
+
+```bash
+rsync -a --delete \
+  --exclude='.git' --exclude='.claude' --exclude='.gitignore' \
+  --exclude='Livro/_bookdown_files' \
+  /home/raydonal/MEGA/Claude/matf14/ /home/raydonal/Github/Cursos/matf14/
+```
+
+**Pedido do professor:** mesma política já aplicada ao curso irmão MATD48 — o site público deve
+mostrar só o livro, os slides e as listas de exercícios; nada de material de outro
+professor/semestre nem informação sobre o assistente de IA usado na preparação do material.
+
+**Feito:**
+1. Removido do repositório (não só desvinculado da home) `Apoio/` inteiro: slides `.odp` e
+   laboratórios do professor anterior, listas antigas, **provas já aplicadas com gabarito
+   rastreado**, e o PDF de livro-texto de terceiros (`MATF14_T01_Estatistica_economica_I_Rodney.pdf`).
+   Confirmado antes de remover: nenhum `.Rmd` de `Aulas2026/`/`Livro/` referenciava `Apoio/` por
+   caminho relativo (os CSVs/imagens extraídos de lá já estavam duplicados em `Aulas2026/`,
+   `Livro/data/` e `Livro/images/`) — diferente do MATD48, não precisou de migração de assets.
+2. Cópia completa de `Apoio/` preservada fora do git, em
+   `/home/raydonal/Github/Cursos/matf14-arquivo-nao-publico/Apoio/` (nunca vai para o GitHub).
+   **Não confundir** com `/home/raydonal/MEGA/Claude/matf14-gabaritos-privado/` (pasta antiga, já
+   existia, guarda os gabaritos das Listas2026 e do Rodney — continua onde estava, sem mudança).
+3. `CLAUDE.md` desversionado (`git rm --cached` + `.gitignore`) — fica só no disco local.
+4. `README.md` atualizado: não descreve mais `Apoio/` como parte do repositório, com nota
+   explicando a remoção (setembro/2026).
+5. Sincronizado e commitado, de passagem, conteúdo já pronto no MEGA de sessões anteriores que
+   nunca tinha sido commitado (novos exemplos/figuras/dados oficiais do livro e dos slides).
+
+**Importante:** isso não reescreve o histórico antigo do git — commits anteriores a `95e47b1`
+ainda têm `Apoio/` (gabaritos de prova incluídos) se alguém for especificamente procurar; só a
+versão atual do site parou de servir esses arquivos. O professor foi avisado disso antes do push.
+
+**Backup (2026-09-19):** `/home/raydonal/MEGA/Claude/matf14-backups/matf14_backup_20260919-2138.tar.gz`
+(88 MB, clone git completo com `.git`, integridade de gzip verificada).
+
+---
+
 ## Sessão 2026-09-17: probabilidade aprofundada, contas nacionais, aulas 2 × 50 min
 
 **Estado:** o professor aprovou a nova versão (2026-09-17). Alterações **não commitadas**
