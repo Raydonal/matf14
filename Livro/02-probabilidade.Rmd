@@ -1,610 +1,1521 @@
 # Introdução à Teoria das Probabilidades {#introducao-a-teoria-das-probabilidades}
 
 ```{r setup-cap2, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center",
+                      out.width = "75%")
 suppressPackageStartupMessages({
   library(tidyverse)
   library(kableExtra)
+  library(patchwork)
 })
-options(scipen = 999)
+source("R/venn.R")
+options(scipen = 999, knitr.kable.NA = "")
+tres <- data.frame(x0 = c(2.9, 5, 7.1), y0 = 2.8, r = 1.45, nome = c("A", "B", "C"))
+tabela <- function(df, caption = NULL, digits = 3) {
+  kbl(df, caption = caption, digits = digits, format.args = list(decimal.mark = ",", big.mark = ".")) |>
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+}
+# formatação de números no texto: vírgula decimal e ponto de milhar
+nb  <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",", big.mark = ".")
+pc  <- function(x, d = 1) paste0(format(round(100 * x, d), nsmall = d, decimal.mark = ","), "%")
+# versões para usar dentro de $...$ (MathJax): vírgula entre chaves e \% escapado
+nbm <- function(x, d = 3) gsub(",", "{,}", nb(x, d), fixed = TRUE)
+pcm <- function(x, d = 1) paste0(gsub(",", "{,}", format(round(100 * x, d), nsmall = d, decimal.mark = ","), fixed = TRUE), "\\%")
+# PNAD Contínua, 2º trimestre de 2026 (mil pessoas)
+pnad <- read.csv("data/pnad_2026t2.csv") |>
+  mutate(across(pop14:informais, as.numeric))
+pn_tot <- filter(pnad, recorte == "total")
+pn_h   <- filter(pnad, categoria == "Homens")
+pn_m   <- filter(pnad, categoria == "Mulheres")
 ```
 
-O Capítulo 1 resumiu dados já observados. Este capítulo muda de pergunta: como quantificar
-a incerteza sobre um resultado que **ainda não ocorreu**? Um investidor não sabe se uma ação vai
-subir ou cair amanhã; um banco não sabe se um cliente específico vai inadimplir; o Tesouro Nacional
-não sabe, com certeza, se a meta de inflação será cumprida. A Teoria das Probabilidades é a
-linguagem matemática para essas perguntas, e é o alicerce necessário para tudo que vem depois:
-variáveis aleatórias (Capítulos 3 e 4), e, em disciplinas futuras, inferência estatística e
-econometria.
+O Capítulo 1 resumiu dados **já observados**. Mas, em geral, queremos investigar uma população e só
+temos acesso a uma amostra; afirmações sobre a amostra valem para a população com alta chance **se a
+amostra for representativa**, e o mais comum é trabalhar com **amostras aleatórias**. Entender essa
+aleatoriedade é o que permite **medir a incerteza** das conclusões. A linguagem para isso é a
+**probabilidade**, assunto deste capítulo (Unidade 2 da ementa, Aulas 09 a 14), baseado nas referências
+[@morettinbussab2012; @ross2010probabilidade; @magalhaes2004probabilidade].
 
-## Introdução: o que significa "probabilidade" {#prob-introducao}
+O roteiro é o seguinte: o que significa "probabilidade" (quatro interpretações); espaço amostral e
+eventos; os axiomas de Kolmogorov e suas consequências; técnicas de contagem e a probabilidade clássica;
+probabilidade geométrica; probabilidade condicional; tabelas de contingência; risco, chance e razão de
+chances; independência; probabilidade total e Teorema de Bayes. Os exemplos com dados reais usam a PNAD
+Contínua do IBGE [@ibge2026pnadt2].
 
-Um **experimento aleatório** é um processo cujo resultado não pode ser previsto com certeza antes
-de sua realização, mesmo que se conheçam todos os resultados possíveis. Lançar uma moeda, sortear
-um cliente de uma carteira para auditoria, observar se uma ação fecha em alta ou baixa amanhã,
-todos são experimentos aleatórios.
+## Fenômenos aleatórios {#prob-introducao}
 
-Há (pelo menos) duas interpretações de probabilidade relevantes para a Economia:
-
-- **Frequentista**: probabilidade é o limite da frequência relativa de um evento se o experimento
-  fosse repetido um número muito grande de vezes, em condições idênticas. É a interpretação natural
-  para dizer "a probabilidade de um empréstimo específico entrar em default é de 3%" com base no
-  histórico de milhares de empréstimos semelhantes.
-- **Subjetiva (bayesiana)**: probabilidade é um grau de crença racional sobre um evento, mesmo
-  quando ele não pode ser repetido nas mesmas condições, "a probabilidade de o Banco Central subir
-  a Selic na próxima reunião é de 70%" não se refere a uma frequência de reuniões idênticas
-  repetidas, mas a uma crença calibrada com a informação disponível hoje.
-
-Ambas obedecem aos mesmos axiomas matemáticos, construídos a seguir, a diferença está apenas em
-*como* se interpreta o número, não em como se calcula com ele.
-
-```{r fig-pesquisa-opiniao, echo=FALSE, out.width="75%", fig.cap="Pesquisa Datafolha: 8 em cada 10 brasileiros são a favor da demissão de servidores por má performance."}
-knitr::include_graphics("images/pesquisa_opiniao.jpg")
+```{r fig-megasena, echo=FALSE, out.width="45%", fig.cap="Qual a probabilidade de ganhar na Mega-Sena? Fonte: IstoÉ Dinheiro."}
+knitr::include_graphics("images/megasena_istoe.png")
 ```
 
-Essa manchete ("8 em cada 10 brasileiros") é a interpretação **frequentista** em ação: o Datafolha
-não entrevistou todos os brasileiros, entrevistou uma amostra, e reporta a proporção observada
-nela como estimativa da proporção que se observaria repetindo o levantamento com amostras
-diferentes, exatamente o vocabulário de população e amostra do Capítulo 1. A cada pesquisa desse
-tipo acompanha uma margem de erro (não mostrada aqui), quanto essa proporção variaria de amostra
-para amostra, um tema que ultrapassa o Capítulo 2, mas que começa exatamente na definição
-frequentista de probabilidade dada acima.
+Perguntas como "qual é a chance de ganhar na Mega-Sena?", "qual é a chance de o meu time ganhar o
+campeonato?", "qual é a chance de um aluno concluir o ensino médio?" ou "qual é a chance de uma pessoa
+ser assaltada na rua às 22h?" envolvem **fenômenos aleatórios**:
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+- **não** podemos prever exatamente os seus **resultados individuais**;
+- mas podemos entender as características do seu **comportamento a longo prazo**.
 
-<p><strong>1.</strong> Classifique cada afirmação a seguir como mais próxima da interpretação
-frequentista ou da subjetiva, e justifique: (a) "a probabilidade de um dado honesto dar 6 é
-1/6"; (b) "a probabilidade de chover amanhã em Salvador é 40%"; (c) "a probabilidade de a
-Argentina vencer a próxima Copa do Mundo é 8%"; (d) "a probabilidade de um segurado de 25 anos
-sofrer um sinistro automotivo no ano é 12%, segundo o histórico da seguradora".</p>
-
-<p><strong>2.</strong> Um evento que só pode acontecer uma única vez na história (uma eleição
-específica, uma crise financeira específica), faz sentido falar em "probabilidade" desse evento
-sob a interpretação frequentista pura? O que a interpretação subjetiva permite que a frequentista,
-estritamente, não permite?</p>
-
-<p><strong>3.</strong> Um trader profissional e um segurado comum usam a palavra "probabilidade"
-de formas diferentes no dia a dia? Dê um exemplo de cada um usando o termo, e identifique se a
-interpretação implícita é a mesma.</p>
-</div>
+```{r fig-longo-prazo, fig.height=3, fig.width=8, fig.cap="Proporção de 'seis' em 2.000 lançamentos simulados de um dado: oscila muito no início e se estabiliza perto de 1/6."}
+set.seed(23)
+lanc <- tibble(n = 1:2000, seis = rbinom(2000, 1, 1/6)) |> mutate(prop = cumsum(seis) / n)
+ggplot(lanc, aes(n, prop)) + geom_hline(yintercept = 1/6, linetype = "dashed", color = "#c0392b") +
+  geom_line(color = "#3b5bdb") + scale_x_log10() +
+  labs(x = "Número de lançamentos (escala log)", y = "Proporção de seis") + theme_minimal(base_size = 13)
 ```
+
+### Probabilidade teórica e probabilidade empírica
+
+- **Teórica**: obtida a partir de **suposições** sobre o fenômeno. Se a moeda é honesta, há dois
+  resultados possíveis e a chance de cara é 50%.
+- **Empírica**: estimada a partir de **observações**. Em 100 lançamentos, 90 deram cara: a chance de
+  cara parece ser 90%. "A chance de uma pessoa sedentária ter um infarto é 1%" é uma probabilidade
+  empírica.
+
+A ideia de probabilidade como **frequência relativa a longo prazo** liga as duas: a probabilidade
+teórica é o valor para o qual a frequência relativa se aproxima quando o experimento é repetido muitas
+vezes, como no gráfico acima.
+
+### O que é, afinal, uma probabilidade? Quatro interpretações
+
+A palavra "probabilidade" é usada em situações muito diferentes: o sorteio da Mega-Sena, a taxa de
+inadimplência de uma carteira de crédito, a chance de o Banco Central cortar os juros na próxima
+reunião. Há quatro formas clássicas de dar sentido a esse número.
+
+| Interpretação | Ideia central | Quando funciona | Exemplo econômico | Limitação |
+|:---|:---|:---|:---|:---|
+| **Clássica** (Laplace) | casos favoráveis / casos possíveis | resultados em número finito e **igualmente prováveis** por simetria | sortear uma empresa para fiscalização; Mega-Sena | exige simetria; não serve para "vitória, empate, derrota" |
+| **Frequentista** | limite da frequência relativa em muitas repetições | fenômenos **repetíveis** nas mesmas condições | taxa histórica de inadimplência de um tipo de empréstimo | não se aplica a eventos únicos ("recessão em 2027") |
+| **Subjetiva** (bayesiana) | grau de crença **coerente** de um agente, dada a informação disponível | eventos únicos, decisões sob incerteza | chance de corte da Selic atribuída por um analista; mercados de previsão | depende de quem avalia |
+| **Axiomática** (Kolmogorov) | qualquer atribuição que obedeça a três axiomas | engloba todas as anteriores | base matemática de todos os modelos do curso | não diz **qual** número usar, só as **regras** |
+
+As três primeiras são maneiras de **atribuir** números a eventos; a axiomática (Seção
+\@ref(conceitos-probabilidade)) diz quais **regras** esses números precisam cumprir para não gerar
+contradições. As técnicas de contagem (Seção \@ref(tecnicas-contagem)) só servem para a interpretação
+clássica: contar casos só produz probabilidades quando os casos são igualmente prováveis.
+
+::: {.caixa-economia}
+**Leitura econômica: coerência é ausência de arbitragem.** Suponha que um analista aceite comprar ou
+vender, pelo preço igual à sua probabilidade, um bilhete que paga R\$ 1 se o evento ocorrer. Ele diz
+$P(\text{Selic sobe}) = 0{,}60$ e $P(\text{Selic não sobe}) = 0{,}50$. Um investidor vende a ele os dois
+bilhetes por $0{,}60 + 0{,}50 = 1{,}10$ reais. Aconteça o que acontecer, exatamente um bilhete paga R\$ 1:
+o analista perde R\$ 0,10 **com certeza**. Probabilidades que violam a regra $P(A) + P(A^c) = 1$ abrem
+espaço para **arbitragem**. Esse argumento (de Finetti) mostra que até a probabilidade subjetiva precisa
+obedecer aos axiomas; é a mesma lógica pela qual preços de ativos sem arbitragem se comportam como
+probabilidades.
+:::
+
+```{r fig-uol, echo=FALSE, out.width="45%", fig.cap="Probabilidades nas notícias de saúde. Fonte: UOL VivaBem / Agência Einstein (15/07/2020)."}
+knitr::include_graphics("images/exercicio_cancer_uol.png")
+```
+
+::: {.caixa-discussao}
+**Discussão.** "Sedentarismo extremo pode aumentar em mais de 80% a probabilidade de um tumor": 80% de
+quê? Essa frase fala de uma probabilidade, de uma diferença de probabilidades, ou de uma razão entre
+elas? (A resposta precisa das medidas da Seção \@ref(medidas-associacao).)
+:::
 
 ## Espaço amostral e eventos {#espaco-amostral-eventos}
 
-O **espaço amostral** $\Omega$ é o conjunto de todos os resultados possíveis de um experimento
-aleatório. Um **evento** é qualquer subconjunto $A \subseteq \Omega$, uma coleção de resultados
-que nos interessa.
+Cada tentativa ou repetição de um fenômeno aleatório gera um **resultado**: o número sorteado na
+Mega-Sena ser 05-06-17-37-43-54; a face de um dado ser par. **Eventos** são resultados, ou combinações
+de resultados.
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: classificação de crédito</strong>: um banco
-classifica cada novo empréstimo em uma de quatro categorias de risco:
-\(\Omega = \{\text{AA}, \text{A}, \text{B}, \text{C}\}\). O evento "empréstimo de risco elevado" é
-\(A = \{\text{B}, \text{C}\} \subset \Omega\).</div>
+::: {.caixa-aplicacao}
+O **espaço amostral** $S$ (ou $\Omega$) é o conjunto de **todos** os resultados possíveis de um
+fenômeno aleatório. Um **evento** é qualquer **subconjunto** do espaço amostral. Dizemos que o evento $A$
+**ocorreu** quando o resultado observado pertence a $A$.
+:::
+
+**Exemplo: conclusão do ensino médio.** Uma pesquisa acompanha alunos do 3º ano do ensino médio. Com
+$C$ = concluir e $A$ = abandonar, para **um** aluno, $S = \{C, A\}$; para **dois** alunos,
+$S = \{CC, CA, AC, AA\}$ ($CA$: o primeiro concluiu e o segundo abandonou). O evento "**um** dos dois
+conclui" é $\{CA, AC\} \subset S$. No lançamento de um dado, "obter número ímpar" é $\{1, 3, 5\} \subset \{1, \ldots, 6\}$.
+
+**Exemplo: decisões do Copom.** Em cada reunião, o Comitê de Política Monetária pode **cortar** ($c$),
+**manter** ($m$) ou **subir** ($s$) a Selic. Para uma reunião, $S = \{c, m, s\}$; para duas reuniões
+seguidas, $S = \{cc, cm, cs, mc, mm, ms, sc, sm, ss\}$, com 9 resultados. O evento "a taxa termina o
+período acima do nível inicial, sem nenhum corte" é $\{ms, sm, ss\}$.
+
+**Exercício 1.** **a)** Um dado honesto é lançado uma vez: liste o espaço amostral e o evento "face
+maior que dois". **b)** Uma moeda é lançada duas vezes: liste o espaço amostral e o evento "faces iguais".
+
+::: {.caixa-resposta}
+**a)** $S = \{1, 2, 3, 4, 5, 6\}$; evento $\{3, 4, 5, 6\}$. **b)** $S = \{(K, K), (K, C), (C, K), (C, C)\}$ (K = cara,
+C = coroa); evento $\{(K, K), (C, C)\}$.
+:::
+
+### Tipos de espaço amostral
+
+- **Finito**: as quatro categorias de risco de um empréstimo, $\{AA, A, B, C\}$.
+- **Enumerável sem limite**: o tempo de espera, em dias inteiros, por uma consulta no SUS,
+  $S = \{0, 1, 2, \ldots\}$.
+- **Não enumerável**: o peso de uma pessoa, $S = \{x : x > 0\}$; entre dois valores possíveis sempre há outro.
+
+```{r fig-sus, echo=FALSE, out.width="55%", fig.cap="Tempo de espera por consultas no SUS: um espaço amostral enumerável sem limite superior. Fonte: O Globo."}
+knitr::include_graphics("images/fila_sus_espera_oglobo.png")
 ```
 
-### Operações com eventos (revisão de teoria de conjuntos)
+É a mesma distinção entre variáveis **discretas** e **contínuas** que separa os Capítulos 3 e 4.
 
-Como eventos são conjuntos, toda a álgebra de conjuntos se aplica:
+### Operações com eventos (revisão de conjuntos)
 
-| Operação | Notação | Significado |
-|---|---|---|
-| União | $A \cup B$ | $A$ ou $B$ (ou ambos) ocorre |
-| Interseção | $A \cap B$ | $A$ e $B$ ocorrem simultaneamente |
-| Complemento | $A^c$ (ou $\bar A$) | $A$ não ocorre |
-| Diferença | $A - B$ | $A$ ocorre e $B$ não |
+Como eventos são conjuntos, usamos a teoria de conjuntos. Notação: $a \in A$ ($a$ pertence a $A$),
+$\emptyset$ (conjunto vazio), $S$ (conjunto universo, o espaço amostral).
 
-Dois eventos são **mutuamente exclusivos** (ou disjuntos) se $A \cap B = \emptyset$, não podem
-ocorrer ao mesmo tempo. Exemplo: "a inflação do mês fecha acima da meta" e "a inflação do mês fecha
-abaixo do piso da meta" são mutuamente exclusivos (não podem ocorrer no mesmo mês).
+```{r fig-venn-ops, echo=FALSE, fig.height=5.5, fig.width=10, out.width="90%", fig.cap="Diagramas de Venn: união, interseção, complementar e eventos disjuntos (A e C)."}
+p1 <- venn(function(a, b, c) a | b, dois, data.frame(x = c(3, 5, 7), y = 2.9, lab = c("1, 2", "3", "4")), "A ∪ B")
+p2 <- venn(function(a, b, c) a & b, dois, data.frame(x = c(3, 5, 7), y = 2.9, lab = c("1, 2", "3", "4")), "A ∩ B")
+p3 <- venn(function(a, b, c) !a, data.frame(x0 = 3.3, y0 = 2.9, r = 1.8, nome = "A"),
+           data.frame(x = c(3.3, 7), y = 2.9, lab = c("1, 2, 3", "4, 5")), "Aᶜ")
+p4 <- venn(function(a, b, c) a | c, tres, data.frame(x = c(2.3, 3.95, 5, 6.05, 7.6), y = 2.8, lab = c("1, 2", "3", "4", "5", "6")),
+           "A e C disjuntos")
+(p1 + p2) / (p3 + p4)
+```
 
-```{r diagrama-venn, echo=FALSE, fig.width=5, fig.height=3.2}
-library(ggplot2)
+| Operação | Notação | Ocorre quando | Exemplo com $A = \{1, 2, 3\}$, $B = \{3, 4\}$ |
+|:---|:---:|:---|:---|
+| Subconjunto | $A \subset B$ | todo elemento de $A$ está em $B$ | $\{1, 2\} \subset A$ |
+| União | $A \cup B$ | **pelo menos um** dos eventos ocorre | $\{1, 2, 3, 4\}$ |
+| Interseção | $A \cap B$ | **ambos** ocorrem | $\{3\}$ |
+| Complementar | $A^c$ | $A$ **não** ocorre | com $S = \{1, \ldots, 5\}$: $\{4, 5\}$ |
+| Diferença | $A \setminus B = A \cap B^c$ | $A$ ocorre e $B$ não | $\{1, 2\}$ |
+| Disjuntos | $A \cap B = \emptyset$ | não podem ocorrer juntos | $\{1, 2, 3\}$ e $\{5, 6\}$ |
+
+### Propriedades das operações e leis de De Morgan
+
+As operações com eventos seguem as mesmas regras da álgebra de conjuntos:
+
+- **comutativas**: $A \cup B = B \cup A$ e $A \cap B = B \cap A$;
+- **associativas**: $(A \cup B) \cup C = A \cup (B \cup C)$, idem para $\cap$;
+- **distributivas**: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ e $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$;
+- **leis de De Morgan**:
+
+$$
+(A \cup B)^c = A^c \cap B^c \qquad \text{e} \qquad (A \cap B)^c = A^c \cup B^c.
+$$
+
+Em palavras: "**não** ocorre ($A$ ou $B$)" é o mesmo que "não ocorre $A$ **e** não ocorre $B$"; "não ocorrem
+os dois juntos" é o mesmo que "falha pelo menos um". As leis valem para qualquer número de eventos:
+$\left(\bigcup_i A_i\right)^c = \bigcap_i A_i^c$.
+
+```{r fig-demorgan, echo=FALSE, fig.height=2.9, fig.width=10, out.width="85%", fig.cap="Lei de De Morgan: a região pintada à esquerda, (A ∪ B)ᶜ, é a mesma da direita, Aᶜ ∩ Bᶜ."}
+venn(function(a, b, c) !(a | b), dois, titulo = "(A ∪ B)ᶜ") + venn(function(a, b, c) !a & !b, dois, titulo = "Aᶜ ∩ Bᶜ")
+```
+
+::: {.caixa-economia}
+**Leitura econômica.** Seja $I$ = "a inflação do ano fica acima do teto da meta" e $D$ = "a taxa de
+desocupação passa de 8%". O cenário "nem inflação acima do teto nem desocupação acima de 8%" é
+$(I \cup D)^c = I^c \cap D^c$. Se um relatório diz que "a probabilidade de algum desses problemas é 35%",
+então a probabilidade do cenário tranquilo é $1 - 0{,}35 = 0{,}65$: De Morgan transforma "nenhum dos dois"
+em "complementar de pelo menos um".
+:::
+
+**Exercício 2.** Uma urna tem 10 bolas numeradas de 1 a 10; uma é retirada ao acaso. Sejam $A$ = "número
+par" e $B$ = "múltiplo de 3". Liste $S$, $A$, $B$, $A \cup B$, $A \cap B$, $A^c$ e $(A \cup B)^c$, e confira que
+$(A \cup B)^c = A^c \cap B^c$.
+
+::: {.caixa-resposta}
+$S = \{1, \ldots, 10\}$; $A = \{2, 4, 6, 8, 10\}$; $B = \{3, 6, 9\}$; $A \cup B = \{2, 3, 4, 6, 8, 9, 10\}$; $A \cap B = \{6\}$;
+$A^c = \{1, 3, 5, 7, 9\}$; $(A \cup B)^c = \{1, 5, 7\}$. Como $B^c = \{1, 2, 4, 5, 7, 8, 10\}$, temos
+$A^c \cap B^c = \{1, 5, 7\}$, igual a $(A \cup B)^c$.
+:::
+
+::: {.caixa-economia}
+**Leitura econômica.** Um banco classifica empréstimos em $S = \{AA, A, B, C\}$. Os eventos "risco
+elevado" $R = \{B, C\}$ e "risco baixo" $L = \{AA, A\}$ são disjuntos e $R \cup L = S$: formam uma **partição**
+de $S$, conceito central no Teorema de Bayes. Com **dois** empréstimos, $S$ tem $4 \times 4 = 16$ resultados, e o
+evento "pelo menos um de risco elevado" tem $16 - 2 \times 2 = 12$.
+:::
+
+## Axiomas de Kolmogorov e propriedades da probabilidade {#conceitos-probabilidade}
+
+### Por que precisamos de axiomas
+
+A definição clássica só funciona com resultados **finitos e igualmente prováveis**; a frequentista exige
+**repetição**. Mas queremos falar de probabilidade em situações sem simetria (a categoria de risco de um
+empréstimo), com infinitos resultados (quantos meses até a próxima alta de juros) e com resultados
+contínuos (a variação do PIB no trimestre). Em 1933, Andrei Kolmogorov resolveu o problema de outra
+forma [@kolmogorov1933grundbegriffe]: em vez de dizer **o que** a probabilidade é, listou as poucas
+**regras** que qualquer atribuição de probabilidades precisa obedecer. Todo o resto é demonstrado a
+partir delas.
+
+### Espaço de probabilidade
+
+::: {.caixa-aplicacao}
+Um **espaço de probabilidade** é um trio $(\Omega, \mathcal{F}, P)$:
+
+1. $\Omega$ é o **espaço amostral**;
+2. $\mathcal{F}$ é a coleção dos **eventos**, isto é, dos subconjuntos de $\Omega$ aos quais atribuímos
+   probabilidade. Ela deve (i) conter $\Omega$; (ii) conter o complementar $A^c$ de todo evento $A$; (iii)
+   conter a união $A_1 \cup A_2 \cup \cdots$ de qualquer sequência de eventos. Uma coleção com essas três
+   propriedades chama-se **σ-álgebra**;
+3. $P$ é uma função que associa a cada evento $A \in \mathcal{F}$ um número $P(A)$, obedecendo aos axiomas abaixo.
+:::
+
+A exigência sobre $\mathcal{F}$ é intuitiva: se faz sentido perguntar a probabilidade de $A$, também faz
+sentido perguntar a de "não $A$" e a de "$A$ ou $B$". Pelas leis de De Morgan, interseções também ficam em
+$\mathcal{F}$. Quando $\Omega$ é **finito**, usamos como $\mathcal{F}$ **todos** os subconjuntos de $\Omega$: com $n$
+resultados, há $2^n$ eventos (cada resultado entra ou não entra no evento; veja a Seção
+\@ref(tecnicas-contagem)). Com as quatro categorias de risco, são $2^4 = 16$ eventos, do vazio a $\Omega$.
+Quando $\Omega$ é um intervalo da reta, nem todo subconjunto pode receber probabilidade de forma
+consistente; usamos intervalos e o que se obtém deles por complementos e uniões. Nada neste curso
+depende desse detalhe técnico.
+
+### Os axiomas de Kolmogorov
+
+::: {.caixa-aplicacao}
+**Axiomas.** Para todo evento $A \in \mathcal{F}$:
+
+- **(A1) Não negatividade:** $P(A) \geq 0$.
+- **(A2) Normalização:** $P(\Omega) = 1$.
+- **(A3) Aditividade enumerável:** se $A_1, A_2, A_3, \ldots$ são eventos **disjuntos dois a dois**
+  ($A_i \cap A_j = \emptyset$ para $i \neq j$), então
+
+$$
+P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i).
+$$
+:::
+
+O axioma (A3) fala de sequências **infinitas** de eventos porque espaços amostrais como $\{0, 1, 2, \ldots\}$
+exigem somar infinitas parcelas. A versão finita (duas ou $n$ parcelas) é uma consequência, como mostramos a seguir.
+
+### Consequências dos axiomas (com demonstração)
+
+Cada propriedade abaixo é deduzida apenas de (A1)–(A3) e das anteriores.
+
+**P1. $P(\emptyset) = 0$.** Tome $A_1 = \Omega$ e $A_2 = A_3 = \cdots = \emptyset$, disjuntos dois a dois. Por (A3),
+$P(\Omega) = P(\Omega) + \sum_{i \geq 2} P(\emptyset)$, logo $\sum_{i \geq 2} P(\emptyset) = 0$. Como cada parcela é
+$\geq 0$ (A1), $P(\emptyset) = 0$.
+
+**P2. Aditividade finita.** Se $A_1, \ldots, A_n$ são disjuntos dois a dois, $P(A_1 \cup \cdots \cup A_n) = \sum_{i=1}^n P(A_i)$.
+Basta completar a sequência com $A_{n+1} = A_{n+2} = \cdots = \emptyset$ e usar (A3) e P1.
+
+**P3. Complementar: $P(A^c) = 1 - P(A)$.** $A$ e $A^c$ são disjuntos e $A \cup A^c = \Omega$; por P2 e (A2),
+$P(A) + P(A^c) = 1$.
+
+**P4. Monotonicidade.** Se $A \subset B$, então $P(B \setminus A) = P(B) - P(A)$ e $P(A) \leq P(B)$. De fato,
+$B = A \cup (B \cap A^c)$, união disjunta; por P2, $P(B) = P(A) + P(B \cap A^c)$, e a última parcela é $\geq 0$.
+
+**P5. $0 \leq P(A) \leq 1$.** Use (A1) e P4 com $B = \Omega$.
+
+**P6. Regra da adição: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.** Escreva $A \cup B = A \cup (B \cap A^c)$ e
+$B = (B \cap A) \cup (B \cap A^c)$, ambas uniões disjuntas. Por P2, $P(A \cup B) = P(A) + P(B \cap A^c)$ e
+$P(B \cap A^c) = P(B) - P(A \cap B)$. Substituindo, obtemos a regra.
+
+**P7. Inclusão-exclusão para três eventos.**
+
+$$
+\begin{aligned}
+P(A \cup B \cup C) = {} & P(A) + P(B) + P(C) \\
+& - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C).
+\end{aligned}
+$$
+
+Aplique P6 a $(A \cup B) \cup C$ e a distributiva $(A \cup B) \cap C = (A \cap C) \cup (B \cap C)$. No diagrama de Venn, a
+região central é somada três vezes, subtraída três vezes e precisa ser somada de volta uma vez.
+
+**P8. Desigualdade de Boole.** Para quaisquer eventos, $P(A_1 \cup \cdots \cup A_n) \leq \sum_{i=1}^n P(A_i)$. Para dois
+eventos, sai de P6 porque $P(A \cap B) \geq 0$; para mais, por indução.
+
+**P9. Desigualdade de Bonferroni.** $P(A \cap B) \geq P(A) + P(B) - 1$. Sai de P6 e de $P(A \cup B) \leq 1$.
+
+**Exemplos.**
+
+- **Complementar**: $P(\text{face} \neq 6) = 1 - 1/6 = 5/6$.
+- **Subconjuntos**: $P(\{6\}) = 1/6 \leq P(\text{par}) = 3/6$.
+- **Soma (disjuntos)**: um réu tem 52% de chance de condenação grave, 26% de condenação leve e 22% de
+  ser inocentado; $P(\text{alguma condenação}) = 0{,}52 + 0{,}26 = 0{,}78$.
+- **União (geral)**: somar $P(A) + P(B)$ conta $A \cap B$ **duas vezes**. Com $A = \{1, 2\}$ e $B = \{2, 3\}$ em um
+  dado, $P(A \cup B) = 2/6 + 2/6 - 1/6 = 3/6$.
+
+::: {.caixa-economia}
+**Leitura econômica: limites para o risco sem supor independência.** Uma carteira tem 10 títulos, cada um
+com probabilidade de 2% de dar calote no ano. Qual a probabilidade de **pelo menos um** calote? Sem saber
+como os calotes se relacionam, os axiomas já dão limites. Por Boole, $P(\text{pelo menos um}) \leq 10 \times 0{,}02
+= 0{,}20$. Por monotonicidade, $P(\text{pelo menos um}) \geq 0{,}02$ (o evento contém o calote do primeiro
+título). Se os calotes fossem independentes (Seção \@ref(independencia)), o valor seria $1 - 0{,}98^{10}
+\approx 0{,}183$; se todos acontecessem juntos (uma crise sistêmica), seria $0{,}02$. A dependência entre os
+títulos decide onde, entre 2% e 20%, está o risco verdadeiro.
+
+**Bonferroni na prática.** Em uma pesquisa, 70% das empresas inovaram e 60% exportam. Então **pelo menos**
+$0{,}70 + 0{,}60 - 1 = 30\%$ fazem as duas coisas, qualquer que seja a relação entre inovar e exportar.
+:::
+
+**Exercício 3.** Numa cidade, 45% das famílias têm cartão de crédito ($A$), 30% têm financiamento
+imobiliário ($B$), 20% têm crédito consignado ($C$); 15% têm $A$ e $B$, 10% têm $A$ e $C$, 5% têm $B$ e $C$ e 3%
+têm os três. Qual a probabilidade de uma família sorteada ter **pelo menos uma** dessas dívidas? E de não
+ter nenhuma?
+
+::: {.caixa-resposta}
+Por inclusão-exclusão, $P(A \cup B \cup C) = 0{,}45 + 0{,}30 + 0{,}20 - 0{,}15 - 0{,}10 - 0{,}05 + 0{,}03 = 0{,}68$.
+Por De Morgan e complementar, $P(\text{nenhuma}) = P(A^c \cap B^c \cap C^c) = 1 - 0{,}68 = 0{,}32$.
+:::
+
+### Como atribuir probabilidades
+
+Os axiomas dizem quais regras obedecer; os números vêm do problema.
+
+1. **Espaço finito ou enumerável.** Basta dar um peso $p(\omega) \geq 0$ a cada resultado, com soma 1; então
+   $P(A) = \sum_{\omega \in A} p(\omega)$. Os pesos **não** precisam ser iguais. Exemplo: novos empréstimos de um banco
+   têm $p(AA) = 0{,}15$, $p(A) = 0{,}45$, $p(B) = 0{,}30$ e $p(C) = 0{,}10$; então $P(\text{risco elevado}) =
+   p(B) + p(C) = 0{,}40$.
+2. **Espaço enumerável infinito.** Suponha que, a cada mês, haja chance $1/2$ de o Copom iniciar um ciclo de
+   alta, independentemente dos meses anteriores, e seja $k$ o mês em que isso acontece pela primeira vez.
+   Então $p(k) = (1/2)^k$, $k = 1, 2, \ldots$, e $\sum_{k \geq 1} (1/2)^k = 1$ (série geométrica). É aqui que a
+   aditividade **enumerável** (A3) é necessária. Por exemplo, $P(k \geq 4) = 1 - p(1) - p(2) - p(3) = 1/8$.
+3. **Espaço finito equiprovável.** Se os $n$ resultados têm o mesmo peso $1/n$, então $P(A) = \#A/n$: a
+   definição clássica é um **caso particular** dos axiomas. Para usá-la, é preciso **contar** (Seção
+   \@ref(tecnicas-contagem)).
+4. **Espaço contínuo.** Probabilidades são atribuídas a **intervalos** ou **regiões**, por comprimentos,
+   áreas (Seção \@ref(probabilidade-geometrica)) ou densidades (Capítulo 4).
+
+### Definição clássica
+
+::: {.caixa-aplicacao}
+Seja $S = \{w_1, \ldots, w_n\}$ um espaço amostral em que **todos** os $n$ resultados têm a **mesma chance**, e
+seja $A$ um evento com $m$ elementos. Então
+
+$$
+P(A) = \frac{m}{n} = \frac{\text{número de elementos do evento}}{\text{número de elementos do espaço amostral}}.
+$$
+:::
+
+**Exemplos.** Um dado honesto: $P(\text{ímpar}) = 3/6 = 0{,}5$. Um júri com 5 homens e 7 mulheres, uma
+pessoa sorteada para liderar: $P(\text{mulher}) = 7/12 \approx 58\%$. Um grupo de 20 pessoas com 5
+desempregadas, uma sorteada: $P(\text{desempregada}) = 5/20 = 0{,}25$.
+
+::: {.caixa-discussao}
+**Discussão.** A definição clássica **exige** resultados igualmente prováveis. Por que ela não serve para
+a chance de o seu time vencer (vitória, empate, derrota)? Que tipo de interpretação (frequentista ou
+subjetiva) você usaria nesse caso?
+:::
+
+### Probabilidades a partir de tabelas
+
+**Exercício 4.** Distribuição dos alunos de uma faculdade:
+
+| Curso | Masculino | Feminino | Total |
+|:---|:---:|:---:|:---:|
+| Medicina | 70 | 40 | 110 |
+| Direito | 15 | 15 | 30 |
+| História | 10 | 20 | 30 |
+| Física | 20 | 10 | 30 |
+| **Total** | **115** | **85** | **200** |
+
+Um aluno é sorteado. Qual é a probabilidade de ele ser **a)** do Direito? **b)** homem ou do Direito?
+**c)** nem homem nem do Direito?
+
+::: {.caixa-resposta}
+**a)** $30/200 = 0{,}15$. **b)** $115/200 + 30/200 - 15/200 = 130/200 = 0{,}65$. **c)** Mulheres fora do Direito:
+$85 - 15 = 70$, logo $70/200 = 0{,}35$; confira: $H^c \cap D^c = (H \cup D)^c$ e $1 - 0{,}65 = 0{,}35$.
+:::
+
+**Exercício 5.** Numa cidade, 400 pessoas foram classificadas por sexo e estado civil:
+
+| | Solteiro (S) | Casado (C) | Divorciado (D) | Viúvo (V) | Total |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Masculino (M) | 50 | 60 | 40 | 30 | 180 |
+| Feminino (F) | 150 | 40 | 10 | 20 | 220 |
+| **Total** | 200 | 100 | 50 | 50 | 400 |
+
+Calcule $P(S)$, $P(M)$, $P(S \cup M)$ e $P(D \cup V)$.
+
+::: {.caixa-resposta}
+$P(S) = 0{,}5$; $P(M) = 0{,}45$; $P(S \cup M) = (200 + 180 - 50)/400 = 0{,}825$; $P(D \cup V) = 100/400 = 0{,}25$
+(eventos disjuntos).
+:::
+
+## Técnicas de contagem e probabilidade clássica {#tecnicas-contagem}
+
+Para usar $P(A) = \#A / \#\Omega$ precisamos **contar** quantos elementos têm o evento e o espaço amostral.
+Listar todos os casos costuma ser inviável: só as apostas simples possíveis da Mega-Sena passam de 50
+milhões. Esta seção explica **o que** cada técnica conta, **por que** a fórmula funciona e **quando** a
+contagem vira probabilidade.
+
+### Quando contar resolve, e quando não resolve
+
+Contar casos só produz probabilidades quando os casos são **igualmente prováveis**. O erro mais comum é
+descrever o espaço amostral por resultados que **não** têm a mesma chance.
+
+- **Soma de dois dados.** A soma vai de 2 a 12, são 11 valores, mas $P(\text{soma} = 7) \neq 1/11$. Os
+  resultados igualmente prováveis são os **36 pares ordenados** $(i, j)$; a soma 7 aparece em 6 deles, logo
+  $P(\text{soma} = 7) = 6/36 = 1/6$, enquanto a soma 2 só aparece em $(1, 1)$: $1/36$.
+- **O erro de d'Alembert.** No século XVIII, o matemático d'Alembert argumentou que, em dois lançamentos de
+  moeda, "nenhuma cara", "uma cara" e "duas caras" teriam chance $1/3$ cada. Mas os resultados
+  elementares são $KK, KC, CK, CC$, e "uma cara" corresponde a dois deles: $P = 2/4 = 1/2$.
+
+```{r soma-dados}
+dados36 <- expand.grid(d1 = 1:6, d2 = 1:6)   # os 36 pares ordenados
+table(dados36$d1 + dados36$d2)               # quantos pares dão cada soma
+```
+
+```{r fig-soma-dados, echo=FALSE, fig.height=3, fig.width=8, fig.cap="Distribuição da soma de dois dados: 11 somas possíveis, mas não igualmente prováveis. Os resultados equiprováveis são os 36 pares ordenados."}
+soma36 <- as.data.frame(table(soma = dados36$d1 + dados36$d2)) |> mutate(p = Freq / 36)
+ggplot(soma36, aes(soma, p)) + geom_col(fill = "#3b5bdb") + geom_hline(yintercept = 1/11, linetype = "dashed", color = "#c0392b") +
+  annotate("text", x = 10.5, y = 1/11 + 0.012, label = "1/11 (errado)", color = "#c0392b") +
+  labs(x = "Soma dos dois dados", y = "Probabilidade") + theme_minimal(base_size = 13)
+```
+
+::: {.caixa-aplicacao}
+**Regra de ouro.** Antes de contar, descreva $\Omega$ por resultados **elementares** que sejam igualmente
+prováveis por simetria (pares ordenados, sequências, subconjuntos sorteados ao acaso). Só então
+$P(A) = \#A / \#\Omega$ vale. Se não houver simetria, conte o que quiser, mas não divida.
+:::
+
+### Princípios aditivo e multiplicativo
+
+**Princípio aditivo.** Se uma escolha pode ser feita de $m$ maneiras de um tipo **ou** de $n$ maneiras de
+outro tipo, sem sobreposição, há $m + n$ maneiras. Um investidor que escolhe **um** fundo entre 8 de renda
+fixa ou 5 de ações tem $8 + 5 = 13$ opções.
+
+**Princípio multiplicativo.** Se uma tarefa é feita em $k$ **etapas sucessivas**, com $n_1$ maneiras para a
+primeira, $n_2$ para a segunda (qualquer que tenha sido a primeira), e assim por diante, a tarefa tem
+$n_1 \times n_2 \times \cdots \times n_k$ maneiras. O diagrama de árvore mostra por quê: cada ramo da primeira etapa se
+abre no mesmo número de ramos na etapa seguinte.
+
+```{r fig-arvore-contagem, echo=FALSE, fig.height=3.4, fig.width=9, out.width="80%", fig.cap="Princípio multiplicativo: 3 bancos × 2 prazos = 6 propostas de financiamento. Com 2 tipos de taxa (pré ou pós-fixada), seriam 3 × 2 × 2 = 12."}
+bancos <- tibble(x = 3, y = c(2, 0, -2), lab = c("Banco 1", "Banco 2", "Banco 3"))
+prazos <- tibble(x = 7, y = c(2.6, 1.4, 0.6, -0.6, -1.4, -2.6), lab = rep(c("24 meses", "36 meses"), 3),
+                 y0 = rep(c(2, 0, -2), each = 2))
 ggplot() +
-  annotate("path", x = 0.35 + 0.5*cos(seq(0,2*pi,length.out=100)),
-           y = 0.5 + 0.5*sin(seq(0,2*pi,length.out=100)), color = "#0d3b54", linewidth = 1) +
-  annotate("path", x = 0.65 + 0.5*cos(seq(0,2*pi,length.out=100)),
-           y = 0.5 + 0.5*sin(seq(0,2*pi,length.out=100)), color = "#c9971e", linewidth = 1) +
-  annotate("text", x = 0.05, y = 0.5, label = "A", size = 6, color = "#0d3b54") +
-  annotate("text", x = 0.95, y = 0.5, label = "B", size = 6, color = "#c9971e") +
-  annotate("text", x = 0.5, y = 0.5, label = expression(A %.% B), size = 5) +
-  coord_equal() + theme_void()
+  geom_segment(data = bancos, aes(x = 0, y = 0, xend = x, yend = y), color = "grey50") +
+  geom_segment(data = prazos, aes(x = 3, y = y0, xend = x, yend = y), color = "grey50") +
+  geom_point(aes(0, 0)) +
+  geom_label(data = bancos, aes(x, y, label = lab), fill = "#dbe4ff") +
+  geom_label(data = prazos, aes(x, y, label = lab), fill = "#fff3bf") +
+  annotate("text", x = 8.9, y = prazos$y, label = paste("proposta", 1:6), hjust = 0) +
+  xlim(-0.3, 10.2) + theme_void()
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+**Exemplos.**
 
-<p><strong>1.</strong> Um analista define \(\Omega\) para o "resultado do PIB do próximo trimestre"
-como \(\{\text{crescimento}, \text{recessão}\}\). Outro analista, mais cuidadoso, define
-\(\Omega=\{\text{crescimento forte}, \text{crescimento fraco}, \text{estagnação},
-\text{recessão leve}, \text{recessão severa}\}\). Os dois espaços amostrais estão "errados"? O que
-muda na análise dependendo de qual granularidade se escolhe?</p>
+- **Placas de veículos** no padrão Mercosul (LLL NLNN: três letras, um número, uma letra, dois números):
+  $26^3 \times 10 \times 26 \times 10^2 = 26^4 \times 10^3 = 456.976.000$ placas.
+- **Senha bancária** de 6 dígitos: $10^6 = 1.000.000$ senhas; um palpite ao acaso acerta com probabilidade
+  $1/1.000.000$.
+- **Trajetórias da Selic**: com 3 decisões possíveis em cada uma das 8 reuniões anuais do Copom, há $3^8 = 6.561$
+  sequências de decisões.
+- **Número de eventos** de um espaço finito com $n$ resultados: para formar um evento, decidimos, para cada
+  resultado, se ele entra ou não (2 opções, $n$ vezes): $2^n$ eventos.
 
-<p><strong>2.</strong> Dê um exemplo de dois eventos econômicos reais que sejam mutuamente
-exclusivos, e outro de dois eventos que possam ocorrer simultaneamente (não exclusivos). Em cada
-caso, explique com base na definição formal, não na intuição.</p>
+::: {.caixa-discussao}
+**Cuidado.** O princípio multiplicativo exige que o **número** de opções em cada etapa não dependa das
+escolhas anteriores (as opções podem mudar, a quantidade não). Quantos números de 3 algarismos **distintos**
+existem? Na primeira posição não pode haver zero (9 opções); na segunda, qualquer algarismo menos o já usado
+(9 opções, agora incluindo o zero); na terceira, 8. Total: $9 \times 9 \times 8 = 648$.
+:::
 
-<p><strong>3.</strong> O evento "a Selic sobe na próxima reunião" e o evento "a Selic sobe mais de
-0,5 ponto percentual na próxima reunião" têm alguma relação de subconjunto entre si? Desenhe
-mentalmente (ou em papel) o diagrama de Venn correspondente.</p>
-</div>
-```
+### Os quatro tipos de seleção
 
-## Conceitos e propriedades de probabilidade {#conceitos-probabilidade}
+Quase todo problema de contagem é uma variação de "selecionar $r$ objetos entre $n$". Duas perguntas
+decidem a fórmula: **a ordem importa?** e **pode repetir?**
 
-Uma **função de probabilidade** $P(\cdot)$ atribui a cada evento $A \subseteq \Omega$ um número
-$P(A)$ satisfazendo os **axiomas de Kolmogorov**:
+| | **Com repetição** | **Sem repetição** |
+|:---|:---|:---|
+| **Ordem importa** | sequências: $n^r$ | arranjos: $A_{n,r} = \dfrac{n!}{(n-r)!}$ |
+| **Ordem não importa** | combinações com repetição: $\dbinom{n+r-1}{r}$ | combinações: $\dbinom{n}{r} = \dfrac{n!}{r!\,(n-r)!}$ |
 
-1. $P(A) \ge 0$ para todo evento $A$.
-2. $P(\Omega) = 1$ (algum resultado do espaço amostral certamente ocorre).
-3. Se $A_1, A_2, \ldots$ são eventos mutuamente exclusivos dois a dois, então
-   $P(A_1 \cup A_2 \cup \cdots) = P(A_1) + P(A_2) + \cdots$ (aditividade).
+| Situação | Ordem importa? | Repete? | Conta |
+|:---|:---:|:---:|:---|
+| Senha de 4 dígitos | sim | sim | $10^4 = 10.000$ |
+| Presidente, vice e tesoureiro entre 10 conselheiros | sim | não | $10 \times 9 \times 8 = 720$ |
+| Carteira de 4 ações entre 12 aprovadas | não | não | $\binom{12}{4} = 495$ |
+| Distribuir 10 parcelas iguais de orçamento entre 3 programas | não | sim | $\binom{12}{2} = 66$ |
 
-Desses três axiomas decorrem propriedades usadas o tempo todo na prática:
+### Permutações
+
+Uma **permutação** é uma **ordenação** de $n$ objetos distintos. Há $n$ escolhas para a primeira posição,
+$n - 1$ para a segunda, e assim por diante, até 1 para a última:
 
 $$
-P(A^c) = 1 - P(A), \qquad P(\emptyset)=0, \qquad A\subseteq B \Rightarrow P(A)\le P(B).
+n! = n \times (n-1) \times \cdots \times 2 \times 1, \qquad 0! = 1.
 $$
 
-**Regra da adição (evento geral, não necessariamente disjuntos)**:
+A convenção $0! = 1$ ("há uma única forma de ordenar nada") mantém as fórmulas abaixo válidas nos casos
+extremos. O fatorial cresce muito rápido: $5! = 120$, $10! = 3.628.800$ e $20! \approx 2{,}4 \times 10^{18}$, por isso
+listar casos é inviável.
+
+**Exemplos.**
+
+- Um comitê ordena 5 projetos de investimento por prioridade: $5! = 120$ rankings possíveis. Se o
+  ranking for feito ao acaso, a probabilidade de o melhor projeto (segundo um critério técnico) ficar em
+  primeiro é $4!/5! = 1/5$: fixado o primeiro lugar, sobram $4!$ ordenações.
+- Uma turma com 6 homens e 4 mulheres é classificada por nota: $10! = 3.628.800$ classificações; se homens e
+  mulheres forem classificados separadamente, $6! \cdot 4! = 17.280$.
+
+**Permutações com elementos repetidos.** Quando alguns objetos são **iguais entre si**, trocá-los de lugar
+não gera ordenação nova. Com $n$ objetos, dos quais $n_1$ de um tipo, $n_2$ de outro, ..., $n_k$ de outro,
 
 $$
-P(A\cup B) = P(A) + P(B) - P(A\cap B).
+\frac{n!}{n_1!\, n_2! \cdots n_k!}.
 $$
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a regra da adição é usada, por
-exemplo, para calcular a probabilidade de que uma empresa seja afetada por "aumento de juros
-<em>ou</em> desvalorização cambial" no próximo trimestre, os dois eventos não são mutuamente
-exclusivos (podem ocorrer juntos, e frequentemente ocorrem, já que o Banco Central às vezes sobe
-juros em resposta à pressão cambial), então subtrair a interseção evita contar duas vezes o cenário
-em que ambos acontecem.</div>
-```
+Dividimos por $n_1!$ porque cada ordenação "distinguível" aparece $n_1!$ vezes entre as $n!$ ordenações
+em que os objetos iguais são tratados como diferentes (e o mesmo para os demais tipos).
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: caindo na malha fina</strong>, a Receita
-Federal cruza informações de todas as declarações de Imposto de Renda entregues em um ano. A
-tabela abaixo (com números arredondados, em milhares de declarações) cruza a faixa de renda
-declarada com o resultado do cruzamento: 80,2 milhões de declarações no total.</div>
-```
+- **Trajetórias mensais**: em 12 meses, o preço de um ativo subiu em 7 e caiu em 5. Quantas sequências de
+  altas (A) e quedas (Q) são possíveis? $12!/(7!\,5!) = 792$.
+- **Anagramas** de ECONOMIA (8 letras, com o O repetido): $8!/2! = 20.160$.
 
-```{r tabela-malha-fina}
-malha_fina <- tribble(
-  ~Faixa_de_renda, ~Caiu_na_malha_fina, ~Nao_caiu, ~Total,
-  "D, abaixo de 25 mil",      90,  14010, 14100,
-  "C, de 25 mil a 49.999",    71,  30629, 30700,
-  "B, de 50 mil a 99.999",    69,  24631, 24700,
-  "A, acima de 100 mil",      80,  10620, 10700,
-  "Total",                    310,  79890, 80200
-)
-malha_fina |>
-  kbl(col.names = c("Faixa de renda", "Caiu na malha fina", "Não caiu", "Total")) |>
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
-```
+### Arranjos
 
-Seja $Z=$ "a declaração caiu na malha fina" e $Y=$ "a declaração é da faixa A (renda mais alta)".
-Sorteando uma declaração ao acaso entre as 80,2 milhões:
+Um **arranjo** de $r$ objetos entre $n$ é uma **sequência sem repetição**: a ordem importa porque as
+posições são diferentes (cargos, colocações, etapas). Pelo princípio multiplicativo,
 
 $$
-P(Z) = \frac{310}{80200} \approx 0{,}0039 \qquad P(Y) = \frac{10700}{80200} \approx 0{,}133
-\qquad P(Z\cap Y) = \frac{80}{80200} \approx 0{,}0010.
+A_{n,r} = n(n-1)\cdots(n-r+1) = \frac{n!}{(n-r)!}.
 $$
 
-```{r malha-fina-r}
-P_Z  <- 310/80200
-P_Y  <- 10700/80200
-P_ZY <- 80/80200
-c(P_Z = P_Z, P_Y = P_Y, P_Z_e_Y = P_ZY)
-```
+- Presidente, vice e tesoureiro escolhidos entre 10 conselheiros: $A_{10,3} = 720$.
+- Os três primeiros colocados em uma licitação com 8 empresas: $A_{8,3} = 336$.
+- Códigos de 3 dígitos com $\{1, 2, 3, 4, 5\}$ sem repetição: $5 \times 4 \times 3 = 60$. A probabilidade de um código
+  sorteado começar com 1 é $A_{4,2}/60 = 12/60 = 1/5$.
 
-Pela regra da adição, a probabilidade de uma declaração ser da faixa A **ou** ter caído na malha
-fina é $P(Y\cup Z) = P(Y)+P(Z)-P(Y\cap Z) \approx 0{,}133+0{,}0039-0{,}0010 = 0{,}136$, subtraindo
-a interseção para não contar duas vezes as declarações que satisfazem as duas condições ao mesmo
-tempo. Essa base é retomada na Seção \@ref(probabilidade-condicional) para perguntar algo mais
-interessante: a probabilidade de cair na malha fina **muda** conforme a faixa de renda?
+### Combinações
 
-### Modelo de espaço equiprovável e métodos de contagem
-
-Quando $\Omega$ é finito e todos os resultados são igualmente prováveis (**espaço equiprovável**),
+Uma **combinação** de $r$ objetos entre $n$ é um **subconjunto** (grupo) de $r$ elementos: a ordem **não**
+importa. A fórmula vem dos arranjos: cada grupo de $r$ elementos pode ser ordenado de $r!$ maneiras, então
+cada grupo aparece $r!$ vezes na lista de arranjos. Logo
 
 $$
-P(A) = \frac{\#A}{\#\Omega} = \frac{\text{nº de resultados favoráveis a } A}{\text{nº total de resultados possíveis}}.
+\binom{n}{r} = \frac{A_{n,r}}{r!} = \frac{n!}{r!\,(n-r)!}.
 $$
 
-Calcular $P(A)$ nesse caso é um problema de **contagem**. Três regras cobrem a maioria dos casos:
+**Vendo a divisão por $r!$.** Um fundo escolhe 2 de 4 empresas, $\{A, B, C, D\}$. Há $A_{4,2} = 12$ pares
+**ordenados**, mas cada carteira aparece duas vezes ($AB$ e $BA$ são a mesma carteira): $12/2! = 6$ carteiras.
 
-- **Princípio multiplicativo**: se uma escolha tem $k_1$ opções, seguida de outra com $k_2$
-  opções (independente da primeira), o total de sequências é $k_1 \times k_2$.
-- **Permutações** de $n$ objetos distintos: $n! = n\times(n-1)\times\cdots\times 1$ arranjos
-  possíveis (a ordem importa).
-- **Combinações**: número de subconjuntos de tamanho $k$ escolhidos entre $n$ objetos, sem
-  importar a ordem:
-  $$
-  \binom{n}{k} = \frac{n!}{k!(n-k)!}.
-  $$
-
-```{r combinacoes-r}
-choose(10, 3)     # C(10,3): combinações
-factorial(5)       # 5! permutações
+```{r combn-exemplo}
+empresas4 <- c("A", "B", "C", "D")
+pares_ord <- subset(expand.grid(prim = empresas4, seg = empresas4), prim != seg)
+nrow(pares_ord)                          # 12 arranjos
+apply(combn(empresas4, 2), 2, paste, collapse = "")   # as 6 combinações
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: auditoria por amostragem</strong>: um auditor
-precisa escolher 3 contratos, de um total de 10, para auditoria detalhada, sem se importar com a
-ordem da escolha. O número de amostras de 3 contratos possíveis é \(\binom{10}{3}=120\). Se 2 dos 10
-contratos têm um problema real, a probabilidade de a amostra sorteada aleatoriamente pegar
-<em>pelo menos um</em> desses 2 é
-\(1 - \binom{8}{3}/\binom{10}{3} = 1 - 56/120 \approx 53{,}3\%\), o complementar de "nenhum dos 2
-problemáticos entra na amostra".</div>
+**Propriedades, com leitura combinatória.**
+
+- **Simetria**: $\binom{n}{r} = \binom{n}{n-r}$. Escolher os $r$ que **entram** equivale a escolher os $n - r$ que **ficam de fora**.
+- **Relação de Pascal**: $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}$. Fixe uma empresa específica: os grupos que
+  a **contêm** escolhem os outros $r - 1$ entre $n - 1$; os que **não** a contêm escolhem os $r$ entre $n - 1$.
+- **Soma**: $\sum_{r=0}^{n} \binom{n}{r} = 2^n$. Contar todos os subconjuntos por tamanho dá o mesmo que contar
+  "entra ou não entra" para cada elemento.
+- **Teorema binomial**: $(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^k b^{n-k}$. Ao expandir o produto de $n$ fatores
+  $(a + b)$, o termo $a^k b^{n-k}$ aparece uma vez para cada escolha de quais $k$ fatores contribuem com $a$. Essa
+  identidade é a base da distribuição Binomial (Capítulo 3).
+
+```{r fig-pascal, echo=FALSE, fig.height=3.2, fig.width=8, out.width="65%", fig.cap="Triângulo de Pascal: cada número é a soma dos dois acima dele; a linha n traz os coeficientes binomiais, que somam 2ⁿ."}
+pascal <- map_dfr(0:6, function(n) tibble(n = n, r = 0:n, v = choose(n, 0:n)))
+ggplot(pascal, aes(x = r - n / 2, y = -n, label = v)) + geom_label(fill = "#fff3bf", size = 5) +
+  annotate("text", x = -4.4, y = -(0:6), label = paste0("n = ", 0:6), hjust = 0, color = "grey40") +
+  annotate("text", x = 4.4, y = -(0:6), label = paste0("soma = ", 2^(0:6)), hjust = 1, color = "grey40") +
+  xlim(-4.5, 4.5) + theme_void()
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+**Combinações com repetição.** Distribuir $r$ unidades **idênticas** entre $n$ categorias (ou escolher $r$
+itens entre $n$ tipos, podendo repetir o tipo) tem $\binom{n+r-1}{r}$ possibilidades. A ideia ("estrelas e
+barras"): represente as $r$ unidades por estrelas e separe as $n$ categorias com $n - 1$ barras; cada
+arrumação de $r$ estrelas e $n - 1$ barras em $n + r - 1$ posições é uma distribuição. Um orçamento de 10
+parcelas de R\$ 1 milhão distribuído entre 3 programas (algum pode ficar sem nada) tem $\binom{12}{10} =
+\binom{12}{2} = 66$ distribuições possíveis.
 
-<p><strong>1.</strong> Por que a regra \(P(A\cup B)=P(A)+P(B)\) (sem subtrair a interseção) só vale
-quando \(A\) e \(B\) são mutuamente exclusivos? Construa um exemplo numérico pequeno em que aplicar
-essa regra incorretamente (esquecendo de subtrair a interseção) leva a uma probabilidade maior que
-1, o que isso já denuncia sobre o erro?</p>
+### Da contagem à probabilidade: exemplos desenvolvidos
 
-<p><strong>2.</strong> Em que situação prática você usaria permutação (ordem importa) em vez de
-combinação (ordem não importa) para contar possibilidades? Dê um exemplo econômico de cada.</p>
+**Exemplo 1: Mega-Sena.** Sorteiam-se 6 números entre 60, e todas as $\binom{60}{6} = 50.063.860$ combinações
+são igualmente prováveis. Para uma aposta simples de 6 números:
 
-<p><strong>3.</strong> No exemplo da auditoria por amostragem, recalcule a probabilidade se, em vez
-de 2, houvesse 5 dos 10 contratos problemáticos. A probabilidade de pegar pelo menos um cresce mais
-ou menos que proporcionalmente ao número de contratos problemáticos? Você consegue explicar a
-direção desse efeito antes mesmo de fazer a conta?</p>
-</div>
+- **Sena** (acertar os 6): 1 caso favorável, $P = 1/50.063.860$.
+- **Quina** (acertar exatamente 5): escolher quais 5 dos 6 apostados foram sorteados, $\binom{6}{5} = 6$, e qual
+  dos 54 não apostados completa o sorteio, $\binom{54}{1} = 54$: $324$ casos, $P \approx 1/154.518$.
+- **Quadra** (exatamente 4): $\binom{6}{4}\binom{54}{2} = 15 \times 1.431 = 21.465$ casos, $P \approx 1/2.332$.
+- Uma aposta com **7 números** contém $\binom{7}{6} = 7$ combinações de 6: a chance de sena é 7 vezes maior,
+  $7/50.063.860$, a mesma de 7 apostas simples diferentes.
+
+```{r megasena}
+total_ms <- choose(60, 6)
+casos <- c(sena = 1,
+           quina = choose(6, 5) * choose(54, 1),
+           quadra = choose(6, 4) * choose(54, 2))
+casos
+round(total_ms / casos)   # "1 chance em ..."
 ```
+
+**Exemplo 2: auditoria fiscal (distribuição hipergeométrica).** Um lote tem 200 notas fiscais, das quais
+12 são irregulares. O auditor sorteia 20 notas, sem reposição. Como todos os $\binom{200}{20}$ subconjuntos
+de 20 notas são igualmente prováveis, a probabilidade de **nenhuma** nota irregular na amostra é
+
+$$
+P(\text{nenhuma}) = \frac{\binom{12}{0}\binom{188}{20}}{\binom{200}{20}} \approx `r nb(choose(188, 20) / choose(200, 20), 3)`,
+$$
+
+e a de encontrar **pelo menos uma** é $1 - `r nbm(choose(188, 20) / choose(200, 20), 3)` = `r nbm(1 - choose(188, 20) / choose(200, 20), 3)`$.
+Em geral, com $N$ itens, $K$ "marcados" e amostra de $n$, a probabilidade de exatamente $k$ marcados é
+$\binom{K}{k}\binom{N-K}{n-k} / \binom{N}{n}$. Pela mesma lógica, se uma remessa de 150 celulares tem 40
+defeituosos e 20 são escolhidos ao acaso, $P(\text{exatamente 9 defeituosos}) = \binom{40}{9}\binom{110}{11}/\binom{150}{20}
+\approx 0{,}0321$.
+
+::: {.caixa-economia}
+**Leitura econômica.** Uma auditoria com 20 notas deixa passar um lote com 6% de irregularidades em mais de
+um quarto das vezes. Aumentar a amostra reduz esse risco, mas custa mais horas de auditor: a contagem permite
+calcular o tamanho de amostra que equilibra custo e risco de não detecção.
+:::
+
+**Exemplo 3: com ou sem ordem, o resultado tem de ser o mesmo.** Um lote tem 10 peças, 4 defeituosas;
+retiram-se 3 sem reposição. Probabilidade de exatamente 2 defeituosas:
+
+- **Sem ordem** (subconjuntos): $\dfrac{\binom{4}{2}\binom{6}{1}}{\binom{10}{3}} = \dfrac{6 \times 6}{120} = 0{,}30$.
+- **Com ordem** (sequências): há $A_{10,3} = 720$ sequências; a peça boa pode estar em 3 posições, e em cada caso
+  há $4 \times 3 \times 6 = 72$ sequências: $\dfrac{3 \times 72}{720} = 0{,}30$.
+
+O importante é usar o **mesmo** critério no numerador e no denominador.
+
+**Exemplo 4: o problema do aniversário.** Em um grupo de $k$ pessoas (ignorando anos bissextos e supondo os
+365 dias igualmente prováveis), qual a probabilidade de pelo menos duas fazerem aniversário no mesmo dia? As
+sequências de aniversários são $365^k$ (ordem importa, com repetição); as sequências **sem** coincidência são
+$A_{365,k}$ (sem repetição). Pelo complementar,
+
+$$
+P(\text{alguma coincidência}) = 1 - \frac{365 \times 364 \times \cdots \times (365 - k + 1)}{365^k}.
+$$
+
+```{r aniversario}
+aniversario <- function(k) 1 - prod((365 - k + 1):365 / 365)
+c(aniversario(23), aniversario(50))
+```
+
+```{r fig-aniversario, echo=FALSE, fig.height=3, fig.width=8, fig.cap="Problema do aniversário: com 23 pessoas a chance de coincidência já passa de 50%; com 50, chega a 97%."}
+aniv <- tibble(k = 1:60, p = sapply(1:60, function(k) 1 - prod((365 - k + 1):365 / 365)))
+ggplot(aniv, aes(k, p)) + geom_line(color = "#3b5bdb", linewidth = 1) + geom_hline(yintercept = 0.5, linetype = "dashed") +
+  geom_point(data = filter(aniv, k %in% c(23, 50)), color = "#c0392b", size = 3) +
+  labs(x = "Número de pessoas", y = "P(pelo menos uma coincidência)") + theme_minimal(base_size = 13)
+```
+
+A intuição falha porque o número de **pares** de pessoas cresce rápido: com 23 pessoas há $\binom{23}{2} = 253$
+pares, cada um com chance $1/365$ de coincidir.
+
+**Exemplo 5: a composição de uma diretoria foi obra do acaso?** Uma empresa tem 20 executivos elegíveis, 12
+homens e 8 mulheres, e forma uma diretoria de 5 pessoas. Se a escolha fosse ao acaso, a probabilidade de
+**nenhuma** mulher seria
+
+$$
+\frac{\binom{12}{5}\binom{8}{0}}{\binom{20}{5}} = \frac{792}{15.504} \approx 0{,}051.
+$$
+
+::: {.caixa-discussao}
+**Discussão.** A empresa renova a diretoria a cada ano e, em três renovações seguidas (tratadas como
+independentes), só nomeou homens. Sob a hipótese de escolha ao acaso, isso teria probabilidade
+$0{,}051^3 \approx 0{,}00013$. Esse cálculo **prova** discriminação? O que ele mostra é que a hipótese "ao acaso" explica
+mal os dados; outras explicações (critérios de promoção, trajetórias de carreira, rede de contatos) precisam
+ser investigadas. É exatamente o raciocínio dos testes de hipóteses, e aparece em processos judiciais sobre
+discriminação no mercado de trabalho.
+:::
+
+::: {.caixa-r}
+**Uso do R.** `factorial(n)` calcula $n!$; `choose(n, r)` calcula $\binom{n}{r}$; `prod((n - r + 1):n)` calcula
+$A_{n,r}$; `combn(x, r)` lista as combinações; `expand.grid()` lista sequências (com repetição). Para conferir
+uma conta por simulação, sorteie com `sample()` muitas vezes e compare a frequência relativa com a fórmula.
+:::
+
+```{r contagem}
+c(placas = 26^4 * 10^3, copom = 3^8,
+  conselho = factorial(10) / factorial(7), carteiras = choose(12, 4),
+  orcamento = choose(12, 2), trajetorias = choose(12, 7))
+# conferindo a auditoria por simulação: 100 mil amostras de 20 notas
+set.seed(1)
+notas <- c(rep(1, 12), rep(0, 188))
+mean(replicate(1e5, sum(sample(notas, 20)) == 0))
+```
+
+::: {.caixa-discussao}
+**Discussão.** Um analista estima a chance de "alta do dólar" **ou** "alta de juros" no trimestre como
+$0{,}45 + 0{,}30 = 0{,}75$. Se a chance de ambos é 0,15, qual é o valor correto e qual foi o erro? Um concurso
+com 200 candidatos para 3 vagas idênticas tem quantos resultados? E se as vagas forem para cargos
+diferentes? Qual das duas contas corresponde a "ordem importa"?
+:::
+
+**Exercício 6.** **a)** De quantas formas um banco pode escolher 3 de suas 15 agências para um projeto-piloto?
+**b)** E se as 3 agências receberem versões diferentes do projeto (A, B e C)? **c)** Se a escolha em (a) for
+ao acaso e 5 das 15 agências ficam no interior, qual a probabilidade de as 3 escolhidas serem do interior?
+
+::: {.caixa-resposta}
+**a)** $\binom{15}{3} = 455$ (grupos). **b)** $A_{15,3} = 15 \times 14 \times 13 = 2.730$ (a ordem, isto é, qual agência recebe qual
+versão, importa); confira que $2.730 = 455 \times 3!$. **c)** $\binom{5}{3}/\binom{15}{3} = 10/455 \approx 0{,}022$.
+:::
+
+## Probabilidade geométrica {#probabilidade-geometrica}
+
+Quando o espaço amostral é um **intervalo** ou uma **região do plano**, não dá para contar resultados. Se o
+resultado é um "ponto escolhido ao acaso" na região, no sentido de que regiões de mesmo tamanho têm a mesma
+chance, a probabilidade é proporcional ao tamanho.
+
+::: {.caixa-aplicacao}
+**Probabilidade geométrica.** Se $\Omega$ é uma região com comprimento (ou área) finito e positivo e o ponto é
+escolhido uniformemente em $\Omega$, então, para um evento $A \subset \Omega$,
+
+$$
+P(A) = \frac{\text{comprimento (ou área) de } A}{\text{comprimento (ou área) de } \Omega}.
+$$
+
+Comprimentos e áreas são não negativos, aditivos para regiões disjuntas e $P(\Omega) = 1$: os axiomas de
+Kolmogorov valem. Um ponto isolado tem comprimento zero, logo **probabilidade zero**, mesmo sendo possível:
+é o que acontece com as variáveis contínuas do Capítulo 4.
+:::
+
+**Exemplo 1: tempo de espera.** Um ônibus passa a cada 15 minutos e um passageiro chega ao ponto num
+instante ao acaso. O tempo de espera está em $\Omega = [0, 15]$. A probabilidade de esperar mais de 10 minutos
+é o comprimento de $(10, 15]$ dividido por 15: $5/15 = 1/3$. A probabilidade de esperar **exatamente** 10
+minutos é $0/15 = 0$.
+
+**Exemplo 2: o problema do encontro.** Um comprador e um vendedor combinam de se encontrar entre 9h e 10h.
+Cada um chega num instante ao acaso nesse intervalo, independentemente do outro, e espera no máximo 15
+minutos. Qual a probabilidade de o negócio ser fechado? Marcando os minutos de chegada $x$ (comprador) e
+$y$ (vendedor), $\Omega$ é o quadrado $[0, 60] \times [0, 60]$, de área 3.600, e o encontro ocorre se $|x - y| \leq 15$
+(a faixa em torno da diagonal). Fora da faixa ficam dois triângulos de catetos 45, com área total
+$2 \times 45^2/2 = 2.025$. Logo
+
+$$
+P(\text{encontro}) = 1 - \frac{2.025}{3.600} = \frac{7}{16} = 0{,}4375.
+$$
+
+```{r fig-encontro, echo=FALSE, fig.height=3.8, fig.width=9, out.width="85%", fig.cap="Problema do encontro: a faixa |x − y| ≤ 15 (em amarelo) ocupa 7/16 do quadrado. À direita, 2.000 chegadas simuladas; a proporção de encontros se aproxima de 0,4375."}
+faixa <- tibble(x = c(0, 15, 60, 60, 45, 0), y = c(0, 0, 45, 60, 60, 15))
+ge1 <- ggplot() + geom_polygon(data = faixa, aes(x, y), fill = "#f4e04d") +
+  annotate("rect", xmin = 0, xmax = 60, ymin = 0, ymax = 60, fill = NA, color = "#2a7fb8", linewidth = 1) +
+  annotate("text", x = c(45, 15), y = c(12, 48), label = "sem encontro", size = 4.5) +
+  coord_fixed() + labs(x = "Chegada do comprador (min)", y = "Chegada do vendedor (min)") + theme_minimal(base_size = 12)
+set.seed(2026)
+cheg <- tibble(x = runif(2000, 0, 60), y = runif(2000, 0, 60), encontro = abs(x - y) <= 15)
+ge2 <- ggplot(cheg, aes(x, y, color = encontro)) + geom_point(size = 0.6) + coord_fixed() +
+  scale_color_manual(values = c("grey60", "#c0392b")) +
+  labs(x = "Comprador", y = "Vendedor", color = "Encontro?") + theme_minimal(base_size = 12)
+ge1 + ge2
+```
+
+```{r encontro-simulacao}
+set.seed(2026)
+comprador <- runif(100000, 0, 60)   # minuto de chegada
+vendedor  <- runif(100000, 0, 60)
+mean(abs(comprador - vendedor) <= 15)
+```
+
+**Exemplo 3: barganha e ganhos de troca.** Em uma negociação, o preço máximo que o comprador aceita pagar,
+$b$, e o preço mínimo que o vendedor aceita receber, $s$, são pontos ao acaso em $[0, 1]$ (em R\$ milhões),
+independentes. Há espaço para acordo quando $b \geq s$: é a metade do quadrado abaixo da diagonal, $P = 1/2$. A
+probabilidade de o **ganho de troca** $b - s$ ser de pelo menos 0,2 é a área do triângulo $\{b - s \geq 0{,}2\}$, de
+catetos $0{,}8$: $0{,}8^2/2 = 0{,}32$.
+
+**Exemplo 4: estimando $\pi$ com pontos ao acaso.** Sorteando pontos no quadrado $[0, 1]^2$, a proporção que cai no
+quarto de círculo $x^2 + y^2 \leq 1$ aproxima a área $\pi/4$. Multiplicar por 4 estima $\pi$: é o princípio do
+**método de Monte Carlo**, usado em finanças para precificar opções e medir risco quando não há fórmula fechada.
+
+```{r monte-carlo-pi}
+set.seed(1)
+mc_x <- runif(100000); mc_y <- runif(100000)
+4 * mean(mc_x^2 + mc_y^2 <= 1)
+```
+
+::: {.caixa-discussao}
+**Discussão: "ao acaso" precisa ser definido.** No **paradoxo de Bertrand**, "escolher uma corda ao acaso em um
+círculo" leva a três respostas diferentes (1/2, 1/3 ou 1/4) para a mesma pergunta, conforme o mecanismo de
+sorteio. Em economia acontece o mesmo: "sortear uma **empresa** ao acaso" e "sortear um **trabalhador** ao acaso
+e olhar a empresa onde ele trabalha" dão distribuições muito diferentes para o tamanho da empresa, porque
+empresas grandes têm mais trabalhadores e são sorteadas mais vezes no segundo mecanismo. Pense em outros
+exemplos: renda média por **família** versus renda da família de uma **pessoa** sorteada.
+:::
+
+**Exercício 7.** Um investidor divide R\$ 1 milhão em duas partes, cortando o intervalo $[0, 1]$ num ponto ao
+acaso. Qual a probabilidade de a parte maior ser pelo menos o triplo da menor?
+
+::: {.caixa-resposta}
+Seja $u$ o ponto de corte. A parte maior é pelo menos o triplo da menor se $u \leq 1/4$ (então $1 - u \geq 3u$) ou
+$u \geq 3/4$. O comprimento favorável é $1/4 + 1/4 = 1/2$, logo $P = 0{,}5$.
+:::
 
 ## Probabilidade condicional {#probabilidade-condicional}
 
-A **probabilidade condicional** de $A$ dado que $B$ já ocorreu é
-
-$$
-P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \qquad P(B) > 0.
-$$
-
-Condicionar em $B$ significa *restringir o espaço amostral* a apenas os resultados em que $B$
-ocorre, dentro desse novo universo, $A\cap B$ é o evento de interesse.
-
-```{r cond-empregos}
-tabela <- tribble(
-  ~Escolaridade, ~Empregado, ~Desempregado, ~Total,
-  "Fundamental/Médio", 180, 70, 250,
-  "Superior", 210, 40, 250,
-  "Total", 390, 110, 500
-)
-tabela |> kbl(caption = "500 pessoas por escolaridade e situação ocupacional") |>
-  kable_styling(full_width = FALSE)
+```{r fig-infarto, echo=FALSE, out.width="60%", fig.cap="Fatores de risco de infarto: o risco é cinco vezes maior entre fumantes. Fonte: Revista Pesquisa FAPESP."}
+knitr::include_graphics("images/infarto_fapesp.jpg")
 ```
 
-Se $B=$ "ter ensino superior" e $A=$ "estar desempregado", então, sorteando uma pessoa ao acaso
-dessa população,
+A probabilidade de uma pessoa **qualquer** ter um infarto é igual à de uma pessoa **que fuma**? Não:
+informações extras podem **mudar** probabilidades.
+
+Na tabela de alunos do Exercício 4, $P(\text{mulher}) = 85/200 = 42{,}5\%$. Se soubermos que o sorteado cursa
+**História**, olhamos só a linha de História como novo espaço amostral: $P(\text{mulher} \mid \text{História}) = 20/30 \approx 66{,}7\%$.
+
+::: {.caixa-aplicacao}
+Sejam $A$ e $B$ eventos com $P(A) > 0$. A **probabilidade condicional** de $B$ **dado** $A$ é
 
 $$
-P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{40/500}{250/500} = \frac{40}{250} = 0{,}16.
+P(B \mid A) = \frac{P(A \cap B)}{P(A)}.
 $$
 
-Compare com a probabilidade **não condicional** $P(A) = 110/500 = 0{,}22$: saber que a pessoa tem
-ensino superior *muda* a probabilidade de estar desempregada, de 22% para 16%, o evento
-"escolaridade" carrega informação relevante sobre o evento "desemprego" nesta população.
+Condicionar em $A$ é **restringir** o espaço amostral a $A$ e **reescalar** as probabilidades para que $A$ passe a
+ter probabilidade 1.
+:::
 
-Da definição de probabilidade condicional decorre a **regra do produto**:
+**Exemplo: um dado.** $A = \{2\}$ e $B = \{2, 4, 6\}$: $P(A \mid B) = (1/6)/(3/6) = 1/3$, mas $P(B \mid A) = (1/6)/(1/6) = 1$.
+**Em geral, $P(A \mid B) \neq P(B \mid A)$.** Confundir as duas é a **falácia da inversão**.
 
-$$
-P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A).
-$$
+**A condicional é uma probabilidade.** Fixado $A$ com $P(A) > 0$, a função $Q(B) = P(B \mid A)$ obedece aos três
+axiomas: $Q(B) \geq 0$; $Q(\Omega) = P(A)/P(A) = 1$; e, para $B_1, B_2, \ldots$ disjuntos, os eventos $A \cap B_i$ também são
+disjuntos, logo $Q(\bigcup B_i) = \sum P(A \cap B_i)/P(A) = \sum Q(B_i)$. Portanto **todas** as propriedades da seção
+anterior valem condicionalmente, por exemplo $P(B^c \mid A) = 1 - P(B \mid A)$. Atenção: em geral
+$P(B \mid A^c) \neq 1 - P(B \mid A)$; aí mudou o evento condicionante, não o evento de interesse.
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: voltando à malha fina</strong>, a Seção 2.3
-prometeu uma pergunta mais interessante: a chance de cair na malha
-fina muda conforme a faixa de renda?</div>
-```
+**Exercício 8.** Um levantamento imobiliário classificou casas pelo preço e pela existência de mais de
+um banheiro (proporções):
 
-```{r malha-fina-condicional}
-malha_fina <- malha_fina |> mutate(
-  P_malha_dado_faixa = Caiu_na_malha_fina / Total
-)
-malha_fina |>
-  select(Faixa_de_renda, Caiu_na_malha_fina, Total, P_malha_dado_faixa) |>
-  kbl(digits = 4,
-      col.names = c("Faixa", "Caiu na malha", "Total", "P(malha | faixa)")) |>
-  kable_styling(full_width = FALSE)
-```
+| Preço | Mais de um banheiro | Um banheiro |
+|:---|:---:|:---:|
+| Baixo | 0,22 | 0,40 |
+| Alto | 0,34 | 0,04 |
 
-A probabilidade condicional de cair na malha fina **quase dobra** entre a faixa de menor renda
-(D, $\approx 0{,}64\%$) e a de maior renda (A, $\approx 0{,}75\%$), mesmo com a faixa A
-concentrando bem menos declarações no total. A probabilidade não condicional $P(Z)\approx0{,}39\%$
-(calculada na Seção anterior) esconde essa heterogeneidade entre faixas, do mesmo jeito que a taxa
-de desemprego agregada, adiante, esconde a diferença por escolaridade.
+Calcule $P(\text{alto})$, $P(\text{mais de um banheiro})$ e $P(\text{mais de um banheiro} \mid \text{alto})$.
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+::: {.caixa-resposta}
+$P(\text{alto}) = 0{,}38$; $P(\text{mais de um banheiro}) = 0{,}56$;
+$P(\text{mais de um banheiro} \mid \text{alto}) = 0{,}34/0{,}38 \approx 0{,}895$.
+:::
 
-<p><strong>1.</strong> Recalcule \(P(\text{superior}\mid\text{desempregado})\) (o "outro lado" da
-condicional) usando a mesma tabela. Esse valor é igual, maior ou menor que
-\(P(\text{desempregado}\mid\text{superior})=0{,}16\) calculado no texto? Explique por que, em geral,
-\(P(A\mid B)\neq P(B\mid A)\), essa confusão tem nome (a "falácia da probabilidade condicional
-invertida" ou "falácia do promotor") e é um dos erros mais comuns em leitura de estatística
-jurídica e médica.</p>
+**Exercício 9.** Na tabela de sexo e estado civil (Exercício 5): $P(S \mid M) = 50/180 \approx 0{,}28$;
+$P(D \mid F) = 10/220 \approx 0{,}045$; $P(F \mid D) = 10/50 = 0{,}2$. Compare as duas últimas: mesmo numerador,
+denominadores diferentes.
 
-<p><strong>2.</strong> Um analista político diz "a probabilidade de reeleição, dado que o prefeito
-é bem avaliado, é de 80%". Identifique explicitamente quem é \(A\) e quem é \(B\) nessa frase, e
-escreva a expressão formal \(P(A\mid B)\) correspondente.</p>
+### Regra da multiplicação
 
-<p><strong>3.</strong> Se \(B\subseteq A\) (todo resultado de \(B\) também está em \(A\)), o que se pode
-concluir sobre \(P(A\mid B)\), sem fazer nenhuma conta? Justifique usando a definição.</p>
-</div>
-```
-
-## Teoremas básicos de probabilidade {#teoremas-basicos}
-
-### Teorema da probabilidade total
-
-Se $B_1, B_2, \ldots, B_k$ formam uma **partição** de $\Omega$ (mutuamente exclusivos, e
-$B_1\cup\cdots\cup B_k = \Omega$), então, para qualquer evento $A$,
+Da definição, $P(A \cap B) = P(A)\,P(B \mid A) = P(B)\,P(A \mid B)$. De forma geral,
 
 $$
-P(A) = \sum_{i=1}^k P(A\mid B_i)\,P(B_i).
+P(A_1 \cap \cdots \cap A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \cdots \cap A_{n-1}).
 $$
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, uma seguradora de crédito
-particiona sua carteira por setor econômico (\(B_1=\) indústria, \(B_2=\) comércio, \(B_3=\) serviços) e
-conhece a taxa de inadimplência histórica <em>dentro</em> de cada setor, \(P(A\mid B_i)\). O teorema da
-probabilidade total é exatamente a fórmula que a seguradora usa para obter a taxa de inadimplência
-<em>global</em> esperada da carteira, ponderando cada taxa setorial pela participação \(P(B_i)\)
-daquele setor na carteira total.</div>
-```
-
-Antes do exemplo com dados reais, vale fixar o mecanismo em um caso pequeno, com números exatos.
-Um lote tem 20 peças defeituosas e 80 peças em perfeito estado. Duas peças são retiradas ao acaso,
-sem reposição. Qual é a probabilidade de a **segunda** peça retirada ser defeituosa?
-
-Seja $B=$ "a primeira peça retirada é defeituosa" e $A=$ "a segunda peça retirada é defeituosa".
-Como a primeira peça, ou é defeituosa, ou não é, $B$ e $B^c$ formam uma partição do espaço
-amostral, com $P(B)=20/100=0{,}2$ e $P(B^c)=80/100=0{,}8$. Se a primeira peça saiu defeituosa,
-restam 19 defeituosas em 99 peças; se não saiu, restam 20 defeituosas em 99 peças. Logo,
+**Exemplo.** Um lote tem 50 peças boas e 10 defeituosas; retiram-se duas sem reposição.
 
 $$
-\begin{aligned}
-P(A) &= P(A\mid B)\,P(B) + P(A\mid B^c)\,P(B^c) \\
-&= \frac{19}{99}\times\frac{20}{100} + \frac{20}{99}\times\frac{80}{100} \\
-&= \frac{380}{9900} + \frac{1600}{9900} = \frac{1980}{9900} = 0{,}2.
-\end{aligned}
+P(D_1 \cap D_2) = P(D_1)\,P(D_2 \mid D_1) = \frac{10}{60} \times \frac{9}{59} = \frac{90}{3.540} \approx 0{,}0254.
 $$
 
-```{r prob-total-pecas}
-P_B         <- 20/100
-P_Bc        <- 80/100
-P_A_dado_B  <- 19/99
-P_A_dado_Bc <- 20/99
-P_A <- P_A_dado_B * P_B + P_A_dado_Bc * P_Bc
-P_A
+Pela contagem da Seção \@ref(tecnicas-contagem), o mesmo resultado: $\binom{10}{2}/\binom{60}{2} = 45/1.770 \approx 0{,}0254$.
+
+```{r fig-arvore-pecas, echo=FALSE, fig.height=3.2, fig.width=9, out.width="80%", fig.cap="Diagrama de árvore das duas retiradas sem reposição (D: defeituosa; B: boa)."}
+no <- tibble(x = c(0, 3, 3, 7, 7, 7, 7), y = c(0, 1.5, -1.5, 2.3, 0.7, -0.7, -2.3), lab = c("", "D1", "B1", "D2", "B2", "D2", "B2"))
+arestas <- tibble(x = c(0, 0, 3, 3, 3, 3), y = c(0, 0, 1.5, 1.5, -1.5, -1.5), xend = c(3, 3, 7, 7, 7, 7),
+                  yend = c(1.5, -1.5, 2.3, 0.7, -0.7, -2.3), p = c("10/60", "50/60", "9/59", "50/59", "10/59", "49/59"))
+final <- tibble(y = c(2.3, 0.7, -0.7, -2.3), lab = c("0,0254", "0,1412", "0,1412", "0,6921"))
+ggplot() + geom_segment(data = arestas, aes(x, y, xend = xend, yend = yend), color = "grey40") +
+  geom_label(data = arestas, aes((x + xend) / 2, (y + yend) / 2, label = p), label.size = 0) +
+  geom_point(data = no, aes(x, y)) + geom_label(data = no[-1, ], aes(x, y, label = lab), fill = "#f4e04d") +
+  geom_text(data = final, aes(8, y, label = lab), hjust = 0) + xlim(0, 9.5) + theme_void()
 ```
 
-Note que $P(A)=0{,}2$ é exatamente igual a $P(B)$, a probabilidade da **primeira** peça ser
-defeituosa. Sem observar o resultado da primeira retirada, a segunda peça carrega, a priori, a
-mesma chance marginal de ser defeituosa que a primeira, mesmo a extração sendo sem reposição, um
-resultado que surpreende quem espera que "sem reposição" sempre distinga a primeira e a segunda
-posições.
+**Exercício 10.** Uma urna tem 3 bolas brancas e 7 vermelhas. **a)** Qual é a probabilidade de duas bolas
+brancas em duas retiradas sem reposição? **b)** E da sequência $B_1 B_2 V_3 V_4 B_5$ em cinco retiradas?
 
-```{r fig-mapa-homicidios, echo=FALSE, out.width="70%", fig.cap="Homicídios no Brasil por 100 mil habitantes, por estado (2025). Fonte: Atlas da Violência (IPEA e FBSP)."}
-knitr::include_graphics("images/mapa_homicidios.png")
+::: {.caixa-resposta}
+**a)** $\frac{3}{10} \cdot \frac{2}{9} = \frac{1}{15} \approx 0{,}0667$. **b)** $\frac{3}{10} \cdot \frac{2}{9} \cdot \frac{7}{8} \cdot \frac{6}{7} \cdot \frac{1}{6} = \frac{1}{120}$.
+:::
+
+## Tabelas de contingência: probabilidades conjuntas, marginais e condicionais {#tabelas-contingencia}
+
+Uma **tabela de contingência** cruza duas variáveis qualitativas. Se sorteamos **uma pessoa ao acaso** da
+população descrita pela tabela, as frequências relativas viram probabilidades, e a mesma tabela responde a
+três perguntas diferentes:
+
+| Tipo | Pergunta | Cálculo na tabela |
+|:---|:---|:---|
+| **Conjunta** | qual a chance de $A$ **e** $B$? | célula / total geral |
+| **Marginal** | qual a chance de $A$ (qualquer $B$)? | total da linha (ou coluna) / total geral |
+| **Condicional** | qual a chance de $B$ **entre** os que têm $A$? | célula / total da **linha** (ou da coluna) |
+
+### Mercado de trabalho brasileiro: sexo e condição na força de trabalho
+
+A PNAD Contínua do 2º trimestre de 2026 classifica a população de 14 anos ou mais em **ocupados**,
+**desocupados** (sem trabalho, mas procurando) e **fora da força de trabalho** (nem trabalham nem procuram).
+
+```{r pnad-sexo-tab}
+tab_sexo <- tibble(
+  Sexo = c("Homens", "Mulheres"),
+  Ocupados = c(pn_h$ocupadas, pn_m$ocupadas),
+  Desocupados = c(pn_h$desocupadas, pn_m$desocupadas),
+  `Fora da força` = c(pn_h$fora, pn_m$fora)) |>
+  mutate(Total = Ocupados + Desocupados + `Fora da força`)
+tab_sexo_tot <- bind_rows(tab_sexo,
+                          summarise(tab_sexo, Sexo = "Total", across(-Sexo, sum)))
+tabela(tab_sexo_tot, digits = 0,
+       caption = "Pessoas de 14 anos ou mais (mil pessoas), Brasil, 2º tri 2026. Fonte: IBGE, PNAD Contínua, tabela 4093.")
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: a taxa nacional é uma probabilidade total</strong>
-, o mapa acima mostra a taxa de homicídios por 100 mil habitantes em cada estado, de \(6{,}4\) (São
-Paulo) a \(57{,}4\) (Amapá), com uma taxa nacional agregada de \(21{,}2\). Sorteando uma pessoa ao
-acaso entre todos os brasileiros, a taxa nacional \(21{,}2\) por 100 mil é exatamente
-\(\sum_i P(\text{homicídio}\mid\text{estado}_i)\times P(\text{estado}_i)\), uma probabilidade total
-em que a partição \(B_i\) são os 27 estados e o peso \(P(B_i)\) é a participação populacional de cada
-um. Nenhum estado, isoladamente, tem taxa igual à nacional, o número agregado é sempre uma média
-ponderada de realidades estaduais muito diferentes.</div>
+(Os totais podem diferir em uma unidade dos publicados pelo IBGE, que arredonda cada célula para milhares.)
+Dividindo pelo total geral obtemos as probabilidades **conjuntas** e **marginais**; dividindo cada célula pelo
+total da sua linha, as **condicionais** $P(\text{condição} \mid \text{sexo})$, o **perfil-linha**:
+
+```{r pnad-sexo-prob}
+n_tot <- sum(tab_sexo$Total)
+conjunta <- tab_sexo_tot |> mutate(across(-Sexo, ~ .x / n_tot))
+tabela(conjunta, caption = "Probabilidades conjuntas (células) e marginais (margens).")
+perfil_linha <- tab_sexo |>
+  mutate(across(Ocupados:`Fora da força`, ~ .x / Total), Total = 1)
+tabela(perfil_linha, caption = "Perfil-linha: P(condição | sexo). Cada linha soma 1.")
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+Lendo as tabelas:
 
-<p><strong>1.</strong> A taxa de inadimplência global calculada pelo teorema da probabilidade total
-é uma média ponderada das taxas setoriais. O que aconteceria com essa taxa global se a composição
-da carteira (a participação \(P(B_i)\) de cada setor) mudasse, mesmo que <em>nenhuma</em> taxa setorial
-\(P(A\mid B_i)\) tivesse mudado? Dê um cenário concreto (por exemplo, crescimento do setor de maior
-risco) em que isso levaria um gestor desatento a concluir, erroneamente, que "o risco de crédito
-piorou".</p>
+- **Conjunta**: $P(\text{mulher} \cap \text{fora da força}) = `r nbm(pn_m$fora / n_tot)`$: cerca de um quarto de toda a
+  população de 14 anos ou mais é de mulheres fora da força de trabalho.
+- **Marginal**: $P(\text{mulher}) = `r nbm(pn_m$pop14 / n_tot)`$ e $P(\text{fora da força}) = `r nbm(pn_tot$fora / n_tot)`$.
+- **Condicional (perfil-linha)**: $P(\text{fora} \mid \text{mulher}) = `r nbm(pn_m$fora / pn_m$pop14)`$, contra
+  $P(\text{fora} \mid \text{homem}) = `r nbm(pn_h$fora / pn_h$pop14)`$.
+- **Condicional (perfil-coluna)**: $P(\text{mulher} \mid \text{fora}) = `r nbm(pn_m$fora / pn_tot$fora)`$: quase dois terços de
+  quem está fora da força de trabalho são mulheres. Não confunda com $P(\text{fora} \mid \text{mulher})$.
 
-<p><strong>2.</strong> Por que a condição "\(B_1,\ldots,B_k\) formam uma partição" (mutuamente
-exclusivos e exaustivos) é essencial para essa fórmula funcionar? O que quebraria se os segmentos
-setoriais se sobrepusessem (uma empresa contada em dois segmentos ao mesmo tempo)?</p>
+::: {.caixa-aplicacao}
+**Marginais são probabilidades totais.** A margem de uma tabela é a soma de uma linha ou coluna de
+conjuntas, e cada conjunta é "condicional × marginal":
 
-<p><strong>3.</strong> Um secretário de segurança pública quer decidir onde alocar mais recursos
-policiais. A taxa nacional de \(21{,}2\) por 100 mil habitantes é útil para essa decisão, ou ela
-esconde exatamente a informação que mais importa? Que unidade de análise (estado, município,
-bairro) você recomendaria para uma decisão de alocação de recursos, e por quê o teorema da
-probabilidade total ajuda a formalizar essa intuição?</p>
-</div>
+$$
+P(\text{fora}) = P(\text{fora} \mid H)\,P(H) + P(\text{fora} \mid M)\,P(M).
+$$
+
+É o teorema da probabilidade total (Seção \@ref(teoremas-basicos)) escrito numa tabela.
+:::
+
+### Taxa ou nível? O evento condicionante muda a resposta
+
+O IBGE publica dois indicadores de desocupação que diferem **apenas no evento condicionante**:
+
+- **Taxa de desocupação** $= P(\text{desocupado} \mid \text{na força de trabalho}) = `r format(pn_tot$desocupadas, big.mark = ".")`/`r format(pn_tot$forca, big.mark = ".")` = `r pcm(pn_tot$desocupadas / pn_tot$forca)`$;
+- **Nível da desocupação** $= P(\text{desocupado} \mid \text{14 anos ou mais}) = `r format(pn_tot$desocupadas, big.mark = ".")`/`r format(pn_tot$pop14, big.mark = ".")` = `r pcm(pn_tot$desocupadas / pn_tot$pop14)`$.
+
+Os dois estão corretos; respondem a perguntas diferentes. A taxa pergunta "entre quem participa do mercado
+de trabalho, quantos não conseguem emprego?"; o nível pergunta "quantos, na população em idade de trabalhar,
+estão procurando emprego sem conseguir?".
+
+### A falácia da inversão com dados reais: escolaridade e desocupação
+
+```{r fig-instrucao, echo=FALSE, fig.height=4, fig.width=10, out.width="95%", fig.cap="À esquerda, P(desocupado | escolaridade, na força de trabalho): a taxa de desocupação de cada grupo. À direita, P(escolaridade | desocupado): a composição dos desocupados. Fonte: IBGE, PNAD Contínua, 2º trimestre de 2026."}
+instr <- filter(pnad, recorte == "instrucao") |>
+  mutate(grupo = c("Sem instrução", "Fund. incompleto", "Fund. completo", "Médio incompleto",
+                   "Médio completo", "Sup. incompleto", "Sup. completo"),
+         grupo = factor(grupo, levels = grupo),
+         taxa = desocupadas / forca, composicao = desocupadas / sum(desocupadas))
+gi1 <- ggplot(instr, aes(grupo, taxa)) + geom_col(fill = "#3b5bdb") + coord_flip() +
+  geom_text(aes(label = pc(taxa)), hjust = -0.1, size = 3.8) + scale_y_continuous(limits = c(0, 0.11), labels = NULL) +
+  labs(x = NULL, y = NULL, title = "P(desocupado | escolaridade)") + theme_minimal(base_size = 12)
+gi2 <- ggplot(instr, aes(grupo, composicao)) + geom_col(fill = "#c9971e") + coord_flip() +
+  geom_text(aes(label = pc(composicao)), hjust = -0.1, size = 3.8) + scale_y_continuous(limits = c(0, 0.55), labels = NULL) +
+  labs(x = NULL, y = NULL, title = "P(escolaridade | desocupado)") + theme_minimal(base_size = 12)
+gi1 + gi2
 ```
+
+Quem tem **ensino médio completo** é `r pc(instr$composicao[5])` dos desocupados, a maior fatia, mas a taxa de
+desocupação desse grupo é `r pc(instr$taxa[5])`, próxima da média: o grupo é grande (`r pc(instr$forca[5] / sum(instr$forca))` da força de
+trabalho). Uma manchete como "o desemprego atinge principalmente quem tem ensino médio" lê a coluna da
+direita como se fosse a da esquerda.
+
+### Confundimento e composição
+
+No gráfico, quem **não tem instrução** tem taxa de desocupação (`r pc(instr$taxa[1])`) **menor** que quem tem ensino
+médio incompleto (`r pc(instr$taxa[4])`). Estudar protege menos contra o desemprego? Não é essa a conclusão. Os grupos
+diferem em **outras** características: só `r pc(instr$forca[1] / instr$pop14[1])` das pessoas sem instrução estão na força de trabalho
+(muitas são idosas e já não procuram emprego), enquanto o médio incompleto concentra **jovens**, que têm as
+maiores taxas de desocupação:
+
+```{r pnad-idade}
+pn_idade <- filter(pnad, recorte == "idade") |>
+  transmute(`Grupo de idade` = categoria,
+            `Taxa de desocupação` = desocupadas / forca,
+            `Participação na força` = forca / pop14)
+tabela(pn_idade,
+       caption = "Desocupação e participação por idade. Fonte: IBGE, PNAD Contínua, 2º tri 2026, tabela 4094.")
+```
+
+A idade é uma **variável de confundimento**: está associada tanto à escolaridade quanto à desocupação.
+Comparar taxas de grupos com composições etárias diferentes mistura o efeito da escolaridade com o da idade.
+
+### O paradoxo de Simpson
+
+O confundimento pode até **inverter** uma comparação. Dois bancos analisam pedidos de crédito (dados
+ilustrativos):
+
+| | Banco A: pedidos | Banco A: aprovados | Banco B: pedidos | Banco B: aprovados |
+|:---|:---:|:---:|:---:|:---:|
+| Risco baixo | 800 | 720 (90%) | 200 | 190 (95%) |
+| Risco alto | 200 | 100 (50%) | 800 | 440 (55%) |
+| **Total** | 1.000 | **820 (82%)** | 1.000 | **630 (63%)** |
+
+O Banco B aprova **mais** em **cada** classe de risco, mas **menos** no total. Não há erro de conta: a taxa total é
+uma **média ponderada** das taxas por classe,
+
+$$
+P(\text{aprov}) = P(\text{aprov} \mid \text{baixo})\,P(\text{baixo}) + P(\text{aprov} \mid \text{alto})\,P(\text{alto}),
+$$
+
+e os pesos são diferentes: 80% dos pedidos do Banco A são de risco baixo, contra 20% no Banco B. Um regulador
+que olhasse só o total concluiria que B é mais restritivo, quando é o contrário. O caso real mais conhecido é o
+das admissões na pós-graduação de Berkeley em 1973: no total, a taxa de admissão de mulheres era menor, mas,
+departamento a departamento, não havia desvantagem, porque as mulheres se candidatavam mais aos departamentos
+mais concorridos [@bickel1975sex].
+
+::: {.caixa-discussao}
+**Discussão.** A taxa de desocupação do Brasil pode cair de um ano para outro mesmo que a taxa de **cada** grupo
+de idade suba? Que mudança na composição da força de trabalho produziria isso? Por que o envelhecimento da
+população é importante para interpretar séries longas de desemprego?
+:::
+
+### Independência em tabelas
+
+Se sexo e condição na força de trabalho fossem **independentes**, cada conjunta seria o produto das marginais,
+e a contagem **esperada** em cada célula seria
+
+$$
+e_{ij} = \frac{(\text{total da linha } i) \times (\text{total da coluna } j)}{\text{total geral}}.
+$$
+
+```{r pnad-esperada}
+pn_obs <- as.matrix(tab_sexo[, c("Ocupados", "Desocupados", "Fora da força")])
+pn_esp <- outer(rowSums(pn_obs), colSums(pn_obs)) / sum(pn_obs)
+rownames(pn_obs) <- rownames(pn_esp) <- tab_sexo$Sexo
+round(pn_obs); round(pn_esp)
+```
+
+As desocupadas observadas (`r format(pn_m$desocupadas, big.mark = ".")` mil) estão próximas das esperadas sob independência, mas as mulheres
+fora da força de trabalho (`r format(pn_m$fora, big.mark = ".")` mil) superam em muito as esperadas (`r format(round(pn_esp[2, 3]), big.mark = ".")` mil): a
+dependência entre sexo e condição está, sobretudo, na **participação** no mercado de trabalho. Medir quão longe a
+tabela observada está da esperada é a ideia do teste qui-quadrado, estudado em Estatística Econômica II.
+
+::: {.caixa-economia}
+**Leitura econômica: probabilidades de transição no mercado de trabalho.** Acompanhando as mesmas pessoas em
+dois trimestres, cruza-se a condição no trimestre $t$ (linhas) com a condição em $t + 1$ (colunas). O
+perfil-linha dessa tabela dá as **probabilidades de transição**, por exemplo $f = P(\text{ocupado em } t+1 \mid
+\text{desocupado em } t)$, a chance de encontrar emprego, e $s = P(\text{desocupado em } t+1 \mid \text{ocupado em } t)$, a
+chance de perder o emprego. Com valores ilustrativos $s = 0{,}02$ e $f = 0{,}30$ por trimestre, e ignorando quem entra e
+sai da força de trabalho, a taxa de desocupação para a qual o mercado tende é $u^* = s/(s + f) = 0{,}02/0{,}32 =
+6{,}25\%$: o fluxo de entrada no desemprego, $s(1 - u^*)$, iguala o de saída, $f\,u^*$. Políticas que aumentam $f$
+(intermediação de mão de obra) ou reduzem $s$ baixam a desocupação de longo prazo. Esse é o ponto de partida dos
+modelos de fluxos em Macroeconomia.
+:::
+
+**Exercício 11.** Com a tabela de sexo e condição, calcule **a)** $P(\text{desocupado} \mid \text{mulher})$ e
+$P(\text{desocupado} \mid \text{mulher, na força de trabalho})$; **b)** $P(\text{homem} \mid \text{ocupado})$. Explique por que os dois
+números de (a) são tão diferentes.
+
+::: {.caixa-resposta}
+**a)** $P(\text{desocupado} \mid \text{mulher}) = `r format(pn_m$desocupadas, big.mark = ".")`/`r format(pn_m$pop14, big.mark = ".")` \approx `r nbm(pn_m$desocupadas / pn_m$pop14)`$ e
+$P(\text{desocupado} \mid \text{mulher, força}) = `r format(pn_m$desocupadas, big.mark = ".")`/`r format(pn_m$forca, big.mark = ".")` \approx `r nbm(pn_m$desocupadas / pn_m$forca)`$. O segundo
+condiciona num evento menor (só as mulheres que participam), porque quase metade das mulheres está fora da força
+de trabalho. **b)** $P(\text{homem} \mid \text{ocupado}) = `r format(pn_h$ocupadas, big.mark = ".")`/`r format(pn_tot$ocupadas, big.mark = ".")` \approx `r nbm(pn_h$ocupadas / pn_tot$ocupadas)`$.
+:::
+
+## Risco, chance e razão de chances {#medidas-associacao}
+
+Em uma tabela $2 \times 2$ com um **grupo** (exposto ou não a um fator) e um **desfecho** (o evento de interesse),
+as probabilidades condicionais geram medidas que economistas, epidemiologistas e analistas de crédito usam o
+tempo todo. Notação:
+
+| | Desfecho $D$ | Sem desfecho $D^c$ | Total |
+|:---|:---:|:---:|:---:|
+| **Grupo 1** (exposto, $E$) | $a$ | $b$ | $a + b$ |
+| **Grupo 0** (não exposto, $E^c$) | $c$ | $d$ | $c + d$ |
+
+### Prevalência e incidência
+
+- **Prevalência**: proporção da população que **está** com a condição em um momento, $P(D)$. A taxa de desocupação
+  é uma prevalência (quem está desocupado na semana de referência).
+- **Incidência**: proporção dos que **passam a ter** a condição num período, entre os que estavam em risco. A
+  proporção de ocupados que perdem o emprego em um trimestre (o $s$ do quadro anterior) é uma incidência.
+
+Prevalência alta pode vir de incidência alta **ou** de duração longa: duas regiões com a mesma taxa de desocupação
+podem ter uma muita rotatividade e desemprego curto, e a outra poucas demissões e desemprego longo.
+
+### Risco, diferença de riscos e risco relativo
+
+::: {.caixa-aplicacao}
+- **Risco** em cada grupo: $R_1 = P(D \mid E) = \dfrac{a}{a+b}$ e $R_0 = P(D \mid E^c) = \dfrac{c}{c+d}$.
+- **Diferença de riscos** (em pontos percentuais): $DR = R_1 - R_0$.
+- **Risco relativo**: $RR = \dfrac{R_1}{R_0}$. "O risco é $RR$ vezes maior"; "aumento relativo de $(RR - 1) \times 100\%$".
+:::
+
+A frase "sedentarismo aumenta em 80% a probabilidade de um tumor" descreve um **risco relativo** $RR = 1{,}8$, e não
+diz nada sobre o risco **absoluto**: se $R_0 = 0{,}5\%$, então $R_1 = 0{,}9\%$ e a diferença é de 0,4 ponto percentual.
+
+### Chance (odds)
+
+::: {.caixa-aplicacao}
+A **chance** (*odds*) de um evento com probabilidade $p$ é
+
+$$
+O = \frac{p}{1 - p}, \qquad \text{e, de volta,} \qquad p = \frac{O}{1 + O}.
+$$
+:::
+
+| $p$ | 0,10 | 0,20 | 0,50 | 0,75 | 0,90 |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| $O = p/(1-p)$ | 0,111 (1 para 9) | 0,25 (1 para 4) | 1 (1 para 1) | 3 (3 para 1) | 9 (9 para 1) |
+
+A probabilidade vai de 0 a 1; a chance vai de 0 a infinito. Na tabela, a chance do desfecho no grupo 1 é
+$O_1 = a/b$ ("desfechos por não desfecho") e no grupo 0, $O_0 = c/d$.
+
+::: {.caixa-economia}
+**Leitura econômica: as "odds" das casas de apostas.** Uma casa de apostas paga R\$ 2,10 por real apostado na
+vitória do time A, R\$ 3,30 no empate e R\$ 3,60 na vitória do time B. A cotação decimal $k$ corresponde à
+probabilidade implícita $1/k$: $1/2{,}10 + 1/3{,}30 + 1/3{,}60 \approx `r nbm(1/2.10 + 1/3.30 + 1/3.60)`$. A soma passa de 1, o que violaria os
+axiomas, e a diferença (cerca de `r pc(1/2.10 + 1/3.30 + 1/3.60 - 1)`) é a **margem da casa**: exatamente o argumento de arbitragem da
+Seção \@ref(prob-introducao), agora a favor de quem define os preços. (A cotação decimal é o **pagamento**, não a
+chance $p/(1-p)$ desta seção.)
+:::
+
+### Razão de chances (odds ratio)
+
+::: {.caixa-aplicacao}
+A **razão de chances** compara as chances dos dois grupos:
+
+$$
+OR = \frac{O_1}{O_0} = \frac{a/b}{c/d} = \frac{a\,d}{b\,c}.
+$$
+
+$OR = 1$ indica chances iguais (na tabela $2 \times 2$, equivale a **independência** entre grupo e desfecho);
+$OR > 1$, chance maior no grupo 1; $OR < 1$, menor.
+:::
+
+**Por que usar a razão de chances, se o risco relativo é mais intuitivo?** Três propriedades:
+
+1. **Simetria.** $\dfrac{a\,d}{b\,c}$ é a mesma se trocarmos o papel de linhas e colunas: a razão de chances do
+   desfecho entre os grupos é igual à razão de chances do grupo entre quem teve e quem não teve o desfecho.
+2. **Invariância à amostragem pelo desfecho.** Se a amostra for montada escolhendo, por exemplo, todos os
+   inadimplentes e uma fração dos adimplentes (estudo **caso-controle**, comum quando o desfecho é raro), as
+   colunas são multiplicadas por constantes diferentes. $R_1$, $R_0$ e $RR$ ficam distorcidos; $OR$ não muda,
+   porque cada constante aparece uma vez no numerador e uma no denominador.
+3. **Aproximação do risco relativo para desfechos raros.** Se $a \ll b$ e $c \ll d$, então $a/b \approx a/(a+b)$ e
+   $c/d \approx c/(c+d)$, logo $OR \approx RR$.
+
+### Exemplo com dados reais: sexo e mercado de trabalho
+
+**Desocupação** (entre quem está na força de trabalho; desfecho relativamente raro):
+
+```{r medidas-desocupacao}
+medidas2x2 <- function(a, b, c, d) {
+  R1 <- a / (a + b); R0 <- c / (c + d)
+  c(R1 = R1, R0 = R0, DR = R1 - R0, RR = R1 / R0,
+    O1 = a / b, O0 = c / d, OR = (a * d) / (b * c))
+}
+# grupo 1 = mulheres; desfecho = desocupada; b e d = ocupadas
+round(medidas2x2(a = pn_m$desocupadas, b = pn_m$ocupadas,
+                 c = pn_h$desocupadas, d = pn_h$ocupadas), 4)
+```
+
+```{r medidas-calc, include=FALSE}
+md <- medidas2x2(pn_m$desocupadas, pn_m$ocupadas, pn_h$desocupadas, pn_h$ocupadas)
+mf <- medidas2x2(pn_m$fora, pn_m$pop14 - pn_m$fora, pn_h$fora, pn_h$pop14 - pn_h$fora)
+```
+
+A taxa de desocupação das mulheres é `r pc(md["R1"])` e a dos homens, `r pc(md["R0"])`: diferença de
+`r nb(100 * md["DR"], 1)` ponto percentual, risco relativo de `r nb(md["RR"], 2)` e razão de chances de `r nb(md["OR"], 2)`. Como a
+desocupação é relativamente rara, $OR$ e $RR$ são parecidos.
+
+**Estar fora da força de trabalho** (desfecho comum):
+
+```{r medidas-fora}
+round(medidas2x2(a = pn_m$fora, b = pn_m$pop14 - pn_m$fora,
+                 c = pn_h$fora, d = pn_h$pop14 - pn_h$fora), 4)
+```
+
+Agora $R_1 = `r pcm(mf["R1"])`$ e $R_0 = `r pcm(mf["R0"])`$: $RR = `r nbm(mf["RR"], 2)`$, mas $OR = `r nbm(mf["OR"], 2)`$. As duas frases abaixo
+estão corretas, e a diferença entre elas não é detalhe:
+
+- "A **probabilidade** de uma mulher estar fora da força de trabalho é `r nb(mf["RR"], 1)` vez a de um homem" ($RR$).
+- "A **chance** de uma mulher estar fora da força de trabalho é `r nb(mf["OR"], 1)` vezes a de um homem" ($OR$).
+
+Ler uma razão de chances como se fosse risco relativo **exagera** a diferença quando o desfecho é comum.
+
+::: {.caixa-economia}
+**Leitura econômica: por que modelos de crédito falam em razão de chances.** Uma carteira tem 10.000 contratos
+(dados ilustrativos): 4.000 sem garantia, com 400 inadimplentes (10%), e 6.000 com garantia, com 180 inadimplentes
+(3%). Na população, $RR = 0{,}10/0{,}03 = 3{,}33$ e $OR = (400 \times 5.820)/(3.600 \times 180) \approx 3{,}59$. Para economizar,
+um analista monta uma amostra com **todos** os 580 inadimplentes e **580** adimplentes sorteados; espera-se que 222
+destes sejam sem garantia e 358 com garantia. Nessa amostra, o "risco" calculado seria $400/622$ contra $180/538$, com
+$RR \approx 1{,}92$, **errado**; mas $OR = (400 \times 358)/(222 \times 180) \approx 3{,}58$, praticamente o valor da população. É por
+isso que a regressão logística, ferramenta padrão de escore de crédito, trabalha com chances e razões de chances.
+:::
+
+| Medida | Fórmula | Escala | Sem associação | Leitura |
+|:---|:---|:---|:---:|:---|
+| Prevalência | $P(D)$ | 0 a 1 | --- | quantos estão com a condição |
+| Risco | $P(D \mid E)$ | 0 a 1 | $R_1 = R_0$ | probabilidade no grupo |
+| Diferença de riscos | $R_1 - R_0$ | $-1$ a $1$ (p.p.) | 0 | impacto absoluto |
+| Risco relativo | $R_1/R_0$ | 0 a $\infty$ | 1 | "quantas vezes mais provável" |
+| Chance | $p/(1-p)$ | 0 a $\infty$ | --- | desfechos por não desfecho |
+| Razão de chances | $ad/(bc)$ | 0 a $\infty$ | 1 | "quantas vezes mais chance" |
+
+::: {.caixa-discussao}
+**Discussão.** A reportagem sobre infarto diz que o risco é "cinco vezes maior entre fumantes". Que informação
+falta para um fumante decidir se isso é muito ou pouco? Uma razão de chances de 2,3 entre mulheres e homens para
+"estar fora da força de trabalho" é evidência de discriminação no mercado de trabalho? Que outras variáveis
+(filhos pequenos, cuidado de idosos, escolaridade, idade) poderiam explicar parte dessa associação?
+:::
+
+**Exercício 12.** Em um programa de qualificação, 300 desempregados fizeram o curso e 120 deles estavam
+empregados seis meses depois; entre 700 que não fizeram, 175 estavam empregados. Calcule $R_1$, $R_0$, $DR$, $RR$ e
+$OR$ para o desfecho "empregado". A comparação permite concluir que o curso **causa** a recolocação?
+
+::: {.caixa-resposta}
+$R_1 = 120/300 = 0{,}40$; $R_0 = 175/700 = 0{,}25$; $DR = 15$ p.p.; $RR = 1{,}6$; $OR = (120 \times 525)/(180 \times 175) = 2{,}0$. Não
+permite concluir causalidade: quem se inscreve no curso pode ser mais motivado ou mais qualificado (seleção). Só um
+sorteio de quem faz o curso, ou um desenho que controle essas diferenças, permitiria atribuir o efeito ao curso.
+:::
 
 ## Independência estatística {#independencia}
 
-Dois eventos $A$ e $B$ são **independentes** se a ocorrência de um não altera a probabilidade do
-outro:
-
-$$
-A \perp B \quad \Longleftrightarrow \quad P(A\mid B) = P(A) \quad \Longleftrightarrow \quad P(A\cap B) = P(A)\,P(B).
-$$
-
-A terceira forma (produto das probabilidades) é a mais usada na prática, por não exigir
-$P(B)>0$ e por ser simétrica em $A$ e $B$, se ela vale, também vale $P(B\mid A)=P(B)$.
-
-**Independência vs. mutuamente exclusivos**, um erro comum é confundir os dois conceitos. Se
-$A$ e $B$ são mutuamente exclusivos ($A\cap B=\emptyset$) e ambos têm probabilidade positiva, eles
-são o oposto de independentes: saber que $A$ ocorreu implica $P(B\mid A) = 0 \ne P(B)$, a
-ocorrência de um **elimina completamente** a possibilidade do outro, o tipo mais forte possível de
-dependência.
-
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: o bloco mais importante do capítulo</strong>
-
-<p><strong>1.</strong> Independência estatística <em>não</em> é o mesmo que "sem relação de
-causa". Dois eventos podem ser estatisticamente dependentes sem que um cause o outro (uma terceira
-variável causa ambos); e, mais sutil ainda, dois eventos causalmente conectados podem, em uma
-amostra específica, apresentar \(P(A\cap B)\approx P(A)P(B)\) por coincidência numérica. Por que,
-ainda assim, é a definição matemática de independência, não uma noção intuitiva de causa, que
-entra nas contas de probabilidade e nas fórmulas de esperança/variância do Capítulo 3?</p>
-
-<p><strong>2.</strong> Dê um exemplo de dois eventos econômicos que você esperaria ser
-aproximadamente independentes (por exemplo, "chove em Salvador amanhã" e "a Bolsa de Nova York
-fecha em alta hoje"), e outro par que você esperaria fortemente dependente. Justifique cada
-intuição.</p>
-
-<p><strong>3.</strong> É possível dois eventos serem independentes numa população e dependentes
-numa subpopulação dela? Pense em um exemplo: escolaridade e uso de determinado serviço financeiro
-podem ser independentes na população geral, mas dependentes dentro de uma faixa etária específica.
-O que esse tipo de situação (às vezes chamada de "paradoxo de Simpson", que você vai reencontrar em
-disciplinas futuras) ensina sobre generalizar conclusões de subgrupos para a população inteira, ou
-vice-versa?</p>
-
-<p><strong>4.</strong> Um analista de crédito assume, por conveniência de cálculo, que a
-inadimplência de dois empréstimos diferentes do mesmo tomador é independente. Em uma crise
-econômica generalizada, essa suposição continua razoável? Que tipo de risco (para o banco) essa
-suposição incorreta esconde?</p>
-</div>
+```{r fig-videogame, echo=FALSE, out.width="45%", fig.cap="Estudos afastam relação entre videogames e violência. Fonte: CNN Brasil (08/03/2020)."}
+knitr::include_graphics("images/videogames_violencia_cnn.jpg")
 ```
+
+Muitas vezes a ocorrência de um evento **não afeta** a chance de outro: $P(B \mid A) = P(B)$. Substituindo na
+definição de probabilidade condicional:
+
+::: {.caixa-aplicacao}
+Dois eventos $A$ e $B$ são **independentes** se
+
+$$
+P(A \cap B) = P(A) \times P(B).
+$$
+
+Se $P(A) > 0$, isso equivale a $P(B \mid A) = P(B)$; se $P(B) > 0$, a $P(A \mid B) = P(A)$. Se $A$ e $B$ são
+independentes, também são $A$ e $B^c$, $A^c$ e $B$, e $A^c$ e $B^c$.
+:::
+
+A última afirmação sai dos axiomas: $P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)\,[1 - P(B)] = P(A)\,P(B^c)$.
+Em uma tabela $2 \times 2$, independência significa $R_1 = R_0$, ou seja, $RR = OR = 1$.
+
+**Exemplos.**
+
+- Um departamento de polícia soluciona 60% dos homicídios; dois casos independentes são ambos
+  solucionados com probabilidade $0{,}6 \times 0{,}6 = 0{,}36$.
+- Uma carta de um baralho: "ás" ($4/52$) e "espadas" ($13/52$) são independentes, pois
+  $P(\text{ás de espadas}) = 1/52 = (4/52)(13/52)$.
+- Uma promotora com dois casos independentes, com 80% e 70% de chance de condenação: ambas com
+  probabilidade 0,56.
+- Um dado: $A = \{2\}$ e $B = \{1, 2\}$ **não** são independentes, pois $1/6 \neq (1/6)(2/6)$.
+- Moeda lançada três vezes: $A$ = "pelo menos duas caras" ($P = 4/8$) e $B$ = "três faces iguais"
+  ($\{KKK, CCC\}$): $P(A \mid B) = (1/8)/(2/8) = 1/2 = P(A)$, independentes.
+
+::: {.caixa-discussao}
+**Independentes não é o mesmo que disjuntos.** Eventos disjuntos com probabilidade positiva são
+**dependentes**: se um ocorre, sabemos que o outro não ocorreu. "Dois bancos quebrarem no mesmo ano" ser
+tratado como independente ($0{,}02 \times 0{,}02 = 0{,}0004$) subestima o **risco sistêmico**: em crises, os bancos
+sofrem os mesmos choques.
+:::
+
+### Três ou mais eventos
+
+Eventos $A_1, \ldots, A_n$ são independentes somente se a regra do produto vale para **todas** as
+combinações (pares, trios, ...). Independência dois a dois **não basta**: lançando dois dados, com $A$ =
+"primeiro par", $B$ = "segundo ímpar" e $C$ = "mesma paridade", cada par é independente
+($P = 9/36 = (1/2)(1/2)$), mas $P(A \cap B \cap C) = 0 \neq 1/8$.
+
+**Exemplos.** Indícios de violência doméstica aparecem em 20% das visitas; em 3 visitas independentes, a
+probabilidade de indícios em todas é $0{,}2^3 = 0{,}008$ e em pelo menos uma, $1 - 0{,}8^3 = 0{,}488$. Um dado lançado
+três vezes: $P(\text{nenhum } 2) = (5/6)^3 \approx 0{,}58$ e $P(\text{pelo menos um } 2) \approx 0{,}42$.
+
+::: {.caixa-economia}
+**Testando independência em uma tabela.** Pesquisa com 1.000 clientes (dados ilustrativos): 400 têm até 35
+anos ($J$), 600 usam o aplicativo ($U$) e 360 têm até 35 anos **e** usam o aplicativo. Como
+$P(J)P(U) = 0{,}24 \neq P(J \cap U) = 0{,}36$, os eventos são **dependentes**. Sob independência, a célula seria
+$1.000 \times 0{,}4 \times 0{,}6 = 240$: comparar tabelas observadas e esperadas é a ideia do teste qui-quadrado
+(Seção \@ref(tabelas-contingencia)).
+:::
+
+## Teoremas básicos de probabilidade {#teoremas-basicos}
+
+### Partição e teorema da probabilidade total
+
+```{r fig-mapa, echo=FALSE, out.width="40%", fig.cap="Mapa de homicídios por estado: os estados formam uma partição do Brasil. Fonte: G1 (12/05/2025), dados do Atlas da Violência."}
+knitr::include_graphics("images/mapa_homicidios.png")
+```
+
+::: {.caixa-aplicacao}
+Os eventos $B_1, \ldots, B_n$ formam uma **partição** de $S$ se: **a)** $B_i \cap B_j = \emptyset$ para $i \neq j$ (não se
+sobrepõem); **b)** $B_1 \cup \cdots \cup B_n = S$ (cobrem tudo); **c)** $P(B_i) > 0$.
+:::
+
+Em um dado, $\{1, 2\}$, $\{3, 4, 5\}$ e $\{6\}$ formam uma partição; $\{1, 2, 3, 4\}$ e $\{4, 5, 6\}$ não (o 4 está nos dois).
+Qualquer evento $A$ pode ser "fatiado" pela partição: $A = (A \cap B_1) \cup \cdots \cup (A \cap B_n)$, com fatias disjuntas.
+Usando a regra da multiplicação em cada fatia:
+
+::: {.caixa-aplicacao}
+**Teorema da probabilidade total.**
+
+$$
+P(A) = \sum_{i=1}^{n} P(A \mid B_i)\, P(B_i).
+$$
+:::
+
+**Exemplo.** Um lote tem 20 peças defeituosas e 80 boas; extraem-se duas sem reposição. Com $B$ = "a
+primeira é defeituosa" e $A$ = "a segunda é defeituosa":
+
+$$
+P(A) = \frac{19}{99} \cdot \frac{20}{100} + \frac{20}{99} \cdot \frac{80}{100} = \frac{380 + 1.600}{9.900} = \frac{1}{5}.
+$$
+
+**Exemplo com dados reais: a taxa de desocupação do Brasil como média das regiões.** As cinco grandes regiões
+formam uma partição da força de trabalho. Com $B_i$ = "a pessoa está na região $i$" e $A$ = "está desocupada",
+dentro da força de trabalho:
+
+```{r prob-total-regioes}
+pn_reg <- filter(pnad, recorte == "regiao") |>
+  transmute(Região = categoria,
+            `P(desocupado | região)` = desocupadas / forca,
+            `P(região)` = forca / sum(forca),
+            Produto = `P(desocupado | região)` * `P(região)`)
+soma_reg <- tibble(Região = "Soma", Produto = sum(pn_reg$Produto))
+tabela(bind_rows(pn_reg, soma_reg), digits = 4,
+       caption = "Probabilidade total com a força de trabalho por região. Fonte: IBGE, PNAD Contínua, 2º tri 2026.")
+```
+
+A soma dos produtos, `r pc(sum(pn_reg$Produto), 2)`, é exatamente a taxa de desocupação do Brasil. O Nordeste tem a maior taxa
+(`r pc(pn_reg[[2]][2])`), mas o Sudeste, com taxa menor, contribui com a maior parcela do total, porque concentra
+`r pc(pn_reg[[3]][3])` da força de trabalho. É a mesma média ponderada que produz o paradoxo de Simpson.
+
+**Exercício 13.** As urnas $U_1$ (3 brancas, 5 vermelhas), $U_2$ (4 brancas, 2 vermelhas) e $U_3$ (1 branca, 3
+vermelhas) são escolhidas com probabilidades $2/6$, $3/6$ e $1/6$; depois retira-se uma bola. Calcule $P(\text{branca})$.
+
+::: {.caixa-resposta}
+$P(\text{branca}) = \frac{3}{8} \cdot \frac{2}{6} + \frac{4}{6} \cdot \frac{3}{6} + \frac{1}{4} \cdot \frac{1}{6} = 0{,}125 + 0{,}333 + 0{,}042 = \frac{1}{2}$.
+:::
 
 ## Teorema de Bayes {#teorema-de-bayes}
 
-```{r fig-bayes-neon, echo=FALSE, out.width="65%", fig.cap="O Teorema de Bayes, tornado regra essencial da computação moderna (filtros de spam, sistemas de recomendação, diagnóstico por IA)."}
+```{r fig-bayes, echo=FALSE, out.width="40%", fig.cap="O Teorema de Bayes, regra essencial da informática. Fonte: BBC News Brasil."}
 knitr::include_graphics("images/bayes_teorema.jpg")
 ```
 
-Combinando a regra do produto nos dois sentidos, $P(A\cap B) = P(A\mid B)P(B) = P(B\mid A)P(A)$,
-obtém-se o **Teorema de Bayes**:
+Probabilidades condicionais podem ser vistas como probabilidades **a priori** atualizadas por uma
+informação adicional.
+
+::: {.caixa-aplicacao}
+**Teorema de Bayes.** Seja $B_1, \ldots, B_n$ uma partição de $S$ e $A$ um evento com $P(A) > 0$. Para cada $j$,
 
 $$
-P(B\mid A) = \frac{P(A\mid B)\,P(B)}{P(A)}.
+P(B_j \mid A) = \frac{P(A \mid B_j)\, P(B_j)}{\sum_{i=1}^{n} P(A \mid B_i)\, P(B_i)}.
 $$
 
-Quando $B_1,\ldots,B_k$ formam uma partição de $\Omega$, o denominador se expande pelo teorema da
-probabilidade total:
+O numerador vem da regra da multiplicação; o denominador é o teorema da probabilidade total.
+$P(B_j)$ é a probabilidade **a priori** e $P(B_j \mid A)$, a **a posteriori**.
+:::
+
+**Passo a passo.** (1) Identifique a partição $B_1, \ldots, B_n$ e a informação $A$; o pedido deve ser do tipo
+$P(B_j \mid A)$. (2) Obtenha as probabilidades a priori $P(B_i)$. (3) Obtenha as condicionais $P(A \mid B_i)$ (é o
+que o enunciado costuma dar). (4) Aplique a fórmula.
+
+**Exemplo: a bolsa e o dólar.** A probabilidade de a bolsa cair amanhã é 10%. Hoje o dólar subiu. Nas vezes
+em que a bolsa caiu, o dólar tinha subido na véspera em 20% dos casos; quando a bolsa subiu, em 5%.
 
 $$
-P(B_i \mid A) = \frac{P(A\mid B_i)\,P(B_i)}{\sum_{j=1}^k P(A\mid B_j)\,P(B_j)}.
+P(\text{cai} \mid \text{dólar sobe}) = \frac{0{,}2 \times 0{,}1}{0{,}2 \times 0{,}1 + 0{,}05 \times 0{,}9} = \frac{0{,}020}{0{,}065} \approx 0{,}308.
 $$
 
-O Teorema de Bayes resolve um tipo específico de pergunta muito comum em Economia e Estatística:
-conhece-se $P(\text{evidência}\mid\text{causa})$ (fácil de medir, geralmente por frequência
-histórica) e quer-se $P(\text{causa}\mid\text{evidência})$ (o que de fato se quer saber, mas é
-difícil de medir diretamente). $P(B)$ é chamada **probabilidade a priori** (antes de observar $A$)
-e $P(B\mid A)$, **probabilidade a posteriori** (depois de observar $A$).
+A informação quase **triplicou** a probabilidade de queda.
 
-Antes do exemplo mais elaborado desta seção, um caso com números mais simples fixa o mecanismo.
-Uma corretora avalia que a probabilidade de a bolsa cair amanhã é $P(B)=0{,}10$ (a priori). Surge a
-notícia de que o dólar teve alta hoje, evento $A$. O histórico mostra que, nos dias em que a bolsa
-caiu no dia seguinte, o dólar tinha subido no dia anterior em $20\%$ dos casos
-($P(A\mid B)=0{,}20$); já nos dias em que a bolsa subiu, o dólar tinha subido no dia anterior em
-apenas $5\%$ dos casos ($P(A\mid B^c)=0{,}05$). Qual é a probabilidade de a bolsa cair amanhã, agora
-que se sabe que o dólar subiu hoje?
+**Exercício 14.** Três fábricas produzem 15%, 35% e 50% das peças de uma empresa, com taxas de defeito de 1%,
+5% e 2%. Uma peça sorteada está defeituosa: qual a probabilidade de ter vindo da segunda fábrica?
 
-Como $B$ e $B^c$ formam uma partição de $\Omega$, com $P(B^c)=1-0{,}10=0{,}90$, o Teorema de Bayes
-dá
+::: {.caixa-resposta}
+$P(D) = 0{,}01(0{,}15) + 0{,}05(0{,}35) + 0{,}02(0{,}50) = 0{,}029$; $P(B_2 \mid D) = 0{,}0175/0{,}029 \approx 0{,}603$. A fábrica
+2 faz 35% das peças, mas responde por 60% das defeituosas.
+:::
+
+### Eventos raros e falsos alarmes
+
+Um sistema antifraude detecta 95% das fraudes e dá falso alarme em 3% das transações legítimas; fraudes
+são 0,2% das transações.
 
 $$
-\begin{aligned}
-P(B\mid A) &= \frac{P(A\mid B)\,P(B)}{P(A\mid B)\,P(B) + P(A\mid B^c)\,P(B^c)} \\
-&= \frac{0{,}20\times 0{,}10}{0{,}20\times 0{,}10 + 0{,}05\times 0{,}90} \\
-&= \frac{0{,}020}{0{,}020+0{,}045} = \frac{0{,}020}{0{,}065} \approx 0{,}308.
-\end{aligned}
+P(\text{fraude} \mid \text{alerta}) = \frac{0{,}95 \times 0{,}002}{0{,}95 \times 0{,}002 + 0{,}03 \times 0{,}998} = \frac{0{,}0019}{0{,}03184} \approx 0{,}06.
 $$
 
-A notícia da alta do dólar quase triplicou a probabilidade de queda da bolsa, de $10\%$ (a priori)
-para cerca de $30{,}8\%$ (a posteriori). O exemplo a seguir repete exatamente esse mecanismo, num
-contexto com consequências práticas mais imediatas.
+Em 100.000 transações: 200 fraudes, das quais 190 geram alerta; 99.800 legítimas, das quais 2.994 geram
+alerta. Só $190/3.184 \approx 6\%$ dos alertas são fraudes.
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: teste de fraude em transações de cartão</strong>:
-um sistema antifraude classifica uma transação como "suspeita" (\(A\)) com probabilidade
-\(P(A\mid \text{fraude})=0{,}95\) (detecta 95\% das fraudes reais) e \(P(A\mid \text{legítima})=0{,}03\)
-(alarme falso em 3\% das transações legítimas). Sabe-se, historicamente, que apenas \(0{,}2\%\) das
-transações são fraudulentas: \(P(\text{fraude})=0{,}002\).</div>
+### Sensibilidade, especificidade e valores preditivos
+
+Todo teste de classificação (exame médico, modelo de crédito, filtro antifraude, alerta de recessão) é
+descrito por uma tabela $2 \times 2$ entre a **situação real** e o **resultado do teste**:
+
+| Medida | Definição | No sistema antifraude |
+|:---|:---|:---|
+| Prevalência | $P(\text{condição})$ | $P(\text{fraude}) = 0{,}002$ |
+| Sensibilidade | $P(+ \mid \text{condição})$ | $0{,}95$ |
+| Especificidade | $P(- \mid \text{sem condição})$ | $0{,}97$ |
+| Valor preditivo positivo (VPP) | $P(\text{condição} \mid +)$ | $\approx 0{,}06$ |
+| Valor preditivo negativo (VPN) | $P(\text{sem condição} \mid -)$ | $\approx 0{,}9999$ |
+
+Sensibilidade e especificidade descrevem o **teste**; os valores preditivos, que interessam a quem recebe o
+resultado, dependem também da **prevalência**, via Bayes.
+
+```{r fig-vpp, echo=FALSE, fig.height=3, fig.width=8, fig.cap="Valor preditivo positivo de um teste com 95% de sensibilidade e 97% de especificidade, conforme a prevalência (escala log). O mesmo teste é quase inútil para condições raras e muito confiável para condições comuns."}
+vpp <- function(prev, sens = 0.95, espec = 0.97) sens * prev / (sens * prev + (1 - espec) * (1 - prev))
+ggplot(tibble(prev = 10^seq(-4, -0.3, length.out = 200)), aes(prev, vpp(prev))) +
+  geom_line(color = "#3b5bdb", linewidth = 1.1) + scale_x_log10(labels = function(x) paste0(100 * x, "%")) +
+  labs(x = "Prevalência", y = "P(condição | teste positivo)") + theme_minimal(base_size = 13)
 ```
 
-Aplicando o Teorema de Bayes, com o denominador expandido pelo teorema da probabilidade total
-($\text{fraude}$ e $\text{legítima}$ formam uma partição), com os números plugados diretamente na
-fórmula:
+### Bayes na forma de chances
+
+Dividindo a fórmula de Bayes para $B$ pela fórmula para $B^c$, o denominador comum desaparece:
 
 $$
-\begin{aligned}
-P(\text{fraude}\mid A) &= \frac{P(A\mid \text{fraude})\,P(\text{fraude})}
-{P(A\mid \text{fraude})\,P(\text{fraude}) + P(A\mid \text{legítima})\,P(\text{legítima})} \\
-&= \frac{0{,}95\times 0{,}002}{0{,}95\times 0{,}002 + 0{,}03\times 0{,}998} \\
-&= \frac{0{,}0019}{0{,}0019+0{,}02994} = \frac{0{,}0019}{0{,}03184} \approx 0{,}0597.
-\end{aligned}
+\underbrace{\frac{P(B \mid A)}{P(B^c \mid A)}}_{\text{chance a posteriori}} =
+\underbrace{\frac{P(B)}{P(B^c)}}_{\text{chance a priori}} \times
+\underbrace{\frac{P(A \mid B)}{P(A \mid B^c)}}_{\text{razão de verossimilhança}}.
 $$
 
-```{r bayes-fraude}
-p_fraude <- 0.002
-p_legit  <- 1 - p_fraude
-p_A_dado_fraude <- 0.95
-p_A_dado_legit  <- 0.03
+A **razão de verossimilhança** mede a força da evidência: quantas vezes o sinal $A$ é mais provável quando $B$ é
+verdadeiro. No antifraude, a chance a priori é $0{,}002/0{,}998 \approx 0{,}002$ e a razão de verossimilhança do alerta é
+$0{,}95/0{,}03 \approx 31{,}7$: chance a posteriori $\approx 0{,}0635$, isto é, $P = 0{,}0635/1{,}0635 \approx 0{,}06$. Se um **segundo**
+sistema, independente do primeiro dada a situação real e com a mesma precisão, também alertar, basta multiplicar de
+novo: chance $\approx 0{,}0635 \times 31{,}7 \approx 2{,}0$, e $P(\text{fraude}) \approx 0{,}67$. Evidências independentes se acumulam
+**multiplicando** chances.
 
-p_A <- p_A_dado_fraude * p_fraude + p_A_dado_legit * p_legit
-p_fraude_dado_A <- (p_A_dado_fraude * p_fraude) / p_A
-p_fraude_dado_A
+```{r bayes}
+bayes <- function(priori, verossim) priori * verossim / sum(priori * verossim)
+bayes(c(0.15, 0.35, 0.50), c(0.01, 0.05, 0.02))  # fábricas
+bayes(c(0.002, 0.998), c(0.95, 0.03))            # antifraude, 1 alerta
+bayes(c(0.002, 0.998), c(0.95^2, 0.03^2))        # 2 alertas independentes
+bayes(c(0.005, 0.995), c(0.95, 0.01))            # exame de sangue
 ```
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, mesmo com um teste que parece
-excelente (95\% de detecção, só 3\% de falso alarme), a probabilidade de uma transação marcada como
-suspeita ser <em>de fato</em> uma fraude é de apenas
-`r scales::percent(p_fraude_dado_A, accuracy = 0.1)`. A razão é que fraudes são raras
-(\(0{,}2\%\) da base): mesmo uma taxa pequena de falso alarme (3\%), aplicada à enorme massa de
-transações legítimas, gera muito mais alarmes falsos em números absolutos do que fraudes reais
-detectadas. Esse é o mesmo raciocínio por trás de por que testes de doenças raras, mesmo precisos,
-têm valor preditivo positivo surpreendentemente baixo, e por que sistemas antifraude reais operam
-em cascata (o "suspeito" do primeiro filtro vira entrada de uma segunda checagem, mais cara e mais
-precisa), em vez de bloquear direto no primeiro alarme.</div>
-```
+::: {.caixa-discussao}
+**Discussão.** Um exame com 95% de eficiência e 1% de falsos positivos, aplicado a uma população com 0,5%
+de doentes, tem $P(\text{doente} \mid +) \approx 0{,}32$: dois em cada três positivos são saudáveis. Se o exame for
+aplicado só a pessoas com sintomas, das quais 20% são doentes, a probabilidade passa a 0,96. A mesma
+lógica vale para análise de crédito, triagem de currículos e para a "falácia do promotor" em julgamentos.
+Um modelo que "prevê recessões" e acertou todas as recessões passadas pode ser inútil: o que falta saber?
+:::
 
-```{=html}
-<div class="caixa-r"><strong>Uso do R</strong>, Bayes não precisa de pacote especial: é
-manipulação direta de probabilidades, como no chunk acima. O ponto de atenção é sempre calcular
-\(P(A)\) primeiro (probabilidade total), como denominador comum, antes de aplicar a fórmula de
-Bayes propriamente dita.</div>
-```
+**Exercício 15.** Um modelo de escore identifica como "alto risco" 80% dos clientes que vão ficar
+inadimplentes e 10% dos que vão pagar em dia. A inadimplência da carteira é 5%. **a)** Qual a probabilidade de um
+cliente classificado como alto risco ficar inadimplente? **b)** Refaça pela forma de chances. **c)** E se a carteira
+tiver 20% de inadimplência?
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: síntese do capítulo</strong>
-
-<p><strong>1.</strong> Um gestor de risco vê a taxa de detecção (95%) do sistema antifraude e
-conclui "o sistema é confiável". Que número, calculado acima, ele está ignorando? Reformule a
-frase do gestor de forma tecnicamente correta.</p>
-
-<p><strong>2.</strong> Se a taxa de fraude na base <strong>subisse</strong> de 0,2% para 5% (um
-período de fraudes em massa), o que aconteceria com \(P(\text{fraude}\mid\text{suspeito})\), mantendo
-o mesmo sistema de detecção? Refaça a conta e confirme sua intuição.</p>
-
-<p><strong>3.</strong> Volte ao início do capítulo (as cinco perguntas sobre incerteza econômica da
-introdução do livro). Escolha uma delas e esboce, em palavras, como você a atacaria usando
-probabilidade condicional, teorema da probabilidade total ou Teorema de Bayes, não precisa
-resolver numericamente, só identificar qual ferramenta do capítulo se aplica e por quê.</p>
-
-<p><strong>4.</strong> A "falácia do promotor" (Discussão da Seção
-2.4) e o exemplo do antifraude têm uma raiz comum: confundir
-\(P(\text{evidência}\mid\text{hipótese})\) com \(P(\text{hipótese}\mid\text{evidência})\). Escreva, com
-suas palavras, uma regra prática de bolso para nunca mais cometer essa confusão.</p>
-</div>
-```
+::: {.caixa-resposta}
+**a)** $P(\text{inad} \mid \text{alto}) = \dfrac{0{,}8 \times 0{,}05}{0{,}8 \times 0{,}05 + 0{,}1 \times 0{,}95} = \dfrac{0{,}040}{0{,}135} \approx 0{,}296$.
+**b)** Chance a priori $0{,}05/0{,}95 \approx 0{,}0526$; razão de verossimilhança $0{,}8/0{,}1 = 8$; chance a posteriori $\approx 0{,}421$;
+$P = 0{,}421/1{,}421 \approx 0{,}296$. **c)** Chance a priori $0{,}25$, a posteriori $2$, $P = 2/3 \approx 0{,}667$.
+:::
 
 ## Fechando o capítulo
 
-A Unidade 2 construiu a maquinaria formal de incerteza: espaço amostral, eventos, probabilidade
-condicional, independência e o Teorema de Bayes. O fio condutor de todas as discussões deste
-capítulo foi o mesmo: uma probabilidade só é interpretável se soubermos exatamente *sobre qual
-população*, *condicional a que informação*, ela está sendo calculada, trocar essas condições, como
-vimos repetidamente, muda o número, às vezes de forma dramática. O Capítulo
-\@ref(variaveis-aleatorias-discretas) dá um passo além: em vez de eventos soltos, associa
-**números** aos resultados de um experimento aleatório, o conceito de variável aleatória,
-permitindo calcular médias e variâncias de quantidades incertas, não apenas probabilidades de
-eventos.
+| Tópico | O essencial |
+|:---|:---|
+| Interpretações | clássica, frequentista, subjetiva; todas obedecem aos axiomas (coerência = sem arbitragem) |
+| Espaço amostral e eventos | $S$; eventos são subconjuntos; $\cup$, $\cap$, complementar; De Morgan |
+| Axiomas de Kolmogorov | $P(A) \geq 0$; $P(\Omega) = 1$; aditividade para eventos disjuntos |
+| Propriedades | $P(A^c) = 1 - P(A)$; $P(A \cup B) = P(A) + P(B) - P(A \cap B)$; Boole; Bonferroni |
+| Probabilidade clássica | $P(A) = \#A/\#\Omega$, **só** com resultados igualmente prováveis |
+| Contagem | $n!$; $n^r$; $A_{n,r} = n!/(n-r)!$; $\binom{n}{r}$; $\binom{n+r-1}{r}$; hipergeométrica |
+| Probabilidade geométrica | razão de comprimentos ou áreas; ponto isolado tem probabilidade zero |
+| Condicional | $P(B \mid A) = P(A \cap B)/P(A)$; em geral $P(A \mid B) \neq P(B \mid A)$ |
+| Tabelas de contingência | conjunta, marginal, perfil-linha e perfil-coluna; confundimento; Simpson |
+| Risco e chance | $DR = R_1 - R_0$; $RR = R_1/R_0$; $O = p/(1-p)$; $OR = ad/(bc)$ |
+| Independência | $P(A \cap B) = P(A)P(B)$; independentes $\neq$ disjuntos; $RR = OR = 1$ |
+| Probabilidade total e Bayes | $P(A) = \sum P(A \mid B_i)P(B_i)$; chance a posteriori = a priori $\times$ razão de verossimilhança |
+
+As Listas 05, 06 e 07 e o Simulado da Prova 2 (Lista 13) cobrem este capítulo.

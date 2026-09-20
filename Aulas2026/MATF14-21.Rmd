@@ -15,194 +15,461 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+barras_pois <- function(lambda, kmax, destaque = NULL, cor = "#3b5bdb") {
+  d <- tibble(k = 0:kmax, pk = dpois(0:kmax, lambda), dest = if (is.null(destaque)) FALSE else k %in% destaque)
+  ggplot(d, aes(k, pk, fill = dest)) + geom_col(width = 0.6, show.legend = FALSE) +
+    scale_fill_manual(values = c(`FALSE` = cor, `TRUE` = "#c0392b")) +
+    scale_x_continuous(breaks = 0:kmax) + labs(x = "k", y = "P(X = k)") + theme_minimal(base_size = 13)
+}
 ```
 
 class: inverse, center, middle
 
 # Aula 21: Distribuição de Poisson
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Uma distribuição sem "\\(n\\)" nem "\\(p\\)"
+## Roteiro da aula (100 minutos)
 
-> A Binomial precisa de \\(n\\) (tentativas) e \\(p\\) (probabilidade de sucesso). A Poisson só precisa de
-> um número, \\(\lambda\\). Como pode um modelo de contagem funcionar sem saber quantas "tentativas"
-> existem? (Pense em "número de chamadas por minuto", quantas "tentativas de ligar" existem num
-> minuto?)
+.roteiro[
 
----
+| Tempo | Parte 1: a distribuição de Poisson |
+|:---|:---|
+| 0–5 min | Provocação: como modelar o número de acidentes? |
+| 5–15 min | Contagens e a distribuição de Poisson |
+| 15–25 min | A forma da Poisson; exemplo Poisson(1) |
+| 25–33 min | **Atividade 1**: erros tipográficos |
+| 33–40 min | Propriedades |
+| 40–50 min | **Atividade 2**: central de atendimento |
 
-class: inverse, center, middle
+| Tempo | Parte 2: aproximação e aplicações |
+|:---|:---|
+| 0–12 min | Aproximação para a Binomial |
+| 12–25 min | Média e variância; produto com defeito |
+| 25–35 min | Mortes no trânsito; estimando λ |
+| 35–43 min | Dados reais: meses de deflação do IPCA |
+| 43–50 min | **Atividade 3**, Uso do R e resumo |
 
-# Bloco 1: Teoria
-
----
-
-## Poisson(\\(\lambda\\))
-
-Número de ocorrências de um evento raro, em taxa média constante \\(\lambda\\), em um intervalo fixo:
-
-$$
-p(x) = \frac{e^{-\lambda}\lambda^x}{x!}, \ x=0,1,2,\ldots \qquad E(X)=\lambda \qquad \mathrm{Var}(X)=\lambda
-$$
-
-**Média = variância**, propriedade notável, e um diagnóstico rápido: se a variância observada de
-uma contagem for bem maior que a média (superdispersão), Poisson puro tende a ser inadequado.
-
---
-
-## Aproximação Poisson \\(\approx\\) Binomial
-
-Quando \\(n\\) grande, \\(p\\) pequeno, \\(\lambda=np\\) moderado: \\(\text{Bin}(n,p) \approx
-\text{Poisson}(np)\\), a resposta à provocação inicial: a Poisson é o "limite" de uma Binomial com
-infinitas tentativas minúsculas de probabilidade infinitesimal, um número fixo \\(\lambda=np\\)
-sobrevive a esse limite mesmo que \\(n\\) e \\(p\\) individualmente "desapareçam".
-
----
-
-## Calculando \\(P(X=x)\\) na mão
-
-Para \\(X\sim Poisson(5)\\), qual a probabilidade de observar exatamente \\(x=4\\) ocorrências?
-
-$$
-P(X=4) = \frac{e^{-5}\,5^4}{4!} \approx 0{,}1755
-$$
-
-```{r poisson-mao}
-exp(-5) * 5^4 / factorial(4)   # conta na mão, passo a passo
-dpois(4, lambda = 5)            # mesma conta, pela função do R
-```
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 1: a distribuição de Poisson
+
+### 50 minutos
 
 ---
 
-## Estimando \\(\lambda\\) a partir de dados: mortes por doença
+## Provocação: como modelar o número de acidentes? .tempo[0–5 min]
 
-Número de mortes/ano nos últimos 7 anos: \\(2,3,3,2,2,1,1\\).
-
-```{r estimar-lambda}
-mortes <- c(2,3,3,2,2,1,1)
-lambda_hat <- mean(mortes)
-lambda_hat
-```
-
-\\(\lambda\\) é a própria média da Poisson, a estimativa natural é a média amostral,
-\\(\hat\lambda=\bar x=2\\). Probabilidade de 4 ou mais mortes no ano seguinte, sob esse modelo:
-
-```{r prob-4-mais}
-1 - ppois(3, lambda_hat)
-```
-
----
-
-## Poisson aproximando Binomial
-
-Produto com 1% de defeito; amostra de 200 unidades; \\(P(\text{no máximo 2 defeituosos})\\)?
-
-```{r binom-vs-poisson}
-pbinom(2, size = 200, prob = 0.01)     # exato, Binomial
-ppois(2, lambda = 200*0.01)             # aproximação, Poisson(2)
-```
-
-As duas contas praticamente coincidem, a aproximação já é excelente com \\(n=200\\), \\(p=0{,}01\\).
-
----
-
-## Mortes no trânsito como contagem Poisson
-
-```{r fig-noticia-acidentes, echo=FALSE, out.height="480px"}
+.pull-left[
+```{r acidentes, echo=FALSE, out.width="80%"}
 knitr::include_graphics("images/noticia_acidentes.jpg")
 ```
 
+.fonte[Fonte: CBN (26/12/2024).]
+]
+
+.pull-right[
+A PRF registrou **165** mortes nas rodovias federais na semana do Natal de 2024, contra **90** no
+mesmo período de 2023.
+
+- Milhões de veículos circulam, e cada um tem uma chance **muito pequena** de se envolver em um
+  acidente fatal.
+- Uma Binomial com \\(n\\) = "milhões de veículos" e \\(p\\) minúsculo? Qual \\(n\\)? Qual \\(p\\)?
+
+.caixa-discussao[
+O salto de 90 para 165 mortes é **variação natural** ou sinal de que algo **mudou**? Precisamos de um
+modelo para **contagens de eventos raros**.
+]
+]
+
 ---
 
-## Mortes no trânsito: o que muda é \\(\lambda\\)
+## Contagens com muitos casos possíveis .tempo[5–15 min]
 
-165 mortes na semana do Natal de 2024 vs. 90 no mesmo período de 2023: esse salto exige perguntar
-se \\(\lambda\\) mudou (mais tráfego, menos fiscalização) ou se é apenas variação natural em torno da
-mesma taxa média.
+Alguns experimentos envolvem um **número alto de "tentativas"** e uma **probabilidade baixa de
+"sucesso"**:
+
+- número de acidentes entre todos os carros que passam por uma via;
+- número de pessoas que vivem mais de 100 anos em uma comunidade;
+- número de clientes que visitam uma loja em um dia;
+- número de chamadas que chegam a uma central de atendimento em um minuto.
+
+--
+
+.caixa-aplicacao[
+A princípio, esses casos poderiam ser modelados por uma \\(\text{Bin}(n, p)\\), mas as contas com \\(n\\)
+**grande** são complicadas (e muitas vezes nem conhecemos \\(n\\)). A distribuição de **Poisson** é uma
+aproximação para a \\(\text{Bin}(n, p)\\) quando \\(n\\) é **grande**, \\(p\\) é **pequeno**, e \\(np\\) é
+**moderado**.
+]
 
 ---
 
-## Gols em uma partida
+## Distribuição de Poisson
 
-```{r fig-noticia-gols, echo=FALSE, out.width="50%"}
-knitr::include_graphics("images/noticia_gols.jpg")
+Modelo probabilístico para **contagens**. Se \\(X\\) tem distribuição de Poisson com parâmetro
+\\(\lambda &gt; 0\\), a sua função de probabilidade é
+
+$$
+P(X = k) = \frac{e^{-\lambda}\, \lambda^k}{k!}, \qquad k \in \\{0, 1, 2, 3, \ldots\\}
+$$
+
+em que \\(k! = k(k-1)\cdots 2 \cdot 1\\) é o fatorial (\\(0! = 1\\)) e \\(e^{x}\\) é a função exponencial
+\\((e \approx 2{,}718)\\).
+
+**Notação:** \\(X \sim \text{Poisson}(\lambda)\\).
+
+--
+
+.caixa-discussao[
+Diferente da Binomial, a Poisson **não tem limite superior**: \\(X\\) pode ser qualquer inteiro não
+negativo. Faz sentido para "número de mortes em uma semana"?
+]
+
+---
+
+## A forma da Poisson depende de \\(\lambda\\) .tempo[15–25 min]
+
+```{r formas-pois, echo=FALSE, fig.height=3.5, fig.width=10, out.width="100%"}
+(barras_pois(0.5, 8) + ggtitle("Poisson(0,5)")) + (barras_pois(2, 8) + ggtitle("Poisson(2)")) +
+  (barras_pois(5, 14) + ggtitle("Poisson(5)"))
 ```
 
-PSG 5 x 4 Bayern: 9 gols somados é um evento na cauda direita da distribuição de gols de uma
-partida, raro, mas não a ponto de descartar o modelo Poisson, é justamente esse tipo de evento
-extremo que os modelos de "gols esperados" (xG) tentam calibrar.
+- \\(\lambda\\) pequeno: a maior parte da probabilidade está em 0 e 1 (assimetria à direita forte).
+- \\(\lambda\\) maior: a distribuição se desloca para a direita e fica mais **simétrica**.
+
+---
+
+## Exemplo: Poisson(1)
+
+Seja \\(X \sim \text{Poisson}(1)\\), isto é, \\(P(X = k) = \dfrac{e^{-1}}{k!}\\), \\(k = 0, 1, 2, \ldots\\)
+
+**a)** Mostre que essa expressão é de fato uma distribuição de probabilidade.
+
+**b)** Calcule \\(P(X = 2)\\) e \\(P(X \geq 2)\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(P(X = k) \geq 0\\) para todo \\(k\\). Usando a série \\(e^{x} = \sum\_{k=0}^{\infty} \frac{x^k}{k!}\\) com \\(x = 1\\):
+
+\\(\sum\_{k=0}^{\infty} P(X = k) = e^{-1} \sum\_{k=0}^{\infty} \frac{1^k}{k!} = e^{-1}\, e^{1} = 1\\). ✓
+
+**b)** \\(P(X = 2) = \frac{e^{-1}}{2!} \approx \frac{0{,}3679}{2} \approx 0{,}1839\\).
+
+\\(P(X \geq 2) = 1 - P(X = 0) - P(X = 1) = 1 - \frac{e^{-1}}{0!} - \frac{e^{-1}}{1!} = 1 - 2e^{-1} \approx 0{,}2642\\).
+]
+
+---
+
+## Exercício 1: erros tipográficos .tempo[25–33 min]
+
+O número de erros tipográficos em uma página de um livro tem distribuição de Poisson com
+\\(\lambda = 1/2\\). Qual é a probabilidade de existir **pelo menos um** erro na página?
+
+--
+
+.caixa-resposta[
+\\(X \sim \text{Poisson}(1/2)\\), logo \\(P(X = k) = \dfrac{e^{-1/2}(1/2)^k}{k!}\\).
+
+\\(P(X \geq 1) = 1 - P(X = 0) = 1 - \dfrac{e^{-1/2}(1/2)^0}{0!} = 1 - e^{-1/2} \approx 1 - 0{,}6065 = 0{,}3935\\).
+]
+
+--
+
+.caixa-discussao[
+Em um livro de 300 páginas, quantas páginas **com** algum erro você esperaria encontrar?
+]
+
+---
+
+## Propriedades da Poisson .tempo[33–40 min]
+
+Se \\(X \sim \text{Poisson}(\lambda)\\), então
+
+$$
+E(X) = \lambda \qquad\qquad Var(X) = \lambda.
+$$
+
+--
+
+.caixa-aplicacao[
+**O parâmetro \\(\lambda\\) é a média** de ocorrências no intervalo considerado. Por isso ele se
+interpreta como uma **taxa**: chamadas **por minuto**, acidentes **por semana**, erros **por página**.
+Se o intervalo muda, \\(\lambda\\) muda na mesma proporção (5 chamadas/minuto = 300 chamadas/hora).
+]
+
+--
+
+.caixa-discussao[
+Média igual à variância é uma **assinatura** da Poisson. Se, em dados reais de contagens, a variância
+for **bem maior** que a média, o que isso sugere sobre o modelo?
+]
+
+---
+
+## Exercício 2: central de atendimento .tempo[40–50 min]
+
+Uma central de atendimento recebe, em média, **5 chamadas por minuto**. Supondo que a distribuição
+de Poisson seja adequada, calcule a probabilidade de a central **não receber nenhuma** chamada em um
+minuto.
+
+--
+
+.caixa-resposta[
+Seja \\(N\\) o número de chamadas em um minuto. Como \\(E(N) = 5\\), temos \\(N \sim \text{Poisson}(5)\\):
+
+\\(P(N = 0) = \dfrac{e^{-5}\, 5^0}{0!} = e^{-5} \approx 0{,}0067\\).
+]
+
+--
+
+**E em 30 segundos?** A taxa cai pela metade: \\(\lambda = 2{,}5\\).
+
+.caixa-resposta[
+\\(P(N\_{30s} = 0) = e^{-2{,}5} \approx 0{,}082\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Intervalo
 
----
-
-## Rodada 1: resolvendo a provocação inicial
-
-**1.** Reformule sua resposta à pergunta de abertura agora que viu a aproximação Poisson ≈
-Binomial: por que "número de chamadas por minuto" não precisa de um "\\(n\\) de tentativas" explícito
-para ser modelado?
-
-**2.** O número de saques em caixas eletrônicos de uma agência por hora seria bem modelado por
-Poisson? Em que condição (horário de pico vs. madrugada) essa suposição de "taxa constante" seria
-mais frágil?
-
----
-
-## Rodada 2: diagnóstico e limites do modelo
-
-**3.** Se a variância observada do número de sinistros mensais de uma seguradora for muito maior
-que a média, o que isso sugere sobre a suposição de "taxa constante \\(\lambda\\)" ao longo do tempo?
-Dê um cenário econômico plausível que geraria essa superdispersão (por exemplo, meses de exceção
-com eventos climáticos extremos).
-
-**4.** No exemplo de estimar \\(\lambda\\) pela média amostral (mortes por doença), quantos anos de
-dado você julgaria necessários para confiar nessa estimativa? O que poderia dar errado ao usar
-\\(\hat\lambda=2\\) com base em apenas 7 observações?
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 4: Uso do R
+# Parte 2: aproximação e aplicações
+
+### 50 minutos
 
 ---
 
-```{r uso-r, eval=FALSE}
-dpois(x, lambda)   # p(x)
-ppois(x, lambda)   # F(x)
-rpois(m, lambda)   # m valores simulados
+## Aproximação para a Binomial .tempo[0–12 min]
 
-mean(dados)         # estimar lambda a partir de uma amostra
+Seja \\(X \sim \text{Bin}(n, p)\\). As contas envolvem fatoriais de \\(n\\), que podem ser números
+**enormes**. Lembre que \\(E(X) = np\\).
+
+.caixa-aplicacao[
+**Aproximação pela Poisson:** se \\(n\\) é **grande** e \\(p\\) é **pequeno**, podemos aproximar a
+distribuição de \\(X\\) por uma Poisson com parâmetro \\(\lambda = np\\).
+
+**Vantagem:** contas com \\(e^{-\lambda}\\) são mais simples que contas com \\(n!\\).
+]
+
+--
+
+**Ideia da prova.** Com \\(\lambda = np\\), isto é, \\(p = \lambda/n\\):
+
+$$
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} = \frac{n(n-1)\cdots(n-k+1)}{n^k} \cdot \frac{\lambda^k}{k!} \cdot \frac{(1 - \lambda/n)^n}{(1 - \lambda/n)^k}
+$$
+
+Para \\(k\\) fixo e \\(n \to \infty\\): o primeiro fator \\(\to 1\\), \\((1 - \lambda/n)^n \to e^{-\lambda}\\) e
+\\((1 - \lambda/n)^k \to 1\\). Logo \\(P(X = k) \to \dfrac{e^{-\lambda}\lambda^k}{k!}\\).
+
+---
+
+## Média e variância na aproximação .tempo[12–25 min]
+
+Se \\(X \sim \text{Bin}(n, p)\\) com \\(\lambda = np\\), \\(n\\) grande e \\(p\\) pequeno:
+
+$$
+E(X) = np = \lambda \qquad\qquad Var(X) = np(1 - p) = \lambda(1 - p) \approx \lambda
+$$
+
+porque \\(1 - p \approx 1\\) quando \\(p\\) é pequeno. É exatamente a média e a variância da Poisson.
+
+--
+
+```{r compara, echo=FALSE, fig.height=2.8, fig.width=10, out.width="100%"}
+d <- bind_rows(
+  tibble(k = 0:8, p = dbinom(0:8, 10, 0.1), modelo = "Bin(10; 0,1)", caso = "n = 10, p = 0,1"),
+  tibble(k = 0:8, p = dpois(0:8, 1), modelo = "Poisson(1)", caso = "n = 10, p = 0,1"),
+  tibble(k = 0:8, p = dbinom(0:8, 200, 0.01), modelo = "Bin(200; 0,01)", caso = "n = 200, p = 0,01"),
+  tibble(k = 0:8, p = dpois(0:8, 2), modelo = "Poisson(2)", caso = "n = 200, p = 0,01")) |>
+  mutate(tipo = ifelse(str_detect(modelo, "Bin"), "Binomial", "Poisson"))
+ggplot(d, aes(k, p, fill = tipo)) + geom_col(position = "dodge", width = 0.7) + facet_wrap(~caso) +
+  scale_fill_manual(values = c("#3b5bdb", "#c9971e")) + scale_x_continuous(breaks = 0:8) +
+  labs(x = "k", y = "P(X = k)", fill = NULL) + theme_minimal(base_size = 13) + theme(legend.position = "top")
 ```
 
 ---
 
-## Simulando o modelo de mortes por doença
+## Exemplo: produto com defeito
 
-```{r sim-poisson}
-set.seed(3)
-z_sim <- rpois(10000, lambda = 2)
-c(media_simulada = mean(z_sim), E_X_teorico = 2)
-c(var_simulada = var(z_sim), Var_X_teorico = 2)
+A probabilidade de um produto apresentar defeito é **0,1**. Determine a probabilidade de uma amostra
+de **10** cópias conter **no máximo um** defeituoso.
+
+--
+
+**Exato (Binomial).** \\(X \sim \text{Bin}(10;\ 0{,}1)\\):
+
+$$
+P(X \leq 1) = \binom{10}{0}(0{,}1)^0(0{,}9)^{10} + \binom{10}{1}(0{,}1)^1(0{,}9)^9 = 0{,}3487 + 0{,}3874 = 0{,}7361
+$$
+
+--
+
+**Aproximação (Poisson).** \\(\lambda = 10 \times 0{,}1 = 1\\):
+
+$$
+P(X \leq 1) \approx \frac{e^{-1} 1^0}{0!} + \frac{e^{-1} 1^1}{1!} = 2e^{-1} \approx 0{,}7358
+$$
+
+.caixa-aplicacao[
+Mesmo com \\(n = 10\\) e \\(p = 0{,}1\\), a aproximação erra só na **quarta casa decimal**. Com \\(n = 200\\) e
+\\(p = 0{,}01\\), as duas dão \\(P(X \leq 2) \approx 0{,}6767\\).
+]
+
+---
+
+## Mortes no trânsito: o que muda é \\(\lambda\\) .tempo[25–35 min]
+
+Suponha que, em semanas "normais" de fim de ano, as mortes nas rodovias federais sigam uma Poisson
+com a média de 2023: \\(\lambda = 90\\) por semana.
+
+--
+
+- \\(E(X) = 90\\) e \\(dp(X) = \sqrt{90} \approx 9{,}5\\).
+- Valores entre **71** e **109** (\\(90 \pm 2 \times 9{,}5\\)) seriam variação "comum".
+- **165** mortes está a quase **8 desvios padrão** acima da média.
+
+```{r transito}
+1 - ppois(164, lambda = 90)      # P(X >= 165) se lambda continuasse 90
 ```
 
-10.000 "anos hipotéticos" simulados sob \\(Poisson(2)\\): média e variância simuladas ficam próximas
-de \\(E(X)=\mathrm{Var}(X)=\lambda=2\\), a igualdade média = variância teórica destacada no Bloco 1
-também aparece nos dados simulados.
+.caixa-discussao[
+Sob \\(\lambda = 90\\), 165 mortes seria **praticamente impossível**. Conclusão: a taxa \\(\lambda\\) de 2024
+**não** é a de 2023. Que fatores podem ter mudado (volume de tráfego, fiscalização, clima,
+acidentes com muitas vítimas)? Por que acidentes com **muitas vítimas** violam a Poisson?
+]
+
+---
+
+## Estimando \\(\lambda\\) com dados: mortes por uma doença rara
+
+Número de mortes por ano causadas por uma doença rara em um município, nos últimos 7 anos:
+
+$$
+2,\ 3,\ 3,\ 2,\ 2,\ 1,\ 1
+$$
+
+--
+
+Como \\(\lambda\\) é a **média** da Poisson, uma estimativa natural é a média amostral:
+\\(\hat\lambda = \bar x = 14/7 = 2\\).
+
+**a)** Qual é a probabilidade de **4 ou mais** mortes no próximo ano? **b)** E de **nenhuma**?
+
+--
+
+.caixa-resposta[
+**a)** \\(P(X \geq 4) = 1 - [P(0) + P(1) + P(2) + P(3)] = 1 - e^{-2}\left(1 + 2 + \frac{4}{2} + \frac{8}{6}\right) \approx 1 - 0{,}857 = 0{,}143\\).
+
+**b)** \\(P(X = 0) = e^{-2} \approx 0{,}135\\).
+]
+
+---
+
+## Dados reais: meses de deflação do IPCA .tempo[35–43 min]
+
+```{r deflacao, include=FALSE}
+ipca <- read.csv("ipca_mensal.csv")
+ipca$ano <- as.integer(substr(ipca$data, 1, 4))
+defl <- aggregate(ipca_mensal_pct ~ ano, data = subset(ipca, ano >= 2000 & ano <= 2025), FUN = function(v) sum(v < 0))
+lam <- mean(defl$ipca_mensal_pct)
+emp <- as.numeric(prop.table(table(factor(defl$ipca_mensal_pct, levels = 0:4))))
+fmt <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",")
+fmtm <- function(x, d = 3) gsub(",", "{,}", fmt(x, d), fixed = TRUE)
+```
+
+\\(Y\\) = número de meses do ano com **IPCA negativo** (deflação), 2000 a 2025. Média observada: \\(\hat\lambda = `r fmtm(lam, 2)`\\);
+variância: `r fmt(mean((defl$ipca_mensal_pct - lam)^2), 2)` (perto da média, como na Poisson).
+
+.pull-left-60[
+```{r deflacao-fig, echo=FALSE, fig.height=3.1, fig.width=6, out.width="100%"}
+tibble(k = rep(0:4, 2), prob = c(emp, dpois(0:4, lam)),
+       fonte = rep(c("Observada (2000–2025)", "Poisson"), each = 5)) |>
+  ggplot(aes(k, prob, fill = fonte)) + geom_col(position = "dodge", width = 0.6) +
+  scale_fill_manual(values = c("#c9971e", "#0d3b54")) +
+  labs(x = "Meses de deflação no ano", y = "Probabilidade", fill = NULL) +
+  theme_minimal(base_size = 13) + theme(legend.position = "top")
+```
+]
+
+.pull-right-40[
+.caixa-economia[
+A Poisson descreve bem esta contagem. Pelo modelo, \\(P(Y \geq 3) = 1 - P(Y \leq 2) \approx `r fmtm(1 - ppois(2, lam), 3)`\\): raro, mas aconteceu
+em 2022, após a redução de impostos sobre combustíveis e energia.
+]
+]
+
+.fonte[Fonte: Banco Central do Brasil, SGS, série 433 (IPCA, variação mensal).]
+
+---
+
+## Atividade 3: discussão .tempo[43–50 min]
+
+**1.** Para cada contagem, a Poisson é razoável? Que hipótese pode falhar?
+
+- **a)** número de clientes que entram numa agência entre 10h e 11h;
+- **b)** número de pessoas que pedem seguro-desemprego numa semana em que uma **grande fábrica fecha**;
+- **c)** número de gols de um time em uma partida.
+
+**2.** Em uma central, a média é 5 chamadas por minuto, mas a variância observada é 18. A Poisson
+continua adequada? O que pode estar acontecendo?
+
+**3.** Por que a Poisson é chamada de "lei dos **eventos raros**", se \\(\lambda\\) pode ser 90?
+
+---
+
+## Uso do R: Poisson
+
+```{r uso-r-1}
+dpois(2, lambda = 1)                      # P(X = 2), o mesmo que exp(-1) * 1^2 / factorial(2)
+1 - ppois(1, lambda = 1)                  # P(X >= 2)
+1 - dpois(0, lambda = 0.5)                # pelo menos um erro tipográfico
+dpois(0, lambda = 5)                      # nenhuma chamada em um minuto
+c(exato = pbinom(1, size = 10, prob = 0.1), poisson = ppois(1, lambda = 1))
+```
+
+---
+
+## Uso do R: simulado vs. teórico
+
+```{r uso-r-2, fig.height=2.5, fig.width=9, out.width="80%"}
+set.seed(21)
+x <- rpois(10000, lambda = 2)
+simulado <- prop.table(table(factor(x, levels = 0:9)))
+teorico  <- dpois(0:9, lambda = 2)
+barplot(rbind(simulado, teorico), beside = TRUE, names.arg = 0:9,
+        legend.text = c("simulado", "teórico"), args.legend = list(x = "topright"))
+c(media = mean(x), variancia = var(x))     # ambas perto de lambda = 2
+```
+
+---
+
+## Resumo
+
+- **Poisson\\((\lambda)\\):** modelo para **contagens** de eventos em um intervalo (tempo, espaço, página).
+- \\(P(X = k) = \dfrac{e^{-\lambda}\lambda^k}{k!}\\), \\(k = 0, 1, 2, \ldots\\)
+- \\(E(X) = Var(X) = \lambda\\): o parâmetro é a **taxa média** no intervalo.
+- **Aproximação:** \\(\text{Bin}(n, p) \approx \text{Poisson}(np)\\) quando \\(n\\) é grande e \\(p\\) é pequeno.
+- **Resumo da unidade:** Bernoulli \\((E = p, Var = p(1-p))\\); Binomial \\((E = np, Var = np(1-p))\\);
+  Poisson \\((E = Var = \lambda)\\).
 
 ---
 
@@ -210,4 +477,4 @@ class: inverse, center, middle
 
 # Próxima aula (11/11): Laboratório
 
-## Simulação de VA discretas em R
+## Simulação de variáveis aleatórias discretas em R

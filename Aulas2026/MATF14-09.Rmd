@@ -2,7 +2,7 @@
 title: "Espaço amostral e eventos. Revisão de conjuntos"
 subtitle: "MATF14: Estatística Econômica I"
 author: "Raydonal Ospina"
-date: "23/09/2026"
+date: "21/09/2026"
 output:
   xaringan::moon_reader:
     css: ["default", "metropolis", "metropolis-fonts", "custom-styles.css"]
@@ -15,219 +15,622 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+source("R/venn.R")
+tres <- data.frame(x0 = c(2.9, 5, 7.1), y0 = 2.8, r = 1.45, nome = c("A", "B", "C"))
 ```
 
 class: inverse, center, middle
-
-# Início da Unidade 2: Probabilidade
 
 # Aula 09: Espaço amostral e eventos
 
-### Provocação · Teoria · Aplicação · Discussão
+### Início da Unidade 2: Probabilidade
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Diariamente você decide sob incerteza
+## Roteiro da aula (100 minutos)
 
-> Devo investir na bolsa este mês?
+.roteiro[
 
---
+| Tempo | Parte 1: o que é probabilidade |
+|:---|:---|
+| 0–10 min | Provocação: Mega-Sena, Copom, ensino médio |
+| 10–25 min | Quatro interpretações de probabilidade; coerência e arbitragem |
+| 25–40 min | Fenômeno aleatório, espaço amostral, tipos de espaço amostral |
+| 40–50 min | **Atividade 1** (duplas): espaços amostrais de fenômenos econômicos |
 
-> Vale a pena contratar um seguro para o carro novo?
+| Tempo | Parte 2: eventos como conjuntos |
+|:---|:---|
+| 0–20 min | Eventos, união, interseção, complementar, disjuntos |
+| 20–30 min | Leis de De Morgan e partição |
+| 30–40 min | **Atividade 2**: urna, empréstimos e eventos econômicos |
+| 40–50 min | Uso do R e fechamento |
 
---
+]
 
-> Devo levar guarda-chuva hoje, mesmo sem certeza de chuva?
-
---
-
-> Devo me matricular numa disciplina eletiva com alta taxa de reprovação?
-
---
-
-Todas essas perguntas têm a mesma estrutura formal por trás: um **experimento aleatório**, um
-**espaço de resultados possíveis**, e um **evento** de interesse dentro desse espaço. Hoje
-construímos esse vocabulário.
-
----
-
-class: inverse, center, middle
-
-# Bloco 1: Teoria
+.small[**Lembrete:** a **Prova 1** (Unidade 1) é na **quarta, 23/09**. Simulado: Lista 08.]
 
 ---
 
-## Por que probabilidade, depois de estatística descritiva?
+## De onde viemos, para onde vamos
 
-O Capítulo 1 resumiu dados **já observados**. Agora: como quantificar incerteza sobre um resultado
-que **ainda não ocorreu**? Um investidor não sabe se uma ação sobe amanhã; um banco não sabe se um
-cliente específico vai inadimplir. Probabilidade é a linguagem formal para essas perguntas.
-
---
-
-## Experimento aleatório, espaço amostral, evento
-
-- **Experimento aleatório**: processo cujo resultado não pode ser previsto com certeza.
-- **Espaço amostral** \\(\Omega\\): conjunto de todos os resultados possíveis.
-- **Evento** \\(A\subseteq\Omega\\): um subconjunto de resultados de interesse.
-
----
-
-## Nem todo espaço amostral é pequeno
-
-\\(\Omega\\) pode ser **finito** (as quatro categorias de risco de crédito que vemos daqui a pouco),
-mas também pode ser:
+- Queremos investigar uma **população**, mas em geral só temos acesso a uma **amostra**.
+- Afirmações sobre a amostra têm alta chance de valer para a população **se a amostra for
+  representativa**.
+- O mais comum é trabalhar com **amostras aleatórias**, que têm menor chance de ser viesadas.
 
 --
 
-**Enumerável (infinito contável)**: número de sinistros que um segurado reporta em um ano,
-\\(\Omega = \\{0, 1, 2, 3, \ldots\\}\\). Não há limite superior fixo, mas dá para contar um por um.
-
---
-
-**Não enumerável (contínuo)**: o retorno percentual de uma ação no próximo mês,
-\\(\Omega = \\{x; x \in \mathbb{R}\\}\\). Entre quaisquer dois retornos possíveis sempre existe outro,
-não dá para "listar" os resultados um a um.
-
---
-
-A distinção não é só formal: é a mesma que separa variável **discreta** de **contínua** (Aula 01) —
-aqui aplicada ao espaço de resultados, e não a uma variável já observada.
-
----
-
-## Revisão de teoria de conjuntos
-
-Como eventos são conjuntos, valem as operações usuais:
-
-| Operação | Notação | Significado |
-|---|---|---|
-| União | \\(A\cup B\\) | \\(A\\) ou \\(B\\) ocorre |
-| Interseção | \\(A\cap B\\) | \\(A\\) e \\(B\\) ocorrem juntos |
-| Complemento | \\(A^c\\) | \\(A\\) não ocorre |
-
---
-
-**Mutuamente exclusivos**: \\(A\cap B=\emptyset\\), não podem ocorrer juntos.
-
-Exemplo: "inflação do mês acima da meta" e "inflação do mês abaixo do piso da meta", mutuamente
-exclusivos (não podem ocorrer no mesmo mês).
+.caixa-aplicacao[
+Entender essa aleatoriedade é o que nos permite **medir a incerteza** das conclusões. A linguagem
+para isso é a **probabilidade**, o tema das Unidades 2, 3 e 4.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 1: o que é probabilidade?
+
+### 50 minutos
 
 ---
 
-## Classificação de risco de crédito
+## Provocação: qual a chance de ganhar na Mega-Sena? .tempo[0–10 min]
 
-Um banco classifica cada empréstimo em uma de quatro categorias:
+.pull-left[
+```{r megasena, echo=FALSE, out.width="95%"}
+knitr::include_graphics("images/megasena_istoe.png")
+```
+
+.fonte[Fonte: IstoÉ Dinheiro. Foto: Marcelo Camargo/Agência Brasil.]
+]
+
+.pull-right[
+Perguntas que envolvem **incerteza**:
+
+- Qual é a chance de ganhar na Mega-Sena?
+- Qual é a chance de o Copom **cortar** a Selic na próxima reunião?
+- Qual é a chance de o meu time ganhar o campeonato?
+- Qual é a chance de um aluno concluir o ensino médio?
+- Qual é a chance de um empréstimo não ser pago?
+
+.caixa-discussao[
+Em quais delas dá para calcular a chance **sem** coletar dados? Em quais a chance depende de
+**quem** está avaliando?
+]
+]
+
+---
+
+## Quatro interpretações de probabilidade .tempo[10–25 min]
+
+.small[
+
+| Interpretação | Ideia | Funciona quando | Exemplo econômico |
+|:---|:---|:---|:---|
+| **Clássica** | casos favoráveis / casos possíveis | resultados finitos e **igualmente prováveis** | sortear uma empresa para fiscalização |
+| **Frequentista** | frequência relativa em **muitas repetições** | o fenômeno se **repete** nas mesmas condições | taxa histórica de inadimplência |
+| **Subjetiva** | grau de crença **coerente** de quem avalia | eventos **únicos** | chance de corte da Selic segundo um analista |
+| **Axiomática** | qualquer atribuição que obedeça a **3 regras** | sempre | base de todos os modelos do curso |
+
+]
+
+--
+
+.caixa-aplicacao[
+As três primeiras dizem **como atribuir** números. A axiomática (Kolmogorov, 1933, próxima aula) diz
+**quais regras** esses números precisam cumprir.
+]
+
+---
+
+## Frequentista: a frequência relativa se estabiliza
+
+```{r longo-prazo, echo=FALSE, fig.height=3, fig.width=10, out.width="92%"}
+set.seed(23)
+lanc <- tibble(n = 1:2000, seis = rbinom(2000, 1, 1/6)) |> mutate(prop = cumsum(seis) / n)
+ggplot(lanc, aes(n, prop)) + geom_hline(yintercept = 1/6, linetype = "dashed", color = "#c0392b") +
+  geom_line(color = "#3b5bdb", linewidth = 0.8) + scale_x_log10() +
+  annotate("text", x = 1500, y = 1/6 + 0.04, label = "1/6", color = "#c0392b", size = 5) +
+  labs(x = "Número de lançamentos (escala log)", y = "Proporção de seis") + theme_minimal(base_size = 13)
+```
+
+.small[Simulação de 2.000 lançamentos de um dado: no começo a proporção de "seis" oscila muito;
+com muitos lançamentos, ela se estabiliza perto de \\(1/6\\).]
+
+--
+
+.caixa-discussao[
+"A chance de recessão no Brasil em 2027 é de 30%." Dá para interpretar esse número como frequência
+relativa em repetições? Que interpretação sobra?
+]
+
+---
+
+## Subjetiva, mas coerente: probabilidade e arbitragem
+
+Um analista aceita **comprar ou vender** por \\(p\\) reais um bilhete que paga R$ 1 se o evento ocorrer,
+em que \\(p\\) é a probabilidade que ele atribui ao evento. Ele diz:
 
 $$
-\Omega = \\{AA, A, B, C\\}
+P(\text{Selic sobe}) = 0{,}60 \qquad P(\text{Selic não sobe}) = 0{,}50
 $$
-
-Evento "risco elevado": \\(R = \\{B, C\\}\\). Evento "risco baixo": \\(L=\\{AA,A\\}\\).
 
 --
 
-\\(R\\) e \\(L\\) são mutuamente exclusivos (\\(R\cap L=\emptyset\\)) e \\(R\cup L=\Omega\\), formam uma
-**partição** do espaço amostral: pedaços que não se sobrepõem e cobrem tudo, como neste diagrama
-(conceito que retomamos na Aula 14, Teorema de Bayes):
+- Um investidor **vende** a ele os dois bilhetes por \\(0{,}60 + 0{,}50 = 1{,}10\\) reais.
+- Aconteça o que acontecer, **exatamente um** bilhete paga R$ 1.
+- O analista perde **R$ 0,10 com certeza**.
 
-```{r fig-particao, echo=FALSE, out.width="45%"}
-knitr::include_graphics("images/particao.png")
-```
+--
 
----
-
-## Um espaço amostral maior: dois empréstimos
-
-Se o banco observa 2 empréstimos, cada um classificado em \\(\\{AA,A,B,C\\}\\):
-
-```{r espaco-produto}
-risco <- c("AA","A","B","C")
-Omega <- expand.grid(emp1 = risco, emp2 = risco)
-nrow(Omega)
-head(Omega, 4)
-```
-
-\\(|\Omega| = 4\times 4 = 16\\) resultados possíveis, o princípio multiplicativo de contagem
-(retomado na Aula 10) já aparece aqui.
+.caixa-economia[
+Probabilidades que não somam 1 abrem espaço para **arbitragem**. Coerência = ausência de arbitragem:
+é por isso que até a probabilidade subjetiva precisa obedecer às regras, e é a mesma lógica dos preços
+de ativos em mercados sem arbitragem.
+]
 
 ---
 
-## Um evento como subconjunto de \\(\Omega\\)
+## Fenômenos aleatórios .tempo[25–40 min]
 
-Evento \\(R\\) = "pelo menos um dos dois empréstimos tem risco elevado (B ou C)". Contando à mão:
-\\(R^c\\) (nenhum dos dois é B ou C) só ocorre quando **ambos** são AA ou A, \\(2\times 2=4\\) combinações,
-logo \\(|R| = 16-4=12\\). Conferindo com o código:
+- **Não** podemos prever exatamente os **resultados individuais** de fenômenos aleatórios...
+- ... mas podemos entender as características do seu **comportamento a longo prazo**.
 
-```{r evento-visual}
-Omega$risco_elevado <- Omega$emp1 %in% c("B", "C") | Omega$emp2 %in% c("B", "C")
-table(Omega$risco_elevado)
-```
+--
 
-A contagem bate: 4 combinações fora de \\(R\\), 12 dentro, exatamente o \\(4\\) e o \\(12\\) da conta manual
-acima.
+Cada tentativa ou **repetição** de um fenômeno aleatório gera um **resultado**:
+
+- o número sorteado na Mega-Sena ser 05-06-17-37-43-54;
+- a decisão do Copom ser **manter** a Selic;
+- a face de um dado lançado ser um número par.
+
+--
+
+.caixa-aplicacao[
+O conjunto de **todos os resultados possíveis** de um fenômeno aleatório é o **espaço amostral**,
+denotado por \\(S\\) (ou \\(\Omega\\)). Um **evento** é qualquer **subconjunto** de \\(S\\).
+]
 
 ---
 
-## O mesmo evento, visualmente
+## Exemplo: conclusão do ensino médio
 
-```{r evento-visual-plot, echo=FALSE, fig.height=4.6}
-cores <- ifelse(Omega$risco_elevado, "#c9971e", "#0d3b54")
-plot(as.numeric(Omega$emp1), as.numeric(Omega$emp2),
-     pch = 15, cex = 7, col = cores,
-     xaxt = "n", yaxt = "n", xlim = c(0.5, 4.5), ylim = c(0.5, 4.5),
-     xlab = "Empréstimo 1", ylab = "Empréstimo 2",
-     main = "Evento R: pelo menos um empréstimo de risco elevado")
-axis(1, at = 1:4, labels = risco)
-axis(2, at = 1:4, labels = risco)
-legend("topleft", legend = c("em R (risco elevado)", "fora de R"),
-       col = c("#c9971e", "#0d3b54"), pch = 15, bty = "n", cex = 0.9)
+Uma pesquisa acompanha alunos do 3º ano do ensino médio. Sejam \\(C\\) = concluir e \\(A\\) = abandonar.
+
+.pull-left[
+**Um** aluno sorteado:
+
+$$
+S = \\{C, A\\}
+$$
+
+**Dois** alunos sorteados:
+
+$$
+S = \\{CC, CA, AC, AA\\}
+$$
+
+\\(CA\\): o primeiro concluiu e o segundo abandonou.
+]
+
+.pull-right[
+O evento "**um** dos dois conclui" é o subconjunto
+
+$$
+\\{CA, AC\\} \subset S.
+$$
+
+.caixa-discussao[
+Por que \\(CA\\) e \\(AC\\) são resultados **diferentes**? Se só interessasse **quantos** concluíram,
+qual seria o espaço amostral? Os resultados seriam igualmente prováveis?
+]
+]
+
+---
+
+## Exemplo econômico: decisões do Copom
+
+Em cada reunião, o Copom pode **cortar** (\\(c\\)), **manter** (\\(m\\)) ou **subir** (\\(s\\)) a Selic.
+
+.pull-left-40[
+**Uma reunião:** \\(S = \\{c, m, s\\}\\)
+
+**Duas reuniões:** \\(3 \times 3 = 9\\) resultados.
+
+Evento "nenhum corte e a taxa termina acima do nível inicial":
+
+$$
+\\{ms, sm, ss\\}
+$$
+]
+
+.pull-right-60[
+```{r copom, echo=FALSE, fig.height=3.6, fig.width=5.4, out.width="100%"}
+dec <- c("corta", "mantém", "sobe")
+grade <- expand.grid(r1 = factor(dec, dec), r2 = factor(dec, dec)) |>
+  mutate(evento = (r1 != "corta" & r2 != "corta") & (r1 == "sobe" | r2 == "sobe"))
+ggplot(grade, aes(r1, r2, fill = evento)) + geom_tile(color = "white", linewidth = 2) +
+  scale_fill_manual(values = c(`TRUE` = "#c9971e", `FALSE` = "#3d7a99"), labels = c("fora do evento", "no evento")) +
+  labs(x = "1ª reunião", y = "2ª reunião", fill = NULL) + theme_minimal(base_size = 14) + theme(legend.position = "bottom")
 ```
 
-Cada quadrado é um dos 16 resultados de \\(\Omega\\); o evento \\(R\\) (dourado) é literalmente um
-subconjunto de células nessa grade, exatamente a ideia de "evento como subconjunto do espaço
-amostral" desta aula, só que agora visível.
+]
+
+---
+
+## Tipos de espaço amostral
+
+.pull-left-60[
+**Finito:** categorias de risco de um empréstimo, \\(S = \\{AA, A, B, C\\}\\).
+
+**Enumerável, mas sem limite:** tempo de espera (em dias) por uma consulta no SUS,
+
+$$
+S = \\{0, 1, 2, 3, \ldots\\}
+$$
+
+**Não enumerável:** o peso de uma pessoa, a variação do PIB no trimestre,
+
+$$
+S = \\{x : x > 0\\}.
+$$
+
+Entre dois valores possíveis sempre existe outro.
+]
+
+.pull-right-40[
+```{r sus, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/fila_sus_espera_oglobo.png")
+```
+
+.fonte[Fonte: O Globo.]
+]
+
+.clear[]
+
+.small[É a diferença entre variável **discreta** e **contínua** da Aula 01; ela separa a Unidade 3 da Unidade 4.]
+
+---
+
+## Atividade 1 (em duplas) .tempo[40–50 min]
+
+.caixa-atividade[
+Para cada situação, escrevam um **espaço amostral** razoável, digam se ele é **finito**, **enumerável sem
+limite** ou **não enumerável**, e definam **um evento** de interesse econômico.
+
+**a)** a decisão do Copom nas **três** próximas reuniões;
+
+**b)** o número de clientes que entram em uma agência bancária em uma hora;
+
+**c)** o tempo, em meses, que um trabalhador desempregado leva para conseguir emprego;
+
+**d)** a variação percentual do PIB no próximo trimestre;
+
+**e)** a classificação de risco (AA, A, B, C) de **dois** empréstimos concedidos hoje.
+]
+
+.small[Em (a) e (e): quantos resultados tem o espaço amostral? Guardem a resposta: ela volta na próxima aula (contagem).]
+
+---
+
+## Atividade 1: respostas
+
+.caixa-resposta[
+**a)** Sequências de 3 decisões em \\(\\{c, m, s\\}\\): finito, com \\(3^3 = 27\\) resultados. Evento: "pelo menos um corte".
+
+**b)** \\(\\{0, 1, 2, \ldots\\}\\): enumerável sem limite. Evento: "mais de 30 clientes".
+
+**c)** Se medido em meses inteiros, \\(\\{0, 1, 2, \ldots\\}\\); se medido exatamente, \\(\\{t : t \geq 0\\}\\), não
+enumerável. Evento: "mais de 12 meses" (desemprego de longa duração).
+
+**d)** Um intervalo de números reais: não enumerável. Evento: "variação negativa".
+
+**e)** Pares de categorias: finito, \\(4 \times 4 = 16\\) resultados. Evento: "pelo menos um de risco elevado".
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Intervalo
 
----
-
-## Rodada 1: voltando à provocação inicial
-
-**1.** Escolha uma das quatro perguntas de abertura (investir na bolsa, seguro do carro, guarda-
-chuva, disciplina eletiva). Defina explicitamente: qual é o experimento aleatório, qual é um
-espaço amostral razoável \\(\Omega\\), e qual evento \\(A\\) representa a "consequência ruim" que você quer
-evitar.
-
-**2.** Dê um exemplo de dois eventos econômicos que sejam mutuamente exclusivos, e outro de dois
-eventos que possam ocorrer simultaneamente (não exclusivos).
-
----
-
-## Rodada 2: granularidade do espaço amostral
-
-**3.** O evento "a Selic sobe na próxima reunião" e o evento "a Selic sobe mais de 0,5 p.p. na
-próxima reunião" têm alguma relação de subconjunto entre si? Qual?
-
-**4.** Um analista define \\(\Omega\\) do PIB do próximo trimestre como \\(\\{\\)crescimento, recessão\\(\\}\\).
-Outro define com 5 categorias mais finas. Nenhum dos dois está "errado", mas o que se perde ao
-escolher a versão mais grosseira?
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Próxima aula (28/09)
+# Parte 2: eventos como conjuntos
 
-## Propriedades de probabilidade. Métodos de contagem
+### 50 minutos
+
+---
+
+## Notação de conjuntos .tempo[0–20 min]
+
+- **Espaço amostral** é o conjunto de todos os resultados possíveis.
+- **Evento** é qualquer subconjunto do espaço amostral.
+
+.pull-left[
+**Notação**
+
+- Conjuntos: letras maiúsculas \\(A, B, \ldots\\)
+- Pertence: \\(a \in A\\); não pertence: \\(c \notin A\\)
+- Conjunto vazio: \\(\emptyset\\)
+- Conjunto universo (espaço amostral): \\(S\\)
+- Subconjunto: \\(A \subset B\\) (se \\(A\\) ocorre, \\(B\\) ocorre)
+]
+
+.pull-right[
+```{r venn-pertence, echo=FALSE, fig.height=3, fig.width=5, out.width="90%"}
+venn(function(a, b, c) a, data.frame(x0 = 4, y0 = 2.9, r = 1.8, nome = "A"),
+     data.frame(x = c(3.4, 4.6, 7.8), y = 2.9, lab = c("a", "b", "c")))
+```
+
+.small[
+\\(a \in A\\), \\(b \in A\\), mas \\(c \notin A\\).
+]
+]
+
+---
+
+## União e interseção
+
+.pull-left[
+**União** \\(A \cup B\\): pertence a \\(A\\) **ou** a \\(B\\) (ou a ambos).
+
+```{r venn-uniao, echo=FALSE, fig.height=2.6, fig.width=5, out.width="90%"}
+venn(function(a, b, c) a | b, dois, data.frame(x = c(3, 3.9, 5, 6.9), y = 2.9, lab = c("1", "2", "3", "4")))
+```
+
+\\(A = \\{1, 2, 3\\}\\), \\(B = \\{3, 4\\}\\): \\(A \cup B = \\{1, 2, 3, 4\\}\\).
+
+**Eventos:** ocorre se **pelo menos um** ocorre.
+]
+
+.pull-right[
+**Interseção** \\(A \cap B\\): pertence a \\(A\\) **e** a \\(B\\).
+
+```{r venn-inter, echo=FALSE, fig.height=2.6, fig.width=5, out.width="90%"}
+venn(function(a, b, c) a & b, dois, data.frame(x = c(3, 3.9, 5, 6.9), y = 2.9, lab = c("1", "2", "3", "4")))
+```
+
+\\(A = \\{1, 2, 3\\}\\), \\(B = \\{3, 4\\}\\): \\(A \cap B = \\{3\\}\\).
+
+**Eventos:** ocorre se **ambos** ocorrem.
+]
+
+---
+
+## Disjuntos e complementar
+
+.pull-left[
+**Disjuntos:** \\(A \cap B = \emptyset\\).
+
+```{r venn-disj, echo=FALSE, fig.height=2.6, fig.width=5, out.width="90%"}
+venn(function(a, b, c) a | b | c, tres,
+     data.frame(x = c(2.1, 2.9, 3.95, 5, 6.05, 7.6), y = 2.8, lab = c("1", "2", "3", "4", "5", "6")))
+```
+
+\\(A = \\{1, 2, 3\\}\\), \\(C = \\{5, 6\\}\\): disjuntos. \\(B = \\{3, 4, 5\\}\\) e \\(C\\): **não**.
+
+**Eventos:** não podem ocorrer juntos.
+]
+
+.pull-right[
+**Complementar** \\(A^c\\): o que está em \\(S\\) e **não** em \\(A\\).
+
+```{r venn-comp, echo=FALSE, fig.height=2.6, fig.width=5, out.width="90%"}
+venn(function(a, b, c) !a, data.frame(x0 = 3.3, y0 = 2.9, r = 1.8, nome = "A"),
+     data.frame(x = c(2.6, 3.3, 4.1, 6.5, 7.6), y = 2.9, lab = c("1", "2", "3", "4", "5")))
+```
+
+\\(S = \\{1, \ldots, 5\\}\\), \\(A = \\{1, 2, 3\\}\\): \\(A^c = \\{4, 5\\}\\).
+
+**Eventos:** ocorre quando \\(A\\) **não** ocorre.
+]
+
+---
+
+## Propriedades das operações
+
+As operações com eventos seguem a álgebra de conjuntos:
+
+- **Comutativas:** \\(A \cup B = B \cup A\\) e \\(A \cap B = B \cap A\\).
+- **Associativas:** \\((A \cup B) \cup C = A \cup (B \cup C)\\), idem para \\(\cap\\).
+- **Distributivas:**
+
+$$
+A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
+$$
+
+$$
+A \cup (B \cap C) = (A \cup B) \cap (A \cup C)
+$$
+
+--
+
+.caixa-discussao[
+Leia a primeira distributiva em linguagem de eventos, com \\(A\\) = "empresa exportadora", \\(B\\) = "setor
+agrícola" e \\(C\\) = "setor extrativo".
+]
+
+---
+
+## Leis de De Morgan .tempo[20–30 min]
+
+$$
+(A \cup B)^c = A^c \cap B^c
+$$
+
+$$
+(A \cap B)^c = A^c \cup B^c
+$$
+
+```{r demorgan, echo=FALSE, fig.height=2.4, fig.width=10, out.width="80%"}
+venn(function(a, b, c) !(a | b), dois, titulo = "(A ∪ B)ᶜ") + venn(function(a, b, c) !a & !b, dois, titulo = "Aᶜ ∩ Bᶜ")
+```
+
+--
+
+.caixa-economia[
+\\(I\\) = "inflação acima do teto da meta"; \\(D\\) = "desocupação acima de 8%". O cenário "nem um nem outro" é
+\\((I \cup D)^c = I^c \cap D^c\\). Se a chance de **algum** dos problemas é 35%, a do cenário tranquilo é 65%.
+]
+
+---
+
+## Partição do espaço amostral
+
+Um banco classifica empréstimos em \\(S = \\{AA, A, B, C\\}\\).
+
+- Evento "risco elevado": \\(R = \\{B, C\\}\\).
+- Evento "risco baixo": \\(L = \\{AA, A\\}\\).
+
+--
+
+.caixa-aplicacao[
+\\(R \cap L = \emptyset\\) (disjuntos) e \\(R \cup L = S\\): os dois formam uma **partição** de \\(S\\), pedaços que
+**não se sobrepõem** e **cobrem tudo**. A partição volta na Aula 14, no Teorema de Bayes.
+]
+
+--
+
+Outras partições econômicas: as **cinco grandes regiões** do país; a população de 14 anos ou mais dividida
+em **ocupados**, **desocupados** e **fora da força de trabalho**.
+
+---
+
+## Atividade 2: urna com 10 bolas .tempo[30–40 min]
+
+.caixa-atividade[
+Uma urna contém 10 bolas numeradas de 1 a 10. Uma bola é escolhida ao acaso. Sejam \\(A\\): número **par**;
+\\(B\\): número **múltiplo de 3**.
+
+Liste \\(S\\), \\(A\\), \\(B\\), \\(A \cup B\\), \\(A \cap B\\), \\(A^c\\) e \\((A \cup B)^c\\). Confira De Morgan: \\((A \cup B)^c = A^c \cap B^c\\).
+]
+
+--
+
+.pull-left[
+.caixa-resposta[
+\\(S = \\{1, \ldots, 10\\}\\); \\(A = \\{2, 4, 6, 8, 10\\}\\); \\(B = \\{3, 6, 9\\}\\)
+
+\\(A \cup B = \\{2, 3, 4, 6, 8, 9, 10\\}\\); \\(A \cap B = \\{6\\}\\)
+
+\\(A^c = \\{1, 3, 5, 7, 9\\}\\); \\((A \cup B)^c = \\{1, 5, 7\\}\\)
+
+\\(B^c = \\{1, 2, 4, 5, 7, 8, 10\\}\\), logo \\(A^c \cap B^c = \\{1, 5, 7\\}\\).
+]
+]
+
+.pull-right[
+```{r venn-urna, echo=FALSE, fig.height=2.8, fig.width=5, out.width="95%"}
+venn(function(a, b, c) a & b, dois,
+     data.frame(x = c(2.8, 3.6, 2.8, 3.6, 5, 6.7, 6.7, 1, 1, 9), y = c(3.5, 3.5, 2.3, 2.3, 2.9, 3.5, 2.3, 5, 1, 1),
+                lab = c("2", "4", "8", "10", "6", "3", "9", "1", "5", "7")))
+```
+
+]
+
+---
+
+## Atividade 2 (cont.): dois empréstimos
+
+.pull-left[
+```{r grade, echo=FALSE, fig.height=4, fig.width=4.6, out.width="100%"}
+risco <- c("AA", "A", "B", "C")
+grade2 <- expand.grid(emp1 = factor(risco, levels = risco), emp2 = factor(risco, levels = risco)) |>
+  mutate(R = emp1 %in% c("B", "C") | emp2 %in% c("B", "C"))
+ggplot(grade2, aes(emp1, emp2, fill = R)) + geom_tile(color = "white", linewidth = 2) +
+  scale_fill_manual(values = c(`TRUE` = "#c9971e", `FALSE` = "#3d7a99"), labels = c("fora do evento", "no evento")) +
+  labs(x = "Empréstimo 1", y = "Empréstimo 2", fill = NULL) + theme_minimal(base_size = 14) +
+  theme(legend.position = "bottom")
+```
+
+]
+
+.pull-right[
+.caixa-atividade[
+Quantos resultados pertencem ao evento "**pelo menos um** dos dois empréstimos tem risco elevado"?
+Use o complementar e De Morgan.
+]
+
+.caixa-resposta[
+"Pelo menos um elevado" \\(= (R\_1 \cup R\_2)\\); o complementar é \\(R\_1^c \cap R\_2^c\\): os dois são AA ou A,
+\\(2 \times 2 = 4\\) resultados. Logo o evento tem \\(16 - 4 = 12\\).
+]
+]
+
+---
+
+## Para discutir
+
+**1.** "A Selic sobe na próxima reunião" e "a Selic sobe mais de 0,5 ponto percentual": algum dos
+dois eventos é **subconjunto** do outro? Qual?
+
+**2.** Um analista define o espaço amostral do PIB do próximo trimestre como {crescimento,
+recessão}. Outro usa 5 categorias mais finas. O que se **perde** com a versão mais grosseira? O que se
+ganha?
+
+**3.** "Inflação acima do teto da meta" e "desocupação abaixo de 7%" são eventos disjuntos? Dê um exemplo
+de dois eventos econômicos que **são** disjuntos.
+
+---
+
+## Uso do R: conjuntos e eventos .tempo[40–50 min]
+
+```{r uso-r-1}
+S <- 1:10
+A <- S[S %% 2 == 0]        # pares (%% é o resto da divisão)
+B <- S[S %% 3 == 0]        # múltiplos de 3
+union(A, B)                # união
+intersect(A, B)            # interseção
+setdiff(S, union(A, B))    # complementar da união
+intersect(setdiff(S, A), setdiff(S, B))   # De Morgan: mesmo resultado
+```
+
+---
+
+## Uso do R: espaço amostral de vários resultados
+
+```{r uso-r-2}
+copom <- expand.grid(reuniao1 = c("corta", "mantém", "sobe"),
+                     reuniao2 = c("corta", "mantém", "sobe"))
+nrow(copom)                                  # 9 resultados
+subset(copom, reuniao1 != "corta" & reuniao2 != "corta" &
+              (reuniao1 == "sobe" | reuniao2 == "sobe"))
+```
+
+.caixa-r[
+**Exercício:** use `expand.grid()` para listar o espaço amostral de **dois dados**. Quantos
+resultados há? Quantos têm soma igual a 7?
+]
+
+---
+
+## Resumo
+
+- **Probabilidade** tem quatro leituras: clássica, frequentista, subjetiva e axiomática; toda atribuição
+  coerente obedece às mesmas regras (senão há arbitragem).
+- **Espaço amostral** \\(S\\): todos os resultados possíveis (finito, enumerável ou não enumerável).
+- **Evento:** qualquer subconjunto de \\(S\\).
+- **Operações:** união ("ou"), interseção ("e"), complementar ("não"); **disjuntos** não ocorrem juntos.
+- **De Morgan:** \\((A \cup B)^c = A^c \cap B^c\\) e \\((A \cap B)^c = A^c \cup B^c\\).
+- **Partição:** eventos disjuntos que cobrem \\(S\\).
+
+.small[Livro: Seções 2.1 e 2.2. Lista 05, questões 1 e 5 e complementares C1 a C3.]
+
+---
+
+class: inverse, center, middle
+
+# Quarta, 23/09: Prova 1 (Unidade 1)
+
+## Próxima aula (28/09): axiomas de Kolmogorov e métodos de contagem

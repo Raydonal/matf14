@@ -15,211 +15,481 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages(library(tidyverse))
+source("R/venn.R")
+pnad <- read.csv("pnad_2026t2.csv") |> mutate(across(pop14:informais, as.numeric))
+pn_tot <- filter(pnad, recorte == "total")
+pn_h <- filter(pnad, categoria == "Homens")
+pn_m <- filter(pnad, categoria == "Mulheres")
+nb <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",", big.mark = ".")
+nbm <- function(x, d = 3) gsub(",", "{,}", nb(x, d), fixed = TRUE)
+mil <- function(x) format(x, big.mark = ".", decimal.mark = ",")
+pc <- function(x, d = 1) paste0(format(round(100 * x, d), nsmall = d, decimal.mark = ","), "%")
+medidas2x2 <- function(a, b, c, d) {
+  R1 <- a / (a + b); R0 <- c / (c + d)
+  c(R1 = R1, R0 = R0, DR = R1 - R0, RR = R1 / R0, O1 = a / b, O0 = c / d, OR = (a * d) / (b * c))
+}
+md <- medidas2x2(pn_m$desocupadas, pn_m$ocupadas, pn_h$desocupadas, pn_h$ocupadas)
+mf <- medidas2x2(pn_m$fora, pn_m$pop14 - pn_m$fora, pn_h$fora, pn_h$pop14 - pn_h$fora)
 ```
 
 class: inverse, center, middle
 
 # Aula 12: Independência estatística
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min): independência · intervalo · Parte 2 (50 min): risco, chance e razão de chances
 
 ---
 
-## Duas afirmações parecidas, com significados opostos
+## Roteiro da aula (100 minutos)
 
-> "Esses dois eventos nunca acontecem juntos" (mutuamente exclusivos) e "esses dois eventos não
-> têm nada a ver um com o outro" (independentes) soam parecidas em português, mas matematicamente
-> são quase opostas. Guarde essa tensão para o fim do bloco de teoria.
+.roteiro[
+
+| Tempo | Parte 1: quando a informação não muda nada |
+|:---|:---|
+| 0–5 min | Provocação: dois bancos quebram no mesmo ano? |
+| 5–20 min | Definição, equivalências, complementares |
+| 20–32 min | Independentes não é disjuntos; três ou mais eventos |
+| 32–42 min | Independência em tabelas: observado × esperado (PNAD) |
+| 42–50 min | **Atividade 1** |
+
+| Tempo | Parte 2: medindo associação em tabelas 2 × 2 |
+|:---|:---|
+| 0–8 min | Prevalência e incidência |
+| 8–18 min | Risco, diferença de riscos e risco relativo |
+| 18–30 min | Chance (odds) e razão de chances |
+| 30–40 min | Dados reais e estudos caso-controle |
+| 40–50 min | **Atividade 2**, Uso do R e fechamento |
+
+]
+
+---
+
+## Provocação: dois bancos quebram no mesmo ano? .tempo[0–5 min]
+
+Dois bancos têm, cada um, probabilidade de **2%** de quebrar no próximo ano.
+
+.caixa-discussao[
+Um analista calcula a chance de **os dois** quebrarem como \\(0{,}02 \times 0{,}02 = 0{,}0004\\), "uma em 2.500".
+
+- Que hipótese ele fez sem dizer?
+- Em 2008, bancos quebraram **juntos**. O que isso diz sobre essa hipótese?
+]
+
+--
+
+.caixa-aplicacao[
+Multiplicar probabilidades exige **independência**. Hoje: o que ela significa, como verificá-la numa tabela e
+como **medir** a associação quando ela **não** vale.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: quando a informação não muda nada
+
+### 50 minutos
 
 ---
 
-## Definição
+## Definição .tempo[5–20 min]
 
+Muitas vezes saber que \\(A\\) ocorreu **não muda** a chance de \\(B\\): \\(P(B \mid A) = P(B)\\). Substituindo na definição
+de condicional, \\(P(A \cap B)/P(A) = P(B)\\):
+
+.caixa-aplicacao[
 \\(A\\) e \\(B\\) são **independentes** se
 
 $$
-P(A\cap B) = P(A)\,P(B)
+P(A \cap B) = P(A) \times P(B).
 $$
 
-equivalente a \\(P(A\mid B)=P(A)\\) (saber que \\(B\\) ocorreu não muda a probabilidade de \\(A\\)).
+Se \\(P(A) > 0\\), equivale a \\(P(B \mid A) = P(B)\\); se \\(P(B) > 0\\), a \\(P(A \mid B) = P(A)\\).
+]
 
 --
 
-## Independência \\(\ne\\) mutuamente exclusivos
+**Exemplos.**
 
-Se \\(A\cap B=\emptyset\\) e \\(P(A),P(B)&gt;0\\): saber que \\(A\\) ocorreu implica \\(P(B\mid A)=0\ne P(B)\\),
-**o oposto** de independência. São conceitos frequentemente confundidos, mas incompatíveis (com
-probabilidades positivas), exatamente a tensão da provocação inicial.
-
----
-
-## Independência \\(\ne\\) ausência de causa
-
-Independência estatística é uma propriedade de **probabilidades**, não de mecanismos causais.
-Dois eventos podem ser dependentes sem que um cause o outro (confundidor comum); e a definição
-\\(P(A\cap B)=P(A)P(B)\\) é o que entra nas contas, não uma noção intuitiva de causalidade.
+- Um departamento de polícia soluciona 60% dos homicídios; dois casos independentes são ambos solucionados com
+  probabilidade \\(0{,}6 \times 0{,}6 = 0{,}36\\).
+- Baralho: "ás" (\\(4/52\\)) e "espadas" (\\(13/52\\)) são independentes, pois \\(P(\text{ás de espadas}) = 1/52 = \frac{4}{52} \cdot \frac{13}{52}\\).
 
 ---
 
-class: inverse, center, middle
+## Complementares também são independentes
 
-# Bloco 2: Aplicação
-
----
-
-## Testando independência com dados
-
-Dois lançamentos de moeda (justa) são independentes por construção física. Já a escolaridade e o
-desemprego (Aula 11) **não são** independentes:
-
-```{r teste-independencia}
-p_desemp <- 110/500
-p_superior <- 250/500
-p_desemp_e_superior_indep <- p_desemp * p_superior   # se fossem independentes
-p_desemp_e_superior_real  <- 40/500                    # valor real observado
-
-c(esperado_sob_independencia = p_desemp_e_superior_indep,
-  observado = p_desemp_e_superior_real)
-```
-
-Os valores diferem (\\(0{,}11\\) vs. \\(0{,}08\\)), evidência de dependência entre escolaridade e situação
-ocupacional nesta população.
-
----
-
-## Independência em séries de eventos
-
-Se \\(A\_1,\ldots,A\_n\\) são mutuamente independentes,
+Se \\(A\\) e \\(B\\) são independentes, também são \\(A\\) e \\(B^c\\):
 
 $$
-P(A\_1\cap A\_2\cap\cdots\cap A\_n) = P(A\_1)\times P(A\_2)\times\cdots\times P(A\_n)
-$$
-
-Base da distribuição **Binomial** (Cap. 3): \\(n\\) tentativas independentes, mesma probabilidade de
-sucesso em cada uma.
-
----
-
-## Resolvendo com números: dois casos, três visitas
-
-Um departamento de polícia soluciona 60% dos seus casos de homicídio. Dois casos \\(A\\) e \\(B\\) são
-independentes (nada liga um ao outro). Qual é a probabilidade de **ambos** serem solucionados?
-
-$$
-P(A\cap B) = P(A)\times P(B) = 0{,}6\times 0{,}6 = 0{,}36 = 36\%
+P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)\\,[1 - P(B)] = P(A)\\,P(B^c)
 $$
 
 --
 
-Agora com \\(n=3\\): um agente social visita, ao acaso, 3 domicílios independentes numa população em
-que 20% das visitas encontram indícios de violência doméstica. Qual é a probabilidade de encontrar
-indícios **nas três** visitas?
+O mesmo vale para \\(A^c\\) e \\(B\\), e para \\(A^c\\) e \\(B^c\\).
 
-$$
-P(V\_1\cap V\_2\cap V\_3) = P(V\_1)\times P(V\_2)\times P(V\_3) = 0{,}2\times 0{,}2\times 0{,}2 = 0{,}008
-$$
+.caixa-economia[
+**Pelo menos um.** Uma promotora tem dois casos independentes, com 80% e 70% de chance de condenação.
 
-Cada visita adicional multiplica a probabilidade por 0,2, a mesma lógica que sustenta a Binomial.
-
----
-
-## Simulando independência: teórico vs. empírico
-
-A definição \\(P(A\cap B)=P(A)P(B)\\) não é só álgebra, é uma afirmação sobre frequências. Simulamos
-os dois casos de homicídio (\\(p=0{,}6\\) cada, resolvidos de forma independente) muitas vezes e
-comparamos a frequência conjunta observada com o valor teórico \\(0{,}36\\):
-
-```{r sim-independencia}
-set.seed(12)
-n_sim <- 100000
-p_A <- 0.6   # prob. de solucionar o caso A
-p_B <- 0.6   # prob. de solucionar o caso B (independente de A)
-
-caso_A <- rbinom(n_sim, size = 1, prob = p_A)   # 1 = solucionado
-caso_B <- rbinom(n_sim, size = 1, prob = p_B)
-
-p_ambos_simulado <- mean(caso_A == 1 & caso_B == 1)
-p_ambos_teorico  <- p_A * p_B
-
-c(simulado = p_ambos_simulado, teorico = p_ambos_teorico)
-```
+- Ambas as condenações: \\(0{,}8 \times 0{,}7 = 0{,}56\\).
+- **Nenhuma** condenação: \\(0{,}2 \times 0{,}3 = 0{,}06\\) (complementares independentes).
+- **Pelo menos uma**: \\(1 - 0{,}06 = 0{,}94\\).
+]
 
 ---
 
-## O mesmo resultado, visualmente
+## Independentes não é o mesmo que disjuntos .tempo[20–32 min]
 
-```{r sim-independencia-plot, echo=FALSE, fig.height=4.2}
-barplot(c(Teórico = p_ambos_teorico, Simulado = p_ambos_simulado),
-        col = c("#0d3b54", "#c9971e"), ylim = c(0, 0.5),
-        main = "P(A ∩ B): teórico vs. simulado (100.000 repetições)",
-        ylab = "Probabilidade")
+.pull-left[
+```{r venn-disj, echo=FALSE, fig.height=2.4, fig.width=5, out.width="80%"}
+venn(function(a, b, c) a | c, data.frame(x0 = c(2.9, 7.1), y0 = 2.9, r = 1.6, nome = c("A", "B")))
 ```
 
-Como `caso_A` e `caso_B` são gerados por `rbinom()` **separadamente** (uma sorteia sem olhar para a
-outra), a construção já garante independência, é exatamente por isso que a frequência conjunta
-simulada se aproxima tanto do produto teórico \\(P(A)\times P(B)\\).
+**Disjuntos**: \\(A \cap B = \emptyset\\), logo \\(P(A \cap B) = 0\\).
+]
+
+.pull-right[
+Se \\(P(A) > 0\\) e \\(P(B) > 0\\), disjuntos **não** podem ser independentes:
+
+$$
+P(A \cap B) = 0 \neq P(A)\\,P(B) > 0
+$$
+
+Saber que \\(A\\) ocorreu diz **tudo** sobre \\(B\\): ele **não** ocorreu.
+]
+
+.clear[]
+
+--
+
+.caixa-discussao[
+Um dado: \\(A = \\{2\\}\\) e \\(B = \\{1, 2\\}\\). São independentes? E \\(A = \\{1, 2\\}\\) e \\(B = \\{2, 3, 4\\}\\)?
+]
+
+--
+
+.caixa-resposta[
+\\(P(A \cap B) = 1/6 \neq (1/6)(2/6)\\): **dependentes**. No segundo, \\(P(A \cap B) = 1/6 = (2/6)(3/6)\\): **independentes**, mesmo
+tendo resultado em comum.
+]
+
+---
+
+## Três ou mais eventos
+
+\\(A\_1, \ldots, A\_n\\) são independentes se a regra do produto vale para **todos** os pares, trios, etc.
+
+--
+
+**Dois a dois não basta.** Lançando dois dados: \\(A\\) = "primeiro par", \\(B\\) = "segundo ímpar", \\(C\\) = "mesma paridade".
+
+- Cada par: \\(P(A \cap B) = P(A \cap C) = P(B \cap C) = 9/36 = \frac12 \cdot \frac12\\). Independentes dois a dois.
+- Os três: \\(P(A \cap B \cap C) = 0 \neq \frac18\\) (primeiro par e segundo ímpar nunca têm a mesma paridade).
+
+--
+
+.caixa-economia[
+**Visitas de fiscalização.** Irregularidades aparecem em 20% das visitas, independentemente. Em 3 visitas:
+\\(P(\text{em todas}) = 0{,}2^3 = 0{,}008\\) e \\(P(\text{em pelo menos uma}) = 1 - 0{,}8^3 = 0{,}488\\).
+]
+
+---
+
+## Risco sistêmico: a independência que falta
+
+.caixa-economia[
+**Carteira de 10 títulos, 2% de calote cada (Aula 10):**
+
+| Hipótese sobre os calotes | \\(P(\text{pelo menos um calote})\\) |
+|:---|:---:|
+| Todos juntos (dependência total) | \\(0{,}020\\) |
+| Independentes | \\(1 - 0{,}98^{10} \approx 0{,}183\\) |
+| Disjuntos (nunca dois juntos) | \\(0{,}200\\) (limite de Boole) |
+]
+
+--
+
+- A chance de **todos** darem calote é \\(0{,}02^{10} \approx 10^{-17}\\) sob independência, mas \\(0{,}02\\) sob dependência total.
+- Em crises, choques **comuns** (recessão, juros) derrubam a independência: o risco de perdas **conjuntas** fica muito maior
+  que o calculado.
+
+.caixa-discussao[
+Por que a hipótese de independência entre hipotecas foi apontada como um dos erros na avaliação de risco antes de 2008?
+]
+
+---
+
+## Independência em tabelas: observado × esperado .tempo[32–42 min]
+
+Sob independência, cada célula seria \\(\dfrac{\text{total da linha} \times \text{total da coluna}}{\text{total geral}}\\).
+
+```{r esperado}
+obs <- matrix(c(pn_h$ocupadas, pn_h$desocupadas, pn_h$fora,
+                pn_m$ocupadas, pn_m$desocupadas, pn_m$fora), nrow = 2, byrow = TRUE,
+              dimnames = list(c("Homens", "Mulheres"), c("Ocup", "Desoc", "Fora")))
+esp <- outer(rowSums(obs), colSums(obs)) / sum(obs)
+round(obs); round(esp)
+```
+
+.small[
+Mulheres desocupadas: `r mil(pn_m$desocupadas)` observadas contra `r mil(round(esp[2, 2]))` esperadas (perto). Fora da força: `r mil(pn_m$fora)` contra `r mil(round(esp[2, 3]))`: a dependência está na **participação**.
+]
+
+---
+
+## Atividade 1 (duplas) .tempo[42–50 min]
+
+.caixa-atividade[
+**1.** Uma moeda é lançada três vezes. \\(A\\) = "pelo menos duas caras"; \\(B\\) = "três faces iguais". São independentes?
+
+**2.** Um dado é lançado três vezes. Qual a probabilidade de **nenhum** 2? E de **pelo menos um** 2?
+
+**3.** Pesquisa com 1.000 clientes: 400 têm até 35 anos (\\(J\\)), 600 usam o aplicativo (\\(U\\)) e 360 têm até 35 anos **e**
+usam o aplicativo. \\(J\\) e \\(U\\) são independentes? Qual seria a contagem esperada na célula \\(J \cap U\\) sob independência?
+]
+
+--
+
+.caixa-resposta[
+**1.** \\(P(A) = 4/8\\), \\(P(B) = 2/8\\), \\(P(A \cap B) = P(\\{KKK\\}) = 1/8 = \frac48 \cdot \frac28\\): **independentes**.
+**2.** \\((5/6)^3 \approx 0{,}579\\); \\(1 - 0{,}579 = 0{,}421\\).
+**3.** \\(P(J)P(U) = 0{,}24 \neq 0{,}36\\): **dependentes**; esperado \\(1.000 \times 0{,}4 \times 0{,}6 = 240\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Intervalo
 
----
-
-## Rodada 1: resolvendo a tensão da abertura
-
-**1.** Explique, com suas palavras e sem símbolos, por que "mutuamente exclusivos" e
-"independentes" são conceitos quase opostos, não sinônimos, mesmo soando parecidos em linguagem
-comum.
-
-**2.** Dê um exemplo de dois eventos econômicos que você esperaria ser aproximadamente
-independentes, e outro par que você esperaria fortemente dependente. Justifique sua intuição em
-cada caso.
-
----
-
-## Rodada 2: dependência que muda por subgrupo
-
-**3.** É possível dois eventos serem independentes *em uma população* e dependentes *em outra*? Dê
-um exemplo (pode ser hipotético envolvendo faixa de renda ou região).
-
-**4.** Um analista de crédito assume, por conveniência, que a inadimplência de dois empréstimos
-diferentes do mesmo tomador é independente. Em uma crise econômica generalizada, essa suposição
-continua razoável? Que risco para o banco essa suposição incorreta esconde, mesmo que cada
-inadimplência individual pareça pouco provável?
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 4: Uso do R
+# Parte 2: medindo associação em tabelas 2 × 2
+
+### 50 minutos
 
 ---
 
-## Testando independência por simulação, na prática
+## A tabela 2 × 2 e a prevalência .tempo[0–8 min]
 
-```{r uso-r, eval=FALSE}
-# duas variáveis geradas de forma independente (rbinom() separado para cada uma)
-caso_A <- rbinom(n_sim, size = 1, prob = p_A)
-caso_B <- rbinom(n_sim, size = 1, prob = p_B)
+| | Desfecho \\(D\\) | Sem desfecho \\(D^c\\) | Total |
+|:---|:---:|:---:|:---:|
+| **Grupo 1** (exposto, \\(E\\)) | \\(a\\) | \\(b\\) | \\(a + b\\) |
+| **Grupo 0** (não exposto, \\(E^c\\)) | \\(c\\) | \\(d\\) | \\(c + d\\) |
 
-# frequência conjunta simulada vs. produto teórico
-mean(caso_A == 1 & caso_B == 1)
-p_A * p_B
+--
+
+- **Prevalência:** proporção que **está** com a condição num momento, \\(P(D)\\). A **taxa de desocupação** é uma prevalência.
+- **Incidência:** proporção que **passa a ter** a condição num período, entre os que estavam em risco. A proporção de
+  ocupados que perdem o emprego num trimestre é uma incidência.
+
+--
+
+.caixa-discussao[
+Duas regiões têm a mesma taxa de desocupação. Numa, muitas demissões e recolocação rápida; na outra, poucas demissões e
+desemprego longo. Qual tem maior **incidência**? Por que a política pública adequada é diferente?
+]
+
+---
+
+## Risco, diferença de riscos e risco relativo .tempo[8–18 min]
+
+.caixa-aplicacao[
+- **Risco** em cada grupo: \\(R\_1 = P(D \mid E) = \dfrac{a}{a+b}\\) e \\(R\_0 = P(D \mid E^c) = \dfrac{c}{c+d}\\).
+- **Diferença de riscos:** \\(DR = R\_1 - R\_0\\) (pontos percentuais): impacto **absoluto**.
+- **Risco relativo:** \\(RR = R\_1 / R\_0\\): "quantas vezes mais provável"; aumento relativo \\((RR - 1) \times 100\\%\\).
+]
+
+--
+
+.pull-left-40[
+```{r uol, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/exercicio_cancer_uol.png")
 ```
 
-`rbinom(n, size = 1, prob = p)` simula `n` repetições de um evento com probabilidade `p`, gerar
-`caso_A` e `caso_B` em chamadas separadas é o que torna as duas sequências independentes por
-construção, útil para testar, por simulação, qualquer alegação de independência antes de assumi-la
-numa conta analítica.
+.fonte[Fonte: UOL VivaBem / Agência Einstein.]
+]
+
+.pull-right-60[
+"Sedentarismo extremo pode aumentar em mais de 80% a probabilidade de um tumor": é um **risco relativo** \\(RR \approx 1{,}8\\).
+
+Se \\(R\_0 = 0{,}5\\%\\), então \\(R\_1 = 0{,}9\\%\\): diferença de **0,4 ponto percentual**. A manchete não diz nada sobre o risco
+**absoluto**.
+]
+
+---
+
+## Chance (odds) .tempo[18–30 min]
+
+.caixa-aplicacao[
+A **chance** de um evento com probabilidade \\(p\\) é
+
+$$
+O = \frac{p}{1 - p}, \qquad p = \frac{O}{1 + O}.
+$$
+]
+
+| \\(p\\) | 0,10 | 0,20 | 0,50 | 0,75 | 0,90 |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| \\(O\\) | 0,11 (1 para 9) | 0,25 (1 para 4) | 1 (1 para 1) | 3 (3 para 1) | 9 (9 para 1) |
+
+--
+
+.caixa-economia[
+**Casas de apostas.** Cotações de 2,10 (vitória), 3,30 (empate) e 3,60 (derrota) dão probabilidades implícitas
+\\(1/2{,}10 + 1/3{,}30 + 1/3{,}60 \approx 1{,}057\\). A soma passa de 1: a diferença, cerca de 5,7%, é a **margem da casa**, o
+argumento de arbitragem da Aula 09 a favor de quem define os preços.
+]
+
+---
+
+## Razão de chances (odds ratio)
+
+.caixa-aplicacao[
+$$
+OR = \frac{O\_1}{O\_0} = \frac{a/b}{c/d} = \frac{a\\,d}{b\\,c}
+$$
+
+\\(OR = 1\\): chances iguais (numa tabela 2 × 2, equivale a **independência**); \\(OR > 1\\): chance maior no grupo 1.
+]
+
+--
+
+**Por que usar \\(OR\\)?**
+
+1. **Simetria:** \\(\frac{ad}{bc}\\) não muda se trocarmos linhas e colunas.
+2. **Amostragem pelo desfecho:** se a amostra escolhe muitos casos com o desfecho e poucos sem (estudo **caso-controle**),
+   \\(RR\\) fica distorcido, mas \\(OR\\) não muda.
+3. **Desfecho raro:** \\(OR \approx RR\\).
+
+---
+
+## Dados reais: sexo e mercado de trabalho .tempo[30–40 min]
+
+.pull-left[
+**Desocupação** (na força de trabalho; desfecho relativamente raro)
+
+.small[
+
+| | Desocupadas | Ocupadas |
+|:---|:---:|:---:|
+| Mulheres | `r mil(pn_m$desocupadas)` | `r mil(pn_m$ocupadas)` |
+| Homens | `r mil(pn_h$desocupadas)` | `r mil(pn_h$ocupadas)` |
+
+]
+
+Risco: mulheres `r pc(md["R1"])`, homens `r pc(md["R0"])`.
+
+RR = `r nb(md["RR"], 2)` e OR = `r nb(md["OR"], 2)`: **parecidos**.
+]
+
+.pull-right[
+**Fora da força de trabalho** (14 anos ou mais; desfecho comum)
+
+.small[
+
+| | Fora | Na força |
+|:---|:---:|:---:|
+| Mulheres | `r mil(pn_m$fora)` | `r mil(pn_m$forca)` |
+| Homens | `r mil(pn_h$fora)` | `r mil(pn_h$forca)` |
+
+]
+
+Risco: mulheres `r pc(mf["R1"])`, homens `r pc(mf["R0"])`.
+
+RR = `r nb(mf["RR"], 2)` e OR = `r nb(mf["OR"], 2)`: **diferentes**.
+]
+
+.clear[]
+
+.caixa-discussao[
+"A **probabilidade** de uma mulher estar fora da força é `r nb(mf["RR"], 1)` vez a de um homem" e "a **chance** é `r nb(mf["OR"], 1)` vezes" estão corretas.
+Ler \\(OR\\) como \\(RR\\) **exagera** a diferença quando o desfecho é comum.
+]
+
+.fonte[Fonte: IBGE, PNAD Contínua, 2º trimestre de 2026 (mil pessoas).]
+
+---
+
+## Por que modelos de crédito falam em razão de chances
+
+**População** de 10.000 contratos (dados ilustrativos):
+
+| | Inadimplente | Adimplente | Risco |
+|:---|:---:|:---:|:---:|
+| Sem garantia | 400 | 3.600 | 10% |
+| Com garantia | 180 | 5.820 | 3% |
+
+\\(RR = 3{,}33\\) e \\(OR = \frac{400 \times 5.820}{3.600 \times 180} \approx 3{,}59\\).
+
+--
+
+**Amostra caso-controle:** os 580 inadimplentes + 580 adimplentes sorteados (≈ 222 sem garantia, 358 com garantia).
+
+- "Risco" na amostra: \\(400/622\\) contra \\(180/538\\), \\(RR \approx 1{,}92\\): **errado**.
+- \\(OR = \frac{400 \times 358}{222 \times 180} \approx 3{,}58\\): **igual** ao da população.
+
+.small[
+É por isso que a **regressão logística**, ferramenta padrão de escore de crédito, trabalha com chances.
+]
+
+---
+
+## Atividade 2 (duplas) .tempo[40–46 min]
+
+.caixa-atividade[
+Um programa de qualificação: entre **300** desempregados que fizeram o curso, **120** estavam empregados seis meses depois;
+entre **700** que não fizeram, **175** estavam empregados.
+
+**a)** Calcule \\(R\_1\\), \\(R\_0\\), \\(DR\\), \\(RR\\) e \\(OR\\) para o desfecho "empregado".
+
+**b)** A comparação permite concluir que o curso **causa** a recolocação? Que variável de confundimento pode estar por trás?
+]
+
+--
+
+.caixa-resposta[
+**a)** \\(R\_1 = 0{,}40\\); \\(R\_0 = 0{,}25\\); \\(DR = 15\\) p.p.; \\(RR = 1{,}6\\); \\(OR = \frac{120 \times 525}{180 \times 175} = 2{,}0\\).
+
+**b)** Não: quem se inscreve pode ser mais motivado ou qualificado (**seleção**). Só um sorteio de quem faz o curso, ou um desenho
+que controle essas diferenças, permitiria atribuir o efeito ao curso.
+]
+
+---
+
+## Uso do R: medidas de associação .tempo[46–50 min]
+
+```{r uso-r}
+medidas2x2 <- function(a, b, c, d) {
+  R1 <- a / (a + b); R0 <- c / (c + d)
+  c(R1 = R1, R0 = R0, DR = R1 - R0, RR = R1 / R0,
+    O1 = a / b, O0 = c / d, OR = (a * d) / (b * c))
+}
+round(medidas2x2(a = 120, b = 180, c = 175, d = 525), 3)   # programa
+round(medidas2x2(a = pn_m$fora, b = pn_m$forca,
+                 c = pn_h$fora, d = pn_h$forca), 3)        # PNAD
+```
+
+---
+
+## Resumo
+
+- **Independência:** \\(P(A \cap B) = P(A)P(B)\\), equivalente a \\(P(B \mid A) = P(B)\\); vale para os complementares.
+- **Independentes ≠ disjuntos**; dois a dois **não** garante independência dos três.
+- **Tabelas:** sob independência, esperado \\(= \\) linha \\(\times\\) coluna / total.
+- **Prevalência** (quem está) × **incidência** (quem passa a ter).
+- \\(DR = R\_1 - R\_0\\) (absoluto); \\(RR = R\_1/R\_0\\) (relativo); \\(O = p/(1-p)\\); \\(OR = ad/(bc)\\).
+- \\(OR \approx RR\\) só para desfechos **raros**; \\(OR\\) resiste à amostragem caso-controle.
+
+.small[Livro: Seções 2.8 e 2.9. Lista 06.]
 
 ---
 
@@ -227,4 +497,4 @@ class: inverse, center, middle
 
 # Próxima aula (07/10): Laboratório
 
-## Simulação de probabilidade em R
+## Simulação de probabilidade e tabelas de contingência no R

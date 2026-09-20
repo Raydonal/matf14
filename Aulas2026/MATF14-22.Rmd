@@ -15,158 +15,463 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"), comment = "##")
+set.seed(22)
 ```
 
 class: inverse, center, middle
 
 # Aula 22: Laboratório
 
-## Gerando e comparando distribuições discretas em R
+## Variáveis aleatórias discretas em R
 
-### Teórico × simulado
+### Bernoulli, Binomial e Poisson: probabilidades, FDA e simulação
 
----
-
-## Plano da aula
-
-1. `sample()`: gerar Bernoulli "na mão".
-2. `dbinom/pbinom/rbinom`: Binomial.
-3. Comparar frequência simulada com probabilidade teórica.
-4. `dpois/ppois/rpois`: Poisson e a aproximação Binomial→Poisson.
-5. Exercício guiado: tamanho mínimo de amostra.
-
-Como nas Aulas 07 e 13, sem laboratório presencial: use o mesmo notebook do **Google Colab**
-(ambiente de execução em R) das aulas anteriores. Se estiver reproduzindo em casa, os slides
-iniciais do `MATF14-07` têm o passo a passo (criar notebook, trocar para R). Todo o código de
-hoje é 100% simulado, nenhum `.csv` precisa ser enviado.
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## 1. Bernoulli via `sample()`
+## Roteiro do laboratório (100 minutos)
 
-```{r bernoulli}
-set.seed(42)
-p <- 0.3
-x <- sample(c(0,1), size = 100, prob = c(1-p, p), replace = TRUE)
-table(x)
-```
+.roteiro[
 
-```{r bernoulli-compara}
-c(media_simulada = mean(x), media_teorica = p)
-c(var_simulada = var(x), var_teorica = p*(1-p))
-```
+| Tempo | Parte 1: Bernoulli e Binomial no R |
+|:---|:---|
+| 0–5 min | Colab com R |
+| 5–12 min | Fatorial e combinações |
+| 12–22 min | Bernoulli: `sample()` e `rbinom()` |
+| 22–50 min | Binomial: `dbinom()`, `pbinom()`, `rbinom()`; teórico vs. simulado |
 
-Pequena diferença entre simulado e teórico é esperada, com mais repetições, a diferença encolhe
-(Lei dos Grandes Números, Aula 13).
+| Tempo | Parte 2: Poisson e dados reais |
+|:---|:---|
+| 0–12 min | Garantia de qualidade; quantos itens inspecionar? |
+| 12–25 min | Poisson: `dpois()`, `ppois()`, `rpois()`; aproximação da Binomial |
+| 25–38 min | Dados reais: trimestres de queda do PIB e meses de deflação |
+| 38–50 min | Exercícios e discussão |
 
----
+]
 
-## 2. Binomial em R
-
-```{r binomial-basico}
-n <- 5; p <- 0.7
-dbinom(2, n, p)                          # P(X=2)
-choose(n,2) * p^2 * (1-p)^(n-2)           # conferindo com a fórmula
-sum(dbinom(0:n, n, p))                    # soma das probabilidades = 1
-```
-
-```{r binomial-fda}
-pbinom(2, n, p)     # P(X <= 2)
-```
-
----
-
-## Gerando amostras de uma Binomial
-
-```{r rbinom-exemplo, fig.height=3.4}
-set.seed(1)
-y <- rbinom(1000, size = n, prob = p)
-rbind(simulado = table(y)/1000, teorico = round(dbinom(0:n, n, p), 3))
-```
-
----
-
-## 3. Comparando médias e variâncias
-
-```{r compara-binom}
-c(media_simulada = mean(y), media_teorica = n*p)
-c(var_simulada = var(y), var_teorica = n*p*(1-p))
-```
-
-```{r hist-binom, fig.height=3.3}
-hist(y, prob = TRUE, breaks = n+1, col = "#0d3b54", main = "Binomial(5, 0,7) simulada")
-```
-
----
-
-## 4. Poisson em R
-
-```{r poisson-basico}
-lambda <- 5
-dpois(4, lambda)
-exp(-lambda)*lambda^4/factorial(4)   # conferindo com a fórmula
-```
-
-```{r rpois-exemplo}
-set.seed(2)
-z <- rpois(1000, lambda)
-c(media_simulada = mean(z), media_teorica = lambda)
-c(var_simulada = var(z), var_teorica = lambda)
-```
-
----
-
-## Aproximação Binomial → Poisson, visualmente
-
-```{r aproximacao, fig.height=4}
-n <- 100; p <- 0.05; lambda <- n*p
-x <- 0:20
-plot(x, dbinom(x, n, p), pch = 19, col = "#0d3b54",
-     ylab = "P(X=x)", main = "Bin(100, 0,05) vs. Poisson(5)")
-points(x, dpois(x, lambda), pch = 8, col = "#c9971e")
-legend("topright", legend = c("Binomial", "Poisson"), col = c("#0d3b54","#c9971e"), pch = c(19,8))
-```
+.caixa-aplicacao[
+**Padrão de nomes no R** (vale para todas as distribuições):
+`d...` probabilidade \\(P(X = k)\\) · `p...` FDA \\(P(X \leq k)\\) · `r...` gera valores aleatórios.
+]
 
 ---
 
 class: inverse, center, middle
 
-# 5. Exercício guiado
+# Parte 1: Bernoulli e Binomial no R
+
+### 50 minutos
 
 ---
 
-## Enunciado
+## Colab com R .tempo[0–5 min]
 
-Peças com 1% de defeito, independentes. Você quer saber o menor \\(n\\) tal que, ao testar \\(n\\) peças,
-\\(P(\text{pelo menos 1 defeituosa}) \ge 0{,}95\\).
-
-```{r exercicio-n-min, fig.height=3.6}
-n <- 1:400
-prob <- 1 - dbinom(0, n, 0.01)
-plot(n, prob, type = "l", col = "#0d3b54")
-abline(h = 0.95, col = "#c9971e", lty = 2)
+.pull-left[
+```{r colab-config, echo=FALSE, out.width="95%"}
+knitr::include_graphics("colab-07-04-config-notebook.png")
 ```
 
-1. Leia no gráfico (aproximadamente) o valor mínimo de \\(n\\).
-2. Confirme com `which(prob >= 0.95)[1]`.
-3. Refaça para uma taxa de defeito de 0,5% em vez de 1%, o \\(n\\) mínimo aumenta ou diminui? Por quê?
+Crie um notebook em colab.research.google.com e vá em **Edit** → **Notebook settings**.
+]
+
+.pull-right[
+```{r colab-r, echo=FALSE, out.width="95%"}
+knitr::include_graphics("colab-07-05-selecionar-r.png")
+```
+
+Em **Runtime type**, escolha **R** e salve.
+]
+
+.clear[]
+
+.caixa-discussao[
+Hoje não há arquivos de dados: tudo é gerado no R. Passo a passo completo nos slides da Aula 07.
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: fatorial e combinações
+
+---
+
+## Fatorial e coeficiente binomial
+
+**Fatorial:** \\(n! = n(n-1)(n-2)\cdots 3 \cdot 2 \cdot 1\\)
+
+```{r fatorial}
+factorial(4)     # 4 * 3 * 2 * 1
+```
+
+--
+
+**Combinação:** \\(\binom{n}{k} = \dfrac{n!}{k!\,(n-k)!}\\)
+
+```{r choose}
+choose(10, 3)
+factorial(10) / (factorial(3) * factorial(10 - 3))     # conferindo pela fórmula
+```
+
+.caixa-r[
+Para \\(n\\) grande, `factorial()` estoura (ex.: `factorial(200)` dá `Inf`), mas `choose(200, 3)` funciona.
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 2: Bernoulli
+
+---
+
+## Gerando valores de uma Bernoulli
+
+Se \\(X \sim \text{Bernoulli}(p)\\), então \\(X \in \\{0, 1\\}\\), \\(P(X = k) = p^k(1-p)^{1-k}\\), \\(E(X) = p\\) e
+\\(Var(X) = p(1 - p)\\).
+
+```{r bern-sample}
+p <- 0.3
+sample(c(0, 1), size = 10, prob = c(1 - p, p), replace = TRUE)   # 10 valores de Bernoulli(0,3)
+rbinom(10, size = 1, prob = p)                                     # o mesmo, com rbinom e n = 1
+```
+
+--
+
+.caixa-r[
+`sample(valores, n, prob = ..., replace = TRUE)` sorteia **com reposição**, cada valor com sua
+probabilidade. Com `replace = FALSE`, os valores não se repetem (não serve para Bernoulli).
+]
+
+---
+
+## Teórico vs. simulado
+
+```{r bern-compara}
+n <- 100
+x <- sample(c(0, 1), n, prob = c(1 - p, p), replace = TRUE)
+table(x)
+c(media_amostral = mean(x), media_teorica = p)
+c(var_amostral = var(x), var_teorica = p * (1 - p))
+```
+
+.caixa-discussao[
+Rode de novo com `n <- 10000`. As médias e variâncias ficam mais próximas dos valores teóricos? Por
+quê?
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: Binomial
+
+---
+
+## Probabilidades: `dbinom()`
+
+\\(X \sim \text{Bin}(5;\ 0{,}7)\\). Quanto vale \\(P(X = 2)\\)?
+
+```{r dbinom}
+n <- 5; p <- 0.7
+dbinom(2, size = n, prob = p)
+choose(n, 2) * p^2 * (1 - p)^(n - 2)       # conferindo pela fórmula
+dbinom(0:n, size = n, prob = p)            # distribuição inteira
+sum(dbinom(0:n, size = n, prob = p))       # soma 1
+```
+
+---
+
+## FDA: `pbinom()`
+
+```{r pbinom}
+pbinom(2, size = n, prob = p)              # P(X <= 2), o mesmo que sum(dbinom(0:2, n, p))
+pbinom(0:n, size = n, prob = p)            # FDA em todos os pontos
+```
+
+--
+
+```{r pbinom-plot, fig.height=2.3, fig.width=9, out.width="75%"}
+plot(stepfun(0:n, c(0, pbinom(0:n, n, p))), verticals = FALSE, pch = 19,
+     main = "FDA da Bin(5; 0,7)", xlab = "x", ylab = "F(x)")
+```
+
+---
+
+## Simulação: `rbinom()`
+
+```{r rbinom}
+x <- rbinom(50, size = n, prob = p)        # 50 valores de Bin(5; 0,7)
+table(x)
+
+m <- 1000
+y <- rbinom(m, size = n, prob = p)
+round(rbind(simulado = table(factor(y, levels = 0:n)) / m,
+            teorico  = dbinom(0:n, n, p)), 3)
+```
+
+---
+
+## Teórico vs. simulado: gráfico, média e variância
+
+.pull-left[
+```{r bin-hist, fig.height=3.8, fig.width=5, out.width="100%"}
+barplot(rbind(table(factor(y, levels = 0:n)) / m,
+              dbinom(0:n, n, p)),
+        beside = TRUE, names.arg = 0:n,
+        col = c("grey70", "steelblue"),
+        legend.text = c("simulado", "teórico"),
+        args.legend = list(x = "topleft"))
+```
+
+]
+
+.pull-right[
+```{r bin-momentos}
+c(mean(y), n * p)
+c(var(y), n * p * (1 - p))
+```
+
+.caixa-aplicacao[
+Com 1.000 simulações, as frequências relativas, a média e a variância ficam **próximas** dos
+valores teóricos \\(np = 3{,}5\\) e \\(np(1-p) = 1{,}05\\).
+]
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: Poisson e dados reais
+
+### 50 minutos
+
+---
+
+## Exemplo: garantia de qualidade .tempo[0–12 min]
+
+Peças com **1%** de defeito, independentes. Pacotes de 10; devolve o dinheiro se **mais de uma**
+peça for defeituosa. \\(X \sim \text{Bin}(10;\ 0{,}01)\\).
+
+```{r garantia}
+1 - pbinom(1, size = 10, prob = 0.01)                  # P(X > 1), exato
+
+pacotes <- rbinom(100000, size = 10, prob = 0.01)      # 100 mil pacotes simulados
+mean(pacotes > 1)                                      # proporção de devoluções
+```
+
+---
+
+## Exercício: quantos itens inspecionar?
+
+Itens com 1% de defeito. Qual é o **menor** \\(n\\) tal que \\(P(\text{pelo menos um defeituoso}) \geq 0{,}95\\)?
+
+.pull-left[
+\\(P(X \geq 1) = 1 - 0{,}99^n \geq 0{,}95\\)
+
+\\(\iff n \geq \dfrac{\log 0{,}05}{\log 0{,}99} \approx 298{,}07\\)
+
+```{r n-min}
+n <- 1:400
+prob <- 1 - dbinom(0, n, 0.01)
+min(n[prob >= 0.95])
+```
+
+]
+
+.pull-right[
+```{r n-min-plot, fig.height=3.2, fig.width=5, out.width="92%"}
+plot(n, prob, type = "l", lwd = 2,
+     xlab = "tamanho da amostra n",
+     ylab = "P(pelo menos 1 defeituoso)")
+abline(h = 0.95, col = "red", lty = 2)
+abline(v = 299, col = "grey50", lty = 3)
+```
+
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: Poisson
+
+---
+
+## Probabilidades e FDA: `dpois()` e `ppois()`
+
+\\(X \sim \text{Poisson}(\lambda)\\): \\(P(X = k) = e^{-\lambda}\lambda^k/k!\\), \\(E(X) = Var(X) = \lambda\\).
+
+```{r dpois}
+lamb <- 5
+dpois(4, lambda = lamb)                          # P(X = 4)
+exp(-lamb) * lamb^4 / factorial(4)               # conferindo pela fórmula
+sum(dpois(0:20, lambda = lamb))                  # quase 1: a série tem infinitos termos
+ppois(3, lambda = lamb)                          # P(X <= 3)
+```
+
+---
+
+## Simulação: `rpois()`
+
+```{r rpois}
+lamb <- 3
+y <- rpois(1000, lambda = lamb)
+round(rbind(simulado = table(factor(y, levels = 0:10)) / 1000,
+            teorico  = dpois(0:10, lamb)), 3)
+c(media = mean(y), variancia = var(y), lambda = lamb)
+```
+
+.caixa-discussao[
+Na Poisson, média e variância simuladas devem ficar **ambas** perto de \\(\lambda\\). Na Binomial, a variância
+fica **menor** que a média. Por quê?
+]
+
+---
+
+## Aproximação da Binomial pela Poisson
+
+\\(X \sim \text{Bin}(100;\ 0{,}05)\\) e a sua aproximação \\(\text{Poisson}(5)\\):
+
+.pull-left[
+```{r aprox-tab}
+k <- 0:10
+round(rbind(
+  binomial = dbinom(k, 100, 0.05),
+  poisson  = dpois(k, 5)), 3)[, 1:6]
+```
+
+]
+
+.pull-right[
+```{r aprox-plot, fig.height=3.0, fig.width=5, out.width="92%"}
+x <- 0:15
+plot(x, dbinom(x, 100, 0.05), pch = 19,
+     ylab = "probabilidade")
+points(x, dpois(x, 5), pch = 8, col = "red")
+legend("topright", c("Bin(100; 0,05)", "Poisson(5)"),
+       pch = c(19, 8), col = c("black", "red"))
+```
+
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 5: dados reais
+
+### 25–38 min
+
+---
+
+## Trimestres de queda do PIB: a Binomial serve?
+
+```{r dados-url, eval=FALSE}
+base <- "https://raydonal.github.io/matf14/Aulas2026/"
+tx <- read.csv(paste0(base, "pib_trimestral_taxas.csv"))
+```
+
+```{r dados-local, include=FALSE}
+tx <- read.csv("pib_trimestral_taxas.csv")
+```
+
+```{r quedas}
+qq <- subset(tx, componente == "PIB a preços de mercado" & grepl("imediatamente", taxa))
+qq$ano <- qq$trimestre %/% 100
+qq <- subset(qq, ano >= 1997 & ano <= 2025)
+quedas <- tapply(qq$valor_pct < 0, qq$ano, sum)      # quedas por ano
+p <- mean(qq$valor_pct < 0)
+round(rbind(observada = table(factor(quedas, levels = 0:4)) / length(quedas),
+            binomial  = dbinom(0:4, 4, p)), 3)
+c(var_observada = mean((quedas - mean(quedas))^2), var_binomial = 4 * p * (1 - p))
+```
+
+---
+
+## Meses de deflação: a Poisson serve?
+
+```{r deflacao}
+ipca <- read.csv("ipca_mensal.csv")                  # no Colab: paste0(base, "ipca_mensal.csv")
+ipca$ano <- as.integer(substr(ipca$data, 1, 4))
+ipca <- subset(ipca, ano >= 2000 & ano <= 2025)
+defl <- tapply(ipca$ipca_mensal_pct < 0, ipca$ano, sum)
+lam <- mean(defl)
+round(rbind(observada = table(factor(defl, levels = 0:4)) / length(defl),
+            poisson   = dpois(0:4, lam)), 3)
+c(media = lam, variancia = mean((defl - lam)^2))
+```
+
+.caixa-discussao[
+Nos dois casos, compare média e variância observadas com as do modelo. Por que uma comparação funciona e a outra não?
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 6: exercícios
+
+### 38–50 min
+
+---
+
+## Enunciados
+
+**1.** A probabilidade de um produto apresentar defeito é 0,01. Calcule a probabilidade de uma
+amostra de **200** cópias conter **no máximo dois** defeituosos: **a)** pela Binomial; **b)** pela
+aproximação de Poisson; **c)** por simulação.
+
+**2.** O número de mortes por ano causadas por uma doença, nos últimos 7 anos, foi
+\\(2, 3, 3, 2, 2, 1, 1\\). **a)** Que estimativa você usaria para \\(\lambda\\)? **b)** Com esse modelo, qual é a
+probabilidade de **4 ou mais** mortes no ano seguinte?
+
+**3.** Uma pesquisa entrevista 20 pessoas, e cada uma apoia uma proposta com probabilidade 0,6,
+independentemente. Simule 10.000 pesquisas e estime a probabilidade de a proposta ter **maioria
+absoluta** (11 ou mais apoiadores). Compare com o valor exato.
+
+---
+
+## Soluções
+
+```{r solucoes}
+# 1
+c(binomial = pbinom(2, 200, 0.01), poisson = ppois(2, 2),
+  simulado = mean(rbinom(100000, 200, 0.01) <= 2))
+
+# 2
+mortes <- c(2, 3, 3, 2, 2, 1, 1)
+lambda_hat <- mean(mortes)
+c(lambda_hat = lambda_hat, P_4_ou_mais = 1 - ppois(3, lambda_hat))
+
+# 3
+c(simulado = mean(rbinom(10000, 20, 0.6) >= 11), exato = 1 - pbinom(10, 20, 0.6))
+```
 
 ---
 
 ## Discussão do laboratório
 
-**1.** Compare a simulação de Bernoulli(0,3) com 100 repetições e a de 1.000 (rode você mesmo com
-`n=1000`). A diferença entre média simulada e teórica encolhe? Isso é a mesma Lei dos Grandes
-Números vista na Aula 13, agora aplicada a uma variável, não só a uma probabilidade de evento.
+**1.** No exercício 3, com 60% de apoio na população, a chance de a amostra de 20 pessoas **não**
+mostrar maioria é cerca de 25%. O que isso diz sobre pesquisas com amostras pequenas?
 
-**2.** No gráfico "Aproximação Binomial → Poisson", os pontos das duas distribuições quase se
-sobrepõem para \\(n=100\\), \\(p=0{,}05\\). Refaça mentalmente para \\(n=10\\), \\(p=0{,}5\\) (onde a aproximação
-é ruim), por que, nesse caso, \\(p\\) não é "pequeno" e a aproximação falha?
+**2.** No exercício 2, estimamos \\(\lambda\\) com **7** anos de dados. Se a média fosse 2 mas a variância
+dos 7 valores fosse 6, você manteria o modelo de Poisson?
 
-**3.** No exercício guiado, depois de responder ao item 3 (taxa de defeito de 0,5%): o \\(n\\) mínimo
-dobrou, mais que dobrou, ou menos que dobrou em relação ao caso de 1%? Sua intuição antes de rodar
-o código bateu com o resultado?
+**3.** Por que a simulação nunca dá **exatamente** o valor teórico? O que acontece com a diferença
+quando aumentamos o número de repetições?
+
 
 ---
 
@@ -174,4 +479,4 @@ class: inverse, center, middle
 
 # Próxima aula (16/11)
 
-## Aula de exercícios + revisão de cálculo (para a Unidade 4)
+## Aula de exercícios e revisão de cálculo

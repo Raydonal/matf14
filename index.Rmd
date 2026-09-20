@@ -20,7 +20,7 @@ suppressPackageStartupMessages({
 
 * 📘 **[Livro-texto](Livro/index.html)** — quatro capítulos (a mesma numeração da ementa oficial:
   descritiva, probabilidade, VA discretas, VA contínuas), mais três apêndices ([ferramentas de
-  trabalho em R e Python](Livro/ferramentas-rpython.html), revisão de cálculo, fórmulário), com
+  trabalho em R e Python](Livro/ferramentas-rpython.html), revisão de cálculo, formulário), com
   exemplos contextualizados em **economia** (inflação, mercado de trabalho, finanças, eleições).
 * 🎓 **Slides de aula (`Aulas2026/`)** — um deck por encontro do cronograma abaixo, estruturado em
   Provocação → Teoria → Aplicação → Discussão → Uso do R.
@@ -99,7 +99,7 @@ tibble(
   Cobertura = c("Unidade 1 (Estatística Descritiva)",
                 "Unidades 2 e 3 (Probabilidade; VA Discretas)",
                 "Unidade 4 (VA Contínuas)"),
-  Data = c("21/09/2026", "18/11/2026", "16/12/2026")
+  Data = c("23/09/2026", "18/11/2026", "16/12/2026")
 ) %>%
   kable(align = "c") %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
@@ -139,22 +139,22 @@ cronograma <- tribble(
   "09/09", "06", "Medidas de dispersão: AT, DP e CV",
     "[Aula](Aulas2026/MATF14-06.html) · [Cap. 1](Livro/dispersao.html) · [Lista 03](Listas2026/Lista03.pdf)",
   "14/09", "07", "[Laboratório] R para estatística descritiva",
-    "[Aula](Aulas2026/MATF14-07.html) · [Cap. 1](Livro/capítulo-1-estatística-descritiva.html)",
+    "[Aula](Aulas2026/MATF14-07.html) · [Apêndice A](Livro/ferramentas-rpython.html)",
   "16/09", "08", "Correlação. Assimetria e curtose",
     "[Aula](Aulas2026/MATF14-08.html) · [Cap. 1](Livro/correlacao.html), [assimetria/curtose](Livro/assimetria-curtose.html) · [Lista 04](Listas2026/Lista04.pdf)",
-  "**21/09**", "—", "**Prova 1** (Unidade 1)", "[Simulado — Lista 08](Listas2026/Lista08.pdf)",
-  "23/09", "09", "Espaço amostral e eventos. Revisão de conjuntos",
+  "21/09", "09", "Espaço amostral e eventos. Revisão de conjuntos",
     "[Aula](Aulas2026/MATF14-09.html) · [Cap. 2](Livro/espaco-amostral-eventos.html)",
-  "28/09", "10", "Propriedades de probabilidade. Métodos de contagem",
-    "[Aula](Aulas2026/MATF14-10.html) · [Cap. 2](Livro/conceitos-probabilidade.html) · [Lista 05](Listas2026/Lista05.pdf)",
-  "30/09", "11", "Probabilidade condicional",
-    "[Aula](Aulas2026/MATF14-11.html) · [Cap. 2](Livro/probabilidade-condicional.html)",
-  "05/10", "12", "Independência estatística",
-    "[Aula](Aulas2026/MATF14-12.html) · [Cap. 2](Livro/independencia.html) · [Lista 06](Listas2026/Lista06.pdf)",
+  "**23/09**", "—", "**Prova 1** (Unidade 1)", "[Simulado — Lista 08](Listas2026/Lista08.pdf)",
+  "28/09", "10", "Axiomas e propriedades de probabilidade. Métodos de contagem",
+    "[Aula](Aulas2026/MATF14-10.html) · [Cap. 2: axiomas](Livro/conceitos-probabilidade.html), [contagem](Livro/tecnicas-contagem.html) · [Lista 05](Listas2026/Lista05.pdf)",
+  "30/09", "11", "Probabilidade geométrica. Probabilidade condicional e tabelas de contingência",
+    "[Aula](Aulas2026/MATF14-11.html) · [Cap. 2: geométrica](Livro/probabilidade-geometrica.html), [condicional](Livro/probabilidade-condicional.html), [tabelas](Livro/tabelas-contingencia.html)",
+  "05/10", "12", "Independência estatística. Risco relativo e razão de chances",
+    "[Aula](Aulas2026/MATF14-12.html) · [Cap. 2: independência](Livro/independencia.html), [risco e chances](Livro/medidas-associacao.html) · [Lista 06](Listas2026/Lista06.pdf)",
   "07/10", "13", "[Laboratório] Simulação de probabilidade em R",
     "[Aula](Aulas2026/MATF14-13.html) · [Cap. 2](Livro/prob-introducao.html)",
   "14/10", "14", "Teorema de Bayes",
-    "[Aula](Aulas2026/MATF14-14.html) · [Cap. 2](Livro/teorema-de-bayes.html) · [Lista 07](Listas2026/Lista07.pdf)",
+    "[Aula](Aulas2026/MATF14-14.html) · [Cap. 2: prob. total](Livro/teoremas-basicos.html), [Bayes](Livro/teorema-de-bayes.html) · [Lista 07](Listas2026/Lista07.pdf)",
   "19/10", "15", "Revisão intermediária + exercícios: Unidades 1 e 2",
     "[Aula](Aulas2026/MATF14-15.html)",
   "21/10", "17", "Variável aleatória discreta: conceituação",
@@ -170,7 +170,7 @@ cronograma <- tribble(
   "11/11", "22", "[Laboratório] Simulação de VA discretas em R",
     "[Aula](Aulas2026/MATF14-22.html) · [Cap. 3](Livro/modelos-discretos.html)",
   "16/11", "23", "Aula de exercícios + Revisão de cálculo",
-    "[Aula](Aulas2026/MATF14-23.html) · [Apêndice](Livro/revisao-de-calculo.html)",
+    "[Aula](Aulas2026/MATF14-23.html) · [Apêndice B](Livro/revisao-de-calculo.html)",
   "**18/11**", "—", "**Prova 2** (Unidades 2 e 3)", "[Simulado — Lista 13](Listas2026/Lista13.pdf)",
   "23/11", "24", "Variável aleatória contínua: conceituação",
     "[Aula](Aulas2026/MATF14-24.html) · [Cap. 4](Livro/va-continua-conceito.html)",
@@ -185,7 +185,7 @@ cronograma <- tribble(
   "09/12", "29", "Aula de exercícios: Unidade 4",
     "[Aula](Aulas2026/MATF14-29.html)",
   "14/12", "30", "Revisão geral pré-Prova 3",
-    "[Aula](Aulas2026/MATF14-30.html) · [Fórmulário](Livro/formulario.html)",
+    "[Aula](Aulas2026/MATF14-30.html) · [Formulário](Livro/formulario.html)",
   "**16/12**", "—", "**Prova 3** (Unidade 4) — último dia letivo", "[Simulado — Lista 14](Listas2026/Lista14.pdf)"
 )
 
@@ -194,7 +194,7 @@ cronograma %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 14) %>%
   column_spec(1, width = "10%") %>%
   column_spec(4, width = "32%") %>%
-  row_spec(c(8, 23, 31), color = "red") %>%
+  row_spec(c(9, 23, 31), color = "red") %>%
   scroll_box(width = "100%")
 ```
 
@@ -227,9 +227,9 @@ Bases usadas no livro-texto e nos slides (`Aulas2026/`, `Livro/data/`):
 
 #### Software
 
-1. [An Introduction to R](http://cran.r-project.org)
-2. [RStudio](https://www.rstudio.com)
-3. [Python](http://www.python.org/)
+1. [R](https://cran.r-project.org)
+2. [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+3. [Python](https://www.python.org/) (ou [Anaconda](https://www.anaconda.com/download))
 
 ***
 

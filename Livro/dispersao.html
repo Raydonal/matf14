@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="pt-BR" xml:lang="pt-BR">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.5 Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação | Estatística Econômica I</title>
   <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
-  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.5 Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação | Estatística Econômica I" />
   <meta property="og:type" content="book" />
@@ -56,8 +56,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -129,6 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -175,85 +177,192 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a></li>
-<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a></li>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-estudar-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.1</b> Por que estudar Estatística?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="populacao-amostra.html"><a href="populacao-amostra.html#popula%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.1.2</b> População</a></li>
+<li class="chapter" data-level="1.1.3" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostra"><i class="fa fa-check"></i><b>1.1.3</b> Amostra</a></li>
+<li class="chapter" data-level="1.1.4" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-definir-bem-a-popula%C3%A7%C3%A3o-importa"><i class="fa fa-check"></i><b>1.1.4</b> Por que definir bem a população importa</a></li>
+<li class="chapter" data-level="1.1.5" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostragem"><i class="fa fa-check"></i><b>1.1.5</b> Amostragem</a></li>
+<li class="chapter" data-level="1.1.6" data-path="populacao-amostra.html"><a href="populacao-amostra.html#par%C3%A2metro-e-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.6</b> Parâmetro e estatística</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classifica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.2.1</b> Classificação</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#nem-todo-n%C3%BAmero-%C3%A9-uma-vari%C3%A1vel-quantitativa"><i class="fa fa-check"></i><b>1.2.2</b> Nem todo número é uma variável quantitativa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classificando-bases-reais"><i class="fa fa-check"></i><b>1.2.3</b> Classificando bases reais</a></li>
+<li class="chapter" data-level="1.2.4" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#exerc%C3%ADcios-resolvidos"><i class="fa fa-check"></i><b>1.2.4</b> Exercícios resolvidos</a></li>
+</ul></li>
 <li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
 <ul>
-<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-frequência"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas de frequência</a></li>
-<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#razão-e-taxa-de-variação"><i class="fa fa-check"></i><b>1.3.2</b> Razão e taxa de variação</a></li>
-<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.3</b> Tabelas de dupla entrada</a></li>
-<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis qualitativas</a></li>
-<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.5</b> Gráficos para variáveis quantitativas</a></li>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#distribui%C3%A7%C3%A3o-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.3.2</b> Distribuição de frequências</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#vari%C3%A1veis-quantitativas-classes"><i class="fa fa-check"></i><b>1.3.3</b> Variáveis quantitativas: classes</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#raz%C3%A3o-e-taxa-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.3.4</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.5</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.6" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gr%C3%A1ficos"><i class="fa fa-check"></i><b>1.3.6</b> Gráficos</a></li>
+<li class="chapter" data-level="1.3.7" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#histograma"><i class="fa fa-check"></i><b>1.3.7</b> Histograma</a></li>
+<li class="chapter" data-level="1.3.8" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#exerc%C3%ADcios-resolvidos-1"><i class="fa fa-check"></i><b>1.3.8</b> Exercícios resolvidos</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#média-a-partir-de-uma-tabela-de-frequências"><i class="fa fa-check"></i><b>1.4.1</b> Média a partir de uma tabela de frequências</a></li>
-<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.2</b> Um exemplo com dados da própria turma</a></li>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#moda"><i class="fa fa-check"></i><b>1.4.1</b> Moda</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#mediana"><i class="fa fa-check"></i><b>1.4.2</b> Mediana</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia"><i class="fa fa-check"></i><b>1.4.3</b> Média</a></li>
+<li class="chapter" data-level="1.4.4" data-path="tendencia-central.html"><a href="tendencia-central.html#sensibilidade-a-valores-extremos"><i class="fa fa-check"></i><b>1.4.4</b> Sensibilidade a valores extremos</a></li>
+<li class="chapter" data-level="1.4.5" data-path="tendencia-central.html"><a href="tendencia-central.html#quando-usar-cada-medida"><i class="fa fa-check"></i><b>1.4.5</b> Quando usar cada medida</a></li>
+<li class="chapter" data-level="1.4.6" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia-a-partir-de-uma-tabela-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.4.6</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.7" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-agrupados-em-classes-as-notas-de-uma-turma"><i class="fa fa-check"></i><b>1.4.7</b> Dados agrupados em classes: as notas de uma turma</a></li>
+<li class="chapter" data-level="1.4.8" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-reais-prefeitos-e-munic%C3%ADpios"><i class="fa fa-check"></i><b>1.4.8</b> Dados reais: prefeitos e municípios</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#quantis-distância-interquartílica-e-boxplot"><i class="fa fa-check"></i><b>1.5.1</b> Quantis, distância interquartílica e boxplot</a></li>
-<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quando-at-e-iqr-não-bastam-cidades-a-e-b"><i class="fa fa-check"></i><b>1.5.2</b> Quando AT e IQR não bastam: cidades A e B</a></li>
-<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.3</b> Desvio padrão, variância e coeficiente de variação</a></li>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#percentis"><i class="fa fa-check"></i><b>1.5.1</b> Percentis</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil"><i class="fa fa-check"></i><b>1.5.2</b> Quartis e distância interquartil</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#boxplot"><i class="fa fa-check"></i><b>1.5.3</b> Boxplot</a></li>
+<li class="chapter" data-level="1.5.4" data-path="dispersao.html"><a href="dispersao.html#amplitude-total"><i class="fa fa-check"></i><b>1.5.4</b> Amplitude total</a></li>
+<li class="chapter" data-level="1.5.5" data-path="dispersao.html"><a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o"><i class="fa fa-check"></i><b>1.5.5</b> Variância e desvio padrão</a></li>
+<li class="chapter" data-level="1.5.6" data-path="dispersao.html"><a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.5.6</b> Coeficiente de variação</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#aplicação-o-faturamento-das-empresas-cresceu-de-1998-para-1999"><i class="fa fa-check"></i><b>1.6.1</b> Aplicação: o faturamento das empresas cresceu de 1998 para 1999?</a></li>
-<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#aplicação-número-de-empregados-versus-faturamento"><i class="fa fa-check"></i><b>1.6.2</b> Aplicação: número de empregados versus faturamento</a></li>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#gr%C3%A1fico-de-dispers%C3%A3o"><i class="fa fa-check"></i><b>1.6.1</b> Gráfico de dispersão</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#defini%C3%A7%C3%A3o-e-c%C3%A1lculo"><i class="fa fa-check"></i><b>1.6.2</b> Definição e cálculo</a></li>
+<li class="chapter" data-level="1.6.3" data-path="correlacao.html"><a href="correlacao.html#interpreta%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.6.3</b> Interpretação</a></li>
+<li class="chapter" data-level="1.6.4" data-path="correlacao.html"><a href="correlacao.html#aplica%C3%A7%C3%B5es-com-as-bases"><i class="fa fa-check"></i><b>1.6.4</b> Aplicações com as bases</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a></li>
-<li class="chapter" data-level="1.8" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.8</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#assimetria"><i class="fa fa-check"></i><b>1.7.1</b> Assimetria</a></li>
+<li class="chapter" data-level="1.7.2" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#curtose"><i class="fa fa-check"></i><b>1.7.2</b> Curtose</a></li>
+<li class="chapter" data-level="1.7.3" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#exemplo-na-m%C3%A3o"><i class="fa fa-check"></i><b>1.7.3</b> Exemplo na mão</a></li>
+<li class="chapter" data-level="1.7.4" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#as-bases-do-cap%C3%ADtulo"><i class="fa fa-check"></i><b>1.7.4</b> As bases do capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="contas-nacionais.html"><a href="contas-nacionais.html"><i class="fa fa-check"></i><b>1.8</b> Aplicação: contas nacionais, regionais e monetárias</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="contas-nacionais.html"><a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib"><i class="fa fa-check"></i><b>1.8.1</b> Agregados macroeconômicos: as três óticas do PIB</a></li>
+<li class="chapter" data-level="1.8.2" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta"><i class="fa fa-check"></i><b>1.8.2</b> Contas trimestrais: quatro taxas para a mesma pergunta</a></li>
+<li class="chapter" data-level="1.8.3" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados"><i class="fa fa-check"></i><b>1.8.3</b> Contas regionais: desigualdade entre os estados</a></li>
+<li class="chapter" data-level="1.8.4" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento"><i class="fa fa-check"></i><b>1.8.4</b> Contas Econômicas Integradas: da produção ao financiamento</a></li>
+<li class="chapter" data-level="1.8.5" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez"><i class="fa fa-check"></i><b>1.8.5</b> Contas monetárias e financeiras: moeda e liquidez</a></li>
+<li class="chapter" data-level="1.8.6" data-path="contas-nacionais.html"><a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros"><i class="fa fa-check"></i><b>1.8.6</b> Modelo de insumo-produto: como os setores dependem uns dos outros</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.9</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Introdução: o que significa “probabilidade”</a></li>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Fenômenos aleatórios</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="prob-introducao.html"><a href="prob-introducao.html#probabilidade-te%C3%B3rica-e-probabilidade-emp%C3%ADrica"><i class="fa fa-check"></i><b>2.1.1</b> Probabilidade teórica e probabilidade empírica</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prob-introducao.html"><a href="prob-introducao.html#o-que-%C3%A9-afinal-uma-probabilidade-quatro-interpreta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.1.2</b> O que é, afinal, uma probabilidade? Quatro interpretações</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#operações-com-eventos-revisão-de-teoria-de-conjuntos"><i class="fa fa-check"></i><b>2.2.1</b> Operações com eventos (revisão de teoria de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#tipos-de-espa%C3%A7o-amostral"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de espaço amostral</a></li>
+<li class="chapter" data-level="2.2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#opera%C3%A7%C3%B5es-com-eventos-revis%C3%A3o-de-conjuntos"><i class="fa fa-check"></i><b>2.2.2</b> Operações com eventos (revisão de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#propriedades-das-opera%C3%A7%C3%B5es-e-leis-de-de-morgan"><i class="fa fa-check"></i><b>2.2.3</b> Propriedades das operações e leis de De Morgan</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Conceitos e propriedades de probabilidade</a>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Axiomas de Kolmogorov e propriedades da probabilidade</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#modelo-de-espaço-equiprovável-e-métodos-de-contagem"><i class="fa fa-check"></i><b>2.3.1</b> Modelo de espaço equiprovável e métodos de contagem</a></li>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#por-que-precisamos-de-axiomas"><i class="fa fa-check"></i><b>2.3.1</b> Por que precisamos de axiomas</a></li>
+<li class="chapter" data-level="2.3.2" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#espa%C3%A7o-de-probabilidade"><i class="fa fa-check"></i><b>2.3.2</b> Espaço de probabilidade</a></li>
+<li class="chapter" data-level="2.3.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#os-axiomas-de-kolmogorov"><i class="fa fa-check"></i><b>2.3.3</b> Os axiomas de Kolmogorov</a></li>
+<li class="chapter" data-level="2.3.4" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#consequ%C3%AAncias-dos-axiomas-com-demonstra%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.3.4</b> Consequências dos axiomas (com demonstração)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#como-atribuir-probabilidades"><i class="fa fa-check"></i><b>2.3.5</b> Como atribuir probabilidades</a></li>
+<li class="chapter" data-level="2.3.6" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#defini%C3%A7%C3%A3o-cl%C3%A1ssica"><i class="fa fa-check"></i><b>2.3.6</b> Definição clássica</a></li>
+<li class="chapter" data-level="2.3.7" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#probabilidades-a-partir-de-tabelas"><i class="fa fa-check"></i><b>2.3.7</b> Probabilidades a partir de tabelas</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.4</b> Probabilidade condicional</a></li>
-<li class="chapter" data-level="2.5" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.5</b> Teoremas básicos de probabilidade</a>
+<li class="chapter" data-level="2.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html"><i class="fa fa-check"></i><b>2.4</b> Técnicas de contagem e probabilidade clássica</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.5.1</b> Teorema da probabilidade total</a></li>
+<li class="chapter" data-level="2.4.1" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve"><i class="fa fa-check"></i><b>2.4.1</b> Quando contar resolve, e quando não resolve</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo"><i class="fa fa-check"></i><b>2.4.2</b> Princípios aditivo e multiplicativo</a></li>
+<li class="chapter" data-level="2.4.3" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.4.3</b> Os quatro tipos de seleção</a></li>
+<li class="chapter" data-level="2.4.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.4</b> Permutações</a></li>
+<li class="chapter" data-level="2.4.5" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#arranjos"><i class="fa fa-check"></i><b>2.4.5</b> Arranjos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.6</b> Combinações</a></li>
+<li class="chapter" data-level="2.4.7" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos"><i class="fa fa-check"></i><b>2.4.7</b> Da contagem à probabilidade: exemplos desenvolvidos</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.6</b> Independência estatística</a></li>
-<li class="chapter" data-level="2.7" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.7</b> Teorema de Bayes</a></li>
-<li class="chapter" data-level="2.8" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.8</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="2.5" data-path="probabilidade-geometrica.html"><a href="probabilidade-geometrica.html"><i class="fa fa-check"></i><b>2.5</b> Probabilidade geométrica</a></li>
+<li class="chapter" data-level="2.6" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.6</b> Probabilidade condicional</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html#regra-da-multiplica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.6.1</b> Regra da multiplicação</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html"><i class="fa fa-check"></i><b>2.7</b> Tabelas de contingência: probabilidades conjuntas, marginais e condicionais</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#mercado-de-trabalho-brasileiro-sexo-e-condi%C3%A7%C3%A3o-na-for%C3%A7a-de-trabalho"><i class="fa fa-check"></i><b>2.7.1</b> Mercado de trabalho brasileiro: sexo e condição na força de trabalho</a></li>
+<li class="chapter" data-level="2.7.2" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#taxa-ou-n%C3%ADvel-o-evento-condicionante-muda-a-resposta"><i class="fa fa-check"></i><b>2.7.2</b> Taxa ou nível? O evento condicionante muda a resposta</a></li>
+<li class="chapter" data-level="2.7.3" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#a-fal%C3%A1cia-da-invers%C3%A3o-com-dados-reais-escolaridade-e-desocupa%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.3</b> A falácia da inversão com dados reais: escolaridade e desocupação</a></li>
+<li class="chapter" data-level="2.7.4" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#confundimento-e-composi%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.4</b> Confundimento e composição</a></li>
+<li class="chapter" data-level="2.7.5" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#o-paradoxo-de-simpson"><i class="fa fa-check"></i><b>2.7.5</b> O paradoxo de Simpson</a></li>
+<li class="chapter" data-level="2.7.6" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#independ%C3%AAncia-em-tabelas"><i class="fa fa-check"></i><b>2.7.6</b> Independência em tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="medidas-associacao.html"><a href="medidas-associacao.html"><i class="fa fa-check"></i><b>2.8</b> Risco, chance e razão de chances</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="medidas-associacao.html"><a href="medidas-associacao.html#preval%C3%AAncia-e-incid%C3%AAncia"><i class="fa fa-check"></i><b>2.8.1</b> Prevalência e incidência</a></li>
+<li class="chapter" data-level="2.8.2" data-path="medidas-associacao.html"><a href="medidas-associacao.html#risco-diferen%C3%A7a-de-riscos-e-risco-relativo"><i class="fa fa-check"></i><b>2.8.2</b> Risco, diferença de riscos e risco relativo</a></li>
+<li class="chapter" data-level="2.8.3" data-path="medidas-associacao.html"><a href="medidas-associacao.html#chance-odds"><i class="fa fa-check"></i><b>2.8.3</b> Chance (odds)</a></li>
+<li class="chapter" data-level="2.8.4" data-path="medidas-associacao.html"><a href="medidas-associacao.html#raz%C3%A3o-de-chances-odds-ratio"><i class="fa fa-check"></i><b>2.8.4</b> Razão de chances (odds ratio)</a></li>
+<li class="chapter" data-level="2.8.5" data-path="medidas-associacao.html"><a href="medidas-associacao.html#exemplo-com-dados-reais-sexo-e-mercado-de-trabalho"><i class="fa fa-check"></i><b>2.8.5</b> Exemplo com dados reais: sexo e mercado de trabalho</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.9</b> Independência estatística</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="independencia.html"><a href="independencia.html#tr%C3%AAs-ou-mais-eventos"><i class="fa fa-check"></i><b>2.9.1</b> Três ou mais eventos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.10</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#parti%C3%A7%C3%A3o-e-teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.10.1</b> Partição e teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.11</b> Teorema de Bayes</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#eventos-raros-e-falsos-alarmes"><i class="fa fa-check"></i><b>2.11.1</b> Eventos raros e falsos alarmes</a></li>
+<li class="chapter" data-level="2.11.2" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#sensibilidade-especificidade-e-valores-preditivos"><i class="fa fa-check"></i><b>2.11.2</b> Sensibilidade, especificidade e valores preditivos</a></li>
+<li class="chapter" data-level="2.11.3" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#bayes-na-forma-de-chances"><i class="fa fa-check"></i><b>2.11.3</b> Bayes na forma de chances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.12</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
 <li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#definição"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
-<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperança-e-da-variância"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#defini%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperan%C3%A7a-e-da-vari%C3%A2ncia"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
 <li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
-<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
-<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
-<li class="chapter" data-level="3.6" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.6</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="3.6" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html"><i class="fa fa-check"></i><b>3.6</b> Aplicação macroeconômica: recessões e deflação</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-trimestres-de-queda-do-pib-em-um-ano-binomial-e-depend%C3%AAncia"><i class="fa fa-check"></i><b>3.6.1</b> Quantos trimestres de queda do PIB em um ano? Binomial e dependência</a></li>
+<li class="chapter" data-level="3.6.2" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-meses-de-defla%C3%A7%C3%A3o-em-um-ano-poisson"><i class="fa fa-check"></i><b>3.6.2</b> Quantos meses de deflação em um ano? Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.7</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a></li>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#probabilidade-como-%C3%A1rea"><i class="fa fa-check"></i><b>4.1.1</b> Probabilidade como área</a></li>
+<li class="chapter" data-level="4.1.2" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#exemplo-distribui%C3%A7%C3%A3o-triangular"><i class="fa fa-check"></i><b>4.1.2</b> Exemplo: distribuição triangular</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
 <li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
 <li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
-<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
-<li class="chapter" data-level="4.4.3" data-path="modelos-continuos.html"><a href="modelos-continuos.html#a-regra-empírica-6895997"><i class="fa fa-check"></i><b>4.4.3</b> A regra empírica (68–95–99,7)</a></li>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.5</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="4.5" data-path="va-continua-macro.html"><a href="va-continua-macro.html"><i class="fa fa-check"></i><b>4.5</b> Aplicação: o crescimento do PIB é normal?</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="va-continua-macro.html"><a href="va-continua-macro.html#crescimento-trimestral-do-pib"><i class="fa fa-check"></i><b>4.5.1</b> Crescimento trimestral do PIB</a></li>
+<li class="chapter" data-level="4.5.2" data-path="va-continua-macro.html"><a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal"><i class="fa fa-check"></i><b>4.5.2</b> Inflação mensal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.6</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apêndices</b></span></li>
 <li class="chapter" data-level="A" data-path="ferramentas-rpython.html"><a href="ferramentas-rpython.html"><i class="fa fa-check"></i><b>A</b> Ferramentas de Trabalho: R e Python</a>
@@ -274,8 +383,8 @@ div.csl-indent {
 <li class="chapter" data-level="B.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>B.3</b> Integrais: o essencial</a>
 <ul>
 <li class="chapter" data-level="B.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>B.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
-<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-cálculo-versão-prática"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
-<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impróprias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-c%C3%A1lculo-vers%C3%A3o-pr%C3%A1tica"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impr%C3%B3prias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>B.4</b> Exercício de fixação</a></li>
 </ul></li>
@@ -285,9 +394,10 @@ div.csl-indent {
 <li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
 <li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
 <li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
-<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Apêndice B: Cálculo (resumo)</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Cálculo (resumo do Apêndice B)</a></li>
 <li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
 <li class="divider"></li>
 <li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
 
@@ -310,213 +420,453 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="dispersao" class="section level2 hasAnchor" number="1.5">
 <h2><span class="header-section-number">1.5</span> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação<a href="dispersao.html#dispersao" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Duas distribuições podem ter a mesma média e serem completamente diferentes na variabilidade dos
-dados em torno dela. Medir “quão espalhados” os dados estão é tão importante quanto medir o centro,
-e é, sistematicamente, a parte que relatórios populares de economia mais omitem.</p>
-<blockquote>
-<p>Duas ações têm o mesmo retorno médio anual de 12%. Uma delas variou entre 8% e 16% ao longo dos
-últimos 5 anos; a outra, entre -30% e 45%. Você as consideraria igualmente atraentes?</p>
-</blockquote>
-<blockquote>
-<p>Dois municípios têm a mesma renda per capita média. Em um deles, quase todo mundo ganha perto
-dessa média; no outro, há uma elite que ganha 50 vezes a média e uma maioria que ganha bem menos.
-A renda média, sozinha, distingue esses dois cenários?</p>
-</blockquote>
-<p><strong>Amplitude total.</strong> A diferença entre o maior e o menor valor:</p>
+<p>Medidas de tendência central resumem os dados com um único valor, mas não informam o quanto eles
+<strong>variam</strong>. Duas cidades podem ter a mesma temperatura média e climas muito diferentes; duas ações,
+o mesmo retorno médio e riscos muito diferentes. Esta seção apresenta as <strong>separatrizes</strong> (quantis,
+quartis, boxplot) e as medidas de <strong>dispersão</strong> (amplitude, variância, desvio padrão, coeficiente de
+variação).</p>
+<div id="percentis" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Percentis<a href="dispersao.html#percentis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A mediana deixa 50% dos dados abaixo e 50% acima: é o <strong>percentil 50</strong>. De forma geral:</p>
+<div class="caixa-aplicacao">
+<p>O <strong>percentil <span class="math inline">\(P\)</span>%</strong> é o número tal que <span class="math inline">\(P\)</span>% dos valores observados estão abaixo dele.</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-bebe"></span>
+<img src="images/percentil_bebe_noticia.png" alt="Percentil nas notícias. Fonte: O Globo (12/04/2023)." width="60%" />
+<p class="caption">
+Figura 1.27: Percentil nas notícias. Fonte: O Globo (12/04/2023).
+</p>
+</div>
+<p>Um bebê de <strong>percentil 6</strong> em tamanho é aquele em que 94% dos bebês na mesma idade gestacional são
+maiores. Não é “6% do tamanho normal” nem “6% menor que a média”.</p>
+<p><strong>Algoritmo geral do percentil <span class="math inline">\(P\)</span>%</strong> (o usado neste curso):</p>
+<ol style="list-style-type: decimal">
+<li>Ordene os <span class="math inline">\(n\)</span> valores em ordem crescente.</li>
+<li>Calcule <span class="math inline">\(k = P \cdot n / 100\)</span>.</li>
+<li>Se <span class="math inline">\(k\)</span> for <strong>inteiro</strong>, o percentil é a <strong>média</strong> dos valores nas posições <span class="math inline">\(k\)</span> e <span class="math inline">\(k + 1\)</span>; se <strong>não</strong>
+for inteiro, arredonde <span class="math inline">\(k\)</span> <strong>para cima</strong> e use o valor nessa posição.</li>
+</ol>
+<p><strong>Exemplo.</strong> Dados ordenados <span class="math inline">\(18, 21, 23, 24, 28\)</span> (<span class="math inline">\(n = 5\)</span>):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Percentil</th>
+<th align="center"><span class="math inline">\(k = P \cdot n/100\)</span></th>
+<th align="left">Regra</th>
+<th align="center">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">25</td>
+<td align="center">1,25</td>
+<td align="left">não inteiro: posição 2</td>
+<td align="center">21</td>
+</tr>
+<tr class="even">
+<td align="center">40</td>
+<td align="center">2</td>
+<td align="left">inteiro: média das posições 2 e 3</td>
+<td align="center"><span class="math inline">\((21 + 23)/2 = 22\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">50</td>
+<td align="center">2,5</td>
+<td align="left">não inteiro: posição 3</td>
+<td align="center">23</td>
+</tr>
+<tr class="even">
+<td align="center">75</td>
+<td align="center">3,75</td>
+<td align="left">não inteiro: posição 4</td>
+<td align="center">24</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="dispersao.html#cb15-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">28</span>)</span>
+<span id="cb15-2"><a href="dispersao.html#cb15-2" tabindex="-1"></a><span class="fu">quantile</span>(x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.40</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>), <span class="at">type =</span> <span class="dv">2</span>)  <span class="co"># type = 2 reproduz o algoritmo acima</span></span></code></pre></div>
+<pre><code>## 25% 40% 50% 75% 
+##  21  22  23  24</code></pre>
+<div class="caixa-r">
+<p><strong>Uso do R.</strong> A função <code>quantile()</code> tem nove algoritmos (<code>type = 1</code> a <code>9</code>). O padrão (<code>type = 7</code>)
+interpola entre posições e pode dar valores ligeiramente diferentes dos da conta à mão. Para conferir
+exercícios deste curso, use <code>type = 2</code>.</p>
+</div>
+</div>
+<div id="quartis-e-distância-interquartil" class="section level3 hasAnchor" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Quartis e distância interquartil<a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Os <strong>quartis</strong> dividem os dados ordenados em quatro partes: <span class="math inline">\(Q_1\)</span> (percentil 25), <span class="math inline">\(Q_2\)</span> (mediana) e
+<span class="math inline">\(Q_3\)</span> (percentil 75). Leituras equivalentes: 75% dos valores estão acima de <span class="math inline">\(Q_1\)</span>; 25% estão acima de
+<span class="math inline">\(Q_3\)</span>; 50% estão entre <span class="math inline">\(Q_1\)</span> e <span class="math inline">\(Q_3\)</span>.</p>
+<p>A <strong>distância interquartil</strong> mede a variabilidade dos 50% centrais:</p>
+<p><span class="math display">\[
+IQR = Q_3 - Q_1.
+\]</span></p>
+<p><strong>Exemplo: duas turmas com <span class="math inline">\(n = 8\)</span>.</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="13%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Turma</th>
+<th align="left">Notas ordenadas</th>
+<th align="center"><span class="math inline">\(Q_1\)</span> (<span class="math inline">\(k = 2\)</span>)</th>
+<th align="center">Mediana (<span class="math inline">\(k = 4\)</span>)</th>
+<th align="center"><span class="math inline">\(Q_3\)</span> (<span class="math inline">\(k = 6\)</span>)</th>
+<th align="center"><span class="math inline">\(IQR\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">X</td>
+<td align="left">5, 6, 6, 7, 7, 8, 8, 9</td>
+<td align="center"><span class="math inline">\((6+6)/2 = 6\)</span></td>
+<td align="center"><span class="math inline">\((7+7)/2 = 7\)</span></td>
+<td align="center"><span class="math inline">\((8+8)/2 = 8\)</span></td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">Y</td>
+<td align="left">2, 3, 5, 7, 7, 9, 10, 10</td>
+<td align="center"><span class="math inline">\((3+5)/2 = 4\)</span></td>
+<td align="center"><span class="math inline">\((7+7)/2 = 7\)</span></td>
+<td align="center"><span class="math inline">\((9+10)/2 = 9{,}5\)</span></td>
+<td align="center">5,5</td>
+</tr>
+</tbody>
+</table>
+<p>As duas turmas têm a mesma mediana, mas os 50% centrais da turma Y ocupam uma faixa quase três vezes
+maior: a turma Y é mais heterogênea.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-salvador-quartis"></span>
+<img src="images/temperatura_salvador_quartis.png" alt="Temperatura em Salvador, agosto de 2024: Q1 = 23,2 °C, Q2 = 24,1 °C e Q3 = 25,6 °C. Fonte: INMET." width="50%" />
+<p class="caption">
+Figura 1.28: Temperatura em Salvador, agosto de 2024: Q1 = 23,2 °C, Q2 = 24,1 °C e Q3 = 25,6 °C. Fonte: INMET.
+</p>
+</div>
+<p>Em Salvador, 50% das temperaturas registradas em agosto de 2024 ficaram entre 23,2 °C e 25,6 °C:
+<span class="math inline">\(IQR = 2{,}4\)</span> °C. Como <span class="math inline">\(Q_2 - Q_1 = 0{,}9\)</span> e <span class="math inline">\(Q_3 - Q_2 = 1{,}5\)</span>, a metade superior está mais espalhada.</p>
+<p><strong>Exercício 7.</strong> Duas notícias usam percentis (abaixo). A definição de “percentil 50” da primeira
+está correta? O que significa o percentil da segunda?</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-percentis-noticias"></span>
+<img src="images/percentil50_noticia_terra.png" alt="Percentis em notícias. Fontes: Terra; BBC News Brasil (22/08/2022)." width="48%" /><img src="images/percentil_superdotacao_bbc.png" alt="Percentis em notícias. Fontes: Terra; BBC News Brasil (22/08/2022)." width="48%" />
+<p class="caption">
+Figura 1.29: Percentis em notícias. Fontes: Terra; BBC News Brasil (22/08/2022).
+</p>
+</div>
+<div class="caixa-resposta">
+<p><strong>Primeira notícia:</strong> errada. O percentil 50 é a <strong>mediana</strong>, não a média (a própria notícia descreve a
+mediana logo em seguida: “metade dos bebês pesa mais e a outra metade, menos”). <strong>Segunda:</strong> percentil
+acima de 97 quer dizer pontuação maior que a de 97% das pessoas avaliadas; só cerca de 3% ficam acima.</p>
+</div>
+</div>
+<div id="boxplot" class="section level3 hasAnchor" number="1.5.3">
+<h3><span class="header-section-number">1.5.3</span> Boxplot<a href="dispersao.html#boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O <strong>boxplot</strong> (diagrama de caixa) é construído a partir dos quartis e mostra, ao mesmo tempo,
+tendência central, variabilidade, simetria e valores atípicos.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-boxplot-anatomia"></span>
+<img src="images/boxplot_anatomia.png" alt="Elementos do boxplot. Fonte: notas de aula de MAT236 (UFBA)." width="45%" />
+<p class="caption">
+Figura 1.30: Elementos do boxplot. Fonte: notas de aula de MAT236 (UFBA).
+</p>
+</div>
+<p><strong>Construção passo a passo:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Calcule <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span>, <span class="math inline">\(Q_3\)</span> e <span class="math inline">\(IQR = Q_3 - Q_1\)</span>.</li>
+<li>Calcule os <strong>limites</strong>: <span class="math inline">\(LI = Q_1 - 1{,}5 \times IQR\)</span> e <span class="math inline">\(LS = Q_3 + 1{,}5 \times IQR\)</span>.</li>
+<li>Desenhe a caixa de <span class="math inline">\(Q_1\)</span> a <span class="math inline">\(Q_3\)</span>, com uma linha na mediana.</li>
+<li>Os <strong>bigodes</strong> vão da caixa até o menor e o maior valor observado <strong>dentro</strong> de <span class="math inline">\([LI, LS]\)</span>.</li>
+<li>Cada valor fora de <span class="math inline">\([LI, LS]\)</span> é marcado individualmente: é uma <strong>observação atípica</strong> (outlier).</li>
+</ol>
+<p><strong>Exemplo: tempo de aprovação de crédito (dias) em duas agências.</strong></p>
+<ul>
+<li>Agência A: <span class="math inline">\(3, 4, 5, 5, 6, 6, 7, 8\)</span>. <span class="math inline">\(Q_1 = 4{,}5\)</span>, <span class="math inline">\(Q_2 = 5{,}5\)</span>, <span class="math inline">\(Q_3 = 6{,}5\)</span>, <span class="math inline">\(IQR = 2\)</span>, limites <span class="math inline">\([1{,}5;\ 9{,}5]\)</span>: sem outliers.</li>
+<li>Agência B: <span class="math inline">\(2, 3, 3, 4, 4, 5, 6, 45\)</span>. <span class="math inline">\(Q_1 = 3\)</span>, <span class="math inline">\(Q_2 = 4\)</span>, <span class="math inline">\(Q_3 = 5{,}5\)</span>, <span class="math inline">\(IQR = 2{,}5\)</span>, limites <span class="math inline">\([-0{,}75;\ 9{,}25]\)</span>:
+45 é outlier e o bigode superior para em 6.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-agencias"></span>
+<img src="livro-matf14_files/figure-html/fig-agencias-1.png" alt="Boxplots dos tempos de aprovação nas duas agências." width="65%" />
+<p class="caption">
+Figura 1.31: Boxplots dos tempos de aprovação nas duas agências.
+</p>
+</div>
+<p>Pela média, B leva 9 dias e A, 5,5; mas 7 dos 8 processos de B levaram no máximo 6 dias. A mediana e o
+<span class="math inline">\(IQR\)</span> descrevem o processo <strong>típico</strong> sem serem distorcidos pelo caso de 45 dias.</p>
+<p>A posição da mediana dentro da caixa e o comprimento dos bigodes revelam a forma da distribuição: em
+uma distribuição <strong>assimétrica à direita</strong>, a mediana fica mais perto de <span class="math inline">\(Q_1\)</span>, o bigode direito é mais
+longo e os outliers aparecem à direita.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-boxplot-formas"></span>
+<img src="livro-matf14_files/figure-html/fig-boxplot-formas-1.png" alt="Histogramas e boxplots de distribuições assimétrica à esquerda, simétrica e assimétrica à direita (dados simulados)." width="100%" />
+<p class="caption">
+Figura 1.32: Histogramas e boxplots de distribuições assimétrica à esquerda, simétrica e assimétrica à direita (dados simulados).
+</p>
+</div>
+<p><strong>Boxplots lado a lado</strong> são a forma mais eficiente de comparar grupos:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="dispersao.html#cb17-1" tabindex="-1"></a><span class="fu">ggplot</span>(empresas, <span class="fu">aes</span>(<span class="at">x =</span> porte, <span class="at">y =</span> faturamento99, <span class="at">fill =</span> porte)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="dispersao.html#cb17-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">outlier.color =</span> <span class="st">&quot;#c0392b&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="dispersao.html#cb17-3" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#cfe8ef&quot;</span>, <span class="st">&quot;#7fb8cf&quot;</span>, <span class="st">&quot;#3d7a99&quot;</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> num_br) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="dispersao.html#cb17-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Porte&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Faturamento em 1999&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div>
+<p><img src="livro-matf14_files/figure-html/boxplot-porte-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-boxplot-ft"></span>
+<img src="images/boxplot_temperatura_global_ft.png" alt="Boxplots das anomalias diárias de temperatura global, um por ano: a mediana sobe desde 1980. Fonte: Financial Times." width="70%" />
+<p class="caption">
+Figura 1.33: Boxplots das anomalias diárias de temperatura global, um por ano: a mediana sobe desde 1980. Fonte: Financial Times.
+</p>
+</div>
+<div class="caixa-economia">
+<p><strong>Boxplot não é gráfico de velas.</strong> Em finanças, o gráfico de velas (candlestick) também tem “caixa e
+hastes”, mas o corpo vai do preço de <strong>abertura</strong> ao de <strong>fechamento</strong> de um período, as hastes vão ao
+<strong>máximo</strong> e ao <strong>mínimo</strong>, e a cor indica alta ou baixa. O boxplot resume a <strong>distribuição</strong> de muitos
+valores; a vela resume a <strong>trajetória</strong> de um preço em um período.</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-candlestick"></span>
+<img src="images/candlestick_nasdaq.jpg" alt="Gráfico de velas do índice NASDAQ e a leitura de uma vela. Fontes: Investing.com; LiteFinance." width="45%" /><img src="images/candlestick_vs_boxplot.jpg" alt="Gráfico de velas do índice NASDAQ e a leitura de uma vela. Fontes: Investing.com; LiteFinance." width="45%" />
+<p class="caption">
+Figura 1.34: Gráfico de velas do índice NASDAQ e a leitura de uma vela. Fontes: Investing.com; LiteFinance.
+</p>
+</div>
+<p><strong>Exercício 8 (FUVEST 2018).</strong> O gráfico mostra as notas no vestibular da USP em 2018: em azul, a nota
+final no processo seletivo (com bônus); em rosa, a nota na Fuvest sem bônus. <strong>a)</strong> Qual grupo e tipo de
+nota tem a mediana mais alta? <strong>b)</strong> E a menor variabilidade? <strong>c)</strong> Entre as notas do processo seletivo,
+qual grupo teve a nota mais alta? <strong>d)</strong> Entre as notas Fuvest sem bônus, qual grupo tem o menor percentil
+25? <strong>e)</strong> O bônus ajudou os bolsistas?</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-fuvest"></span>
+<img src="images/boxplot_fuvest2018.png" alt="Notas no vestibular da Fuvest 2018. Fonte: Jornal da USP." width="60%" />
+<p class="caption">
+Figura 1.35: Notas no vestibular da Fuvest 2018. Fonte: Jornal da USP.
+</p>
+</div>
+<div class="caixa-resposta">
+<p><strong>a)</strong> A nota final do SISU (mediana perto de 700). <strong>b)</strong> Também o SISU (caixa mais baixa, embora com
+muitos outliers). <strong>c)</strong> FUVEST (Demais): o ponto mais alto, perto de 940; a pergunta é sobre a maior
+nota, não sobre a maior mediana. <strong>d)</strong> FUVEST (EP+PPI): <span class="math inline">\(Q_1\)</span> perto de 340. <strong>e)</strong> Entre os bolsistas, a
+caixa com bônus está acima da caixa sem bônus (medianas de cerca de 520 e 445): o bônus elevou as
+notas finais. Saber se os bolsistas tiveram bom desempenho <strong>depois</strong>, na graduação, exigiria outros
+dados.</p>
+</div>
+</div>
+<div id="amplitude-total" class="section level3 hasAnchor" number="1.5.4">
+<h3><span class="header-section-number">1.5.4</span> Amplitude total<a href="dispersao.html#amplitude-total" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
 AT = x_{\max} - x_{\min}.
 \]</span></p>
-<p>É simples, mas extremamente sensível a um único valor extremo, uma única empresa atípica infla a
-<span class="math inline">\(AT\)</span> inteira sem dizer nada sobre as outras 105.</p>
-<div id="quantis-distância-interquartílica-e-boxplot" class="section level3 hasAnchor" number="1.5.1">
-<h3><span class="header-section-number">1.5.1</span> Quantis, distância interquartílica e boxplot<a href="dispersao.html#quantis-distância-interquartílica-e-boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>O <strong>quantil (ou percentil) de ordem <span class="math inline">\(p\)</span></strong> (<span class="math inline">\(0&lt;p&lt;1\)</span>), <span class="math inline">\(Q_p\)</span>, é o valor abaixo do qual está uma
-proporção <span class="math inline">\(p\)</span> dos dados. Os <strong>quartis</strong> (<span class="math inline">\(Q_1=Q_{0{,}25}\)</span>, <span class="math inline">\(Q_2=Q_{0{,}50}=\)</span> mediana,
-<span class="math inline">\(Q_3=Q_{0{,}75}\)</span>) dividem a amostra ordenada em quatro partes iguais. A mediana (Seção
-<a href="tendencia-central.html#tendencia-central">1.4</a>) é só o caso particular <span class="math inline">\(p=0{,}5\)</span> de um <strong>algoritmo geral</strong>, válido para
-qualquer percentil, que vale a pena registrar em três passos:</p>
-<ol style="list-style-type: decimal">
-<li>Ordene os <span class="math inline">\(n\)</span> valores em ordem crescente.</li>
-<li>Calcule <span class="math inline">\(k = \dfrac{P \cdot n}{100}\)</span>, em que <span class="math inline">\(P\)</span> é o percentil desejado (por exemplo, <span class="math inline">\(P=25\)</span>
-para <span class="math inline">\(Q_1\)</span>).</li>
-<li>Se <span class="math inline">\(k\)</span> for inteiro, o percentil é a <strong>média</strong> entre o <span class="math inline">\(k\)</span>-ésimo e o <span class="math inline">\((k+1)\)</span>-ésimo valor
-ordenado; se <span class="math inline">\(k\)</span> <strong>não</strong> for inteiro, arredonde <span class="math inline">\(k\)</span> para cima e o percentil é o valor que ocupa
-essa posição.</li>
-</ol>
-<div class="caixa-aplicacao"><strong>Aplicação: calculando \(Q_{25}\) e \(Q_{50}\) na mão</strong>
+<p>É simples, mas usa só <strong>dois</strong> valores e é muito influenciada por outliers. Na manchete “variação
+térmica de 16 °C” (abaixo), o número é uma amplitude total.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cnn-termica"></span>
+<img src="images/dispersao_variacao_termica_cnn.png" alt="Amplitude total nas notícias. Fonte: CNN Brasil." width="60%" />
+<p class="caption">
+Figura 1.36: Amplitude total nas notícias. Fonte: CNN Brasil.
+</p>
 </div>
-<p>Para os dados já ordenados <span class="math inline">\(18, 21, 23, 24, 28\)</span> (<span class="math inline">\(n=5\)</span>):</p>
-<ul>
-<li><span class="math inline">\(Q_{50}\)</span>: <span class="math inline">\(k = 50\times5/100 = 2{,}5\)</span>, não inteiro, arredonda para cima <span class="math inline">\(\to\)</span> posição 3
-<span class="math inline">\(\to Q_{50}=23\)</span> (a mediana, coerente com a fórmula da Seção <a href="tendencia-central.html#tendencia-central">1.4</a>).</li>
-<li><span class="math inline">\(Q_{25}\)</span>: <span class="math inline">\(k = 25\times5/100 = 1{,}25\)</span>, não inteiro, arredonda para cima <span class="math inline">\(\to\)</span> posição 2
-<span class="math inline">\(\to Q_{25}=21\)</span>.</li>
-</ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="dispersao.html#cb36-1" tabindex="-1"></a>x_pct <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">28</span>)</span>
-<span id="cb36-2"><a href="dispersao.html#cb36-2" tabindex="-1"></a><span class="fu">quantile</span>(x_pct, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>), <span class="at">type =</span> <span class="dv">2</span>)  <span class="co"># type=2: replica o algoritmo dos 3 passos</span></span></code></pre></div>
-<pre><code>## 25% 50% 
-##  21  23</code></pre>
-<p>Algumas leituras equivalentes de quartil, úteis como checagem rápida na hora da prova: “<span class="math inline">\(Q_1\)</span> é o
-valor abaixo do qual estão 25% dos dados” é o mesmo que dizer “acima de <span class="math inline">\(Q_1\)</span> estão 75% dos dados”;
-“entre <span class="math inline">\(Q_1\)</span> e <span class="math inline">\(Q_3\)</span> estão os 50% centrais dos dados” é o mesmo que dizer que <span class="math inline">\(Q_1\)</span> e <span class="math inline">\(Q_3\)</span> marcam,
-respectivamente, onde termina o primeiro quarto e onde começa o último quarto da amostra ordenada.</p>
-<p>A <strong>distância (ou amplitude) interquartílica</strong></p>
-<p><span class="math display">\[
-IQR = Q_3 - Q_1
-\]</span></p>
-<p>mede a dispersão dos 50% centrais dos dados, sendo por isso muito mais <strong>robusta a valores
-extremos</strong> que a amplitude total, não depende dos valores mínimo e máximo.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="dispersao.html#cb38-1" tabindex="-1"></a><span class="fu">quantile</span>(empresas<span class="sc">$</span>faturamento99, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, <span class="dv">1</span>))</span></code></pre></div>
-<pre><code>##       0%      25%      50%      75%     100% 
-##  74392.0 256230.5 327898.0 397744.8 685430.0</code></pre>
-<p>O <strong>boxplot</strong> (diagrama de caixa) representa visualmente <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span>, <span class="math inline">\(Q_3\)</span>, e os limites além dos
-quais um ponto é considerado um <strong>outlier</strong>, convencionalmente <span class="math inline">\(Q_1 - 1{,}5 \times IQR\)</span> e
-<span class="math inline">\(Q_3 + 1{,}5 \times IQR\)</span>:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="dispersao.html#cb40-1" tabindex="-1"></a><span class="fu">ggplot</span>(empresas, <span class="fu">aes</span>(<span class="at">x =</span> porte, <span class="at">y =</span> faturamento99, <span class="at">fill =</span> porte)) <span class="sc">+</span></span>
-<span id="cb40-2"><a href="dispersao.html#cb40-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb40-3"><a href="dispersao.html#cb40-3" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Pequena&quot;</span> <span class="ot">=</span> <span class="st">&quot;#cfe8ef&quot;</span>, <span class="st">&quot;Média&quot;</span> <span class="ot">=</span> <span class="st">&quot;#7fb8cf&quot;</span>,</span>
-<span id="cb40-4"><a href="dispersao.html#cb40-4" tabindex="-1"></a>                                <span class="st">&quot;Grande&quot;</span> <span class="ot">=</span> <span class="st">&quot;#0d3b54&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb40-5"><a href="dispersao.html#cb40-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Porte&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Faturamento em 1999 (R$ mil)&quot;</span>,</span>
-<span id="cb40-6"><a href="dispersao.html#cb40-6" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Faturamento por porte da empresa&quot;</span>) <span class="sc">+</span></span>
-<span id="cb40-7"><a href="dispersao.html#cb40-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><img src="livro-matf14_files/figure-html/boxplot-faturamento-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
-<div class="caixa-aplicacao"><strong>Aplicação</strong>, o boxplot acima já responde, visualmente,
-uma pergunta de política de crédito: a variabilidade de faturamento dentro do grupo "Grande" é
-muito maior que dentro de "Pequena", um banco que usa "porte" como critério único de risco está
-ignorando uma dispersão substancial dentro da própria categoria.</div>
 </div>
-<div id="quando-at-e-iqr-não-bastam-cidades-a-e-b" class="section level3 hasAnchor" number="1.5.2">
-<h3><span class="header-section-number">1.5.2</span> Quando AT e IQR não bastam: cidades A e B<a href="dispersao.html#quando-at-e-iqr-não-bastam-cidades-a-e-b" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Duas cidades registraram a temperatura (°C) em 5 dias:</p>
+<div id="variância-e-desvio-padrão" class="section level3 hasAnchor" number="1.5.5">
+<h3><span class="header-section-number">1.5.5</span> Variância e desvio padrão<a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Exemplo: notas de dois alunos.</strong> Aluno A: <span class="math inline">\(2, 10, 6, 6, 6\)</span>. Aluno B: <span class="math inline">\(2, 6, 10, 4, 8\)</span>. Os dois têm média 6 e
+amplitude total 8, mas as notas de B estão mais espalhadas. Como medir isso?</p>
+<p>Os desvios em relação à média, <span class="math inline">\(x_i - \bar x\)</span>, sempre somam zero, para qualquer conjunto de dados:</p>
 <p><span class="math display">\[
-\text{Cidade A: } 24,\ 26,\ 32,\ 28,\ 25 \qquad\qquad \text{Cidade B: } 20,\ 26,\ 36,\ 28,\ 25
+\sum_{i=1}^{n}(x_i - \bar x) = \sum_{i=1}^{n} x_i - n\,\bar x = n\,\bar x - n\,\bar x = 0.
 \]</span></p>
-<p>Ambas têm a <strong>mesma média</strong>: <span class="math inline">\(\bar x_A = (24+26+32+28+25)/5 = 135/5 = 27\)</span> e
-<span class="math inline">\(\bar x_B = (20+26+36+28+25)/5 = 135/5 = 27\)</span>. Se a análise parasse na média, as duas cidades
-seriam indistinguíveis. Tentando a amplitude total: <span class="math inline">\(AT_A = 32-24=8\)</span> e <span class="math inline">\(AT_B=36-20=16\)</span>, já sugere
-B mais dispersa. Mas o <span class="math inline">\(IQR\)</span>, calculado com o algoritmo de três passos da seção anterior sobre cada
-cidade ordenada (<span class="math inline">\(A: 24,25,26,28,32\)</span>; <span class="math inline">\(B: 20,25,26,28,36\)</span>, ambas com <span class="math inline">\(n=5\)</span>), dá <span class="math inline">\(Q_1=25\)</span>, <span class="math inline">\(Q_3=28\)</span>
-em <strong>ambas</strong>, logo <span class="math inline">\(IQR_A=IQR_B=3\)</span>: o <span class="math inline">\(IQR\)</span>, por olhar só para o “miolo” da distribuição, não
-enxerga a diferença que a <span class="math inline">\(AT\)</span> já tinha detectado. É hora de uma medida que use <strong>todas</strong> as
-observações, não só duas posições.</p>
-<p>O primeiro instinto é somar os desvios de cada valor em relação à média, <span class="math inline">\(x_i - \bar x\)</span>:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="dispersao.html#cb41-1" tabindex="-1"></a>temp_A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">26</span>, <span class="dv">32</span>, <span class="dv">28</span>, <span class="dv">25</span>); temp_B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">26</span>, <span class="dv">36</span>, <span class="dv">28</span>, <span class="dv">25</span>)</span>
-<span id="cb41-2"><a href="dispersao.html#cb41-2" tabindex="-1"></a>desvios_A <span class="ot">&lt;-</span> temp_A <span class="sc">-</span> <span class="fu">mean</span>(temp_A); desvios_B <span class="ot">&lt;-</span> temp_B <span class="sc">-</span> <span class="fu">mean</span>(temp_B)</span>
-<span id="cb41-3"><a href="dispersao.html#cb41-3" tabindex="-1"></a>desvios_A; <span class="fu">sum</span>(desvios_A)</span></code></pre></div>
-<pre><code>## [1] -3 -1  5  1 -2</code></pre>
-<pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="dispersao.html#cb44-1" tabindex="-1"></a>desvios_B; <span class="fu">sum</span>(desvios_B)</span></code></pre></div>
-<pre><code>## [1] -7 -1  9  1 -2</code></pre>
-<pre><code>## [1] 0</code></pre>
-<p>Em ambas, os desvios somam <strong>exatamente zero</strong>, e isso não é coincidência: <span class="math inline">\(\sum_i(x_i-\bar x)= \sum_i x_i - n\bar x = n\bar x - n\bar x = 0\)</span> sempre, para qualquer conjunto de dados. A média dos
-desvios brutos é, por construção, uma medida inútil de dispersão, ela é sempre zero, tanto para
-dados concentrados quanto espalhados. É exatamente para contornar esse cancelamento que a variância
-<strong>eleva os desvios ao quadrado</strong> antes de somar, o que também tem o efeito colateral de penalizar
-desvios grandes proporcionalmente mais que desvios pequenos:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="dispersao.html#cb47-1" tabindex="-1"></a>desvios2_A <span class="ot">&lt;-</span> desvios_A<span class="sc">^</span><span class="dv">2</span>; desvios2_B <span class="ot">&lt;-</span> desvios_B<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb47-2"><a href="dispersao.html#cb47-2" tabindex="-1"></a>desvios2_A; <span class="fu">mean</span>(desvios2_A)</span></code></pre></div>
-<pre><code>## [1]  9  1 25  1  4</code></pre>
-<pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="dispersao.html#cb50-1" tabindex="-1"></a>desvios2_B; <span class="fu">mean</span>(desvios2_B)</span></code></pre></div>
-<pre><code>## [1] 49  1 81  1  4</code></pre>
-<pre><code>## [1] 27.2</code></pre>
-<p>Os desvios quadráticos de A são <span class="math inline">\((-3)^2,(-1)^2,5^2,1^2,(-2)^2 = 9,1,25,1,4\)</span>, que somam <span class="math inline">\(40\)</span> e dão
-média <span class="math inline">\(8\)</span>; os de B são <span class="math inline">\((-7)^2,(-1)^2,9^2,1^2,(-2)^2=49,1,81,1,4\)</span>, que somam <span class="math inline">\(136\)</span> e dão média
-<span class="math inline">\(27{,}2\)</span>. Logo</p>
+<p>Elevando os desvios <strong>ao quadrado</strong> antes de tirar a média, eles deixam de se cancelar:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="left">Desvios <span class="math inline">\(x_i - 6\)</span></th>
+<th align="left">Quadrados</th>
+<th align="center">Média dos quadrados</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">A</td>
+<td align="left"><span class="math inline">\(-4, 0, 0, 0, 4\)</span></td>
+<td align="left"><span class="math inline">\(16, 0, 0, 0, 16\)</span></td>
+<td align="center"><span class="math inline">\(32/5 = 6{,}4\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">B</td>
+<td align="left"><span class="math inline">\(-4, -2, 0, 2, 4\)</span></td>
+<td align="left"><span class="math inline">\(16, 4, 0, 4, 16\)</span></td>
+<td align="center"><span class="math inline">\(40/5 = 8\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="caixa-aplicacao">
+<p>A <strong>variância</strong> de <span class="math inline">\(x_1, \ldots, x_n\)</span> é a média dos desvios ao quadrado, e o <strong>desvio padrão</strong> é a sua raiz:</p>
 <p><span class="math display">\[
-\mathrm{Var}(A) = 8 \quad\Rightarrow\quad dp(A) = \sqrt{8} \approx 2{,}83\ ^\circ\text{C}.
+var(X) = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar x)^2, \qquad dp(X) = \sqrt{var(X)}.
 \]</span></p>
-<p><span class="math display">\[
-\mathrm{Var}(B) = 27{,}2 \quad\Rightarrow\quad dp(B) = \sqrt{27{,}2} \approx 5{,}22\ ^\circ\text{C}.
-\]</span></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="dispersao.html#cb53-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_A =</span> <span class="fu">mean</span>(desvios2_A), <span class="at">dp_A =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(desvios2_A)),</span>
-<span id="cb53-2"><a href="dispersao.html#cb53-2" tabindex="-1"></a>  <span class="at">var_B =</span> <span class="fu">mean</span>(desvios2_B), <span class="at">dp_B =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(desvios2_B)))</span></code></pre></div>
-<pre><code>##     var_A      dp_A     var_B      dp_B 
-##  8.000000  2.828427 27.200000  5.215362</code></pre>
-<p>O desvio padrão de B é quase o dobro do de A, exatamente o que a <span class="math inline">\(AT\)</span> já indicava e o <span class="math inline">\(IQR\)</span> havia
-escondido: a cidade B tem dias muito mais extremos (mínima de 20°C, máxima de 36°C) intercalados
-com dias parecidos com A, enquanto a cidade A oscila de forma mais comportada em torno da mesma
-média. Duas cidades com o “clima médio” idêntico podem ter uma completamente mais arriscada para
-quem planeja, por exemplo, uma agenda de eventos ao ar livre, e só a variância revela isso.</p>
 </div>
-<div id="desvio-padrão-variância-e-coeficiente-de-variação" class="section level3 hasAnchor" number="1.5.3">
-<h3><span class="header-section-number">1.5.3</span> Desvio padrão, variância e coeficiente de variação<a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A variância mede a dispersão média dos dados em torno da média, em unidades <strong>ao quadrado</strong>:</p>
+<p>A variância está em <strong>unidades ao quadrado</strong> (reais², °C²); o desvio padrão está na <strong>mesma unidade</strong>
+dos dados. Aluno A: <span class="math inline">\(dp = \sqrt{6{,}4} \approx 2{,}53\)</span> pontos; aluno B: <span class="math inline">\(dp = \sqrt{8} \approx 2{,}83\)</span> pontos.</p>
+<p><strong>Exemplo: temperatura em duas cidades, em cinco horários.</strong> Cidade A: <span class="math inline">\(24, 26, 32, 28, 25\)</span>. Cidade B:
+<span class="math inline">\(20, 26, 36, 28, 25\)</span>. As duas têm média 27 °C e o <strong>mesmo</strong> <span class="math inline">\(IQR\)</span> (3 °C), mas:</p>
+<table style="width:100%;">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(x_i\)</span> (A)</th>
+<th align="center"><span class="math inline">\(x_i - 27\)</span></th>
+<th align="center"><span class="math inline">\((x_i - 27)^2\)</span></th>
+<th align="center"></th>
+<th align="center"><span class="math inline">\(x_i\)</span> (B)</th>
+<th align="center"><span class="math inline">\(x_i - 27\)</span></th>
+<th align="center"><span class="math inline">\((x_i - 27)^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">24</td>
+<td align="center"><span class="math inline">\(-3\)</span></td>
+<td align="center">9</td>
+<td align="center"></td>
+<td align="center">20</td>
+<td align="center"><span class="math inline">\(-7\)</span></td>
+<td align="center">49</td>
+</tr>
+<tr class="even">
+<td align="center">26</td>
+<td align="center"><span class="math inline">\(-1\)</span></td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">26</td>
+<td align="center"><span class="math inline">\(-1\)</span></td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">32</td>
+<td align="center">5</td>
+<td align="center">25</td>
+<td align="center"></td>
+<td align="center">36</td>
+<td align="center">9</td>
+<td align="center">81</td>
+</tr>
+<tr class="even">
+<td align="center">28</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">28</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">25</td>
+<td align="center"><span class="math inline">\(-2\)</span></td>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center">25</td>
+<td align="center"><span class="math inline">\(-2\)</span></td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Soma</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>40</strong></td>
+<td align="center"></td>
+<td align="center"><strong>Soma</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>136</strong></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(var(A) = 40/5 = 8\)</span>, <span class="math inline">\(dp(A) \approx 2{,}83\)</span> °C; <span class="math inline">\(var(B) = 136/5 = 27{,}2\)</span>, <span class="math inline">\(dp(B) \approx 5{,}22\)</span> °C. O desvio padrão de
+B é quase o dobro do de A: a variância enxerga o que o <span class="math inline">\(IQR\)</span>, restrito aos 50% centrais, não enxergava.</p>
+<div class="caixa-r">
+<p><strong>Uso do R: divisor <span class="math inline">\(n\)</span> ou <span class="math inline">\(n - 1\)</span>?</strong> As funções <code>var()</code> e <code>sd()</code> do R dividem por <span class="math inline">\(n - 1\)</span> (a versão
+<strong>amostral</strong>, usada para estimar a variância de uma população em Inferência Estatística
+<span class="citation">(<a href="#ref-wooldridge2016introducao">Wooldridge, 2016</a>)</span>). Neste curso e nas provas usamos o divisor <span class="math inline">\(n\)</span>, como no formulário. Para a
+cidade B, <code>var(c(20, 26, 36, 28, 25))</code> dá 34, enquanto a fórmula do curso dá 27,2.</p>
+</div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="dispersao.html#cb18-1" tabindex="-1"></a>var_n <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-2"><a href="dispersao.html#cb18-2" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">26</span>, <span class="dv">36</span>, <span class="dv">28</span>, <span class="dv">25</span>)</span>
+<span id="cb18-3"><a href="dispersao.html#cb18-3" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_n =</span> <span class="fu">var_n</span>(b), <span class="at">dp_n =</span> <span class="fu">sqrt</span>(<span class="fu">var_n</span>(b)), <span class="at">var_R =</span> <span class="fu">var</span>(b))</span></code></pre></div>
+<pre><code>##     var_n      dp_n     var_R 
+## 27.200000  5.215362 34.000000</code></pre>
+</div>
+<div id="coeficiente-de-variação" class="section level3 hasAnchor" number="1.5.6">
+<h3><span class="header-section-number">1.5.6</span> Coeficiente de variação<a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Dados de magnitude maior tendem a ter desvio padrão maior. Para comparar a variabilidade de dados de
+naturezas diferentes, normalizamos pela média:</p>
 <p><span class="math display">\[
-\mathrm{Var}(X) = \frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2.
+CV(X) = \frac{dp(X)}{\bar x}.
 \]</span></p>
-<p>O <strong>desvio padrão</strong> devolve a medida à escala original dos dados:</p>
-<p><span class="math display">\[
-dp(X) = \sqrt{\mathrm{Var}(X)} = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2}.
-\]</span></p>
-<div class="caixa-economia"><strong>Nota técnica: duas convenções de variância</strong><br>
-A fórmula acima, com divisor \(n\), é a <strong>variância descritiva</strong> (às vezes chamada
-populacional): resume a dispersão dos dados que você tem em mãos, sem pretender estimar nada além
-deles. Quando os mesmos \(n\) valores são vistos como uma <em>amostra</em> de uma população maior e o
-objetivo é <strong>estimar</strong> a variância populacional, usa-se o divisor \(n-1\) (correção de
-Bessel), \(s^2 = \frac{1}{n-1}\sum_i (x_i-\bar x)^2\), o padrão da Inferência Estatística, e também o
-default da função <code>var()</code> do R. Nesta disciplina, que é de estatística descritiva e
-probabilidade, o divisor \(n\) é o usado nas provas e listas, seguindo o fórmulário oficial; fique
-atento a essa diferença em disciplinas futuras de inferência/econometria (Wooldridge (<a href="#ref-wooldridge2016introducao">2016</a>)).</div>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="dispersao.html#cb55-1" tabindex="-1"></a>var_n <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># divisor n, usado neste curso</span></span>
-<span id="cb55-2"><a href="dispersao.html#cb55-2" tabindex="-1"></a>dp_n  <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">var_n</span>(x))</span>
-<span id="cb55-3"><a href="dispersao.html#cb55-3" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="dispersao.html#cb55-4" tabindex="-1"></a><span class="fu">c</span>(<span class="at">var_n =</span> <span class="fu">var_n</span>(empresas<span class="sc">$</span>faturamento99), <span class="at">dp_n =</span> <span class="fu">dp_n</span>(empresas<span class="sc">$</span>faturamento99),</span>
-<span id="cb55-5"><a href="dispersao.html#cb55-5" tabindex="-1"></a>  <span class="at">var_R =</span> <span class="fu">var</span>(empresas<span class="sc">$</span>faturamento99))       <span class="co"># var() do R usa divisor n-1</span></span></code></pre></div>
-<pre><code>##         var_n          dp_n         var_R 
-## 11086337503.7      105291.7 11191921670.4</code></pre>
-<p>O desvio padrão tem a mesma unidade da variável original (R$ mil), o que o torna interpretável,
-mas isso também é um problema quando se quer comparar a dispersão de variáveis em unidades
-<strong>diferentes</strong>, ou com médias muito diferentes. O <strong>coeficiente de variação</strong>,</p>
-<p><span class="math display">\[
-CV(X) = \frac{dp(X)}{\bar{x}},
-\]</span></p>
-<p>remove essa unidade e permite comparação direta:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="dispersao.html#cb57-1" tabindex="-1"></a>empresas <span class="sc">|&gt;</span></span>
-<span id="cb57-2"><a href="dispersao.html#cb57-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb57-3"><a href="dispersao.html#cb57-3" tabindex="-1"></a>    <span class="at">cv_faturamento =</span> <span class="fu">dp_n</span>(faturamento99) <span class="sc">/</span> <span class="fu">mean</span>(faturamento99),</span>
-<span id="cb57-4"><a href="dispersao.html#cb57-4" tabindex="-1"></a>    <span class="at">cv_empregados  =</span> <span class="fu">dp_n</span>(empregados99) <span class="sc">/</span> <span class="fu">mean</span>(empregados99)</span>
-<span id="cb57-5"><a href="dispersao.html#cb57-5" tabindex="-1"></a>  )</span></code></pre></div>
+<p>O <span class="math inline">\(CV\)</span> é <strong>adimensional</strong> e costuma ser apresentado em porcentagem.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variável</th>
+<th align="center">Média</th>
+<th align="center"><span class="math inline">\(AT\)</span></th>
+<th align="center"><span class="math inline">\(dp\)</span></th>
+<th align="center"><span class="math inline">\(CV\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Temperatura da cidade B (°C)</td>
+<td align="center">27</td>
+<td align="center">16</td>
+<td align="center">5,22</td>
+<td align="center">19%</td>
+</tr>
+<tr class="even">
+<td align="left">Notas do aluno B (pontos)</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">2,83</td>
+<td align="center">47%</td>
+</tr>
+</tbody>
+</table>
+<p>Em valor absoluto, a temperatura “varia mais”; relativamente à própria média, as notas são mais de duas
+vezes mais dispersas.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="dispersao.html#cb20-1" tabindex="-1"></a>dp_n <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="dispersao.html#cb20-2" tabindex="-1"></a>empresas <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">cv_faturamento =</span> <span class="fu">dp_n</span>(faturamento99) <span class="sc">/</span> <span class="fu">mean</span>(faturamento99),</span>
+<span id="cb20-3"><a href="dispersao.html#cb20-3" tabindex="-1"></a>                      <span class="at">cv_empregados  =</span> <span class="fu">dp_n</span>(empregados99) <span class="sc">/</span> <span class="fu">mean</span>(empregados99))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##   cv_faturamento cv_empregados
 ##            &lt;dbl&gt;         &lt;dbl&gt;
 ## 1          0.315          1.12</code></pre>
-<div class="caixa-economia"><strong>Leitura econômica</strong>, não faz sentido comparar
-diretamente o desvio padrão de "faturamento em R$ mil" (ordem de centenas de milhares) com o de
-"número de empregados" (ordem de dezenas): são unidades incomparáveis. O \(CV\), por ser adimensional,
-permite afirmar qual das duas variáveis é <em>relativamente</em> mais dispersa em torno de sua
-própria média, uma pergunta genuinamente comparável entre variáveis, moedas ou países. É a mesma
-lógica usada para comparar a volatilidade de duas ações com preços médios muito diferentes.</div>
-<div class="caixa-discussao"><strong>Para discutir</strong>
-
-<p><strong>1.</strong> Retome a pergunta de abertura desta seção sobre as duas ações com retorno
-médio de 12%, uma variando entre 8-16% e outra entre -30-45%. Que medida de dispersão você usaria
-para quantificar essa diferença de risco, e por que a amplitude total, sozinha, poderia ser
-enganosa se um dos 5 anos fosse um evento atípico (uma crise, por exemplo)?</p>
-
-<p><strong>2.</strong> Um gestor de risco reporta apenas o desvio padrão mensal de um fundo
-("2%"). Baseado só nesse número, é possível saber se há meses de perdas catastróficas raras
-escondidos numa distribuição majoritariamente estável? Que outra informação (ainda não vista, mas
-pode arriscar um palpite) ajudaria a responder isso?</p>
-
-<p><strong>3.</strong> Compare o boxplot de faturamento por porte com um hipotético gráfico que só
-mostrasse a média de faturamento por porte, sem nenhuma medida de dispersão. Que decisão de
-política de crédito mudaria ao ver o boxplot completo, em vez de só as três médias?</p>
-
-<p><strong>4.</strong> O \(IQR\) e o desvio padrão respondem, ambos, "quão dispersos são os dados",
-mas de formas diferentes. Construa (mentalmente ou em papel) um conjunto de dados pequeno em que os
-dois discordem bastante sobre qual de dois grupos é "mais disperso". O que causa essa discordância?</p>
-
-<p><strong>5.</strong> Um artigo de jornal econômico afirma que "o Brasil é mais desigual que a
-Argentina" citando apenas a renda média per capita dos dois países. Que medida de dispersão (e por
-quê) seria indispensável para essa afirmação fazer sentido?</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="dispersao.html#cb22-1" tabindex="-1"></a>empresas <span class="sc">|&gt;</span> <span class="fu">group_by</span>(porte) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">cv_faturamento =</span> <span class="fu">dp_n</span>(faturamento99) <span class="sc">/</span> <span class="fu">mean</span>(faturamento99))</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+##   porte       n cv_faturamento
+##   &lt;fct&gt;   &lt;int&gt;          &lt;dbl&gt;
+## 1 Pequena    13          0.309
+## 2 Média      70          0.177
+## 3 Grande     23          0.146</code></pre>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> Duas ações com retorno médio de 12% ao ano: a ação A rendeu <span class="math inline">\(8, 10, 12, 14\)</span> e <span class="math inline">\(16\%\)</span>;
+a ação B, <span class="math inline">\(-30, 5, 15, 25\)</span> e <span class="math inline">\(45\%\)</span>. Os desvios padrão são <span class="math inline">\(\sqrt{8} \approx 2{,}8\)</span> e <span class="math inline">\(\sqrt{616} \approx 24{,}8\)</span> pontos
+percentuais. Em finanças, o desvio padrão dos retornos é a medida mais simples de <strong>risco</strong>, e a média
+sozinha esconde que a ação B perdeu 30% em um dos anos.</p>
+</div>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> O <span class="math inline">\(CV\)</span> pode enganar quando a média é próxima de zero (lucro que alterna prejuízos e
+lucros) e depende da escala quando o zero é arbitrário: temperaturas em Celsius e em Fahrenheit dão
+<span class="math inline">\(CV\)</span> diferentes. Por que o <span class="math inline">\(CV\)</span> é mais confiável para renda, peso ou número de empregados?</p>
 </div>
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<h3>Referências<a href="referências.html#refer%C3%AAncias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-wooldridge2016introducao" class="csl-entry">
-Wooldridge, J. M. (2016). <em>Introdução à econometria: Uma abordagem moderna</em> (6th ed.). Cengage Learning.
+Wooldridge, J. M. (2016). <em>Introdução à Econometria: Uma Abordagem Moderna</em> (6º ed.). Cengage Learning.
 </div>
 </div>
             </section>

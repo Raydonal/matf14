@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 06}{Probabilidade condicional e independência estatística (Cap. 2, Aulas 11--12)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito06.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Condicional: inadimplência por faixa de renda)}
 
@@ -99,5 +99,119 @@ suposição pode ser razoável em tempos normais, mas perigosa durante uma crise
 generalizada, e que tipo de risco para o banco fica escondido quando essa suposição é usada sem
 qualificação.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Um restaurante popular serve salada ou um prato à base de carne. 75\% dos fregueses são homens, 10\% dos homens preferem salada e 40\% das mulheres preferem carne. Um freguês é sorteado; sejam $H$ (homem), $M$ (mulher), $S$ (prefere salada) e $C$ (prefere carne). Calcule:
+\begin{enumerate}[label=(\alph*)]
+  \item $P(H)$, $P(S \mid H)$ e $P(C \mid H)$;
+  \item $P(S \cup H)$ e $P(S \cap H)$;
+  \item $P(M \mid S)$.
+\end{enumerate}
+\item Os 250 estudantes de uma faculdade, por sexo e área:
+\begin{center}
+\begin{tabular}{l|ccc}
+\toprule
+ & Biológicas & Exatas & Humanas \\
+\midrule
+Masculino & 42 & 30 & 58 \\
+Feminino & 38 & 12 & 70 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Um estudante é sorteado. Qual a probabilidade de ele ser
+\begin{enumerate}[label=(\alph*)]
+  \item do sexo feminino e da área de Humanas?
+  \item do sexo masculino e não ser de Biológicas?
+  \item do sexo feminino, dado que é de Humanas?
+  \item Os eventos \emph{feminino} e \emph{Humanas} são independentes?
+\end{enumerate}
+\item Uma comissão de três moradores é sorteada numa comunidade com 50\% de moradores brancos, 30\% negros e 20\% latinos; o primeiro sorteado é o líder. Suponha sorteios independentes. Qual a probabilidade de
+\begin{enumerate}[label=(\alph*)]
+  \item o líder ser negro?
+  \item o líder ser branco ou latino?
+  \item os três membros serem negros?
+\end{enumerate}
+\item Suponha que 16\% dos presos em prisões estaduais sofram de alguma doença psiquiátrica. Qual a probabilidade de
+\begin{enumerate}[label=(\alph*)]
+  \item um preso escolhido ao acaso não sofrer de doença psiquiátrica?
+  \item nenhum de três presos independentes sofrer de doença psiquiátrica?
+\end{enumerate}
+\item A probabilidade de a pessoa $A$ resolver um problema é $2/3$ e a de $B$ é $3/4$. Se tentarem independentemente, qual a probabilidade de o problema ser resolvido?
+\item Uma carta é sorteada de um baralho comum de 52 cartas. Seja $R$ o evento \emph{rei} e $E$ o evento \emph{espadas}. $R$ e $E$ são independentes? São disjuntos?
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: novos tópicos e dados reais}
+\noindent\textit{Exercícios sobre os tópicos acrescentados ao Capítulo 2 do livro e às aulas.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+
+\item \textbf{(Probabilidade geométrica.)}
+\begin{enumerate}[label=(\alph*)]
+  \item Dois sócios chegam a uma reunião em instantes ao acaso entre 9h e 10h, independentemente, e cada um espera 10
+    minutos pelo outro. Qual a probabilidade de se encontrarem?
+  \item Um ônibus passa a cada 12 minutos. Um passageiro chega num instante ao acaso. Qual a probabilidade de esperar
+    mais de 5 minutos? E de esperar exatamente 5 minutos?
+  \item O preço máximo que um comprador aceita pagar, $b$, e o mínimo que o vendedor aceita receber, $s$, são pontos ao
+    acaso em $[0, 1]$, independentes. Qual a probabilidade de o ganho de troca $b - s$ ser pelo menos $0{,}3$?
+\end{enumerate}
+
+\item \textbf{(Tabela de contingência com dados reais.)} Pessoas de 14 anos ou mais no Brasil, 2º trimestre de 2026 (mil pessoas;
+IBGE, PNAD Contínua):
+\begin{center}
+\begin{tabular}{l|ccc|c}
+\toprule
+ & Ocupadas & Desocupadas & Fora da força & Total \\
+\midrule
+Homens & 58.293 & 2.803 & 23.465 & 84.561 \\
+Mulheres & 44.765 & 3.059 & 43.016 & 90.840 \\
+\midrule
+Total & 103.058 & 5.862 & 66.481 & 175.401 \\
+\bottomrule
+\end{tabular}
+\end{center}
+{\footnotesize Totais obtidos somando as linhas; diferem em até 1 mil das estimativas publicadas por causa do arredondamento.}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(\text{mulher} \cap \text{fora da força})$, $P(\text{fora da força})$, $P(\text{fora da força} \mid \text{mulher})$ e
+    $P(\text{mulher} \mid \text{fora da força})$. Quais são conjuntas, marginais e condicionais?
+  \item A \emph{taxa} de desocupação é $P(\text{desocupado} \mid \text{na força de trabalho})$ e o \emph{nível} de desocupação é
+    $P(\text{desocupado} \mid \text{14 anos ou mais})$. Calcule os dois para o Brasil.
+  \item Sob independência entre sexo e condição, quantas mulheres (em mil) estariam fora da força de trabalho? Compare com o observado.
+\end{enumerate}
+
+\item \textbf{(Paradoxo de Simpson.)} Duas agências de um banco receberam pedidos de crédito de pequenas e médias empresas:
+\begin{center}
+\begin{tabular}{l|cc|cc}
+\toprule
+ & \multicolumn{2}{c|}{Agência X} & \multicolumn{2}{c}{Agência Y} \\
+ & pedidos & aprovados & pedidos & aprovados \\
+\midrule
+Pequenas & 100 & 40 & 400 & 180 \\
+Médias & 400 & 300 & 100 & 80 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Calcule as taxas de aprovação por porte e no total em cada agência. Qual agência é ``mais generosa''? Explique a aparente contradição.
+
+\item \textbf{(Risco relativo e razão de chances.)} Entre os ocupados no 2º trimestre de 2026, 22.717 mil de 58.293 mil homens e
+15.862 mil de 44.765 mil mulheres estavam em situação de informalidade (IBGE, PNAD Contínua).
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a taxa de informalidade de cada sexo, a diferença de riscos, o risco relativo e a razão de chances (homens em relação às mulheres).
+  \item Por que a razão de chances é maior que o risco relativo? Em que situação as duas medidas ficariam próximas?
+  \item Um pesquisador sorteou 1.000 trabalhadores informais e 1.000 formais e comparou a proporção de homens. Qual das duas medidas
+    ele consegue estimar corretamente com esse desenho? Por quê?
+\end{enumerate}
+
+\item \textbf{(Independência e complementares.)} Sejam $A$ e $B$ independentes com $P(A) = 0{,}3$ e $P(B) = 0{,}5$. Calcule $P(A \cup B)$ e
+verifique numericamente que $A^c$ e $B$ também são independentes.
+
+\end{enumerate}
 
 \end{document}

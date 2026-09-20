@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 02}{Medidas de tendência central, quantis, IQR e boxplot (Cap. 1, Aulas 04--05)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito02.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Cálculo direto: salários de uma pequena empresa)}
 
@@ -101,5 +101,90 @@ mediana de uma mesma variável são divulgadas juntas. Se só uma das duas for d
 escrito qual você suspeita que esteja faltando e por quê a instituição pode ter escolhido divulgar
 apenas uma delas.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item O salário anual das secretárias de um escritório de advocacia é: R\$ 120.000, R\$ 60.000, R\$ 40.000, R\$ 40.000, R\$ 30.000, R\$ 30.000 e R\$ 30.000.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a média, a moda e a mediana.
+  \item Há diferença importante entre as três medidas? O que a explica?
+  \item Qual medida representa melhor a tendência central desses salários? Justifique.
+\end{enumerate}
+\item Os preços semanais (em dólares) de uma marca de pizza congelada foram coletados em duas cidades dos EUA durante três anos:
+\begin{center}
+\begin{tabular}{l|ccccccc}
+\toprule
+Cidade & Média & Mediana & DP & Mín. & Máx. & $Q_1$ & $Q_3$ \\
+\midrule
+Dallas & 2,62 & 2,61 & 0,1559 & 2,21 & 3,05 & 2,51 & 2,72 \\
+Chicago & 2,61 & 2,65 & 0,2122 & 1,55 & 3,03 & 2,53 & 2,74 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a distância interquartil dos preços em cada cidade.
+  \item Há diferença na variabilidade dos preços entre as cidades? Compare o $IQR$ com a amplitude total e o desvio padrão.
+  \item Em qual cidade o preço tende a ser mais barato? Justifique.
+  \item Calcule os limites $Q_1 - 1{,}5\,IQR$ e $Q_3 + 1{,}5\,IQR$ para Chicago. O preço mínimo de 1,55 seria um valor atípico?
+\end{enumerate}
+\item Psicólogos acompanharam 20 voluntários com narcolepsia durante um dia e registraram quantas vezes cada um adormeceu:
+\begin{center}
+\begin{tabular}{c|ccccccc|c}
+\toprule
+Nº de cochilos & 1 & 2 & 3 & 4 & 5 & 6 & 7 & Total \\
+\midrule
+Freq. absoluta & 2 & 4 & 3 & 5 & 3 & 1 & 2 & 20 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Encontre a moda, a média, a mediana e os quartis $Q_1$ e $Q_3$ (use o algoritmo de percentis da aula).
+\item Nível educacional dos 39 funcionários administrativos de uma empresa: pós-graduação (3), superior completo (5), superior incompleto (11), médio completo (14), médio incompleto (6).
+\begin{enumerate}[label=(\alph*)]
+  \item Qual é o tipo da variável nível educacional?
+  \item Forneça uma medida de tendência central adequada para essa variável. A média faria sentido?
+\end{enumerate}
+\item Considere a variável $X$ com a distribuição de frequências: $X = 9$ (1), $8$ (5), $0$ (1), $2$ (2), $6$ (1), $3$ (4), $4$ (1).
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a moda, a mediana e a média de $X$.
+  \item Calcule $Q_1$ e $Q_3$ e verifique se há valores atípicos.
+\end{enumerate}
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: contas nacionais e dados reais}
+\noindent\textit{Exercícios com dados oficiais, ligados à seção de contas nacionais do Capítulo 1 do livro. Use o algoritmo de percentis visto em aula.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Crescimento trimestral do PIB.)} Taxa de variação do PIB em relação ao trimestre imediatamente anterior, com ajuste sazonal (\%;
+IBGE, Contas Nacionais Trimestrais), do 1º trimestre de 2023 ao 2º trimestre de 2026:
+\begin{center}
+1,3 \quad 0,8 \quad 0,1 \quad 0,4 \quad 0,7 \quad 1,7 \quad 0,9 \quad 0,1 \quad 1,3 \quad 0,4 \quad 0,1 \quad 0,2 \quad 1,1 \quad 0,5
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a média, a mediana, a moda, $Q_1$ e $Q_3$.
+  \item Calcule a distância interquartílica e as cercas do boxplot. Há valores atípicos? Desenhe o boxplot.
+  \item Uma notícia diz que ``a economia cresceu, em média, 0,7\% por trimestre''. Uma taxa trimestral de 0,7\% equivale a quanto ao ano, se mantida por quatro trimestres?
+\end{enumerate}
+
+\item \textbf{(PIB \emph{per capita} das Unidades da Federação.)} PIB \emph{per capita} das 27 UFs em 2021, em ordem crescente (R\$ mil; IBGE, Contas Regionais).
+O menor é o do Maranhão e o maior, o do Distrito Federal:
+\begin{center}
+\small
+17,5 \; 19,1 \; 19,5 \; 21,1 \; 22,2 \; 22,5 \; 22,7 \; 22,8 \; 22,9 \; 23,5 \; 23,6 \; 27,9 \; 30,0 \; 30,8 \\
+32,0 \; 32,2 \; 37,4 \; 40,1 \; 45,4 \; 47,4 \; 50,1 \; 50,7 \; 54,4 \; 58,3 \; 58,4 \; 65,4 \; 92,7
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a média, a mediana, $Q_1$ e $Q_3$. Construa o boxplot e identifique valores atípicos.
+  \item O PIB \emph{per capita} do Brasil em 2021 foi de R\$ 42,2 mil. Por que ele não coincide com a média calculada em (a)? Qual média
+    ponderada reproduz o valor nacional?
+  \item Qual medida de tendência central você usaria para descrever a UF ``típica''? Justifique.
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

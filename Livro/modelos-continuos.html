@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="pt-BR" xml:lang="pt-BR">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.4 Alguns modelos probabilísticos | Estatística Econômica I</title>
   <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
-  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.4 Alguns modelos probabilísticos | Estatística Econômica I" />
   <meta property="og:type" content="book" />
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="va-continua-fda.html"/>
-<link rel="next" href="fechando-o-capítulo-3.html"/>
+<link rel="next" href="va-continua-macro.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -56,8 +56,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -129,6 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -175,85 +177,192 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a></li>
-<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a></li>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-estudar-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.1</b> Por que estudar Estatística?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="populacao-amostra.html"><a href="populacao-amostra.html#popula%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.1.2</b> População</a></li>
+<li class="chapter" data-level="1.1.3" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostra"><i class="fa fa-check"></i><b>1.1.3</b> Amostra</a></li>
+<li class="chapter" data-level="1.1.4" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-definir-bem-a-popula%C3%A7%C3%A3o-importa"><i class="fa fa-check"></i><b>1.1.4</b> Por que definir bem a população importa</a></li>
+<li class="chapter" data-level="1.1.5" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostragem"><i class="fa fa-check"></i><b>1.1.5</b> Amostragem</a></li>
+<li class="chapter" data-level="1.1.6" data-path="populacao-amostra.html"><a href="populacao-amostra.html#par%C3%A2metro-e-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.6</b> Parâmetro e estatística</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classifica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.2.1</b> Classificação</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#nem-todo-n%C3%BAmero-%C3%A9-uma-vari%C3%A1vel-quantitativa"><i class="fa fa-check"></i><b>1.2.2</b> Nem todo número é uma variável quantitativa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classificando-bases-reais"><i class="fa fa-check"></i><b>1.2.3</b> Classificando bases reais</a></li>
+<li class="chapter" data-level="1.2.4" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#exerc%C3%ADcios-resolvidos"><i class="fa fa-check"></i><b>1.2.4</b> Exercícios resolvidos</a></li>
+</ul></li>
 <li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
 <ul>
-<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-frequência"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas de frequência</a></li>
-<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#razão-e-taxa-de-variação"><i class="fa fa-check"></i><b>1.3.2</b> Razão e taxa de variação</a></li>
-<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.3</b> Tabelas de dupla entrada</a></li>
-<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-qualitativas"><i class="fa fa-check"></i><b>1.3.4</b> Gráficos para variáveis qualitativas</a></li>
-<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gráficos-para-variáveis-quantitativas"><i class="fa fa-check"></i><b>1.3.5</b> Gráficos para variáveis quantitativas</a></li>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#distribui%C3%A7%C3%A3o-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.3.2</b> Distribuição de frequências</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#vari%C3%A1veis-quantitativas-classes"><i class="fa fa-check"></i><b>1.3.3</b> Variáveis quantitativas: classes</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#raz%C3%A3o-e-taxa-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.3.4</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.5</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.6" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gr%C3%A1ficos"><i class="fa fa-check"></i><b>1.3.6</b> Gráficos</a></li>
+<li class="chapter" data-level="1.3.7" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#histograma"><i class="fa fa-check"></i><b>1.3.7</b> Histograma</a></li>
+<li class="chapter" data-level="1.3.8" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#exerc%C3%ADcios-resolvidos-1"><i class="fa fa-check"></i><b>1.3.8</b> Exercícios resolvidos</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#média-a-partir-de-uma-tabela-de-frequências"><i class="fa fa-check"></i><b>1.4.1</b> Média a partir de uma tabela de frequências</a></li>
-<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#um-exemplo-com-dados-da-própria-turma"><i class="fa fa-check"></i><b>1.4.2</b> Um exemplo com dados da própria turma</a></li>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#moda"><i class="fa fa-check"></i><b>1.4.1</b> Moda</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#mediana"><i class="fa fa-check"></i><b>1.4.2</b> Mediana</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia"><i class="fa fa-check"></i><b>1.4.3</b> Média</a></li>
+<li class="chapter" data-level="1.4.4" data-path="tendencia-central.html"><a href="tendencia-central.html#sensibilidade-a-valores-extremos"><i class="fa fa-check"></i><b>1.4.4</b> Sensibilidade a valores extremos</a></li>
+<li class="chapter" data-level="1.4.5" data-path="tendencia-central.html"><a href="tendencia-central.html#quando-usar-cada-medida"><i class="fa fa-check"></i><b>1.4.5</b> Quando usar cada medida</a></li>
+<li class="chapter" data-level="1.4.6" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia-a-partir-de-uma-tabela-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.4.6</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.7" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-agrupados-em-classes-as-notas-de-uma-turma"><i class="fa fa-check"></i><b>1.4.7</b> Dados agrupados em classes: as notas de uma turma</a></li>
+<li class="chapter" data-level="1.4.8" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-reais-prefeitos-e-munic%C3%ADpios"><i class="fa fa-check"></i><b>1.4.8</b> Dados reais: prefeitos e municípios</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#quantis-distância-interquartílica-e-boxplot"><i class="fa fa-check"></i><b>1.5.1</b> Quantis, distância interquartílica e boxplot</a></li>
-<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quando-at-e-iqr-não-bastam-cidades-a-e-b"><i class="fa fa-check"></i><b>1.5.2</b> Quando AT e IQR não bastam: cidades A e B</a></li>
-<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#desvio-padrão-variância-e-coeficiente-de-variação"><i class="fa fa-check"></i><b>1.5.3</b> Desvio padrão, variância e coeficiente de variação</a></li>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#percentis"><i class="fa fa-check"></i><b>1.5.1</b> Percentis</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil"><i class="fa fa-check"></i><b>1.5.2</b> Quartis e distância interquartil</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#boxplot"><i class="fa fa-check"></i><b>1.5.3</b> Boxplot</a></li>
+<li class="chapter" data-level="1.5.4" data-path="dispersao.html"><a href="dispersao.html#amplitude-total"><i class="fa fa-check"></i><b>1.5.4</b> Amplitude total</a></li>
+<li class="chapter" data-level="1.5.5" data-path="dispersao.html"><a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o"><i class="fa fa-check"></i><b>1.5.5</b> Variância e desvio padrão</a></li>
+<li class="chapter" data-level="1.5.6" data-path="dispersao.html"><a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.5.6</b> Coeficiente de variação</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#aplicação-o-faturamento-das-empresas-cresceu-de-1998-para-1999"><i class="fa fa-check"></i><b>1.6.1</b> Aplicação: o faturamento das empresas cresceu de 1998 para 1999?</a></li>
-<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#aplicação-número-de-empregados-versus-faturamento"><i class="fa fa-check"></i><b>1.6.2</b> Aplicação: número de empregados versus faturamento</a></li>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#gr%C3%A1fico-de-dispers%C3%A3o"><i class="fa fa-check"></i><b>1.6.1</b> Gráfico de dispersão</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#defini%C3%A7%C3%A3o-e-c%C3%A1lculo"><i class="fa fa-check"></i><b>1.6.2</b> Definição e cálculo</a></li>
+<li class="chapter" data-level="1.6.3" data-path="correlacao.html"><a href="correlacao.html#interpreta%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.6.3</b> Interpretação</a></li>
+<li class="chapter" data-level="1.6.4" data-path="correlacao.html"><a href="correlacao.html#aplica%C3%A7%C3%B5es-com-as-bases"><i class="fa fa-check"></i><b>1.6.4</b> Aplicações com as bases</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a></li>
-<li class="chapter" data-level="1.8" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.8</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#assimetria"><i class="fa fa-check"></i><b>1.7.1</b> Assimetria</a></li>
+<li class="chapter" data-level="1.7.2" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#curtose"><i class="fa fa-check"></i><b>1.7.2</b> Curtose</a></li>
+<li class="chapter" data-level="1.7.3" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#exemplo-na-m%C3%A3o"><i class="fa fa-check"></i><b>1.7.3</b> Exemplo na mão</a></li>
+<li class="chapter" data-level="1.7.4" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#as-bases-do-cap%C3%ADtulo"><i class="fa fa-check"></i><b>1.7.4</b> As bases do capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="contas-nacionais.html"><a href="contas-nacionais.html"><i class="fa fa-check"></i><b>1.8</b> Aplicação: contas nacionais, regionais e monetárias</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="contas-nacionais.html"><a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib"><i class="fa fa-check"></i><b>1.8.1</b> Agregados macroeconômicos: as três óticas do PIB</a></li>
+<li class="chapter" data-level="1.8.2" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta"><i class="fa fa-check"></i><b>1.8.2</b> Contas trimestrais: quatro taxas para a mesma pergunta</a></li>
+<li class="chapter" data-level="1.8.3" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados"><i class="fa fa-check"></i><b>1.8.3</b> Contas regionais: desigualdade entre os estados</a></li>
+<li class="chapter" data-level="1.8.4" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento"><i class="fa fa-check"></i><b>1.8.4</b> Contas Econômicas Integradas: da produção ao financiamento</a></li>
+<li class="chapter" data-level="1.8.5" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez"><i class="fa fa-check"></i><b>1.8.5</b> Contas monetárias e financeiras: moeda e liquidez</a></li>
+<li class="chapter" data-level="1.8.6" data-path="contas-nacionais.html"><a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros"><i class="fa fa-check"></i><b>1.8.6</b> Modelo de insumo-produto: como os setores dependem uns dos outros</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.9</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Introdução: o que significa “probabilidade”</a></li>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Fenômenos aleatórios</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="prob-introducao.html"><a href="prob-introducao.html#probabilidade-te%C3%B3rica-e-probabilidade-emp%C3%ADrica"><i class="fa fa-check"></i><b>2.1.1</b> Probabilidade teórica e probabilidade empírica</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prob-introducao.html"><a href="prob-introducao.html#o-que-%C3%A9-afinal-uma-probabilidade-quatro-interpreta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.1.2</b> O que é, afinal, uma probabilidade? Quatro interpretações</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#operações-com-eventos-revisão-de-teoria-de-conjuntos"><i class="fa fa-check"></i><b>2.2.1</b> Operações com eventos (revisão de teoria de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#tipos-de-espa%C3%A7o-amostral"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de espaço amostral</a></li>
+<li class="chapter" data-level="2.2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#opera%C3%A7%C3%B5es-com-eventos-revis%C3%A3o-de-conjuntos"><i class="fa fa-check"></i><b>2.2.2</b> Operações com eventos (revisão de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#propriedades-das-opera%C3%A7%C3%B5es-e-leis-de-de-morgan"><i class="fa fa-check"></i><b>2.2.3</b> Propriedades das operações e leis de De Morgan</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Conceitos e propriedades de probabilidade</a>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Axiomas de Kolmogorov e propriedades da probabilidade</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#modelo-de-espaço-equiprovável-e-métodos-de-contagem"><i class="fa fa-check"></i><b>2.3.1</b> Modelo de espaço equiprovável e métodos de contagem</a></li>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#por-que-precisamos-de-axiomas"><i class="fa fa-check"></i><b>2.3.1</b> Por que precisamos de axiomas</a></li>
+<li class="chapter" data-level="2.3.2" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#espa%C3%A7o-de-probabilidade"><i class="fa fa-check"></i><b>2.3.2</b> Espaço de probabilidade</a></li>
+<li class="chapter" data-level="2.3.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#os-axiomas-de-kolmogorov"><i class="fa fa-check"></i><b>2.3.3</b> Os axiomas de Kolmogorov</a></li>
+<li class="chapter" data-level="2.3.4" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#consequ%C3%AAncias-dos-axiomas-com-demonstra%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.3.4</b> Consequências dos axiomas (com demonstração)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#como-atribuir-probabilidades"><i class="fa fa-check"></i><b>2.3.5</b> Como atribuir probabilidades</a></li>
+<li class="chapter" data-level="2.3.6" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#defini%C3%A7%C3%A3o-cl%C3%A1ssica"><i class="fa fa-check"></i><b>2.3.6</b> Definição clássica</a></li>
+<li class="chapter" data-level="2.3.7" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#probabilidades-a-partir-de-tabelas"><i class="fa fa-check"></i><b>2.3.7</b> Probabilidades a partir de tabelas</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.4</b> Probabilidade condicional</a></li>
-<li class="chapter" data-level="2.5" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.5</b> Teoremas básicos de probabilidade</a>
+<li class="chapter" data-level="2.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html"><i class="fa fa-check"></i><b>2.4</b> Técnicas de contagem e probabilidade clássica</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.5.1</b> Teorema da probabilidade total</a></li>
+<li class="chapter" data-level="2.4.1" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve"><i class="fa fa-check"></i><b>2.4.1</b> Quando contar resolve, e quando não resolve</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo"><i class="fa fa-check"></i><b>2.4.2</b> Princípios aditivo e multiplicativo</a></li>
+<li class="chapter" data-level="2.4.3" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.4.3</b> Os quatro tipos de seleção</a></li>
+<li class="chapter" data-level="2.4.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.4</b> Permutações</a></li>
+<li class="chapter" data-level="2.4.5" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#arranjos"><i class="fa fa-check"></i><b>2.4.5</b> Arranjos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.6</b> Combinações</a></li>
+<li class="chapter" data-level="2.4.7" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos"><i class="fa fa-check"></i><b>2.4.7</b> Da contagem à probabilidade: exemplos desenvolvidos</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.6</b> Independência estatística</a></li>
-<li class="chapter" data-level="2.7" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.7</b> Teorema de Bayes</a></li>
-<li class="chapter" data-level="2.8" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.8</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="2.5" data-path="probabilidade-geometrica.html"><a href="probabilidade-geometrica.html"><i class="fa fa-check"></i><b>2.5</b> Probabilidade geométrica</a></li>
+<li class="chapter" data-level="2.6" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.6</b> Probabilidade condicional</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html#regra-da-multiplica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.6.1</b> Regra da multiplicação</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html"><i class="fa fa-check"></i><b>2.7</b> Tabelas de contingência: probabilidades conjuntas, marginais e condicionais</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#mercado-de-trabalho-brasileiro-sexo-e-condi%C3%A7%C3%A3o-na-for%C3%A7a-de-trabalho"><i class="fa fa-check"></i><b>2.7.1</b> Mercado de trabalho brasileiro: sexo e condição na força de trabalho</a></li>
+<li class="chapter" data-level="2.7.2" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#taxa-ou-n%C3%ADvel-o-evento-condicionante-muda-a-resposta"><i class="fa fa-check"></i><b>2.7.2</b> Taxa ou nível? O evento condicionante muda a resposta</a></li>
+<li class="chapter" data-level="2.7.3" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#a-fal%C3%A1cia-da-invers%C3%A3o-com-dados-reais-escolaridade-e-desocupa%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.3</b> A falácia da inversão com dados reais: escolaridade e desocupação</a></li>
+<li class="chapter" data-level="2.7.4" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#confundimento-e-composi%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.4</b> Confundimento e composição</a></li>
+<li class="chapter" data-level="2.7.5" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#o-paradoxo-de-simpson"><i class="fa fa-check"></i><b>2.7.5</b> O paradoxo de Simpson</a></li>
+<li class="chapter" data-level="2.7.6" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#independ%C3%AAncia-em-tabelas"><i class="fa fa-check"></i><b>2.7.6</b> Independência em tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="medidas-associacao.html"><a href="medidas-associacao.html"><i class="fa fa-check"></i><b>2.8</b> Risco, chance e razão de chances</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="medidas-associacao.html"><a href="medidas-associacao.html#preval%C3%AAncia-e-incid%C3%AAncia"><i class="fa fa-check"></i><b>2.8.1</b> Prevalência e incidência</a></li>
+<li class="chapter" data-level="2.8.2" data-path="medidas-associacao.html"><a href="medidas-associacao.html#risco-diferen%C3%A7a-de-riscos-e-risco-relativo"><i class="fa fa-check"></i><b>2.8.2</b> Risco, diferença de riscos e risco relativo</a></li>
+<li class="chapter" data-level="2.8.3" data-path="medidas-associacao.html"><a href="medidas-associacao.html#chance-odds"><i class="fa fa-check"></i><b>2.8.3</b> Chance (odds)</a></li>
+<li class="chapter" data-level="2.8.4" data-path="medidas-associacao.html"><a href="medidas-associacao.html#raz%C3%A3o-de-chances-odds-ratio"><i class="fa fa-check"></i><b>2.8.4</b> Razão de chances (odds ratio)</a></li>
+<li class="chapter" data-level="2.8.5" data-path="medidas-associacao.html"><a href="medidas-associacao.html#exemplo-com-dados-reais-sexo-e-mercado-de-trabalho"><i class="fa fa-check"></i><b>2.8.5</b> Exemplo com dados reais: sexo e mercado de trabalho</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.9</b> Independência estatística</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="independencia.html"><a href="independencia.html#tr%C3%AAs-ou-mais-eventos"><i class="fa fa-check"></i><b>2.9.1</b> Três ou mais eventos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.10</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#parti%C3%A7%C3%A3o-e-teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.10.1</b> Partição e teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.11</b> Teorema de Bayes</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#eventos-raros-e-falsos-alarmes"><i class="fa fa-check"></i><b>2.11.1</b> Eventos raros e falsos alarmes</a></li>
+<li class="chapter" data-level="2.11.2" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#sensibilidade-especificidade-e-valores-preditivos"><i class="fa fa-check"></i><b>2.11.2</b> Sensibilidade, especificidade e valores preditivos</a></li>
+<li class="chapter" data-level="2.11.3" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#bayes-na-forma-de-chances"><i class="fa fa-check"></i><b>2.11.3</b> Bayes na forma de chances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.12</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
 <li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#definição"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
-<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperança-e-da-variância"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#defini%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperan%C3%A7a-e-da-vari%C3%A2ncia"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
 <li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
-<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
-<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribuição-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
-<li class="chapter" data-level="3.6" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.6</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="3.6" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html"><i class="fa fa-check"></i><b>3.6</b> Aplicação macroeconômica: recessões e deflação</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-trimestres-de-queda-do-pib-em-um-ano-binomial-e-depend%C3%AAncia"><i class="fa fa-check"></i><b>3.6.1</b> Quantos trimestres de queda do PIB em um ano? Binomial e dependência</a></li>
+<li class="chapter" data-level="3.6.2" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-meses-de-defla%C3%A7%C3%A3o-em-um-ano-poisson"><i class="fa fa-check"></i><b>3.6.2</b> Quantos meses de deflação em um ano? Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.7</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a></li>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#probabilidade-como-%C3%A1rea"><i class="fa fa-check"></i><b>4.1.1</b> Probabilidade como área</a></li>
+<li class="chapter" data-level="4.1.2" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#exemplo-distribui%C3%A7%C3%A3o-triangular"><i class="fa fa-check"></i><b>4.1.2</b> Exemplo: distribuição triangular</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
 <li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
 <li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
-<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribuição-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
-<li class="chapter" data-level="4.4.3" data-path="modelos-continuos.html"><a href="modelos-continuos.html#a-regra-empírica-6895997"><i class="fa fa-check"></i><b>4.4.3</b> A regra empírica (68–95–99,7)</a></li>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.5</b> Fechando o capítulo</a></li>
+<li class="chapter" data-level="4.5" data-path="va-continua-macro.html"><a href="va-continua-macro.html"><i class="fa fa-check"></i><b>4.5</b> Aplicação: o crescimento do PIB é normal?</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="va-continua-macro.html"><a href="va-continua-macro.html#crescimento-trimestral-do-pib"><i class="fa fa-check"></i><b>4.5.1</b> Crescimento trimestral do PIB</a></li>
+<li class="chapter" data-level="4.5.2" data-path="va-continua-macro.html"><a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal"><i class="fa fa-check"></i><b>4.5.2</b> Inflação mensal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.6</b> Fechando o capítulo</a></li>
 </ul></li>
 <li class="appendix"><span><b>Apêndices</b></span></li>
 <li class="chapter" data-level="A" data-path="ferramentas-rpython.html"><a href="ferramentas-rpython.html"><i class="fa fa-check"></i><b>A</b> Ferramentas de Trabalho: R e Python</a>
@@ -274,8 +383,8 @@ div.csl-indent {
 <li class="chapter" data-level="B.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>B.3</b> Integrais: o essencial</a>
 <ul>
 <li class="chapter" data-level="B.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>B.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
-<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-cálculo-versão-prática"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
-<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impróprias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-c%C3%A1lculo-vers%C3%A3o-pr%C3%A1tica"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impr%C3%B3prias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>B.4</b> Exercício de fixação</a></li>
 </ul></li>
@@ -285,9 +394,10 @@ div.csl-indent {
 <li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
 <li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
 <li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
-<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Apêndice B: Cálculo (resumo)</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Cálculo (resumo do Apêndice B)</a></li>
 <li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
 <li class="divider"></li>
 <li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
 
@@ -310,211 +420,145 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="modelos-continuos" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Alguns modelos probabilísticos<a href="modelos-continuos.html#modelos-continuos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Antes dos modelos nomeados a seguir, vale reforçar que “densidade válida” é um conceito mais amplo
-que os nomes consagrados (Uniforme, Normal etc.): qualquer função não negativa com área total 1
-serve.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-fdp-triangular"></span>
-<img src="images/fdp_triangular.jpg" alt="Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R." width="50%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-midas"></span>
+<img src="images/formula_midas_bbc.jpg" alt="A 'Fórmula de Midas' (Black-Scholes) supõe um modelo probabilístico para preços de ações. Fonte: BBC News Brasil." width="35%" />
 <p class="caption">
-Figure 4.4: Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R.
+Figura 4.8: A ‘Fórmula de Midas’ (Black-Scholes) supõe um modelo probabilístico para preços de ações. Fonte: BBC News Brasil.
 </p>
 </div>
-<div class="caixa-discussao"><strong>Para discutir</strong>
-
-<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em \(x=0\)) até 1 (em \(x=1\)) e desce
-de volta a 0 (em \(x=2\)), formando dois triângulos-retângulos. Usando a fórmula da área de um
-triângulo, confirme que a área total sob a curva é de fato 1, condição necessária para ser uma
-densidade válida.</p>
-
-<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: \(P(X\le 1)\) é maior, menor
-ou igual a \(P(X>1)\)? E \(E(X)\), o desenho sugere que vale exatamente 1? (Aqui a densidade é
-simétrica em torno de \(x=1\), mas o racional geral vale para qualquer densidade: quando existe um
-ponto de simetria, ele é sempre igual a \(E(X)\).)</p>
-</div>
+<p>Na prática usamos <strong>famílias</strong> de densidades com fórmulas determinadas por <strong>parâmetros</strong>, cujas propriedades
+devem refletir o fenômeno analisado.</p>
 <div id="distribuição-uniforme" class="section level3 hasAnchor" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> Distribuição Uniforme<a href="modelos-continuos.html#distribuição-uniforme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A VA mais simples: densidade <strong>constante</strong> em um intervalo <span class="math inline">\([a,b]\)</span>, zero fora dele, “todos os
-valores no intervalo são igualmente prováveis” (no sentido de densidade).</p>
+<h3><span class="header-section-number">4.4.1</span> Distribuição Uniforme<a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="caixa-aplicacao">
+<p><span class="math inline">\(X \sim \text{Unif}(\alpha, \beta)\)</span> se</p>
 <p><span class="math display">\[
-f(x) = \frac{1}{b-a}, \quad a\le x\le b
-\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}.
+f(x) = \frac{1}{\beta - \alpha}, \quad \alpha \leq x \leq \beta \quad (0 \text{ fora}), \qquad F(t) = \frac{t - \alpha}{\beta - \alpha} \text{ em } [\alpha, \beta],
 \]</span></p>
-<div class="caixa-aplicacao"><strong>Aplicação</strong>, o instante, dentro de uma hora, em que um
-cliente entra em uma loja (sem padrão de horário de pico) pode ser modelado como
-\(X\sim\text{Unif}(0,60)\) (minutos após o início da hora).</div>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="modelos-continuos.html#cb124-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span>; b <span class="ot">&lt;-</span> <span class="dv">60</span></span>
-<span id="cb124-2"><a href="modelos-continuos.html#cb124-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">E_X =</span> (a<span class="sc">+</span>b)<span class="sc">/</span><span class="dv">2</span>, <span class="at">Var_X =</span> (b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">12</span>)</span></code></pre></div>
-<pre><code>##   E_X Var_X 
-##    30   300</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="modelos-continuos.html#cb126-1" tabindex="-1"></a><span class="fu">punif</span>(<span class="dv">20</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)   <span class="co"># P(X &lt;= 20)</span></span></code></pre></div>
-<pre><code>## [1] 0.3333333</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="modelos-continuos.html#cb128-1" tabindex="-1"></a><span class="fu">dunif</span>(<span class="dv">30</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)   <span class="co"># densidade em x=30 (constante = 1/60)</span></span></code></pre></div>
-<pre><code>## [1] 0.01666667</code></pre>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hist-unif"></span>
-<img src="images/hist_fdp_unif01.png" alt="Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho." width="65%" />
+<p><span class="math display">\[
+P(a &lt; X &lt; b) = \frac{b - a}{\beta - \alpha}, \qquad E(X) = \frac{\alpha + \beta}{2}, \qquad Var(X) = \frac{(\beta - \alpha)^2}{12}.
+\]</span></p>
+</div>
+<p>Intervalos de <strong>mesmo comprimento</strong> têm a <strong>mesma probabilidade</strong>: a Uniforme modela situações sem nenhum valor
+preferido. Com <span class="math inline">\(\alpha = 0\)</span> e <span class="math inline">\(\beta = 1\)</span>: <span class="math inline">\(P(X &lt; 0{,}8) = 0{,}8\)</span>, <span class="math inline">\(P(0{,}2 &lt; X &lt; 0{,}9) = 0{,}7\)</span>, <span class="math inline">\(P(X &gt; 0{,}5) = 0{,}5\)</span>, <span class="math inline">\(E(X) = 1/2\)</span> e
+<span class="math inline">\(Var(X) = 1/12\)</span>.</p>
+<p><strong>Dedução da média e da variância.</strong> Usando <span class="math inline">\(b^2 - a^2 = (b - a)(b + a)\)</span> e <span class="math inline">\(b^3 - a^3 = (b - a)(b^2 + ab + a^2)\)</span>:
+<span class="math inline">\(E(X) = \frac{\beta^2 - \alpha^2}{2(\beta - \alpha)} = \frac{\alpha + \beta}{2}\)</span>, <span class="math inline">\(E(X^2) = \frac{\alpha^2 + \alpha\beta + \beta^2}{3}\)</span> e
+<span class="math inline">\(Var(X) = \frac{\alpha^2 + \alpha\beta + \beta^2}{3} - \frac{(\alpha + \beta)^2}{4} = \frac{(\beta - \alpha)^2}{12}\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-uniformes"></span>
+<img src="livro-matf14_files/figure-html/fig-uniformes-1.png" alt="Densidade e FDA da Unif(2, 7)." width="95%" />
 <p class="caption">
-Figure 4.5: Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho.
+Figura 4.9: Densidade e FDA da Unif(2, 7).
 </p>
 </div>
-<p>É a lei dos grandes números (fora do escopo formal deste curso, mas já intuída no Capítulo 1) que
-garante essa aproximação: quanto maior a amostra simulada, mais o histograma se aproxima da
-densidade teórica constante <span class="math inline">\(f(x)=1\)</span> em <span class="math inline">\([0,1]\)</span>, e mais a média amostral se aproxima de
-<span class="math inline">\(E(X)=0{,}5\)</span>, a mesma lógica por trás de qualquer simulação Monte Carlo usada para verificar um
-resultado teórico.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-hist-unif"></span>
+<img src="images/hist_fdp_unif01.png" alt="1.000 valores simulados de Unif(0, 1), com a densidade (vermelho) e a média (azul)." width="45%" />
+<p class="caption">
+Figura 4.10: 1.000 valores simulados de Unif(0, 1), com a densidade (vermelho) e a média (azul).
+</p>
+</div>
+<p><strong>Exercício 5.</strong> <span class="math inline">\(X \sim \text{Unif}(0, 10)\)</span>: FDA, <span class="math inline">\(P(2 &lt; X &lt; 4)\)</span>, média e variância.</p>
+<div class="caixa-resposta">
+<p><span class="math inline">\(F(t) = t/10\)</span> em <span class="math inline">\([0, 10)\)</span>; <span class="math inline">\(P(2 &lt; X &lt; 4) = F(4) - F(2) = 1/5\)</span>; <span class="math inline">\(E(X) = 5\)</span>; <span class="math inline">\(Var(X) = 100/12 \approx 8{,}33\)</span>.</p>
+</div>
+<div class="caixa-economia">
+<p><strong>Espera pelo metrô.</strong> Trens a cada 8 minutos e chegada aleatória: <span class="math inline">\(X \sim \text{Unif}(0, 8)\)</span>. <span class="math inline">\(P(X &gt; 6) = 0{,}25\)</span>, espera média
+de 4 minutos e 90% embarcam em até 7,2 minutos. Com trens a cada 4 minutos, a espera média cai pela metade.
+Já <strong>renda</strong> não é uniforme: a Uniforme ignoraria a forte assimetria à direita do Capítulo 1.</p>
+</div>
 </div>
 <div id="distribuição-normal" class="section level3 hasAnchor" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> Distribuição Normal<a href="modelos-continuos.html#distribuição-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>O modelo contínuo mais importante em Estatística e Economia, descreve bem fenômenos que resultam
-da soma de muitos pequenos efeitos independentes (erros de medição, retornos agregados de muitos
-fatores). Densidade em forma de sino, simétrica em torno da média:</p>
-<p><span class="math display">\[
-f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x\in\mathbb{R}
-\qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2.
-\]</span></p>
-<p>Notação: <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. Quando <span class="math inline">\(\mu=0\)</span> e <span class="math inline">\(\sigma=1\)</span>, chama-se <strong>Normal padrão</strong>, <span class="math inline">\(Z\sim N(0,1)\)</span>, qualquer Normal pode ser convertida em padrão pela <strong>padronização</strong>:</p>
-<p><span class="math display">\[
-Z = \frac{X-\mu}{\sigma}.
-\]</span></p>
-<p>A padronização por si só não calcula nada, ela só troca a pergunta original (sobre <span class="math inline">\(X\)</span>) por uma
-pergunta equivalente sobre <span class="math inline">\(Z\)</span>, que pode ser respondida numa tabela ou numa função como
-<code>pnorm()</code>. A relação-chave é</p>
-<p><span class="math display">\[
-P(X\le a) = P\!\left(Z\le \frac{a-\mu}{\sigma}\right) = \Phi\!\left(\frac{a-\mu}{\sigma}\right),
-\]</span></p>
-<p>em que <span class="math inline">\(\Phi\)</span> é a FDA da Normal padrão. Vale a pena fazer essa conta à mão pelo menos uma vez antes
-de confiar apenas no R.</p>
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: padronização passo a passo</strong>, a
-renda mensal (\(X\), em R$) das famílias de uma certa cidade segue aproximadamente
-\(X\sim N(2.000,\ 1.000^2)\). Qual é a probabilidade de uma família sorteada ao acaso ganhar menos de
-R$ 1.830?</div>
-<p><strong>Passo 1 (padronizar).</strong> Subtrai-se a média e divide-se pelo desvio padrão:</p>
-<p><span class="math display">\[
-z = \frac{1.830-2.000}{1.000} = \frac{-170}{1.000} = -0{,}17.
-\]</span></p>
-<p><strong>Passo 2 (reescrever o evento em termos de <span class="math inline">\(Z\)</span>).</strong></p>
-<p><span class="math display">\[
-P(X&lt;1.830) = P\!\left(Z &lt; \frac{1.830-2.000}{1.000}\right) = P(Z&lt;-0{,}17) = \Phi(-0{,}17).
-\]</span></p>
-<p><strong>Passo 3 (consultar a tabela ou calcular <span class="math inline">\(\Phi\)</span>).</strong> Na tabela da Normal padrão, a linha <span class="math inline">\(-0{,}1\)</span>
-com a coluna <span class="math inline">\(0{,}07\)</span> fornece <span class="math inline">\(\Phi(-0{,}17)\approx 0{,}4325\)</span>: cerca de <strong>43,25%</strong> das famílias
-ganham menos de R$ 1.830. Só agora, com o valor já obtido à mão, confirmamos com <code>pnorm()</code>:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="modelos-continuos.html#cb130-1" tabindex="-1"></a>mu_renda <span class="ot">&lt;-</span> <span class="dv">2000</span>; sigma_renda <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb130-2"><a href="modelos-continuos.html#cb130-2" tabindex="-1"></a></span>
-<span id="cb130-3"><a href="modelos-continuos.html#cb130-3" tabindex="-1"></a>z <span class="ot">&lt;-</span> (<span class="dv">1830</span> <span class="sc">-</span> mu_renda) <span class="sc">/</span> sigma_renda</span>
-<span id="cb130-4"><a href="modelos-continuos.html#cb130-4" tabindex="-1"></a>z                       <span class="co"># valor padronizado calculado à mão</span></span></code></pre></div>
-<pre><code>## [1] -0.17</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="modelos-continuos.html#cb132-1" tabindex="-1"></a><span class="fu">pnorm</span>(z)                <span class="co"># Phi(z) pela Normal padrão, N(0,1)</span></span></code></pre></div>
-<pre><code>## [1] 0.4325051</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="modelos-continuos.html#cb134-1" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">1830</span>, mu_renda, sigma_renda)  <span class="co"># mesma probabilidade, direto na escala de X</span></span></code></pre></div>
-<pre><code>## [1] 0.4325051</code></pre>
-<p>As três formas (tabela, <code>pnorm(z)</code> e <code>pnorm(1830, mu, sigma)</code>) devem coincidir, e coincidem: o
-<code>pnorm()</code> com os parâmetros originais já faz a padronização internamente, por isso adiantar o
-cálculo de <span class="math inline">\(z\)</span> à mão é redundante para o R, mas essencial para entender <em>o que</em> o R está calculando
-e para resolver questões de prova sem computador.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-black-scholes"></span>
-<img src="images/black_scholes.jpg" alt="'Fórmula de Midas': a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal)." width="70%" />
+<h3><span class="header-section-number">4.4.2</span> Distribuição Normal<a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-enem-normal"></span>
+<img src="images/exercicio_notas_enem2023.png" alt="Notas do ENEM 2023: um pico central e forma aproximadamente simétrica. Fonte: Nexo Jornal, dados do Inep." width="42%" />
 <p class="caption">
-Figure 4.6: ‘Fórmula de Midas’: a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal).
+Figura 4.11: Notas do ENEM 2023: um pico central e forma aproximadamente simétrica. Fonte: Nexo Jornal, dados do Inep.
 </p>
 </div>
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a fórmula de Black-Scholes-Merton
-(1973), um dos resultados mais influentes das finanças modernas, precifica opções assumindo que o
-log-retorno de um ativo segue uma distribuição Normal. A reportagem acima resume um fato histórico
-importante: essa mesma suposição, quando os mercados se afastam dela (crises, "caudas gordas",
-Capítulo 1), contribuiu para perdas catastróficas, como a quebra do fundo LTCM em 1998. A lição não
-é "não use a Normal", é a mesma do Capítulo 1: todo modelo é uma simplificação, e usá-lo bem
-exige saber em que condições ele deixa de valer.</div>
-<div class="caixa-aplicacao"><strong>Aplicação: retorno mensal de um fundo de ações</strong>,
-histórico sugere retorno mensal aproximadamente \(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\). Qual é a
-probabilidade do fundo ter retorno negativo em um mês qualquer?</div>
-<p>Repetindo os passos do exemplo anterior, agora com <span class="math inline">\(\mu=1{,}2\)</span> e <span class="math inline">\(\sigma=4{,}5\)</span>. Padronizando o
-valor de interesse (<span class="math inline">\(a=0\)</span>):</p>
+<p>A <strong>curva normal</strong> (em forma de sino) é o modelo contínuo mais usado: simétrica, com um único pico. A maioria
+dos adultos tem entre 1,50 m e 1,90 m; a maioria das pessoas tem QI entre 85 e 115; a maioria das notas do
+ENEM fica entre 400 e 700.</p>
+<div class="caixa-aplicacao">
+<p><span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> se</p>
 <p><span class="math display">\[
-z = \frac{0-1{,}2}{4{,}5} = \frac{-1{,}2}{4{,}5} \approx -0{,}27,
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{-\frac{(x - \mu)^2}{2\sigma^2}\right\}, \qquad -\infty &lt; x &lt; \infty,
 \]</span></p>
-<p><span class="math display">\[
-P(X&lt;0) = P\!\left(Z&lt;\frac{0-1{,}2}{4{,}5}\right) = P(Z&lt;-0{,}27) = \Phi(-0{,}27) \approx 0{,}3936
-\]</span></p>
-<p>pela tabela (linha <span class="math inline">\(-0{,}2\)</span>, coluna <span class="math inline">\(0{,}07\)</span>). Para a segunda pergunta, “qual a probabilidade do
-retorno ficar entre 0% e 5% no mês?”, padronizamos os dois extremos do intervalo:</p>
-<p><span class="math display">\[
-z_1 = \frac{0-1{,}2}{4{,}5}\approx -0{,}27, \qquad z_2 = \frac{5-1{,}2}{4{,}5}\approx 0{,}84,
-\]</span></p>
-<p><span class="math display">\[
-P(0&lt;X&lt;5) = \Phi(z_2)-\Phi(z_1) = \Phi(0{,}84)-\Phi(-0{,}27) \approx 0{,}7995-0{,}3936 = 0{,}4059.
-\]</span></p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="modelos-continuos.html#cb136-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">1.2</span>; sigma <span class="ot">&lt;-</span> <span class="fl">4.5</span></span>
-<span id="cb136-2"><a href="modelos-continuos.html#cb136-2" tabindex="-1"></a></span>
-<span id="cb136-3"><a href="modelos-continuos.html#cb136-3" tabindex="-1"></a><span class="co"># padronização à mão, como acima, antes de qualquer chamada a pnorm()</span></span>
-<span id="cb136-4"><a href="modelos-continuos.html#cb136-4" tabindex="-1"></a>z0 <span class="ot">&lt;-</span> (<span class="dv">0</span> <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
-<span id="cb136-5"><a href="modelos-continuos.html#cb136-5" tabindex="-1"></a>z5 <span class="ot">&lt;-</span> (<span class="dv">5</span> <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
-<span id="cb136-6"><a href="modelos-continuos.html#cb136-6" tabindex="-1"></a><span class="fu">c</span>(<span class="at">z0 =</span> z0, <span class="at">z5 =</span> z5)</span></code></pre></div>
-<pre><code>##         z0         z5 
-## -0.2666667  0.8444444</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="modelos-continuos.html#cb138-1" tabindex="-1"></a><span class="co"># Phi(z) pela Normal padrão: deve reproduzir os valores de tabela acima</span></span>
-<span id="cb138-2"><a href="modelos-continuos.html#cb138-2" tabindex="-1"></a><span class="fu">pnorm</span>(z0)</span></code></pre></div>
-<pre><code>## [1] 0.3948629</code></pre>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="modelos-continuos.html#cb140-1" tabindex="-1"></a><span class="fu">pnorm</span>(z5) <span class="sc">-</span> <span class="fu">pnorm</span>(z0)</span></code></pre></div>
-<pre><code>## [1] 0.4059265</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="modelos-continuos.html#cb142-1" tabindex="-1"></a><span class="co"># confirmação: pnorm() com os parâmetros originais já padroniza por dentro</span></span>
-<span id="cb142-2"><a href="modelos-continuos.html#cb142-2" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">0</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span></code></pre></div>
-<pre><code>## [1] 0.3948629</code></pre>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="modelos-continuos.html#cb144-1" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>, mu, sigma) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">0</span>, mu, sigma)</span></code></pre></div>
-<pre><code>## [1] 0.4059265</code></pre>
-<p>Note que <code>pnorm(z0)</code> usa <span class="math inline">\(z_0=-0{,}2\overline{6}\)</span> com todas as casas decimais, enquanto a consulta
-à tabela acima arredondou <span class="math inline">\(z\)</span> para <span class="math inline">\(-0{,}27\)</span> (tabelas só têm duas casas). Por isso os valores
-“batem” apenas de forma aproximada (<span class="math inline">\(0{,}3936\)</span> na tabela vs. <span class="math inline">\(\approx 0{,}3949\)</span> no R): a diferença
-é só arredondamento, não um erro de método, e é exatamente o tipo de discrepância que se espera ao
-comparar um cálculo manual com uma tabela e um cálculo numérico exato.</p>
-<p><img src="livro-matf14_files/figure-html/grafico-normal-1.png" alt="" width="80%" style="display: block; margin: auto;" /></p>
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a probabilidade de retorno mensal
-negativo (área sombreada) é o tipo de número que um gestor de risco reporta como parte da
-caracterização de um fundo, junto de uma ressalva importante, retomada da discussão de curtose no
-Capítulo 1: retornos financeiros reais frequentemente têm caudas mais pesadas que a Normal
-(curtose \(>3\)), de modo que a probabilidade Normal tende a <em>subestimar</em> a frequência real de
-perdas extremas, a Normal é um ponto de partida útil, não a palavra final em modelagem de
-risco.</div>
+<p>com <span class="math inline">\(E(X) = \mu\)</span> (média = moda = mediana) e <span class="math inline">\(Var(X) = \sigma^2\)</span>. <strong>Atenção:</strong> em <span class="math inline">\(N(500;\ 100^2)\)</span> o segundo parâmetro é
+a <strong>variância</strong>; o desvio padrão é 100.</p>
 </div>
-<div id="a-regra-empírica-6895997" class="section level3 hasAnchor" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> A regra empírica (68–95–99,7)<a href="modelos-continuos.html#a-regra-empírica-6895997" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Para qualquer <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>:</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-normal-params"></span>
+<img src="livro-matf14_files/figure-html/fig-normal-params-1.png" alt="μ desloca a curva; σ a alarga ou estreita." width="95%" />
+<p class="caption">
+Figura 4.12: μ desloca a curva; σ a alarga ou estreita.
+</p>
+</div>
+<p><strong>Regra 68–95–99,7.</strong> Aproximadamente 68,3% dos valores ficam entre <span class="math inline">\(\mu - \sigma\)</span> e <span class="math inline">\(\mu + \sigma\)</span>; 95,4% entre <span class="math inline">\(\mu \pm 2\sigma\)</span>;
+99,7% entre <span class="math inline">\(\mu \pm 3\sigma\)</span>.</p>
+<p><strong>Curvas não normais.</strong> A normal <strong>não</strong> serve para distribuições assimétricas, com mais de um pico ou muito
+diferentes de um sino. Antes de usá-la, olhe o histograma.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-empresas-normal"></span>
+<img src="livro-matf14_files/figure-html/fig-empresas-normal-1.png" alt="Empregados (inadequado), tempo de existência (inadequado) e faturamento (adequado) das 106 empresas." width="95%" />
+<p class="caption">
+Figura 4.13: Empregados (inadequado), tempo de existência (inadequado) e faturamento (adequado) das 106 empresas.
+</p>
+</div>
+<div class="caixa-economia">
+<p><strong>Idade dos prefeitos.</strong> A distribuição é simétrica, com um pico: média de cerca de 50 anos e desvio padrão de
+10,8. Pelo modelo, metade dos prefeitos tem menos de 50 anos e cerca de 68% têm entre 39 e 61 anos; nos dados,
+são 64,7%. O modelo acerta aproximadamente.</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-prefeitos-normal"></span>
+<img src="livro-matf14_files/figure-html/fig-prefeitos-normal-1.png" alt="Idade dos 5.232 prefeitos e a curva normal com a mesma média e o mesmo desvio padrão." width="60%" />
+<p class="caption">
+Figura 4.14: Idade dos 5.232 prefeitos e a curva normal com a mesma média e o mesmo desvio padrão.
+</p>
+</div>
+<div id="normal-padrão-e-tabela" class="section level4 unnumbered hasAnchor">
+<h4>Normal padrão e tabela<a href="modelos-continuos.html#normal-padr%C3%A3o-e-tabela" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A integral da densidade normal não tem primitiva por fórmula simples. Usamos como referência a <strong>normal
+padrão</strong> <span class="math inline">\(Z \sim N(0, 1)\)</span>, cuja FDA <span class="math inline">\(\Phi(a) = P(Z &lt; a)\)</span> está <strong>tabelada</strong> (Apêndice C). Para ler a tabela: a <strong>linha</strong> dá o
+primeiro dígito e a primeira casa decimal de <span class="math inline">\(a\)</span>, e a <strong>coluna</strong>, a segunda casa decimal. Ex.: <span class="math inline">\(P(Z &lt; 1{,}55) = 0{,}9394\)</span>
+e <span class="math inline">\(P(Z &lt; -2{,}25) = 0{,}0122\)</span>.</p>
+<p><strong>Exemplo.</strong> <span class="math inline">\(P(-2 &lt; Z &lt; 1{,}55) = P(Z &lt; 1{,}55) - P(Z &lt; -2) = 0{,}9394 - 0{,}0228 = 0{,}9166\)</span>.</p>
+<p><strong>Exercício 6.</strong> <span class="math inline">\(P(Z &lt; 0{,}53)\)</span>; <span class="math inline">\(P(-1 &lt; Z &lt; 1)\)</span>; <span class="math inline">\(P(Z &gt; -0{,}68)\)</span>.</p>
+<div class="caixa-resposta">
+<p><span class="math inline">\(0{,}7019\)</span>; <span class="math inline">\(0{,}8413 - 0{,}1587 = 0{,}6826\)</span>; <span class="math inline">\(1 - 0{,}2483 = 0{,}7517\)</span>.</p>
+</div>
+</div>
+<div id="padronização" class="section level4 unnumbered hasAnchor">
+<h4>Padronização<a href="modelos-continuos.html#padroniza%C3%A7%C3%A3o" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="caixa-aplicacao">
+<p>Se <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, então <span class="math inline">\(Z = \dfrac{X - \mu}{\sigma} \sim N(0, 1)\)</span>, e</p>
 <p><span class="math display">\[
-\begin{aligned}
-P(\mu-\sigma &lt; X &lt; \mu+\sigma) &amp;\approx 0{,}683 \\
-P(\mu-2\sigma &lt; X &lt; \mu+2\sigma) &amp;\approx 0{,}954 \\
-P(\mu-3\sigma &lt; X &lt; \mu+3\sigma) &amp;\approx 0{,}997
-\end{aligned}
+P(X &lt; a) = P\left(Z &lt; \frac{a - \mu}{\sigma}\right), \qquad P(X &gt; a) = 1 - P\left(Z \leq \frac{a - \mu}{\sigma}\right),
 \]</span></p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="modelos-continuos.html#cb146-1" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">2</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">2</span>)   <span class="co"># P(-2 &lt; Z &lt; 2) na Normal padrão</span></span></code></pre></div>
-<pre><code>## [1] 0.9544997</code></pre>
-<div class="caixa-r"><strong>Uso do R</strong>, <code>pnorm</code>/<code>dnorm</code>/
-<code>qnorm</code>/<code>rnorm</code> seguem o mesmo padrão das demais distribuições do R.
-<code>qnorm(p, mean, sd)</code> é a função inversa da FDA, devolve o valor \(x\) tal que
-\(F(x)=p\), útil para "qual é o retorno que só é superado (ou não superado) por p% dos
-casos?".</div>
-<div class="caixa-discussao"><strong>Para discutir: síntese do capítulo e do curso</strong>
-
-<p><strong>1.</strong> A regra empírica é uma consequência direta da Normal, não uma suposição
-extra. Se retornos financeiros reais têm curtose maior que 3 (Capítulo 1), a probabilidade real de
-um retorno cair fora de \(\mu\pm2\sigma\) é maior ou menor que os 4,6\% previstos pela regra
-empírica? Que consequência prática isso tem para um gestor que usa "2 desvios padrão" como limite
-de alerta de risco?</p>
-
-<p><strong>2.</strong> Por que a soma de "muitos pequenos efeitos independentes" tende a gerar uma
-distribuição aproximadamente Normal? Não é preciso provar, dê uma intuição, pensando no que
-acontece ao somar vários erros de medição pequenos e aleatórios, cada um podendo ser positivo ou
-negativo.</p>
-
-<p><strong>3.</strong> Volte à primeira pergunta do Prefácio do livro ("vale a pena trocar a
-poupança por um fundo multimercado?"). Com o vocabulário completo dos Capítulos 1 a 4 agora
-disponível, escreva um parágrafo respondendo, não com uma resposta definitiva ("sim" ou "não"),
-mas listando que informações estatísticas (medidas de posição, dispersão, forma, um modelo de
-distribuição para o retorno) você exigiria antes de decidir.</p>
-
-<p><strong>4.</strong> Ao longo do curso, cada capítulo teve um bloco de discussão insistindo no
-mesmo ponto: um número sozinho raramente basta, é preciso saber sua origem, seu condicionamento e
-seus limites. Escolha, dentre todas as discussões do semestre, a que mais mudou sua forma de ler um
-número em uma notícia econômica, e explique por quê.</p>
+<p><span class="math display">\[
+P(a &lt; X &lt; b) = P\left(Z &lt; \frac{b - \mu}{\sigma}\right) - P\left(Z \leq \frac{a - \mu}{\sigma}\right).
+\]</span></p>
+<p><strong>Percentil:</strong> <span class="math inline">\(x = \mu + z\,\sigma\)</span>, com <span class="math inline">\(z\)</span> lido no <strong>corpo</strong> da tabela.</p>
+</div>
+<p><strong>Exemplos.</strong></p>
+<ul>
+<li>Notas do ENEM com média 500 e desvio padrão 100: <span class="math inline">\(P(X &lt; 700) = P(Z &lt; 2) = 0{,}9772\)</span>.</li>
+<li>Bolsas de sangue por mês com média 1.300 e desvio padrão 200: <span class="math inline">\(P(X &lt; 850) = P(Z &lt; -2{,}25) = 0{,}0122\)</span>. O estoque
+suficiente em 95% dos meses é <span class="math inline">\(1.300 + 1{,}645 \times 200 \approx 1.629\)</span> bolsas.</li>
+</ul>
+<p><strong>Exercício 7.</strong> Renda mensal modelada por <span class="math inline">\(N(2.000;\ 1.000^2)\)</span>. Probabilidade de ganhar <strong>a)</strong> menos de 1.830; <strong>b)</strong> menos
+de 2.570; <strong>c)</strong> mais de 3.000; <strong>d)</strong> entre 500 e 1.600. <strong>e)</strong> Qual renda separa os 10% mais ricos?</p>
+<div class="caixa-resposta">
+<p><strong>a)</strong> <span class="math inline">\(P(Z &lt; -0{,}17) = 0{,}4325\)</span>. <strong>b)</strong> <span class="math inline">\(P(Z &lt; 0{,}57) = 0{,}7157\)</span>. <strong>c)</strong> <span class="math inline">\(1 - 0{,}8413 = 0{,}1587\)</span>.
+<strong>d)</strong> <span class="math inline">\(P(Z &lt; -0{,}4) - P(Z &lt; -1{,}5) = 0{,}3446 - 0{,}0668 = 0{,}2778\)</span>. <strong>e)</strong> <span class="math inline">\(2.000 + 1{,}28 \times 1.000 = 3.280\)</span>.</p>
+</div>
+<div class="caixa-discussao">
+<p><strong>Os limites do modelo.</strong> Esse modelo de renda dá <span class="math inline">\(P(X &lt; 0) = P(Z &lt; -2) = 2{,}3\%\)</span> de rendas <strong>negativas</strong>, e a renda real é
+assimétrica à direita. Um fundo com retorno anual médio de 7,98% e desvio padrão de 21,13% tem, pela normal,
+<span class="math inline">\(P(X &gt; 10\%) \approx 0{,}46\)</span> e <span class="math inline">\(P(X &lt; -5\%) \approx 0{,}27\)</span>; mas retornos de ativos têm caudas mais pesadas que a normal (curtose
+maior que 3), e perdas extremas são subestimadas.</p>
+</div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="modelos-continuos.html#cb111-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">pnorm</span>(<span class="fl">1.55</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">2</span>), <span class="fu">pnorm</span>(<span class="dv">850</span>, <span class="dv">1300</span>, <span class="dv">200</span>), <span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">1300</span>, <span class="dv">200</span>),</span>
+<span id="cb111-2"><a href="modelos-continuos.html#cb111-2" tabindex="-1"></a>  <span class="fu">pnorm</span>(<span class="dv">1600</span>, <span class="dv">2000</span>, <span class="dv">1000</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">500</span>, <span class="dv">2000</span>, <span class="dv">1000</span>), <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">10</span>, <span class="fl">7.98</span>, <span class="fl">21.13</span>), <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="fl">7.98</span>, <span class="fl">21.13</span>))</span></code></pre></div>
+<pre><code>## [1]    0.91667911    0.01222447 1628.97072539    0.27777106    0.46191966
+## [6]    0.26951104</code></pre>
 </div>
 </div>
 </div>
@@ -524,7 +568,7 @@ número em uma notícia econômica, e explique por quê.</p>
         </div>
       </div>
 <a href="va-continua-fda.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="fechando-o-capítulo-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="va-continua-macro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

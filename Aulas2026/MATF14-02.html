@@ -202,7 +202,9 @@ glimpse(empresas)
 ## $ regiao        &lt;chr&gt; "sudeste", "sudeste", "nordeste", "nordeste", "nordeste"…
 ```
 
---
+---
+
+## Leitura de dados: o mesmo `empresas.csv` em Python
 
 O equivalente em Python, com `pandas`:
 
@@ -320,7 +322,9 @@ sample(1:6, size = 3)          # sorteia 3 números de 1 a 6, sem repetir
 ## [1] 5 4 2
 ```
 
---
+---
+
+## Números aleatórios em Python
 
 O mesmo em Python, com `numpy`:
 
@@ -339,48 +343,67 @@ Isso é exatamente o que os laboratórios de simulação (Aulas 13 e 22) vão us
 
 ---
 
-## Gráficos básicos (1/2): dispersão e histograma
+## Gráficos básicos (1/2): dispersão, em R e em Python
 
+.pull-left[
 
 ``` r
-plot(empresas$faturamento98, empresas$faturamento99,
-     xlab = "Faturamento 1998", ylab = "Faturamento 1999",
-     main = "Dispersão: faturamento 1998 x 1999", pch = 19, col = "#0d3b54")
+plot(empresas$faturamento98,
+     empresas$faturamento99,
+     xlab = "Faturamento 1998",
+     ylab = "Faturamento 1999",
+     main = "Faturamento 1998 x 1999",
+     pch = 19, col = "#0d3b54")
 ```
 
-&lt;img src="MATF14-02_files/figure-html/grafico-dispersao-1.png" alt="" width="504" /&gt;
+&lt;img src="MATF14-02_files/figure-html/grafico-dispersao-1.png" alt="" width="100%" /&gt;
+]
 
---
-
+.pull-right[
 ```python
 import matplotlib.pyplot as plt
-plt.scatter(empresas["faturamento98"], empresas["faturamento99"])
-plt.xlabel("Faturamento 1998"); plt.ylabel("Faturamento 1999")
-plt.title("Dispersão: faturamento 1998 x 1999")
+plt.scatter(empresas["faturamento98"],
+            empresas["faturamento99"])
+plt.xlabel("Faturamento 1998")
+plt.ylabel("Faturamento 1999")
+plt.title("Faturamento 1998 x 1999")
 plt.show()
 ```
+
+Cada ponto é uma empresa: quem faturou mais em 1998 tende a faturar mais em 1999 (correlação,
+Aula 08).
+]
 
 ---
 
 ## Histograma, em R e em Python
 
+.pull-left[
 
 ``` r
 hist(empresas$faturamento99,
-     main = "Histograma do faturamento (1999)",
-     xlab = "Faturamento 1999 (R$)", col = "#c9971e")
+     main = "Faturamento (1999)",
+     xlab = "Faturamento 1999",
+     ylab = "Frequência",
+     col = "#c9971e")
 ```
 
-&lt;img src="MATF14-02_files/figure-html/grafico-histograma-1.png" alt="" width="504" /&gt;
+&lt;img src="MATF14-02_files/figure-html/grafico-histograma-1.png" alt="" width="100%" /&gt;
+]
 
---
-
+.pull-right[
 ```python
-plt.hist(empresas["faturamento99"], color="#c9971e")
-plt.title("Histograma do faturamento (1999)")
-plt.xlabel("Faturamento 1999 (R$)")
+plt.hist(empresas["faturamento99"],
+         color="#c9971e")
+plt.title("Faturamento (1999)")
+plt.xlabel("Faturamento 1999")
+plt.ylabel("Frequência")
 plt.show()
 ```
+
+O R escolhe as classes sozinho (regra de Sturges); em Python o padrão é 10 classes, por isso os
+dois histogramas podem sair um pouco diferentes (Aula 03).
+]
 
 ---
 
@@ -388,43 +411,53 @@ plt.show()
 
 Contagem de empresas por setor (a mesma base usada na Provocação 2 da Aula 03):
 
+.pull-left[
 
 ``` r
 setor_freq &lt;- table(trimws(empresas$setor))
-pie(setor_freq, main = "Empresas por setor (pizza)")
+pie(setor_freq, main = "Empresas por setor")
 ```
 
-&lt;img src="MATF14-02_files/figure-html/grafico-pizza-1.png" alt="" width="504" /&gt;
+&lt;img src="MATF14-02_files/figure-html/grafico-pizza-1.png" alt="" width="100%" /&gt;
+]
 
---
-
+.pull-right[
 ```python
-setor_freq = empresas["setor"].str.strip().value_counts()
-plt.pie(setor_freq, labels=setor_freq.index)
-plt.title("Empresas por setor (pizza)")
+setor_freq = (empresas["setor"]
+              .str.strip().value_counts())
+plt.pie(setor_freq,
+        labels=setor_freq.index)
+plt.title("Empresas por setor")
 plt.show()
 ```
+]
 
 ---
 
 ## Gráfico de barras, em R e em Python
 
+.pull-left[
 
 ``` r
-par(mar = c(12, 4, 3, 1))
-barplot(sort(setor_freq, decreasing = TRUE),
-        main = "Empresas por setor (barras)", las = 2, cex.names = 0.85, col = "#0d3b54")
+par(mar = c(4, 12, 3, 1))
+barplot(sort(setor_freq), horiz = TRUE,
+        las = 1, col = "#0d3b54",
+        main = "Empresas por setor",
+        xlab = "Número de empresas")
 ```
 
-&lt;img src="MATF14-02_files/figure-html/grafico-barras-base-1.png" alt="" width="504" /&gt;
+&lt;img src="MATF14-02_files/figure-html/grafico-barras-base-1.png" alt="" width="100%" /&gt;
+]
 
---
-
+.pull-right[
 ```python
-setor_freq.sort_values(ascending=False).plot(kind="bar", color="#0d3b54")
-plt.title("Empresas por setor (barras)")
+(setor_freq.sort_values()
+   .plot(kind="barh", color="#0d3b54"))
+plt.title("Empresas por setor")
+plt.xlabel("Número de empresas")
 plt.show()
 ```
+]
 
 --
 

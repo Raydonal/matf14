@@ -46,3 +46,9 @@ code, pre {
 table {
   font-size: 15px;
 }
+div.caixa-resposta  { background: #f3f0fa; border-left: 5px solid #6c4bb4; border-radius: 6px; padding: 0.8em 1.1em; margin: 1.2em 0; }
+div.caixa-aplicacao > p:first-child, div.caixa-discussao > p:first-child, div.caixa-r > p:first-child,
+div.caixa-economia > p:first-child, div.caixa-resposta > p:first-child { margin-top: 0; }
+div.caixa-aplicacao > p:last-child, div.caixa-discussao > p:last-child, div.caixa-r > p:last-child,
+div.caixa-economia > p:last-child, div.caixa-resposta > p:last-child { margin-bottom: 0; }
+p.fonte, .fonte { font-size: 0.8em; color: #666; }

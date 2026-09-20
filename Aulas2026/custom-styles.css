@@ -3,16 +3,28 @@
   font-size: 1.1rem;
 }
 
+/* código legível no projetor (0.6rem era ilegível) */
 .remark-code {
-  font-size: 0.6rem;
+  font-size: 0.78rem;
 }
 
 .remark-slide-content h1 {
   font-size: 1.8rem;
 }
 
+/* utilitários de tamanho e colunas */
+.small   { font-size: 0.88em; }
+.smaller { font-size: 0.76em; }
+.fonte   { font-size: 0.55em; color: #6b6b6b; }
+.fonte a { color: #6b6b6b; }
+.pull-left-40  { float: left;  width: 38%; }
+.pull-right-60 { float: right; width: 59%; }
+.pull-left-60  { float: left;  width: 59%; }
+.pull-right-40 { float: right; width: 38%; }
+.clear { clear: both; display: block; }
+
 /* Caixas de destaque, mesma paleta do livro-texto (Livro/style.css) */
-div.caixa-aplicacao, div.caixa-discussao, div.caixa-r, div.caixa-economia {
+div.caixa-aplicacao, div.caixa-discussao, div.caixa-r, div.caixa-economia, div.caixa-resposta {
   border-radius: 6px;
   padding: 0.5em 0.9em;
   margin: 0.6em 0;
@@ -22,3 +34,20 @@ div.caixa-aplicacao { background: #eef7f1; border-left: 5px solid #2e8b57; }
 div.caixa-discussao { background: #fdf3e7; border-left: 5px solid #d98324; }
 div.caixa-r         { background: #eef3fb; border-left: 5px solid #3b5bdb; }
 div.caixa-economia  { background: #fdf8ee; border-left: 5px solid #c9971e; }
+div.caixa-resposta  { background: #f3f0fa; border-left: 5px solid #6c4bb4; }
+
+/* tabelas de frequência feitas em markdown */
+.remark-slide-content table { border-collapse: collapse; margin: 0.4em auto; font-size: 0.95em; }
+.remark-slide-content table th, .remark-slide-content table td { padding: 0.15em 0.6em; border-bottom: 1px solid #ddd; }
+
+/* Organização da aula em 2 × 50 min */
+.tempo { display: inline-block; background: #0d3b54; color: #ffffff; border-radius: 4px; white-space: nowrap;
+         padding: 0.05em 0.5em; font-size: 0.62em; vertical-align: middle; margin-left: 0.4em; }
+div.caixa-atividade { background: #e8f6f3; border-left: 5px solid #138d75; border-radius: 6px;
+                      padding: 0.5em 0.9em; margin: 0.6em 0; font-size: 0.85em; }
+.roteiro table { font-size: 0.95em; }
+.roteiro td:first-child { white-space: nowrap; font-weight: bold; color: #0d3b54; }
+/* selo de tempo no canto superior direito, sobre a faixa escura: não ocupa linha do título */
+.remark-slide-content { position: relative; }
+.remark-slide-content h2 .tempo { position: absolute; top: 26px; right: 32px; margin: 0;
+                                  background: #c9971e; color: #1b1b1b; font-size: 0.55em; }

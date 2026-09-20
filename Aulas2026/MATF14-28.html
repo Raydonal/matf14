@@ -21,228 +21,791 @@ class: inverse, center, middle
 
 # Aula 28: Distribuição Normal
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## A distribuição mais usada: e mais mal-usada
+## Roteiro da aula (100 minutos)
 
-&gt; A Normal é o modelo padrão para tudo, de notas de prova a retornos financeiros. Mas ela também é
-&gt; a distribuição mais aplicada sem checagem prévia em toda a Estatística, inclusive em finanças,
-&gt; onde caudas pesadas (Cap. 1) tornam essa suposição arriscada. Hoje: como usá-la bem, e como saber
-&gt; quando desconfiar dela.
+.roteiro[
+
+| Tempo | Parte 1: a curva normal |
+|:---|:---|
+| 0–5 min | Provocação: o que é um resultado "normal"? |
+| 5–15 min | A curva normal; exemplos da turma |
+| 15–25 min | Densidade normal; curvas não normais; **Atividade 1** |
+| 25–35 min | Probabilidade é área; os parâmetros |
+| 35–50 min | Regra 68–95–99,7; idade dos prefeitos |
+
+| Tempo | Parte 2: normal padrão, tabela e aplicações |
+|:---|:---|
+| 0–12 min | Normal padrão e a tabela; exemplo |
+| 12–22 min | **Atividade 2**; padronização e outros casos |
+| 22–32 min | Bolsas de sangue; renda mensal; retorno de um fundo |
+| 32–40 min | Dados reais: o crescimento do PIB é normal? |
+| 40–46 min | Percentis; **Atividade 3**: discussão |
+| 46–50 min | Uso do R e resumo |
+
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: a curva normal
+
+### 50 minutos
 
 ---
 
-## Normal(\\(\mu,\sigma^2\\))
+## Provocação: o que é um resultado "normal"? .tempo[0–5 min]
 
-$$
-f(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \ x\in\mathbb{R}
-\qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2
-$$
+.pull-left[
+&lt;img src="images/exercicio_notas_enem2023.png" alt="" width="92%" /&gt;
 
-Simétrica, em forma de sino, em torno de \\(\mu\\). O modelo contínuo mais usado, surge naturalmente
-da soma de muitos pequenos efeitos independentes.
+.fonte[Fonte: Nexo Jornal (17/01/2024), dados do Inep.]
+]
+
+.pull-right[
+As notas do ENEM 2023 (Aula 03):
+
+- a **maioria** ficou entre 400 e 700 pontos;
+- **poucas** pessoas tiraram menos de 300 ou mais de 850;
+- o histograma tem **um pico** no centro e é aproximadamente **simétrico**.
+
+.caixa-discussao[
+Altura de adultos, QI, erros de medição, notas de provas grandes: por que tantos fenômenos têm
+histogramas com esse mesmo **formato de sino**?
+]
+]
+
+---
+
+## A curva normal .tempo[5–15 min]
+
+.pull-left[
+- Na prática existem muitos tipos de distribuições e histogramas.
+- A **curva normal** (curva em forma de **sino**) é o modelo **mais usado** em aplicações.
+- É **simétrica**, com um **único pico** no centro.
+]
+
+.pull-right[
+&lt;img src="MATF14-28_files/figure-html/curva-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
 
 --
 
-## Padronização
+**Realidade vs. curva normal:**
 
-$$
-Z = \frac{X-\mu}{\sigma} \ \sim \ N(0,1) \quad \text{(Normal padrão)}
-$$
-
-Converte qualquer Normal em uma referência comum, tabelada.
+- a maioria dos adultos tem entre 1,50 m e 1,90 m; poucos têm menos de 1,50 m ou mais de 1,90 m;
+- a maioria das pessoas tem QI entre 85 e 115; pouquíssimas têm menos de 55 ou mais de 145;
+- a maioria das notas do ENEM fica entre 400 e 700.
 
 ---
 
-## Regra empírica (68-95-99,7)
+## Exemplos da turma (MATF14, 2025.2)
+
+.pull-left[
+&lt;img src="images/letras_nomes_matf14.png" alt="" width="100%" /&gt;
+
+.small[Número de letras no nome completo: **próximo** de um sino.]
+]
+
+.pull-right[
+&lt;img src="images/notas_prova1_matf14.png" alt="" width="100%" /&gt;
+
+.small[Notas da Prova 1: assimétrica à esquerda, **não** tem forma de sino.]
+]
+
+.clear[]
+
+.fonte[Dados de uma turma de MATF14.]
+
+---
+
+## Função densidade normal .tempo[15–25 min]
+
+\\(X\\) segue uma **distribuição normal** com parâmetros \\(\mu\\) e \\(\sigma^2\\) se a sua densidade é
 
 $$
-P(\mu-\sigma&amp;lt;X&amp;lt;\mu+\sigma)\approx68{,}3\% \quad
-P(\mu-2\sigma&amp;lt;X&amp;lt;\mu+2\sigma)\approx95{,}4\% \quad
-P(\mu-3\sigma&amp;lt;X&amp;lt;\mu+3\sigma)\approx99{,}7\%
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\\{-\frac{(x - \mu)^2}{2\sigma^2}\right\\}, \qquad -\infty &amp;lt; x &amp;lt; \infty,
 $$
 
-&lt;img src="MATF14-28_files/figure-html/regra-empirica-1.png" alt="" width="504" /&gt;
+em que \\(\exp(x) = e^x\\) é a função exponencial.
+
+**Notação:** \\(X \sim N(\mu, \sigma^2)\\).
+
+--
+
+- A **média** de \\(X\\) é \\(E(X) = \mu\\), que pode ser **qualquer** número real.
+- A **variância** de \\(X\\) é \\(Var(X) = \sigma^2 &amp;gt; 0\\); o **desvio padrão** é \\(\sigma\\).
+
+.caixa-discussao[
+**Atenção à notação:** em \\(N(500;\ 100^2)\\) o segundo número é a **variância**. O desvio padrão é 100.
+]
+
+---
+
+## Curvas não normais
+
+A curva normal **não** é adequada em muitos casos:
+
+- distribuições **assimétricas**;
+- com **mais de um pico**;
+- com formas muito diferentes de um sino.
+
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/pop-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+.caixa-aplicacao[
+É **recomendável** olhar o **histograma** dos dados antes de usar a distribuição normal. A população dos
+5.232 municípios da nossa base é fortemente assimétrica à direita: uma normal daria probabilidade
+positiva a populações **negativas**.
+]
+]
+
+---
+
+## Exercício 1: o modelo normal é adequado?
+
+Histogramas de três variáveis das 106 empresas da nossa base. Para cada uma, o modelo normal é adequado?
+
+&lt;img src="MATF14-28_files/figure-html/ex-empresas-1.png" alt="" width="100%" /&gt;
+
+--
+
+.caixa-resposta[
+**(a)** Inadequado: forte assimetria à direita. **(b)** Inadequado: assimétrica à direita, sem pico central
+claro. **(c)** Adequado: um pico, aproximadamente simétrica (assimetria 0,36, Aula 08).
+]
+
+---
+
+## Probabilidade é área sob a curva .tempo[25–35 min]
+
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/area-exemplo-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+- A curva se concentra nos valores **mais prováveis**: aqui, de 200 a 800.
+- A **área total** sob a curva é 100%.
+- A probabilidade de um intervalo é a **área** sob a curva nele.
+
+**Ex.:** \\(P(600 &amp;lt; X &amp;lt; 800) \approx 15{,}7\\%\\).
+]
+
+.clear[]
+
+.caixa-discussao[
+A área da cauda **acima** de 800 é pequena, mas **não é zero**. E a área **abaixo** de 0? Faz sentido para
+notas do ENEM?
+]
+
+---
+
+## Os parâmetros da curva normal
+
+A **média** \\(\mu\\) e o **desvio padrão** \\(\sigma\\) caracterizam a curva normal:
+
+- \\(\mu\\) indica o **centro** da distribuição;
+- \\(\sigma\\) indica o quão **larga** é a densidade.
+
+&lt;img src="MATF14-28_files/figure-html/parametros-1.png" alt="" width="100%" /&gt;
+
+---
+
+## Interpretação dos parâmetros: a regra 68–95–99,7 .tempo[35–50 min]
+
+.pull-left[
+Se \\(X \sim N(\mu, \sigma^2)\\):
+
+- **média, moda e mediana** de \\(X\\) valem \\(\mu\\);
+- o desvio padrão de \\(X\\) é \\(\sigma\\);
+- aprox. **68,3%** dos valores ficam entre \\(\mu - \sigma\\) e \\(\mu + \sigma\\);
+- aprox. **95,4%** entre \\(\mu - 2\sigma\\) e \\(\mu + 2\sigma\\);
+- aprox. **99,7%** entre \\(\mu - 3\sigma\\) e \\(\mu + 3\sigma\\).
+]
+
+.pull-right[
+&lt;img src="MATF14-28_files/figure-html/regra-1.png" alt="" width="100%" /&gt;
+
+]
+
+---
+
+## Exemplo: idade dos prefeitos
+
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/pref-hist-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+- **Simetria**, forma de **sino**, **único pico**: a normal pode ser usada.
+- Dos dados: média \\(\approx 50\\) anos e desvio padrão \\(\approx 10{,}8\\) anos.
+
+**Interpretações pelo modelo:**
+
+- metade dos prefeitos tem menos de 50 anos;
+- cerca de **68%** têm entre 39,2 e 60,8 anos;
+- quase todos têm entre 17,6 e 82,4 anos (\\(\mu \pm 3\sigma\\)).
+
+.caixa-discussao[
+Nos **dados**, 64,7% estão a menos de 1 desvio padrão da média. O modelo acerta "aproximadamente".
+]
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Intervalo
 
----
-
-## A "Fórmula de Midas"
-
-&lt;img src="images/black_scholes.jpg" alt="" width="46%" /&gt;
-
-Black-Scholes-Merton (1973) precifica opções assumindo retornos aproximadamente Normais. Quando os
-mercados se afastam dessa suposição (caudas gordas, Cap. 1), o modelo pode falhar de forma
-catastrófica, como na quebra do fundo LTCM em 1998.
-
----
-
-## Padronização: exemplo passo a passo
-
-Renda mensal de uma cidade, \\(X\sim N(2.000,\ 1.000^2)\\) (R$). Qual é \\(P(X&amp;lt;1.830)\\)?
-
-**Passo 1 (padronizar):**
-$$
-z = \frac{1.830-2.000}{1.000} = -0{,}17
-$$
-
-**Passo 2 (reescrever em \\(Z\\) e consultar a tabela):**
-$$
-P(X&amp;lt;1.830) = P(Z&amp;lt;-0{,}17) = \Phi(-0{,}17)\approx 0{,}4325
-$$
-
-
-``` r
-mu_renda &lt;- 2000; sigma_renda &lt;- 1000
-
-z &lt;- (1830 - mu_renda) / sigma_renda
-z                                  # valor padronizado, calculado à mão
-```
-
-```
-## [1] -0.17
-```
-
-``` r
-pnorm(z)                           # Phi(z) pela Normal padrão
-```
-
-```
-## [1] 0.4325051
-```
-
-``` r
-pnorm(1830, mu_renda, sigma_renda) # mesma probabilidade, escala original de X
-```
-
-```
-## [1] 0.4325051
-```
-
----
-
-## Retorno mensal de um fundo
-
-\\(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\\). Repetindo os mesmos passos para \\(P(X&amp;lt;0)\\) (retorno
-negativo no mês):
-
-$$
-z = \frac{0-1{,}2}{4{,}5}\approx -0{,}27 \qquad P(X&amp;lt;0)=\Phi(-0{,}27)\approx 0{,}3936
-$$
-
-
-``` r
-mu &lt;- 1.2; sigma &lt;- 4.5
-
-z0 &lt;- (0 - mu) / sigma        # padronização à mão, como no exemplo anterior
-z0
-```
-
-```
-## [1] -0.2666667
-```
-
-``` r
-pnorm(z0)                     # Phi(z0): deve bater (a menos de arredondar z) com 0,3936
-```
-
-```
-## [1] 0.3948629
-```
-
-``` r
-pnorm(0, mu, sigma)                       # P(retorno &lt; 0), confirmação direta
-```
-
-```
-## [1] 0.3948629
-```
-
-``` r
-pnorm(5, mu, sigma) - pnorm(0, mu, sigma) # P(0 &lt; retorno &lt; 5)
-```
-
-```
-## [1] 0.4059265
-```
-
-&lt;img src="MATF14-28_files/figure-html/grafico-retorno-1.png" alt="" width="504" /&gt;
-
----
-
-## Quantis: "o pior cenário de 5%"
-
-Qual retorno só é superado (para baixo) por 5% dos meses (Value-at-Risk simplificado)?
-
-
-``` r
-qnorm(0.05, mu, sigma)
-```
-
-```
-## [1] -6.201841
-```
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (a mais longa da aula)
+# Parte 2: normal padrão, tabela e aplicações
+
+### 50 minutos
 
 ---
 
-## Rodada 1: resolvendo a provocação inicial
+## Como calcular probabilidades gerais? .tempo[0–12 min]
 
-**1.** A Normal tem curtose exatamente 3 (Cap. 1). Retornos financeiros reais costumam ter curtose
-maior, "caudas gordas". A probabilidade de retorno muito negativo calculada com o modelo Normal
-tende a subestimar ou superestimar o risco real de perdas extremas? Que implicação prática isso
-tem para o cálculo de Value-at-Risk feito acima?
+Se \\(X \sim N(\mu, \sigma^2)\\), a regra 68–95–99,7 dá \\(P(\mu - k\sigma &amp;lt; X &amp;lt; \mu + k\sigma)\\) para \\(k = 1, 2, 3\\).
 
-**2.** Um gestor de risco usa exclusivamente a regra empírica (2 desvios padrão \\(\approx\\) 95%) para
-definir seus limites de alerta. Em que tipo de mercado (calmo vs. em crise) essa prática seria mais
-perigosa?
+**E \\(P(a &amp;lt; X &amp;lt; b)\\) para quaisquer \\(a\\) e \\(b\\)?**
+
+--
+
+- A integral da densidade normal **não** tem primitiva por fórmula simples.
+- Solução: usar como **referência** a **normal padrão** \\(N(0, 1)\\), cujas probabilidades estão **tabeladas**.
+
+--
+
+.caixa-aplicacao[
+Se \\(Z \sim N(0, 1)\\), a densidade e a FDA de \\(Z\\) são
+
+$$
+\phi(x) = \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}, \qquad \Phi(t) = P(Z &amp;lt; t) = \int\_{-\infty}^{t} \frac{1}{\sqrt{2\pi}}\, e^{-x^2/2}\,dx.
+$$
+
+A tabela fornece \\(\Phi(a) = P(Z &amp;lt; a)\\). Ex.: \\(P(Z &amp;lt; 1{,}5) = 0{,}9332\\).
+]
+
+---
+
+## Como ler a tabela da normal padrão
+
+.smaller[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; a &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,00 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,01 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,02 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,03 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,04 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,05 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,06 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,07 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,08 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,09 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; -2,3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0107 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0104 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0102 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0099 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0096 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0094 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0091 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0089 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0087 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0084 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; -2,2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0139 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0136 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0132 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0129 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0125 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0122 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0119 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0116 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0113 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0110 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; -2,0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0228 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0222 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0217 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0212 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0207 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0202 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0197 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0192 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0188 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,0183 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; a &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,00 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,01 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,02 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,03 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,04 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,05 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,06 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,07 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,08 &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 0,09 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1,4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9192 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9207 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9222 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9236 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9251 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9265 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9279 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9292 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9306 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9319 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1,5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9332 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9345 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9357 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9370 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9382 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9394 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9406 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9418 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9429 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9441 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1,6 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9452 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9463 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9474 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9484 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9495 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9505 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9515 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9525 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9535 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,9545 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.small[
+**Linhas:** o primeiro dígito e a primeira casa decimal de \\(a\\). **Colunas:** a segunda casa decimal de \\(a\\).
+Para \\(a\\) negativo, a coluna **subtrai**: \\(-2{,}2 - 0{,}05 = -2{,}25\\).
+
+**Ex. 1:** \\(P(Z &amp;lt; -2{,}25)\\): linha \\(-2{,}2\\), coluna \\(0{,}05\\): **0,0122**. **Ex. 2:** \\(P(Z &amp;lt; 1{,}55)\\): linha \\(1{,}5\\), coluna \\(0{,}05\\): **0,9394**.
+]
+
+.fonte[A tabela completa está no formulário da disciplina (apêndice do livro).]
 
 ---
 
-## Rodada 2: de onde vem a Normal
+## Exemplo: \\(P(-2 &amp;lt; Z &amp;lt; 1{,}55)\\)
 
-**3.** Por que a soma de "muitos pequenos efeitos independentes" tende a gerar uma distribuição
-aproximadamente Normal? Dê uma intuição (não uma prova), pensando no que acontece ao somar vários
-erros de medição pequenos e aleatórios, cada um podendo ser positivo ou negativo.
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/ex-z-1.png" alt="" width="100%" /&gt;
 
-**4.** Cite uma variável econômica que você esperaria ser bem aproximada pela Normal (por exemplo,
-por resultar da soma de muitos fatores pequenos) e outra que você esperaria claramente **não**
-Normal (por ter cauda pesada, ser sempre positiva, ou ser fortemente assimétrica, retome o
-Capítulo 1).
+]
+
+.pull-right[
+Pela figura, a área entre \\(-2\\) e \\(1{,}55\\) é a área **até** 1,55 **menos** a área **até** \\(-2\\):
+
+$$
+P(-2 &amp;lt; Z &amp;lt; 1{,}55) =
+$$
+
+$$
+P(Z &amp;lt; 1{,}55) - P(Z &amp;lt; -2)
+$$
+
+Na tabela: \\(P(Z &amp;lt; 1{,}55) = 0{,}9394\\) e \\(P(Z &amp;lt; -2) = 0{,}0228\\).
+
+$$
+= 0{,}9394 - 0{,}0228 = 0{,}9166 \approx 91{,}66\\%
+$$
+]
 
 ---
 
-class: inverse, center, middle
+## Exercício 2 .tempo[12–22 min]
 
-# Bloco 4: Uso do R
+Seja \\(Z \sim N(0, 1)\\). Calcule a probabilidade de:
+
+**a)** \\(Z\\) ser menor do que 0,53. **b)** \\(Z\\) estar entre \\(-1\\) e 1. **c)** \\(Z\\) ser maior do que \\(-0{,}68\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(P(Z &amp;lt; 0{,}53) = 0{,}7019\\).
+
+**b)** \\(P(-1 &amp;lt; Z &amp;lt; 1) = P(Z &amp;lt; 1) - P(Z &amp;lt; -1) = 0{,}8413 - 0{,}1587 = 0{,}6826\\) (a regra dos 68%!).
+
+**c)** \\(P(Z &amp;gt; -0{,}68) = 1 - P(Z &amp;lt; -0{,}68) = 1 - 0{,}2483 = 0{,}7517\\).
+]
+
+--
+
+&lt;img src="MATF14-28_files/figure-html/ex2-areas-1.png" alt="" width="100%" /&gt;
 
 ---
+
+## Padronização: de \\(N(\mu, \sigma^2)\\) para \\(N(0, 1)\\)
+
+Para calcular probabilidades de \\(X \sim N(\mu, \sigma^2)\\), **transformamos** o problema para a normal padrão:
+
+$$
+Z = \frac{X - \mu}{\sigma} \sim N(0, 1).
+$$
+
+**Passos:** (1) subtraia a média \\(\mu\\); (2) divida pelo desvio padrão \\(\sigma\\).
+
+--
+
+$$
+P(X &amp;lt; a) = P\left(Z &amp;lt; \frac{a - \mu}{\sigma}\right)
+$$
+
+--
+
+**Ex.:** as notas do ENEM têm distribuição normal com média 500 e desvio padrão 100. Qual é a
+probabilidade de um aluno tirar nota **menor que 700**?
+
+$$
+P(X &amp;lt; 700) = P\left(Z &amp;lt; \frac{700 - 500}{100}\right) = P(Z &amp;lt; 2) = 0{,}9772
+$$
+
+.caixa-aplicacao[
+\\(z = 2\\) quer dizer: 700 está **2 desvios padrão acima** da média.
+]
+
+---
+
+## Outros casos
+
+Seja \\(X \sim N(\mu, \sigma^2)\\).
+
+- **Maior que:** a área total é 1, logo
+
+$$
+P(X &amp;gt; a) = 1 - P(X \leq a) = 1 - P\left(Z \leq \frac{a - \mu}{\sigma}\right).
+$$
+
+- **Entre:**
+
+$$
+P(a &amp;lt; X &amp;lt; b) = P(X &amp;lt; b) - P(X \leq a) = P\left(Z &amp;lt; \frac{b - \mu}{\sigma}\right) - P\left(Z \leq \frac{a - \mu}{\sigma}\right).
+$$
+
+.caixa-discussao[
+Lembre: para a normal (contínua), \\(&amp;lt;\\) e \\(\leq\\) dão a **mesma** probabilidade.
+]
+
+---
+
+## Exemplo: bolsas de sangue .tempo[22–32 min]
+
+O número de bolsas de sangue usadas por mês em um hospital tem distribuição normal com média
+**1.300** e desvio padrão **200**. Qual é a probabilidade de, em um mês, serem necessárias **menos de 850**
+bolsas?
+
+--
+
+.pull-left[
+Seja \\(X\\) o número de bolsas usadas no mês: \\(\mu = 1.300\\), \\(\sigma = 200\\).
+
+$$
+P(X &amp;lt; 850) = P\left(Z &amp;lt; \frac{850 - 1.300}{200}\right)
+$$
+
+$$
+= P(Z &amp;lt; -2{,}25) = 0{,}0122
+$$
+
+A probabilidade é de **1,22%**.
+]
+
+.pull-right[
+&lt;img src="MATF14-28_files/figure-html/sangue-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+.caixa-discussao[
+Para **planejar estoque**, a pergunta mais útil é a oposta: quantas bolsas bastam em **95%** dos meses?
+]
+
+---
+
+## Exercício 3: renda mensal
+
+A renda mensal em uma cidade é representada por um modelo normal com média **R$ 2.000** e desvio padrão
+**R$ 1.000**. Uma pessoa é selecionada ao acaso. Qual é a probabilidade de ela ganhar:
+
+**a)** menos de R$ 1.830? **b)** menos de R$ 2.570? **c)** mais de R$ 3.000? **d)** entre R$ 500 e R$ 1.600?
+
+--
+
+.caixa-resposta[
+**a)** \\(P\left(Z &amp;lt; \frac{1.830 - 2.000}{1.000}\right) = P(Z &amp;lt; -0{,}17) = 0{,}4325\\).
+
+**b)** \\(P(Z &amp;lt; 0{,}57) = 0{,}7157\\).
+
+**c)** \\(1 - P(Z &amp;lt; 1) = 1 - 0{,}8413 = 0{,}1587\\).
+
+**d)** \\(P(Z &amp;lt; -0{,}4) - P(Z &amp;lt; -1{,}5) = 0{,}3446 - 0{,}0668 = 0{,}2778\\).
+]
+
+---
+
+## Exercício 3: o modelo é bom?
+
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/renda-neg-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+\\(P(X &amp;lt; 0) = P(Z &amp;lt; -2) = 0{,}0228\\).
+
+.caixa-discussao[
+O modelo diz que **2,3%** das pessoas têm **renda negativa**! E a renda real é **assimétrica à direita**
+(Aula 04), com poucas rendas muito altas. Em que tipo de pergunta esse modelo ainda poderia ser útil, e
+em qual seria perigoso?
+]
+]
+
+---
+
+## Exercício 4: retorno de um fundo
+
+O retorno anual de um fundo de investimentos tem média **7,98%** e desvio padrão **21,13%**. Supondo
+distribuição normal, encontre a probabilidade de o retorno em um ano ser:
+
+**a)** maior que 10%; **b)** menor que \\(-5\\%\\).
+
+--
+
+.caixa-resposta[
+Seja \\(X \sim N(7{,}98;\ 21{,}13^2)\\).
+
+**a)** \\(z = \frac{10 - 7{,}98}{21{,}13} \approx 0{,}10\\): \\(P(X &amp;gt; 10) = 1 - P(Z &amp;lt; 0{,}10) = 1 - 0{,}5398 \approx 0{,}46\\).
+
+**b)** \\(z = \frac{-5 - 7{,}98}{21{,}13} \approx -0{,}61\\): \\(P(X &amp;lt; -5) = P(Z &amp;lt; -0{,}61) = 0{,}2709\\).
+]
+
+--
+
+.caixa-economia[
+Em **27%** dos anos o fundo perde mais de 5%. A média de 8% ao ano esconde um **risco** alto. E a
+normal **subestima** perdas extremas de ativos financeiros, que têm caudas mais pesadas (curtose &amp;gt; 3,
+Aula 08).
+]
+
+---
+
+
+
+## Dados reais: o crescimento do PIB é normal? .tempo[32–40 min]
+
+.pull-left[
+&lt;img src="MATF14-28_files/figure-html/pib-normal-1.png" alt="" width="100%" /&gt;
+]
+
+.pull-right[
+Normal com média 0,58 e desvio padrão 1,58:
+
+$$
+P(\text{queda}) = P\left(Z &lt; \frac{0 - 0{,}58}{1{,}58}\right) \approx 0{,}36
+$$
+
+Observado: 0,22.
+]
+
+.clear[]
+
+.caixa-discussao[
+Os dados são mais **concentrados** no centro e têm **caudas longas** (2020): o desvio padrão inflado "espalha" a normal. Um
+modelo deve ser checado nas **caudas** antes de ser usado para medir risco de recessão.
+]
+
+---
+
+## Percentis da normal: o caminho inverso .tempo[40–46 min]
+
+Qual é a **renda** que separa os **10% mais ricos** (percentil 90) no modelo \\(N(2.000;\ 1.000^2)\\)?
+
+--
+
+1. Na tabela, procure a **probabilidade** 0,90 no **corpo** da tabela: \\(P(Z &amp;lt; 1{,}28) \approx 0{,}8997\\), logo \\(z \approx 1{,}28\\).
+2. **Desfaça** a padronização: \\(x = \mu + z\,\sigma\\).
+
+$$
+x = 2.000 + 1{,}28 \times 1.000 = 3.280 \text{ reais.}
+$$
+
+--
+
+.caixa-aplicacao[
+**Bolsas de sangue:** o percentil 95 de \\(N(1.300;\ 200^2)\\) é \\(1.300 + 1{,}645 \times 200 \approx 1.629\\) bolsas. Com esse
+estoque, faltará sangue em só **5%** dos meses.
+]
+
+---
+
+## Atividade 3: discussão
+
+**1.** Dois alunos: Ana tirou 720 no ENEM (média 500, desvio 100) e Bruno tirou 8,5 numa prova (média 6,
+desvio 1,5). Quem foi **relativamente** melhor? Use a padronização.
+
+**2.** Um relatório afirma: "os retornos do nosso fundo são normais, então uma perda de mais de 3 desvios
+padrão acontece a cada 370 anos". Por que um gestor deveria desconfiar dessa frase?
+
+**3.** Por que tantas variáveis têm histograma em forma de sino? Pense em uma variável que é a **soma**
+de muitos pequenos efeitos independentes (altura: genes, alimentação, ambiente...).
+
+--
+
+.caixa-resposta[
+**1.** Ana: \\(z = (720 - 500)/100 = 2{,}2\\). Bruno: \\(z = (8{,}5 - 6)/1{,}5 \approx 1{,}67\\). Ana foi relativamente
+melhor. **3.** É a intuição do **Teorema Central do Limite**, que você verá em Estatística II.
+]
+
+---
+
+## Uso do R: `pnorm`, `qnorm`, `dnorm`, `rnorm` .tempo[46–50 min]
 
 
 ``` r
-dnorm(x, mean = mu, sd = sigma)   # densidade
-pnorm(x, mean = mu, sd = sigma)   # FDA
-qnorm(p, mean = mu, sd = sigma)   # quantil (inverso da FDA)
-rnorm(m, mean = mu, sd = sigma)   # m valores simulados
+pnorm(1.55) - pnorm(-2)                            # P(-2 &lt; Z &lt; 1,55)
 ```
+
+```
+## [1] 0.9166791
+```
+
+``` r
+pnorm(850, mean = 1300, sd = 200)                  # bolsas de sangue: 0,0122
+```
+
+```
+## [1] 0.01222447
+```
+
+``` r
+c(1 - pnorm(3000, 2000, 1000), pnorm(1600, 2000, 1000) - pnorm(500, 2000, 1000))   # renda
+```
+
+```
+## [1] 0.1586553 0.2777711
+```
+
+``` r
+c(qnorm(0.90, 2000, 1000), qnorm(0.95, 1300, 200)) # percentis: renda e estoque de bolsas
+```
+
+```
+## [1] 3281.552 1628.971
+```
+
+.caixa-r[
+Atenção: no R o argumento é o **desvio padrão** (`sd`), e não a variância.
+]
+
+---
+
+## Uso do R: a regra 68–95–99,7 com dados reais
+
+
+``` r
+idade &lt;- prefeitos$idade
+mu &lt;- mean(idade); s &lt;- sd(idade)
+c(media = mu, dp = s)
+```
+
+```
+##    media       dp 
+## 49.84117 10.77715
+```
+
+``` r
+c(dados_1dp = mean(abs(idade - mu) &lt;= s),   normal_1dp = pnorm(1) - pnorm(-1))
+```
+
+```
+##  dados_1dp normal_1dp 
+##  0.6473624  0.6826895
+```
+
+``` r
+c(dados_2dp = mean(abs(idade - mu) &lt;= 2*s), normal_2dp = pnorm(2) - pnorm(-2))
+```
+
+```
+##  dados_2dp normal_2dp 
+##  0.9629205  0.9544997
+```
+
+``` r
+set.seed(28)
+z &lt;- rnorm(100000)                               # 100 mil valores de N(0, 1)
+mean(z &gt; -2 &amp; z &lt; 1.55)                          # perto de 0,9166
+```
+
+```
+## [1] 0.91607
+```
+
+---
+
+## Resumo
+
+- \\(X \sim N(\mu, \sigma^2)\\): simétrica, forma de sino; \\(E(X) = \mu\\) (média = moda = mediana), \\(Var(X) = \sigma^2\\).
+- **Regra 68–95–99,7** para \\(\mu \pm \sigma\\), \\(\mu \pm 2\sigma\\), \\(\mu \pm 3\sigma\\).
+- **Padronização:** \\(Z = (X - \mu)/\sigma \sim N(0, 1)\\) e \\(P(X &amp;lt; a) = P\left(Z &amp;lt; \frac{a - \mu}{\sigma}\right)\\), com a tabela de \\(P(Z &amp;lt; a)\\).
+- \\(P(X &amp;gt; a) = 1 - P(X \leq a)\\); \\(P(a &amp;lt; X &amp;lt; b) = P(X &amp;lt; b) - P(X \leq a)\\).
+- **Percentis:** \\(x = \mu + z\,\sigma\\).
+- Sempre **olhe o histograma** antes de supor normalidade.
 
 ---
 

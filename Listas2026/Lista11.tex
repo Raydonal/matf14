@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 11}{Variável aleatória contínua, densidade, esperança, variância e FDA (Cap. 4, Aulas 24--26)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito11.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Densidade válida: tempo de vida de um equipamento)}
 
@@ -89,5 +89,64 @@ colega que ainda não cursou esta disciplina, uma explicação de por que isso n
 contradição com o fato de $X$ certamente assumir \emph{algum} valor quando o experimento
 acontece. Evite fórmulas, o objetivo é uma explicação em português comum.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item (Aquecimento de cálculo) Calcule as derivadas: $8x^{11}$; $5 + x + 3x^2$; $e^{-3x}$; $e^{7x^2 - 2x}$. Calcule as integrais: $\int_0^1 7\,dx$; $\int_1^2 x^3\,dx$; $\int_0^2 (x^2 - 3x + 5)\,dx$; $\int_0^3 e^{2x}\,dx$.
+\item (Triangular em $[0, 1]$) Seja $f(x) = Cx$ para $0 \leq x \leq 1/2$, $f(x) = C(1 - x)$ para $1/2 < x \leq 1$ e $f(x) = 0$ fora.
+\begin{enumerate}[label=(\alph*)]
+  \item Encontre $C$.
+  \item Esboce o gráfico de $f$.
+  \item Calcule $P(X \leq 1/2)$ e $P(1/4 \leq X \leq 3/4)$.
+\end{enumerate}
+\item Seja $f(x) = C(1 - x^2)$ para $-1 \leq x \leq 1$ e zero fora.
+\begin{enumerate}[label=(\alph*)]
+  \item Encontre $C$.
+  \item Calcule $E(X)$.
+  \item Calcule $Var(X)$.
+\end{enumerate}
+\item (Exponencial) Para $\lambda > 0$, seja $f(x) = \lambda e^{-\lambda x}$ para $x \geq 0$ e zero para $x < 0$.
+\begin{enumerate}[label=(\alph*)]
+  \item Encontre a função de distribuição acumulada de $X$.
+  \item Calcule $P(X > 10)$.
+  \item Encontre a mediana de $X$.
+  \item (Mais difícil) Mostre que $E(X) = 1/\lambda$.
+\end{enumerate}
+\item Seja $f(x) = Cx^{-3}$ para $x \geq 10$ e zero para $x < 10$.
+\begin{enumerate}[label=(\alph*)]
+  \item Encontre $C$.
+  \item Calcule a função de distribuição acumulada.
+  \item Calcule $P(X > 20)$.
+\end{enumerate}
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: modelos probabilísticos e dados reais}
+\noindent\textit{Exercício ligado à seção de aplicação macroeconômica do Capítulo 4 do livro.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Um modelo contínuo para a inflação mensal.)} De janeiro de 2017 a agosto de 2026 (116 meses), o IPCA mensal variou de $-0{,}68\%$ a
+$1{,}62\%$, com média $0{,}41\%$; houve 13 meses com inflação negativa e 9 meses acima de 1\% (IBGE, via BCB-SGS). Um analista modela a inflação mensal $X$ (em \%) pela
+densidade triangular
+$$
+f(x) = \begin{cases}
+\dfrac{2(x + 0{,}7)}{2{,}53}, & -0{,}7 \leq x \leq 0{,}4, \\[2mm]
+\dfrac{2(1{,}6 - x)}{2{,}76}, & 0{,}4 < x \leq 1{,}6, \\[2mm]
+0, & \text{caso contrário}.
+\end{cases}
+$$
+\begin{enumerate}[label=(\alph*)]
+  \item Verifique que $f$ é uma densidade (use a área de triângulos, sem integrar) e esboce o gráfico.
+  \item Obtenha a função de distribuição acumulada $F(x)$ e calcule $P(X < 0)$, $P(X > 1)$ e $F(0{,}4)$.
+  \item Calcule $E(X)$. Compare as três probabilidades/médias do modelo com as frequências e a média observadas.
+  \item Em que parte da distribuição o modelo erra mais? Que consequência isso teria para um banco que usa o modelo para avaliar o risco de inflação alta?
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

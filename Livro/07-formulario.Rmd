@@ -38,17 +38,19 @@ cima e percentil $=x_{(k)}$.
 
 **Dispersão.**
 $$
-AT = x_{\max}-x_{\min} \qquad IQR = Q_3-Q_1 \qquad
-\mathrm{Var}(X) = \frac1n\sum_{i=1}^n (x_i-\bar x)^2 \qquad dp(X)=\sqrt{\mathrm{Var}(X)}
+AT = x_{\max}-x_{\min} \qquad IQR = Q_3-Q_1
 $$
 $$
-CV(X) = \frac{dp(X)}{\bar x} \qquad \text{outlier (boxplot): } x < Q_1-1{,}5\,IQR \text{ ou } x>Q_3+1{,}5\,IQR
+\mathrm{Var}(X) = \frac1n\sum_{i=1}^n (x_i-\bar x)^2 \qquad dp(X)=\sqrt{\mathrm{Var}(X)} \qquad CV(X) = \frac{dp(X)}{\bar x}
+$$
+$$
+\text{outlier (boxplot): } x < Q_1-1{,}5\,IQR \ \text{ ou } \ x>Q_3+1{,}5\,IQR
 $$
 
 **Curtose, três regimes:** leptocúrtica ($>3$, caudas pesadas) $\quad$ mesocúrtica
 ($\approx3$, referência Normal) $\quad$ platicúrtica ($<3$, caudas leves).
 
-**Tabela de contingência de referência (Yule, 1912):**
+**Tabela de contingência de referência** [@yule1912association]**:**
 
 ```{r tabela-yule-formulario, echo=FALSE}
 tibble::tribble(
@@ -130,7 +132,7 @@ tibble::tribble(
 **Regra empírica (Normal):** $P(\mu\pm\sigma)\approx68{,}3\%$;
 $P(\mu\pm2\sigma)\approx95{,}4\%$; $P(\mu\pm3\sigma)\approx99{,}7\%$.
 
-## Apêndice B: Cálculo (resumo)
+## Cálculo (resumo do Apêndice B) {#apêndice-b-cálculo-resumo}
 
 $$
 \frac{d}{dx}c=0 \quad \frac{d}{dx}x^n=nx^{n-1} \quad \frac{d}{dx}e^x=e^x
@@ -147,8 +149,16 @@ tibble::tibble(
   z = z,
   `P(Z ≤ z)` = round(pnorm(z), 4),
   `P(Z > z)` = round(1 - pnorm(z), 4)
-) |> knitr::kable(caption = "Valores de referência da FDA da Normal padrão")
+) |> knitr::kable(caption = "Valores de referência da FDA da Normal padrão",
+                  digits = c(3, 4, 4), format.args = list(decimal.mark = ","))
 ```
 
 Para qualquer outro valor de $z$, use `pnorm(z)` em R, esta tabela cobre apenas os percentis mais
 cobrados em prova (mediana, quartis, 90º/95º/99º percentis e a regra empírica).
+
+# Referências {-}
+
+Obras e fontes citadas ao longo do livro.
+
+::: {#refs}
+:::

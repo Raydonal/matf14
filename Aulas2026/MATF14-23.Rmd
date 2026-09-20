@@ -15,201 +15,537 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages(library(tidyverse))
 ```
 
 class: inverse, center, middle
 
-# Aula 23: Exercícios de VA discreta + revisão de cálculo
+# Aula 23: Exercícios da Unidade 3 e revisão de cálculo
 
-## Preparando o terreno para a Unidade 4
+### Parte 1 (50 min): variáveis aleatórias discretas (Prova 2) · intervalo · Parte 2 (50 min): derivadas e integrais (Unidade 4)
+
+---
+
+## Roteiro da aula (100 minutos)
+
+.roteiro[
+
+| Tempo | Parte 1: exercícios da Unidade 3 |
+|:---|:---|
+| 0–6 min | Como usar a aula; mapa da Unidade 3 |
+| 6–18 min | Exercício 1: licitação |
+| 18–28 min | Exercício 2: defeitos em carros novos |
+| 28–38 min | Exercício 3: tipo sanguíneo (Binomial e Poisson) |
+| 38–44 min | Exercício 4: créditos, chamadas e sinistros |
+| 44–50 min | Exercício 5: meses de deflação (dados reais) |
+
+| Tempo | Parte 2: revisão de cálculo |
+|:---|:---|
+| 0–5 min | Por que cálculo, agora? |
+| 5–18 min | Área sob uma função; retângulos e integral |
+| 18–30 min | Derivadas; **Exercício 6** |
+| 30–43 min | Integrais; **Exercício 7** |
+| 43–50 min | Discussão e Uso do R |
+
+]
 
 ---
 
 class: inverse, center, middle
 
-# Parte 1: Exercícios resolvidos (VA discreta)
+# Parte 1: exercícios de variáveis aleatórias discretas
+
+### 50 minutos
 
 ---
 
-## Problema 1
+## Como usar esta aula .tempo[0–6 min]
 
-Uma linha de crédito pessoal aprova, historicamente, 60% das solicitações, de forma independente
-entre clientes. Em um dia com 8 solicitações, qual a probabilidade de exatamente 5 serem
-aprovadas?
+- **Parte 1:** exercícios no nível da **P2** (18/11), que cobre as Unidades 2 e 3. Resolva **no papel**
+  antes de avançar o slide.
+- **Parte 2:** revisão **mínima** de derivadas e integrais. Na Unidade 4, probabilidades de variáveis
+  **contínuas** são **áreas** sob curvas, e área se calcula com **integral**.
 
 --
 
-**Solução.** \\(X\sim\text{Bin}(8;\,0{,}6)\\).
+.caixa-aplicacao[
+**Roteiro de cada exercício:** (1) identifique a variável aleatória e os seus valores; (2) reconheça
+o modelo (tabela, Bernoulli, Binomial, Poisson); (3) escreva a probabilidade pedida **antes** de
+fazer contas; (4) calcule; (5) interprete.
+]
+
+---
+
+## Mapa da Unidade 3
+
+| Conceito | Fórmula |
+|:---|:---|
+| Distribuição | \\(P(X = x\_i) \geq 0\\), \\(\sum P(X = x\_i) = 1\\) |
+| Esperança | \\(E(X) = \sum x\_i\, P(X = x\_i)\\) |
+| Variância | \\(Var(X) = E(X^2) - [E(X)]^2\\) |
+| Propriedades | \\(E(aX + b) = aE(X) + b\\); \\(Var(aX + b) = a^2 Var(X)\\) |
+| FDA | \\(F(x) = P(X \leq x)\\) |
+| Bernoulli\\((p)\\) | \\(E = p\\), \\(Var = p(1-p)\\) |
+| Binomial\\((n, p)\\) | \\(\binom{n}{k}p^k(1-p)^{n-k}\\); \\(E = np\\), \\(Var = np(1-p)\\) |
+| Poisson\\((\lambda)\\) | \\(e^{-\lambda}\lambda^k/k!\\); \\(E = Var = \lambda\\) |
+
+---
+
+## Exercício 1: licitação .tempo[6–18 min]
+
+Uma empresa entrará em uma concorrência para a licitação de um contrato. Se vencer, terá um **lucro de
+50 mil reais**; caso contrário, o lucro será **zero**. A chance de conseguir o contrato é de **30%**.
+
+**a)** Qual é a distribuição do lucro da empresa (em milhares de reais)?
+
+**b)** Qual é o lucro esperado? **c)** Encontre o desvio padrão do lucro.
+
+--
+
+.caixa-resposta[
+**a)** Seja \\(L\\) o lucro em milhares de reais:
+
+| \\(k\\) | 0 | 50 |
+|:---:|:---:|:---:|
+| \\(P(L = k)\\) | 0,7 | 0,3 |
+
+**b)** \\(E(L) = 0 \times 0{,}7 + 50 \times 0{,}3 = 15\\) mil reais.
+
+**c)** \\(E(L^2) = 50^2 \times 0{,}3 = 750\\); \\(Var(L) = 750 - 15^2 = 525\\); \\(dp(L) = \sqrt{525} \approx 22{,}9\\) mil reais.
+]
+
+---
+
+## Exercício 1: discussão
+
+.caixa-discussao[
+**1.** \\(L = 50 \cdot I\\), com \\(I \sim \text{Bernoulli}(0{,}3)\\). Use as propriedades para conferir
+\\(E(L) = 50 \times 0{,}3\\) e \\(Var(L) = 50^2 \times 0{,}3 \times 0{,}7\\).
+
+**2.** O lucro esperado (15 mil) é um valor que a empresa **nunca** obtém. Então para que serve?
+
+**3.** Se a empresa participar de **10** licitações independentes iguais, qual é a probabilidade de
+vencer **pelo menos 5**?
+]
+
+--
+
+.caixa-resposta[
+**1.** \\(50 \times 0{,}3 = 15\\) e \\(2.500 \times 0{,}21 = 525\\). ✓ **2.** Serve para planejar a **média** de
+muitas licitações (orçamento anual). **3.** \\(V \sim \text{Bin}(10;\ 0{,}3)\\): \\(P(V \geq 5) = 1 - P(V \leq 4) \approx 0{,}150\\).
+]
+
+---
+
+## Exercício 2: defeitos em carros novos .tempo[18–28 min]
+
+Uma empresa que inspeciona carros novos constatou que muitos têm defeitos na parte externa
+(arranhões, amassados etc.). Nenhum carro tem mais de três defeitos: **7%** tinham três, **11%** tinham
+dois e **21%** tinham um defeito. Um carro novo é selecionado ao acaso.
+
+**a)** Qual é a distribuição do número de defeitos?
+
+**b)** Encontre o número esperado de defeitos. **c)** Qual é o desvio padrão do número de defeitos?
+
+---
+
+## Exercício 2: resolução
+
+.caixa-resposta[
+**a)** Seja \\(N\\) o número de defeitos. \\(P(N = 0) = 1 - 0{,}07 - 0{,}11 - 0{,}21 = 0{,}61\\).
+
+| \\(k\\) | 0 | 1 | 2 | 3 |
+|:---:|:---:|:---:|:---:|:---:|
+| \\(P(N = k)\\) | 0,61 | 0,21 | 0,11 | 0,07 |
+
+**b)** \\(E(N) = 0(0{,}61) + 1(0{,}21) + 2(0{,}11) + 3(0{,}07) = 0{,}21 + 0{,}22 + 0{,}21 = 0{,}64\\).
+
+**c)** \\(E(N^2) = 1(0{,}21) + 4(0{,}11) + 9(0{,}07) = 0{,}21 + 0{,}44 + 0{,}63 = 1{,}28\\).
+
+\\(Var(N) = 1{,}28 - 0{,}64^2 = 1{,}28 - 0{,}4096 = 0{,}8704\\); \\(dp(N) = \sqrt{0{,}8704} \approx 0{,}933\\).
+]
+
+--
+
+.caixa-discussao[
+Calcule e esboce a FDA de \\(N\\). Qual é a probabilidade de um carro ter **pelo menos um** defeito?
+]
+
+---
+
+## Exercício 3: tipo sanguíneo .tempo[28–38 min]
+
+Sabe-se que **43%** das pessoas de uma população têm sangue do **tipo A**. Um laboratório coletará
+amostras de sangue de **120** indivíduos sorteados dessa população. Seja \\(N\\) o número de pessoas da
+amostra com sangue tipo A.
+
+**a)** Qual é a distribuição de \\(N\\)? **b)** Qual é a média de \\(N\\)? **c)** E o desvio padrão?
+
+**d)** Que distribuição **alternativa** poderia ser usada para calcular probabilidades aproximadas de \\(N\\)?
+
+--
+
+.caixa-resposta[
+**a)** \\(N \sim \text{Bin}(120;\ 0{,}43)\\). **b)** \\(E(N) = 120 \times 0{,}43 = 51{,}6\\).
+
+**c)** \\(dp(N) = \sqrt{120 \times 0{,}43 \times 0{,}57} = \sqrt{29{,}41} \approx 5{,}42\\).
+
+**d)** Uma candidata é a \\(\text{Poisson}(51{,}6)\\), com \\(\lambda = np\\).
+]
+
+---
+
+## Exercício 3: a aproximação é boa aqui?
+
+.pull-left[
+```{r sangue-aprox, echo=FALSE, fig.height=3.8, fig.width=5, out.width="100%"}
+kk <- 25:80
+tibble(k = rep(kk, 2), p = c(dbinom(kk, 120, 0.43), dpois(kk, 51.6)),
+       modelo = rep(c("Bin(120; 0,43)", "Poisson(51,6)"), each = length(kk))) |>
+  ggplot(aes(k, p, color = modelo)) + geom_point(size = 1.8) + geom_line(alpha = 0.5) +
+  scale_color_manual(values = c("#3b5bdb", "#c0392b")) +
+  labs(x = "k", y = "P(N = k)", color = NULL) + theme_minimal(base_size = 13) + theme(legend.position = "top")
+```
+
+]
+
+.pull-right[
+- Binomial: \\(Var(N) = 29{,}4\\). Poisson: \\(Var = 51{,}6\\).
+- \\(P(N \leq 60)\\): Binomial **0,949**; Poisson **0,890**.
+
+.caixa-discussao[
+A Poisson aproxima a Binomial quando \\(p\\) é **pequeno**. Com \\(p = 0{,}43\\), a Poisson é **larga
+demais**. Na Unidade 4 veremos uma aproximação melhor para este caso: a **Normal**.
+]
+]
+
+---
+
+## Exercício 4: créditos, chamadas e sinistros .tempo[38–44 min]
+
+**a)** Uma linha de crédito aprova 60% das solicitações, independentemente. Em um dia com 8
+solicitações, qual é a probabilidade de **exatamente 5** serem aprovadas?
+
+**b)** Um call center recebe em média 4 chamadas por minuto (Poisson). Qual é a probabilidade de, em um
+minuto, receber **no máximo 1** chamada?
+
+**c)** Uma seguradora modela o número de sinistros por ano com \\(E(X) = 0{,}8\\) e \\(Var(X) = 0{,}9\\). Com custo
+fixo de R$ 3.500 por sinistro, calcule a média e o desvio padrão do custo anual \\(C = 3.500X\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(X \sim \text{Bin}(8;\ 0{,}6)\\): \\(\binom{8}{5}(0{,}6)^5(0{,}4)^3 = 56 \times 0{,}07776 \times 0{,}064 \approx 0{,}279\\).
+
+**b)** \\(P(X \leq 1) = e^{-4} + 4e^{-4} = 5e^{-4} \approx 0{,}092\\).
+
+**c)** \\(E(C) = 3.500 \times 0{,}8 = 2.800\\); \\(dp(C) = 3.500\sqrt{0{,}9} \approx 3.320\\) reais.
+]
+
+---
+
+## Exercício 5: meses de deflação (dados reais) .tempo[44–50 min]
+
+Entre 2000 e 2025, o IPCA mensal foi **negativo** em média em **0,58** mês por ano, e a variância do número de meses
+de deflação por ano foi parecida com a média. Modele \\(Y\\) = meses de deflação no ano por uma **Poisson(0,58)**.
+
+**a)** \\(P(Y = 0)\\)? **b)** \\(P(Y \geq 2)\\)? **c)** Em 26 anos, quantos anos com **pelo menos dois** meses de deflação o modelo prevê?
+
+--
+
+.caixa-resposta[
+**a)** \\(e^{-0{,}58} \approx 0{,}560\\). **b)** \\(1 - e^{-0{,}58}(1 + 0{,}58) \approx 1 - 0{,}885 = 0{,}115\\).
+**c)** \\(26 \times 0{,}115 \approx 3\\) anos. Observados: 3 anos (2018, 2020 e 2022; fonte: Banco Central, SGS 433).
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: revisão de cálculo
+
+### 50 minutos
+
+---
+
+## Por que cálculo, agora? .tempo[0–5 min]
+
+- Na Unidade 3, probabilidades eram **somas**: \\(P(X \leq 2) = P(X = 0) + P(X = 1) + P(X = 2)\\).
+- Na Unidade 4, as variáveis são **contínuas** (tempo, renda, peso). Não dá para somar "todos os
+  valores": há infinitos, e cada um tem probabilidade zero.
+
+--
+
+.caixa-aplicacao[
+Para variáveis contínuas, probabilidades serão **áreas sob uma curva** (a função densidade). A
+ferramenta para calcular áreas sob curvas é a **integral**, e o atalho para calcular integrais é a
+tabela de **derivadas**.
+]
+
+---
+
+## Cálculo de área sob uma função .tempo[5–18 min]
+
+.pull-left[
+```{r area, echo=FALSE, out.width="95%"}
+knitr::include_graphics("images/calculo_area_sob_funcao.png")
+```
+
+]
+
+.pull-right[
+Diversos problemas envolvem a **área** da região sob o gráfico de uma função:
+
+- probabilidade a partir de um **histograma**;
+- **distância** percorrida a partir da velocidade;
+- **receita acumulada** a partir de uma taxa de vendas.
+
+.caixa-discussao[
+Como calcular a área \\(A\\) sob \\(f(x)\\), de \\(a\\) até \\(b\\), quando \\(f\\) é uma curva?
+]
+]
+
+---
+
+## Da área do retângulo à integral
+
+.pull-left[
+```{r area-const, echo=FALSE, out.width="58%"}
+knitr::include_graphics("images/calculo_area_constante.png")
+```
+
+Se \\(f(x) = k\\) (constante) em \\([a, b]\\), a área é a de um **retângulo**:
+
 $$
-P(X=5) = \binom{8}{5}(0{,}6)^5(0{,}4)^3 = 56\times(0{,}6)^5\times(0{,}4)^3 \approx 0{,}2787
+A = k \cdot (b - a).
+$$
+]
+
+.pull-right[
+```{r riemann, echo=FALSE, out.width="58%"}
+knitr::include_graphics("images/calculo_soma_riemann.png")
+```
+
+No caso geral, aproximamos a área por **muitos retângulos**:
+
+$$
+A \approx \sum\_{i=1}^{n} f(x\_i)\,(x\_i - x\_{i-1}).
+$$
+]
+
+.clear[]
+
+.caixa-aplicacao[
+O **limite** para infinitos retângulos é a **integral** de \\(f\\) em \\([a, b]\\): \\(A = \displaystyle\int\_a^b f(x)\,dx\\).
+]
+
+---
+
+## Retângulos se aproximando da área
+
+```{r riemann-anim, echo=FALSE, fig.height=3.2, fig.width=10, out.width="100%"}
+f <- function(x) 2 * x
+ret <- map_dfr(c(4, 10, 40), function(n) {
+  x0 <- seq(0, 1, length.out = n + 1)
+  tibble(painel = paste(n, "retângulos: soma =", format(round(sum(f(x0[-1]) / n), 3), decimal.mark = ",")),
+         xmin = head(x0, -1), xmax = x0[-1], ymax = f(x0[-1]))
+})
+ggplot(ret) + geom_rect(aes(xmin = xmin, xmax = xmax, ymin = 0, ymax = ymax), fill = "#e8dcef", color = "#7a4f9a") +
+  stat_function(fun = f, color = "#3b0f6b", linewidth = 1.1) + facet_wrap(~painel) +
+  labs(x = "x", y = "f(x) = 2x") + theme_minimal(base_size = 12)
+```
+
+A área exata sob \\(f(x) = 2x\\) entre 0 e 1 é um **triângulo**: \\(\frac{1 \times 2}{2} = 1\\). As somas dos
+retângulos se aproximam de 1 quando \\(n\\) cresce.
+
+---
+
+## Derivadas: o que são .tempo[18–30 min]
+
+A **derivada** de uma função \\(F(x)\\), denotada \\(F'(x)\\), mede a **taxa de variação** de \\(F\\).
+
+**Ex.:** se \\(F(t)\\) é a receita acumulada até o dia \\(t\\), \\(F'(t)\\) é a **receita por dia** (a taxa de vendas).
+
+--
+
+.caixa-aplicacao[
+**A ideia central do cálculo:** integrar é o **inverso** de derivar. Se sabemos que \\(F'(x) = f(x)\\),
+então a área sob \\(f\\) entre \\(a\\) e \\(b\\) é \\(F(b) - F(a)\\). Por isso aprendemos uma **tabela de
+derivadas**: lida "de trás para frente", ela vira uma tabela de integrais.
+]
+
+---
+
+## Tabela mínima de derivadas
+
+| Função | Derivada | Exemplo |
+|:---|:---|:---|
+| \\(f(x) = c\\) (constante) | \\(f'(x) = 0\\) | \\(f(x) = 3 \Rightarrow f'(x) = 0\\) |
+| \\(f(x) = x^n\\) | \\(f'(x) = n\,x^{n-1}\\) | \\(f(x) = 2x^5 \Rightarrow f'(x) = 10x^4\\) |
+| \\(f(x) = e^x\\) | \\(f'(x) = e^x\\) | \\(f(x) = e^{2x} \Rightarrow f'(x) = 2e^{2x}\\) |
+| \\(f(x) = \ln(x)\\) | \\(f'(x) = 1/x\\) | \\(f(x) = \ln(2x) \Rightarrow f'(x) = 1/x\\) |
+| \\(f(x) = u(x) + v(x)\\) | \\(f'(x) = u'(x) + v'(x)\\) | \\(f(x) = e^{2x} + x^2 \Rightarrow f'(x) = 2e^{2x} + 2x\\) |
+| \\(f(x) = u(x)\,v(x)\\) | \\(f'(x) = u'v + uv'\\) | \\(f(x) = x^2\ln x \Rightarrow f'(x) = 2x\ln x + x\\) |
+| \\(f(x) = g(h(x))\\) (cadeia) | \\(f'(x) = g'(h(x))\,h'(x)\\) | \\(f(x) = e^{-x^2} \Rightarrow f'(x) = -2x\,e^{-x^2}\\) |
+
+---
+
+## Exercício 6: derivadas
+
+Lembrando que a derivada de \\(x\\) é 1, calcule:
+
+.pull-left[
+**a)** \\(f(x) = x^5\\)
+
+**b)** \\(f(x) = 2 + x^3\\)
+
+**c)** \\(f(x) = 5e^x\\)
+]
+
+.pull-right[
+**d)** \\(f(x) = \ln(x)\\)
+
+**e)** \\(f(x) = 2x^2 + 3x^3\\)
+
+**f)** \\(f(x) = x^2 - x^3/3\\)
+]
+
+.clear[]
+
+--
+
+.caixa-resposta[
+**a)** \\(5x^4\\). **b)** \\(3x^2\\). **c)** \\(5e^x\\). **d)** \\(1/x\\). **e)** \\(4x + 9x^2\\). **f)** \\(2x - x^2\\).
+]
+
+---
+
+## Cálculo de integrais .tempo[30–43 min]
+
+Para calcular a integral de \\(f(x)\\) em \\([a, b]\\):
+
+**1.** Encontre uma função \\(F(x)\\) tal que \\(F'(x) = f(x)\\) (uma **primitiva** de \\(f\\)).
+
+**2.** Calcule
+
+$$
+\int\_a^b f(x)\,dx = F(b) - F(a) = \Big[F(x)\Big]\_a^b.
 $$
 
-```{r problema1}
-choose(8, 5) * 0.6^5 * 0.4^3   # conta à mão, termo a termo
-dbinom(5, size = 8, prob = 0.6)   # confirmação via função pronta do R
-```
-
----
-
-## Problema 1 (verificação por simulação)
-
-O mesmo padrão "simular vs. teórico" do Laboratório 3 (VA discreta) também serve para conferir uma
-probabilidade binomial pontual: simule muitos dias de 8 solicitações e conte em que fração exatamente
-5 são aprovadas.
-
-```{r problema1-simulacao}
-set.seed(2026)
-dias_simulados <- rbinom(100000, size = 8, prob = 0.6)   # 100 mil dias simulados
-mean(dias_simulados == 5)   # proporção simulada de "exatamente 5 aprovadas"
-dbinom(5, size = 8, prob = 0.6)   # valor teórico, para comparar
-```
-
-Com 100 mil repetições, a proporção simulada já fica bem próxima do valor teórico \\(0{,}2787\\), a
-mesma lógica de convergência que vamos revisitar com `runif()`/`rnorm()` nas Aulas 27-28.
-
----
-
-## Problema 2
-
-Um call center recebe, em média, 4 chamadas por minuto (Poisson). Qual a probabilidade de, em um
-minuto escolhido ao acaso, receber no máximo 1 chamada?
-
 --
-
-**Solução.** \\(X\sim\text{Poisson}(4)\\).
-
-```{r problema2}
-ppois(1, lambda = 4)
-```
-
-Note como esse valor é pequeno, com taxa média 4, receber 0 ou 1 chamada é um evento raro.
-
----
-
-## Problema 3
-
-Uma seguradora modela \\(X=\\) número de sinistros/ano com \\(E(X)=0{,}8\\) e \\(\mathrm{Var}(X)=0{,}9\\).
-Se o custo por sinistro é fixo em R$ 3.500, calcule \\(E\\) e \\(dp\\) do custo total anual \\(C=3500X\\).
-
---
-
-**Solução.** \\(E(C)=3500\times E(X)=3500\times 0{,}8=2800\\).
-\\(\mathrm{Var}(C)=3500^2\times\mathrm{Var}(X)=3500^2\times0{,}9\\); \\(dp(C)=3500\times\sqrt{0{,}9}\\).
-
-```{r problema3}
-3500 * sqrt(0.9)
-```
-
----
-
-## Discussão: antes da revisão de cálculo
-
-**1.** Nos três problemas, identifique qual condição de aplicabilidade (Bernoulli/Binomial vs.
-Poisson) foi decisiva para escolher o modelo. O que no enunciado sinalizou "Binomial" no Problema 1
-e "Poisson" no Problema 2?
-
-**2.** No Problema 3, por que a fórmula usa \\(3500^2\\) na variância, mas só \\(3500\\) (sem elevar ao
-quadrado) na esperança? Relacione com as propriedades \\(E(aX)=aE(X)\\) e \\(\mathrm{Var}(aX)=a^2
-\mathrm{Var}(X)\\) vistas na Aula 18.
-
----
-
-class: inverse, center, middle
-
-# Parte 2: Revisão de cálculo
-
-## Preparando a Unidade 4 (VA contínuas)
-
----
-
-## Por que cálculo, agora?
-
-No caso discreto, somamos (\\(\sum\\)) para obter \\(E(X)\\), \\(\mathrm{Var}(X)\\), \\(F(x)\\). No caso contínuo
-(a partir da próxima aula), a ferramenta análoga é a **integral** (\\(\int\\)), porque um único ponto
-tem probabilidade zero, e só intervalos acumulam probabilidade.
-
----
-
-## Derivadas: tabela mínima
-
-| \\(f(x)\\) | \\(f'(x)\\) |
-|---|---|
-| \\(c\\) | \\(0\\) |
-| \\(x^n\\) | \\(nx^{n-1}\\) |
-| \\(e^x\\) | \\(e^x\\) |
-
-## Integrais (primitivas): tabela mínima
 
 | \\(f(x)\\) | Primitiva \\(F(x)\\) |
-|---|---|
-| \\(c\\) | \\(cx\\) |
-| \\(x^n\\) (\\(n\ne-1\\)) | \\(\dfrac{x^{n+1}}{n+1}\\) |
-| \\(e^{\lambda x}\\) | \\(\dfrac{1}{\lambda}e^{\lambda x}\\) |
+|:---|:---|
+| \\(k\\) (constante) | \\(kx\\) |
+| \\(x^n\\), \\(n \neq -1\\) | \\(\dfrac{x^{n+1}}{n+1}\\) |
+| \\(1/x\\) | \\(\ln(x)\\) |
+| \\(e^{-x}\\) | \\(-e^{-x}\\) |
+| \\(u(x) + v(x)\\) | \\(U(x) + V(x)\\) |
 
-Teorema Fundamental: \\(\displaystyle\int\_a^b f(x)\,dx = F(b)-F(a)\\).
+.small[
+A "constante \\(+c\\)" das primitivas se cancela em \\(F(b) - F(a)\\).
+]
 
 ---
 
-## Exercício de fixação
+## Exemplos
 
-Calcule \\(\displaystyle\int\_0^1 3x^2\,dx\\) à mão, depois confira em R.
+**1.** \\(\displaystyle\int\_1^{10} dx = \Big[x\Big]\_1^{10} = 10 - 1 = 9\\).
 
-```{r integral-r}
-F <- function(x) x^3
-F(1) - F(0)
+--
 
-integrate(function(x) 3*x^2, lower = 0, upper = 1)
+**2.** \\(\displaystyle\int\_0^1 x^n\,dx = \Big[\frac{x^{n+1}}{n+1}\Big]\_0^1 = \frac{1^{n+1}}{n+1} - \frac{0^{n+1}}{n+1} = \frac{1}{n+1}\\).
+
+--
+
+**3.** \\(\displaystyle\int\_0^{\infty} e^{-x}\,dx = \lim\_{t \to \infty}\Big[-e^{-x}\Big]\_0^{t} = \lim\_{t \to \infty}\left(-e^{-t}\right) - \left(-e^{0}\right) = 0 + 1 = 1\\).
+
+--
+
+**4.** \\(\displaystyle\int\_0^1 2x\,dx = \Big[x^2\Big]\_0^1 = 1 - 0 = 1\\) (a área do triângulo que os retângulos aproximavam).
+
+.caixa-aplicacao[
+Os exemplos 3 e 4 dão área **igual a 1**. Guarde isso: é exatamente a condição para uma função ser
+uma **densidade de probabilidade**.
+]
+
+---
+
+## Exercício 7: integrais
+
+.pull-left[
+**a)** \\(\displaystyle\int\_1^2 2x^3\,dx\\)
+
+**b)** \\(\displaystyle\int\_5^8 \frac{1}{x}\,dx\\)
+]
+
+.pull-right[
+**c)** \\(\displaystyle\int\_{-1}^{2} \left(2 + e^{-x}\right)dx\\)
+
+**d)** \\(\displaystyle\int\_0^1 2(1 - x)\,dx\\)
+]
+
+.clear[]
+
+--
+
+.caixa-resposta[
+**a)** \\(\Big[\frac{2x^4}{4}\Big]\_1^2 = \frac{16}{2} - \frac{1}{2} = \frac{15}{2}\\).
+
+**b)** \\(\Big[\ln x\Big]\_5^8 = \ln 8 - \ln 5 = \ln(8/5) = \ln(1{,}6) \approx 0{,}47\\).
+
+**c)** \\(\Big[2x - e^{-x}\Big]\_{-1}^{2} = (4 - e^{-2}) - (-2 - e^{1}) = 6 + e - e^{-2} \approx 8{,}58\\).
+
+**d)** \\(\Big[2x - x^2\Big]\_0^1 = 2 - 1 = 1\\).
+]
+
+---
+
+## Discussão: antes da Unidade 4 .tempo[43–50 min]
+
+**1.** Uma função \\(f(x) \geq 0\\) em \\([0, 1]\\) com \\(\int\_0^1 f(x)\,dx = 1\\) pode ter valor **maior que 1** em
+algum ponto? Teste com \\(f(x) = 2x\\).
+
+**2.** A área sob \\(f(x) = 2x\\) entre 0 e 0,5 é \\(\int\_0^{0{,}5} 2x\,dx\\). Calcule e compare com a área entre 0,5 e 1.
+Por que as duas áreas são diferentes se os intervalos têm o mesmo comprimento?
+
+**3.** Na Unidade 3, \\(P(X = 2)\\) podia ser positiva. Qual é a "área" sob uma curva **exatamente** no
+ponto \\(x = 2\\)? O que isso sugere sobre \\(P(X = 2)\\) para variáveis contínuas?
+
+--
+
+.caixa-resposta[
+**1.** Sim: \\(f(1) = 2\\). Densidade não é probabilidade. **2.** \\(0{,}25\\) e \\(0{,}75\\): a curva é mais alta perto de 1.
+**3.** Área de um segmento de largura zero é **zero**: \\(P(X = 2) = 0\\).
+]
+
+---
+
+## Uso do R: conferindo derivadas e integrais
+
+```{r uso-r}
+D(quote(2 * x^2 + 3 * x^3), "x")                  # derivada simbólica
+integrate(function(x) 2 * x^3, lower = 1, upper = 2)
+integrate(function(x) 1 / x, lower = 5, upper = 8)
+integrate(function(x) 2 + exp(-x), lower = -1, upper = 2)
+integrate(function(x) exp(-x), lower = 0, upper = Inf)
 ```
 
-Esse valor (exatamente 1) não é coincidência, no Capítulo 4/Aula 24, veremos que essa integral
-confirma que \\(f(x)=3x^2\\) em \\([0,1]\\) é uma densidade de probabilidade válida.
-
----
-
-## Discussão final
-
-**3.** No caso discreto, "somar a probabilidade de todos os valores possíveis" dá exatamente 1. O
-exercício de fixação sugere que, no caso contínuo, "integrar a densidade sobre todo o suporte"
-também dá 1. Por que essas duas afirmações são, na verdade, a mesma ideia expressa em duas
-linguagens diferentes (soma discreta vs. integral)?
-
-**4.** Se você já entendeu por que \\(\int\_0^1 3x^2\,dx=1\\) confirma uma densidade válida, tente prever
-(sem calcular): \\(f(x)=2x\\) para \\(0\le x\le 1\\) também seria uma densidade válida? Confira com
-`integrate()`.
-
----
-
-## Conferindo a pergunta 4: \\(f(x)=2x\\) é densidade válida?
-
-À mão: a primitiva de \\(2x\\) é \\(x^2\\), logo \\(\displaystyle\int\_0^1 2x\,dx = 1^2-0^2=1\\). Como
-\\(2x\ge0\\) em \\([0,1]\\) e a integral dá exatamente 1, **sim**, é uma densidade válida.
-
-```{r verifica-2x}
-F2 <- function(x) x^2          # primitiva de f(x) = 2x, calculada à mão
-F2(1) - F2(0)                  # confirma o valor à mão
-
-integrate(function(x) 2*x, lower = 0, upper = 1)   # confirmação numérica
-```
-
-Duas densidades diferentes (\\(3x^2\\) e \\(2x\\)) no mesmo intervalo \\([0,1]\\), ambas com integral 1,
-é a mesma lição da Discussão 1: "densidade válida" é uma condição sobre a área total, não sobre a
-forma específica da função.
 
 ---
 
 class: inverse, center, middle
 
-# Fim das Unidades 2 e 3
+# Prova 2: 18/11 (Unidades 2 e 3)
 
-## Prova 2 cobre Probabilidade e VA discretas juntas
-
-### Revise as Listas 05-10 antes da data oficial de P2
-
----
-
-class: inverse, center, middle
-
-# Próxima aula (23/11)
-
-## Variável aleatória contínua: conceituação
+## Próxima aula (23/11): Variável aleatória contínua, conceituação

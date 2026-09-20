@@ -19,242 +19,353 @@
 
 class: inverse, center, middle
 
-# Aula 29: Exercícios resolvidos (VA contínua)
+# Aula 29: Exercícios da Unidade 4
+
+### Variáveis aleatórias contínuas: densidade, esperança, FDA, Uniforme e Normal
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Problema 1: Uniforme
+## Roteiro da aula (100 minutos)
 
-O tempo de processamento de um saque em um caixa eletrônico é uniforme entre 10 e 40 segundos.
-Qual a probabilidade de um saque levar mais de 30 segundos?
+.roteiro[
 
---
+| Tempo | Parte 1: densidades dadas por fórmula |
+|:---|:---|
+| 0–6 min | Como usar a aula; mapa da Unidade 4 |
+| 6–20 min | Exercício 1: encontrando a constante |
+| 20–35 min | Exercício 2: esperança e variância |
+| 35–50 min | Exercício 3: densidade e FDA |
 
-**Solução.** \\(X\sim\text{Unif}(10,40)\\).
+| Tempo | Parte 2: Uniforme, Normal e as unidades juntas |
+|:---|:---|
+| 0–10 min | Exercício 4: caixa eletrônico |
+| 10–20 min | Exercício 5: prazo de entrega |
+| 20–28 min | Exercício 6: nota de um exame de certificação |
+| 28–42 min | Exercícios 7 e 8: seguro; controle de qualidade |
+| 42–50 min | Discussão e Uso do R |
+
+]
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: densidades dadas por fórmula
+
+### 50 minutos
+
+---
+
+## Como usar esta aula .tempo[0–6 min]
+
+Cada exercício aparece **sem** resposta. Resolva no papel, **depois** avance o slide.
+
+.caixa-aplicacao[
+**Roteiro para variáveis contínuas:**
+
+1. Escreva a probabilidade pedida com a notação certa: \\(P(X &amp;gt; a)\\), \\(P(a &amp;lt; X &amp;lt; b)\\)...
+2. Faça um **esboço** da densidade e **pinte** a área pedida.
+3. Decida a ferramenta: **integral** (densidade dada por fórmula), **FDA** (se já conhecida), **comprimento**
+   (Uniforme) ou **padronização + tabela** (Normal).
+4. Confira: a resposta está entre 0 e 1? É compatível com o tamanho da área pintada?
+]
+
+---
+
+## Mapa da Unidade 4
+
+| Conceito | Fórmula |
+|:---|:---|
+| Densidade | \\(f(x) \geq 0\\), \\(\int\_{-\infty}^{\infty} f(x)\,dx = 1\\); \\(P(a &amp;lt; X \leq b) = \int\_a^b f(x)\,dx\\) |
+| Esperança e variância | \\(E(X) = \int x f(x)\,dx\\); \\(Var(X) = \int x^2 f(x)\,dx - [E(X)]^2\\) |
+| FDA | \\(F(t) = \int\_{-\infty}^{t} f(x)\,dx\\); \\(F' = f\\); \\(P(a &amp;lt; X \leq b) = F(b) - F(a)\\) |
+| Uniforme\\((\alpha, \beta)\\) | \\(f = \frac{1}{\beta - \alpha}\\); \\(E = \frac{\alpha + \beta}{2}\\); \\(Var = \frac{(\beta - \alpha)^2}{12}\\) |
+| Normal\\((\mu, \sigma^2)\\) | \\(Z = \frac{X - \mu}{\sigma} \sim N(0, 1)\\); \\(P(X &amp;lt; a) = P\left(Z &amp;lt; \frac{a - \mu}{\sigma}\right)\\) |
+
+---
+
+## Exercício 1: encontrando a constante .tempo[6–20 min]
+
+Considere a função
+
 $$
-P(X&amp;gt;30) = 1-F(30) = 1-\frac{30-10}{40-10} = 1-\frac{20}{30} = \frac13
+f(x) = \begin{cases} \dfrac{C}{x^2}, &amp; x \geq 10,\\\\ 0, &amp; x &amp;lt; 10. \end{cases}
 $$
 
+**a)** Encontre o valor de \\(C\\) para que \\(f\\) seja uma legítima função densidade de probabilidade.
 
-``` r
-1 - punif(30, 10, 40)
-```
-
-```
-## [1] 0.3333333
-```
+**b)** Calcule \\(P(X &amp;gt; 15)\\).
 
 ---
 
-## Problema 2: Normal, padronização
+## Exercício 1: resolução
 
-O tempo de entrega de um e-commerce é \\(X\sim N(5,\ 1{,}5^2)\\) dias. Qual a probabilidade de a
-entrega demorar mais de 8 dias?
+.pull-left[
+.caixa-resposta[
+**a)** \\(f\\) deve ser não negativa (\\(C \geq 0\\)) e ter integral 1:
+
+\\(\int\_{10}^{\infty} \frac{C}{x^2}\,dx = C\Big[-\frac{1}{x}\Big]\_{10}^{\infty} = C\left(0 + \frac{1}{10}\right) = \frac{C}{10} = 1\\)
+
+\\(\Rightarrow C = 10\\).
+
+**b)** \\(P(X &amp;gt; 15) = \int\_{15}^{\infty} \frac{10}{x^2}\,dx = 10\Big[-\frac{1}{x}\Big]\_{15}^{\infty} = \frac{10}{15} = \frac{2}{3}\\).
+]
+]
+
+.pull-right[
+&lt;img src="MATF14-29_files/figure-html/ex1-1.png" alt="" width="100%" /&gt;
+
+.small[
+A primitiva de \\(x^{-2}\\) é \\(-x^{-1}\\) (regra da potência com \\(n = -2\\)).
+]
+]
+
+.clear[]
+
+.caixa-discussao[
+A densidade tem uma cauda **infinita** à direita, e mesmo assim a área total é 1. Esse tipo de modelo
+(Pareto) é usado para **rendas altas** e **tamanho de empresas**.
+]
+
+---
+
+## Exercício 2: esperança e variância .tempo[20–35 min]
+
+Considere uma variável aleatória \\(X\\) com densidade
+
+$$
+f(x) = \begin{cases} 3x^2, &amp; -1 \leq x \leq 0,\\\\ 0, &amp; \text{caso contrário}. \end{cases}
+$$
+
+Calcule \\(E(X)\\) e \\(Var(X)\\).
 
 --
 
-**Solução.** \\(Z=\frac{8-5}{1{,}5}=2\\); \\(P(X&amp;gt;8)=P(Z&amp;gt;2)\\).
+.pull-left-60[
+.caixa-resposta[
+\\(E(X) = \int\_{-1}^{0} x \cdot 3x^2\,dx = \Big[\frac{3x^4}{4}\Big]\_{-1}^{0} = 0 - \frac{3}{4} = -\frac{3}{4}.\\)
 
+\\(E(X^2) = \int\_{-1}^{0} 3x^4\,dx = \Big[\frac{3x^5}{5}\Big]\_{-1}^{0} = 0 - \left(-\frac{3}{5}\right) = \frac{3}{5}.\\)
 
-``` r
-1 - pnorm(8, mean = 5, sd = 1.5)
-```
+\\(Var(X) = \frac{3}{5} - \frac{9}{16} = \frac{48 - 45}{80} = \frac{3}{80}.\\)
+]
+]
 
-```
-## [1] 0.02275013
-```
+.pull-right-40[
+&lt;img src="MATF14-29_files/figure-html/ex2-1.png" alt="" width="100%" /&gt;
 
-``` r
-1 - pnorm(2)   # mesma conta, via padronização
-```
+]
 
-```
-## [1] 0.02275013
-```
+.clear[]
+
+.small[
+Atenção ao sinal: \\((-1)^4 = 1\\) e \\((-1)^5 = -1\\). A média fica perto de \\(-1\\), onde a densidade é maior.
+]
 
 ---
 
-## Problema 3: Integral direta
+## Exercício 3: densidade e FDA .tempo[35–50 min]
 
-\\(X\\) tem densidade \\(f(x)=3x^2\\), \\(0\le x\le1\\) (e \\(f(x)=0\\) fora desse intervalo).
+\\(X\\) tem densidade \\(f(x) = 3x^2\\) para \\(0 \leq x \leq 1\\) (e 0 fora).
 
-**(a)** Confirme que \\(f\\) é uma densidade válida. **(b)** Calcule \\(P(X\le 0{,}5)\\).
+**a)** Confirme que \\(f\\) é uma densidade válida. **b)** Encontre a FDA. **c)** Calcule \\(P(X \leq 0{,}5)\\) e
+\\(P(0{,}5 &amp;lt; X \leq 0{,}8)\\). **d)** Sem calcular, \\(E(X)\\) é maior ou menor que 0,5?
 
 --
 
-**Solução (a).** \\(\int\_0^1 3x^2\,dx = [x^3]\_0^1 = 1-0=1\\) ✓
+.caixa-resposta[
+**a)** \\(\int\_0^1 3x^2\,dx = \Big[x^3\Big]\_0^1 = 1\\) e \\(f \geq 0\\). ✓
 
-**Solução (b).** \\(F(x)=x^3\\); \\(P(X\le0{,}5)=F(0{,}5)=0{,}5^3=0{,}125\\).
+**b)** \\(F(t) = 0\\) para \\(t &amp;lt; 0\\); \\(F(t) = t^3\\) para \\(0 \leq t \leq 1\\); \\(F(t) = 1\\) para \\(t &amp;gt; 1\\).
 
+**c)** \\(F(0{,}5) = 0{,}125\\); \\(F(0{,}8) - F(0{,}5) = 0{,}512 - 0{,}125 = 0{,}387\\).
 
-``` r
-integrate(function(x) 3*x^2, 0, 1)     # confirma o item (a): integral total = 1
-```
-
-```
-## 1 with absolute error &lt; 1.1e-14
-```
-
-``` r
-0.5^3                                   # F(0,5) pela primitiva
-```
-
-```
-## [1] 0.125
-```
-
-``` r
-integrate(function(x) 3*x^2, 0, 0.5)   # mesmo valor, por integração numérica direta
-```
-
-```
-## 0.125 with absolute error &lt; 1.4e-15
-```
+**d)** **Maior**: a densidade cresce em direção a 1. De fato, \\(E(X) = \int\_0^1 3x^3\,dx = 3/4\\).
+]
 
 ---
 
-## Problema 4: combinando Cap. 3 e Cap. 4
+class: inverse, center, middle
 
-Uma seguradora modela o número de sinistros/ano como \\(N\sim\text{Poisson}(2)\\) e, dado que houve ao
-menos 1 sinistro, o valor de cada sinistro como \\(V\sim N(5000, 1200^2)\\). Qual a probabilidade de
-haver pelo menos 1 sinistro **e** o próximo sinistro (se ocorrer) custar mais de R$ 7.000?
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: Uniforme, Normal e as unidades juntas
+
+### 50 minutos
+
+---
+
+## Exercício 4: caixa eletrônico .tempo[0–10 min]
+
+O tempo de processamento de um saque em um caixa eletrônico é **uniforme entre 10 e 40 segundos**.
+
+**a)** Qual é a probabilidade de um saque levar **mais de 30 segundos**?
+
+**b)** Qual é o tempo médio e o desvio padrão?
+
+**c)** Dado que um saque já passou de 20 segundos, qual é a probabilidade de passar de 30?
 
 --
 
-**Solução.** Os dois eventos são tratados como independentes aqui (frequência de sinistro e valor
-de um sinistro individual):
+.caixa-resposta[
+\\(X \sim \text{Unif}(10, 40)\\).
 
+**a)** \\(P(X &amp;gt; 30) = 1 - F(30) = 1 - \frac{30 - 10}{40 - 10} = \frac{1}{3}\\).
 
-``` r
-p_pelo_menos_1 &lt;- 1 - dpois(0, 2)
-p_valor_alto   &lt;- 1 - pnorm(7000, 5000, 1200)
-p_pelo_menos_1 * p_valor_alto
-```
+**b)** \\(E(X) = \frac{10 + 40}{2} = 25\\) s; \\(dp(X) = \frac{30}{\sqrt{12}} \approx 8{,}66\\) s.
 
-```
-## [1] 0.04132263
-```
+**c)** \\(P(X &amp;gt; 30 \mid X &amp;gt; 20) = \frac{P(X &amp;gt; 30)}{P(X &amp;gt; 20)} = \frac{10/30}{20/30} = \frac{1}{2}\\).
+]
 
 ---
 
-## Problema 5: retorno de um fundo de investimento
+## Exercício 5: prazo de entrega .tempo[10–20 min]
 
-O retorno anual de um fundo tem distribuição \\(X\sim N(7{,}98\%,\ (21{,}13\%)^2)\\). Encontre a
-probabilidade do retorno em um ano qualquer ser **(a)** maior que 10% e **(b)** menor que -5%.
+O tempo de entrega de um e-commerce é \\(X \sim N(5;\ 1{,}5^2)\\) dias.
+
+**a)** Qual é a probabilidade de a entrega demorar **mais de 8 dias**?
+
+**b)** A empresa quer anunciar um prazo que seja cumprido em **90%** das entregas. Qual prazo?
 
 --
 
-**Solução (a).** Padronizando: \\(z=\dfrac{10-7{,}98}{21{,}13}\approx0{,}10\\), logo
-\\(P(X&amp;gt;10)=P(Z&amp;gt;0{,}10)=1-\Phi(0{,}10)\\).
+.pull-left[
+.caixa-resposta[
+**a)** \\(z = \frac{8 - 5}{1{,}5} = 2\\).
 
-**Solução (b).** \\(z=\dfrac{-5-7{,}98}{21{,}13}\approx-0{,}61\\), logo
-\\(P(X&amp;lt;-5)=\Phi(-0{,}61)\\).
+\\(P(X &amp;gt; 8) = 1 - P(Z &amp;lt; 2) = 1 - 0{,}9772 = 0{,}0228\\).
 
+**b)** Na tabela, \\(P(Z &amp;lt; 1{,}28) \approx 0{,}90\\).
 
-``` r
-mu_f &lt;- 7.98; sigma_f &lt;- 21.13
+\\(x = 5 + 1{,}28 \times 1{,}5 = 6{,}92\\) dias: anunciar **7 dias**.
+]
+]
 
-z_a &lt;- (10 - mu_f) / sigma_f
-z_a
-```
+.pull-right[
+&lt;img src="MATF14-29_files/figure-html/ex5-1.png" alt="" width="100%" /&gt;
 
-```
-## [1] 0.09559867
-```
-
-``` r
-1 - pnorm(z_a)              # via padronização
-```
-
-```
-## [1] 0.4619197
-```
-
-``` r
-1 - pnorm(10, mu_f, sigma_f) # direto na escala original, mesmo resultado
-```
-
-```
-## [1] 0.4619197
-```
-
-``` r
-z_b &lt;- (-5 - mu_f) / sigma_f
-z_b
-```
-
-```
-## [1] -0.6142925
-```
-
-``` r
-pnorm(z_b)
-```
-
-```
-## [1] 0.269511
-```
-
-``` r
-pnorm(-5, mu_f, sigma_f)
-```
-
-```
-## [1] 0.269511
-```
-
-Note que os dois caminhos (padronizar e olhar \\(Z\\), ou usar `pnorm(x, mu, sigma)` direto) sempre
-dão o mesmo número, é só uma questão de qual é mais conveniente calcular à mão.
+]
 
 ---
 
-## Problema 6: achando a constante normalizadora
+## Exercício 6: nota de um exame de certificação .tempo[20–28 min]
 
-\\(X\\) tem densidade \\(f(x) = C\cdot x\\), \\(0\le x&amp;lt;1\\) (e \\(f(x)=0\\) fora desse intervalo). **(a)**
-Determine \\(C\\). **(b)** Calcule a FDA \\(F(x)\\). **(c)** Calcule \\(P(0{,}2&amp;lt;X\le0{,}4)\\).
+As notas de um exame de certificação profissional seguem \\(N(15;\ 2^2)\\) (escala de 0 a 20).
+
+**a)** Qual é a proporção de candidatos com nota **acima de 12**?
+
+**b)** E **entre 12 e 18**?
+
+**c)** Os 5% com **menores** notas são reprovados. Qual é a nota de corte?
 
 --
 
-**Solução (a).** \\(\int\_0^1 C x\,dx = C\left[\dfrac{x^2}{2}\right]\_0^1 = \dfrac{C}{2} = 1
-\Rightarrow C=2\\). Diferente dos problemas anteriores (onde \\(f\\) já vinha pronta), aqui a
-condição \\(\int f = 1\\) é o que **define** a constante.
+.caixa-resposta[
+**a)** \\(z = \frac{12 - 15}{2} = -1{,}5\\): \\(P(X &amp;gt; 12) = 1 - P(Z &amp;lt; -1{,}5) = 1 - 0{,}0668 = 0{,}9332\\).
 
-**Solução (b).** \\(F(x) = \int\_0^x 2t\,dt = x^2\\), para \\(0\le x&amp;lt;1\\) (\\(F(x)=0\\) antes, \\(F(x)=1\\)
-depois).
+**b)** \\(P(12 &amp;lt; X &amp;lt; 18) = P(Z &amp;lt; 1{,}5) - P(Z &amp;lt; -1{,}5) = 0{,}9332 - 0{,}0668 = 0{,}8664\\).
 
-**Solução (c).** \\(P(0{,}2&amp;lt;X\le0{,}4) = F(0{,}4)-F(0{,}2) = 0{,}4^2-0{,}2^2 = 0{,}12\\).
-
-
-``` r
-C &lt;- 1 / integrate(function(x) x, 0, 1)$value
-C
-```
-
-```
-## [1] 2
-```
-
-``` r
-Fx6 &lt;- function(x) x^2
-Fx6(0.4) - Fx6(0.2)
-```
-
-```
-## [1] 0.12
-```
+**c)** \\(P(Z &amp;lt; -1{,}645) \approx 0{,}05\\): corte \\(= 15 - 1{,}645 \times 2 \approx 11{,}7\\).
+]
 
 ---
 
-## Discussão: antes da revisão final
+## Exercício 7: seguro com frequência e valor .tempo[28–42 min]
 
-**1.** O Problema 4 combina uma VA discreta (número de sinistros) com uma VA contínua (valor de
-cada sinistro) num mesmo modelo. Em que outras situações econômicas você imagina precisar combinar
-os dois tipos, por exemplo, "número de clientes que compram" (discreto) e "valor de cada compra"
-(contínuo)?
+Uma seguradora modela o **número de sinistros** por ano como \\(N \sim \text{Poisson}(2)\\) e o **valor** de um
+sinistro como \\(V \sim N(5.000;\ 1.200^2)\\) reais, independente de \\(N\\).
 
-**2.** No Problema 3, a densidade \\(f(x)=3x^2\\) cresce à medida que \\(x\\) se aproxima de 1. O que isso
-significa, em termos de onde a probabilidade está mais concentrada dentro do intervalo \\([0,1]\\)? Sem
-calcular, você esperaria \\(E(X)\\) maior ou menor que \\(0{,}5\\) (o ponto médio do intervalo)?
+**a)** Qual é a probabilidade de haver **pelo menos um** sinistro no ano?
+
+**b)** Qual é a probabilidade de um sinistro custar **mais de R$ 7.000**?
+
+**c)** Qual é a probabilidade de haver pelo menos um sinistro **e** o primeiro deles custar mais de R$ 7.000?
+
+--
+
+.caixa-resposta[
+**a)** \\(1 - P(N = 0) = 1 - e^{-2} \approx 0{,}8647\\) (Unidade 3).
+
+**b)** \\(z = \frac{7.000 - 5.000}{1.200} \approx 1{,}67\\): \\(1 - P(Z &amp;lt; 1{,}67) = 1 - 0{,}9525 = 0{,}0475\\) (Unidade 4).
+
+**c)** Por independência (Unidade 2): \\(0{,}8647 \times 0{,}0475 \approx 0{,}041\\).
+]
+
+---
+
+## Exercício 8: controle de qualidade
+
+O diâmetro de uma peça é \\(D \sim N(20;\ 0{,}1^2)\\) mm. Uma peça é **defeituosa** se o diâmetro estiver fora
+do intervalo \\((19{,}8;\ 20{,}2)\\).
+
+**a)** Qual é a probabilidade de uma peça ser defeituosa?
+
+**b)** Em um lote de **10** peças independentes, qual é a probabilidade de haver **pelo menos uma** defeituosa?
+
+--
+
+.caixa-resposta[
+**a)** \\(z = \pm 2\\): \\(P(\text{defeituosa}) = 1 - [P(Z &amp;lt; 2) - P(Z &amp;lt; -2)] = 1 - (0{,}9772 - 0{,}0228) = 0{,}0456\\).
+
+**b)** O número de defeituosas é \\(\text{Bin}(10;\ 0{,}0456)\\): \\(1 - (1 - 0{,}0456)^{10} = 1 - 0{,}9544^{10} \approx 0{,}373\\).
+]
+
+.caixa-discussao[
+Uma probabilidade **pequena** por peça (4,6%) vira uma chance de **37%** por lote. Onde já vimos esse
+efeito? (Aula 20: tamanho de amostra para detectar defeitos.)
+]
+
+---
+
+## Discussão: antes da revisão final .tempo[42–50 min]
+
+**1.** No Exercício 7, discreta (quantos sinistros) e contínua (quanto custa cada um) aparecem juntas. Dê
+outro exemplo econômico: número de clientes que compram \\(\times\\) valor de cada compra...
+
+**2.** No Exercício 1, a densidade \\(10/x^2\\) tem **média infinita**: \\(\int\_{10}^{\infty} x \cdot \frac{10}{x^2}\,dx = \infty\\).
+O que isso diz sobre usar a **média** para resumir rendas muito desiguais?
+
+**3.** No Exercício 6, a normal dá probabilidade positiva a notas **acima de 20**. Isso invalida o modelo?
+Calcule \\(P(X &amp;gt; 20)\\) e decida.
+
+--
+
+.caixa-resposta[
+**3.** \\(z = 2{,}5\\): \\(P(X &amp;gt; 20) = 1 - 0{,}9938 = 0{,}0062\\). Pequena: o modelo é uma **aproximação** útil, mas
+não deve ser usado para perguntas sobre a **cauda** extrema.
+]
+
+---
+
+## Uso do R: conferindo tudo
+
+
+``` r
+c(ex1 = integrate(function(x) 10 / x^2, 15, Inf)$value,
+  ex2 = integrate(function(x) x * 3 * x^2, -1, 0)$value,
+  ex4 = 1 - punif(30, 10, 40))
+##        ex1        ex2        ex4 
+##  0.6666667 -0.7500000  0.3333333
+c(ex5a = 1 - pnorm(8, 5, 1.5), ex5b = qnorm(0.9, 5, 1.5))
+##       ex5a       ex5b 
+## 0.02275013 6.92232735
+c(ex6a = 1 - pnorm(12, 15, 2), ex6b = pnorm(18, 15, 2) - pnorm(12, 15, 2), ex6c = qnorm(0.05, 15, 2))
+##       ex6a       ex6b       ex6c 
+##  0.9331928  0.8663856 11.7102927
+p_def &lt;- 1 - (pnorm(20.2, 20, 0.1) - pnorm(19.8, 20, 0.1))
+c(ex7 = (1 - dpois(0, 2)) * (1 - pnorm(7000, 5000, 1200)), ex8a = p_def, ex8b = 1 - (1 - p_def)^10)
+##        ex7       ex8a       ex8b 
+## 0.04132263 0.04550026 0.37229133
+```
+
 
 ---
 

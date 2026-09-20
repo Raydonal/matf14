@@ -15,321 +15,543 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
 suppressPackageStartupMessages(library(tidyverse))
+barras_prob <- function(k, p, xlab = "k", cor = "#3b5bdb") {
+  ggplot(tibble(k = factor(k, levels = k), p = p), aes(k, p)) +
+    geom_col(width = 0.12, fill = cor) + geom_point(size = 3, color = cor) +
+    geom_text(aes(label = format(round(p, 3), decimal.mark = ",")), vjust = -0.9, size = 4.2) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.18))) +
+    labs(x = xlab, y = "P(X = k)") + theme_minimal(base_size = 14)
+}
 ```
 
 class: inverse, center, middle
-
-# Início da Unidade 3
 
 # Aula 17: Variável aleatória discreta
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Início da Unidade 3: Variáveis aleatórias
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## A seguradora sabe o futuro?
+## Roteiro da aula (100 minutos)
 
-> Uma seguradora conhece, do histórico, a distribuição de probabilidade do número de sinistros por
-> apólice em um ano. Ela sabe, hoje, quantos sinistros uma apólice específica vai gerar este ano?
-> Se não sabe o valor exato, o que ela sabe, e por que isso já é suficiente para fixar um prêmio?
+.roteiro[
 
----
+| Tempo | Parte 1: o que é uma variável aleatória |
+|:---|:---|
+| 0–5 min | De onde viemos; provocação: quantos gols vai ter o jogo? |
+| 5–22 min | Definição, tipos (discreta e contínua) |
+| 22–40 min | Distribuição de probabilidade: moedas e dados |
+| 40–50 min | **Atividade 1**: exercício do dado |
 
-class: inverse, center, middle
+| Tempo | Parte 2: distribuições em aplicações |
+|:---|:---|
+| 0–10 min | Seguradora e peças defeituosas |
+| 10–18 min | Sinistros de uma apólice |
+| 18–30 min | Dados reais: trimestres de queda do PIB |
+| 30–42 min | **Atividade 2**: identificando e validando distribuições |
+| 42–50 min | Uso do R e resumo |
 
-# Bloco 1: Teoria
-
----
-
-## Da probabilidade de eventos aos números
-
-A Unidade 2 tratou de probabilidades de **eventos**. Agora: associar um **número** a cada
-resultado de um experimento aleatório, permitindo calcular médias e variâncias de quantidades
-ainda incertas, como fizemos no Cap. 1 para dados já observados.
-
---
-
-## Notação
-
-Representamos **variáveis aleatórias** por letras maiúsculas (\\(X, Y, Z, \ldots\\)) e os
-**valores que elas assumem**, uma vez observado o resultado, por letras minúsculas
-(\\(x, y, z, \ldots\\)). Por exemplo: "a variável aleatória \\(X\\) assumiu o valor \\(x=2\\)".
-
----
-
-## Do espaço amostral à variável aleatória
-
-Uma **variável aleatória (VA)** é uma **função** que associa um número real a cada resultado
-\\(\omega\\) de um espaço amostral \\(\Omega\\). Vamos construir uma passo a passo.
-
-**Exemplo.** Lançamos duas moedas honestas. Seja \\(X\\) = número de caras obtidas.
-
-Espaço amostral: \\(\Omega = \\{CC, CK, KC, KK\\}\\), cada resultado com probabilidade \\(1/4\\).
-
---
-
-| \\(\omega\\) | CC | CK | KC | KK |
-|---|---|---|---|---|
-| \\(X(\omega)\\) | 2 | 1 | 1 | 0 |
-
-\\(X\\) mapeia cada resultado de \\(\Omega\\) (que não é, em si, um número) para um número real. É
-exatamente isso que o nome "**variável aleatória**" quer dizer: uma função definida no espaço
-amostral.
-
----
-
-## Da tabela de mapeamento à distribuição
-
-Note que dois resultados diferentes, \\(CK\\) e \\(KC\\), levam ao **mesmo** valor \\(X=1\\): a
-probabilidade de \\(X=1\\) soma as probabilidades dos dois.
-
---
-
-**Solução.** Passo 1: os valores possíveis de \\(X\\) são \\(\\{0,1,2\\}\\). Passo 2: calculamos a
-probabilidade de cada um agrupando os resultados de \\(\Omega\\) que levam a ele:
-
-$$
-P(X=0)=P(KK)=\frac14
-$$
-$$
-P(X=1)=P(CK)+P(KC)=\frac14+\frac14=\frac12
-$$
-$$
-P(X=2)=P(CC)=\frac14
-$$
-
---
-
-| \\(x\\) | 0 | 1 | 2 |
-|---|---|---|---|
-| \\(P(X=x)\\) | 1/4 | 1/2 | 1/4 |
-
-Note que \\(X=1\\) é o valor mais provável, apesar de os quatro resultados de \\(\Omega\\) serem
-igualmente prováveis: a "contagem" (número de caras) não é uniforme mesmo quando o espaço amostral
-é.
-
----
-
-## Variável aleatória discreta: definição formal
-
-Generalizando o exemplo anterior: uma VA \\(X\\) é **discreta** quando assume valores em um conjunto
-finito ou enumerável \\(\\{x\_1, x\_2, x\_3, \ldots\\}\\). Sua **função de probabilidade** é
-
-$$
-p(x\_i) = P(X=x\_i), \qquad p(x\_i)\ge 0 \ \text{ para todo } i, \qquad \sum\_i p(x\_i) = 1.
-$$
-
---
-
-No exemplo das duas moedas: \\(p(0)+p(1)+p(2) = \frac14+\frac12+\frac14 = 1\\). Toda distribuição de
-probabilidade válida precisa satisfazer essa soma, é o mesmo papel que a soma das frequências
-relativas somarem 1 desempenhava na Unidade 1.
-
----
-
-## Passos para obter uma distribuição de probabilidade
-
-Em geral, para achar a distribuição de uma VA discreta:
-
-**Passo 1.** Identificar todos os valores possíveis que a variável pode assumir.
-
-**Passo 2.** Calcular a probabilidade de cada valor ocorrer.
-
---
-
-**Observações**: toda probabilidade calculada deve estar entre 0 e 1; a soma de todas deve dar
-exatamente 1; casos simples costumam ser apresentados em uma tabela (valor, probabilidade), como
-fizemos acima.
-
----
-
-## Discreta vs. contínua
-
-Uma VA é **discreta** quando seus valores podem ser contados/listados (mesmo que sejam infinitos).
-É **contínua** quando assume valores em um intervalo da reta real, incluindo números "quebrados".
-
-| Discreta | Contínua |
-|---|---|
-| Nº de sinistros de uma apólice | Valor total pago em sinistros (R$) |
-| Nº de clientes que cancelam um plano | Tempo até o cancelamento |
-| Nº de gols em uma partida | Peso de um recém-nascido |
-
-O Capítulo 4 do livro-texto trata do caso contínuo, hoje é só o caso discreto.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 1: o que é uma variável aleatória
+
+### 50 minutos
 
 ---
 
-## Exercício resolvido: dado honesto
+## De onde viemos .tempo[0–5 min]
+
+- Não podemos prever o resultado exato de **fenômenos aleatórios**, mas podemos entender os padrões
+  dos seus possíveis **eventos**.
+- **Probabilidades** medem a chance de eventos aleatórios ocorrerem.
+- É muito comum estarmos interessados em **variáveis quantitativas**, numéricas.
+
+--
+
+.caixa-aplicacao[
+Quando o valor de uma variável numérica é **aleatório**, usamos probabilidade para entender o seu
+**padrão de comportamento**. É o conceito central das Unidades 3 e 4: a **variável aleatória**.
+]
+
+---
+
+## Provocação: quantos gols vai ter o jogo?
+
+.pull-left[
+```{r gols, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/noticia_gols.jpg")
+```
+
+.fonte[Fonte: CNN Brasil (28/04/2026).]
+]
+
+.pull-right[
+Antes do apito inicial, ninguém sabe **quantos** gols a partida terá. Mas dá para dizer que:
+
+- 0, 1, 2 ou 3 gols são resultados **comuns**;
+- 9 gols (como em PSG 5 x 4 Bayern) é um resultado **raro**.
+
+.caixa-discussao[
+Como transformar essa intuição em **números**? Qual é a probabilidade de uma partida ter
+**exatamente 3 gols**? E **mais de 4**?
+]
+]
+
+---
+
+## Variáveis aleatórias .tempo[5–22 min]
+
+Frequentemente estamos interessados em algum **número** associado a um fenômeno aleatório:
+
+- número de gols numa partida de futebol;
+- peso de uma pessoa ao final de uma dieta;
+- despesas de uma empresa ao final de um mês.
+
+--
+
+.caixa-aplicacao[
+Uma **variável aleatória** corresponde a um **valor numérico** baseado no **resultado** de um
+fenômeno aleatório.
+]
+
+--
+
+- A partida teve \\(N = 7\\) gols.
+- O peso ao final da dieta foi \\(X = 80\\) kg.
+- A despesa total da empresa foi \\(Y = 50.000\\) reais.
+
+---
+
+## Definição
+
+Uma **variável aleatória** é uma **função** definida no espaço amostral que assume valores
+**reais**.
+
+**Ex.:** número de caras no lançamento de duas moedas (K = cara, C = coroa).
+
+```{r funcao-va, echo=FALSE, fig.height=2.9, fig.width=8, out.width="72%", fig.align="center"}
+S <- tibble(res = c("CC", "KC", "CK", "KK"), y = c(3, 2, 1, 0), x = c(0, 1, 1, 2))
+ggplot() +
+  annotate("rect", xmin = 0.3, xmax = 2.3, ymin = -0.6, ymax = 3.6, fill = "#fbf5c8", color = "#2a7fb8", linewidth = 1) +
+  annotate("rect", xmin = 5.2, xmax = 6.6, ymin = 0.2, ymax = 2.8, fill = "#fbf5c8", color = "#2a7fb8", linewidth = 1) +
+  geom_text(data = S, aes(1.1, y, label = res), size = 6) + geom_point(data = S, aes(1.8, y), size = 2.5) +
+  annotate("point", x = 5.6, y = c(2.3, 1.5, 0.7), size = 2.5) +
+  annotate("text", x = 6.1, y = c(2.3, 1.5, 0.7), label = c("0", "1", "2"), size = 6) +
+  geom_segment(data = S, aes(x = 1.85, y = y, xend = 5.5, yend = c(2.3, 1.5, 1.5, 0.7)),
+               arrow = arrow(length = unit(0.2, "cm")), color = "#2a7fb8", linewidth = 0.9) +
+  annotate("text", x = c(1.3, 5.9), y = c(4.1, 3.3), label = c("Espaço amostral S", "X: número de caras"), size = 5) +
+  xlim(0, 7) + ylim(-0.8, 4.4) + theme_void()
+```
+
+--
+
+.caixa-aplicacao[
+**Notação:** variáveis aleatórias com letras **maiúsculas** (\\(X\\), \\(Y\\), \\(N\\)) e valores
+observados com letras **minúsculas** (\\(x\\), \\(y\\), \\(k\\)). Ex.: \\(P(X = 1)\\).
+]
+
+---
+
+## Tipos de variáveis aleatórias
+
+.pull-left[
+.caixa-aplicacao[
+**Discreta:** assume valores em um conjunto **enumerável** (podemos contar ou listar todos os
+valores).
+
+Ex.: número de gols numa partida, número de doentes numa semana, número de dias sem chuva numa
+semana.
+]
+]
+
+.pull-right[
+.caixa-economia[
+**Contínua:** assume valores em conjuntos **não enumeráveis**, tipicamente intervalos da reta real
+(inclui números "quebrados").
+
+Ex.: peso de um bebê ao nascer, nível de um rio no fim do mês, quantidade de chuva num dia, lucro
+de uma empresa ao fim do ano.
+]
+]
+
+.clear[]
+
+.caixa-discussao[
+Nesta unidade: **discretas**. Na Unidade 4: **contínuas**. O **número de empregados** de uma empresa
+é discreto; o **faturamento**, rigorosamente, também (centavos), mas costuma ser tratado como contínuo.
+Por quê?
+]
+
+---
+
+## Variável aleatória discreta
+
+Seja \\(X\\) uma variável aleatória discreta que assume valores em \\(\\{x\_1, x\_2, \ldots\\}\\), um conjunto
+**contável**. Então:
+
+- \\(P(X = x\_i) \geq 0\\) para todo \\(i = 1, 2, 3, \ldots\\);
+- \\(P(X = x) = 0\\) para qualquer \\(x\\) **fora** desse conjunto;
+- \\(\displaystyle\sum\_{i=1}^{\infty} P(X = x\_i) = 1\\).
+
+--
+
+Os eventos de interesse agora são relacionados aos **valores** que \\(X\\) pode assumir:
+
+$$
+\\{X = 2\\}, \qquad \\{X &gt; 3\\}, \qquad \\{1/2 \leq X \leq 4/5\\}, \quad \ldots
+$$
+
+---
+
+## Distribuição de probabilidade .tempo[22–40 min]
+
+Queremos a probabilidade de a variável aleatória assumir certos valores. Ex.: sendo \\(X\\) o número de
+gols de uma partida, quanto vale \\(P(X = 3)\\)?
+
+.caixa-aplicacao[
+A **distribuição de probabilidade** especifica os **valores possíveis** de uma variável aleatória e
+as **probabilidades** de eles ocorrerem. É a ideia da **tabela de frequências**, agora para um
+fenômeno aleatório.
+]
+
+--
+
+.pull-left[
+| Gols \\((k)\\) | 0 | 1 | 2 | 3 | \\(\geq 4\\) |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 0,10 | 0,20 | 0,30 | 0,20 | 0,20 |
+
+.small[Valores hipotéticos.]
+]
+
+.pull-right[
+```{r gols-dist, echo=FALSE, fig.height=2.8, fig.width=5, out.width="92%"}
+barras_prob(c("0", "1", "2", "3", "≥4"), c(0.1, 0.2, 0.3, 0.2, 0.2), "Número de gols")
+```
+
+]
+
+---
+
+## Como obter a distribuição de probabilidade
+
+**Passo 1.** Verificar quais são os **possíveis valores** da variável aleatória.
+
+**Passo 2.** Calcular a **probabilidade** de cada valor.
+
+--
+
+**Observações:**
+
+- todas as probabilidades calculadas devem ser números **entre 0 e 1**;
+- a **soma** de todas as probabilidades deve ser **igual a 1**;
+- casos simples costumam ser apresentados em uma **tabela** com os valores e as probabilidades.
+
+---
+
+## Exemplo: uma moeda
+
+Uma moeda honesta é lançada uma vez. Seja \\(X\\) o número de caras obtidas. Qual é a distribuição de
+\\(X\\)?
+
+--
+
+**Passo 1.** \\(X\\) pode assumir dois valores: 0 (nenhuma cara) ou 1 (uma cara).
+
+**Passo 2.**
+
+$$
+P(X = 0) = P(\text{coroa}) = 0{,}5 \qquad\qquad P(X = 1) = P(\text{cara}) = 0{,}5
+$$
+
+| \\(x\\) | 0 | 1 |
+|:---:|:---:|:---:|
+| \\(P(X = x)\\) | 0,5 | 0,5 |
+
+---
+
+## Exemplo: duas moedas
+
+Duas moedas honestas são lançadas. Seja \\(X\\) o número de caras. Qual é a distribuição de \\(X\\)?
+
+--
+
+.pull-left[
+**Passo 1.** \\(X \in \\{0, 1, 2\\}\\).
+
+**Passo 2.** Os 4 resultados de \\(S\\) são igualmente prováveis:
+
+- \\(P(X = 0) = P(\\{CC\\}) = 1/4\\);
+- \\(P(X = 1) = P(\\{KC, CK\\}) = 2/4\\);
+- \\(P(X = 2) = P(\\{KK\\}) = 1/4\\).
+
+Soma: \\(1/4 + 2/4 + 1/4 = 1\\). ✓
+]
+
+.pull-right[
+```{r duas-moedas, echo=FALSE, fig.height=3, fig.width=5, out.width="95%"}
+barras_prob(0:2, c(0.25, 0.5, 0.25), "Número de caras")
+```
+
+]
+
+.clear[]
+
+.caixa-discussao[
+Note que \\(X = 1\\) tem o **dobro** da probabilidade de \\(X = 0\\): **dois** resultados de \\(S\\) levam ao valor 1.
+]
+
+---
+
+## Exercício 1: um dado .tempo[40–50 min]
 
 Seja \\(X\\) o resultado do lançamento de um dado honesto.
 
-**a)** Qual a distribuição de \\(X\\)? **b)** Qual \\(P(X&gt;4)\\)?
+**a)** Qual é a distribuição de probabilidade de \\(X\\)? **b)** Qual é a probabilidade de \\(X\\) ser
+maior do que 4?
 
 --
 
-**Solução (a).** Passo 1: \\(X\in\\{1,2,3,4,5,6\\}\\). Passo 2: cada face é igualmente provável,
-\\(P(X=k)=1/6\\) para cada \\(k\\).
+.caixa-resposta[
+**a)** Passo 1: \\(X \in \\{1, 2, 3, 4, 5, 6\\}\\). Passo 2: \\(P(X = k) = 1/6\\) para cada \\(k\\).
 
-| \\(x\\) | 1 | 2 | 3 | 4 | 5 | 6 |
-|---|---|---|---|---|---|---|
-| \\(P(X=x)\\) | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 |
+| \\(k\\) | 1 | 2 | 3 | 4 | 5 | 6 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 |
 
---
-
-**Solução (b).** \\(P(X&gt;4) = P(X=5)+P(X=6) = \frac16+\frac16 = \frac26 \approx 33\%\\).
-
----
-
-## Aplicação econômica: itens defeituosos em um lote
-
-Um lote pequeno tem **2 itens**, cada um defeituoso (D) de forma independente com probabilidade
-\\(0{,}1\\), ou bom (B) com probabilidade \\(0{,}9\\). Seja \\(X\\) = número de itens defeituosos no
-lote.
-
---
-
-**Solução.** Passo 1: enumeramos o espaço amostral e o valor de \\(X\\) em cada resultado:
-
-| \\(\omega\\) | BB | BD | DB | DD |
-|---|---|---|---|---|
-| \\(P(\omega)\\) | \\(0{,}9\times0{,}9=0{,}81\\) | \\(0{,}9\times0{,}1=0{,}09\\) | \\(0{,}1\times0{,}9=0{,}09\\) | \\(0{,}1\times0{,}1=0{,}01\\) |
-| \\(X(\omega)\\) | 0 | 1 | 1 | 2 |
-
---
-
-Passo 2: agrupamos por valor de \\(X\\):
-
-| \\(x\\) | 0 | 1 | 2 |
-|---|---|---|---|
-| \\(P(X=x)\\) | 0,81 | 0,18 | 0,01 |
-
-Essa é exatamente a lógica que a Aula 20 vai generalizar como distribuição **Binomial**.
-
----
-
-## Aplicação: seguradora, quanto ela paga por cliente?
-
-Uma seguradora paga R$ 100.000 se o cliente morre (probabilidade \\(1/1000\\)), R$ 50.000 se fica
-incapacitado (probabilidade \\(2/1000\\)), ou nada, caso contrário. Seja \\(X\\) = pagamento a um
-cliente em um ano.
-
---
-
-Aqui as probabilidades já são dadas diretamente (não vêm de enumerar um espaço amostral
-equiprovável, como nos exemplos anteriores):
-
-| Pagamento (\\(x\\)) | 100.000 | 50.000 | 0 |
-|---|---|---|---|
-| \\(P(X=x)\\) | 1/1000 | 2/1000 | 997/1000 |
-
-Note que as três probabilidades somam \\(1\\): \\(\frac{1}{1000}+\frac{2}{1000}+\frac{997}{1000}=1\\).
-Voltaremos a essa distribuição na Aula 18 para calcular quanto a seguradora espera pagar, em média,
-por cliente.
-
----
-
-## Número de sinistros em uma apólice
-
-```{r sinistros}
-sinistros <- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01))
-sum(sinistros$p)
-sinistros
-```
-
-```{r grafico-fmp, fig.height=3.3, echo=FALSE}
-ggplot(sinistros, aes(factor(x), p)) + geom_col(fill="#0d3b54") +
-  labs(x="Nº de sinistros", y="p(x)") + theme_minimal(base_size=13)
-```
+**b)** \\(P(X &gt; 4) = P(X = 5) + P(X = 6) = \frac{1}{6} + \frac{1}{6} = \frac{2}{6} \approx 33\\%\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Intervalo
 
----
-
-## Rodada 1: resolvendo a provocação inicial
-
-**1.** Volte à pergunta de abertura. Depois de ver a tabela de \\(p(x)\\), formule sua resposta: o que,
-exatamente, a seguradora "sabe" sobre uma apólice específica antes do ano terminar?
-
-**2.** \\(P(X=0)=0{,}60\\): 60% das apólices não registram nenhum sinistro no ano. Isso significa que
-60% dos segurados "não precisavam" do seguro? Que erro de raciocínio essa conclusão cometeria,
-pensando no papel de um seguro?
-
----
-
-## Rodada 2: generalizando
-
-**3.** Dê um exemplo de VA discreta em Economia/Finanças que assuma **infinitos** valores possíveis
-(não um conjunto finito, como número de tentativas até um evento ocorrer). O que muda na condição
-\\(\sum\_i p(x\_i)=1\\) nesse caso, a soma ainda precisa dar exatamente 1, mesmo com infinitos termos?
-
-**4.** Por que "número de sinistros de uma apólice" é discreta, mas "valor total pago em sinistros"
-(em R$) normalmente é tratado como contínua? A resposta prepara o terreno para o Capítulo 4.
-
----
-
-## Rodada 3: voltando aos exemplos construídos
-
-**5.** No exemplo das duas moedas, dois resultados diferentes de \\(\Omega\\) (\\(CK\\) e \\(KC\\))
-levaram ao mesmo valor de \\(X\\). Isso também acontece no exemplo do lote de 2 itens? Identifique
-quais resultados "colidem" no mesmo valor de \\(X\\).
-
-**6.** No exemplo da seguradora (pagamento por cliente), a tabela de probabilidades **não** veio de
-enumerar um espaço amostral equiprovável. Isso invalida a definição de variável aleatória discreta
-vista nesta aula, ou a definição já previa esse caso desde o início? Releia a definição formal para
-responder.
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 4: Uso do R
+# Parte 2: distribuições em aplicações
+
+### 50 minutos
 
 ---
 
-## Construindo e checando uma distribuição no R
+## Exercício 2: a seguradora .tempo[0–10 min]
 
-O lote de itens defeituosos (2 itens, \\(p=0{,}1\\)) construído à mão pode ser conferido no R:
+Uma seguradora oferece uma apólice por "morte ou incapacidade". Ela paga **R$ 100.000** se o cliente
+morre e **R$ 50.000** se o cliente fica permanentemente incapacitado.
 
-```{r lote-defeituosos}
-x <- c(0, 1, 2)
-p <- c(0.81, 0.18, 0.01)
-sum(p)                      # tem que dar 1
-data.frame(x, p)
-```
-
----
-
-## Simulando o espaço amostral
-
-Podemos **simular** o lote de 2 itens sorteando, para cada item, "defeituoso" com probabilidade
-\\(0{,}1\\), e comparar a frequência simulada de cada valor de \\(X\\) com a tabela teórica que
-construímos à mão:
-
-```{r simula-lote}
-set.seed(123)
-n_lotes <- 2000
-defeitos_item1 <- sample(c(0, 1), n_lotes, prob = c(0.9, 0.1), replace = TRUE)
-defeitos_item2 <- sample(c(0, 1), n_lotes, prob = c(0.9, 0.1), replace = TRUE)
-X_simulado <- defeitos_item1 + defeitos_item2
-table(X_simulado) / n_lotes     # frequências simuladas
-```
+A taxa de morte de clientes num ano é de **1/1.000** e a taxa de pessoas que ficam permanentemente
+incapacitadas é de **2/1.000**. Qual é a distribuição do **pagamento** que a empresa faz a um cliente
+em um ano?
 
 --
 
-Compare com a tabela teórica \\(P(X=0)=0{,}81\\), \\(P(X=1)=0{,}18\\), \\(P(X=2)=0{,}01\\): as
-frequências simuladas devem ficar próximas, mas não idênticas, o mesmo espírito de simulação que
-retomaremos com mais detalhe na Aula 22.
+.caixa-resposta[
+O pagamento é R$ 100.000 se o segurado morre, R$ 50.000 se fica incapacitado e **zero** se nada
+ocorre (probabilidade \\(1 - 1/1.000 - 2/1.000 = 997/1.000\\)).
+
+| Pagamento (R$) | 100.000 | 50.000 | 0 |
+|:---|:---:|:---:|:---:|
+| Probabilidade | 1/1.000 | 2/1.000 | 997/1.000 |
+]
+
+.caixa-discussao[
+A seguradora **não sabe** quanto vai pagar a cada cliente. Mesmo assim, ela precisa definir o
+**preço** da apólice. Como? (Próxima aula: **valor esperado**.)
+]
+
+---
+
+## Aplicação: itens defeituosos em um lote
+
+Um lote tem **10 peças**, das quais **3 são defeituosas**. Um fiscal sorteia **2 peças sem
+reposição**. Seja \\(X\\) o número de peças defeituosas na amostra.
+
+--
+
+**Passo 1.** \\(X \in \\{0, 1, 2\\}\\). **Passo 2** (contagem da Aula 10): há \\(\binom{10}{2} = 45\\) amostras.
+
+.pull-left[
+- \\(P(X = 0) = \dfrac{\binom{3}{0}\binom{7}{2}}{45} = \dfrac{21}{45}\\)
+- \\(P(X = 1) = \dfrac{\binom{3}{1}\binom{7}{1}}{45} = \dfrac{21}{45}\\)
+- \\(P(X = 2) = \dfrac{\binom{3}{2}\binom{7}{0}}{45} = \dfrac{3}{45}\\)
+
+Soma: \\(45/45 = 1\\). ✓
+]
+
+.pull-right[
+```{r lote, echo=FALSE, fig.height=3, fig.width=5, out.width="95%"}
+barras_prob(0:2, c(21, 21, 3) / 45, "Peças defeituosas na amostra", cor = "#c0392b")
+```
+
+]
+
+---
+
+## Aplicação: sinistros de uma apólice de automóvel .tempo[10–18 min]
+
+Registros de uma seguradora indicam o número de **sinistros por apólice em um ano** (dados
+ilustrativos):
+
+| Sinistros \\((k)\\) | 0 | 1 | 2 | 3 | 4 ou mais |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 0,72 | 0,19 | 0,06 | 0,02 | 0,01 |
+
+--
+
+**a)** A tabela é uma distribuição de probabilidade válida? **b)** Qual é a probabilidade de uma
+apólice ter **pelo menos um** sinistro? **c)** E de ter **no máximo dois**?
+
+--
+
+.caixa-resposta[
+**a)** Sim: todas entre 0 e 1 e \\(0{,}72 + 0{,}19 + 0{,}06 + 0{,}02 + 0{,}01 = 1\\).
+
+**b)** \\(P(X \geq 1) = 1 - P(X = 0) = 1 - 0{,}72 = 0{,}28\\).
+
+**c)** \\(P(X \leq 2) = 0{,}72 + 0{,}19 + 0{,}06 = 0{,}97\\).
+]
+
+---
+
+## Dados reais: quantos trimestres de queda do PIB? .tempo[18–30 min]
+
+```{r pib-quedas, include=FALSE}
+tx <- read.csv("pib_trimestral_taxas.csv")
+qq <- subset(tx, componente == "PIB a preços de mercado" & grepl("imediatamente", taxa))
+qq$ano <- qq$trimestre %/% 100
+anos <- aggregate(valor_pct ~ ano, data = subset(qq, ano >= 1997 & ano <= 2025),
+                  FUN = function(v) sum(v < 0))
+dist <- as.numeric(prop.table(table(factor(anos$valor_pct, levels = 0:4))))
+```
+
+Seja \\(X\\) o número de trimestres, **em um ano**, em que o PIB caiu em relação ao trimestre anterior (com ajuste
+sazonal). \\(X \in \\{0, 1, 2, 3, 4\\}\\). Usando as frequências relativas de 1997 a 2025 como probabilidades:
+
+.pull-left-40[
+.small[
+
+| \\(k\\) | \\(P(X = k)\\) |
+|:---:|:---:|
+| 0 | `r format(round(dist[1], 3), decimal.mark = ",")` |
+| 1 | `r format(round(dist[2], 3), decimal.mark = ",")` |
+| 2 | `r format(round(dist[3], 3), decimal.mark = ",")` |
+| 3 | `r format(round(dist[4], 3), decimal.mark = ",")` |
+| 4 | `r format(round(dist[5], 3), decimal.mark = ",")` |
+
+]
+
+.fonte[Fonte: IBGE, Contas Nacionais Trimestrais, tabela 5932 (29 anos).]
+]
+
+.pull-right-60[
+```{r pib-quedas-fig, echo=FALSE, fig.height=2.5, fig.width=5.5, out.width="92%"}
+barras_prob(0:4, dist, "Trimestres de queda do PIB no ano", cor = "#0d3b54")
+```
+]
+
+.clear[]
+
+.caixa-discussao[
+É uma distribuição válida? Qual a probabilidade de um ano com **pelo menos dois** trimestres de queda? Quais anos
+você imagina que estão na barra de 2 ou mais?
+]
+
+---
+
+## Atividade 2: identificando variáveis aleatórias .tempo[30–42 min]
+
+**1.** Para cada situação, defina uma variável aleatória, diga se ela é **discreta** ou **contínua** e
+liste (ou descreva) os seus valores possíveis:
+
+- **a)** o número de clientes que entram em uma agência em uma hora;
+- **b)** o tempo de atendimento de um cliente;
+- **c)** a taxa de inflação do próximo mês;
+- **d)** o número de empresas que pedem recuperação judicial em um trimestre.
+
+**2.** Uma pesquisa pergunta a nota (0 a 10) de satisfação com um serviço. Por que essa variável é
+discreta, embora a média das notas possa ser 7,35?
+
+---
+
+## Atividade 2 (cont.): validando distribuições
+
+**3.** Um colega propõe a seguinte distribuição para o número de filhos de uma família sorteada:
+
+| \\(k\\) | 0 | 1 | 2 | 3 | 4 |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 0,25 | 0,35 | 0,25 | 0,10 | 0,10 |
+
+Ela é válida? O que precisaria mudar?
+
+**4.** Uma variável aleatória pode ter **infinitos** valores possíveis e ainda assim ser discreta?
+Dê um exemplo (dica: número de lançamentos de uma moeda até sair a primeira cara).
+
+--
+
+.caixa-resposta[
+**3.** Não: a soma é \\(1{,}05\\). **4.** Sim, \\(X \in \\{1, 2, 3, \ldots\\}\\) é infinito mas **enumerável**, com
+\\(P(X = k) = (1/2)^k\\), que soma 1.
+]
+
+---
+
+## Uso do R: construindo e checando uma distribuição .tempo[42–50 min]
+
+```{r uso-r-1}
+k <- c(0, 1, 2, 3, 4)
+p <- c(0.72, 0.19, 0.06, 0.02, 0.01)          # sinistros por apólice
+
+all(p >= 0 & p <= 1)                            # todas entre 0 e 1?
+sum(p)                                          # soma 1?
+sum(p[k >= 1])                                  # P(X >= 1)
+sum(p[k <= 2])                                  # P(X <= 2)
+```
+
+```{r uso-r-2, eval=FALSE}
+barplot(p, names.arg = k, xlab = "Sinistros", ylab = "P(X = k)")
+```
+
+---
+
+## Uso do R: simulando uma variável aleatória
+
+```{r uso-r-3}
+set.seed(17)
+# duas moedas: X = número de caras
+X <- replicate(100000, sum(sample(c(0, 1), 2, replace = TRUE)))
+prop.table(table(X))            # compare com 1/4, 2/4, 1/4
+
+# lote com 3 defeituosas em 10, amostra de 2 sem reposição
+lote <- c(rep(1, 3), rep(0, 7))
+D <- replicate(100000, sum(sample(lote, 2)))
+prop.table(table(D))            # compare com 21/45, 21/45, 3/45
+```
+
+---
+
+## Resumo
+
+- Uma **variável aleatória** é uma função que associa um **número** a cada resultado de um fenômeno
+  aleatório.
+- **Discreta:** valores enumeráveis (contagens). **Contínua:** valores em intervalos (mensurações).
+- A **distribuição de probabilidade** lista os valores possíveis e as probabilidades de cada um.
+- Para obtê-la: **(1)** liste os valores; **(2)** calcule as probabilidades.
+- Uma distribuição válida tem probabilidades **entre 0 e 1** que **somam 1**.
 
 ---
 
@@ -337,4 +559,4 @@ class: inverse, center, middle
 
 # Próxima aula (26/10)
 
-## Esperança e variância
+## Esperança e variância de variáveis aleatórias discretas

@@ -2,7 +2,8 @@
 title: "Estatística Econômica I"
 subtitle: "Notas de curso: MATF14"
 author: "Raydonal Ospina"
-date: "`r format(Sys.Date(), '%d de %B de %Y')`"
+date: "`r paste(as.integer(format(Sys.Date(), '%d')), 'de', c('janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro')[as.integer(format(Sys.Date(), '%m'))], 'de', format(Sys.Date(), '%Y'))`"
+lang: pt-BR
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: refs.bib
@@ -66,8 +67,8 @@ financeiro, pesquisas de opinião, política pública.
 **Avaliação da disciplina:** três provas (P1, P2 e P3), com nota final $NF=(P_1+P_2+P_3)/3$. P1
 cobre a Unidade 1 (Estatística Descritiva); P2 cobre as Unidades 2 e 3 (Probabilidade e Variáveis
 Aleatórias Discretas); P3 cobre a Unidade 4 (Variáveis Aleatórias Contínuas). As listas de
-exercícios **não valem nota**, mas são o principal instrumento de preparação, cada lista de
-`Listas2026/` traz gabarito completo para autoavaliação. Não há projetos nesta disciplina: o
+exercícios **não valem nota**, mas são o principal instrumento de preparação; as resoluções são
+discutidas em sala e não são publicadas neste material. Não há projetos nesta disciplina: o
 objetivo é dominar os conceitos com profundidade suficiente para resolvê-los sob prova, sem
 consulta, e para reconhecê-los quando reaparecerem, e vão reaparecer, em Econometria,
 Microeconomia e qualquer leitura crítica de dados que você fizer depois de formado.
@@ -96,9 +97,9 @@ localizar qualquer tópico cobrado em prova diretamente pelo número da seção:
 
 | Capítulo | Tópico | Seções da ementa | Aulas correspondentes | Prova |
 |---|---|---|---|---|
-| 1 | Estatística Descritiva e Exploratória de Dados | 1.1 – 1.6 | Aulas 01–08 | P1 |
-| 2 | Introdução à Teoria das Probabilidades | 2.1 – 2.7 | Aulas 09–16 | P2 |
-| 3 | Variáveis Aleatórias Discretas | 3.1 – 3.4 | Aulas 17–23 | P2 |
+| 1 | Estatística Descritiva e Exploratória de Dados | 1.1 – 1.7 | Aulas 01–08 | P1 |
+| 2 | Introdução à Teoria das Probabilidades | 2.1 – 2.7 | Aulas 09–15 | P2 |
+| 3 | Variáveis Aleatórias Discretas | 3.1 – 3.5 | Aulas 17–23 | P2 |
 | 4 | Variáveis Aleatórias Contínuas | 4.1 – 4.4 | Aulas 24–30 | P3 |
 | Apêndice A | Ferramentas de Trabalho: R e Python | - | apoio à Aula 02 e ao Cap. 1 | - |
 | Apêndice B | Revisão de Cálculo (derivadas e integrais) | - | apoio ao Cap. 4 | - |
@@ -106,7 +107,7 @@ localizar qualquer tópico cobrado em prova diretamente pelo número da seção:
 
 Os slides de aula (`Aulas2026/`) seguem o cronograma **dia a dia** do semestre (uma aula, um
 deck); as listas (`Listas2026/`) agrupam esses dias em blocos temáticos maiores, com questões
-contextualizadas e gabarito à parte. O livro é a versão de referência mais completa: cada capítulo
+contextualizadas. O livro é a versão de referência mais completa: cada capítulo
 cobre com mais vagar, e com mais discussão, o que os slides do bloco correspondente apresentam de
 forma resumida em sala.
 

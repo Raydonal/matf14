@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xml:lang="pt-BR">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.5 Aplicação: o crescimento do PIB é normal? | Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.5 Aplicação: o crescimento do PIB é normal? | Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.5 Aplicação: o crescimento do PIB é normal? | Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modelos-continuos.html"/>
+<link rel="next" href="fechando-o-capítulo-3.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><strong>Estatística Econômica I</strong></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path="para-quem-é-este-livro.html"><a href="para-quem-é-este-livro.html"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><a href="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path="como-o-material-está-organizado.html"><a href="como-o-material-está-organizado.html"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><a href="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path="convenções-tipográficas.html"><a href="convenções-tipográficas.html"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path="agradecimentos.html"><a href="agradecimentos.html"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-estudar-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.1</b> Por que estudar Estatística?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="populacao-amostra.html"><a href="populacao-amostra.html#popula%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.1.2</b> População</a></li>
+<li class="chapter" data-level="1.1.3" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostra"><i class="fa fa-check"></i><b>1.1.3</b> Amostra</a></li>
+<li class="chapter" data-level="1.1.4" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-definir-bem-a-popula%C3%A7%C3%A3o-importa"><i class="fa fa-check"></i><b>1.1.4</b> Por que definir bem a população importa</a></li>
+<li class="chapter" data-level="1.1.5" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostragem"><i class="fa fa-check"></i><b>1.1.5</b> Amostragem</a></li>
+<li class="chapter" data-level="1.1.6" data-path="populacao-amostra.html"><a href="populacao-amostra.html#par%C3%A2metro-e-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.6</b> Parâmetro e estatística</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classifica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.2.1</b> Classificação</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#nem-todo-n%C3%BAmero-%C3%A9-uma-vari%C3%A1vel-quantitativa"><i class="fa fa-check"></i><b>1.2.2</b> Nem todo número é uma variável quantitativa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classificando-bases-reais"><i class="fa fa-check"></i><b>1.2.3</b> Classificando bases reais</a></li>
+<li class="chapter" data-level="1.2.4" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#exerc%C3%ADcios-resolvidos"><i class="fa fa-check"></i><b>1.2.4</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#distribui%C3%A7%C3%A3o-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.3.2</b> Distribuição de frequências</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#vari%C3%A1veis-quantitativas-classes"><i class="fa fa-check"></i><b>1.3.3</b> Variáveis quantitativas: classes</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#raz%C3%A3o-e-taxa-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.3.4</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.5</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.6" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gr%C3%A1ficos"><i class="fa fa-check"></i><b>1.3.6</b> Gráficos</a></li>
+<li class="chapter" data-level="1.3.7" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#histograma"><i class="fa fa-check"></i><b>1.3.7</b> Histograma</a></li>
+<li class="chapter" data-level="1.3.8" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#exerc%C3%ADcios-resolvidos-1"><i class="fa fa-check"></i><b>1.3.8</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#moda"><i class="fa fa-check"></i><b>1.4.1</b> Moda</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#mediana"><i class="fa fa-check"></i><b>1.4.2</b> Mediana</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia"><i class="fa fa-check"></i><b>1.4.3</b> Média</a></li>
+<li class="chapter" data-level="1.4.4" data-path="tendencia-central.html"><a href="tendencia-central.html#sensibilidade-a-valores-extremos"><i class="fa fa-check"></i><b>1.4.4</b> Sensibilidade a valores extremos</a></li>
+<li class="chapter" data-level="1.4.5" data-path="tendencia-central.html"><a href="tendencia-central.html#quando-usar-cada-medida"><i class="fa fa-check"></i><b>1.4.5</b> Quando usar cada medida</a></li>
+<li class="chapter" data-level="1.4.6" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia-a-partir-de-uma-tabela-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.4.6</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.7" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-agrupados-em-classes-as-notas-de-uma-turma"><i class="fa fa-check"></i><b>1.4.7</b> Dados agrupados em classes: as notas de uma turma</a></li>
+<li class="chapter" data-level="1.4.8" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-reais-prefeitos-e-munic%C3%ADpios"><i class="fa fa-check"></i><b>1.4.8</b> Dados reais: prefeitos e municípios</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#percentis"><i class="fa fa-check"></i><b>1.5.1</b> Percentis</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil"><i class="fa fa-check"></i><b>1.5.2</b> Quartis e distância interquartil</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#boxplot"><i class="fa fa-check"></i><b>1.5.3</b> Boxplot</a></li>
+<li class="chapter" data-level="1.5.4" data-path="dispersao.html"><a href="dispersao.html#amplitude-total"><i class="fa fa-check"></i><b>1.5.4</b> Amplitude total</a></li>
+<li class="chapter" data-level="1.5.5" data-path="dispersao.html"><a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o"><i class="fa fa-check"></i><b>1.5.5</b> Variância e desvio padrão</a></li>
+<li class="chapter" data-level="1.5.6" data-path="dispersao.html"><a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.5.6</b> Coeficiente de variação</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#gr%C3%A1fico-de-dispers%C3%A3o"><i class="fa fa-check"></i><b>1.6.1</b> Gráfico de dispersão</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#defini%C3%A7%C3%A3o-e-c%C3%A1lculo"><i class="fa fa-check"></i><b>1.6.2</b> Definição e cálculo</a></li>
+<li class="chapter" data-level="1.6.3" data-path="correlacao.html"><a href="correlacao.html#interpreta%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.6.3</b> Interpretação</a></li>
+<li class="chapter" data-level="1.6.4" data-path="correlacao.html"><a href="correlacao.html#aplica%C3%A7%C3%B5es-com-as-bases"><i class="fa fa-check"></i><b>1.6.4</b> Aplicações com as bases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#assimetria"><i class="fa fa-check"></i><b>1.7.1</b> Assimetria</a></li>
+<li class="chapter" data-level="1.7.2" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#curtose"><i class="fa fa-check"></i><b>1.7.2</b> Curtose</a></li>
+<li class="chapter" data-level="1.7.3" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#exemplo-na-m%C3%A3o"><i class="fa fa-check"></i><b>1.7.3</b> Exemplo na mão</a></li>
+<li class="chapter" data-level="1.7.4" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#as-bases-do-cap%C3%ADtulo"><i class="fa fa-check"></i><b>1.7.4</b> As bases do capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="contas-nacionais.html"><a href="contas-nacionais.html"><i class="fa fa-check"></i><b>1.8</b> Aplicação: contas nacionais, regionais e monetárias</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="contas-nacionais.html"><a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib"><i class="fa fa-check"></i><b>1.8.1</b> Agregados macroeconômicos: as três óticas do PIB</a></li>
+<li class="chapter" data-level="1.8.2" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta"><i class="fa fa-check"></i><b>1.8.2</b> Contas trimestrais: quatro taxas para a mesma pergunta</a></li>
+<li class="chapter" data-level="1.8.3" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados"><i class="fa fa-check"></i><b>1.8.3</b> Contas regionais: desigualdade entre os estados</a></li>
+<li class="chapter" data-level="1.8.4" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento"><i class="fa fa-check"></i><b>1.8.4</b> Contas Econômicas Integradas: da produção ao financiamento</a></li>
+<li class="chapter" data-level="1.8.5" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez"><i class="fa fa-check"></i><b>1.8.5</b> Contas monetárias e financeiras: moeda e liquidez</a></li>
+<li class="chapter" data-level="1.8.6" data-path="contas-nacionais.html"><a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros"><i class="fa fa-check"></i><b>1.8.6</b> Modelo de insumo-produto: como os setores dependem uns dos outros</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.9</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Fenômenos aleatórios</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="prob-introducao.html"><a href="prob-introducao.html#probabilidade-te%C3%B3rica-e-probabilidade-emp%C3%ADrica"><i class="fa fa-check"></i><b>2.1.1</b> Probabilidade teórica e probabilidade empírica</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prob-introducao.html"><a href="prob-introducao.html#o-que-%C3%A9-afinal-uma-probabilidade-quatro-interpreta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.1.2</b> O que é, afinal, uma probabilidade? Quatro interpretações</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#tipos-de-espa%C3%A7o-amostral"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de espaço amostral</a></li>
+<li class="chapter" data-level="2.2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#opera%C3%A7%C3%B5es-com-eventos-revis%C3%A3o-de-conjuntos"><i class="fa fa-check"></i><b>2.2.2</b> Operações com eventos (revisão de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#propriedades-das-opera%C3%A7%C3%B5es-e-leis-de-de-morgan"><i class="fa fa-check"></i><b>2.2.3</b> Propriedades das operações e leis de De Morgan</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Axiomas de Kolmogorov e propriedades da probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#por-que-precisamos-de-axiomas"><i class="fa fa-check"></i><b>2.3.1</b> Por que precisamos de axiomas</a></li>
+<li class="chapter" data-level="2.3.2" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#espa%C3%A7o-de-probabilidade"><i class="fa fa-check"></i><b>2.3.2</b> Espaço de probabilidade</a></li>
+<li class="chapter" data-level="2.3.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#os-axiomas-de-kolmogorov"><i class="fa fa-check"></i><b>2.3.3</b> Os axiomas de Kolmogorov</a></li>
+<li class="chapter" data-level="2.3.4" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#consequ%C3%AAncias-dos-axiomas-com-demonstra%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.3.4</b> Consequências dos axiomas (com demonstração)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#como-atribuir-probabilidades"><i class="fa fa-check"></i><b>2.3.5</b> Como atribuir probabilidades</a></li>
+<li class="chapter" data-level="2.3.6" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#defini%C3%A7%C3%A3o-cl%C3%A1ssica"><i class="fa fa-check"></i><b>2.3.6</b> Definição clássica</a></li>
+<li class="chapter" data-level="2.3.7" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#probabilidades-a-partir-de-tabelas"><i class="fa fa-check"></i><b>2.3.7</b> Probabilidades a partir de tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html"><i class="fa fa-check"></i><b>2.4</b> Técnicas de contagem e probabilidade clássica</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve"><i class="fa fa-check"></i><b>2.4.1</b> Quando contar resolve, e quando não resolve</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo"><i class="fa fa-check"></i><b>2.4.2</b> Princípios aditivo e multiplicativo</a></li>
+<li class="chapter" data-level="2.4.3" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.4.3</b> Os quatro tipos de seleção</a></li>
+<li class="chapter" data-level="2.4.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.4</b> Permutações</a></li>
+<li class="chapter" data-level="2.4.5" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#arranjos"><i class="fa fa-check"></i><b>2.4.5</b> Arranjos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.6</b> Combinações</a></li>
+<li class="chapter" data-level="2.4.7" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos"><i class="fa fa-check"></i><b>2.4.7</b> Da contagem à probabilidade: exemplos desenvolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="probabilidade-geometrica.html"><a href="probabilidade-geometrica.html"><i class="fa fa-check"></i><b>2.5</b> Probabilidade geométrica</a></li>
+<li class="chapter" data-level="2.6" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.6</b> Probabilidade condicional</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html#regra-da-multiplica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.6.1</b> Regra da multiplicação</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html"><i class="fa fa-check"></i><b>2.7</b> Tabelas de contingência: probabilidades conjuntas, marginais e condicionais</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#mercado-de-trabalho-brasileiro-sexo-e-condi%C3%A7%C3%A3o-na-for%C3%A7a-de-trabalho"><i class="fa fa-check"></i><b>2.7.1</b> Mercado de trabalho brasileiro: sexo e condição na força de trabalho</a></li>
+<li class="chapter" data-level="2.7.2" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#taxa-ou-n%C3%ADvel-o-evento-condicionante-muda-a-resposta"><i class="fa fa-check"></i><b>2.7.2</b> Taxa ou nível? O evento condicionante muda a resposta</a></li>
+<li class="chapter" data-level="2.7.3" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#a-fal%C3%A1cia-da-invers%C3%A3o-com-dados-reais-escolaridade-e-desocupa%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.3</b> A falácia da inversão com dados reais: escolaridade e desocupação</a></li>
+<li class="chapter" data-level="2.7.4" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#confundimento-e-composi%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.4</b> Confundimento e composição</a></li>
+<li class="chapter" data-level="2.7.5" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#o-paradoxo-de-simpson"><i class="fa fa-check"></i><b>2.7.5</b> O paradoxo de Simpson</a></li>
+<li class="chapter" data-level="2.7.6" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#independ%C3%AAncia-em-tabelas"><i class="fa fa-check"></i><b>2.7.6</b> Independência em tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="medidas-associacao.html"><a href="medidas-associacao.html"><i class="fa fa-check"></i><b>2.8</b> Risco, chance e razão de chances</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="medidas-associacao.html"><a href="medidas-associacao.html#preval%C3%AAncia-e-incid%C3%AAncia"><i class="fa fa-check"></i><b>2.8.1</b> Prevalência e incidência</a></li>
+<li class="chapter" data-level="2.8.2" data-path="medidas-associacao.html"><a href="medidas-associacao.html#risco-diferen%C3%A7a-de-riscos-e-risco-relativo"><i class="fa fa-check"></i><b>2.8.2</b> Risco, diferença de riscos e risco relativo</a></li>
+<li class="chapter" data-level="2.8.3" data-path="medidas-associacao.html"><a href="medidas-associacao.html#chance-odds"><i class="fa fa-check"></i><b>2.8.3</b> Chance (odds)</a></li>
+<li class="chapter" data-level="2.8.4" data-path="medidas-associacao.html"><a href="medidas-associacao.html#raz%C3%A3o-de-chances-odds-ratio"><i class="fa fa-check"></i><b>2.8.4</b> Razão de chances (odds ratio)</a></li>
+<li class="chapter" data-level="2.8.5" data-path="medidas-associacao.html"><a href="medidas-associacao.html#exemplo-com-dados-reais-sexo-e-mercado-de-trabalho"><i class="fa fa-check"></i><b>2.8.5</b> Exemplo com dados reais: sexo e mercado de trabalho</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.9</b> Independência estatística</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="independencia.html"><a href="independencia.html#tr%C3%AAs-ou-mais-eventos"><i class="fa fa-check"></i><b>2.9.1</b> Três ou mais eventos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.10</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#parti%C3%A7%C3%A3o-e-teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.10.1</b> Partição e teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.11</b> Teorema de Bayes</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#eventos-raros-e-falsos-alarmes"><i class="fa fa-check"></i><b>2.11.1</b> Eventos raros e falsos alarmes</a></li>
+<li class="chapter" data-level="2.11.2" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#sensibilidade-especificidade-e-valores-preditivos"><i class="fa fa-check"></i><b>2.11.2</b> Sensibilidade, especificidade e valores preditivos</a></li>
+<li class="chapter" data-level="2.11.3" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#bayes-na-forma-de-chances"><i class="fa fa-check"></i><b>2.11.3</b> Bayes na forma de chances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.12</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
+<li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#defini%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperan%C3%A7a-e-da-vari%C3%A2ncia"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
+<li class="chapter" data-level="3.6" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html"><i class="fa fa-check"></i><b>3.6</b> Aplicação macroeconômica: recessões e deflação</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-trimestres-de-queda-do-pib-em-um-ano-binomial-e-depend%C3%AAncia"><i class="fa fa-check"></i><b>3.6.1</b> Quantos trimestres de queda do PIB em um ano? Binomial e dependência</a></li>
+<li class="chapter" data-level="3.6.2" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-meses-de-defla%C3%A7%C3%A3o-em-um-ano-poisson"><i class="fa fa-check"></i><b>3.6.2</b> Quantos meses de deflação em um ano? Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.7</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#probabilidade-como-%C3%A1rea"><i class="fa fa-check"></i><b>4.1.1</b> Probabilidade como área</a></li>
+<li class="chapter" data-level="4.1.2" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#exemplo-distribui%C3%A7%C3%A3o-triangular"><i class="fa fa-check"></i><b>4.1.2</b> Exemplo: distribuição triangular</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
+<li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="va-continua-macro.html"><a href="va-continua-macro.html"><i class="fa fa-check"></i><b>4.5</b> Aplicação: o crescimento do PIB é normal?</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="va-continua-macro.html"><a href="va-continua-macro.html#crescimento-trimestral-do-pib"><i class="fa fa-check"></i><b>4.5.1</b> Crescimento trimestral do PIB</a></li>
+<li class="chapter" data-level="4.5.2" data-path="va-continua-macro.html"><a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal"><i class="fa fa-check"></i><b>4.5.2</b> Inflação mensal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.6</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apêndices</b></span></li>
+<li class="chapter" data-level="A" data-path="ferramentas-rpython.html"><a href="ferramentas-rpython.html"><i class="fa fa-check"></i><b>A</b> Ferramentas de Trabalho: R e Python</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="instalação.html"><a href="instalação.html"><i class="fa fa-check"></i><b>A.1</b> Instalação</a></li>
+<li class="chapter" data-level="A.2" data-path="r-e-python-como-calculadora.html"><a href="r-e-python-como-calculadora.html"><i class="fa fa-check"></i><b>A.2</b> R e Python como calculadora</a></li>
+<li class="chapter" data-level="A.3" data-path="leitura-de-dados.html"><a href="leitura-de-dados.html"><i class="fa fa-check"></i><b>A.3</b> Leitura de dados</a></li>
+<li class="chapter" data-level="A.4" data-path="funções.html"><a href="funções.html"><i class="fa fa-check"></i><b>A.4</b> Funções</a></li>
+<li class="chapter" data-level="A.5" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>A.5</b> Loops</a></li>
+<li class="chapter" data-level="A.6" data-path="números-aleatórios.html"><a href="números-aleatórios.html"><i class="fa fa-check"></i><b>A.6</b> Números aleatórios</a></li>
+<li class="chapter" data-level="A.7" data-path="gráficos-básicos.html"><a href="gráficos-básicos.html"><i class="fa fa-check"></i><b>A.7</b> Gráficos básicos</a></li>
+<li class="chapter" data-level="A.8" data-path="para-continuar-estudando-de-graça.html"><a href="para-continuar-estudando-de-graça.html"><i class="fa fa-check"></i><b>A.8</b> Para continuar estudando, de graça</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="revisao-de-calculo.html"><a href="revisao-de-calculo.html"><i class="fa fa-check"></i><b>B</b> Revisão de Cálculo</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="por-que-integrais-aparecem-em-probabilidade.html"><a href="por-que-integrais-aparecem-em-probabilidade.html"><i class="fa fa-check"></i><b>B.1</b> Por que integrais aparecem em probabilidade</a></li>
+<li class="chapter" data-level="B.2" data-path="derivadas-o-essencial.html"><a href="derivadas-o-essencial.html"><i class="fa fa-check"></i><b>B.2</b> Derivadas: o essencial</a></li>
+<li class="chapter" data-level="B.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>B.3</b> Integrais: o essencial</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>B.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-c%C3%A1lculo-vers%C3%A3o-pr%C3%A1tica"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impr%C3%B3prias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>B.4</b> Exercício de fixação</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="formulario.html"><a href="formulario.html"><i class="fa fa-check"></i><b>C</b> Fórmulário e tabelas de referência</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="capítulo-1-estatística-descritiva.html"><a href="capítulo-1-estatística-descritiva.html"><i class="fa fa-check"></i><b>C.1</b> Capítulo 1: Estatística Descritiva</a></li>
+<li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
+<li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
+<li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Cálculo (resumo do Apêndice B)</a></li>
+<li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="divider"></li>
+<li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="va-continua-macro" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Aplicação: o crescimento do PIB é normal?<a href="va-continua-macro.html#va-continua-macro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Modelos normais são usados o tempo todo em macroeconomia e finanças: cenários de crescimento, bandas de
+inflação, risco de carteiras. Antes de usá-los, vale comparar as probabilidades do modelo com as frequências
+observadas.</p>
+<div id="crescimento-trimestral-do-pib" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Crescimento trimestral do PIB<a href="va-continua-macro.html#crescimento-trimestral-do-pib" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Com as taxas de crescimento do PIB contra o trimestre anterior (Seção <a href="contas-nacionais.html#contas-nacionais">1.8</a>), ajustamos uma
+normal com a média e o desvio padrão amostrais:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="va-continua-macro.html#cb113-1" tabindex="-1"></a>m4_x <span class="ot">&lt;-</span> m4_tx<span class="sc">$</span>valor_pct</span>
+<span id="cb113-2"><a href="va-continua-macro.html#cb113-2" tabindex="-1"></a>m4_mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(m4_x); m4_s <span class="ot">&lt;-</span> <span class="fu">sd</span>(m4_x)</span>
+<span id="cb113-3"><a href="va-continua-macro.html#cb113-3" tabindex="-1"></a><span class="fu">c</span>(<span class="at">media =</span> m4_mu, <span class="at">dp =</span> m4_s,</span>
+<span id="cb113-4"><a href="va-continua-macro.html#cb113-4" tabindex="-1"></a>  <span class="at">P_queda_normal =</span> <span class="fu">pnorm</span>(<span class="dv">0</span>, m4_mu, m4_s), <span class="at">P_queda_observada =</span> <span class="fu">mean</span>(m4_x <span class="sc">&lt;</span> <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##             media                dp    P_queda_normal P_queda_observada 
+##         0.5834711         1.5830533         0.3562229         0.2231405</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-macro4-normal"></span>
+<img src="livro-matf14_files/figure-html/fig-macro4-normal-1.png" alt="Histograma (densidade) do crescimento trimestral do PIB, 1996 a 2026, e a densidade normal com a mesma média e o mesmo desvio padrão. Fonte: IBGE, tabela 5932." width="75%" />
+<p class="caption">
+Figura 4.15: Histograma (densidade) do crescimento trimestral do PIB, 1996 a 2026, e a densidade normal com a mesma média e o mesmo desvio padrão. Fonte: IBGE, tabela 5932.
+</p>
+</div>
+<p>O modelo normal dá <span class="math inline">\(P(\text{queda}) = P\left(Z &lt; \frac{0 - 0{,}58}{1{,}58}\right) \approx 0{,}356\)</span>, mas o PIB caiu em
+apenas 22,3% dos trimestres. O histograma mostra por quê: os dados são muito mais <strong>concentrados</strong> perto
+do centro e têm <strong>caudas longas</strong> (a queda e a recuperação de 2020). O desvio padrão, inflado pelas caudas,
+“espalha” a normal e superestima quedas pequenas. A curtose amostral é
+16,0, muito acima do valor 3 da normal (Seção <a href="assimetria-curtose.html#assimetria-curtose">1.7</a>).</p>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> Retirar os dois trimestres da pandemia torna a normal adequada? Refaça as contas sem eles
+(<code>filter(!trimestre %in% c(202002, 202003))</code>). Que problema há em <strong>retirar</strong> valores atípicos só porque atrapalham o
+modelo? Para quem avalia o risco de uma recessão, as caudas são justamente a parte que importa.</p>
+</div>
+</div>
+<div id="inflação-mensal" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Inflação mensal<a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para o IPCA mensal desde 2017, o ajuste é melhor:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="va-continua-macro.html#cb115-1" tabindex="-1"></a>m4_i <span class="ot">&lt;-</span> m4_ipca<span class="sc">$</span>ipca_mensal_pct[<span class="fu">as.integer</span>(<span class="fu">substr</span>(m4_ipca<span class="sc">$</span>data, <span class="dv">1</span>, <span class="dv">4</span>)) <span class="sc">&gt;=</span> <span class="dv">2017</span>]</span>
+<span id="cb115-2"><a href="va-continua-macro.html#cb115-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">meses =</span> <span class="fu">length</span>(m4_i), <span class="at">media =</span> <span class="fu">mean</span>(m4_i), <span class="at">dp =</span> <span class="fu">sd</span>(m4_i),</span>
+<span id="cb115-3"><a href="va-continua-macro.html#cb115-3" tabindex="-1"></a>  <span class="at">P_acima_1_normal =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">1</span>, <span class="fu">mean</span>(m4_i), <span class="fu">sd</span>(m4_i)), <span class="at">P_acima_1_observada =</span> <span class="fu">mean</span>(m4_i <span class="sc">&gt;</span> <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##               meses               media                  dp    P_acima_1_normal 
+##        116.00000000          0.40586207          0.39348403          0.06552916 
+## P_acima_1_observada 
+##          0.07758621</code></pre>
+<p>A normal prevê que 6,6% dos meses teriam inflação acima de 1%; observamos
+7,8%. Diferenças desse tamanho são comuns em amostras de cerca de uma centena de meses.</p>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> O mesmo modelo pode ser razoável para uma variável e inadequado para outra, e a
+verificação é simples: compare algumas probabilidades do modelo com as frequências observadas, especialmente nas
+<strong>caudas</strong>. Bancos centrais usam distribuições com caudas mais pesadas e assimetria (como os “gráficos de leque” de
+projeções de inflação) justamente porque a normal subestima cenários extremos.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelos-continuos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fechando-o-capítulo-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,480 +1,451 @@
 # Variáveis Aleatórias Contínuas {#variaveis-aleatorias-continuas}
 
 ```{r setup-cap4, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center",
+                      out.width = "75%")
 suppressPackageStartupMessages({
   library(tidyverse)
   library(kableExtra)
+  library(patchwork)
 })
 options(scipen = 999)
+empresas  <- read_csv("data/empresas.csv", show_col_types = FALSE)
+prefeitos <- read_csv("data/dados_prefeitos.csv", show_col_types = FALSE)
+area <- function(f, xlim, a, b, titulo = NULL, rotulo = NULL, ylab = "f(x)", cor = "#1f3fbf", n = 600) {
+  d <- tibble(x = seq(xlim[1], xlim[2], length.out = n), y = f(x))
+  g <- ggplot(d, aes(x, y)) + geom_area(data = filter(d, x >= a, x <= b), fill = "#f4a6a6", alpha = 0.9) +
+    geom_line(color = cor, linewidth = 1.1) + labs(x = "x", y = ylab, title = titulo) + theme_minimal(base_size = 12)
+  if (!is.null(rotulo)) g <- g + annotate("text", x = (max(a, xlim[1]) + min(b, xlim[2])) / 2, y = max(d$y) * 0.3, label = rotulo, size = 5)
+  g
+}
+tri  <- function(x) ifelse(x >= 0 & x <= 1, x, ifelse(x > 1 & x <= 2, 2 - x, 0))
+f2x  <- function(x) ifelse(x >= 0 & x < 1, 2 * x, 0)
+f21x <- function(x) ifelse(x >= 0 & x <= 1, 2 * (1 - x), 0)
 ```
 
-O Capítulo 3 tratou de contagens: valores discretos, separados uns dos outros. Muitas variáveis
-econômicas relevantes, porém, variam **continuamente**: o tempo até um evento, uma taxa de juros, o
-retorno de um ativo, a renda de uma família. Este capítulo estende esperança, variância e FDA para
-esse caso, trocando somatórios por integrais, com o ferramental revisado no Apêndice
-\@ref(revisao-de-calculo).
+Tempo, renda, chuva, retorno de investimentos: muitas variáveis econômicas assumem valores em
+**intervalos** da reta real, e não em um conjunto enumerável. Para elas, somas viram **integrais** e
+probabilidades viram **áreas**. Este capítulo (Unidade 4 da ementa, Aulas 24 a 30) apresenta a densidade de
+probabilidade, a esperança, a variância e a FDA de variáveis contínuas, e os modelos Uniforme e Normal. A
+revisão de derivadas e integrais necessária está no Apêndice \@ref(revisao-de-calculo). O texto segue
+[@morettinbussab2012; @magalhaes2004probabilidade].
 
 ## Conceituação de variável aleatória contínua {#va-continua-conceito}
 
-Uma VA $X$ é **contínua** quando pode assumir qualquer valor em um intervalo (finito ou infinito)
-da reta real. Diferente do caso discreto, **não existe** uma função de probabilidade $p(x)=P(X=x)$
-útil aqui: para uma VA contínua, $P(X=x)=0$ para **todo** valor específico $x$, a probabilidade só
-se acumula sobre intervalos, nunca sobre um único ponto.
-
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: antes da definição formal</strong>
-
-<p><strong>1.</strong> Se \(P(X=x)=0\) para todo \(x\), como é possível que \(X\) assuma <em>algum</em>
-valor com probabilidade total \(1\)? Não há contradição, mas vale a pena travar nessa pergunta antes
-de seguir. (Dica: a soma de "infinitos zeros", num sentido contínuo, não é necessariamente zero,
-é o mesmo tipo de sutileza por trás da integral imprópria do Apêndice B.)</p>
-
-<p><strong>2.</strong> A renda mensal exata de uma família, em centavos, é tecnicamente discreta (o
-menor incremento monetário é 1 centavo). Por que, ainda assim, ela é quase sempre tratada como
-variável contínua em modelos econômicos? O que se ganha nessa aproximação, e o que, na prática, se
-perde?</p>
-</div>
+```{r fig-chuva, echo=FALSE, out.width="48%", fig.show="hold", fig.cap="Chuva acumulada em Salvador: uma variável contínua. Fonte: G1 Bahia (12/11/2025)."}
+knitr::include_graphics(c("images/chuva_salvador_nov2025_manchete.jpg", "images/chuva_salvador_nov2025_texto.jpg"))
 ```
 
-Em vez de $p(x)$, define-se a **função densidade de probabilidade (fdp)** $f(x)$, tal que, para
-qualquer intervalo $[a,b]$,
+Foram 85 mm de chuva em menos de um dia. Poderiam ter sido 85,3 mm, ou 84,97 mm: a quantidade de chuva não
+é uma contagem.
+
+::: {.caixa-aplicacao}
+Uma **variável aleatória contínua** assume valores em um **intervalo** de números reais. Tipicamente vem de
+uma **mensuração**: quantidade de chuva num dia, duração de uma viagem, rentabilidade de um investimento,
+renda mensal, tempo de espera em uma fila.
+:::
+
+### Probabilidade como área
+
+Para variáveis **discretas**, probabilidades são **somas**. Na avaliação de um posto de saúde com notas 1 a 4 e
+probabilidades $0{,}2$, $0{,}1$, $0{,}4$, $0{,}3$, desenhadas como barras de largura 1, cada probabilidade é a **área** de
+uma barra e a área total é 1. Para variáveis **contínuas** a ideia é a mesma, com uma curva no lugar das
+barras.
+
+```{r fig-area-idea, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="Discreta: probabilidades como áreas de barras. Contínua: P(X > 0) é a área sob a curva, 50% por simetria."}
+p1 <- tibble(nota = factor(1:4), p = c(0.2, 0.1, 0.4, 0.3)) |>
+  ggplot(aes(nota, p)) + geom_col(width = 1, fill = "#4682b4", color = "white") +
+  labs(x = "Nota", y = "Probabilidade") + theme_minimal(base_size = 12)
+p1 + area(dnorm, c(-4, 4), 0, 4, rotulo = "50%")
+```
+
+::: {.caixa-aplicacao}
+A **função densidade de probabilidade** (f.d.p.) de uma variável contínua $X$ é uma função $f$ com
+
+**i.** $f(x) \geq 0$ para todo $x$; e **ii.** $\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1$.
+
+Probabilidades são áreas sob $f$:
 
 $$
-P(a\le X\le b) = \int_a^b f(x)\,dx,
+P(a < X \leq b) = \int_a^b f(x)\,dx.
+$$
+:::
+
+```{r fig-desenho-area, echo=FALSE, out.width="45%", fig.cap="A área entre a e b é P(a < X ≤ b); a área total é 1."}
+knitr::include_graphics("images/fdp_area_desenho.jpg")
+```
+
+**Consequências.** $P(X = a) = \int_a^a f(x)\,dx = 0$: para variáveis contínuas, incluir ou não os extremos **não
+muda** a probabilidade, $P(a < X < b) = P(a \leq X \leq b)$. E a **densidade não é probabilidade**: $f(x) = 2x$ em
+$[0, 1]$ tem $f(1) = 2 > 1$, mas $P(0{,}9 < X < 1) = \int_{0{,}9}^1 2x\,dx = 0{,}19$.
+
+### Exemplo: distribuição triangular
+
+$$
+f(x) = \begin{cases} x, & 0 \leq x \leq 1,\\ 2 - x, & 1 < x \leq 2,\\ 0, & \text{caso contrário}. \end{cases}
 $$
 
-com as condições análogas ao caso discreto:
+**a)** $f \geq 0$ e $\int_0^1 x\,dx + \int_1^2 (2 - x)\,dx = \frac{1}{2} + \left[2x - \frac{x^2}{2}\right]_1^2 = \frac{1}{2} + \frac{1}{2} = 1$: é uma densidade.
+
+**b)** $P(0 < X < 0{,}8) = \int_0^{0{,}8} x\,dx = 0{,}32$.
 
 $$
-f(x)\ge 0 \ \text{para todo } x, \qquad \int_{-\infty}^{\infty} f(x)\,dx = 1.
+P(0{,}3 < X < 1{,}5) = \int_{0{,}3}^{1} x\,dx + \int_1^{1{,}5} (2 - x)\,dx
 $$
 
-$f(x)$ **não é** uma probabilidade, pode até ser maior que 1 em algum ponto, é uma **densidade**:
-a probabilidade "por unidade de comprimento" em torno de $x$. Geometricamente, $f(x)$ é a curva, e
-$P(a\le X\le b)$ é a **área** sob essa curva entre $a$ e $b$. Essa área é, por definição, o que uma
-integral calcula, o limite de uma soma de retângulos cada vez mais finos aproximando a região sob a
-curva; quem quiser revisitar essa construção passo a passo (a soma de Riemann) encontra a
-demonstração completa no Apêndice \@ref(revisao-de-calculo).
+$$
+= \frac{1 - 0{,}09}{2} + \left[2x - \frac{x^2}{2}\right]_1^{1{,}5} = 0{,}455 + 0{,}375 = 0{,}83.
+$$
 
-```{r fig-fdp-exemplo-mao, echo=FALSE, out.width="60%", fig.cap="Densidade $f(x)$ genérica: a área sob a curva entre $a$ e $b$ é $P(a<X\\le b)$; a área total sob toda a curva vale 1."}
-knitr::include_graphics("images/fdp_exemplo_mao.jpg")
+A segunda integral precisa ser **quebrada** porque a fórmula de $f$ muda em $x = 1$.
+
+```{r fig-triangular, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="Densidade triangular: P(0 < X < 0,8) = 0,32 e P(0,3 < X < 1,5) = 0,83."}
+area(tri, c(-0.3, 2.3), 0, 0.8, rotulo = "0,32") + area(tri, c(-0.3, 2.3), 0.3, 1.5, rotulo = "0,83")
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: chuva acumulada é uma variável contínua</strong>. A
-manchete abaixo diz que Salvador registrou, em menos de um dia, 76% do acumulado de chuva esperado
-para todo o mês de novembro. O volume de chuva acumulado (em mm) é um exemplo típico de variável
-contínua: pode assumir qualquer valor não negativo, ao contrário das contagens discretas do
-Capítulo 3. A pergunta que só faz sentido com a linguagem deste capítulo é \(P(X\ge x_{obs})\), a
-probabilidade de um dia acumular pelo menos o volume observado, segundo a distribuição histórica de
-chuva de novembro para a cidade, é essa probabilidade, não o número bruto de milímetros, que separa
-um dia "chuvoso, mas normal" de um evento estatisticamente extremo.</div>
-```
+**Exercício 1.** Mostre que $f(x) = 2(1 - x)$, $0 \leq x \leq 1$, é uma densidade e calcule $P(1/2 < X < 2/3)$.
 
-```{r fig-chuva-salvador, echo=FALSE, out.width="70%", fig.cap="Chuva acumulada em Salvador ultrapassa 76% do esperado para novembro em menos de 24 horas (G1, 12/11/2025)."}
-knitr::include_graphics("images/chuva_salvador.jpg")
-```
+::: {.caixa-resposta}
+$f \geq 0$ e $\int_0^1 2(1 - x)\,dx = [2x - x^2]_0^1 = 1$. $P(1/2 < X < 2/3) = [2x - x^2]_{1/2}^{2/3} = \frac{8}{9} - \frac{3}{4} = \frac{5}{36} \approx 0{,}1389$.
+:::
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: tempo de espera em uma fila de atendimento</strong>
-, o tempo \(X\) (em minutos) que um cliente espera em uma fila de banco tem densidade
-\(f(x) = 0{,}2\,e^{-0{,}2x}\), \(x\ge 0\) (distribuição Exponencial, com taxa \(0{,}2\)).</div>
-```
+::: {.caixa-economia}
+**Tempo de espera numa fila.** O tempo $X$ (minutos) no caixa de um banco tem densidade $f(x) = 0{,}2\,e^{-0{,}2x}$,
+$x \geq 0$. Uma primitiva é $-e^{-0{,}2x}$, logo $P(5 \leq X \leq 15) = e^{-1} - e^{-3} \approx 0{,}318$.
+:::
 
-```{r fdp-exponencial, fig.height=3.5}
-f <- function(x) 0.2*exp(-0.2*x)
-df <- tibble(x = seq(0, 30, length.out = 300), y = f(x))
-df_area <- df |> filter(x >= 5, x <= 15)
-
-ggplot(df, aes(x,y)) + geom_line(color="#0d3b54") +
-  geom_area(data = df_area, fill = "#c9971e", alpha = .5) +
-  labs(x = "minutos", y = "f(x)", title = "P(5 ≤ X ≤ 15) = área sombreada") +
-  theme_minimal(base_size = 13)
-
-integrate(f, lower = 5, upper = 15)
+```{r integrais-cap4}
+c(integrate(tri, 0.3, 1.5)$value, integrate(f21x, 1/2, 2/3)$value, integrate(function(x) 0.2 * exp(-0.2 * x), 5, 15)$value)
 ```
 
 ## Esperança e variância {#va-continua-esperanca-variancia}
 
-As definições trocam soma por integral, mas a interpretação é idêntica ao Capítulo 3:
-
-$$
-E(X) = \mu = \int_{-\infty}^{\infty} x\,f(x)\,dx
-\qquad\qquad
-\mathrm{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx.
-$$
-
-Todas as propriedades do Capítulo 3 continuam válidas sem alteração: $E(aX+b)=aE(X)+b$,
-$\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$, $E(X+Y)=E(X)+E(Y)$ sempre, e
-$\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$ sob independência.
-
-Antes de deixar o R fazer a conta pela primeira vez, vale ver como ela sai "à mão". Para a fila de
-atendimento, $f(x)=0{,}2\,e^{-0{,}2x}$, $x\ge0$, a esperança é
-
-$$
-E(X) = \int_0^\infty x\cdot 0{,}2\,e^{-0{,}2x}\,dx.
-$$
-
-Essa é uma integral por partes clássica (Apêndice \@ref(revisao-de-calculo)), mas o resultado geral
-vale a pena memorizar: para qualquer Exponencial com taxa $\lambda$, $f(x)=\lambda e^{-\lambda x}$,
-
-$$
-E(X) = \int_0^\infty x\cdot\lambda e^{-\lambda x}\,dx = \frac{1}{\lambda}.
-$$
-
-Com $\lambda=0{,}2$, $E(X) = 1/0{,}2 = 5$. Só agora confirmamos numericamente:
-
-```{r esperanca-exponencial}
-# E(X) da fila: integral de x*f(x) de 0 a infinito (à mão, deu 1/lambda = 1/0,2 = 5)
-integrand <- function(x) x * 0.2*exp(-0.2*x)
-integrate(integrand, lower = 0, upper = Inf)
-```
-
-$E(X)=5$ minutos, o tempo médio de espera na fila, exatamente o valor previsto pela fórmula
-$1/\lambda$.
-
-```{r fig-peso-esperado, echo=FALSE, out.width="80%", fig.cap="Companhia aérea reforma aviões após o peso real dos passageiros de primeira classe superar o peso esperado usado no projeto das cabines."}
+```{r fig-aviao, echo=FALSE, out.width="45%", fig.cap="Cabines que excederam o peso esperado de projeto. Fonte: CNN Brasil."}
 knitr::include_graphics("images/peso_esperado_aviao.jpg")
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: engenharia também usa \(E(X)\)</strong>, o caso
-real acima não é sobre economia, mas ilustra o mesmo conceito com consequências físicas diretas:
-companhias aéreas projetam estrutura, distribuição de peso e consumo de combustível de uma
-aeronave com base no <em>peso esperado</em> por passageiro, uma média ponderada de uma
-distribuição de peso corporal mais bagagem. Quando o peso real observado passa a exceder
-sistematicamente o peso de projeto (mudança na composição populacional ao longo de décadas, mais
-bagagem de mão, assentos maiores), a estrutura precisa ser refeita. É a mesma lógica de uma
-seguradora recalculando \(E(X)\) quando o perfil de sinistros muda, ou de um dimensionamento de
-capacidade de atendimento baseado no \(E(X)=5\) minutos calculado acima: um valor esperado não é uma
-verdade estática, é uma estimativa que precisa ser revista quando a distribuição subjacente
-muda.</div>
+No caso discreto, $E(X) = \sum x_i P(X = x_i)$. No contínuo, trocamos a **soma** por uma **integral** e a
+probabilidade pela **densidade**.
+
+::: {.caixa-aplicacao}
+Se $X$ tem densidade $f$,
+
+$$
+E(X) = \int_{-\infty}^{\infty} x\, f(x)\,dx, \qquad E[g(X)] = \int_{-\infty}^{\infty} g(x)\, f(x)\,dx,
+$$
+
+$$
+Var(X) = \int_{-\infty}^{\infty} (x - \mu)^2 f(x)\,dx = E(X^2) - \mu^2, \qquad dp(X) = \sqrt{Var(X)}.
+$$
+
+As integrais são calculadas só onde $f(x) \neq 0$, e as **propriedades** de $E$ e $Var$ são as mesmas do
+Capítulo 3.
+:::
+
+**Exemplo: $f(x) = 2x$, $0 < x < 1$.**
+
+$$
+E(X) = \int_0^1 2x^2\,dx = \frac{2}{3}, \qquad E(X^2) = \int_0^1 2x^3\,dx = \frac{1}{2}, \qquad Var(X) = \frac{1}{2} - \frac{4}{9} = \frac{1}{18}.
+$$
+
+**Exercício 2: $f(x) = 2(1 - x)$, $0 \leq x \leq 1$.**
+
+::: {.caixa-resposta}
+$E(X) = \int_0^1 2(x - x^2)\,dx = 1 - \frac{2}{3} = \frac{1}{3}$; $E(X^2) = \int_0^1 2(x^2 - x^3)\,dx = \frac{2}{3} - \frac{1}{2} = \frac{1}{6}$;
+$Var(X) = \frac{1}{6} - \frac{1}{9} = \frac{1}{18}$. As duas densidades são espelhadas: médias diferentes, mesma variância.
+:::
+
+```{r fig-medias, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="Histograma de 1.000 valores simulados com densidade 2x (vermelho: densidade; azul: média amostral) e a densidade 2(1 - x) com a média 1/3."}
+set.seed(25)
+amostra <- sqrt(runif(1000))
+g1 <- ggplot(tibble(x = amostra), aes(x)) + geom_histogram(aes(y = after_stat(density)), breaks = seq(0, 1, 0.1), fill = "grey85", color = "grey40") +
+  stat_function(fun = f2x, color = "red", linewidth = 1.1, xlim = c(0, 1)) + geom_vline(xintercept = mean(amostra), color = "#3b5bdb", linewidth = 1) +
+  labs(y = "Densidade") + theme_minimal(base_size = 12)
+g2 <- area(f21x, c(-0.2, 1.2), 0, 1) + geom_vline(xintercept = 1/3, color = "#c0392b", linetype = "dashed", linewidth = 1)
+g1 + g2
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+A média amostral de 1.000 valores simulados fica perto de $2/3$: o histograma aproxima a densidade e a
+média amostral aproxima $E(X)$.
 
-<p><strong>1.</strong> \(E(X)=5\) minutos é o tempo "esperado", mas, como a Exponencial é
-assimétrica à direita, grande parte dos clientes espera bem menos que 5 minutos, enquanto uma
-minoria espera bem mais. O que isso implica para uma agência que divulga "tempo médio de espera: 5
-minutos" como métrica de atendimento ao público? Que medida (do Capítulo 1) complementaria melhor
-essa informação?</p>
-
-<p><strong>2.</strong> As fórmulas de \(E(aX+b)\) e \(\mathrm{Var}(aX+b)\) são idênticas às do Capítulo
-3, só trocando soma por integral na definição. Por que isso não deveria ser surpreendente?</p>
-</div>
-```
+::: {.caixa-economia}
+**Inadimplência de uma carteira.** Se a proporção $X$ de inadimplentes tem densidade $2(1 - x)$, a taxa em
+porcentagem $Y = 100X$ tem, pelas propriedades, $E(Y) = 33{,}3\%$ e $dp(Y) = 100/\sqrt{18} \approx 23{,}6$ pontos percentuais,
+sem novas integrais. **A média esconde a maioria**: na fila de espera com média de 5 minutos,
+$P(X \leq 5) = 1 - e^{-1} \approx 63\%$ dos clientes esperam menos que a média.
+:::
 
 ## Função de distribuição acumulada {#va-continua-fda}
 
-$$
-F(x) = P(X\le x) = \int_{-\infty}^x f(t)\,dt.
-$$
-
-Diferente do caso discreto, $F$ é **contínua** (sem saltos) quando $f$ é contínua, reflexo direto
-de $P(X=x)=0$. Uma consequência prática importante:
+::: {.caixa-aplicacao}
+A FDA de uma variável contínua é a área acumulada até $t$:
 
 $$
-P(X\le x) = P(X<x) \qquad P(X\ge x) = P(X>x),
+F(t) = P(X \leq t) = \int_{-\infty}^{t} f(x)\,dx.
 $$
 
-ao contrário do caso discreto, onde a diferença entre $\le$ e $<$ importava (Capítulo 3). Pela
-relação entre $f$ e $F$ (Teorema Fundamental do Cálculo, Apêndice B):
+Ela é contínua, não decrescente, vai de 0 a 1, e
 
 $$
-F'(x) = f(x), \qquad P(a\le X\le b) = F(b) - F(a).
+F'(t) = f(t), \qquad P(a < X \leq b) = F(b) - F(a).
 $$
+:::
 
-```{r fda-exponencial, fig.height=3.5}
-Fx <- function(x) 1 - exp(-0.2*x)   # primitiva de f, calculada à mão
-ggplot(tibble(x = seq(0,30,length.out=300), F = Fx(x)), aes(x,F)) +
-  geom_line(color = "#0d3b54") +
-  labs(x = "minutos", y = "F(x)", title = "FDA, tempo de espera") +
-  theme_minimal(base_size = 13)
+**Exemplo: $f(x) = 2x$ em $(0, 1)$.** $F(t) = 0$ para $t < 0$; $F(t) = \int_0^t 2x\,dx = t^2$ para $0 \leq t < 1$; $F(t) = 1$ para
+$t \geq 1$. **Exercício 3:** para $f(x) = 2(1 - x)$, $F(t) = 2t - t^2$ em $[0, 1)$.
+
+```{r fig-fdas-cont, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="FDAs das densidades 2x (F = t²) e 2(1 - x) (F = 2t - t²)."}
+fc <- function(F, titulo) ggplot(tibble(t = seq(-0.2, 1.2, length.out = 400)), aes(t, F(t))) + geom_line(color = "#c0392b", linewidth = 1.2) +
+  labs(y = "F(t)", title = titulo) + theme_minimal(base_size = 12)
+fc(function(t) ifelse(t < 0, 0, ifelse(t < 1, t^2, 1)), "F(t) = t²") + fc(function(t) ifelse(t < 0, 0, ifelse(t < 1, 2 * t - t^2, 1)), "F(t) = 2t - t²")
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+**Exercício 4.** Seja $f(x) = Cx$ em $[0, 1)$. **a)** Encontre $C$. **b)** Encontre a FDA. **c)** Calcule $P(0{,}2 < X \leq 0{,}4)$.
 
-<p><strong>1.</strong> No Capítulo 3, \(P(X\ge x)\ne P(X>x)\) em geral (a diferença de um ponto
-importava). Aqui, \(P(X\ge x)=P(X>x)\) sempre. Explique essa diferença usando o fato \(P(X=x)=0\) para
-VA contínua, qual é exatamente o "ponto a mais ou a menos" que deixou de importar?</p>
+::: {.caixa-resposta}
+**a)** $\int_0^1 Cx\,dx = C/2 = 1$, logo $C = 2$. **b)** $F(t) = t^2$ em $[0, 1)$. **c)** $F(0{,}4) - F(0{,}2) = 0{,}16 - 0{,}04 = 0{,}12$.
+:::
 
-<p><strong>2.</strong> Dado \(F(x)=1-e^{-0{,}2x}\), como você recuperaria \(f(x)\) a partir dela, sem
-ter a fórmula de \(f\) em mãos? Use a relação \(F'(x)=f(x)\) para deduzir.</p>
-</div>
-```
+**Percentis pela FDA.** O percentil $p$ resolve $F(q) = p$; a mediana, $F(m) = 0{,}5$. Para $f = 2x$, $m = \sqrt{0{,}5} \approx 0{,}707$
+(maior que a média $0{,}667$). Na fila, $F(t) = 1 - e^{-0{,}2t}$: a mediana é $5 \ln 2 \approx 3{,}47$ minutos e o percentil 95 é
+$-\ln(0{,}05)/0{,}2 \approx 15$ minutos, o tipo de número usado em metas de atendimento ("95% atendidos em até 15
+minutos").
 
 ## Alguns modelos probabilísticos {#modelos-continuos}
 
-Antes dos modelos nomeados a seguir, vale reforçar que "densidade válida" é um conceito mais amplo
-que os nomes consagrados (Uniforme, Normal etc.): qualquer função não negativa com área total 1
-serve.
-
-```{r fig-fdp-triangular, echo=FALSE, out.width="50%", fig.cap="Densidade triangular em [0,2], com pico em x=1: outro exemplo de densidade válida, sem distribuição nomeada correspondente no R."}
-knitr::include_graphics("images/fdp_triangular.jpg")
+```{r fig-midas, echo=FALSE, out.width="35%", fig.cap="A 'Fórmula de Midas' (Black-Scholes) supõe um modelo probabilístico para preços de ações. Fonte: BBC News Brasil."}
+knitr::include_graphics("images/formula_midas_bbc.jpg")
 ```
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
-
-<p><strong>1.</strong> A densidade triangular acima sobe de 0 (em \(x=0\)) até 1 (em \(x=1\)) e desce
-de volta a 0 (em \(x=2\)), formando dois triângulos-retângulos. Usando a fórmula da área de um
-triângulo, confirme que a área total sob a curva é de fato 1, condição necessária para ser uma
-densidade válida.</p>
-
-<p><strong>2.</strong> Sem calcular nada, apenas observando o desenho: \(P(X\le 1)\) é maior, menor
-ou igual a \(P(X>1)\)? E \(E(X)\), o desenho sugere que vale exatamente 1? (Aqui a densidade é
-simétrica em torno de \(x=1\), mas o racional geral vale para qualquer densidade: quando existe um
-ponto de simetria, ele é sempre igual a \(E(X)\).)</p>
-</div>
-```
+Na prática usamos **famílias** de densidades com fórmulas determinadas por **parâmetros**, cujas propriedades
+devem refletir o fenômeno analisado.
 
 ### Distribuição Uniforme
 
-A VA mais simples: densidade **constante** em um intervalo $[a,b]$, zero fora dele, "todos os
-valores no intervalo são igualmente prováveis" (no sentido de densidade).
+::: {.caixa-aplicacao}
+$X \sim \text{Unif}(\alpha, \beta)$ se
 
 $$
-f(x) = \frac{1}{b-a}, \quad a\le x\le b
-\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}.
+f(x) = \frac{1}{\beta - \alpha}, \quad \alpha \leq x \leq \beta \quad (0 \text{ fora}), \qquad F(t) = \frac{t - \alpha}{\beta - \alpha} \text{ em } [\alpha, \beta],
 $$
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação</strong>, o instante, dentro de uma hora, em que um
-cliente entra em uma loja (sem padrão de horário de pico) pode ser modelado como
-\(X\sim\text{Unif}(0,60)\) (minutos após o início da hora).</div>
+$$
+P(a < X < b) = \frac{b - a}{\beta - \alpha}, \qquad E(X) = \frac{\alpha + \beta}{2}, \qquad Var(X) = \frac{(\beta - \alpha)^2}{12}.
+$$
+:::
+
+Intervalos de **mesmo comprimento** têm a **mesma probabilidade**: a Uniforme modela situações sem nenhum valor
+preferido. Com $\alpha = 0$ e $\beta = 1$: $P(X < 0{,}8) = 0{,}8$, $P(0{,}2 < X < 0{,}9) = 0{,}7$, $P(X > 0{,}5) = 0{,}5$, $E(X) = 1/2$ e
+$Var(X) = 1/12$.
+
+**Dedução da média e da variância.** Usando $b^2 - a^2 = (b - a)(b + a)$ e $b^3 - a^3 = (b - a)(b^2 + ab + a^2)$:
+$E(X) = \frac{\beta^2 - \alpha^2}{2(\beta - \alpha)} = \frac{\alpha + \beta}{2}$, $E(X^2) = \frac{\alpha^2 + \alpha\beta + \beta^2}{3}$ e
+$Var(X) = \frac{\alpha^2 + \alpha\beta + \beta^2}{3} - \frac{(\alpha + \beta)^2}{4} = \frac{(\beta - \alpha)^2}{12}$.
+
+```{r fig-uniformes, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="Densidade e FDA da Unif(2, 7)."}
+g1 <- ggplot(tibble(x = seq(1, 8, length.out = 800)), aes(x, dunif(x, 2, 7))) + geom_line(color = "#1f3fbf", linewidth = 1.2) + labs(y = "f(x)") + theme_minimal(base_size = 12)
+g2 <- ggplot(tibble(x = seq(1, 8, length.out = 800)), aes(x, punif(x, 2, 7))) + geom_line(color = "#c0392b", linewidth = 1.2) + labs(y = "F(x)") + theme_minimal(base_size = 12)
+g1 + g2
 ```
 
-```{r uniforme-r, fig.height=3.5}
-a <- 0; b <- 60
-c(E_X = (a+b)/2, Var_X = (b-a)^2/12)
-
-punif(20, min = a, max = b)   # P(X <= 20)
-dunif(30, min = a, max = b)   # densidade em x=30 (constante = 1/60)
-```
-
-```{r fig-hist-unif, echo=FALSE, out.width="65%", fig.cap="Histograma de 1.000 valores simulados de Unif(0,1): a densidade constante (vermelho) e a média teórica 0,5 (azul) já são bem aproximadas por uma amostra desse tamanho."}
+```{r fig-hist-unif, echo=FALSE, out.width="45%", fig.cap="1.000 valores simulados de Unif(0, 1), com a densidade (vermelho) e a média (azul)."}
 knitr::include_graphics("images/hist_fdp_unif01.png")
 ```
 
-É a lei dos grandes números (fora do escopo formal deste curso, mas já intuída no Capítulo 1) que
-garante essa aproximação: quanto maior a amostra simulada, mais o histograma se aproxima da
-densidade teórica constante $f(x)=1$ em $[0,1]$, e mais a média amostral se aproxima de
-$E(X)=0{,}5$, a mesma lógica por trás de qualquer simulação Monte Carlo usada para verificar um
-resultado teórico.
+**Exercício 5.** $X \sim \text{Unif}(0, 10)$: FDA, $P(2 < X < 4)$, média e variância.
+
+::: {.caixa-resposta}
+$F(t) = t/10$ em $[0, 10)$; $P(2 < X < 4) = F(4) - F(2) = 1/5$; $E(X) = 5$; $Var(X) = 100/12 \approx 8{,}33$.
+:::
+
+::: {.caixa-economia}
+**Espera pelo metrô.** Trens a cada 8 minutos e chegada aleatória: $X \sim \text{Unif}(0, 8)$. $P(X > 6) = 0{,}25$, espera média
+de 4 minutos e 90% embarcam em até 7,2 minutos. Com trens a cada 4 minutos, a espera média cai pela metade.
+Já **renda** não é uniforme: a Uniforme ignoraria a forte assimetria à direita do Capítulo 1.
+:::
 
 ### Distribuição Normal
 
-O modelo contínuo mais importante em Estatística e Economia, descreve bem fenômenos que resultam
-da soma de muitos pequenos efeitos independentes (erros de medição, retornos agregados de muitos
-fatores). Densidade em forma de sino, simétrica em torno da média:
-
-$$
-f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x\in\mathbb{R}
-\qquad E(X)=\mu \qquad \mathrm{Var}(X)=\sigma^2.
-$$
-
-Notação: $X\sim N(\mu,\sigma^2)$. Quando $\mu=0$ e $\sigma=1$, chama-se **Normal padrão**, $Z\sim
-N(0,1)$, qualquer Normal pode ser convertida em padrão pela **padronização**:
-
-$$
-Z = \frac{X-\mu}{\sigma}.
-$$
-
-A padronização por si só não calcula nada, ela só troca a pergunta original (sobre $X$) por uma
-pergunta equivalente sobre $Z$, que pode ser respondida numa tabela ou numa função como
-`pnorm()`. A relação-chave é
-
-$$
-P(X\le a) = P\!\left(Z\le \frac{a-\mu}{\sigma}\right) = \Phi\!\left(\frac{a-\mu}{\sigma}\right),
-$$
-
-em que $\Phi$ é a FDA da Normal padrão. Vale a pena fazer essa conta à mão pelo menos uma vez antes
-de confiar apenas no R.
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: padronização passo a passo</strong>, a
-renda mensal (\(X\), em R$) das famílias de uma certa cidade segue aproximadamente
-\(X\sim N(2.000,\ 1.000^2)\). Qual é a probabilidade de uma família sorteada ao acaso ganhar menos de
-R$ 1.830?</div>
+```{r fig-enem-normal, echo=FALSE, out.width="42%", fig.cap="Notas do ENEM 2023: um pico central e forma aproximadamente simétrica. Fonte: Nexo Jornal, dados do Inep."}
+knitr::include_graphics("images/exercicio_notas_enem2023.png")
 ```
 
-**Passo 1 (padronizar).** Subtrai-se a média e divide-se pelo desvio padrão:
+A **curva normal** (em forma de sino) é o modelo contínuo mais usado: simétrica, com um único pico. A maioria
+dos adultos tem entre 1,50 m e 1,90 m; a maioria das pessoas tem QI entre 85 e 115; a maioria das notas do
+ENEM fica entre 400 e 700.
+
+::: {.caixa-aplicacao}
+$X \sim N(\mu, \sigma^2)$ se
 
 $$
-z = \frac{1.830-2.000}{1.000} = \frac{-170}{1.000} = -0{,}17.
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{-\frac{(x - \mu)^2}{2\sigma^2}\right\}, \qquad -\infty < x < \infty,
 $$
 
-**Passo 2 (reescrever o evento em termos de $Z$).**
+com $E(X) = \mu$ (média = moda = mediana) e $Var(X) = \sigma^2$. **Atenção:** em $N(500;\ 100^2)$ o segundo parâmetro é
+a **variância**; o desvio padrão é 100.
+:::
 
-$$
-P(X<1.830) = P\!\left(Z < \frac{1.830-2.000}{1.000}\right) = P(Z<-0{,}17) = \Phi(-0{,}17).
-$$
-
-**Passo 3 (consultar a tabela ou calcular $\Phi$).** Na tabela da Normal padrão, a linha $-0{,}1$
-com a coluna $0{,}07$ fornece $\Phi(-0{,}17)\approx 0{,}4325$: cerca de **43,25%** das famílias
-ganham menos de R\$ 1.830. Só agora, com o valor já obtido à mão, confirmamos com `pnorm()`:
-
-```{r padronizacao-mao}
-mu_renda <- 2000; sigma_renda <- 1000
-
-z <- (1830 - mu_renda) / sigma_renda
-z                       # valor padronizado calculado à mão
-
-pnorm(z)                # Phi(z) pela Normal padrão, N(0,1)
-pnorm(1830, mu_renda, sigma_renda)  # mesma probabilidade, direto na escala de X
+```{r fig-normal-params, echo=FALSE, fig.height=3, fig.width=10, out.width="95%", fig.cap="μ desloca a curva; σ a alarga ou estreita."}
+d1 <- tibble(x = seq(-6, 10, length.out = 500)) |> mutate(`N(0; 1)` = dnorm(x), `N(4; 1)` = dnorm(x, 4)) |> pivot_longer(-x)
+d2 <- tibble(x = seq(-8, 8, length.out = 500)) |> mutate(`N(0; 1)` = dnorm(x), `N(0; 2²)` = dnorm(x, 0, 2), `N(0; 0,5²)` = dnorm(x, 0, 0.5)) |> pivot_longer(-x)
+(ggplot(d1, aes(x, value, color = name)) + geom_line(linewidth = 1.1) + labs(y = "f(x)", color = NULL) + theme_minimal(base_size = 12) + theme(legend.position = "top")) +
+  (ggplot(d2, aes(x, value, color = name)) + geom_line(linewidth = 1.1) + labs(y = "f(x)", color = NULL) + theme_minimal(base_size = 12) + theme(legend.position = "top"))
 ```
 
-As três formas (tabela, `pnorm(z)` e `pnorm(1830, mu, sigma)`) devem coincidir, e coincidem: o
-`pnorm()` com os parâmetros originais já faz a padronização internamente, por isso adiantar o
-cálculo de $z$ à mão é redundante para o R, mas essencial para entender *o que* o R está calculando
-e para resolver questões de prova sem computador.
+**Regra 68–95–99,7.** Aproximadamente 68,3% dos valores ficam entre $\mu - \sigma$ e $\mu + \sigma$; 95,4% entre $\mu \pm 2\sigma$;
+99,7% entre $\mu \pm 3\sigma$.
 
-```{r fig-black-scholes, echo=FALSE, out.width="70%", fig.cap="'Fórmula de Midas': a equação de Black-Scholes, criada para precificar opções financeiras, apoiada na suposição de que retornos seguem uma distribuição Normal (ou log-Normal)."}
-knitr::include_graphics("images/black_scholes.jpg")
+**Curvas não normais.** A normal **não** serve para distribuições assimétricas, com mais de um pico ou muito
+diferentes de um sino. Antes de usá-la, olhe o histograma.
+
+```{r fig-empresas-normal, echo=FALSE, fig.height=2.6, fig.width=10, out.width="95%", fig.cap="Empregados (inadequado), tempo de existência (inadequado) e faturamento (adequado) das 106 empresas."}
+h <- function(v, xlab, bw) ggplot(empresas, aes({{ v }})) + geom_histogram(binwidth = bw, fill = "grey80", color = "grey40") + labs(x = xlab, y = NULL) + theme_minimal(base_size = 11)
+h(empregados99, "Nº de empregados", 25) + h(idade, "Tempo de existência (anos)", 4) + h(faturamento99 / 1000, "Faturamento (x 1.000)", 60)
 ```
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a fórmula de Black-Scholes-Merton
-(1973), um dos resultados mais influentes das finanças modernas, precifica opções assumindo que o
-log-retorno de um ativo segue uma distribuição Normal. A reportagem acima resume um fato histórico
-importante: essa mesma suposição, quando os mercados se afastam dela (crises, "caudas gordas",
-Capítulo 1), contribuiu para perdas catastróficas, como a quebra do fundo LTCM em 1998. A lição não
-é "não use a Normal", é a mesma do Capítulo 1: todo modelo é uma simplificação, e usá-lo bem
-exige saber em que condições ele deixa de valer.</div>
+::: {.caixa-economia}
+**Idade dos prefeitos.** A distribuição é simétrica, com um pico: média de cerca de 50 anos e desvio padrão de
+10,8. Pelo modelo, metade dos prefeitos tem menos de 50 anos e cerca de 68% têm entre 39 e 61 anos; nos dados,
+são 64,7%. O modelo acerta aproximadamente.
+:::
+
+```{r fig-prefeitos-normal, echo=FALSE, fig.height=3.2, fig.width=7, out.width="60%", fig.cap="Idade dos 5.232 prefeitos e a curva normal com a mesma média e o mesmo desvio padrão."}
+ggplot(prefeitos, aes(idade)) + geom_histogram(aes(y = after_stat(density)), binwidth = 5, boundary = 20, fill = "grey85", color = "grey40") +
+  stat_function(fun = dnorm, args = list(mean = mean(prefeitos$idade), sd = sd(prefeitos$idade)), color = "#1f3fbf", linewidth = 1.2) +
+  labs(x = "Idade do prefeito", y = "Densidade") + theme_minimal(base_size = 12)
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: retorno mensal de um fundo de ações</strong>,
-histórico sugere retorno mensal aproximadamente \(X\sim N(1{,}2\%,\ (4{,}5\%)^2)\). Qual é a
-probabilidade do fundo ter retorno negativo em um mês qualquer?</div>
+#### Normal padrão e tabela {-}
+
+A integral da densidade normal não tem primitiva por fórmula simples. Usamos como referência a **normal
+padrão** $Z \sim N(0, 1)$, cuja FDA $\Phi(a) = P(Z < a)$ está **tabelada** (Apêndice C). Para ler a tabela: a **linha** dá o
+primeiro dígito e a primeira casa decimal de $a$, e a **coluna**, a segunda casa decimal. Ex.: $P(Z < 1{,}55) = 0{,}9394$
+e $P(Z < -2{,}25) = 0{,}0122$.
+
+**Exemplo.** $P(-2 < Z < 1{,}55) = P(Z < 1{,}55) - P(Z < -2) = 0{,}9394 - 0{,}0228 = 0{,}9166$.
+
+**Exercício 6.** $P(Z < 0{,}53)$; $P(-1 < Z < 1)$; $P(Z > -0{,}68)$.
+
+::: {.caixa-resposta}
+$0{,}7019$; $0{,}8413 - 0{,}1587 = 0{,}6826$; $1 - 0{,}2483 = 0{,}7517$.
+:::
+
+#### Padronização {-}
+
+::: {.caixa-aplicacao}
+Se $X \sim N(\mu, \sigma^2)$, então $Z = \dfrac{X - \mu}{\sigma} \sim N(0, 1)$, e
+
+$$
+P(X < a) = P\left(Z < \frac{a - \mu}{\sigma}\right), \qquad P(X > a) = 1 - P\left(Z \leq \frac{a - \mu}{\sigma}\right),
+$$
+
+$$
+P(a < X < b) = P\left(Z < \frac{b - \mu}{\sigma}\right) - P\left(Z \leq \frac{a - \mu}{\sigma}\right).
+$$
+
+**Percentil:** $x = \mu + z\,\sigma$, com $z$ lido no **corpo** da tabela.
+:::
+
+**Exemplos.**
+
+- Notas do ENEM com média 500 e desvio padrão 100: $P(X < 700) = P(Z < 2) = 0{,}9772$.
+- Bolsas de sangue por mês com média 1.300 e desvio padrão 200: $P(X < 850) = P(Z < -2{,}25) = 0{,}0122$. O estoque
+  suficiente em 95% dos meses é $1.300 + 1{,}645 \times 200 \approx 1.629$ bolsas.
+
+**Exercício 7.** Renda mensal modelada por $N(2.000;\ 1.000^2)$. Probabilidade de ganhar **a)** menos de 1.830; **b)** menos
+de 2.570; **c)** mais de 3.000; **d)** entre 500 e 1.600. **e)** Qual renda separa os 10% mais ricos?
+
+::: {.caixa-resposta}
+**a)** $P(Z < -0{,}17) = 0{,}4325$. **b)** $P(Z < 0{,}57) = 0{,}7157$. **c)** $1 - 0{,}8413 = 0{,}1587$.
+**d)** $P(Z < -0{,}4) - P(Z < -1{,}5) = 0{,}3446 - 0{,}0668 = 0{,}2778$. **e)** $2.000 + 1{,}28 \times 1.000 = 3.280$.
+:::
+
+::: {.caixa-discussao}
+**Os limites do modelo.** Esse modelo de renda dá $P(X < 0) = P(Z < -2) = 2{,}3\%$ de rendas **negativas**, e a renda real é
+assimétrica à direita. Um fundo com retorno anual médio de 7,98% e desvio padrão de 21,13% tem, pela normal,
+$P(X > 10\%) \approx 0{,}46$ e $P(X < -5\%) \approx 0{,}27$; mas retornos de ativos têm caudas mais pesadas que a normal (curtose
+maior que 3), e perdas extremas são subestimadas.
+:::
+
+```{r normal-r}
+c(pnorm(1.55) - pnorm(-2), pnorm(850, 1300, 200), qnorm(0.95, 1300, 200),
+  pnorm(1600, 2000, 1000) - pnorm(500, 2000, 1000), 1 - pnorm(10, 7.98, 21.13), pnorm(-5, 7.98, 21.13))
 ```
 
-Repetindo os passos do exemplo anterior, agora com $\mu=1{,}2$ e $\sigma=4{,}5$. Padronizando o
-valor de interesse ($a=0$):
+## Aplicação: o crescimento do PIB é normal? {#va-continua-macro}
 
-$$
-z = \frac{0-1{,}2}{4{,}5} = \frac{-1{,}2}{4{,}5} \approx -0{,}27,
-$$
-
-$$
-P(X<0) = P\!\left(Z<\frac{0-1{,}2}{4{,}5}\right) = P(Z<-0{,}27) = \Phi(-0{,}27) \approx 0{,}3936
-$$
-
-pela tabela (linha $-0{,}2$, coluna $0{,}07$). Para a segunda pergunta, "qual a probabilidade do
-retorno ficar entre 0% e 5% no mês?", padronizamos os dois extremos do intervalo:
-
-$$
-z_1 = \frac{0-1{,}2}{4{,}5}\approx -0{,}27, \qquad z_2 = \frac{5-1{,}2}{4{,}5}\approx 0{,}84,
-$$
-
-$$
-P(0<X<5) = \Phi(z_2)-\Phi(z_1) = \Phi(0{,}84)-\Phi(-0{,}27) \approx 0{,}7995-0{,}3936 = 0{,}4059.
-$$
-
-```{r normal-r, fig.height=3.6}
-mu <- 1.2; sigma <- 4.5
-
-# padronização à mão, como acima, antes de qualquer chamada a pnorm()
-z0 <- (0 - mu) / sigma
-z5 <- (5 - mu) / sigma
-c(z0 = z0, z5 = z5)
-
-# Phi(z) pela Normal padrão: deve reproduzir os valores de tabela acima
-pnorm(z0)
-pnorm(z5) - pnorm(z0)
-
-# confirmação: pnorm() com os parâmetros originais já padroniza por dentro
-pnorm(0, mean = mu, sd = sigma)
-pnorm(5, mu, sigma) - pnorm(0, mu, sigma)
+```{r macro4-setup, include=FALSE}
+m4_nb <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",", big.mark = ".")
+m4_nbm <- function(x, d = 3) gsub(",", "{,}", m4_nb(x, d), fixed = TRUE)
+m4_tx <- read_csv("data/pib_trimestral_taxas.csv", show_col_types = FALSE) |>
+  filter(componente == "PIB a preços de mercado", grepl("imediatamente", taxa))
+m4_ipca <- read_csv("data/ipca_mensal.csv", show_col_types = FALSE)
 ```
 
-Note que `pnorm(z0)` usa $z_0=-0{,}2\overline{6}$ com todas as casas decimais, enquanto a consulta
-à tabela acima arredondou $z$ para $-0{,}27$ (tabelas só têm duas casas). Por isso os valores
-"batem" apenas de forma aproximada ($0{,}3936$ na tabela vs. $\approx 0{,}3949$ no R): a diferença
-é só arredondamento, não um erro de método, e é exatamente o tipo de discrepância que se espera ao
-comparar um cálculo manual com uma tabela e um cálculo numérico exato.
+Modelos normais são usados o tempo todo em macroeconomia e finanças: cenários de crescimento, bandas de
+inflação, risco de carteiras. Antes de usá-los, vale comparar as probabilidades do modelo com as frequências
+observadas.
 
-```{r grafico-normal, echo=FALSE, fig.height=3.8}
-df <- tibble(x = seq(mu - 4*sigma, mu + 4*sigma, length.out = 300),
-             y = dnorm(x, mu, sigma))
-df_neg <- df |> filter(x <= 0)
+### Crescimento trimestral do PIB
 
-ggplot(df, aes(x,y)) + geom_line(color = "#0d3b54") +
-  geom_area(data = df_neg, fill = "#c9971e", alpha = .6) +
-  labs(x = "retorno mensal (%)", y = "densidade",
-       title = paste0("P(retorno < 0) = área sombreada ≈ ",
-                       round(pnorm(0, mu, sigma), 3))) +
-  theme_minimal(base_size = 13)
+Com as taxas de crescimento do PIB contra o trimestre anterior (Seção \@ref(contas-nacionais)), ajustamos uma
+normal com a média e o desvio padrão amostrais:
+
+```{r macro4-normal}
+m4_x <- m4_tx$valor_pct
+m4_mu <- mean(m4_x); m4_s <- sd(m4_x)
+c(media = m4_mu, dp = m4_s,
+  P_queda_normal = pnorm(0, m4_mu, m4_s), P_queda_observada = mean(m4_x < 0))
 ```
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a probabilidade de retorno mensal
-negativo (área sombreada) é o tipo de número que um gestor de risco reporta como parte da
-caracterização de um fundo, junto de uma ressalva importante, retomada da discussão de curtose no
-Capítulo 1: retornos financeiros reais frequentemente têm caudas mais pesadas que a Normal
-(curtose \(>3\)), de modo que a probabilidade Normal tende a <em>subestimar</em> a frequência real de
-perdas extremas, a Normal é um ponto de partida útil, não a palavra final em modelagem de
-risco.</div>
+```{r fig-macro4-normal, echo=FALSE, fig.height=3.2, fig.width=8, fig.cap="Histograma (densidade) do crescimento trimestral do PIB, 1996 a 2026, e a densidade normal com a mesma média e o mesmo desvio padrão. Fonte: IBGE, tabela 5932."}
+ggplot(tibble(x = m4_x), aes(x)) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 0.5, fill = "#7fb8cf", color = "white") +
+  stat_function(fun = dnorm, args = list(mean = m4_mu, sd = m4_s), color = "#c0392b", linewidth = 1.1) +
+  labs(x = "Crescimento trimestral (%)", y = "Densidade") + theme_minimal(base_size = 13)
 ```
 
-### A regra empírica (68--95--99,7)
+O modelo normal dá $P(\text{queda}) = P\left(Z < \frac{0 - `r m4_nbm(m4_mu, 2)`}{`r m4_nbm(m4_s, 2)`}\right) \approx `r m4_nbm(pnorm(0, m4_mu, m4_s), 3)`$, mas o PIB caiu em
+apenas `r m4_nb(100 * mean(m4_x < 0), 1)`% dos trimestres. O histograma mostra por quê: os dados são muito mais **concentrados** perto
+do centro e têm **caudas longas** (a queda e a recuperação de 2020). O desvio padrão, inflado pelas caudas,
+"espalha" a normal e superestima quedas pequenas. A curtose amostral é
+`r m4_nb(mean((m4_x - m4_mu)^4) / mean((m4_x - m4_mu)^2)^2, 1)`, muito acima do valor 3 da normal (Seção \@ref(assimetria-curtose)).
 
-Para qualquer $X\sim N(\mu,\sigma^2)$:
+::: {.caixa-discussao}
+**Discussão.** Retirar os dois trimestres da pandemia torna a normal adequada? Refaça as contas sem eles
+(`filter(!trimestre %in% c(202002, 202003))`). Que problema há em **retirar** valores atípicos só porque atrapalham o
+modelo? Para quem avalia o risco de uma recessão, as caudas são justamente a parte que importa.
+:::
 
-$$
-\begin{aligned}
-P(\mu-\sigma < X < \mu+\sigma) &\approx 0{,}683 \\
-P(\mu-2\sigma < X < \mu+2\sigma) &\approx 0{,}954 \\
-P(\mu-3\sigma < X < \mu+3\sigma) &\approx 0{,}997
-\end{aligned}
-$$
+### Inflação mensal
 
-```{r regra-empirica}
-pnorm(2) - pnorm(-2)   # P(-2 < Z < 2) na Normal padrão
+Para o IPCA mensal desde 2017, o ajuste é melhor:
+
+```{r macro4-ipca}
+m4_i <- m4_ipca$ipca_mensal_pct[as.integer(substr(m4_ipca$data, 1, 4)) >= 2017]
+c(meses = length(m4_i), media = mean(m4_i), dp = sd(m4_i),
+  P_acima_1_normal = 1 - pnorm(1, mean(m4_i), sd(m4_i)), P_acima_1_observada = mean(m4_i > 1))
 ```
 
-```{=html}
-<div class="caixa-r"><strong>Uso do R</strong>, <code>pnorm</code>/<code>dnorm</code>/
-<code>qnorm</code>/<code>rnorm</code> seguem o mesmo padrão das demais distribuições do R.
-<code>qnorm(p, mean, sd)</code> é a função inversa da FDA, devolve o valor \(x\) tal que
-\(F(x)=p\), útil para "qual é o retorno que só é superado (ou não superado) por p% dos
-casos?".</div>
-```
+A normal prevê que `r m4_nb(100 * (1 - pnorm(1, mean(m4_i), sd(m4_i))), 1)`% dos meses teriam inflação acima de 1%; observamos
+`r m4_nb(100 * mean(m4_i > 1), 1)`%. Diferenças desse tamanho são comuns em amostras de cerca de uma centena de meses.
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: síntese do capítulo e do curso</strong>
-
-<p><strong>1.</strong> A regra empírica é uma consequência direta da Normal, não uma suposição
-extra. Se retornos financeiros reais têm curtose maior que 3 (Capítulo 1), a probabilidade real de
-um retorno cair fora de \(\mu\pm2\sigma\) é maior ou menor que os 4,6\% previstos pela regra
-empírica? Que consequência prática isso tem para um gestor que usa "2 desvios padrão" como limite
-de alerta de risco?</p>
-
-<p><strong>2.</strong> Por que a soma de "muitos pequenos efeitos independentes" tende a gerar uma
-distribuição aproximadamente Normal? Não é preciso provar, dê uma intuição, pensando no que
-acontece ao somar vários erros de medição pequenos e aleatórios, cada um podendo ser positivo ou
-negativo.</p>
-
-<p><strong>3.</strong> Volte à primeira pergunta do Prefácio do livro ("vale a pena trocar a
-poupança por um fundo multimercado?"). Com o vocabulário completo dos Capítulos 1 a 4 agora
-disponível, escreva um parágrafo respondendo, não com uma resposta definitiva ("sim" ou "não"),
-mas listando que informações estatísticas (medidas de posição, dispersão, forma, um modelo de
-distribuição para o retorno) você exigiria antes de decidir.</p>
-
-<p><strong>4.</strong> Ao longo do curso, cada capítulo teve um bloco de discussão insistindo no
-mesmo ponto: um número sozinho raramente basta, é preciso saber sua origem, seu condicionamento e
-seus limites. Escolha, dentre todas as discussões do semestre, a que mais mudou sua forma de ler um
-número em uma notícia econômica, e explique por quê.</p>
-</div>
-```
+::: {.caixa-economia}
+**Leitura econômica.** O mesmo modelo pode ser razoável para uma variável e inadequado para outra, e a
+verificação é simples: compare algumas probabilidades do modelo com as frequências observadas, especialmente nas
+**caudas**. Bancos centrais usam distribuições com caudas mais pesadas e assimetria (como os "gráficos de leque" de
+projeções de inflação) justamente porque a normal subestima cenários extremos.
+:::
 
 ## Fechando o capítulo
 
-Com este capítulo, o curso completa o ciclo: de dados observados (Cap. 1), à linguagem formal de
-incerteza (Cap. 2), a modelos de contagens (Cap. 3) e finalmente a modelos de grandezas contínuas
-(Cap. 4), o vocabulário completo para ler, questionar e modelar formalmente a maior parte dos
-fenômenos quantitativos que um economista ou estatístico encontra na prática. Os Apêndices A e B
-seguem como material de referência para revisão e consulta.
+| Tópico | O essencial |
+|:---|:---|
+| Densidade | $f \geq 0$, $\int f = 1$; $P(a < X \leq b) = \int_a^b f$; $P(X = a) = 0$ |
+| Esperança e variância | $E(X) = \int x f$; $Var(X) = \int x^2 f - [E(X)]^2$ |
+| FDA | $F(t) = \int_{-\infty}^t f$; $F' = f$; $P(a < X \leq b) = F(b) - F(a)$ |
+| Uniforme$(\alpha, \beta)$ | $f = 1/(\beta - \alpha)$; $E = (\alpha + \beta)/2$; $Var = (\beta - \alpha)^2/12$ |
+| Normal$(\mu, \sigma^2)$ | regra 68–95–99,7; $Z = (X - \mu)/\sigma$; tabela de $P(Z < a)$; percentil $\mu + z\sigma$ |
+| Verificar o modelo | compare $P$ do modelo com frequências observadas, sobretudo nas caudas (crescimento do PIB: curtose alta) |
+
+As Listas 11 e 12 e o Simulado da Prova 3 (Lista 14) cobrem este capítulo.

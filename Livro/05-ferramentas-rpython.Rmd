@@ -157,13 +157,13 @@ plt.show()
 ```{r grafico-histograma, fig.height=3.6}
 hist(empresas$faturamento99,
      main = "Histograma do faturamento (1999)",
-     xlab = "Faturamento 1999 (R$)", col = "#c9971e")
+     xlab = "Faturamento 1999", ylab = "Frequência", col = "#c9971e")
 ```
 
 ```python
 plt.hist(empresas["faturamento99"], color="#c9971e")
 plt.title("Histograma do faturamento (1999)")
-plt.xlabel("Faturamento 1999 (R$)")
+plt.xlabel("Faturamento 1999"); plt.ylabel("Frequência")
 plt.show()
 ```
 
@@ -182,14 +182,15 @@ plt.title("Empresas por setor (pizza)")
 plt.show()
 ```
 
-```{r grafico-barras-base, fig.height=4.4}
-par(mar = c(12, 4, 3, 1))
-barplot(sort(setor_freq, decreasing = TRUE),
-        main = "Empresas por setor (barras)", las = 2, cex.names = 0.85, col = "#0d3b54")
+```{r grafico-barras-base, fig.height=3.6}
+par(mar = c(4, 13, 3, 1))              # margem esquerda larga para os nomes
+barplot(sort(setor_freq), horiz = TRUE, las = 1,
+        main = "Empresas por setor (barras)",
+        xlab = "Número de empresas", col = "#0d3b54")
 ```
 
 ```python
-setor_freq.sort_values(ascending=False).plot(kind="bar", color="#0d3b54")
+setor_freq.sort_values().plot(kind="barh", color="#0d3b54")
 plt.title("Empresas por setor (barras)")
 plt.show()
 ```

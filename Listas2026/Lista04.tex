@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 04}{Coeficiente de correlação, assimetria e curtose: fecha a Unidade 1 (Cap. 1, Aula 08)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito04.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Interpretação de $r$: gastos com propaganda e vendas)}
 
@@ -96,5 +96,81 @@ tendência central, dispersão, e, se fizer sentido para a variável escolhida, 
 correlação com outra variável da base. O objetivo é praticar a integração dos conceitos, não
 calcular algo novo.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item A tabela traz o PIB per capita (R\$) e o IDH das capitais do Nordeste.
+\begin{center}
+\begin{tabular}{l|ccccccccc}
+\toprule
+Capital & REC & AJU & SLZ & NAT & JPA & SSA & FOR & THE & MCZ \\
+\midrule
+PIB per capita & 33.094 & 27.139 & 36.827 & 28.409 & 21.662 & 28.483 & 24.296 & 22.279 & 24.322 \\
+IDH & 0,772 & 0,770 & 0,768 & 0,763 & 0,763 & 0,759 & 0,754 & 0,751 & 0,721 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Faça o gráfico de dispersão.
+  \item Calcule o coeficiente de correlação mostrando a tabela com os valores padronizados.
+  \item Interprete o resultado. Ele permite dizer que aumentar o PIB per capita aumenta o IDH?
+\end{enumerate}
+\item Com os dados de 10 casais (salário anual em salários mínimos) de um bairro:
+\begin{center}
+\begin{tabular}{l|cccccccccc}
+\toprule
+Casal & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+Homem & 10 & 10 & 10 & 15 & 15 & 15 & 15 & 20 & 20 & 20 \\
+Mulher & 5 & 10 & 10 & 5 & 10 & 10 & 15 & 10 & 10 & 15 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule, separadamente, média, moda, mediana e variância dos salários de homens e de mulheres.
+  \item Calcule a correlação entre o salário do homem e o da mulher em cada casal. Interprete.
+  \item Calcule a assimetria dos salários das mulheres. A distribuição é simétrica?
+\end{enumerate}
+\item Para os dados $X = -2, -1, 0, 1, 2$ e $Y = X^2$, calcule $cor(X, Y)$. O resultado significa que $X$ e $Y$ não estão associados? Explique.
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: contas nacionais e dados reais}
+\noindent\textit{Exercícios com dados oficiais, ligados à seção de contas nacionais do Capítulo 1 do livro.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Poupança e investimento.)} Taxa de poupança bruta e taxa de investimento (formação bruta de capital), em \% do PIB
+(IBGE, Contas Econômicas Trimestrais, somas anuais):
+\begin{center}
+\begin{tabular}{lccccccc}
+\toprule
+Ano & 2019 & 2020 & 2021 & 2022 & 2023 & 2024 & 2025 \\
+\midrule
+Poupança ($x$) & 12,2 & 14,8 & 17,1 & 15,8 & 15,0 & 14,1 & 14,4 \\
+Investimento ($y$) & 15,5 & 16,1 & 19,5 & 18,1 & 15,8 & 17,0 & 17,1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Faça o diagrama de dispersão e calcule o coeficiente de correlação de Pearson.
+  \item Em todos os anos o investimento superou a poupança. Pela identidade das contas econômicas integradas, como essa diferença foi financiada?
+  \item Correlação alta entre poupança e investimento prova que ``a poupança causa o investimento''? Dê uma explicação alternativa.
+\end{enumerate}
+
+\item \textbf{(Assimetria e curtose do crescimento do PIB.)} Para as 121 taxas de variação do PIB em relação ao trimestre anterior (2º trimestre de 1996 ao
+2º trimestre de 2026), obtêm-se média 0,58\%, assimetria $-1{,}18$ e curtose $16{,}0$. Retirando os quatro trimestres de 2020 ($-2{,}3$; $-8{,}9$; $7{,}9$; $3{,}8$),
+a assimetria passa a $-0{,}76$ e a curtose a $5{,}0$.
+\begin{enumerate}[label=(\alph*)]
+  \item Interprete o sinal da assimetria. O que ele diz sobre recessões e expansões?
+  \item Compare a curtose com o valor de referência 3. Por que quatro observações mudam tanto a curtose?
+  \item Para descrever o crescimento ``típico'' da economia, você usaria média e desvio padrão ou mediana e distância interquartílica? Justifique.
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

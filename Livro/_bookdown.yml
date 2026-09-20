@@ -13,5 +13,11 @@ rmd_files: [
   "07-formulario.Rmd"
 ]
 language:
+  label:
+    fig: "Figura "
+    tab: "Tabela "
+    eq: "Equação "
+    exm: "Exemplo "
+    exr: "Exercício "
   ui:
     chapter_name: "Capítulo "

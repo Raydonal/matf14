@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xml:lang="pt-BR">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.8 Aplicação: contas nacionais, regionais e monetárias | Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.8 Aplicação: contas nacionais, regionais e monetárias | Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.8 Aplicação: contas nacionais, regionais e monetárias | Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="assimetria-curtose.html"/>
+<link rel="next" href="fechando-o-capítulo.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><strong>Estatística Econômica I</strong></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path="para-quem-é-este-livro.html"><a href="para-quem-é-este-livro.html"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><a href="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path="como-o-material-está-organizado.html"><a href="como-o-material-está-organizado.html"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><a href="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path="convenções-tipográficas.html"><a href="convenções-tipográficas.html"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path="agradecimentos.html"><a href="agradecimentos.html"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-estudar-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.1</b> Por que estudar Estatística?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="populacao-amostra.html"><a href="populacao-amostra.html#popula%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.1.2</b> População</a></li>
+<li class="chapter" data-level="1.1.3" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostra"><i class="fa fa-check"></i><b>1.1.3</b> Amostra</a></li>
+<li class="chapter" data-level="1.1.4" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-definir-bem-a-popula%C3%A7%C3%A3o-importa"><i class="fa fa-check"></i><b>1.1.4</b> Por que definir bem a população importa</a></li>
+<li class="chapter" data-level="1.1.5" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostragem"><i class="fa fa-check"></i><b>1.1.5</b> Amostragem</a></li>
+<li class="chapter" data-level="1.1.6" data-path="populacao-amostra.html"><a href="populacao-amostra.html#par%C3%A2metro-e-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.6</b> Parâmetro e estatística</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classifica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.2.1</b> Classificação</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#nem-todo-n%C3%BAmero-%C3%A9-uma-vari%C3%A1vel-quantitativa"><i class="fa fa-check"></i><b>1.2.2</b> Nem todo número é uma variável quantitativa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classificando-bases-reais"><i class="fa fa-check"></i><b>1.2.3</b> Classificando bases reais</a></li>
+<li class="chapter" data-level="1.2.4" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#exerc%C3%ADcios-resolvidos"><i class="fa fa-check"></i><b>1.2.4</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#distribui%C3%A7%C3%A3o-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.3.2</b> Distribuição de frequências</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#vari%C3%A1veis-quantitativas-classes"><i class="fa fa-check"></i><b>1.3.3</b> Variáveis quantitativas: classes</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#raz%C3%A3o-e-taxa-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.3.4</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.5</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.6" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gr%C3%A1ficos"><i class="fa fa-check"></i><b>1.3.6</b> Gráficos</a></li>
+<li class="chapter" data-level="1.3.7" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#histograma"><i class="fa fa-check"></i><b>1.3.7</b> Histograma</a></li>
+<li class="chapter" data-level="1.3.8" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#exerc%C3%ADcios-resolvidos-1"><i class="fa fa-check"></i><b>1.3.8</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#moda"><i class="fa fa-check"></i><b>1.4.1</b> Moda</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#mediana"><i class="fa fa-check"></i><b>1.4.2</b> Mediana</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia"><i class="fa fa-check"></i><b>1.4.3</b> Média</a></li>
+<li class="chapter" data-level="1.4.4" data-path="tendencia-central.html"><a href="tendencia-central.html#sensibilidade-a-valores-extremos"><i class="fa fa-check"></i><b>1.4.4</b> Sensibilidade a valores extremos</a></li>
+<li class="chapter" data-level="1.4.5" data-path="tendencia-central.html"><a href="tendencia-central.html#quando-usar-cada-medida"><i class="fa fa-check"></i><b>1.4.5</b> Quando usar cada medida</a></li>
+<li class="chapter" data-level="1.4.6" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia-a-partir-de-uma-tabela-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.4.6</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.7" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-agrupados-em-classes-as-notas-de-uma-turma"><i class="fa fa-check"></i><b>1.4.7</b> Dados agrupados em classes: as notas de uma turma</a></li>
+<li class="chapter" data-level="1.4.8" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-reais-prefeitos-e-munic%C3%ADpios"><i class="fa fa-check"></i><b>1.4.8</b> Dados reais: prefeitos e municípios</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#percentis"><i class="fa fa-check"></i><b>1.5.1</b> Percentis</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil"><i class="fa fa-check"></i><b>1.5.2</b> Quartis e distância interquartil</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#boxplot"><i class="fa fa-check"></i><b>1.5.3</b> Boxplot</a></li>
+<li class="chapter" data-level="1.5.4" data-path="dispersao.html"><a href="dispersao.html#amplitude-total"><i class="fa fa-check"></i><b>1.5.4</b> Amplitude total</a></li>
+<li class="chapter" data-level="1.5.5" data-path="dispersao.html"><a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o"><i class="fa fa-check"></i><b>1.5.5</b> Variância e desvio padrão</a></li>
+<li class="chapter" data-level="1.5.6" data-path="dispersao.html"><a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.5.6</b> Coeficiente de variação</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#gr%C3%A1fico-de-dispers%C3%A3o"><i class="fa fa-check"></i><b>1.6.1</b> Gráfico de dispersão</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#defini%C3%A7%C3%A3o-e-c%C3%A1lculo"><i class="fa fa-check"></i><b>1.6.2</b> Definição e cálculo</a></li>
+<li class="chapter" data-level="1.6.3" data-path="correlacao.html"><a href="correlacao.html#interpreta%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.6.3</b> Interpretação</a></li>
+<li class="chapter" data-level="1.6.4" data-path="correlacao.html"><a href="correlacao.html#aplica%C3%A7%C3%B5es-com-as-bases"><i class="fa fa-check"></i><b>1.6.4</b> Aplicações com as bases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#assimetria"><i class="fa fa-check"></i><b>1.7.1</b> Assimetria</a></li>
+<li class="chapter" data-level="1.7.2" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#curtose"><i class="fa fa-check"></i><b>1.7.2</b> Curtose</a></li>
+<li class="chapter" data-level="1.7.3" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#exemplo-na-m%C3%A3o"><i class="fa fa-check"></i><b>1.7.3</b> Exemplo na mão</a></li>
+<li class="chapter" data-level="1.7.4" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#as-bases-do-cap%C3%ADtulo"><i class="fa fa-check"></i><b>1.7.4</b> As bases do capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="contas-nacionais.html"><a href="contas-nacionais.html"><i class="fa fa-check"></i><b>1.8</b> Aplicação: contas nacionais, regionais e monetárias</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="contas-nacionais.html"><a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib"><i class="fa fa-check"></i><b>1.8.1</b> Agregados macroeconômicos: as três óticas do PIB</a></li>
+<li class="chapter" data-level="1.8.2" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta"><i class="fa fa-check"></i><b>1.8.2</b> Contas trimestrais: quatro taxas para a mesma pergunta</a></li>
+<li class="chapter" data-level="1.8.3" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados"><i class="fa fa-check"></i><b>1.8.3</b> Contas regionais: desigualdade entre os estados</a></li>
+<li class="chapter" data-level="1.8.4" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento"><i class="fa fa-check"></i><b>1.8.4</b> Contas Econômicas Integradas: da produção ao financiamento</a></li>
+<li class="chapter" data-level="1.8.5" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez"><i class="fa fa-check"></i><b>1.8.5</b> Contas monetárias e financeiras: moeda e liquidez</a></li>
+<li class="chapter" data-level="1.8.6" data-path="contas-nacionais.html"><a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros"><i class="fa fa-check"></i><b>1.8.6</b> Modelo de insumo-produto: como os setores dependem uns dos outros</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.9</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Fenômenos aleatórios</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="prob-introducao.html"><a href="prob-introducao.html#probabilidade-te%C3%B3rica-e-probabilidade-emp%C3%ADrica"><i class="fa fa-check"></i><b>2.1.1</b> Probabilidade teórica e probabilidade empírica</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prob-introducao.html"><a href="prob-introducao.html#o-que-%C3%A9-afinal-uma-probabilidade-quatro-interpreta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.1.2</b> O que é, afinal, uma probabilidade? Quatro interpretações</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#tipos-de-espa%C3%A7o-amostral"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de espaço amostral</a></li>
+<li class="chapter" data-level="2.2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#opera%C3%A7%C3%B5es-com-eventos-revis%C3%A3o-de-conjuntos"><i class="fa fa-check"></i><b>2.2.2</b> Operações com eventos (revisão de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#propriedades-das-opera%C3%A7%C3%B5es-e-leis-de-de-morgan"><i class="fa fa-check"></i><b>2.2.3</b> Propriedades das operações e leis de De Morgan</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Axiomas de Kolmogorov e propriedades da probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#por-que-precisamos-de-axiomas"><i class="fa fa-check"></i><b>2.3.1</b> Por que precisamos de axiomas</a></li>
+<li class="chapter" data-level="2.3.2" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#espa%C3%A7o-de-probabilidade"><i class="fa fa-check"></i><b>2.3.2</b> Espaço de probabilidade</a></li>
+<li class="chapter" data-level="2.3.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#os-axiomas-de-kolmogorov"><i class="fa fa-check"></i><b>2.3.3</b> Os axiomas de Kolmogorov</a></li>
+<li class="chapter" data-level="2.3.4" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#consequ%C3%AAncias-dos-axiomas-com-demonstra%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.3.4</b> Consequências dos axiomas (com demonstração)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#como-atribuir-probabilidades"><i class="fa fa-check"></i><b>2.3.5</b> Como atribuir probabilidades</a></li>
+<li class="chapter" data-level="2.3.6" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#defini%C3%A7%C3%A3o-cl%C3%A1ssica"><i class="fa fa-check"></i><b>2.3.6</b> Definição clássica</a></li>
+<li class="chapter" data-level="2.3.7" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#probabilidades-a-partir-de-tabelas"><i class="fa fa-check"></i><b>2.3.7</b> Probabilidades a partir de tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html"><i class="fa fa-check"></i><b>2.4</b> Técnicas de contagem e probabilidade clássica</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve"><i class="fa fa-check"></i><b>2.4.1</b> Quando contar resolve, e quando não resolve</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo"><i class="fa fa-check"></i><b>2.4.2</b> Princípios aditivo e multiplicativo</a></li>
+<li class="chapter" data-level="2.4.3" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.4.3</b> Os quatro tipos de seleção</a></li>
+<li class="chapter" data-level="2.4.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.4</b> Permutações</a></li>
+<li class="chapter" data-level="2.4.5" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#arranjos"><i class="fa fa-check"></i><b>2.4.5</b> Arranjos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.6</b> Combinações</a></li>
+<li class="chapter" data-level="2.4.7" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos"><i class="fa fa-check"></i><b>2.4.7</b> Da contagem à probabilidade: exemplos desenvolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="probabilidade-geometrica.html"><a href="probabilidade-geometrica.html"><i class="fa fa-check"></i><b>2.5</b> Probabilidade geométrica</a></li>
+<li class="chapter" data-level="2.6" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.6</b> Probabilidade condicional</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html#regra-da-multiplica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.6.1</b> Regra da multiplicação</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html"><i class="fa fa-check"></i><b>2.7</b> Tabelas de contingência: probabilidades conjuntas, marginais e condicionais</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#mercado-de-trabalho-brasileiro-sexo-e-condi%C3%A7%C3%A3o-na-for%C3%A7a-de-trabalho"><i class="fa fa-check"></i><b>2.7.1</b> Mercado de trabalho brasileiro: sexo e condição na força de trabalho</a></li>
+<li class="chapter" data-level="2.7.2" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#taxa-ou-n%C3%ADvel-o-evento-condicionante-muda-a-resposta"><i class="fa fa-check"></i><b>2.7.2</b> Taxa ou nível? O evento condicionante muda a resposta</a></li>
+<li class="chapter" data-level="2.7.3" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#a-fal%C3%A1cia-da-invers%C3%A3o-com-dados-reais-escolaridade-e-desocupa%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.3</b> A falácia da inversão com dados reais: escolaridade e desocupação</a></li>
+<li class="chapter" data-level="2.7.4" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#confundimento-e-composi%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.4</b> Confundimento e composição</a></li>
+<li class="chapter" data-level="2.7.5" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#o-paradoxo-de-simpson"><i class="fa fa-check"></i><b>2.7.5</b> O paradoxo de Simpson</a></li>
+<li class="chapter" data-level="2.7.6" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#independ%C3%AAncia-em-tabelas"><i class="fa fa-check"></i><b>2.7.6</b> Independência em tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="medidas-associacao.html"><a href="medidas-associacao.html"><i class="fa fa-check"></i><b>2.8</b> Risco, chance e razão de chances</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="medidas-associacao.html"><a href="medidas-associacao.html#preval%C3%AAncia-e-incid%C3%AAncia"><i class="fa fa-check"></i><b>2.8.1</b> Prevalência e incidência</a></li>
+<li class="chapter" data-level="2.8.2" data-path="medidas-associacao.html"><a href="medidas-associacao.html#risco-diferen%C3%A7a-de-riscos-e-risco-relativo"><i class="fa fa-check"></i><b>2.8.2</b> Risco, diferença de riscos e risco relativo</a></li>
+<li class="chapter" data-level="2.8.3" data-path="medidas-associacao.html"><a href="medidas-associacao.html#chance-odds"><i class="fa fa-check"></i><b>2.8.3</b> Chance (odds)</a></li>
+<li class="chapter" data-level="2.8.4" data-path="medidas-associacao.html"><a href="medidas-associacao.html#raz%C3%A3o-de-chances-odds-ratio"><i class="fa fa-check"></i><b>2.8.4</b> Razão de chances (odds ratio)</a></li>
+<li class="chapter" data-level="2.8.5" data-path="medidas-associacao.html"><a href="medidas-associacao.html#exemplo-com-dados-reais-sexo-e-mercado-de-trabalho"><i class="fa fa-check"></i><b>2.8.5</b> Exemplo com dados reais: sexo e mercado de trabalho</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.9</b> Independência estatística</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="independencia.html"><a href="independencia.html#tr%C3%AAs-ou-mais-eventos"><i class="fa fa-check"></i><b>2.9.1</b> Três ou mais eventos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.10</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#parti%C3%A7%C3%A3o-e-teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.10.1</b> Partição e teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.11</b> Teorema de Bayes</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#eventos-raros-e-falsos-alarmes"><i class="fa fa-check"></i><b>2.11.1</b> Eventos raros e falsos alarmes</a></li>
+<li class="chapter" data-level="2.11.2" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#sensibilidade-especificidade-e-valores-preditivos"><i class="fa fa-check"></i><b>2.11.2</b> Sensibilidade, especificidade e valores preditivos</a></li>
+<li class="chapter" data-level="2.11.3" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#bayes-na-forma-de-chances"><i class="fa fa-check"></i><b>2.11.3</b> Bayes na forma de chances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.12</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
+<li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#defini%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperan%C3%A7a-e-da-vari%C3%A2ncia"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
+<li class="chapter" data-level="3.6" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html"><i class="fa fa-check"></i><b>3.6</b> Aplicação macroeconômica: recessões e deflação</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-trimestres-de-queda-do-pib-em-um-ano-binomial-e-depend%C3%AAncia"><i class="fa fa-check"></i><b>3.6.1</b> Quantos trimestres de queda do PIB em um ano? Binomial e dependência</a></li>
+<li class="chapter" data-level="3.6.2" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-meses-de-defla%C3%A7%C3%A3o-em-um-ano-poisson"><i class="fa fa-check"></i><b>3.6.2</b> Quantos meses de deflação em um ano? Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.7</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#probabilidade-como-%C3%A1rea"><i class="fa fa-check"></i><b>4.1.1</b> Probabilidade como área</a></li>
+<li class="chapter" data-level="4.1.2" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#exemplo-distribui%C3%A7%C3%A3o-triangular"><i class="fa fa-check"></i><b>4.1.2</b> Exemplo: distribuição triangular</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
+<li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="va-continua-macro.html"><a href="va-continua-macro.html"><i class="fa fa-check"></i><b>4.5</b> Aplicação: o crescimento do PIB é normal?</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="va-continua-macro.html"><a href="va-continua-macro.html#crescimento-trimestral-do-pib"><i class="fa fa-check"></i><b>4.5.1</b> Crescimento trimestral do PIB</a></li>
+<li class="chapter" data-level="4.5.2" data-path="va-continua-macro.html"><a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal"><i class="fa fa-check"></i><b>4.5.2</b> Inflação mensal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.6</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apêndices</b></span></li>
+<li class="chapter" data-level="A" data-path="ferramentas-rpython.html"><a href="ferramentas-rpython.html"><i class="fa fa-check"></i><b>A</b> Ferramentas de Trabalho: R e Python</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="instalação.html"><a href="instalação.html"><i class="fa fa-check"></i><b>A.1</b> Instalação</a></li>
+<li class="chapter" data-level="A.2" data-path="r-e-python-como-calculadora.html"><a href="r-e-python-como-calculadora.html"><i class="fa fa-check"></i><b>A.2</b> R e Python como calculadora</a></li>
+<li class="chapter" data-level="A.3" data-path="leitura-de-dados.html"><a href="leitura-de-dados.html"><i class="fa fa-check"></i><b>A.3</b> Leitura de dados</a></li>
+<li class="chapter" data-level="A.4" data-path="funções.html"><a href="funções.html"><i class="fa fa-check"></i><b>A.4</b> Funções</a></li>
+<li class="chapter" data-level="A.5" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>A.5</b> Loops</a></li>
+<li class="chapter" data-level="A.6" data-path="números-aleatórios.html"><a href="números-aleatórios.html"><i class="fa fa-check"></i><b>A.6</b> Números aleatórios</a></li>
+<li class="chapter" data-level="A.7" data-path="gráficos-básicos.html"><a href="gráficos-básicos.html"><i class="fa fa-check"></i><b>A.7</b> Gráficos básicos</a></li>
+<li class="chapter" data-level="A.8" data-path="para-continuar-estudando-de-graça.html"><a href="para-continuar-estudando-de-graça.html"><i class="fa fa-check"></i><b>A.8</b> Para continuar estudando, de graça</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="revisao-de-calculo.html"><a href="revisao-de-calculo.html"><i class="fa fa-check"></i><b>B</b> Revisão de Cálculo</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="por-que-integrais-aparecem-em-probabilidade.html"><a href="por-que-integrais-aparecem-em-probabilidade.html"><i class="fa fa-check"></i><b>B.1</b> Por que integrais aparecem em probabilidade</a></li>
+<li class="chapter" data-level="B.2" data-path="derivadas-o-essencial.html"><a href="derivadas-o-essencial.html"><i class="fa fa-check"></i><b>B.2</b> Derivadas: o essencial</a></li>
+<li class="chapter" data-level="B.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>B.3</b> Integrais: o essencial</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>B.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-c%C3%A1lculo-vers%C3%A3o-pr%C3%A1tica"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impr%C3%B3prias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>B.4</b> Exercício de fixação</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="formulario.html"><a href="formulario.html"><i class="fa fa-check"></i><b>C</b> Fórmulário e tabelas de referência</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="capítulo-1-estatística-descritiva.html"><a href="capítulo-1-estatística-descritiva.html"><i class="fa fa-check"></i><b>C.1</b> Capítulo 1: Estatística Descritiva</a></li>
+<li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
+<li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
+<li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Cálculo (resumo do Apêndice B)</a></li>
+<li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="divider"></li>
+<li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="contas-nacionais" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Aplicação: contas nacionais, regionais e monetárias<a href="contas-nacionais.html#contas-nacionais" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As ferramentas deste capítulo (frequências relativas, taxas de variação, medidas de posição e de
+dispersão, gráficos e correlação) são exatamente as que um economista usa para ler as <strong>contas
+nacionais</strong>. O <strong>Sistema de Contas Nacionais</strong> (SCN), produzido pelo IBGE, registra de forma integrada a
+produção, a renda, o consumo, o investimento e o financiamento da economia; o Banco Central publica as
+<strong>estatísticas monetárias</strong>. Esta seção percorre seis blocos desse sistema com dados oficiais extraídos
+em 17/09/2026 <span class="citation">(<a href="#ref-bcb2026sgs">Banco Central do Brasil, 2026</a>; <a href="#ref-ibge2018mip">Instituto Brasileiro de Geografia e Estatística (IBGE), 2018</a>, <a href="#ref-ibge2025scn">2025b</a>, <a href="#ref-ibge2025regionais">2025a</a>, <a href="#ref-ibge2026cnt">2026a</a>)</span>. O
+script <code>Livro/data/baixar_contas.R</code> refaz o download.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Bloco</th>
+<th align="left">Pergunta que responde</th>
+<th align="left">Fonte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Agregados macroeconômicos</td>
+<td align="left">quanto a economia produz, gasta e remunera?</td>
+<td align="left">IBGE, SCN anual e trimestral</td>
+</tr>
+<tr class="even">
+<td align="left">Contas trimestrais</td>
+<td align="left">a economia está crescendo agora?</td>
+<td align="left">IBGE, Contas Nacionais Trimestrais</td>
+</tr>
+<tr class="odd">
+<td align="left">Contas regionais</td>
+<td align="left">como a produção se distribui entre os estados?</td>
+<td align="left">IBGE, Contas Regionais</td>
+</tr>
+<tr class="even">
+<td align="left">Contas Econômicas Integradas</td>
+<td align="left">de onde vem a renda e como ela financia o investimento?</td>
+<td align="left">IBGE, contas econômicas</td>
+</tr>
+<tr class="odd">
+<td align="left">Contas monetárias e financeiras</td>
+<td align="left">quanta moeda e quanta liquidez há na economia?</td>
+<td align="left">Banco Central</td>
+</tr>
+<tr class="even">
+<td align="left">Insumo-produto</td>
+<td align="left">como os setores dependem uns dos outros?</td>
+<td align="left">IBGE, Matriz de Insumo-Produto</td>
+</tr>
+</tbody>
+</table>
+<div id="agregados-macroeconômicos-as-três-óticas-do-pib" class="section level3 hasAnchor" number="1.8.1">
+<h3><span class="header-section-number">1.8.1</span> Agregados macroeconômicos: as três óticas do PIB<a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O <strong>Produto Interno Bruto</strong> (PIB) é o valor dos bens e serviços <strong>finais</strong> produzidos no país em um
+período. Ele pode ser medido de três maneiras, que chegam ao mesmo número:</p>
+<ul>
+<li><strong>Ótica da produção:</strong> valor da produção menos o consumo intermediário (o que foi usado como insumo),
+somado aos impostos líquidos sobre produtos: <span class="math inline">\(PIB = VBP - CI + \text{impostos líquidos}\)</span>. A diferença
+<span class="math inline">\(VBP - CI\)</span> é o <strong>valor adicionado</strong>.</li>
+<li><strong>Ótica da despesa:</strong> consumo das famílias (<span class="math inline">\(C\)</span>), consumo do governo (<span class="math inline">\(G\)</span>), formação bruta de capital
+fixo (<span class="math inline">\(FBCF\)</span>, o investimento), variação de estoques (<span class="math inline">\(\Delta E\)</span>) e exportações (<span class="math inline">\(X\)</span>) menos importações (<span class="math inline">\(M\)</span>):
+<span class="math inline">\(PIB = C + G + FBCF + \Delta E + X - M\)</span>.</li>
+<li><strong>Ótica da renda:</strong> remuneração dos empregados, rendimento misto (autônomos), excedente operacional
+bruto (lucros e aluguéis) e impostos líquidos sobre a produção e a importação.</li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="contas-nacionais.html#cb33-1" tabindex="-1"></a>cn_2021 <span class="ot">&lt;-</span> <span class="fu">filter</span>(cn_ot, ano <span class="sc">==</span> <span class="dv">2021</span>, <span class="sc">!</span><span class="fu">is.na</span>(valor_milhoes)) <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="contas-nacionais.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bilhoes =</span> valor_milhoes <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb33-3"><a href="contas-nacionais.html#cb33-3" tabindex="-1"></a>         <span class="at">pct_pib =</span> <span class="dv">100</span> <span class="sc">*</span> valor_milhoes <span class="sc">/</span> <span class="dv">9012142</span>)       <span class="co"># PIB de 2021: R$ 9.012.142 milhões</span></span>
+<span id="cb33-4"><a href="contas-nacionais.html#cb33-4" tabindex="-1"></a><span class="fu">tabela</span>(<span class="fu">select</span>(cn_2021, Ó<span class="at">tica =</span> otica, <span class="at">Item =</span> item, <span class="st">`</span><span class="at">R$ bilhões</span><span class="st">`</span> <span class="ot">=</span> bilhoes, <span class="st">`</span><span class="at">% do PIB</span><span class="st">`</span> <span class="ot">=</span> pct_pib),</span>
+<span id="cb33-5"><a href="contas-nacionais.html#cb33-5" tabindex="-1"></a>       <span class="at">digits =</span> <span class="dv">1</span>, <span class="at">caption =</span> <span class="st">&quot;PIB de 2021 sob as três óticas, valores correntes. Fonte: IBGE, SCN, tabela sinótica 5.&quot;</span>)</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cn-oticas">Tabela 1.7: </span>PIB de 2021 sob as três óticas, valores correntes. Fonte: IBGE, SCN, tabela sinótica 5.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Ótica
+</th>
+<th style="text-align:left;">
+Item
+</th>
+<th style="text-align:right;">
+R$ bilhões
+</th>
+<th style="text-align:right;">
+% do PIB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+produção
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+9.012,1
+</td>
+<td style="text-align:right;">
+100,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+produção
+</td>
+<td style="text-align:left;">
+Produção
+</td>
+<td style="text-align:right;">
+16.581,9
+</td>
+<td style="text-align:right;">
+184,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+produção
+</td>
+<td style="text-align:left;">
+Impostos sobre produtos
+</td>
+<td style="text-align:right;">
+1.302,5
+</td>
+<td style="text-align:right;">
+14,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+produção
+</td>
+<td style="text-align:left;">
+Subsídios aos produtos (-)
+</td>
+<td style="text-align:right;">
+-4,3
+</td>
+<td style="text-align:right;">
+0,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+produção
+</td>
+<td style="text-align:left;">
+Consumo intermediário (-)
+</td>
+<td style="text-align:right;">
+-8.867,9
+</td>
+<td style="text-align:right;">
+-98,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+9.012,1
+</td>
+<td style="text-align:right;">
+100,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Despesa de consumo final
+</td>
+<td style="text-align:right;">
+7.202,1
+</td>
+<td style="text-align:right;">
+79,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Despesa de consumo das famílias
+</td>
+<td style="text-align:right;">
+5.415,5
+</td>
+<td style="text-align:right;">
+60,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Despesa de consumo das Instituições sem fins de lucro a serviço das famílias
+</td>
+<td style="text-align:right;">
+115,0
+</td>
+<td style="text-align:right;">
+1,3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Despesa de consumo do governo
+</td>
+<td style="text-align:right;">
+1.671,5
+</td>
+<td style="text-align:right;">
+18,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Formação bruta de capital
+</td>
+<td style="text-align:right;">
+1.759,3
+</td>
+<td style="text-align:right;">
+19,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Formação bruta de capital fixo
+</td>
+<td style="text-align:right;">
+1.614,8
+</td>
+<td style="text-align:right;">
+17,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Variação de estoque
+</td>
+<td style="text-align:right;">
+144,6
+</td>
+<td style="text-align:right;">
+1,6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Exportação de bens e serviços
+</td>
+<td style="text-align:right;">
+1.722,2
+</td>
+<td style="text-align:right;">
+19,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+despesa
+</td>
+<td style="text-align:left;">
+Importação de bens e serviços (-)
+</td>
+<td style="text-align:right;">
+-1.671,5
+</td>
+<td style="text-align:right;">
+-18,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+9.012,1
+</td>
+<td style="text-align:right;">
+100,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Remuneração dos empregados
+</td>
+<td style="text-align:right;">
+3.534,6
+</td>
+<td style="text-align:right;">
+39,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Salários
+</td>
+<td style="text-align:right;">
+2.795,0
+</td>
+<td style="text-align:right;">
+31,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Contribuições sociais efetivas
+</td>
+<td style="text-align:right;">
+639,0
+</td>
+<td style="text-align:right;">
+7,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Contribuições sociais imputadas
+</td>
+<td style="text-align:right;">
+100,6
+</td>
+<td style="text-align:right;">
+1,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Rendimento misto bruto
+</td>
+<td style="text-align:right;">
+701,5
+</td>
+<td style="text-align:right;">
+7,8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Excedente operacional bruto
+</td>
+<td style="text-align:right;">
+3.376,9
+</td>
+<td style="text-align:right;">
+37,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Impostos sobre a produção e importação
+</td>
+<td style="text-align:right;">
+1.413,4
+</td>
+<td style="text-align:right;">
+15,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renda
+</td>
+<td style="text-align:left;">
+Subsídios a produção e importação (-)
+</td>
+<td style="text-align:right;">
+-14,3
+</td>
+<td style="text-align:right;">
+-0,2
+</td>
+</tr>
+</tbody>
+</table>
+<p>As três somas dão R$ 9,01 trilhões em 2021, o último ano em que as três óticas estão publicadas. (A ótica
+da renda não sai no mesmo ritmo das outras duas; os subitens em recuo, como “Salários”, já estão dentro
+do item anterior e não devem ser somados de novo.)</p>
+<p><strong>A composição da despesa em 2025.</strong> Somando os quatro trimestres de 2025 das contas trimestrais, cada
+componente vira uma <strong>frequência relativa</strong> do PIB:</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-despesa"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-despesa-1.png" alt="Componentes do PIB de 2025 pela ótica da despesa, em % do PIB (valores correntes, soma dos quatro trimestres). As importações entram com sinal negativo. Fonte: IBGE, Contas Nacionais Trimestrais, tabela 1846." width="80%" />
+<p class="caption">
+Figura 1.42: Componentes do PIB de 2025 pela ótica da despesa, em % do PIB (valores correntes, soma dos quatro trimestres). As importações entram com sinal negativo. Fonte: IBGE, Contas Nacionais Trimestrais, tabela 1846.
+</p>
+</div>
+<p>O PIB de 2025 foi de R$ 12,74 trilhões. O consumo das famílias responde por
+63,4% do PIB e a <strong>taxa de investimento</strong> (<span class="math inline">\(FBCF/PIB\)</span>) foi de
+16,8%. Pela ótica da produção, os serviços geraram
+69,5% do valor adicionado, a indústria
+23,4% e a agropecuária
+7,1%.</p>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> Frequências relativas são a linguagem natural das contas nacionais: “o
+investimento foi 16,8% do PIB” compara economias de tamanhos diferentes e anos
+com preços diferentes, algo que os valores em reais não permitem. Mas cuidado com o gráfico de pizza: as
+importações entram com sinal negativo e a soma das “fatias” positivas passa de 100%. Aqui, barras são a
+escolha correta (Seção <a href="tabelas-graficos.html#tabelas-graficos">1.3</a>).</p>
+</div>
+</div>
+<div id="contas-trimestrais-quatro-taxas-para-a-mesma-pergunta" class="section level3 hasAnchor" number="1.8.2">
+<h3><span class="header-section-number">1.8.2</span> Contas trimestrais: quatro taxas para a mesma pergunta<a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As Contas Nacionais Trimestrais publicam, a cada trimestre, <strong>quatro</strong> taxas de variação do volume do
+PIB. Todas usam a fórmula de taxa de variação da Seção <a href="tabelas-graficos.html#tabelas-graficos">1.3</a>; o que muda é <strong>com o que</strong> se
+compara:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="contas-nacionais.html#cb34-1" tabindex="-1"></a>cn_ult <span class="ot">&lt;-</span> <span class="fu">max</span>(cn_tx<span class="sc">$</span>trimestre)</span>
+<span id="cb34-2"><a href="contas-nacionais.html#cb34-2" tabindex="-1"></a>cn_tx_ult <span class="ot">&lt;-</span> cn_tx <span class="sc">|&gt;</span> <span class="fu">filter</span>(trimestre <span class="sc">==</span> cn_ult, componente <span class="sc">==</span> <span class="st">&quot;PIB a preços de mercado&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="contas-nacionais.html#cb34-3" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">Taxa =</span> taxa, <span class="st">`</span><span class="at">%</span><span class="st">`</span> <span class="ot">=</span> valor_pct)</span>
+<span id="cb34-4"><a href="contas-nacionais.html#cb34-4" tabindex="-1"></a><span class="fu">tabela</span>(cn_tx_ult, <span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb34-5"><a href="contas-nacionais.html#cb34-5" tabindex="-1"></a>       <span class="at">caption =</span> <span class="fu">paste0</span>(<span class="st">&quot;Taxas de variação do PIB no &quot;</span>, <span class="fu">cn_tri</span>(cn_ult), <span class="st">&quot;. Fonte: IBGE, tabela 5932.&quot;</span>))</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cn-taxas">Tabela 1.8: </span>Taxas de variação do PIB no 2º tri 2026. Fonte: IBGE, tabela 5932.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Taxa
+</th>
+<th style="text-align:right;">
+%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Taxa trimestral (em relação ao mesmo período do ano anterior)
+</td>
+<td style="text-align:right;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Taxa acumulada em quatro trimestres (em relação ao mesmo período do ano anterior)
+</td>
+<td style="text-align:right;">
+1,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Taxa acumulada ao longo do ano (em relação ao mesmo período do ano anterior)
+</td>
+<td style="text-align:right;">
+1,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Taxa trimestre contra trimestre imediatamente anterior
+</td>
+<td style="text-align:right;">
+0,5
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Taxa</th>
+<th align="left">Compara com</th>
+<th align="left">Responde a</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">trimestre contra trimestre anterior (com ajuste sazonal)</td>
+<td align="left">o trimestre imediatamente anterior</td>
+<td align="left">a economia acelerou <strong>agora</strong>?</td>
+</tr>
+<tr class="even">
+<td align="left">trimestral</td>
+<td align="left">o mesmo trimestre do ano anterior</td>
+<td align="left">como está em relação a um ano atrás, sem precisar de ajuste sazonal?</td>
+</tr>
+<tr class="odd">
+<td align="left">acumulada no ano</td>
+<td align="left">o mesmo período do ano anterior</td>
+<td align="left">como vai o ano até aqui?</td>
+</tr>
+<tr class="even">
+<td align="left">acumulada em quatro trimestres</td>
+<td align="left">os quatro trimestres anteriores</td>
+<td align="left">qual o crescimento “anual” mais recente?</td>
+</tr>
+</tbody>
+</table>
+<p>A primeira taxa exige <strong>ajuste sazonal</strong>: o PIB do 4º trimestre é, todo ano, diferente do 1º por razões de
+calendário (safra, festas, férias), e comparar trimestres vizinhos sem retirar esse padrão confundiria
+sazonalidade com crescimento.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-indice"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-indice-1.png" alt="Índice de volume do PIB com ajuste sazonal (média de 1995 = 100). Quedas marcadas em 2008-2009, 2015-2016 e 2020. Fonte: IBGE, tabela 1621." width="80%" />
+<p class="caption">
+Figura 1.43: Índice de volume do PIB com ajuste sazonal (média de 1995 = 100). Quedas marcadas em 2008-2009, 2015-2016 e 2020. Fonte: IBGE, tabela 1621.
+</p>
+</div>
+<p><strong>A distribuição do crescimento trimestral.</strong> Tratando as taxas “trimestre contra trimestre anterior” de
+1996 a 2026 como um conjunto de dados, usamos as medidas das seções anteriores:</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-qq"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-qq-1.png" alt="Taxa de crescimento do PIB contra o trimestre anterior, com ajuste sazonal, 1996 a 2026. Histograma e boxplot: a pandemia produziu os dois valores mais extremos; os demais atípicos são as quedas de 1998, 2008, 2015 e do 1º trimestre de 2020 e as altas de 1996 e do 4º trimestre de 2020. Fonte: IBGE, tabela 5932." width="80%" />
+<p class="caption">
+Figura 1.44: Taxa de crescimento do PIB contra o trimestre anterior, com ajuste sazonal, 1996 a 2026. Histograma e boxplot: a pandemia produziu os dois valores mais extremos; os demais atípicos são as quedas de 1998, 2008, 2015 e do 1º trimestre de 2020 e as altas de 1996 e do 4º trimestre de 2020. Fonte: IBGE, tabela 5932.
+</p>
+</div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="contas-nacionais.html#cb35-1" tabindex="-1"></a>cn_qq_s <span class="ot">&lt;-</span> cn_qq<span class="sc">$</span>valor_pct</span>
+<span id="cb35-2"><a href="contas-nacionais.html#cb35-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">n =</span> <span class="fu">length</span>(cn_qq_s), <span class="at">media =</span> <span class="fu">mean</span>(cn_qq_s), <span class="at">mediana =</span> <span class="fu">median</span>(cn_qq_s), <span class="at">dp =</span> <span class="fu">sd</span>(cn_qq_s),</span>
+<span id="cb35-3"><a href="contas-nacionais.html#cb35-3" tabindex="-1"></a>  <span class="at">Q1 =</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(cn_qq_s, <span class="fl">0.25</span>, <span class="at">type =</span> <span class="dv">2</span>)), <span class="at">Q3 =</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(cn_qq_s, <span class="fl">0.75</span>, <span class="at">type =</span> <span class="dv">2</span>)),</span>
+<span id="cb35-4"><a href="contas-nacionais.html#cb35-4" tabindex="-1"></a>  <span class="at">prop_negativos =</span> <span class="fu">mean</span>(cn_qq_s <span class="sc">&lt;</span> <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##              n          media        mediana             dp             Q1 
+##    121.0000000      0.5834711      0.8000000      1.5830533      0.0000000 
+##             Q3 prop_negativos 
+##      1.3000000      0.2231405</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="contas-nacionais.html#cb37-1" tabindex="-1"></a>cn_qq <span class="sc">|&gt;</span> <span class="fu">arrange</span>(valor_pct) <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">n</span>())) <span class="sc">|&gt;</span> <span class="fu">select</span>(trimestre, valor_pct)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   trimestre valor_pct
+##   &lt;chr&gt;         &lt;dbl&gt;
+## 1 202002         -8.9
+## 2 202003          7.9</code></pre>
+<p>Em 121 trimestres, a mediana do crescimento foi 0,8% e a média
+0,58%; a média fica abaixo da mediana, puxada pela queda de 8,9% no 2º trimestre de 2020
+(assimetria à esquerda). O PIB caiu em 22,3% dos trimestres. Esses números reaparecem no
+Capítulo 3 (quantos trimestres de queda esperar em um ano) e no Capítulo 4 (modelo normal para o
+crescimento).</p>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> Em 2025, as taxas trimestre contra trimestre anterior foram
+1,3; 0,4; 0,1; 0,2 (%). Compondo as quatro,
+<span class="math inline">\(\prod (1 + r_t) - 1 \approx 2{,}0\%\)</span>. Esse número é o
+crescimento do PIB <strong>em 2025</strong>? (Dica: ele compara o 4º trimestre de 2025 com o 4º de 2024; o crescimento do
+ano compara a <strong>soma</strong> dos quatro trimestres de cada ano.) Por que o boletim do IBGE destaca taxas diferentes
+conforme o público?</p>
+</div>
+</div>
+<div id="contas-regionais-desigualdade-entre-os-estados" class="section level3 hasAnchor" number="1.8.3">
+<h3><span class="header-section-number">1.8.3</span> Contas regionais: desigualdade entre os estados<a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As <strong>Contas Regionais</strong> repartem o PIB entre as 27 unidades da federação. As participações formam uma
+distribuição de frequências relativas, e a <strong>frequência acumulada</strong> mostra a concentração:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="contas-nacionais.html#cb39-1" tabindex="-1"></a>cn_uf23 <span class="ot">&lt;-</span> cn_uf <span class="sc">|&gt;</span> <span class="fu">filter</span>(ano <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(pib)) <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="contas-nacionais.html#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participacao =</span> <span class="dv">100</span> <span class="sc">*</span> pib <span class="sc">/</span> <span class="fu">sum</span>(pib), <span class="at">acumulada =</span> <span class="fu">cumsum</span>(participacao))</span>
+<span id="cb39-3"><a href="contas-nacionais.html#cb39-3" tabindex="-1"></a><span class="fu">tabela</span>(<span class="fu">head</span>(<span class="fu">select</span>(cn_uf23, <span class="at">UF =</span> uf, Região <span class="ot">=</span> regiao, <span class="st">`</span><span class="at">Participação (%)</span><span class="st">`</span> <span class="ot">=</span> participacao,</span>
+<span id="cb39-4"><a href="contas-nacionais.html#cb39-4" tabindex="-1"></a>                   <span class="st">`</span><span class="at">Acumulada (%)</span><span class="st">`</span> <span class="ot">=</span> acumulada), <span class="dv">8</span>), <span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb39-5"><a href="contas-nacionais.html#cb39-5" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Os oito maiores PIBs estaduais em 2023. Fonte: IBGE, Contas Regionais, tabela 5938.&quot;</span>)</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cn-uf-concentracao">Tabela 1.9: </span>Os oito maiores PIBs estaduais em 2023. Fonte: IBGE, Contas Regionais, tabela 5938.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+UF
+</th>
+<th style="text-align:left;">
+Região
+</th>
+<th style="text-align:right;">
+Participação (%)
+</th>
+<th style="text-align:right;">
+Acumulada (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+São Paulo
+</td>
+<td style="text-align:left;">
+Sudeste
+</td>
+<td style="text-align:right;">
+31,5
+</td>
+<td style="text-align:right;">
+31,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rio de Janeiro
+</td>
+<td style="text-align:left;">
+Sudeste
+</td>
+<td style="text-align:right;">
+10,7
+</td>
+<td style="text-align:right;">
+42,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minas Gerais
+</td>
+<td style="text-align:left;">
+Sudeste
+</td>
+<td style="text-align:right;">
+8,9
+</td>
+<td style="text-align:right;">
+51,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Paraná
+</td>
+<td style="text-align:left;">
+Sul
+</td>
+<td style="text-align:right;">
+6,1
+</td>
+<td style="text-align:right;">
+57,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rio Grande do Sul
+</td>
+<td style="text-align:left;">
+Sul
+</td>
+<td style="text-align:right;">
+5,9
+</td>
+<td style="text-align:right;">
+63,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Santa Catarina
+</td>
+<td style="text-align:left;">
+Sul
+</td>
+<td style="text-align:right;">
+4,7
+</td>
+<td style="text-align:right;">
+67,8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bahia
+</td>
+<td style="text-align:left;">
+Nordeste
+</td>
+<td style="text-align:right;">
+3,9
+</td>
+<td style="text-align:right;">
+71,8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Distrito Federal
+</td>
+<td style="text-align:left;">
+Centro-Oeste
+</td>
+<td style="text-align:right;">
+3,3
+</td>
+<td style="text-align:right;">
+75,1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Três estados (São Paulo, Rio de Janeiro, Minas Gerais) geram 51,1% do PIB do país.</p>
+<p><strong>PIB per capita e a média ponderada.</strong> Com o PIB e a população estimada de 2021 (último ano com as duas
+informações publicadas lado a lado), calculamos o PIB per capita de cada estado:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="contas-nacionais.html#cb40-1" tabindex="-1"></a>cn_uf21 <span class="ot">&lt;-</span> cn_uf <span class="sc">|&gt;</span> <span class="fu">filter</span>(ano <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">pc =</span> <span class="dv">1000</span> <span class="sc">*</span> pib <span class="sc">/</span> populacao)</span>
+<span id="cb40-2"><a href="contas-nacionais.html#cb40-2" tabindex="-1"></a><span class="fu">c</span>(<span class="at">brasil =</span> <span class="dv">1000</span> <span class="sc">*</span> <span class="fu">sum</span>(cn_uf21<span class="sc">$</span>pib) <span class="sc">/</span> <span class="fu">sum</span>(cn_uf21<span class="sc">$</span>populacao),</span>
+<span id="cb40-3"><a href="contas-nacionais.html#cb40-3" tabindex="-1"></a>  <span class="at">media_simples_ufs =</span> <span class="fu">mean</span>(cn_uf21<span class="sc">$</span>pc), <span class="at">mediana_ufs =</span> <span class="fu">median</span>(cn_uf21<span class="sc">$</span>pc),</span>
+<span id="cb40-4"><a href="contas-nacionais.html#cb40-4" tabindex="-1"></a>  <span class="at">cv_ufs =</span> <span class="fu">sd</span>(cn_uf21<span class="sc">$</span>pc) <span class="sc">/</span> <span class="fu">mean</span>(cn_uf21<span class="sc">$</span>pc), <span class="at">maior_sobre_menor =</span> <span class="fu">max</span>(cn_uf21<span class="sc">$</span>pc) <span class="sc">/</span> <span class="fu">min</span>(cn_uf21<span class="sc">$</span>pc))</span></code></pre></div>
+<pre><code>##            brasil media_simples_ufs       mediana_ufs            cv_ufs 
+##     42247.5236565     36682.9179220     30803.5578496         0.4943261 
+## maior_sobre_menor 
+##         5.3075244</code></pre>
+<p>O PIB per capita do Brasil (R$ 42.248) <strong>não</strong> é a média simples dos 27 estados
+(R$ 36.683): é uma <strong>média ponderada</strong> pela população, e cinco dos seis estados mais populosos (São Paulo, Minas Gerais,
+Rio de Janeiro, Paraná e Rio Grande do Sul) têm PIB per capita acima da mediana dos estados. O maior valor (Distrito Federal) é 5,3 vezes o menor
+(Maranhão).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-uf-box"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-uf-box-1.png" alt="PIB per capita dos estados em 2021 (R$ mil), por grande região. Fonte: IBGE, Contas Regionais (tabela 5938) e Estimativas de População (tabela 6579)." width="80%" />
+<p class="caption">
+Figura 1.45: PIB per capita dos estados em 2021 (R$ mil), por grande região. Fonte: IBGE, Contas Regionais (tabela 5938) e Estimativas de População (tabela 6579).
+</p>
+</div>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> O coeficiente de variação do PIB per capita entre os estados é de
+49%: a dispersão regional é grande. Mas o boxplot do Centro-Oeste mostra por que olhar só para
+a média da região engana: o Distrito Federal (renda da administração pública) e Mato Grosso (agronegócio) têm
+PIB per capita alto por razões muito diferentes, e um valor atípico muda a média regional.</p>
+</div>
+</div>
+<div id="contas-econômicas-integradas-da-produção-ao-financiamento" class="section level3 hasAnchor" number="1.8.4">
+<h3><span class="header-section-number">1.8.4</span> Contas Econômicas Integradas: da produção ao financiamento<a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As <strong>Contas Econômicas Integradas</strong> (CEI) mostram, em sequência, como o valor produzido vira renda, como a
+renda se divide entre consumo e poupança e como a poupança financia (ou não) o investimento. Para a economia
+como um todo, as contas econômicas trimestrais do IBGE seguem exatamente essa sequência:</p>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cn-cei">Tabela 1.10: </span>Sequência de contas da economia brasileira em 2025 (soma dos quatro trimestres). Fonte: IBGE, tabela 2072.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Conta
+</th>
+<th style="text-align:right;">
+R$ bilhões
+</th>
+<th style="text-align:right;">
+% do PIB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Produto Interno Bruto
+</td>
+<td style="text-align:right;">
+12.738,6
+</td>
+<td style="text-align:right;">
+100,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(+) Salários (líquidos recebidos do exterior)
+</td>
+<td style="text-align:right;">
+2,0
+</td>
+<td style="text-align:right;">
+0,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(+) Rendas de propriedade (líquidas recebidas do exterior)
+</td>
+<td style="text-align:right;">
+-416,5
+</td>
+<td style="text-align:right;">
+-3,3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(=) Renda nacional bruta
+</td>
+<td style="text-align:right;">
+12.324,1
+</td>
+<td style="text-align:right;">
+96,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(+) Outras transferências correntes (líquidas recebidas do exterior)
+</td>
+<td style="text-align:right;">
+29,2
+</td>
+<td style="text-align:right;">
+0,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(=) Renda nacional disponível bruta
+</td>
+<td style="text-align:right;">
+12.353,3
+</td>
+<td style="text-align:right;">
+97,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(-) Despesa de consumo final
+</td>
+<td style="text-align:right;">
+10.518,7
+</td>
+<td style="text-align:right;">
+82,6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(=) Poupança bruta
+</td>
+<td style="text-align:right;">
+1.834,5
+</td>
+<td style="text-align:right;">
+14,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(-) Formação bruta de capital
+</td>
+<td style="text-align:right;">
+2.175,2
+</td>
+<td style="text-align:right;">
+17,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(+) Cessão de ativos não financeiros não produzidos (aquisições líquidas)
+</td>
+<td style="text-align:right;">
+1,4
+</td>
+<td style="text-align:right;">
+0,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(+) Transferências de capital (líquidas recebidas do exterior)
+</td>
+<td style="text-align:right;">
+0,1
+</td>
+<td style="text-align:right;">
+0,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(=) Capacidade / necessidade líquida de financiamento
+</td>
+<td style="text-align:right;">
+-339,1
+</td>
+<td style="text-align:right;">
+-2,7
+</td>
+</tr>
+</tbody>
+</table>
+<p>Cada linha com “(=)” é uma <strong>identidade contábil</strong>: a poupança bruta é a renda disponível menos o consumo; a
+capacidade (+) ou necessidade (−) de financiamento é a poupança menos o investimento (mais ajustes pequenos).
+Em 2025, o Brasil investiu mais do que poupou, e a diferença, R$ 339 bilhões
+(2,7% do PIB), foi financiada pelo <strong>resto do mundo</strong>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-poupanca"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-poupanca-1.png" alt="Taxas de poupança bruta e de investimento (formação bruta de capital) em % do PIB, 2000 a 2025. A distância entre as curvas é a necessidade de financiamento externo. Fonte: IBGE, tabela 2072." width="80%" />
+<p class="caption">
+Figura 1.46: Taxas de poupança bruta e de investimento (formação bruta de capital) em % do PIB, 2000 a 2025. A distância entre as curvas é a necessidade de financiamento externo. Fonte: IBGE, tabela 2072.
+</p>
+</div>
+<p>Entre 2000 e 2025, a economia teve <strong>capacidade</strong> de financiamento (poupou mais do que investiu) em
+3 anos (2004, 2005, 2006); o saldo mediano (capacidade ou
+necessidade de financiamento) no período foi de -2,4% do PIB.</p>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> Nas CEI completas publicadas pelo IBGE, a mesma sequência de contas aparece <strong>por setor
+institucional</strong>: famílias, empresas não financeiras, instituições financeiras, governo e instituições sem fins
+de lucro, além do resto do mundo. Qual setor você espera que seja, tipicamente, <strong>credor</strong> (poupa mais do que
+investe) e qual seja <strong>devedor</strong>? Por que a soma das capacidades e necessidades de todos os setores residentes é
+igual, com sinal trocado, à do resto do mundo?</p>
+</div>
+</div>
+<div id="contas-monetárias-e-financeiras-moeda-e-liquidez" class="section level3 hasAnchor" number="1.8.5">
+<h3><span class="header-section-number">1.8.5</span> Contas monetárias e financeiras: moeda e liquidez<a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O Banco Central mede a quantidade de moeda por <strong>agregados monetários</strong> de liquidez decrescente. O <strong>M1</strong>
+(meios de pagamento restritos) é o papel-moeda em poder do público mais os depósitos à vista; <strong>M2</strong>, <strong>M3</strong> e
+<strong>M4</strong> acrescentam, em camadas, ativos financeiros cada vez menos líquidos (depósitos de poupança e títulos
+emitidos por instituições financeiras; cotas de fundos e operações compromissadas; títulos públicos). A <strong>base
+monetária</strong> é a moeda emitida pelo próprio Banco Central.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="contas-nacionais.html#cb42-1" tabindex="-1"></a>cn_nomes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">base_monetaria =</span> <span class="st">&quot;Base monetária&quot;</span>, <span class="at">papel_moeda_publico =</span> <span class="st">&quot;Papel-moeda em poder do público&quot;</span>,</span>
+<span id="cb42-2"><a href="contas-nacionais.html#cb42-2" tabindex="-1"></a>              <span class="at">depositos_vista =</span> <span class="st">&quot;Depósitos à vista&quot;</span>, <span class="at">M1 =</span> <span class="st">&quot;M1&quot;</span>, <span class="at">M2 =</span> <span class="st">&quot;M2&quot;</span>, <span class="at">M3 =</span> <span class="st">&quot;M3&quot;</span>, <span class="at">M4 =</span> <span class="st">&quot;M4&quot;</span>)</span>
+<span id="cb42-3"><a href="contas-nacionais.html#cb42-3" tabindex="-1"></a>cn_mon_ult <span class="ot">&lt;-</span> cn_mon <span class="sc">|&gt;</span> <span class="fu">filter</span>(data <span class="sc">==</span> <span class="fu">max</span>(data)) <span class="sc">|&gt;</span> <span class="fu">select</span>(serie, valor)</span>
+<span id="cb42-4"><a href="contas-nacionais.html#cb42-4" tabindex="-1"></a>cn_m4 <span class="ot">&lt;-</span> cn_mon_ult<span class="sc">$</span>valor[cn_mon_ult<span class="sc">$</span>serie <span class="sc">==</span> <span class="st">&quot;M4&quot;</span>]</span>
+<span id="cb42-5"><a href="contas-nacionais.html#cb42-5" tabindex="-1"></a><span class="fu">tabela</span>(<span class="fu">transmute</span>(cn_mon_ult, <span class="at">Agregado =</span> cn_nomes[serie], <span class="st">`</span><span class="at">R$ bilhões</span><span class="st">`</span> <span class="ot">=</span> valor <span class="sc">/</span> <span class="fl">1e6</span>,</span>
+<span id="cb42-6"><a href="contas-nacionais.html#cb42-6" tabindex="-1"></a>                 <span class="st">`</span><span class="at">% do M4</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">100</span> <span class="sc">*</span> valor <span class="sc">/</span> cn_m4), <span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb42-7"><a href="contas-nacionais.html#cb42-7" tabindex="-1"></a>       <span class="at">caption =</span> <span class="fu">paste0</span>(<span class="st">&quot;Agregados monetários, saldo em &quot;</span>, <span class="fu">format</span>(<span class="fu">max</span>(cn_mon<span class="sc">$</span>data), <span class="st">&quot;%m/%Y&quot;</span>),</span>
+<span id="cb42-8"><a href="contas-nacionais.html#cb42-8" tabindex="-1"></a>                        <span class="st">&quot; (valores do SGS em R$ mil, convertidos). Fonte: Banco Central do Brasil.&quot;</span>))</span></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cn-monetario">Tabela 1.11: </span>Agregados monetários, saldo em 07/2026 (valores do SGS em R$ mil, convertidos). Fonte: Banco Central do Brasil.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Agregado
+</th>
+<th style="text-align:right;">
+R$ bilhões
+</th>
+<th style="text-align:right;">
+% do M4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Base monetária
+</td>
+<td style="text-align:right;">
+432,6
+</td>
+<td style="text-align:right;">
+2,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Papel-moeda em poder do público
+</td>
+<td style="text-align:right;">
+335,6
+</td>
+<td style="text-align:right;">
+2,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Depósitos à vista
+</td>
+<td style="text-align:right;">
+309,7
+</td>
+<td style="text-align:right;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M1
+</td>
+<td style="text-align:right;">
+645,3
+</td>
+<td style="text-align:right;">
+4,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M2
+</td>
+<td style="text-align:right;">
+7.737,7
+</td>
+<td style="text-align:right;">
+48,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M3
+</td>
+<td style="text-align:right;">
+14.059,8
+</td>
+<td style="text-align:right;">
+88,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M4
+</td>
+<td style="text-align:right;">
+15.820,8
+</td>
+<td style="text-align:right;">
+100,0
+</td>
+</tr>
+</tbody>
+</table>
+<p>Dois números resumem a tabela. O M1 é só 4,1% do M4: quase toda a “moeda
+ampla” rende juros. E a razão <span class="math inline">\(M1/\text{base monetária} = 1{,}49\)</span> é o
+<strong>multiplicador monetário</strong>: cada real emitido pelo Banco Central sustenta cerca de 1,5
+real de meios de pagamento, porque os bancos emprestam parte dos depósitos.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-m1m4"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-m1m4-1.png" alt="Taxa de variação em 12 meses do M1 e do M4 (saldos nominais). Fonte: Banco Central do Brasil, SGS, séries 27791 e 27815." width="80%" />
+<p class="caption">
+Figura 1.47: Taxa de variação em 12 meses do M1 e do M4 (saldos nominais). Fonte: Banco Central do Brasil, SGS, séries 27791 e 27815.
+</p>
+</div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="contas-nacionais.html#cb43-1" tabindex="-1"></a>cn_var12 <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(var12), <span class="at">dp =</span> <span class="fu">sd</span>(var12))   <span class="co"># variação em 12 meses (%)</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   serie media    dp
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 M1     6.80 11.2 
+## 2 M4    11.5   2.74</code></pre>
+<p>O M1 cresce de forma muito mais <strong>volátil</strong> que o M4 (compare os desvios padrão): em 2020, com o auxílio
+emergencial e a Selic no piso, o M1 chegou a crescer mais de 50% em 12 meses. As pessoas trocam depósitos à vista
+por aplicações que rendem juros quando a Selic sobe, e fazem o contrário quando ela cai; o M4, que inclui as
+duas formas, é bem mais estável.</p>
+</div>
+<div id="modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros" class="section level3 hasAnchor" number="1.8.6">
+<h3><span class="header-section-number">1.8.6</span> Modelo de insumo-produto: como os setores dependem uns dos outros<a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Na <strong>Matriz de Insumo-Produto</strong> (MIP), cada célula <span class="math inline">\(z_{ij}\)</span> registra quanto o setor <span class="math inline">\(j\)</span> comprou do setor <span class="math inline">\(i\)</span> como
+insumo. É uma <strong>tabela de dupla entrada</strong> entre setores vendedores (linhas) e compradores (colunas). Dividindo
+cada coluna pelo valor da produção do setor comprador, <span class="math inline">\(X_j\)</span>, obtemos os <strong>coeficientes técnicos</strong></p>
+<p><span class="math display">\[
+a_{ij} = \frac{z_{ij}}{X_j},
+\]</span></p>
+<p>que dizem quantos reais de insumo do setor <span class="math inline">\(i\)</span> são necessários para produzir R$ 1 no setor <span class="math inline">\(j\)</span>. É exatamente o
+<strong>perfil-coluna</strong> das tabelas de contingência (Seção <a href="tabelas-contingencia.html#tabelas-contingencia">2.7</a>), com a produção no denominador.</p>
+<p><strong>Um exemplo com dois setores, feito à mão.</strong> Agricultura (A) e indústria (I), valores em R$ bilhões:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Compras de A</th>
+<th align="center">Compras de I</th>
+<th align="center">Demanda final</th>
+<th align="center">Produção total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Vendas de A</td>
+<td align="center">10</td>
+<td align="center">40</td>
+<td align="center">50</td>
+<td align="center">100</td>
+</tr>
+<tr class="even">
+<td align="left">Vendas de I</td>
+<td align="center">20</td>
+<td align="center">60</td>
+<td align="center">120</td>
+<td align="center">200</td>
+</tr>
+</tbody>
+</table>
+<p>Os coeficientes técnicos são <span class="math inline">\(a_{AA} = 10/100 = 0{,}10\)</span>, <span class="math inline">\(a_{IA} = 20/100 = 0{,}20\)</span>, <span class="math inline">\(a_{AI} = 40/200 = 0{,}20\)</span> e
+<span class="math inline">\(a_{II} = 60/200 = 0{,}30\)</span>. Como produção = insumos + demanda final, <span class="math inline">\(X = AX + f\)</span>, e a produção necessária para
+atender uma demanda final <span class="math inline">\(f\)</span> é</p>
+<p><span class="math display">\[
+X = (I - A)^{-1} f, \qquad (I - A)^{-1} = \frac{1}{0{,}59}\begin{pmatrix} 0{,}70 &amp; 0{,}20 \\ 0{,}20 &amp; 0{,}90 \end{pmatrix}
+\approx \begin{pmatrix} 1{,}186 &amp; 0{,}339 \\ 0{,}339 &amp; 1{,}525 \end{pmatrix}.
+\]</span></p>
+<p>A matriz <span class="math inline">\((I - A)^{-1}\)</span> é a <strong>matriz de Leontief</strong> <span class="citation">(<a href="#ref-leontief1936quantitative">Leontief, 1936</a>)</span>. A soma de cada coluna é o
+<strong>multiplicador de produção</strong>: R$ 1 a mais de demanda final por produtos industriais gera
+<span class="math inline">\(0{,}339 + 1{,}525 = 1{,}864\)</span> reais de produção na economia (o próprio real, os insumos industriais e agrícolas
+comprados, os insumos desses insumos, e assim por diante).</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="contas-nacionais.html#cb45-1" tabindex="-1"></a>A2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;I&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;I&quot;</span>)))</span>
+<span id="cb45-2"><a href="contas-nacionais.html#cb45-2" tabindex="-1"></a>L2 <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">diag</span>(<span class="dv">2</span>) <span class="sc">-</span> A2)</span>
+<span id="cb45-3"><a href="contas-nacionais.html#cb45-3" tabindex="-1"></a><span class="fu">round</span>(L2, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##       A     I
+## A 1.186 0.339
+## I 0.339 1.525</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="contas-nacionais.html#cb47-1" tabindex="-1"></a><span class="fu">colSums</span>(L2)                       <span class="co"># multiplicadores de produção</span></span></code></pre></div>
+<pre><code>##        A        I 
+## 1.525424 1.864407</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="contas-nacionais.html#cb49-1" tabindex="-1"></a>L2 <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">120</span>)                 <span class="co"># reproduz a produção total (100, 200)</span></span></code></pre></div>
+<pre><code>##   [,1]
+## A  100
+## I  200</code></pre>
+<p><strong>A economia brasileira com 12 setores.</strong> Com os coeficientes técnicos da MIP de 2015 do IBGE:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="contas-nacionais.html#cb51-1" tabindex="-1"></a>cn_Am <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(cn_A[, <span class="sc">-</span><span class="dv">1</span>])             <span class="co"># coeficientes técnicos, 12 x 12</span></span>
+<span id="cb51-2"><a href="contas-nacionais.html#cb51-2" tabindex="-1"></a>cn_L <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">diag</span>(<span class="fu">nrow</span>(cn_Am)) <span class="sc">-</span> cn_Am)   <span class="co"># matriz de Leontief</span></span>
+<span id="cb51-3"><a href="contas-nacionais.html#cb51-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sort</span>(<span class="fu">colSums</span>(cn_L), <span class="at">decreasing =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  [1] 2.15 1.95 1.84 1.81 1.77 1.72 1.64 1.53 1.53 1.49 1.38 1.11</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-cn-mip"></span>
+<img src="livro-matf14_files/figure-html/fig-cn-mip-1.png" alt="Multiplicadores de produção da matriz de insumo-produto brasileira de 2015 (12 setores): produção total gerada por R$ 1 de demanda final em cada setor. Fonte: IBGE, Matriz de Insumo-Produto 2015, tabela 14." width="80%" />
+<p class="caption">
+Figura 1.48: Multiplicadores de produção da matriz de insumo-produto brasileira de 2015 (12 setores): produção total gerada por R$ 1 de demanda final em cada setor. Fonte: IBGE, Matriz de Insumo-Produto 2015, tabela 14.
+</p>
+</div>
+<p>As <strong>indústrias de transformação</strong> têm o maior multiplicador (2,15): usam muitos insumos
+de outros setores, que por sua vez compram de outros. As <strong>atividades imobiliárias</strong> têm o menor
+(1,11), porque o aluguel usa poucos insumos intermediários.</p>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> Multiplicadores orientam políticas: um programa de compras públicas concentrado em
+setores com multiplicador alto movimenta mais a produção total. Mas o modelo supõe coeficientes <strong>fixos</strong> (a
+tecnologia e os preços de 2015 valem para qualquer escala de produção) e não considera restrições de capacidade
+nem importações que substituem produção nacional: é uma primeira aproximação, não uma previsão.</p>
+</div>
+<p><strong>Exercício 9.</strong> Com os dados desta seção: <strong>a)</strong> calcule a participação das exportações e das importações no
+PIB de 2025 e explique por que o saldo externo de bens e serviços é pequeno em relação ao PIB; <strong>b)</strong> na tabela
+das contas econômicas de 2025, verifique a identidade “poupança bruta = renda nacional disponível bruta −
+consumo final”; <strong>c)</strong> no exemplo de dois setores, qual a produção total necessária se a demanda final por
+produtos agrícolas subir de 50 para 60?</p>
+<div class="caixa-resposta">
+<p><strong>a)</strong> Exportações 17,8% e importações 17,5% do PIB: o saldo
+é a diferença entre dois números grandes e parecidos. <strong>b)</strong> <span class="math inline">\(12.353{,}3 - 10.518{,}7 = 1.834{,}5\)</span>, que é a poupança bruta
+da tabela (R$ bilhões). <strong>c)</strong> <span class="math inline">\(X = L f\)</span> com <span class="math inline">\(f = (60, 120)\)</span>: <span class="math inline">\(X_A = 1{,}186 \times 60 + 0{,}339 \times 120 \approx 111{,}9\)</span> e
+<span class="math inline">\(X_I = 0{,}339 \times 60 + 1{,}525 \times 120 \approx 203{,}4\)</span>. Os 10 bilhões a mais de demanda agrícola geram cerca de 15,3 bilhões de
+produção total (o multiplicador da agricultura, <span class="math inline">\(1{,}525\)</span>).</p>
+</div>
+</div>
+</div>
+<h3>Referências<a href="referências.html#refer%C3%AAncias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-bcb2026sgs" class="csl-entry">
+Banco Central do Brasil. (2026). <em>Sistema Gerenciador de Séries Temporais: séries 433, 1788, 27789, 27790, 27791, 27810, 27813 e 27815</em>. api.bcb.gov.br.
+</div>
+<div id="ref-ibge2018mip" class="csl-entry">
+Instituto Brasileiro de Geografia e Estatística (IBGE). (2018). <em>Matriz de Insumo-Produto: Brasil 2015 (nível 12)</em>. ftp.ibge.gov.br/Contas_Nacionais/Matriz_de_Insumo_Produto/2015.
+</div>
+<div id="ref-ibge2025regionais" class="csl-entry">
+Instituto Brasileiro de Geografia e Estatística (IBGE). (2025a). <em>Produto Interno Bruto dos Municípios e Contas Regionais: tabela 5938; Estimativas de População: tabela 6579</em>. API de agregados do IBGE (servicodados.ibge.gov.br).
+</div>
+<div id="ref-ibge2025scn" class="csl-entry">
+Instituto Brasileiro de Geografia e Estatística (IBGE). (2025b). <em>Sistema de Contas Nacionais: Brasil 2023. Tabelas sinóticas</em>. ftp.ibge.gov.br/Contas_Nacionais/Sistema_de_Contas_Nacionais/2023.
+</div>
+<div id="ref-ibge2026cnt" class="csl-entry">
+Instituto Brasileiro de Geografia e Estatística (IBGE). (2026a). <em>Contas Nacionais Trimestrais: tabelas 1621, 1846, 2072 e 5932, 1º trimestre de 1996 ao 2º trimestre de 2026</em>. API de agregados do IBGE (servicodados.ibge.gov.br).
+</div>
+<div id="ref-leontief1936quantitative" class="csl-entry">
+Leontief, W. W. (1936). Quantitative input and output relations in the economic systems of the <span>United States</span>. <em>The Review of Economics and Statistics</em>, <em>18</em>(3), 105–125.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="assimetria-curtose.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fechando-o-capítulo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

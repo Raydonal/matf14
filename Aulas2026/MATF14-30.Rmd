@@ -15,90 +15,291 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+area <- function(f, xlim, a, b, titulo = NULL, n = 600) {
+  d <- tibble(x = seq(xlim[1], xlim[2], length.out = n), y = f(x))
+  ggplot(d, aes(x, y)) + geom_area(data = filter(d, x >= a, x <= b), fill = "#f4a6a6", alpha = 0.9) +
+    geom_line(color = "#1f3fbf", linewidth = 1.1) + labs(x = "x", y = "f(x)", title = titulo) + theme_minimal(base_size = 13)
+}
 ```
 
 class: inverse, center, middle
 
 # Aula 30: Revisão geral
 
-## Rumo à Prova 3: Unidade 4 (VA contínuas)
+### Rumo à Prova 3 (16/12): Unidade 4, variáveis aleatórias contínuas
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Lembrete rápido: Unidade 3 (já avaliada em P2)
+## Roteiro da aula (100 minutos)
 
-| Tópico | Fórmula-chave |
-|---|---|
-| Esperança | \\(E(X)=\sum\_i x\_i p(x\_i)\\) |
-| Variância | \\(\mathrm{Var}(X)=\sum\_i(x\_i-\mu)^2p(x\_i)\\) |
-| FDA | \\(F(x)=\sum\_{x\_i\le x}p(x\_i)\\), em escada |
-| Bernoulli(\\(p\\)) | \\(E=p\\), \\(\mathrm{Var}=p(1-p)\\) |
-| Binomial(\\(n,p\\)) | \\(p(x)=\binom{n}{x}p^x(1-p)^{n-x}\\); \\(E=np\\), \\(\mathrm{Var}=np(1-p)\\) |
-| Poisson(\\(\lambda\\)) | \\(p(x)=\frac{e^{-\lambda}\lambda^x}{x!}\\); \\(E=\mathrm{Var}=\lambda\\) |
+.roteiro[
 
----
+| Tempo | Parte 1: o mapa da Unidade 4 |
+|:---|:---|
+| 0–8 min | O que cai na Prova 3 |
+| 8–18 min | Do discreto ao contínuo: a mesma estrutura; mapa |
+| 18–25 min | Os erros mais comuns |
+| 25–38 min | Revisão 1: densidade triangular |
+| 38–50 min | Revisão 2: constante e média |
 
-## Mapa da Unidade 4 (o que P3 cobre): VA contínua
+| Tempo | Parte 2: exercícios e fechamento do curso |
+|:---|:---|
+| 0–12 min | Revisão 3: Uniforme |
+| 12–25 min | Revisão 4: Normal |
+| 25–37 min | Revisão 5: juntando as unidades |
+| 37–45 min | Discussão final: o curso em quatro perguntas |
+| 45–50 min | Checklist da P3 e Uso do R |
 
-| Tópico | Fórmula-chave |
-|---|---|
-| Densidade | \\(P(a\le X\le b)=\int\_a^b f(x)dx\\); \\(\int\_{-\infty}^\infty f=1\\) |
-| Esperança | \\(E(X)=\int x f(x)dx\\) |
-| FDA | \\(F(x)=\int\_{-\infty}^x f(t)dt\\); \\(F'=f\\); contínua (sem saltos) |
-| Uniforme(\\(a,b\\)) | \\(f=\frac{1}{b-a}\\); \\(E=\frac{a+b}{2}\\), \\(\mathrm{Var}=\frac{(b-a)^2}{12}\\) |
-| Normal(\\(\mu,\sigma^2\\)) | \\(Z=\frac{X-\mu}\sigma\sim N(0,1)\\); regra 68-95-99,7 |
-
----
-
-## Os 5 erros mais comuns em prova (Unidade 4)
-
-1. Usar \\(\binom{n}{x}\\) na Poisson (não existe, é fórmula da Binomial, já não cai mais em P3).
-2. Esquecer que, em VA contínua, \\(P(X\le x)=P(X&lt;x)\\) (diferente do caso discreto).
-3. Confundir \\(f(x)\\) (densidade, pode ser \\(&gt;1\\)) com probabilidade.
-4. Errar o sinal ao padronizar: \\(Z=(X-\mu)/\sigma\\), não \\((\mu-X)/\sigma\\).
-5. Esquecer de verificar que \\(\int f(x)dx=1\\) antes de usar uma densidade "nova" dada em um
-   problema.
-
----
-
-## Discussão final: o curso inteiro em quatro perguntas
-
-**1.** Se uma questão de prova pedir para você calcular \\(E(X)\\) de uma variável contínua com
-densidade dada, e você não souber de cabeça a fórmula pronta (se houver uma), que dois passos
-gerais (do Apêndice B e do Capítulo 4) sempre funcionam, custe o que custar?
-
-**2.** Um resultado de prova envolvendo a distribuição Normal pede para você calcular uma
-probabilidade "extrema" (muito à esquerda ou à direita da média). Que ferramenta do Capítulo 1
-(assimetria e curtose) você usaria para questionar se o modelo Normal é mesmo razoável para essa
-variável, antes de confiar cegamente no número calculado?
-
-**3.** Ao longo do semestre, cada capítulo teve blocos de discussão insistindo que um número
-sozinho raramente basta. Escreva, de memória, um exemplo (de qualquer unidade) em que essa lição
-mudaria a forma como você leria uma manchete de jornal econômico.
-
-**4.** Última pergunta do curso: releia as cinco perguntas de abertura da Aula 01 (fundo de
-investimento, pesquisa eleitoral, inflação, escore de crédito, seguro para jovens). Escolha uma e
-escreva a resposta mais completa que você seria capaz de dar hoje, usando qualquer ferramenta das
-quatro unidades.
-
----
-
-## Checklist de estudo
-
-- P3 cobre **apenas** a Unidade 4: refaça, sem consultar o gabarito, as Listas 11, 12 e 14
-  (`Listas2026/`) — Lista 13 é o simulado da Unidades 2 e 3 (P2), não entra aqui.
-- Pratique alternar entre \\(F\\) e \\(f\\) nos dois sentidos (derivar e integrar), é a habilidade mais
-  cobrada de cálculo na prova.
-- Revise o Apêndice B (revisão de cálculo) se ainda tiver dúvida nas primitivas básicas.
-- Nota final do semestre: \\(NF=(P\_1+P\_2+P\_3)/3\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Prova 3
+# Parte 1: o mapa da Unidade 4
 
-## Unidade 4 completa
+### 50 minutos
 
-### Bom estudo, e bom fim de semestre!
+---
+
+## O que cai na Prova 3 .tempo[0–8 min]
+
+- A **P3** cobre a **Unidade 4**: variável aleatória contínua, densidade, esperança e variância, FDA,
+  Uniforme e Normal.
+- As ferramentas das unidades anteriores **aparecem de apoio**: complementar, condicional, independência,
+  Binomial.
+- A **tabela da normal padrão** e o **formulário** são fornecidos.
+
+--
+
+.caixa-aplicacao[
+**Nota final:** \\(NF = (P\_1 + P\_2 + P\_3)/3\\). Aprovação com \\(NF \geq 5{,}0\\) e frequência de pelo menos 75%.
+]
+
+---
+
+## Do discreto ao contínuo: a mesma estrutura .tempo[8–18 min]
+
+| | Discreta (Unidade 3) | Contínua (Unidade 4) |
+|:---|:---|:---|
+| Distribuição | \\(P(X = x\_i)\\) | densidade \\(f(x)\\) |
+| Condição | \\(\sum P(X = x\_i) = 1\\) | \\(\int\_{-\infty}^{\infty} f(x)\,dx = 1\\) |
+| Probabilidade | **soma** das \\(P(X = x\_i)\\) no evento | **área**: \\(\int\_a^b f(x)\,dx\\) |
+| \\(P(X = a)\\) | pode ser positiva | sempre **0** |
+| Esperança | \\(\sum x\_i\, P(X = x\_i)\\) | \\(\int x\, f(x)\,dx\\) |
+| Variância | \\(E(X^2) - [E(X)]^2\\) | \\(E(X^2) - [E(X)]^2\\) |
+| FDA | degraus | curva contínua; \\(F' = f\\) |
+| Modelos | Bernoulli, Binomial, Poisson | Uniforme, Normal |
+
+---
+
+## Mapa da Unidade 4
+
+| Tópico | O essencial |
+|:---|:---|
+| Densidade válida | \\(f \geq 0\\) e área total 1 (encontrar constantes) |
+| Probabilidade | \\(P(a &lt; X \leq b) = \int\_a^b f(x)\,dx = F(b) - F(a)\\) |
+| Momentos | \\(E(X) = \int x f\\); \\(E(X^2) = \int x^2 f\\); \\(Var = E(X^2) - [E(X)]^2\\) |
+| FDA | \\(F(t) = \int\_{-\infty}^{t} f\\); mediana: \\(F(m) = 0{,}5\\) |
+| Uniforme\\((\alpha, \beta)\\) | \\(\frac{b - a}{\beta - \alpha}\\); \\(E = \frac{\alpha + \beta}{2}\\); \\(Var = \frac{(\beta - \alpha)^2}{12}\\) |
+| Normal\\((\mu, \sigma^2)\\) | \\(Z = \frac{X - \mu}{\sigma}\\); tabela de \\(P(Z &lt; a)\\); percentil \\(x = \mu + z\sigma\\) |
+
+---
+
+## Os erros mais comuns na Unidade 4 .tempo[18–25 min]
+
+1. Tratar a **densidade** \\(f(x)\\) como probabilidade (ela pode ser maior que 1).
+2. Esquecer de **quebrar a integral** quando a densidade muda de fórmula (triangular).
+3. Errar sinais com potências de números negativos: \\((-1)^4 = 1\\), \\((-1)^5 = -1\\).
+4. Em \\(N(\mu, \sigma^2)\\), usar a **variância** no lugar do desvio padrão ao padronizar.
+5. Para \\(P(X &gt; a)\\), esquecer o **complementar** \\(1 - P(Z &lt; z)\\).
+6. Ler a tabela ao contrário: procurar \\(z\\) quando se tem a probabilidade (**percentil**) e vice-versa.
+7. Supor **normalidade** sem olhar o histograma (renda, população...).
+
+---
+
+## Revisão 1: densidade triangular .tempo[25–38 min]
+
+\\(X\\) tem densidade \\(f(x) = x\\) para \\(0 \leq x \leq 1\\), \\(f(x) = 2 - x\\) para \\(1 &lt; x \leq 2\\), e 0 fora.
+
+**a)** Calcule \\(P(X &gt; 1{,}5)\\). **b)** Encontre \\(F(t)\\) para \\(0 \leq t \leq 1\\). **c)** Qual é a mediana?
+
+--
+
+.pull-left[
+.caixa-resposta[
+**a)** \\(\int\_{1{,}5}^{2} (2 - x)\,dx = \Big[2x - \frac{x^2}{2}\Big]\_{1{,}5}^{2} = 2 - 1{,}875 = 0{,}125\\).
+
+**b)** \\(F(t) = \int\_0^t x\,dx = \frac{t^2}{2}\\).
+
+**c)** Por **simetria** em torno de 1, a mediana é **1** (\\(F(1) = 1/2\\)). ✓
+]
+]
+
+.pull-right[
+```{r rev1, echo=FALSE, fig.height=3, fig.width=5, out.width="100%"}
+area(function(x) ifelse(x >= 0 & x <= 1, x, ifelse(x > 1 & x <= 2, 2 - x, 0)), c(-0.3, 2.3), 1.5, 2.3, "P(X > 1,5)")
+```
+
+]
+
+---
+
+## Revisão 2: encontrando a constante e a média .tempo[38–50 min]
+
+\\(X\\) tem densidade \\(f(x) = C(1 - x^2)\\) para \\(-1 \leq x \leq 1\\) (e 0 fora).
+
+**a)** Encontre \\(C\\). **b)** Calcule \\(E(X)\\) (pense antes de integrar). **c)** Calcule \\(Var(X)\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(\int\_{-1}^{1} C(1 - x^2)\,dx = C\Big[x - \frac{x^3}{3}\Big]\_{-1}^{1} = C\left(\frac{2}{3} + \frac{2}{3}\right) = \frac{4C}{3} = 1 \Rightarrow C = \frac{3}{4}\\).
+
+**b)** A densidade é **simétrica** em torno de 0, logo \\(E(X) = 0\\).
+
+**c)** \\(E(X^2) = \frac{3}{4}\int\_{-1}^{1} (x^2 - x^4)\,dx = \frac{3}{4}\Big[\frac{x^3}{3} - \frac{x^5}{5}\Big]\_{-1}^{1} = \frac{3}{4} \cdot 2 \cdot \left(\frac{1}{3} - \frac{1}{5}\right) = \frac{1}{5}\\).
+
+\\(Var(X) = \frac{1}{5} - 0^2 = \frac{1}{5}\\).
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: exercícios e fechamento do curso
+
+### 50 minutos
+
+---
+
+## Revisão 3: Uniforme .tempo[0–12 min]
+
+Um ônibus passa em um ponto a cada **15 minutos**. Um passageiro chega em um instante aleatório: a espera é
+\\(X \sim \text{Unif}(0, 15)\\).
+
+**a)** \\(P(X &lt; 5)\\)? **b)** \\(E(X)\\) e \\(dp(X)\\)? **c)** Se ele já esperou 10 minutos, qual é a probabilidade de
+esperar **mais** 3 minutos ou mais, isto é, \\(P(X &gt; 13 \mid X &gt; 10)\\)?
+
+--
+
+.caixa-resposta[
+**a)** \\(5/15 = 1/3\\). **b)** \\(E(X) = 7{,}5\\) min; \\(dp(X) = 15/\sqrt{12} \approx 4{,}33\\) min.
+
+**c)** \\(\frac{P(X &gt; 13)}{P(X &gt; 10)} = \frac{2/15}{5/15} = \frac{2}{5} = 0{,}4\\).
+]
+
+.caixa-discussao[
+Compare: sem a informação, \\(P(X &gt; 3) = 12/15 = 0{,}8\\). Ter esperado 10 minutos **mudou** a chance. Por
+quê? (Ele está mais perto do próximo ônibus.)
+]
+
+---
+
+## Revisão 4: Normal .tempo[12–25 min]
+
+O **salário inicial** de recém-formados em Economia em uma região é modelado como
+\\(N(4.500;\ 800^2)\\) reais.
+
+**a)** Qual é a proporção que ganha **menos de R$ 3.700**?
+
+**b)** E **entre R$ 4.000 e R$ 5.500**?
+
+**c)** Qual salário separa os **20%** mais bem pagos?
+
+--
+
+.caixa-resposta[
+**a)** \\(z = \frac{3.700 - 4.500}{800} = -1\\): \\(P(Z &lt; -1) = 0{,}1587\\).
+
+**b)** \\(z\_1 = -0{,}625 \approx -0{,}63\\), \\(z\_2 = 1{,}25\\): \\(P(Z &lt; 1{,}25) - P(Z &lt; -0{,}63) = 0{,}8944 - 0{,}2643 = 0{,}6301\\).
+
+**c)** \\(P(Z &lt; 0{,}84) \approx 0{,}80\\): \\(x = 4.500 + 0{,}84 \times 800 = 5.172\\) reais.
+]
+
+---
+
+## Revisão 5: juntando as unidades .tempo[25–37 min]
+
+Uma fábrica produz barras cujo **peso** é \\(N(1.000;\ 20^2)\\) gramas. Uma barra é **reprovada** se pesar menos de
+**970 g**. O inspetor examina **5** barras independentes.
+
+**a)** Qual é a probabilidade de uma barra ser reprovada?
+
+**b)** Qual é a probabilidade de **nenhuma** das 5 ser reprovada?
+
+**c)** Qual é o número **esperado** de barras reprovadas em um lote de 200?
+
+--
+
+.caixa-resposta[
+**a)** \\(z = \frac{970 - 1.000}{20} = -1{,}5\\): \\(P(Z &lt; -1{,}5) = 0{,}0668\\) (Unidade 4).
+
+**b)** \\((1 - 0{,}0668)^5 = 0{,}9332^5 \approx 0{,}708\\) (independência, Unidade 2).
+
+**c)** Número de reprovadas \\(\sim \text{Bin}(200;\ 0{,}0668)\\): \\(E = 200 \times 0{,}0668 \approx 13{,}4\\) barras (Unidade 3).
+]
+
+---
+
+## O curso em quatro perguntas .tempo[37–45 min]
+
+**1.** Um **número sozinho** raramente basta. Escolha um exemplo de qualquer unidade em que olhar só a
+**média** levaria a uma decisão errada.
+
+**2.** Uma manchete diz que um teste de fraude "acerta 95%". Que **duas** outras informações você pediria
+antes de confiar em um alerta? (Aula 14.)
+
+**3.** Antes de usar a **Normal** para calcular a probabilidade de um evento extremo, que ferramentas da
+**Unidade 1** você usaria para checar se o modelo é razoável?
+
+**4.** Volte à primeira aula: "você já decide com números incertos" (pesquisa eleitoral, desemprego,
+score de crédito). Escolha uma dessas situações e responda usando ferramentas das **quatro** unidades.
+
+---
+
+## Checklist de estudo para a P3 .tempo[45–50 min]
+
+- [ ] Refazer, **sem** consultar respostas, as Listas **11** e **12** e o **Simulado da P3** (Lista 14).
+- [ ] Refazer os exercícios das Aulas 24 a 29.
+- [ ] Praticar integrais de polinômios (com limites **negativos**) e de \\(e^{-x}\\).
+- [ ] Praticar a leitura da tabela da normal nos **dois** sentidos: \\(z \to\\) probabilidade e probabilidade
+  \\(\to z\\).
+- [ ] Para cada exercício, fazer o **esboço** da densidade e pintar a área antes de calcular.
+- [ ] Revisar a **revisão de cálculo** (Aula 23 e apêndice do livro), se ainda houver dúvida em primitivas.
+
+---
+
+## Uso do R: conferindo a revisão
+
+```{r uso-r}
+C <- 1 / integrate(function(x) 1 - x^2, -1, 1)$value
+c(rev1a = integrate(function(x) 2 - x, 1.5, 2)$value, rev2a = C,
+  rev2c = integrate(function(x) x^2 * C * (1 - x^2), -1, 1)$value,
+  rev3c = (1 - punif(13, 0, 15)) / (1 - punif(10, 0, 15)))
+c(rev4a = pnorm(3700, 4500, 800), rev4b = pnorm(5500, 4500, 800) - pnorm(4000, 4500, 800),
+  rev4c = qnorm(0.8, 4500, 800))
+p <- pnorm(970, 1000, 20); c(rev5a = p, rev5b = (1 - p)^5, rev5c = 200 * p)
+```
+
+
+---
+
+class: inverse, center, middle
+
+# Prova 3: 16/12/2026
+
+## Bons estudos!

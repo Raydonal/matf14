@@ -1,0 +1,691 @@
+"trimestre","componente","valor_milhoes"
+"201901","Agropecuária - total",94821
+"201902","Agropecuária - total",83473
+"201903","Agropecuária - total",75480
+"201904","Agropecuária - total",56940
+"202001","Agropecuária - total",128729
+"202002","Agropecuária - total",128444
+"202003","Agropecuária - total",100483
+"202004","Agropecuária - total",76965
+"202101","Agropecuária - total",244068
+"202102","Agropecuária - total",169064
+"202103","Agropecuária - total",106886
+"202104","Agropecuária - total",71067
+"202201","Agropecuária - total",170408
+"202202","Agropecuária - total",162485
+"202203","Agropecuária - total",145705
+"202204","Agropecuária - total",102745
+"202301","Agropecuária - total",196486
+"202302","Agropecuária - total",194327
+"202303","Agropecuária - total",157149
+"202304","Agropecuária - total",111162
+"202401","Agropecuária - total",190749
+"202402","Agropecuária - total",203684
+"202403","Agropecuária - total",170874
+"202404","Agropecuária - total",112268
+"202501","Agropecuária - total",245582
+"202502","Agropecuária - total",251976
+"202503","Agropecuária - total",176191
+"202504","Agropecuária - total",101548
+"202601","Agropecuária - total",230386
+"202602","Agropecuária - total",204591
+"201901","Indústria - total",306190
+"201902","Indústria - total",343377
+"201903","Indústria - total",376960
+"201904","Indústria - total",359277
+"202001","Indústria - total",336572
+"202002","Indústria - total",343114
+"202003","Indústria - total",405248
+"202004","Indústria - total",399403
+"202101","Indústria - total",426822
+"202102","Indústria - total",493040
+"202103","Indústria - total",555769
+"202104","Indústria - total",518168
+"202201","Indústria - total",494170
+"202202","Indústria - total",594970
+"202203","Indústria - total",617098
+"202204","Indústria - total",593889
+"202301","Indústria - total",562977
+"202302","Indústria - total",603144
+"202303","Indústria - total",620226
+"202304","Indústria - total",636966
+"202401","Indústria - total",572315
+"202402","Indústria - total",619057
+"202403","Indústria - total",643971
+"202404","Indústria - total",631313
+"202501","Indústria - total",592624
+"202502","Indústria - total",643604
+"202503","Indústria - total",682155
+"202504","Indústria - total",648431
+"202601","Indústria - total",632852
+"202602","Indústria - total",706134
+"201901","Indústrias extrativas",34690
+"201902","Indústrias extrativas",43946
+"201903","Indústrias extrativas",55560
+"201904","Indústrias extrativas",48621
+"202001","Indústrias extrativas",47613
+"202002","Indústrias extrativas",38338
+"202003","Indústrias extrativas",50149
+"202004","Indústrias extrativas",57515
+"202101","Indústrias extrativas",80703
+"202102","Indústrias extrativas",110478
+"202103","Indústrias extrativas",126525
+"202104","Indústrias extrativas",107162
+"202201","Indústrias extrativas",100116
+"202202","Indústrias extrativas",123757
+"202203","Indústrias extrativas",136362
+"202204","Indústrias extrativas",116441
+"202301","Indústrias extrativas",98453
+"202302","Indústrias extrativas",93058
+"202303","Indústrias extrativas",98746
+"202304","Indústrias extrativas",112022
+"202401","Indústrias extrativas",101211
+"202402","Indústrias extrativas",104731
+"202403","Indústrias extrativas",112853
+"202404","Indústrias extrativas",110815
+"202501","Indústrias extrativas",105661
+"202502","Indústrias extrativas",100722
+"202503","Indústrias extrativas",101006
+"202504","Indústrias extrativas",96210
+"202601","Indústrias extrativas",91109
+"202602","Indústrias extrativas",133124
+"201901","Indústrias de transformação",169674
+"201902","Indústrias de transformação",193950
+"201903","Indústrias de transformação",204888
+"201904","Indústrias de transformação",194970
+"202001","Indústrias de transformação",173495
+"202002","Indústrias de transformação",187687
+"202003","Indústrias de transformação",229621
+"202004","Indústrias de transformação",222886
+"202101","Indústrias de transformação",226859
+"202102","Indústrias de transformação",262597
+"202103","Indústrias de transformação",298234
+"202104","Indústrias de transformação",285149
+"202201","Indústrias de transformação",265914
+"202202","Indústrias de transformação",343509
+"202203","Indústrias de transformação",362419
+"202204","Indústrias de transformação",345984
+"202301","Indústrias de transformação",332074
+"202302","Indústrias de transformação",366289
+"202303","Indústrias de transformação",386270
+"202304","Indústrias de transformação",365707
+"202401","Indústrias de transformação",320519
+"202402","Indústrias de transformação",356674
+"202403","Indústrias de transformação",379973
+"202404","Indústrias de transformação",369396
+"202501","Indústrias de transformação",330723
+"202502","Indústrias de transformação",375514
+"202503","Indústrias de transformação",410990
+"202504","Indústrias de transformação",382391
+"202601","Indústrias de transformação",360771
+"202602","Indústrias de transformação",395581
+"201901","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",44608
+"201902","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",44686
+"201903","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",50177
+"201904","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",51391
+"202001","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",49532
+"202002","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",53481
+"202003","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",54562
+"202004","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",51536
+"202101","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",50292
+"202102","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",54996
+"202103","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",59148
+"202104","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",56546
+"202201","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",60582
+"202202","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",56472
+"202203","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",41283
+"202204","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",53249
+"202301","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",57477
+"202302","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",62756
+"202303","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",51022
+"202304","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",71364
+"202401","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",64679
+"202402","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",65720
+"202403","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",61160
+"202404","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",59842
+"202501","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",59893
+"202502","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",64828
+"202503","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",65882
+"202504","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",69627
+"202601","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",73826
+"202602","Eletricidade e gás, água, esgoto, atividades de gestão de resíduos",72094
+"201901","Construção",57218
+"201902","Construção",60794
+"201903","Construção",66335
+"201904","Construção",64295
+"202001","Construção",65932
+"202002","Construção",63609
+"202003","Construção",70916
+"202004","Construção",67465
+"202101","Construção",68968
+"202102","Construção",64970
+"202103","Construção",71862
+"202104","Construção",69311
+"202201","Construção",67559
+"202202","Construção",71232
+"202203","Construção",77033
+"202204","Construção",78216
+"202301","Construção",74974
+"202302","Construção",81041
+"202303","Construção",84188
+"202304","Construção",87874
+"202401","Construção",85906
+"202402","Construção",91932
+"202403","Construção",89985
+"202404","Construção",91259
+"202501","Construção",96348
+"202502","Construção",102540
+"202503","Construção",104277
+"202504","Construção",100203
+"202601","Construção",107147
+"202602","Construção",105334
+"201901","Serviços - total",1105719
+"201902","Serviços - total",1149985
+"201903","Serviços - total",1169820
+"201904","Serviços - total",1234642
+"202001","Serviços - total",1141341
+"202002","Serviços - total",1106257
+"202003","Serviços - total",1155306
+"202004","Serviços - total",1273075
+"202101","Serviços - total",1184303
+"202102","Serviços - total",1243949
+"202103","Serviços - total",1293682
+"202104","Serviços - total",1407180
+"202201","Serviços - total",1318603
+"202202","Serviços - total",1428022
+"202203","Serviços - total",1496717
+"202204","Serviços - total",1611663
+"202301","Serviços - total",1501240
+"202302","Serviços - total",1592737
+"202303","Serviços - total",1629060
+"202304","Serviços - total",1753118
+"202401","Serviços - total",1619175
+"202402","Serviços - total",1708117
+"202403","Serviços - total",1767211
+"202404","Serviços - total",1875368
+"202501","Serviços - total",1761351
+"202502","Serviços - total",1876137
+"202503","Serviços - total",1928012
+"202504","Serviços - total",2044370
+"202601","Serviços - total",1926570
+"202602","Serviços - total",2027144
+"201901","Comércio",193729
+"201902","Comércio",203230
+"201903","Comércio",214119
+"201904","Comércio",211512
+"202001","Comércio",197598
+"202002","Comércio",175375
+"202003","Comércio",218670
+"202004","Comércio",233703
+"202101","Comércio",217565
+"202102","Comércio",234816
+"202103","Comércio",256923
+"202104","Comércio",256399
+"202201","Comércio",250947
+"202202","Comércio",279207
+"202203","Comércio",298237
+"202204","Comércio",289357
+"202301","Comércio",274397
+"202302","Comércio",280547
+"202303","Comércio",297896
+"202304","Comércio",292692
+"202401","Comércio",278010
+"202402","Comércio",298645
+"202403","Comércio",325301
+"202404","Comércio",323669
+"202501","Comércio",302365
+"202502","Comércio",316953
+"202503","Comércio",332614
+"202504","Comércio",319578
+"202601","Comércio",299722
+"202602","Comércio",328199
+"201901","Transporte, armazenagem e correio",68065
+"201902","Transporte, armazenagem e correio",69186
+"201903","Transporte, armazenagem e correio",74625
+"201904","Transporte, armazenagem e correio",72595
+"202001","Transporte, armazenagem e correio",64987
+"202002","Transporte, armazenagem e correio",60192
+"202003","Transporte, armazenagem e correio",69058
+"202004","Transporte, armazenagem e correio",79002
+"202101","Transporte, armazenagem e correio",74144
+"202102","Transporte, armazenagem e correio",75199
+"202103","Transporte, armazenagem e correio",78450
+"202104","Transporte, armazenagem e correio",76248
+"202201","Transporte, armazenagem e correio",71620
+"202202","Transporte, armazenagem e correio",67188
+"202203","Transporte, armazenagem e correio",70473
+"202204","Transporte, armazenagem e correio",70101
+"202301","Transporte, armazenagem e correio",76554
+"202302","Transporte, armazenagem e correio",85979
+"202303","Transporte, armazenagem e correio",90135
+"202304","Transporte, armazenagem e correio",84518
+"202401","Transporte, armazenagem e correio",86076
+"202402","Transporte, armazenagem e correio",89974
+"202403","Transporte, armazenagem e correio",96614
+"202404","Transporte, armazenagem e correio",92869
+"202501","Transporte, armazenagem e correio",91300
+"202502","Transporte, armazenagem e correio",97591
+"202503","Transporte, armazenagem e correio",105450
+"202504","Transporte, armazenagem e correio",101330
+"202601","Transporte, armazenagem e correio",100964
+"202602","Transporte, armazenagem e correio",102008
+"201901","Informação e comunicação",50553
+"201902","Informação e comunicação",53092
+"201903","Informação e comunicação",55294
+"201904","Informação e comunicação",59937
+"202001","Informação e comunicação",55271
+"202002","Informação e comunicação",57753
+"202003","Informação e comunicação",58265
+"202004","Informação e comunicação",66284
+"202101","Informação e comunicação",60000
+"202102","Informação e comunicação",64688
+"202103","Informação e comunicação",65867
+"202104","Informação e comunicação",73977
+"202201","Informação e comunicação",63943
+"202202","Informação e comunicação",69477
+"202203","Informação e comunicação",75382
+"202204","Informação e comunicação",82382
+"202301","Informação e comunicação",73872
+"202302","Informação e comunicação",79798
+"202303","Informação e comunicação",81958
+"202304","Informação e comunicação",87377
+"202401","Informação e comunicação",80637
+"202402","Informação e comunicação",85759
+"202403","Informação e comunicação",89530
+"202404","Informação e comunicação",96745
+"202501","Informação e comunicação",88161
+"202502","Informação e comunicação",94941
+"202503","Informação e comunicação",99299
+"202504","Informação e comunicação",106890
+"202601","Informação e comunicação",101133
+"202602","Informação e comunicação",107301
+"201901","Atividades financeiras, de seguros e serviços relacionados",112064
+"201902","Atividades financeiras, de seguros e serviços relacionados",111318
+"201903","Atividades financeiras, de seguros e serviços relacionados",117184
+"201904","Atividades financeiras, de seguros e serviços relacionados",119726
+"202001","Atividades financeiras, de seguros e serviços relacionados",119918
+"202002","Atividades financeiras, de seguros e serviços relacionados",115957
+"202003","Atividades financeiras, de seguros e serviços relacionados",112560
+"202004","Atividades financeiras, de seguros e serviços relacionados",106116
+"202101","Atividades financeiras, de seguros e serviços relacionados",113517
+"202102","Atividades financeiras, de seguros e serviços relacionados",103496
+"202103","Atividades financeiras, de seguros e serviços relacionados",105009
+"202104","Atividades financeiras, de seguros e serviços relacionados",125026
+"202201","Atividades financeiras, de seguros e serviços relacionados",139380
+"202202","Atividades financeiras, de seguros e serviços relacionados",146146
+"202203","Atividades financeiras, de seguros e serviços relacionados",152420
+"202204","Atividades financeiras, de seguros e serviços relacionados",171430
+"202301","Atividades financeiras, de seguros e serviços relacionados",180264
+"202302","Atividades financeiras, de seguros e serviços relacionados",182242
+"202303","Atividades financeiras, de seguros e serviços relacionados",170568
+"202304","Atividades financeiras, de seguros e serviços relacionados",183391
+"202401","Atividades financeiras, de seguros e serviços relacionados",185679
+"202402","Atividades financeiras, de seguros e serviços relacionados",180492
+"202403","Atividades financeiras, de seguros e serviços relacionados",179483
+"202404","Atividades financeiras, de seguros e serviços relacionados",198966
+"202501","Atividades financeiras, de seguros e serviços relacionados",220185
+"202502","Atividades financeiras, de seguros e serviços relacionados",231704
+"202503","Atividades financeiras, de seguros e serviços relacionados",229022
+"202504","Atividades financeiras, de seguros e serviços relacionados",249358
+"202601","Atividades financeiras, de seguros e serviços relacionados",249364
+"202602","Atividades financeiras, de seguros e serviços relacionados",255606
+"201901","Atividades imobiliárias",151038
+"201902","Atividades imobiliárias",154202
+"201903","Atividades imobiliárias",156638
+"201904","Atividades imobiliárias",157706
+"202001","Atividades imobiliárias",158449
+"202002","Atividades imobiliárias",161890
+"202003","Atividades imobiliárias",166086
+"202004","Atividades imobiliárias",169588
+"202101","Atividades imobiliárias",169401
+"202102","Atividades imobiliárias",172385
+"202103","Atividades imobiliárias",176029
+"202104","Atividades imobiliárias",181650
+"202201","Atividades imobiliárias",182454
+"202202","Atividades imobiliárias",188121
+"202203","Atividades imobiliárias",196657
+"202204","Atividades imobiliárias",202943
+"202301","Atividades imobiliárias",200139
+"202302","Atividades imobiliárias",207092
+"202303","Atividades imobiliárias",215468
+"202304","Atividades imobiliárias",216255
+"202401","Atividades imobiliárias",216787
+"202402","Atividades imobiliárias",221388
+"202403","Atividades imobiliárias",228139
+"202404","Atividades imobiliárias",226865
+"202501","Atividades imobiliárias",230356
+"202502","Atividades imobiliárias",236197
+"202503","Atividades imobiliárias",243121
+"202504","Atividades imobiliárias",244441
+"202601","Atividades imobiliárias",248680
+"202602","Atividades imobiliárias",253124
+"201901","Outras atividades de serviços",271943
+"201902","Outras atividades de serviços",284887
+"201903","Outras atividades de serviços",288846
+"201904","Outras atividades de serviços",302587
+"202001","Outras atividades de serviços",279161
+"202002","Outras atividades de serviços",251838
+"202003","Outras atividades de serviços",260069
+"202004","Outras atividades de serviços",291288
+"202101","Outras atividades de serviços",272406
+"202102","Outras atividades de serviços",292281
+"202103","Outras atividades de serviços",319369
+"202104","Outras atividades de serviços",345315
+"202201","Outras atividades de serviços",314012
+"202202","Outras atividades de serviços",345314
+"202203","Outras atividades de serviços",369847
+"202204","Outras atividades de serviços",392130
+"202301","Outras atividades de serviços",363814
+"202302","Outras atividades de serviços",388824
+"202303","Outras atividades de serviços",410409
+"202304","Outras atividades de serviços",435691
+"202401","Outras atividades de serviços",407860
+"202402","Outras atividades de serviços",430347
+"202403","Outras atividades de serviços",454446
+"202404","Outras atividades de serviços",468618
+"202501","Outras atividades de serviços",436985
+"202502","Outras atividades de serviços",473297
+"202503","Outras atividades de serviços",493063
+"202504","Outras atividades de serviços",518570
+"202601","Outras atividades de serviços",485929
+"202602","Outras atividades de serviços",514844
+"201901","Administração, saúde e educação públicas e seguridade social",258328
+"201902","Administração, saúde e educação públicas e seguridade social",274070
+"201903","Administração, saúde e educação públicas e seguridade social",263114
+"201904","Administração, saúde e educação públicas e seguridade social",310579
+"202001","Administração, saúde e educação públicas e seguridade social",265956
+"202002","Administração, saúde e educação públicas e seguridade social",283251
+"202003","Administração, saúde e educação públicas e seguridade social",270599
+"202004","Administração, saúde e educação públicas e seguridade social",327094
+"202101","Administração, saúde e educação públicas e seguridade social",277270
+"202102","Administração, saúde e educação públicas e seguridade social",301084
+"202103","Administração, saúde e educação públicas e seguridade social",292035
+"202104","Administração, saúde e educação públicas e seguridade social",348567
+"202201","Administração, saúde e educação públicas e seguridade social",296247
+"202202","Administração, saúde e educação públicas e seguridade social",332570
+"202203","Administração, saúde e educação públicas e seguridade social",333702
+"202204","Administração, saúde e educação públicas e seguridade social",403321
+"202301","Administração, saúde e educação públicas e seguridade social",332200
+"202302","Administração, saúde e educação públicas e seguridade social",368255
+"202303","Administração, saúde e educação públicas e seguridade social",362626
+"202304","Administração, saúde e educação públicas e seguridade social",453193
+"202401","Administração, saúde e educação públicas e seguridade social",364125
+"202402","Administração, saúde e educação públicas e seguridade social",401512
+"202403","Administração, saúde e educação públicas e seguridade social",393698
+"202404","Administração, saúde e educação públicas e seguridade social",467636
+"202501","Administração, saúde e educação públicas e seguridade social",391999
+"202502","Administração, saúde e educação públicas e seguridade social",425453
+"202503","Administração, saúde e educação públicas e seguridade social",425445
+"202504","Administração, saúde e educação públicas e seguridade social",504202
+"202601","Administração, saúde e educação públicas e seguridade social",440778
+"202602","Administração, saúde e educação públicas e seguridade social",466061
+"201901","Valor adicionado a preços básicos",1506730
+"201902","Valor adicionado a preços básicos",1576835
+"201903","Valor adicionado a preços básicos",1622260
+"201904","Valor adicionado a preços básicos",1650858
+"202001","Valor adicionado a preços básicos",1606642
+"202002","Valor adicionado a preços básicos",1577815
+"202003","Valor adicionado a preços básicos",1661037
+"202004","Valor adicionado a preços básicos",1749443
+"202101","Valor adicionado a preços básicos",1855194
+"202102","Valor adicionado a preços básicos",1906053
+"202103","Valor adicionado a preços básicos",1956338
+"202104","Valor adicionado a preços básicos",1996415
+"202201","Valor adicionado a preços básicos",1983182
+"202202","Valor adicionado a preços básicos",2185477
+"202203","Valor adicionado a preços básicos",2259520
+"202204","Valor adicionado a preços básicos",2308297
+"202301","Valor adicionado a preços básicos",2260703
+"202302","Valor adicionado a preços básicos",2390208
+"202303","Valor adicionado a preços básicos",2406436
+"202304","Valor adicionado a preços básicos",2501246
+"202401","Valor adicionado a preços básicos",2382240
+"202402","Valor adicionado a preços básicos",2530859
+"202403","Valor adicionado a preços básicos",2582056
+"202404","Valor adicionado a preços básicos",2618948
+"202501","Valor adicionado a preços básicos",2599557
+"202502","Valor adicionado a preços básicos",2771717
+"202503","Valor adicionado a preços básicos",2786359
+"202504","Valor adicionado a preços básicos",2794349
+"202601","Valor adicionado a preços básicos",2789809
+"202602","Valor adicionado a preços básicos",2937869
+"201901","Impostos líquidos sobre produtos",250823
+"201902","Impostos líquidos sobre produtos",249926
+"201903","Impostos líquidos sobre produtos",258350
+"201904","Impostos líquidos sobre produtos",273348
+"202001","Impostos líquidos sobre produtos",261453
+"202002","Impostos líquidos sobre produtos",174908
+"202003","Impostos líquidos sobre produtos",268286
+"202004","Impostos líquidos sobre produtos",310013
+"202101","Impostos líquidos sobre produtos",301477
+"202102","Impostos líquidos sobre produtos",297586
+"202103","Impostos líquidos sobre produtos",339513
+"202104","Impostos líquidos sobre produtos",359567
+"202201","Impostos líquidos sobre produtos",336346
+"202202","Impostos líquidos sobre produtos",332005
+"202203","Impostos líquidos sobre produtos",341662
+"202204","Impostos líquidos sobre produtos",333188
+"202301","Impostos líquidos sobre produtos",320315
+"202302","Impostos líquidos sobre produtos",337372
+"202303","Impostos líquidos sobre produtos",363010
+"202304","Impostos líquidos sobre produtos",364055
+"202401","Impostos líquidos sobre produtos",382593
+"202402","Impostos líquidos sobre produtos",403900
+"202403","Impostos líquidos sobre produtos",433880
+"202404","Impostos líquidos sobre produtos",444775
+"202501","Impostos líquidos sobre produtos",425166
+"202502","Impostos líquidos sobre produtos",428628
+"202503","Impostos líquidos sobre produtos",449349
+"202504","Impostos líquidos sobre produtos",483441
+"202601","Impostos líquidos sobre produtos",461170
+"202602","Impostos líquidos sobre produtos",487859
+"201901","PIB a preços de mercado",1757554
+"201902","PIB a preços de mercado",1826761
+"201903","PIB a preços de mercado",1880610
+"201904","PIB a preços de mercado",1924206
+"202001","PIB a preços de mercado",1868095
+"202002","PIB a preços de mercado",1752724
+"202003","PIB a preços de mercado",1929323
+"202004","PIB a preços de mercado",2059455
+"202101","PIB a preços de mercado",2156670
+"202102","PIB a preços de mercado",2203639
+"202103","PIB a preços de mercado",2295851
+"202104","PIB a preços de mercado",2355982
+"202201","PIB a preços de mercado",2319528
+"202202","PIB a preços de mercado",2517481
+"202203","PIB a preços de mercado",2601182
+"202204","PIB a preços de mercado",2641485
+"202301","PIB a preços de mercado",2581018
+"202302","PIB a preços de mercado",2727580
+"202303","PIB a preços de mercado",2769445
+"202304","PIB a preços de mercado",2865301
+"202401","PIB a preços de mercado",2764833
+"202402","PIB a preços de mercado",2934759
+"202403","PIB a preços de mercado",3015936
+"202404","PIB a preços de mercado",3063723
+"202501","PIB a preços de mercado",3024723
+"202502","PIB a preços de mercado",3200345
+"202503","PIB a preços de mercado",3235708
+"202504","PIB a preços de mercado",3277790
+"202601","PIB a preços de mercado",3250979
+"202602","PIB a preços de mercado",3425728
+"201901","Despesa de consumo das famílias",1155353
+"201902","Despesa de consumo das famílias",1172601
+"201903","Despesa de consumo das famílias",1216014
+"201904","Despesa de consumo das famílias",1269611
+"202001","Despesa de consumo das famílias",1211460
+"202002","Despesa de consumo das famílias",1066604
+"202003","Despesa de consumo das famílias",1200311
+"202004","Despesa de consumo das famílias",1326629
+"202101","Despesa de consumo das famílias",1287344
+"202102","Despesa de consumo das famílias",1306327
+"202103","Despesa de consumo das famílias",1413002
+"202104","Despesa de consumo das famílias",1523898
+"202201","Despesa de consumo das famílias",1475027
+"202202","Despesa de consumo das famílias",1563936
+"202203","Despesa de consumo das famílias",1626419
+"202204","Despesa de consumo das famílias",1691277
+"202301","Despesa de consumo das famílias",1635673
+"202302","Despesa de consumo das famílias",1686827
+"202303","Despesa de consumo das famílias",1748852
+"202304","Despesa de consumo das famílias",1814674
+"202401","Despesa de consumo das famílias",1784961
+"202402","Despesa de consumo das famílias",1834839
+"202403","Despesa de consumo das famílias",1932140
+"202404","Despesa de consumo das famílias",1981637
+"202501","Despesa de consumo das famílias",1934192
+"202502","Despesa de consumo das famílias",1992000
+"202503","Despesa de consumo das famílias",2050092
+"202504","Despesa de consumo das famílias",2105049
+"202601","Despesa de consumo das famílias",2054680
+"202602","Despesa de consumo das famílias",2112893
+"201901","Despesa de consumo da administração pública",332854
+"201902","Despesa de consumo da administração pública",367453
+"201903","Despesa de consumo da administração pública",357184
+"201904","Despesa de consumo da administração pública",419122
+"202001","Despesa de consumo da administração pública",344792
+"202002","Despesa de consumo da administração pública",381981
+"202003","Despesa de consumo da administração pública",366836
+"202004","Despesa de consumo da administração pública",438596
+"202101","Despesa de consumo da administração pública",359922
+"202102","Despesa de consumo da administração pública",411468
+"202103","Despesa de consumo da administração pública",408387
+"202104","Despesa de consumo da administração pública",491759
+"202201","Despesa de consumo da administração pública",385343
+"202202","Despesa de consumo da administração pública",456787
+"202203","Despesa de consumo da administração pública",462230
+"202204","Despesa de consumo da administração pública",550524
+"202301","Despesa de consumo da administração pública",435039
+"202302","Despesa de consumo da administração pública",511529
+"202303","Despesa de consumo da administração pública",506846
+"202304","Despesa de consumo da administração pública",630485
+"202401","Despesa de consumo da administração pública",475444
+"202402","Despesa de consumo da administração pública",551037
+"202403","Despesa de consumo da administração pública",546460
+"202404","Despesa de consumo da administração pública",637977
+"202501","Despesa de consumo da administração pública",521189
+"202502","Despesa de consumo da administração pública",598349
+"202503","Despesa de consumo da administração pública",607065
+"202504","Despesa de consumo da administração pública",710811
+"202601","Despesa de consumo da administração pública",598994
+"202602","Despesa de consumo da administração pública",667666
+"201901","Formação bruta de capital fixo",263449
+"201902","Formação bruta de capital fixo",280716
+"201903","Formação bruta de capital fixo",308672
+"201904","Formação bruta de capital fixo",290349
+"202001","Formação bruta de capital fixo",302015
+"202002","Formação bruta de capital fixo",264650
+"202003","Formação bruta de capital fixo",316149
+"202004","Formação bruta de capital fixo",377414
+"202101","Formação bruta de capital fixo",396730
+"202102","Formação bruta de capital fixo",383293
+"202103","Formação bruta de capital fixo",419005
+"202104","Formação bruta de capital fixo",415754
+"202201","Formação bruta de capital fixo",410115
+"202202","Formação bruta de capital fixo",435559
+"202203","Formação bruta de capital fixo",476868
+"202204","Formação bruta de capital fixo",471681
+"202301","Formação bruta de capital fixo",440153
+"202302","Formação bruta de capital fixo",444049
+"202303","Formação bruta de capital fixo",454830
+"202304","Formação bruta de capital fixo",456877
+"202401","Formação bruta de capital fixo",458641
+"202402","Formação bruta de capital fixo",482720
+"202403","Formação bruta de capital fixo",524523
+"202404","Formação bruta de capital fixo",525913
+"202501","Formação bruta de capital fixo",530908
+"202502","Formação bruta de capital fixo",530091
+"202503","Formação bruta de capital fixo",558726
+"202504","Formação bruta de capital fixo",525325
+"202601","Formação bruta de capital fixo",535207
+"202602","Formação bruta de capital fixo",552092
+"201901","Variação de estoque",19790
+"201902","Variação de estoque",1980
+"201903","Variação de estoque",20809
+"201904","Variação de estoque",-39209
+"202001","Variação de estoque",48642
+"202002","Variação de estoque",-8502
+"202003","Variação de estoque",-5508
+"202004","Variação de estoque",-68511
+"202101","Variação de estoque",161381
+"202102","Variação de estoque",13019
+"202103","Variação de estoque",13361
+"202104","Variação de estoque",-43203
+"202201","Variação de estoque",53453
+"202202","Variação de estoque",19318
+"202203","Variação de estoque",35057
+"202204","Variação de estoque",-78817
+"202301","Variação de estoque",37971
+"202302","Variação de estoque",-578
+"202303","Variação de estoque",-10109
+"202304","Variação de estoque",-98451
+"202401","Variação de estoque",26433
+"202402","Variação de estoque",28740
+"202403","Variação de estoque",21925
+"202404","Variação de estoque",-68608
+"202501","Variação de estoque",75911
+"202502","Variação de estoque",51496
+"202503","Variação de estoque",16607
+"202504","Variação de estoque",-113828
+"202601","Variação de estoque",73060
+"202602","Variação de estoque",51550
+"201901","Exportação de bens e serviços",230569
+"201902","Exportação de bens e serviços",263403
+"201903","Exportação de bens e serviços",278699
+"201904","Exportação de bens e serviços",270890
+"202001","Exportação de bens e serviços",259853
+"202002","Exportação de bens e serviços",322289
+"202003","Exportação de bens e serviços",334871
+"202004","Exportação de bens e serviços",335037
+"202101","Exportação de bens e serviços",355130
+"202102","Exportação de bens e serviços",477524
+"202103","Exportação de bens e serviços",454799
+"202104","Exportação de bens e serviços",434716
+"202201","Exportação de bens e serviços",437089
+"202202","Exportação de bens e serviços",510857
+"202203","Exportação de bens e serviços",538197
+"202204","Exportação de bens e serviços",492575
+"202301","Exportação de bens e serviços",467382
+"202302","Exportação de bens e serviços",509059
+"202303","Exportação de bens e serviços",495090
+"202304","Exportação de bens e serviços",494914
+"202401","Exportação de bens e serviços",453419
+"202402","Exportação de bens e serviços",535797
+"202403","Exportação de bens e serviços",562370
+"202404","Exportação de bens e serviços",561444
+"202501","Exportação de bens e serviços",532283
+"202502","Exportação de bens e serviços",581149
+"202503","Exportação de bens e serviços",580544
+"202504","Exportação de bens e serviços",576128
+"202601","Exportação de bens e serviços",519931
+"202602","Exportação de bens e serviços",597945
+"201901","Importação de bens e serviços (-)",244462
+"201902","Importação de bens e serviços (-)",259391
+"201903","Importação de bens e serviços (-)",300767
+"201904","Importação de bens e serviços (-)",286558
+"202001","Importação de bens e serviços (-)",298667
+"202002","Importação de bens e serviços (-)",274297
+"202003","Importação de bens e serviços (-)",283335
+"202004","Importação de bens e serviços (-)",349709
+"202101","Importação de bens e serviços (-)",403836
+"202102","Importação de bens e serviços (-)",387992
+"202103","Importação de bens e serviços (-)",412703
+"202104","Importação de bens e serviços (-)",466942
+"202201","Importação de bens e serviços (-)",441498
+"202202","Importação de bens e serviços (-)",468975
+"202203","Importação de bens e serviços (-)",537589
+"202204","Importação de bens e serviços (-)",485755
+"202301","Importação de bens e serviços (-)",435199
+"202302","Importação de bens e serviços (-)",423307
+"202303","Importação de bens e serviços (-)",426064
+"202304","Importação de bens e serviços (-)",433197
+"202401","Importação de bens e serviços (-)",434065
+"202402","Importação de bens e serviços (-)",498373
+"202403","Importação de bens e serviços (-)",571481
+"202404","Importação de bens e serviços (-)",574640
+"202501","Importação de bens e serviços (-)",569760
+"202502","Importação de bens e serviços (-)",552741
+"202503","Importação de bens e serviços (-)",577327
+"202504","Importação de bens e serviços (-)",525696
+"202601","Importação de bens e serviços (-)",530893
+"202602","Importação de bens e serviços (-)",556418

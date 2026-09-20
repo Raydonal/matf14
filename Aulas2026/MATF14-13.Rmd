@@ -15,187 +15,578 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"), comment = "##")
 suppressPackageStartupMessages(library(tidyverse))
-set.seed(14)
+set.seed(13)
 ```
 
 class: inverse, center, middle
 
 # Aula 13: Laboratório
 
-## Simulação de Monte Carlo em R
+## Simulação de probabilidade em R
 
-### Verificando probabilidade com repetição massiva
+### Conferindo as contas das Aulas 09 a 12 com milhares de repetições
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Antes de começar: sem laboratório presencial
+## Roteiro do laboratório (100 minutos)
 
-Como na Aula 07, este roteiro roda inteiro no **Google Colab**, no navegador, sem instalar
-nada. Sirva-se do mesmo notebook da Aula 07 (ou crie um novo, o processo é idêntico) e troque
-o ambiente de execução para **R**.
+.roteiro[
 
---
+| Tempo | Parte 1: sortear e repetir |
+|:---|:---|
+| 0–8 min | Colab com R; a função `sample()` |
+| 8–20 min | Frequência relativa, lei dos grandes números, falácia do apostador |
+| 20–40 min | Estimando probabilidades: moedas, dados, urna, Mega-Sena |
+| 40–50 min | **Exercícios 1 a 3** |
+
+| Tempo | Parte 2: áreas, tabelas e informação |
+|:---|:---|
+| 0–10 min | Probabilidade geométrica por simulação: encontro e \\(\pi\\) |
+| 10–30 min | Tabelas de contingência com a PNAD: conjunta, condicional, probabilidade total, razão de chances |
+| 30–40 min | Condicional, independência e Monty Hall |
+| 40–50 min | **Exercícios 4 e 5** e discussão |
+
+]
+
+.caixa-aplicacao[
+**Ideia central:** a probabilidade de um evento é o valor para o qual a **frequência relativa** se aproxima quando
+o experimento é repetido **muitas** vezes. No computador, repetir 100 mil vezes leva menos de um segundo.
+]
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: sortear e repetir
+
+### 50 minutos
+
+---
+
+## Colab com R .tempo[0–8 min]
 
 .pull-left[
-```{r colab-recap-config, echo=FALSE, out.width="95%"}
+```{r colab-config, echo=FALSE, out.width="95%"}
 knitr::include_graphics("colab-07-04-config-notebook.png")
 ```
+
+**1.** Em colab.research.google.com, crie um notebook. **2.** Menu **Edit** → **Notebook settings**.
 ]
 
 .pull-right[
-```{r colab-recap-r, echo=FALSE, out.width="95%"}
+```{r colab-r, echo=FALSE, out.width="95%"}
 knitr::include_graphics("colab-07-05-selecionar-r.png")
 ```
+
+**3.** Em **Runtime type**, escolha **R** e salve.
 ]
 
-Se não participou da Aula 07 ou está reproduzindo em casa, reveja os slides iniciais do
-`MATF14-07` para o passo a passo completo (criar notebook, escolher R, subir arquivos). Esta
-aula não depende de nenhum `.csv`, os experimentos de hoje são todos simulados em R.
+.clear[]
 
----
-
-## Ideia central: a definição frequentista, na prática
-
-A probabilidade de um evento é o limite da frequência relativa se o experimento fosse repetido
-infinitas vezes. Em R, não repetimos infinitas vezes, mas repetimos **muitas** vezes
-(`replicate()`), e observamos a frequência relativa se aproximar do valor teórico.
-
-```{r moeda-simples}
-lancamentos <- sample(c("cara", "coroa"), size = 10, replace = TRUE)
-lancamentos
-mean(lancamentos == "cara")
-```
-
-Com só 10 lançamentos, a frequência de "cara" está longe de 0,5. O que acontece com mais
-repetições?
-
----
-
-## Lei dos grandes números, visualmente
-
-```{r lgn, fig.height=4}
-set.seed(1)
-n_max <- 5000
-lanc <- sample(c(1,0), n_max, replace = TRUE)   # 1 = cara, 0 = coroa
-freq_acumulada <- cumsum(lanc) / seq_len(n_max)
-
-ggplot(tibble(n = 1:n_max, freq = freq_acumulada), aes(n, freq)) +
-  geom_line(color = "#0d3b54") +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "#c9971e") +
-  labs(x = "Número de lançamentos", y = "Frequência relativa de \"cara\"",
-       title = "Convergência da frequência relativa para P(cara) = 0,5") +
-  theme_minimal(base_size = 13)
-```
-
----
-
-## Estimando uma probabilidade por simulação
-
-Probabilidade de, em 3 lançamentos de moeda, sair **pelo menos 2 caras**:
-
-```{r pelo-menos-2}
-simular_experimento <- function() {
-  lanc <- sample(c(1,0), size = 3, replace = TRUE)
-  sum(lanc) >= 2
-}
-
-resultados <- replicate(100000, simular_experimento())
-mean(resultados)   # estimativa por simulação
-```
-
-Valor teórico (contagem, Aula 10): \\(\binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 4/8 = 0{,}5\\).
+.caixa-discussao[
+Na Parte 1 tudo é gerado no próprio R. Na Parte 2 vamos ler um `.csv` da PNAD direto da página do curso. O passo a
+passo completo do Colab está nos slides da Aula 07.
+]
 
 ---
 
 class: inverse, center, middle
 
-# O problema de Monty Hall
-
-## Probabilidade condicional, contraintuitiva
+# Bloco 1: sorteios no R
 
 ---
 
-## O problema
+## A função `sample()`
 
-Um jogo tem 3 portas: atrás de uma há um carro, atrás das outras duas, nada. Você escolhe uma
-porta. O apresentador, que sabe onde está o carro, **abre uma das outras duas portas sem o
-prêmio**. Ele oferece: trocar de porta ou manter a escolha original?
+```{r sample-basico}
+sample(1:6, size = 1)                          # lança um dado
+sample(1:6, size = 10, replace = TRUE)         # 10 lançamentos: COM reposição
+sample(c("cara", "coroa"), size = 5, replace = TRUE)
+sample(1:10, size = 3)                         # 3 bolas de 1 a 10: SEM reposição (padrão)
+```
 
 --
 
-**Intuição comum (errada)**: "sobraram 2 portas, tanto faz, 50-50".
-
-**Resposta correta**: trocar dobra a chance de vitória, de \\(1/3\\) para \\(2/3\\), vamos comprovar por
-simulação (mais fácil que a conta analítica de probabilidade condicional aqui).
+.caixa-r[
+`replace = TRUE`: cada sorteio **devolve** o elemento (dado, moeda). `replace = FALSE` (padrão): o
+elemento sorteado **sai** da urna. Para **reproduzir** os mesmos números, use `set.seed(123)` antes.
+]
 
 ---
 
-## Simulando Monty Hall
+## Sorteios com probabilidades diferentes
 
-```{r monty-hall}
-jogar_monty_hall <- function(trocar) {
-  portas <- 1:3
-  premio <- sample(portas, 1)
-  escolha <- sample(portas, 1)
-  # apresentador abre uma porta sem prêmio, diferente da escolhida
-  disponiveis <- setdiff(portas, c(escolha, premio))
-  aberta <- if (length(disponiveis) == 1) disponiveis else sample(disponiveis, 1)
-  if (trocar) {
-    escolha_final <- setdiff(portas, c(escolha, aberta))
-  } else {
-    escolha_final <- escolha
-  }
-  escolha_final == premio
-}
-
-mean(replicate(50000, jogar_monty_hall(trocar = TRUE)))
-mean(replicate(50000, jogar_monty_hall(trocar = FALSE)))
+```{r sample-prob}
+tipos <- c("O", "A", "B", "AB")
+probs <- c(0.45, 0.40, 0.11, 0.04)            # tipos sanguíneos (Aula 15)
+doadores <- sample(tipos, size = 20, replace = TRUE, prob = probs)
+doadores
+table(doadores)
 ```
 
----
-
-## Por que isso importa para condicional e Bayes
-
-A chave: a ação do apresentador (abrir uma porta *sem* o prêmio, *sabendo* onde ele está) **não é
-aleatória**, ela carrega informação. A probabilidade da porta não escolhida e não aberta passa a
-ser condicional a essa ação, não mais \\(1/3\\) "isolada". É o mesmo tipo de raciocínio (atualizar uma
-probabilidade à luz de uma evidência) que formaliza o Teorema de Bayes, na próxima aula.
+.caixa-discussao[
+Com só 20 doadores, as proporções observadas batem com 45%, 40%, 11% e 4%? O que você espera que
+aconteça com 20 mil doadores?
+]
 
 ---
 
 class: inverse, center, middle
 
-# Discussão do laboratório
+# Bloco 2: frequência relativa e lei dos grandes números
 
 ---
 
-## Antes do exercício guiado
+## Lançando um dado muitas vezes
 
-**1.** Mesmo depois de ver a simulação confirmar \\(2/3\\) vs. \\(1/3\\), muita gente continua achando que
-"deveria ser 50-50". Tente articular, com suas próprias palavras (sem fórmula), por que a ação do
-apresentador não é neutra, o que ele "sabe" que você não sabia antes de escolher.
+```{r lgn-code, eval=FALSE}
+n <- 5000
+seis <- sample(1:6, n, replace = TRUE) == 6        # TRUE quando sai 6
+freq <- cumsum(seis) / (1:n)                        # frequência relativa acumulada
 
-**2.** Refaça mentalmente o Monty Hall com 100 portas em vez de 3: você escolhe 1, o apresentador
-abre 98 sem prêmio, sobrando a sua e mais uma. Isso deveria deixar sua intuição sobre "trocar" mais
-ou menos convincente que com 3 portas? Por quê?
+plot(1:n, freq, type = "l", log = "x", ylim = c(0, 0.5),
+     xlab = "Número de lançamentos", ylab = "Frequência relativa de seis")
+abline(h = 1/6, col = "red", lty = 2)
+```
 
-**3.** A Lei dos Grandes Números (gráfico acima) mostra a frequência convergindo para 0,5 mesmo
-começando longe dele em poucos lançamentos. Isso significa que, depois de uma sequência de "caras"
-muito acima do esperado, a moeda fica "devendo" coroas para compensar? (Esse erro de raciocínio
-tem nome, a "falácia do apostador", e é diretamente relevante para investidores que acreditam
-que uma ação "está devendo" uma alta depois de vários dias de queda.)
+```{r lgn-plot, echo=FALSE, fig.height=3, fig.width=9, out.width="88%"}
+n <- 5000
+seis <- sample(1:6, n, replace = TRUE) == 6
+freq <- cumsum(seis) / (1:n)
+par(mar = c(4, 4.2, 0.5, 1))
+plot(1:n, freq, type = "l", log = "x", ylim = c(0, 0.5), xlab = "Número de lançamentos (escala log)",
+     ylab = "Freq. relativa de seis", col = "#3b5bdb", lwd = 1.5)
+abline(h = 1/6, col = "red", lty = 2, lwd = 2)
+```
 
 ---
 
-## Exercício guiado
+## A falácia do apostador
 
-1. Modifique `jogar_monty_hall()` para 4 portas (1 prêmio, apresentador abre 2 sem prêmio).
-   Simule e compare a probabilidade de vitória trocando vs. mantendo a escolha.
-2. Simule a probabilidade condicional da Aula 11 (escolaridade × desemprego): gere uma população
-   sintética de 500 pessoas com as proporções da tabela vista em aula e confira, por simulação, que
-   \\(P(\text{desempregado}\mid\text{superior}) \approx 0{,}16\\).
+.caixa-discussao[
+A frequência relativa **converge** para \\(1/6\\). Isso quer dizer que, depois de dez lançamentos sem
+seis, o dado "fica devendo" um seis e a chance de sair seis no próximo lançamento **aumenta**?
+]
+
+--
+
+```{r apostador}
+lanc <- matrix(sample(1:6, 11 * 200000, replace = TRUE), ncol = 11)
+sem_seis_10 <- rowSums(lanc[, 1:10] == 6) == 0     # nenhum seis nos 10 primeiros
+mean(lanc[sem_seis_10, 11] == 6)                    # P(seis no 11º | nenhum nos 10 primeiros)
+```
+
+.caixa-resposta[
+Continua perto de \\(1/6 \approx 0{,}167\\): lançamentos são **independentes**. A convergência acontece
+porque os desvios iniciais são **diluídos** por muitas repetições, e não "compensados". O mesmo vale
+para quem acha que uma ação "está devendo" uma alta depois de vários dias de queda.
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: estimando probabilidades
+
+---
+
+## Receita geral com `replicate()`
+
+1. Escreva uma **função** que realiza **uma vez** o experimento e devolve `TRUE` se o evento ocorreu.
+2. Repita com `replicate(n, funcao())`.
+3. A **média** do vetor lógico é a frequência relativa (`TRUE` vale 1, `FALSE` vale 0).
+
+--
+
+**Duas moedas: faces iguais** (Aula 09, teórico \\(2/4 = 0{,}5\\))
+
+```{r duas-moedas}
+faces_iguais <- function() {
+  m <- sample(c("cara", "coroa"), 2, replace = TRUE)
+  m[1] == m[2]
+}
+mean(replicate(100000, faces_iguais()))
+```
+
+---
+
+## Dois dados: soma igual a sete
+
+Teórico (Aula 10): \\(6/36 \approx 0{,}1667\\).
+
+```{r soma-sete}
+soma_sete <- function() sum(sample(1:6, 2, replace = TRUE)) == 7
+mean(replicate(100000, soma_sete()))
+```
+
+--
+
+**Distribuição inteira da soma de dois dados:**
+
+```{r soma-dist, fig.height=2.6, fig.width=9, out.width="80%"}
+somas <- replicate(100000, sum(sample(1:6, 2, replace = TRUE)))
+barplot(prop.table(table(somas)), col = "#7fb8cf", ylab = "Freq. relativa")
+```
+
+---
+
+## Urna sem reposição: duas bolas brancas
+
+Urna com 3 brancas e 7 vermelhas, duas retiradas **sem reposição** (Aula 11):
+teórico \\(\frac{3}{10} \times \frac{2}{9} \approx 0{,}0667\\).
+
+```{r urna}
+urna <- c(rep("branca", 3), rep("vermelha", 7))
+duas_brancas <- function() all(sample(urna, 2) == "branca")     # replace = FALSE por padrão
+mean(replicate(100000, duas_brancas()))
+```
+
+--
+
+.caixa-discussao[
+Troque para `sample(urna, 2, replace = TRUE)`. O resultado se aproxima de qual valor teórico? Por quê?
+]
+
+--
+
+.caixa-resposta[
+Com reposição, as retiradas são **independentes**: \\((3/10)^2 = 0{,}09\\).
+]
+
+---
+
+## Mega-Sena: acertar a quadra
+
+Na Mega-Sena sorteiam-se 6 dezenas de 60. Com uma aposta simples (6 dezenas), qual é a chance de
+acertar **exatamente 4** (quadra)?
+
+--
+
+**Pela contagem (Aula 10):**
+
+$$
+P(\text{quadra}) = \frac{\binom{6}{4}\binom{54}{2}}{\binom{60}{6}} = \frac{15 \times 1.431}{50.063.860} \approx 0{,}000429
+$$
+
+```{r megasena}
+choose(6, 4) * choose(54, 2) / choose(60, 6)
+
+aposta <- 1:6
+acertos <- replicate(200000, sum(sample(1:60, 6) %in% aposta))
+mean(acertos == 4)
+```
+
+---
+
+## Exercícios 1 a 3 .tempo[40–50 min]
+
+.caixa-atividade[
+**1.** Estime por simulação a probabilidade de, em **3 lançamentos** de um dado, o número 2 aparecer **pelo menos
+uma vez**. Compare com o valor teórico \\(1 - (5/6)^3\\).
+
+**2.** **Problema do aniversário:** numa turma de 40 alunos, qual é a probabilidade de **pelo menos dois** fazerem
+aniversário no mesmo dia? Dê um palpite **antes** de simular.
+
+**3.** Três doadores de sangue (O: 45%, A: 40%, B: 11%, AB: 4%). Estime a probabilidade de **nenhum** ter sangue AB e
+compare com \\(0{,}96^3\\).
+]
+
+---
+
+## Soluções 1 a 3
+
+```{r sol-1}
+pelo_menos_um_2 <- function() any(sample(1:6, 3, replace = TRUE) == 2)
+c(simulado = mean(replicate(100000, pelo_menos_um_2())), teorico = 1 - (5/6)^3)
+
+aniversario <- function(n = 40) any(duplicated(sample(1:365, n, replace = TRUE)))
+mean(replicate(50000, aniversario()))
+
+nenhum_AB <- function() !any(sample(c("O", "A", "B", "AB"), 3, replace = TRUE,
+                                    prob = c(0.45, 0.40, 0.11, 0.04)) == "AB")
+c(simulado = mean(replicate(100000, nenhum_AB())), teorico = 0.96^3)
+```
+
+.caixa-resposta[
+**2.** Cerca de **89%**: com 40 pessoas há \\(\binom{40}{2} = 780\\) **pares**. Teórico: \\(1 - \frac{365 \times 364 \times \cdots \times 326}{365^{40}} \approx 0{,}891\\).
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: áreas, tabelas e informação
+
+### 50 minutos
+
+---
+
+## Probabilidade geométrica por simulação .tempo[0–10 min]
+
+**Problema do encontro (Aula 11):** comprador e vendedor chegam ao acaso entre 9h e 10h e esperam 15 minutos.
+Teórico: \\(7/16 = 0{,}4375\\).
+
+.pull-left-60[
+```{r encontro}
+n <- 100000
+comprador <- runif(n, 0, 60)
+vendedor  <- runif(n, 0, 60)
+mean(abs(comprador - vendedor) <= 15)
+```
+
+```{r encontro-plot-code, eval=FALSE}
+encontro <- abs(comprador - vendedor) <= 15
+plot(comprador[1:2000], vendedor[1:2000], pch = 20,
+     col = ifelse(encontro[1:2000], "red", "grey"))
+```
+]
+
+.pull-right-40[
+```{r encontro-plot, echo=FALSE, fig.height=3.6, fig.width=3.6, out.width="100%"}
+encontro <- abs(comprador - vendedor) <= 15
+par(mar = c(4, 4, 1, 1))
+plot(comprador[1:2000], vendedor[1:2000], pch = 20, cex = 0.4, xlab = "comprador", ylab = "vendedor",
+     col = ifelse(encontro[1:2000], "red", "grey"))
+```
+]
+
+---
+
+## Monte Carlo: estimando \\(\pi\\)
+
+```{r pi}
+x <- runif(100000)
+y <- runif(100000)
+dentro <- x^2 + y^2 <= 1        # ponto no quarto de círculo
+4 * mean(dentro)                # estimativa de pi
+```
+
+--
+
+.caixa-discussao[
+Rode 5 vezes com 1.000 pontos e 5 vezes com 100.000. Qual das duas estimativas **varia** menos entre as rodadas? Esse é o
+motivo pelo qual bancos simulam **milhões** de cenários para medir risco.
+]
+
+---
+
+## Tabelas de contingência com a PNAD .tempo[10–30 min]
+
+```{r pnad-url, eval=FALSE}
+url <- "https://raydonal.github.io/matf14/Aulas2026/pnad_2026t2.csv"
+pnad <- read.csv(url)
+```
+
+```{r pnad-local, include=FALSE}
+pnad <- read.csv("pnad_2026t2.csv")
+```
+
+```{r pnad-sexo}
+sexo <- subset(pnad, recorte == "sexo")
+tab <- as.matrix(sexo[, c("ocupadas", "desocupadas", "fora")])
+rownames(tab) <- sexo$categoria
+tab                                   # mil pessoas, 2º trimestre de 2026
+round(prop.table(tab), 3)             # probabilidades conjuntas
+```
+
+---
+
+## Perfis linha e coluna
+
+```{r pnad-perfis}
+round(prop.table(tab, margin = 1), 3)   # P(condição | sexo)
+round(prop.table(tab, margin = 2), 3)   # P(sexo | condição)
+```
+
+.caixa-r[
+`margin = 1` divide pelo total da **linha** (condiciona no sexo); `margin = 2`, pelo total da **coluna** (condiciona
+na condição). Trocar um pelo outro é a **falácia da inversão**.
+]
+
+---
+
+## Probabilidade total com as regiões
+
+```{r pnad-regioes}
+reg  <- subset(pnad, recorte == "regiao")
+taxa <- reg$desocupadas / reg$forca        # P(desocupado | região)
+peso <- reg$forca / sum(reg$forca)         # P(região), na força de trabalho
+data.frame(regiao = reg$categoria, taxa = round(taxa, 3), peso = round(peso, 3))
+sum(taxa * peso)                           # taxa de desocupação do Brasil
+```
+
+---
+
+## Risco relativo e razão de chances
+
+```{r pnad-or}
+m <- as.numeric(sexo[sexo$categoria == "Mulheres", c("fora", "forca")])
+h <- as.numeric(sexo[sexo$categoria == "Homens",   c("fora", "forca")])
+R1 <- m[1] / sum(m); R0 <- h[1] / sum(h)            # P(fora | sexo)
+c(R1 = R1, R0 = R0, RR = R1 / R0,
+  OR = (m[1] * h[2]) / (m[2] * h[1]))
+```
+
+.caixa-discussao[
+Por que a razão de chances é bem maior que o risco relativo aqui? Refaça para "desocupada", usando só a força de
+trabalho (`ocupadas` e `desocupadas`). \\(OR\\) e \\(RR\\) ficam mais parecidos? Por quê?
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 6: condicional, independência e Monty Hall
+
+### 30–40 min
+
+---
+
+## Probabilidade condicional por simulação
+
+Alunos de uma faculdade (Aula 11): \\(P(\text{mulher}) = 85/200\\) e
+\\(P(\text{mulher} \mid \text{História}) = 20/30\\).
+
+```{r condicional}
+alunos <- tibble(
+  curso = rep(c("Medicina", "Direito", "História", "Física"), times = c(110, 30, 30, 30)),
+  sexo  = c(rep(c("M", "F"), c(70, 40)), rep(c("M", "F"), c(15, 15)),
+            rep(c("M", "F"), c(10, 20)), rep(c("M", "F"), c(20, 10))))
+
+sorteio <- alunos[sample(200, 100000, replace = TRUE), ]
+mean(sorteio$sexo == "F")                                   # perto de 0,425
+sorteio |> filter(curso == "História") |> summarise(mean(sexo == "F"))   # perto de 0,667
+```
+
+.caixa-r[
+`filter(curso == "História")` **restringe o espaço amostral**, exatamente como a definição de
+\\(P(\text{mulher} \mid \text{História})\\).
+]
+
+---
+
+## Independência por simulação
+
+Promotora com dois casos independentes: \\(P(\text{roubo}) = 0{,}8\\), \\(P(\text{sequestro}) = 0{,}7\\).
+
+```{r independencia}
+n <- 100000
+roubo     <- runif(n) < 0.8
+sequestro <- runif(n) < 0.7
+mean(roubo & sequestro)                  # teórico 0,8 x 0,7 = 0,56
+mean(sequestro[roubo])                   # P(sequestro | roubo): perto de 0,7 = P(sequestro)
+```
+
+--
+
+.caixa-discussao[
+Como você modificaria o código para que os dois casos **não** fossem independentes (por exemplo, a
+promotora ganha o sequestro com 90% de chance se ganhar o roubo, e 30% se perder)?
+]
+
+---
+
+## O problema de Monty Hall
+
+Há 3 portas: atrás de uma há um carro; atrás das outras, nada. Você escolhe uma porta. O
+apresentador, **que sabe** onde está o carro, abre uma das outras portas **sem** o prêmio e oferece:
+**trocar** de porta ou **manter**?
+
+--
+
+**Intuição comum:** "sobraram 2 portas, é 50%".
+
+```{r monty}
+jogar <- function(trocar) {
+  premio  <- sample(1:3, 1)
+  escolha <- sample(1:3, 1)
+  opcoes  <- setdiff(1:3, c(escolha, premio))            # portas que o apresentador pode abrir
+  aberta  <- if (length(opcoes) == 1) opcoes else sample(opcoes, 1)
+  final   <- if (trocar) setdiff(1:3, c(escolha, aberta)) else escolha
+  final == premio
+}
+c(trocando = mean(replicate(50000, jogar(TRUE))), mantendo = mean(replicate(50000, jogar(FALSE))))
+```
+
+---
+
+## Por que trocar dobra a chance?
+
+- A sua escolha inicial acerta com probabilidade \\(1/3\\), e **nada** do que o apresentador faz muda
+  isso.
+- Com probabilidade \\(2/3\\) o carro está numa das **outras** duas portas. O apresentador **elimina** a
+  vazia entre elas: trocar leva você ao carro em **todos** esses casos.
+
+--
+
+.caixa-discussao[
+A ação do apresentador **não é aleatória**: ele **sabe** onde está o carro. Por isso ela traz
+informação. Pense em 100 portas: você escolhe uma e ele abre 98 vazias. Você ainda acha que é 50%?
+]
+
+.caixa-aplicacao[
+Atualizar uma probabilidade com base em uma evidência é exatamente o que o **Teorema de Bayes** (Aula
+14) formaliza.
+]
+
+---
+
+## Exercícios 4 e 5 .tempo[40–50 min]
+
+.caixa-atividade[
+**4.** No problema do encontro, cada um espera só **10 minutos**. Estime a probabilidade de encontro por simulação e
+compare com o valor pela área, \\(1 - (50/60)^2\\).
+
+**5.** Com a coluna `informais` do arquivo da PNAD (entre os ocupados), calcule o risco relativo e a razão de chances de
+**informalidade** dos homens em relação às mulheres. Interprete.
+]
+
+---
+
+## Soluções 4 e 5
+
+```{r sol-4-5}
+comprador <- runif(100000, 0, 60); vendedor <- runif(100000, 0, 60)
+c(simulado = mean(abs(comprador - vendedor) <= 10), teorico = 1 - (50/60)^2)
+
+hom <- as.numeric(sexo[sexo$categoria == "Homens",   c("informais", "ocupadas")])
+mul <- as.numeric(sexo[sexo$categoria == "Mulheres", c("informais", "ocupadas")])
+Rh <- hom[1] / hom[2]; Rm <- mul[1] / mul[2]
+c(Rh = Rh, Rm = Rm, RR = Rh / Rm,
+  OR = (hom[1] * (mul[2] - mul[1])) / ((hom[2] - hom[1]) * mul[1]))
+```
+
+.caixa-resposta[
+**5.** A taxa de informalidade dos homens ocupados é um pouco maior que a das mulheres (\\(RR \approx 1{,}10\\)); como a
+informalidade é comum (mais de um terço), a razão de chances (\\(\approx 1{,}16\\)) fica acima do risco relativo.
+]
+
+---
+
+## Discussão do laboratório
+
+**1.** Quantas repetições são "suficientes"? Rode a estimativa da soma sete com 100, 1.000 e 100.000
+repetições, várias vezes cada. O que acontece com a **variação** entre as estimativas?
+
+**2.** Por que a simulação **não substitui** a conta? Em que situação a simulação é a única saída
+prática?
+
+**3.** Um colega diz: "simulei 10 vezes o Monty Hall e trocar ganhou só 5 vezes, então é 50%". O que
+está errado nesse raciocínio?
+
 
 ---
 
@@ -203,4 +594,4 @@ class: inverse, center, middle
 
 # Próxima aula (14/10)
 
-## Teorema de Bayes
+## Teorema da probabilidade total e Teorema de Bayes

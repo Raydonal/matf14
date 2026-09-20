@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 05}{Espaço amostral, eventos, axiomas de probabilidade e métodos de contagem (Cap. 2, Aulas 09--10)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito05.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Espaço amostral e eventos: carteira de dois ativos)}
 
@@ -93,5 +93,101 @@ eleitoral). Defina $\Omega$ com um nível de detalhe que você julgue razoável,
 por escrito, por que uma definição mais grosseira (menos categorias) ou mais fina (mais categorias)
 mudaria a análise que se pode fazer a partir dela.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Defina o espaço amostral de cada experimento:
+\begin{enumerate}[label=(\alph*)]
+  \item lançam-se dois dados e anota-se a configuração obtida;
+  \item conta-se o número de peças defeituosas, em uma hora, de uma linha de produção;
+  \item investigam-se famílias com três crianças e anota-se a configuração segundo o sexo;
+  \item numa entrevista telefônica com cinco assinantes, pergunta-se se o proprietário tem ou não máquina de secar roupa;
+  \item de um fichário com dois nomes de mulheres e dois de homens, sorteia-se uma ficha por vez até sair o último nome de mulher.
+\end{enumerate}
+\item Uma moeda é lançada três vezes. Seja $A_i$ o evento \emph{cara no $i$-ésimo lançamento}. Liste os elementos de:
+\begin{enumerate}[label=(\alph*)]
+  \item $A_1^c \cap A_3$
+  \item $A_1^c \cup A_3$
+  \item $(A_1^c \cap A_3^c)^c$
+  \item $A_1 \cap (A_2 \cup A_3)$
+\end{enumerate}
+\item O espaço amostral é o intervalo $[0, 1]$. Sejam $A = \{x : 1/4 \leq x \leq 7/10\}$ e $B = \{x : 1/2 \leq x \leq 9/10\}$. Determine:
+\begin{enumerate}[label=(\alph*)]
+  \item $A^c$
+  \item $A \cap B^c$
+  \item $(A \cup B)^c$
+  \item $A^c \cup B$
+\end{enumerate}
+\item Uma cidade tem 20 mil habitantes e três jornais, A, B e C. Uma pesquisa revela que 12 mil leem A, 8 mil leem B, 7 mil leem A e B, 6 mil leem C, 4.500 leem A e C, 1.000 leem B e C, e 500 leem os três. Sorteado um respondente, qual é a probabilidade de que ele leia
+\begin{enumerate}[label=(\alph*)]
+  \item pelo menos um jornal?
+  \item somente um jornal? (Dica: faça o diagrama de Venn.)
+\end{enumerate}
+\item Estudantes de um curso de introdução à Economia, segundo o ano e se buscam especialização em Economia: 1 (2º, sim), 2 (4º, não), 3 (3º, sim), 4 (1º, não), 5 (1º, sim), 6 (2º, sim), 7 (2º, sim), 8 (3º, não), 9 (2º, sim), 10 (2º, não). Um estudante é escolhido ao acaso. Qual a probabilidade de ele ser
+\begin{enumerate}[label=(\alph*)]
+  \item do segundo ano?
+  \item de especialização em Economia?
+  \item do primeiro ou do segundo ano?
+  \item de um ano diferente do primeiro?
+\end{enumerate}
+\item Um estudante responde ao acaso a duas questões: uma de verdadeiro/falso e outra de múltipla escolha com cinco alternativas. Qual a probabilidade de ele acertar
+\begin{enumerate}[label=(\alph*)]
+  \item a de verdadeiro/falso?
+  \item a de múltipla escolha?
+  \item ambas?
+  \item nenhuma?
+\end{enumerate}
+\item De um grupo de 5 mulheres e 7 homens, quantos comitês diferentes com 2 mulheres e 3 homens podem ser formados? E se dois dos homens se recusam a trabalhar juntos?
+\item Uma remessa de 150 celulares tem 40 defeituosos. Vinte são escolhidos ao acaso, sem reposição. Escreva a expressão, com combinações, da probabilidade de exatamente 9 defeituosos na amostra.
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: novos tópicos e dados reais}
+\noindent\textit{Exercícios sobre os tópicos acrescentados ao Capítulo 2 do livro e às aulas.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+
+\item \textbf{(Interpretações de probabilidade.)} Diga qual interpretação (clássica, frequentista ou subjetiva) sustenta cada número:
+\begin{enumerate}[label=(\alph*)]
+  \item a chance de uma empresa específica ser sorteada para fiscalização entre 500 cadastradas é $1/500$;
+  \item ``a probabilidade de inadimplência deste tipo de empréstimo é 3,2\%'', calculada com dez anos de contratos;
+  \item ``há 70\% de chance de o Copom cortar a Selic na próxima reunião'', segundo um analista;
+  \item um analista aceita comprar ou vender, por $p$ reais, bilhetes que pagam R\$ 1 se o evento ocorrer. Ele atribui
+    $P(\text{Selic sobe}) = 0{,}55$ e $P(\text{Selic não sobe}) = 0{,}50$. Mostre como um investidor pode ganhar dinheiro com certeza.
+\end{enumerate}
+
+\item \textbf{(Axiomas de Kolmogorov.)} Usando apenas os axiomas e as propriedades vistas em aula:
+\begin{enumerate}[label=(\alph*)]
+  \item mostre que $P(A \cap B^c) = P(A) - P(A \cap B)$;
+  \item mostre que $P(A \cap B) \geq P(A) + P(B) - 1$ (desigualdade de Bonferroni);
+  \item em uma pesquisa, 65\% das empresas exportam e 55\% importam. Qual a menor e qual a maior proporção possível de
+    empresas que fazem as duas coisas?
+\end{enumerate}
+
+\item \textbf{(Os quatro tipos de contagem.)} Para cada situação, diga se a ordem importa e se há repetição, e conte:
+\begin{enumerate}[label=(\alph*)]
+  \item senhas de 6 caracteres formadas com 26 letras e 10 algarismos, podendo repetir;
+  \item ordens possíveis de apresentação de 7 propostas em uma licitação;
+  \item comissões de 3 pessoas escolhidas entre 12 servidores;
+  \item escolhas de presidente, vice e tesoureiro entre os mesmos 12 servidores;
+  \item formas de distribuir 8 bolsas de estudo idênticas entre 4 cursos (algum curso pode ficar sem bolsa).
+\end{enumerate}
+
+\item \textbf{(Auditoria.)} Um lote tem 50 contratos, dos quais 5 são irregulares. O auditor sorteia 6 contratos.
+\begin{enumerate}[label=(\alph*)]
+  \item Sem reposição, qual a probabilidade de nenhum contrato irregular na amostra? E de pelo menos um?
+  \item Refaça (a) supondo sorteio \emph{com} reposição e compare. Por que os valores são próximos?
+\end{enumerate}
+
+\item \textbf{(Quando contar não basta.)} Um colega afirma: "ao lançar três moedas, o número de caras pode ser 0, 1, 2 ou 3;
+logo $P(\text{duas caras}) = 1/4$``. Aponte o erro e calcule a probabilidade correta. Faça o mesmo para ''a soma de dois dados
+vai de 2 a 12, logo $P(\text{soma } 7) = 1/11$".
+
+\end{enumerate}
 
 \end{document}

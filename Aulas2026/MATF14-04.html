@@ -20,235 +20,635 @@ class: inverse, center, middle
 
 # Aula 04: Medidas de tendência central
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## "Salário médio subiu 3%": médio segundo quem?
+## Roteiro da aula (100 minutos)
 
-&gt; Um sindicato e uma empresa negociam reajuste. A empresa cita a **média** salarial da categoria; o
-&gt; sindicato cita a **mediana**. Os dois números vêm dos mesmos dados. Por que cada lado escolhe um?
+.roteiro[
 
---
+| Tempo | Parte 1: moda, mediana e média |
+|:---|:---|
+| 0–8 min | Provocação: três palavras que você lê todo dia |
+| 8–15 min | Por que resumir? Moda |
+| 15–30 min | Mediana: n ímpar ou par |
+| 30–42 min | Média |
+| 42–50 min | Média é sensível a extremos; mediana não |
 
-&gt; Se você soubesse de antemão que a resposta depende da forma da distribuição salarial, que
-&gt; pergunta faria antes de aceitar qualquer um dos dois números?
+| Tempo | Parte 2: usando as medidas |
+|:---|:---|
+| 0–10 min | **Atividade 1**: contribuições beneficentes; quando usar cada medida |
+| 10–22 min | Forma dos dados; média a partir de tabelas |
+| 22–30 min | Dados reais: PIB per capita, média simples e ponderada |
+| 30–40 min | Notas em classes; prefeitos e municípios |
+| 40–46 min | **Atividade 2**: discussão |
+| 46–50 min | Uso do R e resumo |
 
----
-
-class: inverse, center, middle
-
-# Bloco 1: Teoria
-
----
-
-## Média, mediana e moda
-
-$$
-\bar{x} = \frac{1}{n}\sum\_{i=1}^n x\_i
-\qquad\qquad
-\text{Mediana} = \begin{cases} x\_{(\frac{n+1}{2})}, &amp; n \text{ ímpar} \\ \frac{x\_{(n/2)} + x\_{(n/2+1)}}{2}, &amp; n \text{ par}\end{cases}
-$$
-
-**Moda**: valor/categoria mais frequente, a única que faz sentido para variável qualitativa.
-
---
-
-## Quando elas divergem
-
-Em distribuições **simétricas**: média ≈ mediana ≈ moda.
-
-Em distribuições **assimétricas à direita** (cauda longa de valores altos, renda, faturamento):
-
-$$
-\text{moda} &amp;lt; \text{mediana} &amp;lt; \text{média}
-$$
-
-A média é "puxada" pelos valores extremos; a mediana não.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 1: moda, mediana e média
+
+### 50 minutos
+
+---
+
+## Provocação: três palavras que você lê todo dia .tempo[0–8 min]
+
+&lt;img src="images/moda_noticia_veja.png" alt="" width="52%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/mediana_ipca15_valor.png" alt="" width="52%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/media_renda_estados_agbrasil.png" alt="" width="58%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fontes: Veja (14/11/2024); Valor Econômico (27/03/2025); Agência Brasil (28/02/2025).]
+
+---
+
+## O que cada manchete quer dizer?
+
+- A "moda" da Veja é o que **mais aparece**: é exatamente o sentido estatístico.
+- "Abaixo da **mediana** do mercado": metade dos analistas previa uma inflação maior que um certo
+  valor, e a outra metade, menor. Por que o jornal usa a mediana, e não a média das previsões?
+- "Renda acima da **média** nacional": quantos estados você esperaria acima da média? Metade?
+
+--
+
+.caixa-discussao[
+**Pergunta da aula.** Um sindicato cita a **mediana** dos salários de uma categoria; a empresa cita
+a **média**. Os dois números vêm **dos mesmos dados**. Por que cada lado escolhe um, e quem está
+"certo"?
+]
+
+---
+
+## Por que resumir? .tempo[8–15 min]
+
+- Uma **tabela de frequências** já resume os dados e é mais informativa que a lista bruta.
+- Podemos resumir **ainda mais**, com um **único valor representativo**.
+
+--
+
+.caixa-aplicacao[
+**Medidas de tendência central** (ou de posição central) são valores em torno dos quais os dados
+tendem a se concentrar. As três principais são a **moda**, a **mediana** e a **média**.
+]
+
+--
+
+Durante toda a aula vamos usar os mesmos cinco dados como exemplo:
+
+$$
+3,\quad 4,\quad 7,\quad 8,\quad 8
+$$
+
+---
+
+## Moda
+
+A **moda** \\((Mo)\\) é o valor **mais frequente** do conjunto de dados.
+
+- Dados \\(3, 4, 7, 8, 8\\): o valor 8 aparece duas vezes, os demais uma vez. **Moda = 8**.
+
+--
+
+- Também serve para **variáveis qualitativas**: é a **categoria mais comum**. Entre as marcas de
+  carros emplacados no Brasil em 2024, a mais vendida foi a Fiat: Fiat é a **moda** da variável
+  "marca".
+
+--
+
+- Um conjunto pode ter **mais de uma moda** ou **nenhuma**:
+
+| Dados | Moda |
+|:---|:---|
+| \\(2, 3, 3, 5, 7, 7\\) | 3 e 7 (**bimodal**) |
+| \\(1, 4, 6, 9\\) | não há moda (todos com frequência 1) |
+
+.caixa-discussao[
+A moda é a **única** das três medidas que faz sentido para variável qualitativa **nominal**. Qual
+seria a "média" da variável "marca do carro"?
+]
+
+---
+
+## Mediana .tempo[15–30 min]
+
+A **mediana** \\((Md)\\) é o valor que fica **no meio** dos dados **ordenados**, separando-os em
+duas partes de mesmo tamanho.
+
+- Dados \\(3, 4, 7, 8, 8\\): o valor do meio é **7**. Dois valores abaixo, dois acima.
+
+--
+
+&lt;img src="images/mediana_idade_censo2022.png" alt="" width="75%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: G1, sobre o Censo 2022 do IBGE (27/10/2023).]
+
+--
+
+.caixa-aplicacao[
+"Idade mediana de 35 anos" **não** quer dizer que a idade típica é 35, nem que 35 é a idade média:
+quer dizer que **50%** da população tem **até** 35 anos.
+]
+
+---
+
+## Cálculo da mediana: \\(n\\) ímpar ou par
+
+**Passo 1.** Ordene os dados: \\(x\_{(1)} \le x\_{(2)} \le \cdots \le x\_{(n)}\\).
+
+**Passo 2.** Use a posição central:
+
+$$
+Md = \begin{cases}
+x\_{((n+1)/2)}, &amp; \text{se } n \text{ for ímpar},\\\\[4pt]
+\dfrac{x\_{(n/2)} + x\_{(n/2+1)}}{2}, &amp; \text{se } n \text{ for par}.
+\end{cases}
+$$
+
+--
+
+.pull-left[
+**\\(n\\) ímpar:** \\(30, 40, 70, 80, 80\\), \\(n = 5\\).
+
+Posição \\((5+1)/2 = 3\\).
+
+**Mediana = 70**.
+]
+
+.pull-right[
+**\\(n\\) par:** \\(30, 40, 70, 80, 80, 100\\), \\(n = 6\\).
+
+Posições \\(6/2 = 3\\) e \\(6/2+1 = 4\\).
+
+**Mediana = \\((70 + 80)/2 = 75\\)**.
+]
+
+---
+
+## Média .tempo[30–42 min]
+
+A **média** (aritmética) \\(\bar x\\) é a **soma** dos valores dividida pelo **número** de valores.
+Se temos \\(n\\) valores \\(x\_1, x\_2, \ldots, x\_n\\):
+
+$$
+\bar x = \frac{x\_1 + x\_2 + \cdots + x\_n}{n} = \frac{1}{n}\sum\_{i=1}^{n} x\_i
+$$
+
+--
+
+Dados \\(3, 4, 7, 8, 8\\), com \\(n = 5\\):
+
+$$
+\bar x = \frac{3 + 4 + 7 + 8 + 8}{5} = \frac{30}{5} = 6
+$$
+
+--
+
+&lt;img src="images/media_refrigerante_bbc.png" alt="" width="68%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: BBC News Brasil.]
+
+.small[Aqui a unidade é o **domicílio**: "270,9 litros por domicílio por ano" é o total consumido
+dividido pelo número de domicílios.]
+
+---
+
+## Média é sensível a extremos; mediana não .tempo[42–50 min]
+
+Troque o último 8 por **80** (um erro de digitação, ou um caso raro):
+
+| Dados | Média | Mediana | Moda |
+|:---|:---:|:---:|:---:|
+| \\(3, 4, 7, 8, 8\\) | \\(30/5 = 6\\) | 7 | 8 |
+| \\(3, 4, 7, 8, 80\\) | \\(102/5 = 20{,}4\\) | 7 | não há |
+
+--
+
+.caixa-aplicacao[
+Um **único** valor mudou a média de 6 para 20,4, e ela deixou de representar **qualquer** dos cinco
+dados. A mediana continuou 7: ela só depende de **qual valor está no meio**, não do tamanho dos
+extremos.
+]
+
+--
+
+.caixa-discussao[
+Agora releia a manchete do IPCA-15: por que um jornal econômico prefere a **mediana** das previsões
+de dezenas de analistas, e não a média?
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: usando as medidas
+
+### 50 minutos
+
+---
+
+## Exercício: contribuições beneficentes .tempo[0–10 min]
+
+Uma voluntária pede contribuições no bairro em que mora para um trabalho beneficente e recebe (em
+reais):
+
+$$
+5,\quad 10,\quad 85,\quad 15,\quad 18,\quad 2,\quad 5
+$$
+
+**a)** Calcule a moda, a mediana e a média. **b)** Qual medida representa melhor as contribuições?
+
+--
+
+**Ordenando:** \\(2,\ 5,\ 5,\ 10,\ 15,\ 18,\ 85\\) \\((n = 7)\\).
+
+- **Moda:** 5 (aparece duas vezes).
+- **Mediana:** posição \\((7+1)/2 = 4\\) \\(\Rightarrow\\) **10**.
+- **Média:** \\((2+5+5+10+15+18+85)/7 = 140/7 =\\) **20**.
+
+--
+
+.caixa-resposta[
+**b)** A **mediana**. Seis das sete contribuições são de até 18 reais; a média (20) fica acima de
+**todas** elas, puxada por uma única doação de 85 reais.
+]
+
+---
+
+## Quando usar cada medida?
+
+.pull-left[
+**Moda**
+
+- Mais simples; faz sentido em dados **discretos** ou **qualitativos**.
+- Ex.: número de sapato mais vendido por uma loja; partido mais votado.
+
+**Média**
+
+- A mais usada e conhecida; usa **todos** os valores.
+- Mais adequada para distribuições **simétricas**.
+- Ex.: peso, altura, notas.
+]
+
+.pull-right[
+**Mediana**
+
+- Mais indicada para distribuições **assimétricas**.
+- **Menos sensível** a valores extremos (outliers).
+- Ex.: renda dos funcionários de uma empresa, PIB dos municípios, preço de imóveis.
+
+.caixa-discussao[
+Por que o IBGE divulga o **rendimento mediano** do trabalho, e não só o médio?
+]
+]
+
+---
+
+## As três medidas revelam a forma dos dados .tempo[10–22 min]
+
+&lt;img src="MATF14-04_files/figure-html/formas-1.png" alt="" width="100%" /&gt;
+
+| Forma | Relação usual |
+|:---|:---|
+| Simétrica | média \\(\approx\\) mediana \\(\approx\\) moda |
+| Assimétrica à direita (cauda longa de valores **altos**) | moda &amp;lt; mediana &amp;lt; média |
+| Assimétrica à esquerda (cauda longa de valores **baixos**) | média &amp;lt; mediana &amp;lt; moda |
 
 ---
 
 ## Média a partir de uma tabela de frequências
 
-Quando os dados já vêm resumidos em contagens `\(n\_i\)` para cada valor `\(x\_i\)`, não é preciso voltar
-aos dados brutos: a mesma média de sempre pode ser escrita ponderada pela frequência
-`\(f\_i = n\_i/n\)`:
+Se os dados têm \\(k\\) valores possíveis \\(x\_1, \ldots, x\_k\\), com frequências absolutas
+\\(n\_1, \ldots, n\_k\\) e relativas \\(f\_i = n\_i/n\\):
 
+.pull-left-40[
+| Valor | Freq. abs. | Freq. rel. |
+|:---:|:---:|:---:|
+| \\(x\_1\\) | \\(n\_1\\) | \\(f\_1 = n\_1/n\\) |
+| \\(\vdots\\) | \\(\vdots\\) | \\(\vdots\\) |
+| \\(x\_k\\) | \\(n\_k\\) | \\(f\_k = n\_k/n\\) |
+| **Total** | \\(n\\) | \\(1\\) |
+]
+
+.pull-right-60[
 $$
-\bar X = \frac{1}{n}\sum\_{i=1}^k n\_i x\_i = \sum\_{i=1}^k f\_i x\_i
+\bar x = \frac{1}{n}\sum\_{i=1}^{k} n\_i\, x\_i = \sum\_{i=1}^{k} f\_i\, x\_i
 $$
 
---
+Cada valor entra na soma **tantas vezes quanto aparece**: é uma média **ponderada** pelas
+frequências.
 
-**Exemplo: número de funcionários em 80 microempresas**
-
-| `\(x\_i\)` (funcionários) | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|---|---|---|---|
-| `\(n\_i\)` | 8 | 15 | 22 | 18 | 12 | 5 |
-
-`\(n = 8+15+22+18+12+5 = 80\)`
+**Moda** e **mediana** são calculadas como antes, lendo a tabela ordenada.
+]
 
 ---
 
-## Resolvendo na mão
+## Exemplo: número de filhos em 46 famílias
 
-$$
-\sum\_i n\_i x\_i = 0(8)+1(15)+2(22)+3(18)+4(12)+5(5) = 186
-$$
-
-$$
-\bar X = \frac{186}{80} = 2{,}325 \approx 2{,}33 \text{ funcionários}
-$$
+| Nº de filhos \\((x\_i)\\) | 0 | 1 | 2 | 3 | 4 | 5 | Total |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Freq. absoluta \\((n\_i)\\) | 9 | 10 | 14 | 9 | 3 | 1 | 46 |
+| Freq. acumulada | 9 | 19 | 33 | 42 | 45 | 46 | |
+| Posições ordenadas | 1–9 | 10–19 | 20–33 | 34–42 | 43–45 | 46 | |
 
 --
 
-**Mediana**: acumulando frequências, `\(8 \to 23 \to 45 \to \ldots\)`; a 40ª e a 41ª posição (de 80)
-caem na classe `\(x=2\)` (acumulado passa de 23 para 45 aí), logo mediana `\(=2\)`.
-
-**Moda**: a classe de maior `\(n\_i\)` é `\(x=2\)` (com `\(n\_i=22\)`), logo moda `\(=2\)`.
+- **Moda:** \\(x = 2\\), a maior frequência \\((14)\\).
+- **Mediana:** \\(n = 46\\) é par \\(\Rightarrow\\) média das posições 23 e 24. As duas caem em
+  "20–33", ou seja, em \\(x = 2\\). **Mediana = 2**.
 
 --
 
-Média (`\(2{,}33\)`) `\(\approx\)` mediana (`\(2\)`) `\(\approx\)` moda (`\(2\)`): distribuição pouco assimétrica.
+- **Média:**
+
+$$
+\bar x = \frac{0\cdot 9 + 1\cdot 10 + 2\cdot 14 + 3\cdot 9 + 4\cdot 3 + 5\cdot 1}{46} = \frac{0 + 10 + 28 + 27 + 12 + 5}{46} = \frac{82}{46} \approx 1{,}78
+$$
+
+---
+
+## Exercício: funcionários em 80 microempresas
+
+Um escritório de contabilidade registrou o número de funcionários no setor administrativo de 80
+microempresas:
+
+| Nº de funcionários | 0 | 1 | 2 | 3 | 4 | 5 |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Freq. absoluta | 8 | 15 | 22 | 18 | 12 | 5 |
+
+**a)** Moda. **b)** Mediana. **c)** Média.
+
+--
+
+.caixa-resposta[
+**a)** Moda = 2 (frequência 22).
+
+**b)** Acumuladas: 8, 23, **45**, 63, 75, 80. As posições 40 e 41 estão entre a 24ª e a 45ª, isto é,
+em \\(x = 2\\): **mediana = 2**.
+
+**c)** \\(\bar x = (0\cdot8 + 1\cdot15 + 2\cdot22 + 3\cdot18 + 4\cdot12 + 5\cdot5)/80 = 186/80 \approx 2{,}33\\).
+]
+
+---
+
+## Dados reais: PIB per capita, média simples e ponderada .tempo[22–30 min]
+
+
+
+Com o PIB e a população de 2021 dos 27 estados:
+
+.pull-left[
+- **Média simples** dos PIBs per capita estaduais: R$ 36.683.
+- **Mediana** dos estados: R$ 30.804.
+- **PIB per capita do Brasil** (PIB total ÷ população total): R$ 42.248.
+]
+
+.pull-right[
+.caixa-aplicacao[
+O PIB per capita do Brasil é uma **média ponderada** dos estados, com pesos iguais às populações:
+
+$$
+\bar x\_{\text{Brasil}} = \sum\_{i} \frac{\text{pop}\_i}{\text{pop total}}\\, \bar x\_i
+$$
+]
+]
+
+.clear[]
+
+.caixa-discussao[
+Por que a média ponderada fica **acima** da média simples? (Dica: onde estão os estados mais populosos?) Qual das três
+medidas você usaria para dizer "o estado típico"?
+]
+
+.fonte[Fonte: IBGE, Contas Regionais (tabela 5938) e Estimativas de População (tabela 6579).]
+
+---
+
+## Dados em classes: notas da Prova 1 (2025.2) .tempo[30–40 min]
+
+.pull-left[
+&lt;img src="images/notas_prova1_matf14.png" alt="" width="100%" /&gt;
+
+.fonte[Dados de uma turma de MATF14.]
+
+Quando só temos as **classes**, usamos o **ponto médio** \\(c\_i\\) de cada classe no lugar dos
+valores.
+]
+
+.pull-right[.small[
+| Classe | \\(c\_i\\) | \\(n\_i\\) | \\(c\_i\, n\_i\\) |
+|:---:|:---:|:---:|:---:|
+| &amp;#91;1, 2) | 1,5 | 1 | 1,5 |
+| &amp;#91;2, 3) | 2,5 | 1 | 2,5 |
+| &amp;#91;3, 4) | 3,5 | 3 | 10,5 |
+| &amp;#91;4, 5) | 4,5 | 3 | 13,5 |
+| &amp;#91;5, 6) | 5,5 | 5 | 27,5 |
+| &amp;#91;6, 7) | 6,5 | 2 | 13,0 |
+| &amp;#91;7, 8) | 7,5 | 5 | 37,5 |
+| &amp;#91;8, 9) | 8,5 | 5 | 42,5 |
+| &amp;#91;9, 10&amp;#93; | 9,5 | 7 | 66,5 |
+| **Total** | | **32** | **215,0** |
+]]
+
+---
+
+## Notas da Prova 1: as três medidas
+
+- **Média (aproximada):** \\(\bar x \approx 215/32 \approx 6{,}72\\).
+
+- **Classe mediana:** \\(n = 32\\), posições 16 e 17. Acumuladas: 1, 2, 5, 8, 13, **15, 20**, ...
+  As posições 16 e 17 estão na classe **[7, 8)**, ponto médio 7,5.
+
+- **Classe modal:** **[9, 10]**, com 7 alunos, ponto médio 9,5.
+
+--
+
+.caixa-aplicacao[
+Média (6,72) &amp;lt; mediana (≈ 7,5) &amp;lt; moda (≈ 9,5): a distribuição das notas é **assimétrica à
+esquerda**. A maioria foi bem (19 dos 32 alunos tiraram 6 ou mais), mas uma cauda de notas baixas
+puxa a média para baixo.
+]
+
+.caixa-discussao[
+Por que o resultado com classes é **aproximado**? Em que situação o ponto médio subestimaria a média
+verdadeira de uma classe?
+]
+
+---
+
+## Dados reais: prefeitos e municípios brasileiros
+
+Base com os **5.232** municípios de até 100 mil habitantes e seus prefeitos (eleições de 2020).
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Variável &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Média &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mediana &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Idade do prefeito (anos) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49,8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50,0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; População estimada em 2021 (hab.) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.194,6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.932,5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;img src="MATF14-04_files/figure-html/prefeitos-hist-1.png" alt="" width="100%" /&gt;
+
+.small[Linha vermelha cheia: **média**. Linha verde tracejada: **mediana**.]
+
+---
+
+## Lendo os dois histogramas
+
+.caixa-aplicacao[
+**Idade dos prefeitos:** média 49,8 e mediana 50 praticamente coincidem, e o histograma é quase
+simétrico.
+
+**População dos municípios:** a média (≈ 17,2 mil) é **57% maior** que a mediana (≈ 10,9 mil). Poucos
+municípios grandes formam uma cauda longa à direita. A **metade** dos municípios tem menos de 11 mil
+habitantes, e o "município médio" de 17 mil habitantes não descreve o município típico.
+]
+
+--
+
+.caixa-discussao[
+A moda da idade é 54 anos (190 prefeitos), mas 48 anos tem 186 e 43 anos tem 181. Faz sentido dizer
+que "a idade típica de um prefeito é 54 anos"? O que isso mostra sobre a moda de uma variável com
+muitos valores possíveis?
+]
+
+---
+
+## Atividade 2: voltando ao sindicato e à empresa .tempo[40–46 min]
+
+**1.** Salários costumam ter distribuição **assimétrica à direita** (poucos salários muito altos).
+Qual é maior, a média ou a mediana? Por que a empresa prefere citar a média, e o sindicato, a
+mediana?
+
+**2.** Algum dos dois números é "errado"? Que **terceira** informação você pediria para decidir
+qual deles descreve melhor o trabalhador típico?
+
+--
+
+**3.** Nas 106 empresas da nossa base, o **faturamento** tem média de 334,3 mil e mediana de
+327,9 mil; o **número de empregados** tem média de 60,7 e mediana de 34. Em qual das duas
+variáveis a média é enganosa como "valor típico"? O que você espera ver nos histogramas?
+
+---
+
+## Atividade 2 (cont.): médias nas notícias
+
+**4.** "Nove estados e o DF têm renda por pessoa **acima da média nacional**." São 27 unidades da
+federação. Se a média nacional fosse substituída pela **mediana das 27 UFs**, quantas estariam acima
+dela? Por que a manchete com a média é mais informativa sobre **desigualdade regional**?
+
+**5.** Um fundo anuncia "retorno **médio** de 15% ao ano nos últimos 5 anos". Os retornos foram
+\\(-10\\%,\ 2\\%,\ 3\\%,\ 5\\%,\ 75\\%\\). Calcule a média e a mediana. Qual número você usaria para
+decidir investir?
+
+--
+
+**6.** É possível que a moda fique **fora** do intervalo entre a média e a mediana? Teste com os
+dados \\(1, 1, 1, 6, 7, 8, 9, 9\\).
+
+--
+
+.caixa-resposta[
+**5.** Média \\(= 75/5 = 15\\%\\), mediana \\(= 3\\%\\): um único ano excepcional sustenta o anúncio.
+**6.** Moda \\(= 1\\), mediana \\(= (6+7)/2 = 6{,}5\\), média \\(= 42/8 = 5{,}25\\): a moda fica **abaixo**
+das duas, fora do intervalo.
+]
+
+---
+
+## Uso do R: média, mediana e moda .tempo[46–50 min]
 
 
 ``` r
-x_i &lt;- 0:5; n_i &lt;- c(8, 15, 22, 18, 12, 5)
-x_bruto &lt;- rep(x_i, times = n_i)          # reconstrói os 80 valores individuais
-c(n = length(x_bruto), media = mean(x_bruto), mediana = median(x_bruto))
+x &lt;- c(5, 10, 85, 15, 18, 2, 5)          # contribuições
+mean(x)      # 20
+median(x)    # 10
+table(x)     # frequências: a moda é o valor de maior contagem
+
+# o R não tem função pronta para a moda estatística (mode() é outra coisa!)
+moda &lt;- function(v) { t &lt;- table(v); names(t)[t == max(t)] }
+moda(x)      # "5"
+
+# a partir de uma tabela de frequências
+valores &lt;- 0:5; freq &lt;- c(9, 10, 14, 9, 3, 1)
+weighted.mean(valores, w = freq)                 # 1,78
+median(rep(valores, times = freq))               # reconstrói os 46 dados: 2
 ```
 
-```
-##       n   media mediana 
-##  80.000   2.325   2.000
-```
+.caixa-r[
+`mode(x)` no R devolve o **tipo** do objeto (`"numeric"`), não a moda. Cuidado com `NA`: use
+`mean(x, na.rm = TRUE)`.
+]
 
 ---
 
-## Faturamento das empresas: média vs. mediana
-
-
-``` r
-empresas |&gt; summarise(media = mean(faturamento99), mediana = median(faturamento99))
-```
-
-```
-##      media mediana
-## 1 334264.9  327898
-```
-
-A média é claramente maior que a mediana, evidência de assimetria à direita: poucas empresas muito
-grandes puxam a média para cima, enquanto a mediana continua descrevendo a empresa "típica".
-
----
-
-## O mesmo fenômeno em renda nacional
-
-É exatamente a lógica usada para relatar desigualdade: a renda média de um país é, quase sempre,
-maior que a renda mediana. A razão entre as duas já é, informalmente, um primeiro indício (bruto)
-de desigualdade, antes mesmo de calcular um índice de Gini.
-
-&lt;img src="MATF14-04_files/figure-html/hist-fat-1.png" alt="" width="504" /&gt;
-
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (bloco central da aula)
-
----
-
-## Rodada 1: volte à pergunta de abertura
-
-**1.** Explique, agora com vocabulário formal, por que a empresa prefere citar a média e o
-sindicato a mediana na negociação salarial. Isso torna algum dos dois números "errado"?
-
-**2.** Se você fosse o setor de comunicação de uma prefeitura querendo mostrar "cidade próspera",
-qual medida de tendência central do faturamento das empresas locais você destacaria? E se fosse um
-auditor fiscal avaliando concentração de riqueza?
-
----
-
-## Rodada 2: generalizando
-
-**3.** Dê um exemplo de uma variável econômica em que você esperaria média \\(\approx\\) mediana
-\\(\approx\\) moda (distribuição aproximadamente simétrica). O que essas três variáveis "bem
-comportadas" costumam ter em comum, em contraste com renda ou faturamento?
-
-**4.** É possível a moda estar **fora** do intervalo entre a média e a mediana (não seguir a ordem
-"moda &lt; mediana &lt; média" ou seu espelho)? Pense em uma distribuição bimodal para testar sua
-intuição.
-
-**5.** Retomando o Capítulo 1 do livro: um fundo de investimento anuncia "retorno médio anualizado
-de 15% nos últimos 5 anos". Que pergunta sobre a mediana anual (não só a média dos 5 anos) você
-faria antes de decidir investir?
-
----
-
-class: inverse, center, middle
-
-# Bloco 4: Uso do R
-
----
+## Uso do R: com dados reais
 
 
 ``` r
 library(tidyverse)
-empresas &lt;- read.csv("empresas.csv")
+prefeitos &lt;- read.csv("dados_prefeitos.csv")
+empresas  &lt;- read.csv("empresas.csv")
 
-empresas |&gt; summarise(
-  media   = mean(faturamento99),
-  mediana = median(faturamento99)
-)
+prefeitos |&gt; summarise(media = mean(Pop.estimada.2021), mediana = median(Pop.estimada.2021))
 
-# moda não tem função nativa no R: para variável qualitativa:
-empresas |&gt; count(porte, sort = TRUE) |&gt; slice(1)   # categoria mais frequente
+# média e mediana por região
+prefeitos |&gt; group_by(Regiao) |&gt;
+  summarise(media_idade = mean(idade), mediana_idade = median(idade))
+
+# moda de uma variável qualitativa: a categoria mais frequente
+prefeitos |&gt; count(escolaridade, sort = TRUE) |&gt; slice(1)
+
+empresas |&gt; summarise(media = mean(empregados99), mediana = median(empregados99))
 ```
 
-`mean()` e `median()` ignoram `NA` só se `na.rm = TRUE` for passado, checar sempre `sum(is.na(x))`
-antes de resumir uma variável real.
+.caixa-r[
+**Exercício:** faça o histograma de `empregados99` com linhas verticais na média e na mediana
+(`geom_vline()`) e compare com o de `faturamento99`.
+]
 
 ---
 
-## Dados da própria turma (semestre anterior)
+## Resumo
 
-.pull-left[
-&lt;img src="images/notas_prova1_matf14.png" alt="" width="95%" /&gt;
-]
-.pull-right[
-&lt;img src="images/letras_nomes_matf14.png" alt="" width="95%" /&gt;
-]
-
-Duas variáveis quantitativas reais de uma turma de MATF14: notas da Prova 1 (`\(n=32\)`), e número de
-letras no nome completo dos alunos (`\(n=37\)`).
-
----
-
-## Resolvendo com a fórmula de tabela de frequências
-
-Lendo a altura de cada barra do histograma de notas (classes de amplitude 1) e usando o ponto
-médio de cada classe como `\(x\_i\)`:
-
-$$
-\bar X = \sum\_i f\_i x\_i \approx 6{,}72 \qquad \text{Mediana} \approx 7{,}5 \qquad \text{Moda} \approx 9{,}5
-$$
-
---
-
-Como **média (`\(6{,}72\)`) &amp;lt; mediana (`\(7{,}5\)`) &amp;lt; moda (`\(9{,}5\)`)**, a distribuição das notas é
-**assimétrica à esquerda**: uma barra zerada em `\([6,7)\)` separa um grupo de alunos com notas baixas
-de um grupo maior com notas altas, o oposto da assimetria à direita do faturamento.
-
---
-
-Já para o número de letras nos nomes: `\(\bar X \approx 26{,}68\)`, mediana `\(=28\)`, moda `\(=28\)`, as três
-medidas próximas, uma distribuição quase simétrica.
+- **Moda:** valor (ou categoria) mais frequente. Pode não existir ou não ser única. Única medida para
+  variáveis nominais.
+- **Mediana:** valor central dos dados **ordenados**; posição \\((n+1)/2\\) se \\(n\\) é ímpar, média
+  das posições \\(n/2\\) e \\(n/2+1\\) se \\(n\\) é par. Robusta a valores extremos.
+- **Média:** soma dos valores dividida por \\(n\\); usa todos os dados e é sensível a extremos.
+- **Tabela de frequências:** \\(\bar x = \frac{1}{n}\sum n\_i x\_i = \sum f\_i x\_i\\); com classes,
+  usa-se o ponto médio (resultado aproximado).
+- **Forma:** simétrica \\(\Rightarrow\\) média ≈ mediana ≈ moda; cauda à direita \\(\Rightarrow\\) média
+  &amp;gt; mediana; cauda à esquerda \\(\Rightarrow\\) média &amp;lt; mediana.
 
 ---
 

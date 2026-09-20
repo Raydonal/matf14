@@ -15,271 +15,609 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4.2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"), comment = "##")
+empresas  <- read.csv("empresas.csv")
+prefeitos <- read.csv("dados_prefeitos.csv")
+par_slide <- function() par(mar = c(4.2, 4.2, 2.5, 1), cex = 1.1)
 ```
 
 class: inverse, center, middle
 
 # Aula 07: Laboratório
 
-## Carregar dados, resumir e visualizar em R
+## R para estatística descritiva
 
-### Do CSV bruto ao boxplot e à correlação
+### Do comando básico ao boxplot e à correlação
 
----
-
-## Plano da aula prática
-
-1. Carregar `empresas.csv` em R (`read.csv()`), inspecionar o *dataframe*.
-2. Frequências de variáveis qualitativas.
-3. Medidas de posição e dispersão de variáveis quantitativas.
-4. Quantis e boxplot.
-5. Correlação entre faturamento 1998 e 1999.
-6. Exercício guiado com `dados_prefeitos.csv`.
-
-Não há laboratório de informática presencial neste semestre: todo o roteiro roda no
-**Google Colab**, no navegador, sem instalar nada. Funciona tanto acompanhando a aula
-projetada quanto reproduzindo depois em casa, no seu próprio computador.
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Google Colab: criando um notebook
+## Roteiro do laboratório (100 minutos)
 
-```{r colab-pagina, echo=FALSE, out.width="72%", fig.align='center'}
+.roteiro[
+
+| Tempo | Parte 1: primeiros passos no R |
+|:---|:---|
+| 0–12 min | Abrir o R no Google Colab e enviar os arquivos |
+| 12–30 min | R como calculadora: operações, variáveis, vetores e funções |
+| 30–50 min | Gráficos com dados do próprio R (`chickwts`, `LakeHuron`) |
+
+| Tempo | Parte 2: a Unidade 1 no computador |
+|:---|:---|
+| 0–30 min | `empresas.csv`: frequências, posição, quartis, dispersão, boxplot, correlação |
+| 30–45 min | **Atividade**: exercício com `dados_prefeitos.csv` |
+| 45–50 min | Discussão do laboratório |
+
+]
+
+.caixa-aplicacao[
+**Não há laboratório presencial neste semestre.** Todo o roteiro roda no **Google Colab**, no
+navegador, em qualquer computador ou celular com conta Google. Acompanhe na aula projetada e
+**refaça em casa**, digitando os comandos.
+]
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: primeiros passos no R
+
+### 50 minutos
+
+---
+
+class: inverse, center, middle
+
+# Bloco 1: R no Google Colab
+
+---
+
+## Passo 1: abrir o Colab e criar um notebook .tempo[0–12 min]
+
+.pull-left[
+```{r colab-1, echo=FALSE, out.width="100%"}
 knitr::include_graphics("colab-07-01-pagina-colab.png")
 ```
 
-Acesse **colab.research.google.com** com sua conta Google e clique em **Novo notebook**.
+Acesse **colab.research.google.com** e entre com a sua conta Google.
+]
 
----
-
-## O notebook em branco
-
-```{r colab-novo, echo=FALSE, out.width="62%", fig.align='center'}
+.pull-right[
+```{r colab-2, echo=FALSE, out.width="100%"}
 knitr::include_graphics("colab-07-02-novo-notebook.png")
 ```
 
-Dê um nome ao notebook (canto superior esquerdo) para não perdê-lo depois entre vários
-notebooks sem nome.
+Menu **File** (Arquivo) → **New notebook in Drive** (Novo notebook).
+]
 
 ---
 
-## Por padrão, o Colab abre em Python
-
-```{r colab-pagina-notebook, echo=FALSE, out.width="62%", fig.align='center'}
-knitr::include_graphics("colab-07-03-pagina-notebook.png")
-```
-
-Antes de digitar qualquer código desta aula, é preciso trocar a linguagem do ambiente de
-execução de Python para **R**.
-
----
-
-## Trocando o ambiente de execução para R
+## Passo 2: trocar a linguagem de Python para R
 
 .pull-left[
-```{r colab-config, echo=FALSE, out.width="95%"}
+```{r colab-4, echo=FALSE, out.width="100%"}
 knitr::include_graphics("colab-07-04-config-notebook.png")
 ```
-Menu **Ambiente de execução** → **Alterar tipo de ambiente de execução**.
+
+Por padrão o notebook abre em **Python**. Menu **Edit** (Editar) → **Notebook settings**
+(Configurações do notebook).
 ]
 
---
-
 .pull-right[
-```{r colab-selecionar-r, echo=FALSE, out.width="95%"}
+```{r colab-5, echo=FALSE, out.width="100%"}
 knitr::include_graphics("colab-07-05-selecionar-r.png")
 ```
-Escolha **R** na lista de linguagens e confirme (**Salvar**).
+
+Em **Runtime type** (Tipo de ambiente de execução), escolha **R** e clique em **Save** (Salvar).
 ]
 
 ---
 
-## Enviando `empresas.csv` e `dados_prefeitos.csv` para o Colab
+## Passo 3: enviar os arquivos de dados
 
-```{r colab-upload, echo=FALSE, out.width="42%", fig.align='center'}
+.pull-left-60[
+```{r colab-6, echo=FALSE, out.width="100%"}
 knitr::include_graphics("colab-07-06-upload-arquivos.jpg")
 ```
 
-Clique no ícone de **pasta** na barra lateral esquerda e, na aba de arquivos, arraste os dois
-`.csv` desta aula (ou use o botão de upload). Repita sempre que reabrir o notebook, o
-armazenamento de sessão do Colab **não é permanente**.
+]
 
---
+.pull-right-40[
+- Baixe `empresas.csv` e `dados_prefeitos.csv` da página do curso.
+- No Colab, clique no ícone de **pasta** (barra lateral esquerda).
+- Arraste os dois arquivos para a aba **Arquivos**, ou use o botão de upload.
 
-Alternativa (só funciona enquanto o repositório da disciplina estiver público, evite depender
-disso para a prova): ler direto de uma URL, sem upload manual, com
-`read.csv("https://raw.githubusercontent.com/Raydonal/matf14/main/Aulas2026/empresas.csv")`.
+.caixa-discussao[
+O armazenamento do Colab **não é permanente**: ao reabrir o notebook outro dia, envie os arquivos
+de novo.
+]
+]
 
 ---
 
-## 1. Carregar e inspecionar
+class: inverse, center, middle
 
-```{r carregar}
+# Bloco 2: R como calculadora
+
+---
+
+## Operações e operadores lógicos .tempo[12–30 min]
+
+.pull-left[
+**Aritmética**
+
+```{r ops}
+1 + 1
+5 - 3
+2 * 3
+10 / 5
+2^3
+```
+
+]
+
+.pull-right[
+**Comparações** (devolvem `TRUE` ou `FALSE`)
+
+```{r logicos}
+5 > 3
+3 >= 3
+3 > 3
+5 == 3     # igual (dois sinais!)
+4 != 2     # diferente
+```
+
+]
+
+---
+
+## Tipos de dados e variáveis
+
+.pull-left[
+```{r tipos}
+class(0.5)
+class(TRUE)
+class("UFBA")
+```
+
+]
+
+.pull-right[
+Uma **variável** é como uma **caixa com nome**: o conteúdo pode mudar, o nome fica.
+
+```{r variaveis}
+x <- 2        # atribuição (também vale x = 2)
+5 * x
+x <- 20       # trocando o conteúdo
+idade <- 2 * x
+idade
+```
+
+]
+
+.clear[]
+
+.caixa-r[
+Aqui "variável" é um **objeto do R**. Não confunda com a **variável estatística** da Aula 01, que é
+uma característica medida nos dados (embora, no R, cada coluna de dados vire um objeto).
+]
+
+---
+
+## Vetores e funções
+
+Um **vetor** é uma lista **indexada** de valores do mesmo tipo: um armário de gavetas numeradas.
+
+```{r vetores}
+vet <- c(1, 2, 5, 8, 1, 3)   # c() "combina" valores
+vet[3]                        # o que está na gaveta 3
+vet[3] <- 99                  # trocando o conteúdo da gaveta 3
+vet
+length(vet)                   # quantos elementos
+```
+
+---
+
+## Funções
+
+Uma **função** recebe argumentos e devolve um resultado:
+
+```{r funcoes}
+seq(from = 1, to = 9)
+sum(vet)
+mean(c(3, 4, 7, 8, 8))
+```
+
+.caixa-r[
+Para ver a **ajuda** de qualquer função, digite `?` antes do nome: `?seq`, `?mean`, `?hist`.
+]
+
+---
+
+class: inverse, center, middle
+
+# Bloco 3: gráficos com dados do próprio R
+
+---
+
+## Peso de galinhas segundo o tipo de alimento .tempo[30–50 min]
+
+O R já vem com conjuntos de dados. `chickwts` vem de um estudo sobre a efetividade de diferentes
+suplementos no crescimento de galinhas:
+
+- `weight`: peso da galinha (quantitativa contínua);
+- `feed`: tipo de alimento (qualitativa nominal).
+
+```{r chick}
+data("chickwts")
+names(chickwts)
+chickwts$weight[1:5]      # os 5 primeiros pesos
+dim(chickwts)             # 71 galinhas, 2 variáveis
+```
+
+.caixa-r[
+Para **ver a tabela inteira**, rode `View(chickwts)` (no Colab, basta digitar `chickwts`).
+]
+
+---
+
+## Variável qualitativa: frequências e colunas
+
+.pull-left[
+```{r tab-feed}
+tpeso <- table(chickwts$feed)
+as.data.frame(tpeso)
+```
+
+```{r barras, eval=FALSE}
+barplot(tpeso, ylab = "Contagem",
+        xlab = "Alimento",
+        main = "Galinhas por alimento")
+```
+
+]
+
+.pull-right[
+```{r barras-out, echo=FALSE, fig.height=4.3, fig.width=5.5, out.width="100%"}
+par_slide()
+par(mar = c(6, 4.2, 2.5, 1)); barplot(tpeso, ylab = "Contagem", main = "Galinhas por alimento", col = "#7fb8cf", las = 2)
+```
+
+]
+
+---
+
+## Barras deitadas e setores
+
+.pull-left[
+```{r barras-h, fig.height=3.6, fig.width=5, out.width="100%"}
+par(mar = c(4, 7, 1, 1))
+barplot(tpeso, horiz = TRUE, las = 1)
+```
+
+]
+
+.pull-right[
+```{r pizza, fig.height=3.6, fig.width=5, out.width="100%"}
+par(mar = c(1, 1, 1, 1))
+pie(tpeso)
+```
+
+]
+
+.caixa-discussao[
+Olhando só a pizza, qual alimento tem mais galinhas: `soybean` ou `casein`? E no gráfico de barras?
+]
+
+---
+
+## Variável quantitativa: histograma e moda
+
+.pull-left[
+```{r hist-chick, fig.height=3.7, fig.width=5, out.width="100%"}
+hist(chickwts$weight,
+     main = "Peso das galinhas",
+     ylab = "Frequência", xlab = "Peso")
+```
+
+]
+
+.pull-right[
+**Média e mediana**
+
+```{r central-chick}
+mean(chickwts$weight)
+median(chickwts$weight)
+```
+
+**Classe modal** do histograma
+
+```{r moda-chick}
+h <- hist(chickwts$weight, plot = FALSE)
+h$mids[which.max(h$counts)]
+```
+
+]
+
+---
+
+## Série temporal: gráfico de linhas
+
+`LakeHuron`: nível anual do Lago Huron (EUA/Canadá), de 1875 a 1972.
+
+```{r huron, fig.height=3.3, fig.width=9, out.width="85%", fig.align="center"}
+data("LakeHuron")
+plot(LakeHuron, main = "Nível do Lago Huron", ylab = "Nível (pés)", xlab = "Ano")
+```
+
+.caixa-discussao[
+Por que um histograma do nível do lago **esconderia** a informação mais importante deste gráfico?
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: a Unidade 1 no computador
+
+### 50 minutos
+
+---
+
+class: inverse, center, middle
+
+# Bloco 4: a base de empresas
+
+---
+
+## Carregar e inspecionar .tempo[0–30 min]
+
+```{r ler, eval=FALSE}
 empresas <- read.csv("empresas.csv", header = TRUE)
-class(empresas)
-dim(empresas)
+```
+
+```{r inspecionar}
+class(empresas)     # uma tabela de dados: data.frame
+dim(empresas)       # 106 empresas (linhas), 11 variáveis (colunas)
 names(empresas)
 ```
 
----
-
-## Primeiros valores e tipos de coluna
-
-```{r inspecao}
-str(empresas[, c("porte", "empregados99", "faturamento99")])
-```
-
-`read.csv()` já reconhece números como `numeric`/`integer` e texto como `character`, mas cabe a
-você decidir se uma coluna de texto deveria virar `factor` (variável ordinal, por exemplo).
-
---
-
-**Atenção com dados brasileiros**: se a planilha usa vírgula como separador decimal (comum em
-exportações de Excel em pt-BR), `read.csv()` precisa do argumento `dec = ","`:
-`read.csv("empresas.csv", header = TRUE, dec = ",")`. Sem isso, a coluna decimal vira `character`
-e toda conta com ela falha silenciosamente ou gera `NA`.
+.caixa-r[
+Se a planilha usar **vírgula** como separador decimal (comum em arquivos gerados no Excel em
+português), use `read.csv("arquivo.csv", dec = ",")`. Sem isso, a coluna numérica vira texto.
+]
 
 ---
 
-## 2. Frequências de variável qualitativa
+## Frequências e medidas de posição
 
-```{r freq}
+.pull-left[
+**Variável qualitativa:** constituição jurídica
+
+```{r freq-const}
 table(empresas$constituicao)
+prop.table(table(empresas$constituicao))
 ```
 
-```{r freq-pct}
-prop.table(table(empresas$porte)) |> round(3)
-```
+]
 
----
+.pull-right[
+**Variável quantitativa:** idade da empresa (anos)
 
-## 3. Medidas de posição central
-
-```{r posicao}
+```{r posicao-idade}
 mean(empresas$idade)
 median(empresas$idade)
 summary(empresas$idade)
 ```
 
-`summary()` já devolve mínimo, quartis, média e máximo de uma vez, ótimo primeiro diagnóstico.
+]
 
 ---
 
-## Moda: cuidado com `mode()`
+## Quartis no histograma
 
-R não tem uma função `moda()` pronta, e `mode()` **não** é o que parece, devolve o modo de
-*armazenamento* do objeto, não a moda estatística:
-
-```{r moda}
-mode(empresas$faturamento99)                     # "numeric": armazenamento, não a moda!
-
-tab_setor <- table(empresas$setor)
-tab_setor[which.max(tab_setor)]                  # setor mais frequente, via which.max()
-```
-
----
-
-## Histograma da idade das empresas
-
-```{r hist-idade}
-hist(empresas$idade, main = "Idade das empresas", xlab = "Anos", ylab = "Frequência",
-     col = "#c9971e")
-```
-
----
-
-## 4. Quantis e boxplot
-
-```{r quantis}
+.pull-left[
+```{r quartis-idade}
 Q1 <- quantile(empresas$idade, 0.25)
 Q2 <- quantile(empresas$idade, 0.50)
 Q3 <- quantile(empresas$idade, 0.75)
-c(Q1 = Q1, Q2 = Q2, Q3 = Q3)
+c(Q1, Q2, Q3)
 ```
 
-```{r boxplot-idade, fig.height=3.3}
-boxplot(empresas$idade, ylab = "Idade da empresa", col = "#cfe8ef", horizontal = TRUE)
+```{r quartis-plot-code, eval=FALSE}
+hist(empresas$idade, main = "Idade",
+     xlab = "Anos", ylab = "Frequência")
+abline(v = Q1, lwd = 2, col = "blue")
+abline(v = Q2, lwd = 2, col = "red")
+abline(v = Q3, lwd = 2, col = "darkgreen")
+legend("topright", legend = c("Q1", "Q2", "Q3"),
+       fill = c("blue", "red", "darkgreen"))
 ```
+
+]
+
+.pull-right[
+```{r quartis-plot, echo=FALSE, fig.height=4.4, fig.width=5, out.width="100%"}
+par_slide()
+hist(empresas$idade, main = "Idade", xlab = "Anos", ylab = "Frequência", col = "grey90")
+abline(v = Q1, lwd = 3, col = "blue"); abline(v = Q2, lwd = 3, col = "red"); abline(v = Q3, lwd = 3, col = "darkgreen")
+legend("topright", legend = c("Q1", "Q2", "Q3"), fill = c("blue", "red", "darkgreen"), title = "Quartis")
+```
+
+]
 
 ---
 
 ## Medidas de dispersão
 
 ```{r dispersao}
-max(empresas$idade) - min(empresas$idade)   # amplitude total
-sd(empresas$idade)                          # desvio padrão (R usa divisor n-1)
-sd(empresas$idade) / mean(empresas$idade)   # coeficiente de variação
+max(empresas$idade) - min(empresas$idade)       # amplitude total
+IQR(empresas$idade)                              # distância interquartil
+var(empresas$idade)                              # variância (divisor n - 1)
+sd(empresas$idade)                               # desvio padrão (divisor n - 1)
+sd(empresas$idade) / mean(empresas$idade)        # coeficiente de variação
 ```
 
 ---
 
-## 5. Comparando 1998 e 1999: faturamento
+## Cuidados com `var()` e `sd()`
 
-```{r f98f99}
+```{r var-n}
+x <- empresas$idade
+mean((x - mean(x))^2)            # variância com divisor n (fórmula da aula)
+sqrt(mean((x - mean(x))^2))      # desvio padrão com divisor n
+```
+
+.caixa-r[
+**Atenção 1:** `var()` e `sd()` dividem por \\(n - 1\\). Nas nossas fórmulas o divisor é \\(n\\):
+use `mean((x - mean(x))^2)`. Com \\(n = 106\\), a diferença é pequena, mas em amostras pequenas não.
+
+**Atenção 2:** o \\(CV\\) é `sd / mean`, e não `mean / sd`. Trocar a ordem dá o **inverso** do
+coeficiente.
+]
+
+---
+
+## Faturamento: 1998 contra 1999
+
+```{r fat-resumo}
 f98 <- empresas$faturamento98
 f99 <- empresas$faturamento99
-summary(f98); summary(f99)
+summary(f98)
+summary(f99)
 ```
 
-```{r boxplot-f98f99, fig.height=3.3}
-boxplot(f98, f99, names = c("1998", "1999"), ylab = "Faturamento", col = c("#0d3b54", "#c9971e"))
-```
+.caixa-discussao[
+A mediana subiu de 1998 para 1999? Calcule também `sd(f98) / mean(f98)` e `sd(f99) / mean(f99)`:
+a dispersão relativa mudou?
+]
 
 ---
 
-## Correlação entre os dois faturamentos
+## Boxplot e dispersão dos faturamentos
 
-```{r cor, fig.height=3.6}
-cor(f98, f99)
-plot(f98, f99, xlab = "Faturamento 1998", ylab = "Faturamento 1999", pch = 19,
-     col = adjustcolor("#0d3b54", alpha.f = 0.5))
+.pull-left[
+```{r box-fat, fig.height=4, fig.width=5, out.width="100%"}
+boxplot(f98, f99,
+        names = c("1998", "1999"),
+        ylab = "Faturamento",
+        col = c("#cfe8ef", "#f3d9a4"))
 ```
 
-Correlação bem próxima de 1: empresas que faturavam mais em 1998 seguem, em geral, faturando mais
-em 1999, o *ranking* entre empresas é bastante estável de um ano para o outro.
+]
+
+.pull-right[
+```{r disp-fat, fig.height=4, fig.width=5, out.width="100%"}
+plot(f98, f99,
+     xlab = "Faturamento 1998",
+     ylab = "Faturamento 1999")
+abline(a = 0, b = 1, col = "red")
+```
+
+]
+
+.clear[]
+
+.small[A linha vermelha é \\(y = x\\): empresas **acima** dela faturaram mais em 1999 que em 1998.
+`cor(f98, f99)` \\(= `r format(round(cor(empresas$faturamento98, empresas$faturamento99), 3), decimal.mark = ",")`\\).]
 
 ---
 
 class: inverse, center, middle
 
-# 6. Exercício guiado
-
-## Base `dados_prefeitos.csv`
+# Bloco 5: atividade com a base de prefeitos
 
 ---
 
-## Enunciado
+## Enunciado .tempo[30–45 min]
 
-Carregue `dados_prefeitos.csv` e responda em R:
+Carregue `dados_prefeitos.csv` no Colab e responda usando o R:
 
-1. Quantas pessoas de cada sexo foram eleitas prefeitas/prefeitos em 2020?
-2. Qual foi o nível de escolaridade mais comum entre os prefeitos eleitos?
-3. Qual é a população média e mediana dos municípios da base?
-4. Como é a distribuição (histograma) das idades dos prefeitos eleitos?
-5. Qual é a correlação entre a idade do prefeito e a população estimada do município?
+**1.** Quantas pessoas de cada sexo foram eleitas prefeitas ou prefeitos em 2020?
 
---
+**2.** Qual foi o nível de escolaridade mais comum entre os prefeitos?
 
-Dica: as colunas relevantes são `sexo`, `escolaridade`, `Pop.estimada.2021` e `idade`.
+**3.** Qual é a população média e a mediana dos municípios da base?
+
+**4.** Como é a distribuição (histograma) das idades dos prefeitos?
+
+**5.** Qual é a correlação entre a idade dos prefeitos e a população do município?
+
+.caixa-discussao[
+Tente **antes** de ver a solução. Dica: as colunas relevantes são `sexo`, `escolaridade`,
+`Pop.estimada.2021` e `idade`.
+]
 
 ---
 
-## Discussão do laboratório
+## Solução: itens 1 a 3
 
-**1.** Depois de rodar o item 1 do exercício guiado, você tem uma tabela de frequências por sexo.
-Que gráfico você faria a partir dela, e por que esse gráfico já é, sozinho, uma peça de evidência
-sobre representatividade política?
+```{r sol-123}
+table(prefeitos$sexo)                                   # 1
 
-**2.** No item 5, se a correlação entre idade do prefeito e população do município for próxima de
-zero, isso permite concluir que não existe *nenhuma* relação sistemática entre as duas variáveis?
-Releia a Aula 08 (que você verá em breve) antes de responder, ou arrisque um palpite agora e
-confira depois.
+tab_esc <- table(prefeitos$escolaridade)                # 2
+names(tab_esc)[which.max(tab_esc)]
 
-**3.** Compare o `cor(f98, f99)` calculado nesta aula com o gráfico de dispersão correspondente.
-O valor numérico, sozinho, teria sido suficiente para você confiar que a relação é bem
-aproximadamente linear (e não, por exemplo, uma curva)? Por que olhar o gráfico continua sendo
-necessário mesmo depois de calcular \\(r\\)?
+mean(prefeitos$Pop.estimada.2021)                       # 3
+median(prefeitos$Pop.estimada.2021)
+```
+
+.caixa-resposta[
+**1.** 635 mulheres e 4.597 homens. **2.** Ensino superior completo. **3.** Média ≈ 17.195 e
+mediana ≈ 10.932 habitantes: **assimétrica à direita**.
+]
+
+---
+
+## Solução: itens 4 e 5
+
+.pull-left[
+```{r sol-4, fig.height=3.8, fig.width=5, out.width="100%"}
+hist(prefeitos$idade,
+     main = "Idade dos prefeitos",
+     xlab = "Idade (anos)",
+     ylab = "Frequência")
+```
+
+]
+
+.pull-right[
+```{r sol-5}
+cor(prefeitos$idade,
+    prefeitos$Pop.estimada.2021)
+```
+
+.caixa-resposta[
+**4.** Aproximadamente **simétrica**, centrada perto de 50 anos, entre 21 e 89 anos.
+
+**5.** \\(cor \approx 0{,}05\\): praticamente **nenhuma** associação linear entre a idade do
+prefeito e o tamanho do município.
+]
+]
+
+---
+
+## Discussão do laboratório .tempo[45–50 min]
+
+**1.** No item 1, a tabela de frequências por sexo é, sozinha, evidência sobre **representatividade
+política**? Que outra informação (sobre a população brasileira) você precisaria?
+
+**2.** No item 5, correlação perto de zero permite concluir que **não existe nenhuma relação** entre
+as duas variáveis? Releia a Aula 08.
+
+**3.** A correlação entre os faturamentos de 1998 e 1999 é 0,87. O valor numérico, sozinho, garante
+que a relação é aproximadamente **linear**? Por que olhar o gráfico continua sendo necessário?
+
 
 ---
 
@@ -287,4 +625,4 @@ class: inverse, center, middle
 
 # Próxima aula (16/09)
 
-## Coeficiente de correlação. Medidas de assimetria e curtose
+## Correlação. Assimetria e curtose

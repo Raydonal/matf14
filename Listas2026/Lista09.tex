@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 09}{Variável aleatória discreta, esperança, variância e função de distribuição acumulada (Cap. 3, Aulas 17--19)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito09.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Função de probabilidade: número de ações de um fundo)}
 
@@ -96,5 +96,70 @@ leitor sem formação em estatística, o que $E(X)$ representa e por que ainda �
 negócio (precificação de seguro, dimensionamento de estoque, etc.), mesmo sem ser "o valor mais
 provável".
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Seja $T$ uma variável aleatória discreta com distribuição
+\begin{center}
+\begin{tabular}{c|cccccc}
+\toprule
+$t$ & 2 & 3 & 4 & 5 & 6 & 7 \\
+\midrule
+$P(T = t)$ & 1/10 & 1/10 & 4/10 & 2/10 & 1/10 & 1/10 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(|T - 4| > 2)$.
+  \item Calcule $E(T)$ e $Var(T)$.
+  \item Construa a tabela da função de distribuição acumulada de $T$.
+\end{enumerate}
+\item Um vendedor agendou duas visitas. A primeira resulta em venda com probabilidade 0,3 e a segunda com probabilidade 0,6, independentemente. Cada venda é, com a mesma probabilidade, do modelo de luxo (R\$ 1.000) ou do padrão (R\$ 500).
+\begin{enumerate}[label=(\alph*)]
+  \item Determine a distribuição de probabilidade do valor total vendido.
+  \item Qual é o valor esperado do total vendido?
+\end{enumerate}
+\item Uma empresa entrará numa licitação: se vencer, terá lucro de 50 mil reais; caso contrário, lucro zero. A chance de vencer é 30\%. Encontre a distribuição do lucro (em milhares de reais), o lucro esperado e o desvio padrão do lucro.
+\item Uma empresa que inspeciona carros novos constatou que nenhum carro tem mais de três defeitos externos; 7\% têm três, 11\% têm dois e 21\% têm um. Um carro é sorteado. Encontre a distribuição do número de defeitos, o número esperado e o desvio padrão.
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: modelos probabilísticos e dados reais}
+\noindent\textit{Exercícios ligados à seção de aplicação macroeconômica do Capítulo 3 do livro.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Trimestres de queda do PIB.)} Seja $X$ o número de trimestres de um ano em que o PIB caiu em relação ao trimestre anterior
+(com ajuste sazonal). De 1997 a 2025 (29 anos), a contagem de anos foi (IBGE, Contas Nacionais Trimestrais):
+\begin{center}
+\begin{tabular}{l|ccccc}
+\toprule
+$k$ & 0 & 1 & 2 & 3 & 4 \\
+\midrule
+Número de anos & 15 & 6 & 5 & 2 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Usando as frequências relativas como probabilidades, escreva a função de probabilidade de $X$ e verifique que ela é válida.
+  \item Calcule $E(X)$, $\mathrm{Var}(X)$ e o desvio padrão. Interprete $E(X)$.
+  \item Escreva a função de distribuição acumulada $F(x)$ para todo $x$ real e esboce seu gráfico.
+  \item Calcule $P(X \geq 2)$. Os anos com duas ou mais quedas foram 1998, 2001, 2003, 2014, 2015, 2016, 2018 e 2020. O que eles têm em comum?
+\end{enumerate}
+
+\item \textbf{(Esperança e arrecadação.)} Um analista atribui ao crescimento do PIB no próximo ano ($X$, em \%) a distribuição
+$P(X = -1) = 0{,}15$, $P(X = 1) = 0{,}35$, $P(X = 2) = 0{,}40$ e $P(X = 3) = 0{,}10$. A arrecadação federal (R\$ bilhões) é aproximada por
+$Y = 2.500 + 40X$.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(X)$ e $\mathrm{Var}(X)$.
+  \item Use as propriedades da esperança e da variância para obter $E(Y)$ e o desvio padrão de $Y$.
+  \item Calcule $P(Y < 2.500)$ e interprete.
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

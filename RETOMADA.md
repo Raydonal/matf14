@@ -1,5 +1,100 @@
 # Retomada — MATF14 2026.2 (revisão profunda: exemplos do Rodney + renderização)
 
+## Sessão 2026-09-17: probabilidade aprofundada, contas nacionais, aulas 2 × 50 min
+
+**Estado:** o professor aprovou a nova versão (2026-09-17). Alterações **não commitadas**
+(somam-se às de 2026-09-16): **o professor fará o commit e o push ele mesmo** — não commitar nem
+empurrar sem pedido explícito. Backup fora do git feito no fim da sessão (ver "Backup" abaixo).
+
+**Pedido do professor:** capítulo de probabilidade superficial (contagem, axiomas, probabilidade
+geométrica, tabelas de contingência, chances/razão de chances/prevalência); ampliar todos os
+capítulos com contas nacionais, CEI, contas monetárias e financeiras, trimestrais, regionais e
+insumo-produto; reorganizar os slides para duas aulas de 50 min por encontro; P1 em 23/09; nome do
+Rodney fora dos slides.
+
+**Feito:**
+1. **Cronograma:** Aula 09 em 21/09 e P1 em 23/09 (README, `index.Rmd`, `date:` do deck 09, avisos nos decks 08 e 09 e
+   slide de avaliação do deck 01). Nada mais mudou.
+2. **Créditos:** nome do Rodney removido de slides, listas e legendas; fica só nos Agradecimentos
+   do livro (`Livro/index.Rmd`). Regra registrada no `CLAUDE.md`.
+3. **Capítulo 2 reescrito:** interpretações de probabilidade, σ-álgebra e axiomas de Kolmogorov
+   com consequências (Boole/Bonferroni), os quatro tipos de contagem com exemplos e o elo com a
+   probabilidade clássica (só vale com resultados equiprováveis), hipergeométrica, probabilidade
+   geométrica, tabelas de contingência com a PNAD Contínua (perfis, Simpson), risco relativo,
+   razão de chances, prevalência/incidência, VPP/VPN, Bayes na forma de chances.
+4. **Contas nacionais:** nova seção `#contas-nacionais` no Cap. 1 (PIB pelas três óticas, taxas
+   trimestrais, contas regionais, CEI, agregados monetários, matriz de Leontief) e seções de
+   aplicação macro nos Caps. 3 (`#va-discreta-macro`: recessões e deflação) e 4
+   (`#va-continua-macro`: normalidade do crescimento do PIB). Dados oficiais em `Livro/data/`
+   (cópias em `Aulas2026/`), baixados por `Livro/data/baixar_contas.R`.
+5. **Slides:** todos os decks do cronograma reorganizados em Roteiro → Parte 1 (50 min) →
+   Intervalo → Parte 2 (50 min), com tempo por slide (`.tempo[...]`) e atividades em sala;
+   decks 10–14 refeitos para o novo Cap. 2; slides novos com dados reais nas Unidades 1, 3 e 4.
+6. **Listas:** seção "Aprofundamento" (A1, A2, …) nas Listas 01–07 e 09–12, com os novos tópicos e
+   dados reais; todas recompiladas (`needspace` no `preamble.tex`).
+7. **Gabaritos:** mantidos **fora do repositório**, em
+   `../matf14-gabaritos-privado/Listas2026/GabaritoNN.{tex,pdf}` (inclui as soluções dos
+   exercícios de Aprofundamento; corrigidos erros numéricos antigos nos Gabaritos 02, 03, 08 e 10).
+8. **Verificação:** capturas automáticas de todos os slides dos decks do cronograma e das 69 páginas do livro
+   (corte, TeX cru, imagem quebrada, erro de R) → **0 problemas** no fim; revisão visual das
+   listas e dos slides novos. Correções achadas assim: slide 52 do deck 01 e 32 do deck 27
+   cortados; rótulos cortados no boxplot do PIB (deck 05); legenda `fig-cn-qq` do livro dizia 2
+   atípicos (são 8: quedas de 1998, 2008T4, 2015T2, 2020T1–T2; altas de 1996T3, 2020T3–T4).
+9. Dicas de resposta removidas das listas (Lista 04, complementar do coeficiente de correlação;
+   Lista 05 C7) — as respostas estão só nos gabaritos. Figuras órfãs **não rastreadas** em
+   `Aulas2026/*_files/` apagadas.
+10. Livro inteiro, `index.Rmd` e todos os decks re-renderizados no fim; os 74 links da página do
+    curso apontam para arquivos existentes.
+
+**Pendências / decisões em aberto:**
+- Commit e push: com o professor. Ao commitar, conferir `git status` (≈520 caminhos alterados,
+  incluindo figuras novas em `Aulas2026/*_files/` e `Livro/*_files/` e os CSVs de `Livro/data/`).
+- 25 figuras órfãs **rastreadas** pelo git em `Aulas2026/MATF14-*_files/figure-html/` (de nomes de
+  chunk antigos) não são mais usadas; podem sair no commit com `git rm`.
+- Simulados (Listas 08, 13, 14) não ganharam exercícios de Aprofundamento.
+- `README.md` ainda credita "colaboração de Rodney Vasconcelos Fonseca" na abertura (não é slide,
+  lista nem legenda; o professor decide se mantém).
+- O render do livro emite 13 *warnings* do R (sem erro; não investigados nesta sessão).
+- Leitura humana ponta a ponta antes da P1 (23/09/2026) continua recomendada.
+
+**Backup (2026-09-17):** em `/home/raydonal/MyGithub/Raydonal/matf14-backups/` (fora do repo):
+`matf14_backup_<TS>.tar.gz` (árvore de trabalho sem `.git`, com todas as alterações não
+commitadas), `matf14-gabaritos-privado_<TS>.tar.gz` e `ferramentas-sessao_<TS>.tar.gz` (scripts
+da sessão: `restructure.py` + `cfgNN.py` para reorganizar decks em 2 × 50 min, `escape_sub.py`,
+`fix_spans.py`, `shoot_deck.R`/`shoot_book.R` para auditoria por captura de tela, `calc_listas*.R`
+com as contas dos exercícios novos, planos da sessão), mais `SHA256SUMS`. Restaurar com
+`tar -xzf <arquivo> -C <destino>`.
+
+---
+
+## Sessão 2026-09-16: correção massiva (livro, slides, listas, site)
+
+**Estado:** alterações **não commitadas** (aguardando o professor pedir commit/push).
+
+**Motivo:** o professor apontou que slides e livro ainda prometiam material que não aparecia (ex.:
+`MATF14-05`, "Rodada 3: leitura de boxplot (ENEM/SISU/FUVEST)" sem gráfico nem dados), equações
+quebradas e pouca extração do material do Rodney (texto **e imagens** dos `.odp`).
+
+**Feito:**
+1. Extração completa dos `.odp` do Rodney (4 unidades + aula de exercícios): cada slide em PNG,
+   texto por slide e imagens embutidas. 66 figuras (notícias, gráficos, tabelas, desenhos de
+   cálculo) copiadas para `Aulas2026/images/` e `Livro/images/`, sempre com fonte indicada.
+2. Todos os decks (01, 03–15, 17–30) reescritos/enriquecidos com os exemplos do Rodney; `02`
+   reorganizado. Novos helpers `Aulas2026/R/venn.R` e `fda.R` (cópias em `Livro/R/`).
+   `custom-styles.css` reescrito (código legível, classes `.fonte`, `.pull-*-40/60`, `caixa-resposta`).
+3. Livro: Caps. 1–4 reescritos com caixas em *fenced divs* (`::: {.caixa-*}`), figuras do Rodney,
+   IDs de seção preservados (links da página do curso continuam válidos); Apêndices B e C
+   revisados; rótulos "Figura/Tabela", data e referências em português.
+4. Listas 01–14: removida a promessa de gabarito, adicionados "Exercícios complementares"
+   adaptados das listas/provas de 2026.1; todas recompiladas.
+5. Contas conferidas em R; erros corrigidos (ex.: Bin(10; 0,86) P(X=8)=0,264; N(500,100²)
+   P(600<X<800)=15,7%; fórmula de CV invertida no lab do Rodney).
+6. Verificação: captura de tela automática de **todos** os slides e de todas as 61 páginas do livro
+   com checagem de corte, TeX cru, imagem quebrada e erro de R — 0 problemas no fim. As lições
+   novas de renderização estão no `CLAUDE.md`.
+
+---
+
 **Última atualização:** 2026-09-13, ~21:45 (horário local). Tudo commitado e empurrado para o
 `main` (`git@github.com:Raydonal/matf14.git`, HEAD = `89875dc`). Página do curso no ar em
 <https://raydonal.github.io/matf14/>. Este arquivo existe para retomar o trabalho sem precisar
@@ -79,7 +174,7 @@ nem stash pendente.
   processo pra isso). Recomendado antes de qualquer mudança grande futura:
   ```bash
   TS=$(date +%Y%m%d-%H%M)
-  cd /home/raydonal/Github/Cursos
+  cd /home/raydonal/MyGithub/Raydonal   # caminho atual (antes: /home/raydonal/Github/Cursos)
   tar --exclude='matf14/.git' -czf "matf14-backups/matf14_backup_${TS}.tar.gz" matf14
   gzip -t "matf14-backups/matf14_backup_${TS}.tar.gz" && echo OK
   ```

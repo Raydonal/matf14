@@ -15,156 +15,458 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
-suppressPackageStartupMessages(library(tidyverse))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+curva <- function(f, xlim, titulo = NULL, ylab = "f(x)", cor = "#1f3fbf", a = NULL, b = NULL, n = 500) {
+  d <- tibble(x = seq(xlim[1], xlim[2], length.out = n), y = f(x))
+  g <- ggplot(d, aes(x, y))
+  if (!is.null(a)) g <- g + geom_area(data = filter(d, x >= a, x <= b), fill = "#f4a6a6", alpha = 0.8)
+  g + geom_line(color = cor, linewidth = 1.2) + labs(x = "x", y = ylab, title = titulo) + theme_minimal(base_size = 13)
+}
+f2x <- function(x) ifelse(x >= 0 & x < 1, 2 * x, 0)
+F2x <- function(t) ifelse(t < 0, 0, ifelse(t < 1, t^2, 1))
+f21 <- function(x) ifelse(x >= 0 & x <= 1, 2 * (1 - x), 0)
+F21 <- function(t) ifelse(t < 0, 0, ifelse(t < 1, 2 * t - t^2, 1))
 ```
 
 class: inverse, center, middle
 
-# Aula 26: FDA de variável contínua
+# Aula 26: Função de distribuição acumulada
 
-### Provocação · Teoria · Aplicação · Discussão
+### Variáveis aleatórias contínuas
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Resolvendo a dúvida da aula passada
+## Roteiro da aula (100 minutos)
 
-> Na Aula 25 perguntamos: a maioria dos clientes espera "perto de 5 minutos" (a média)? Hoje temos
-> a ferramenta exata para responder: a FDA.
+.roteiro[
+
+| Tempo | Parte 1: a FDA de uma variável contínua |
+|:---|:---|
+| 0–5 min | Provocação: "a maioria espera menos que a média"? |
+| 5–15 min | Relembrando a FDA; FDA de uma variável contínua |
+| 15–27 min | Exemplo f(x) = 2x; densidade e FDA lado a lado |
+| 27–38 min | **Atividade 1** |
+| 38–50 min | Propriedades; **Atividade 2** |
+
+| Tempo | Parte 2: quantis e aplicações |
+|:---|:---|
+| 0–12 min | Mediana e quantis pela FDA |
+| 12–25 min | Fila de espera; meta de atendimento |
+| 25–35 min | Dados reais: FDA empírica do crescimento do PIB |
+| 35–44 min | **Atividade 3**: discussão |
+| 44–50 min | Uso do R e resumo |
+
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: a FDA de uma variável contínua
+
+### 50 minutos
 
 ---
 
-## Definição
+## Provocação: "a maioria espera menos que a média"? .tempo[0–5 min]
 
-$$
-F(x) = P(X\le x) = \int\_{-\infty}^x f(t)\,dt
-$$
+Na Aula 25, o tempo de espera numa fila tinha densidade \\(f(x) = 0{,}2\,e^{-0{,}2x}\\) e **média de 5
+minutos**.
 
-**Contínua** (sem saltos), ao contrário do caso discreto, reflexo de \\(P(X=x)=0\\).
+- Qual é a proporção de clientes que esperam **no máximo** 3 minutos? E no máximo 5? E 10?
+- Para cada pergunta, precisamos calcular uma **integral** diferente.
 
 --
 
-## Consequência importante
+.caixa-discussao[
+Não seria melhor ter **uma única função** que, dado qualquer \\(t\\), devolvesse \\(P(X \leq t)\\)? Na Aula 19
+ela existia para variáveis discretas. Como ela fica para variáveis contínuas?
+]
+
+---
+
+## Relembrando a função de distribuição acumulada .tempo[5–15 min]
+
+A **função de distribuição acumulada** de uma variável aleatória \\(X\\) é
 
 $$
-P(X\le x)=P(X&lt;x) \qquad P(X\ge x)=P(X&gt;x)
+F(t) = P(X \leq t), \qquad \text{para todo número real } t.
 $$
 
-Ao contrário do Cap. 3 (discreto), aqui **não importa** incluir ou não o extremo do intervalo.
+- Sempre \\(0 \leq F(t) \leq 1\\), com \\(F(t) \to 0\\) quando \\(t \to -\infty\\) e \\(F(t) \to 1\\) quando \\(t \to \infty\\).
+- \\(F\\) é **não decrescente** e **contínua à direita**.
 
 --
 
-## Relação com \\(f\\)
+.caixa-aplicacao[
+Essas características valem também para variáveis **contínuas**, com uma diferença: em vez de
+**degraus** (Aula 19), a FDA de uma variável contínua é uma curva **sem saltos**.
+]
+
+---
+
+## FDA de uma variável contínua
+
+Seja \\(X\\) com densidade \\(f(x)\\). Probabilidades são integrais:
 
 $$
-F'(x)=f(x) \qquad\qquad P(a\le X\le b) = F(b)-F(a)
+P(a &lt; X \leq b) = \int\_a^b f(x)\,dx.
 $$
+
+--
+
+O evento \\(\\{X \leq t\\}\\) é o mesmo que \\(\\{-\infty &lt; X \leq t\\}\\). Logo, a **FDA** de \\(X\\) é
+
+$$
+F(t) = P(X \leq t) = \int\_{-\infty}^{t} f(x)\,dx.
+$$
+
+--
+
+.pull-left[
+```{r area-t, echo=FALSE, fig.height=2.5, fig.width=5, out.width="95%"}
+curva(f2x, c(-0.2, 1.2), "F(0,7) = área até t = 0,7", a = -0.2, b = 0.7)
+```
+
+]
+
+.pull-right[
+.caixa-aplicacao[
+\\(F(t)\\) é a **área acumulada** sob a densidade, da esquerda até o ponto \\(t\\).
+]
+]
+
+---
+
+## Exemplo: \\(f(x) = 2x\\) .tempo[15–27 min]
+
+Seja \\(X\\) com f.d.p. \\(f(x) = 2x\\) para \\(0 &lt; x &lt; 1\\) e \\(f(x) = 0\\) caso contrário. Calcule a FDA de \\(X\\).
+
+--
+
+- Para \\(t &lt; 0\\): não há área à esquerda de \\(t\\), então \\(F(t) = 0\\).
+- Para \\(t \geq 1\\): toda a área já foi acumulada, então \\(F(t) = 1\\).
+- Para \\(0 \leq t &lt; 1\\):
+
+$$
+F(t) = P(X \leq t) = \int\_{-\infty}^{t} f(x)\,dx = \int\_0^t 2x\,dx = \Big[x^2\Big]\_0^t = t^2.
+$$
+
+--
+
+$$
+F(t) = \begin{cases} 0, & t &lt; 0,\\\\ t^2, & 0 \leq t &lt; 1,\\\\ 1, & t \geq 1. \end{cases}
+$$
+
+---
+
+## Densidade e FDA lado a lado
+
+```{r dens-fda-2x, echo=FALSE, fig.height=3.4, fig.width=10, out.width="100%"}
+curva(f2x, c(-0.2, 1.2), "Densidade f(x) = 2x") + curva(F2x, c(-0.2, 1.2), "FDA F(t) = t²", ylab = "F(t)", cor = "#c0392b")
+```
+
+- \\(F\\) **não decrescente**, com \\(\lim\_{t \to -\infty} F(t) = 0\\) e \\(\lim\_{t \to \infty} F(t) = 1\\).
+- A FDA cresce **devagar** onde a densidade é **baixa** (perto de 0) e **rápido** onde ela é **alta** (perto de 1).
+
+---
+
+## Exercício 1 .tempo[27–38 min]
+
+Seja \\(X\\) com f.d.p. \\(f(x) = 2(1 - x)\\) para \\(0 \leq x \leq 1\\) e 0 caso contrário. Calcule a função de
+distribuição acumulada de \\(X\\).
+
+--
+
+.pull-left[
+.caixa-resposta[
+Para \\(0 \leq t &lt; 1\\):
+
+\\(F(t) = \int\_0^t 2(1 - x)\,dx = \Big[2x - x^2\Big]\_0^t = 2t - t^2\\).
+
+$$
+F(t) = \begin{cases} 0, & t &lt; 0,\\\\ 2t - t^2, & 0 \leq t &lt; 1,\\\\ 1, & t \geq 1. \end{cases}
+$$
+]
+]
+
+.pull-right[
+```{r fda-21, echo=FALSE, fig.height=3.4, fig.width=5, out.width="100%"}
+curva(F21, c(-0.2, 1.2), "FDA F(t) = 2t - t²", ylab = "F(t)", cor = "#c0392b")
+```
+
+.small[
+A imagem está em \\([0, 1]\\); a função é **contínua** e **não decrescente**.
+]
+]
+
+---
+
+## Propriedades da FDA contínua .tempo[38–50 min]
+
+**1. A densidade é a derivada da FDA.** Se \\(f\\) é contínua em \\(t\\),
+
+$$
+F'(t) = \frac{d}{dt} F(t) = f(t).
+$$
+
+.small[
+Confira: \\(F(t) = t^2 \Rightarrow F'(t) = 2t = f(t)\\); \\(F(t) = 2t - t^2 \Rightarrow F'(t) = 2 - 2t = f(t)\\).
+]
+
+--
+
+**2. Probabilidades de intervalos saem da FDA, sem nova integral.** Dados \\(a &lt; b\\),
+
+$$
+P(a &lt; X \leq b) = \int\_a^b f(x)\,dx = \int\_{-\infty}^{b} f(x)\,dx - \int\_{-\infty}^{a} f(x)\,dx = F(b) - F(a).
+$$
+
+--
+
+**3.** Como \\(P(X = a) = 0\\):
+
+$$
+P(X &gt; a) = 1 - F(a) \qquad P(a \leq X \leq b) = P(a &lt; X &lt; b) = F(b) - F(a).
+$$
+
+---
+
+## Exercício 2
+
+Seja \\(X\\) com densidade \\(f(x) = C \cdot x\\) para \\(0 \leq x &lt; 1\\) e 0 caso contrário.
+
+**a)** Determine \\(C\\) para que \\(f\\) seja uma legítima f.d.p.
+
+**b)** Calcule a FDA de \\(X\\). **c)** Calcule \\(P(0{,}2 &lt; X \leq 0{,}4)\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(\int\_0^1 Cx\,dx = C\Big[\frac{x^2}{2}\Big]\_0^1 = \frac{C}{2} = 1 \Rightarrow C = 2\\) (e \\(f \geq 0\\)).
+
+**b)** \\(F(t) = 0\\) para \\(t &lt; 0\\); \\(F(t) = t^2\\) para \\(0 \leq t &lt; 1\\); \\(F(t) = 1\\) para \\(t \geq 1\\).
+
+**c)** \\(P(0{,}2 &lt; X \leq 0{,}4) = F(0{,}4) - F(0{,}2) = 0{,}16 - 0{,}04 = 0{,}12\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Intervalo
 
----
-
-## FDA da fila de espera
-
-Retomando a Aula 25: \\(f(x)=0{,}2e^{-0{,}2x}\\), \\(x\ge0\\). Aplicando a definição \\(F(x)=\int\_{-\infty}^x
-f(t)\,dt\\):
-$$
-F(x)=\int\_0^x 0{,}2\,e^{-0{,}2t}\,dt = \left[-e^{-0{,}2t}\right]\_0^x = -e^{-0{,}2x}-(-e^0) = 1-e^{-0{,}2x}, \quad x\ge0
-$$
-
-```{r fda-fila, fig.height=3.8}
-Fx <- function(x) 1 - exp(-0.2*x)
-ggplot(tibble(x=seq(0,30,length.out=300), F=Fx(x)), aes(x,F)) +
-  geom_line(color="#0d3b54") + labs(x="minutos", y="F(x)") + theme_minimal(base_size=13)
-```
-
----
-
-## Respondendo a dúvida da Aula 25
-
-$$
-P(X &lt; 5) = F(5) = 1-e^{-1} \approx 0{,}632
-$$
-
-```{r resposta-duvida}
-Fx(5)
-```
-
-**Resposta**: 63,2% dos clientes esperam *menos* que a média de 5 minutos, confirmando a
-assimetria à direita. A média não descreve "o cliente típico"; descreve um ponto puxado para cima
-pela minoria que espera muito.
-
----
-
-## Um segundo exemplo: densidade triangular
-
-Considere \\(f(x) = 2(1-x)\\) para \\(0\le x\le1\\) (e \\(f(x)=0\\) fora desse intervalo) — por exemplo, o
-instante (padronizado em \\([0,1]\\)) da primeira negociação de um ativo após a abertura do pregão,
-concentrado logo no início.
-
---
-
-Integrando \\(f\\) a partir de \\(0\\):
-
-$$
-F(x) = \int\_0^x 2(1-t)\,dt = \left[2t-t^2\right]\_0^x = 2x-x^2, \qquad 0\le x\le1
-$$
-
-Fora desse intervalo, \\(F(x)=0\\) para \\(x&lt;0\\) e \\(F(x)=1\\) para \\(x&gt;1\\): a mesma FDA "achatada
-nas pontas e crescente no meio" de toda variável com suporte limitado — ao contrário da fila de
-espera (suporte ilimitado) do slide anterior.
-
----
-
-## Confirmando com R
-
-```{r fda-triangular}
-Fx2 <- function(x) 2*x - x^2
-Fx2(2/3) - Fx2(1/2)   # P(1/2 < X < 2/3) = F(2/3) - F(1/2)
-```
-
-\\(P(1/2 &lt; X &lt; 2/3) = F(2/3)-F(1/2) \approx 0{,}139\\), o mesmo resultado que sairia de integrar
-\\(f\\) diretamente nesse intervalo: outra confirmação de que \\(F(b)-F(a)\\) é sempre um atalho válido
-para uma probabilidade contínua.
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Parte 2: quantis e aplicações
+
+### 50 minutos
 
 ---
 
-## Rodada 1
+## A mediana e os quantis pela FDA .tempo[0–12 min]
 
-**1.** Recalcule: qual proporção de clientes espera *mais* que 10 minutos (\\(P(X&gt;10)\\))? Esse número
-é pequeno ou grande o suficiente para preocupar um gerente de atendimento, mesmo com uma média
-"aceitável" de 5 minutos?
+O **percentil \\(p\\)** de \\(X\\) é o valor \\(q\\) com \\(F(q) = p\\). Em particular, a **mediana** resolve \\(F(m) = 0{,}5\\).
 
-**2.** Dado \\(F(x)=1-e^{-0{,}2x}\\), como você recuperaria \\(f(x)\\) a partir dela, sem ter a fórmula de
-\\(f\\) em mãos? Use \\(F'(x)=f(x)\\).
+--
+
+.pull-left[
+**Para \\(f(x) = 2x\\):**
+
+\\(m^2 = 0{,}5 \Rightarrow m = \sqrt{0{,}5} \approx 0{,}707\\).
+
+Compare com \\(E(X) = 2/3 \approx 0{,}667\\).
+]
+
+.pull-right[
+**Para \\(f(x) = 2(1 - x)\\):**
+
+\\(2m - m^2 = 0{,}5 \Rightarrow m^2 - 2m + 0{,}5 = 0\\)
+
+\\(m = 1 - \sqrt{0{,}5} \approx 0{,}293\\) (a raiz em \\([0, 1]\\)).
+
+Compare com \\(E(X) = 1/3 \approx 0{,}333\\).
+]
+
+.clear[]
+
+.caixa-discussao[
+Na primeira densidade, mediana &gt; média; na segunda, mediana &lt; média. Qual delas é assimétrica
+à **direita**? Confira com a regra da Aula 04.
+]
 
 ---
 
-## Rodada 2
+## Fila de espera: respondendo à provocação .tempo[12–25 min]
 
-**3.** No caso discreto (Cap. 3), \\(F\\) tinha "degraus". Por que, no caso contínuo, uma FDA com um
-degrau seria logicamente impossível, que propriedade ela contradiria?
+Com \\(f(x) = 0{,}2\,e^{-0{,}2x}\\), \\(x \geq 0\\), a FDA é
 
-**4.** Um gerente de operações decide comunicar não a média, mas "o tempo que 90% dos clientes não
-ultrapassam" (um quantil, retomado no Capítulo 1). Calcule esse valor usando `qexp(0.9, rate=0.2)`
-e compare com a média de 5 minutos. Qual dos dois números você recomendaria divulgar ao público, e
-por quê?
+$$
+F(t) = \int\_0^t 0{,}2\,e^{-0{,}2x}\,dx = \Big[-e^{-0{,}2x}\Big]\_0^t = 1 - e^{-0{,}2t}, \qquad t \geq 0.
+$$
+
+--
+
+.pull-left[
+| \\(t\\) (minutos) | \\(F(t) = P(X \leq t)\\) |
+|:---:|:---:|
+| 3 | \\(1 - e^{-0{,}6} \approx 0{,}451\\) |
+| 5 | \\(1 - e^{-1} \approx 0{,}632\\) |
+| 10 | \\(1 - e^{-2} \approx 0{,}865\\) |
+| 15 | \\(1 - e^{-3} \approx 0{,}950\\) |
+]
+
+.pull-right[
+```{r fda-fila, echo=FALSE, fig.height=2.6, fig.width=5, out.width="92%"}
+curva(function(t) ifelse(t < 0, 0, 1 - exp(-0.2 * t)), c(-2, 30), "F(t) = 1 - exp(-0,2 t)", ylab = "F(t)", cor = "#c0392b") +
+  geom_hline(yintercept = 0.5, linetype = "dotted") + geom_vline(xintercept = 5 * log(2), linetype = "dotted")
+```
+
+]
+
+.clear[]
+
+.caixa-aplicacao[
+**63%** dos clientes esperam **menos** que a média de 5 minutos. A **mediana** resolve \\(1 - e^{-0{,}2m} = 0{,}5\\):
+\\(m = 5\ln 2 \approx 3{,}47\\) minutos.
+]
+
+---
+
+## Meta de atendimento
+
+Um banco quer anunciar: "**95%** dos clientes são atendidos em até \\(T\\) minutos". Qual é o menor \\(T\\)?
+
+--
+
+$$
+F(T) = 1 - e^{-0{,}2T} = 0{,}95 \iff e^{-0{,}2T} = 0{,}05 \iff T = \frac{-\ln 0{,}05}{0{,}2} \approx 14{,}98 \text{ minutos.}
+$$
+
+--
+
+.caixa-economia[
+Esse é o **percentil 95** do tempo de espera. Metas de serviço (SLA) são quase sempre escritas em
+termos de **percentis** da FDA, e não da média: "atender 95% das chamadas em até 20 segundos".
+]
+
+---
+
+```{r pib-qq, include=FALSE}
+tx <- read.csv("pib_trimestral_taxas.csv")
+qq <- subset(tx, componente == "PIB a preços de mercado" & grepl("imediatamente", taxa))$valor_pct
+fmt <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",")
+fmtm <- function(x, d = 3) gsub(",", "{,}", fmt(x, d), fixed = TRUE)
+```
+
+## Dados reais: FDA empírica do crescimento do PIB .tempo[25–35 min]
+
+.pull-left-60[
+```{r ecdf-pib, echo=FALSE, fig.height=3.3, fig.width=6, out.width="100%"}
+ggplot(tibble(x = qq), aes(x)) + stat_ecdf(color = "#c0392b", linewidth = 1.1, pad = FALSE) +
+  geom_hline(yintercept = c(0.25, 0.5, 0.75), linetype = "dotted", color = "grey40") +
+  geom_vline(xintercept = 0, color = "grey50") +
+  labs(x = "Crescimento trimestral do PIB (%)", y = "F(x) = proporção de trimestres ≤ x") + theme_minimal(base_size = 12)
+```
+]
+
+.pull-right-40[
+A **FDA empírica** \\(\hat F(x)\\) é a proporção de trimestres com crescimento \\(\leq x\\).
+
+- \\(\hat F(0) \approx `r fmtm(mean(qq <= 0), 2)`\\): proporção de trimestres **sem** crescimento.
+- Mediana: \\(\hat F^{-1}(0{,}5) \approx `r fmtm(quantile(qq, 0.5, type = 2), 1)`\\%\\).
+- \\(Q\_3 \approx `r fmtm(quantile(qq, 0.75, type = 2), 1)`\\%\\): um trimestre em cada quatro cresce mais que isso.
+]
+
+.clear[]
+
+.fonte[Fonte: IBGE, Contas Nacionais Trimestrais, tabela 5932, 1996–2026.]
+
+---
+
+## Atividade 3: discussão .tempo[35–44 min]
+
+**1.** A FDA da Aula 19 tinha **degraus**; a desta aula é **contínua**. O que o tamanho de um degrau
+representava? Por que não há degraus agora?
+
+**2.** Para uma variável contínua, \\(P(X \leq 5)\\) e \\(P(X &lt; 5)\\) são iguais. Para o número de sinistros da
+Aula 19, não eram. Explique em uma frase.
+
+**3.** Esboce à mão a FDA de uma variável com densidade **constante** \\(f(x) = 1/4\\) em \\([2, 6]\\). Qual é a
+forma do gráfico? (Esta é a distribuição da próxima aula.)
+
+--
+
+.caixa-resposta[
+**3.** \\(F(t) = 0\\) para \\(t &lt; 2\\); \\(F(t) = (t - 2)/4\\) em \\([2, 6]\\); \\(F(t) = 1\\) para \\(t \geq 6\\): uma **rampa reta**.
+]
+
+---
+
+## Atividade 3 (cont.): da FDA para a densidade
+
+**4.** Uma variável tem FDA \\(F(t) = t^3\\) para \\(0 \leq t \leq 1\\) (0 antes e 1 depois).
+
+- **a)** Qual é a densidade?
+- **b)** Calcule \\(P(X &gt; 0{,}5)\\).
+- **c)** Qual é a mediana?
+
+--
+
+.caixa-resposta[
+**a)** \\(f(t) = F'(t) = 3t^2\\) em \\([0, 1]\\). **b)** \\(1 - F(0{,}5) = 1 - 0{,}125 = 0{,}875\\).
+**c)** \\(m^3 = 0{,}5 \Rightarrow m = 0{,}5^{1/3} \approx 0{,}794\\).
+]
+
+---
+
+## Uso do R: FDA com `integrate()` e dados simulados .tempo[44–50 min]
+
+```{r uso-r-1}
+f <- function(x) 2 * x
+F_num <- function(t) integrate(f, lower = 0, upper = t)$value   # FDA pela integral
+c(F_num(0.4), 0.4^2)                                             # confere com t^2
+
+F <- function(t) ifelse(t < 0, 0, ifelse(t < 1, t^2, 1))
+F(0.4) - F(0.2)                                                  # P(0,2 < X <= 0,4)
+
+set.seed(26)
+x <- sqrt(runif(100000))                                         # valores com densidade 2x
+Fn <- ecdf(x)                                                    # FDA empírica
+c(Fn(0.4) - Fn(0.2), median(x), sqrt(0.5))                       # probabilidade e mediana
+```
+
+---
+
+## Uso do R: transformação inversa
+
+Se \\(U \sim \text{Uniforme}(0, 1)\\) e \\(F\\) é uma FDA contínua e crescente, então \\(X = F^{-1}(U)\\) tem FDA \\(F\\).
+
+```{r uso-r-2, fig.height=2.3, fig.width=9, out.width="75%"}
+u <- runif(10000)
+espera <- -log(1 - u) / 0.2           # inversa de F(t) = 1 - exp(-0.2 t)
+c(media = mean(espera), prop_ate_5 = mean(espera <= 5))
+hist(espera, breaks = 60, freq = FALSE, main = "", xlab = "minutos")
+curve(0.2 * exp(-0.2 * x), add = TRUE, col = "red", lwd = 2)
+```
+
+---
+
+## Resumo
+
+- **FDA contínua:** \\(F(t) = P(X \leq t) = \int\_{-\infty}^{t} f(x)\,dx\\), a área acumulada até \\(t\\).
+- \\(F\\) é contínua, não decrescente, vai de 0 a 1.
+- **A densidade é a derivada da FDA:** \\(F'(t) = f(t)\\).
+- \\(P(a &lt; X \leq b) = F(b) - F(a)\\) e \\(P(X &gt; a) = 1 - F(a)\\).
+- **Percentis** resolvem \\(F(q) = p\\); a **mediana** resolve \\(F(m) = 0{,}5\\).
 
 ---
 

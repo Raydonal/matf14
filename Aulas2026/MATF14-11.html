@@ -20,210 +20,550 @@ class: inverse, center, middle
 
 # Aula 11: Probabilidade condicional
 
-### Provocação · Teoria · Aplicação · Discussão
+### Parte 1 (50 min): probabilidade geométrica e condicional · intervalo · Parte 2 (50 min): tabelas de contingência
 
 ---
 
-## A pergunta que muda tudo: condicional a quê?
+## Roteiro da aula (100 minutos)
 
-&gt; "A probabilidade de reeleição de um prefeito bem avaliado é de 80%." Essa frase já é uma
-&gt; afirmação sobre probabilidade condicional. Quem é o evento condicionante, e o que aconteceria com
-&gt; o número "80%" se ele não estivesse ali?
+.roteiro[
+
+| Tempo | Parte 1: áreas e informação |
+|:---|:---|
+| 0–5 min | Provocação: duas frases sobre mulheres e mercado de trabalho |
+| 5–22 min | Probabilidade geométrica: espera, encontro, barganha, Monte Carlo |
+| 22–40 min | Probabilidade condicional e regra da multiplicação |
+| 40–50 min | **Atividade 1**: urna, casas e orçamento |
+
+| Tempo | Parte 2: tabelas de contingência com a PNAD |
+|:---|:---|
+| 0–12 min | Conjunta, marginal e condicional |
+| 12–20 min | Taxa ou nível? O evento condicionante |
+| 20–30 min | Falácia da inversão: escolaridade e desocupação |
+| 30–40 min | Confundimento e paradoxo de Simpson |
+| 40–50 min | **Atividade 2**, Uso do R e fechamento |
+
+]
+
+---
+
+## Provocação: as duas frases dizem a mesma coisa? .tempo[0–5 min]
+
+Com dados da PNAD Contínua do 2º trimestre de 2026 (IBGE):
+
+.caixa-discussao[
+**Frase 1:** "65% das pessoas fora da força de trabalho são mulheres."
+
+**Frase 2:** "47% das mulheres estão fora da força de trabalho."
+]
+
+--
+
+- As duas usam o **mesmo** número de mulheres fora da força de trabalho (43.016 mil).
+- Mudam o **denominador**: todos os que estão fora da força, ou todas as mulheres.
+
+--
+
+.caixa-aplicacao[
+Cada frase é uma **probabilidade condicional** diferente. Hoje: como a informação muda a probabilidade, e
+como ler uma **tabela de contingência** sem trocar os denominadores.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: áreas e informação
+
+### 50 minutos
 
 ---
 
-## Definição
+## Probabilidade geométrica .tempo[5–22 min]
 
+Quando o resultado é um **ponto ao acaso** num intervalo ou numa região do plano, não dá para contar
+resultados. Regiões de mesmo tamanho têm a mesma chance:
+
+.caixa-aplicacao[
 $$
-P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \qquad P(B)&amp;gt;0
+P(A) = \frac{\text{comprimento (ou área) de } A}{\text{comprimento (ou área) de } \Omega}
 $$
 
-Condicionar em \\(B\\) = restringir o espaço amostral aos resultados em que \\(B\\) ocorre.
+Comprimentos e áreas são não negativos, aditivos e \\(P(\Omega) = 1\\): os **axiomas** valem.
+]
 
 --
 
-## Regra do produto
+**Espera pelo ônibus.** Um ônibus passa a cada 15 minutos; o passageiro chega num instante ao acaso.
 
-Da definição, isolando \\(P(A\cap B)\\):
+- \\(P(\text{esperar mais de 10 min}) = \dfrac{15 - 10}{15} = \dfrac{1}{3}\\).
+- \\(P(\text{esperar exatamente 10 min}) = 0\\): um ponto tem comprimento **zero**, mesmo sendo possível (Unidade 4).
+
+---
+
+## O problema do encontro
+
+Comprador e vendedor combinam de se encontrar entre 9h e 10h. Cada um chega num instante ao acaso, de forma
+independente, e espera **no máximo 15 minutos**. Qual a chance de o negócio ser fechado?
+
+.pull-left-40[
+\\(\Omega = [0, 60] \times [0, 60]\\), área 3.600.
+
+Encontro: \\(|x - y| \leq 15\\), a faixa em torno da diagonal.
+
+Fora da faixa: dois triângulos de catetos 45, área \\(2 \times 45^2/2 = 2.025\\).
 
 $$
-P(A\cap B) = P(B)\,P(A\mid B) = P(A)\,P(B\mid A)
+P = 1 - \frac{2.025}{3.600} = \frac{7}{16} = 0{,}4375
 $$
+]
+
+.pull-right-60[
+&lt;img src="MATF14-11_files/figure-html/encontro-1.png" alt="" width="100%" /&gt;
+
+]
+
+---
+
+## Barganha e o método de Monte Carlo
+
+.pull-left[
+**Barganha.** O preço máximo do comprador \\(b\\) e o mínimo do vendedor \\(s\\) são pontos ao acaso em \\([0, 1]\\)
+(R$ milhões), independentes.
+
+- Há acordo possível se \\(b \geq s\\): metade do quadrado, \\(P = 1/2\\).
+- Ganho de troca \\(b - s \geq 0{,}2\\): triângulo de catetos 0,8, \\(P = 0{,}8^2/2 = 0{,}32\\).
+]
+
+.pull-right[
+**Monte Carlo.** Pontos ao acaso no quadrado \\([0, 1]^2\\): a proporção dentro do quarto de círculo aproxima \\(\pi/4\\).
+
+
+``` r
+set.seed(1)
+x &lt;- runif(100000); y &lt;- runif(100000)
+4 * mean(x^2 + y^2 &lt;= 1)
+```
+
+```
+## [1] 3.14632
+```
+
+.small[
+Finanças usam a mesma ideia para precificar opções e medir risco quando não há fórmula.
+]
+]
+
+--
+
+.caixa-discussao[
+**"Ao acaso" precisa ser definido.** Sortear uma **empresa** ao acaso ou sortear um **trabalhador** ao acaso e
+olhar sua empresa dá tamanhos médios de empresa muito diferentes. Por quê?
+]
+
+---
+
+## Probabilidade condicional .tempo[22–40 min]
+
+.pull-left-40[
+&lt;img src="images/infarto_fapesp.jpg" alt="" width="100%" /&gt;
+
+.fonte[Fonte: Revista Pesquisa FAPESP.]
+]
+
+.pull-right-60[
+A chance de infarto de uma pessoa **qualquer** é igual à de uma pessoa **que fuma**? Não: informação extra
+**muda** probabilidades.
+
+.caixa-aplicacao[
+Com \\(P(A) &gt; 0\\), a **probabilidade condicional** de \\(B\\) **dado** \\(A\\) é
+
+$$
+P(B \mid A) = \frac{P(A \cap B)}{P(A)}.
+$$
+
+Condicionar é **restringir** o espaço amostral a \\(A\\) e **reescalar** para que \\(A\\) tenha probabilidade 1.
+]
+]
+
+---
+
+## Exemplo: um dado e a falácia da inversão
+
+Dado honesto; \\(A = \\{2\\}\\) e \\(B = \\{2, 4, 6\\}\\) ("par").
+
+$$
+P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{1/6}{3/6} = \frac13
+\qquad
+P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{1/6}{1/6} = 1
+$$
+
+--
+
+.caixa-discussao[
+**Em geral, \\(P(A \mid B) \neq P(B \mid A)\\).** "A maioria dos presos é jovem" não quer dizer "a maioria dos jovens é
+presa". Confundir as duas é a **falácia da inversão**.
+]
+
+--
+
+.caixa-aplicacao[
+**A condicional é uma probabilidade:** \\(Q(B) = P(B \mid A)\\) obedece aos três axiomas. Logo
+\\(P(B^c \mid A) = 1 - P(B \mid A)\\). Mas, em geral, \\(P(B \mid A^c) \neq 1 - P(B \mid A)\\).
+]
+
+---
+
+## Regra da multiplicação e árvores
+
+Da definição: \\(P(A \cap B) = P(A)\\, P(B \mid A)\\). Um lote tem 50 peças boas e 10 defeituosas; retiram-se **duas sem reposição**.
+
+.pull-left-40[
+$$
+P(D\_1 \cap D\_2) = \frac{10}{60} \times \frac{9}{59} \approx 0{,}0254
+$$
+
+Pela contagem (Aula 10): \\(\binom{10}{2} / \binom{60}{2} = 45/1.770\\), o mesmo valor.
+]
+
+.pull-right-60[
+&lt;img src="MATF14-11_files/figure-html/arvore-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+.caixa-aplicacao[
+**Em geral:** \\(P(A\_1 \cap A\_2 \cap A\_3) = P(A\_1)\\, P(A\_2 \mid A\_1)\\, P(A\_3 \mid A\_1 \cap A\_2)\\), e assim por diante.
+]
+
+---
+
+## Atividade 1 (duplas) .tempo[40–50 min]
+
+.caixa-atividade[
+**1.** Uma urna tem 3 bolas brancas e 7 vermelhas. Qual a probabilidade de duas brancas em duas retiradas sem
+reposição? E da sequência \\(B\_1 B\_2 V\_3 V\_4 B\_5\\) em cinco retiradas?
+
+**2.** Casas classificadas por preço e banheiros (proporções): baixo e mais de um banheiro 0,22; baixo e um
+banheiro 0,40; alto e mais de um 0,34; alto e um 0,04. Calcule \\(P(\text{mais de um banheiro} \mid \text{alto})\\).
+
+**3.** Um investidor divide R$ 1 milhão em duas partes, cortando \\([0, 1]\\) num ponto ao acaso. Qual a
+probabilidade de a parte maior ser pelo menos o **triplo** da menor?
+]
+
+---
+
+## Atividade 1: respostas
+
+.caixa-resposta[
+**1.** \\(\frac{3}{10} \cdot \frac{2}{9} = \frac{1}{15} \approx 0{,}067\\). Sequência: \\(\frac{3}{10} \cdot \frac{2}{9} \cdot \frac{7}{8} \cdot \frac{6}{7} \cdot \frac{1}{6} = \frac{1}{120}\\).
+
+**2.** \\(P(\text{alto}) = 0{,}34 + 0{,}04 = 0{,}38\\); \\(P(\text{mais de um} \mid \text{alto}) = 0{,}34/0{,}38 \approx 0{,}895\\).
+
+**3.** Com corte em \\(u\\), a parte maior é pelo menos o triplo da menor se \\(u \leq 1/4\\) ou \\(u \geq 3/4\\):
+comprimento favorável \\(1/4 + 1/4\\), \\(P = 0{,}5\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Intervalo
 
----
-
-## Escolaridade e desemprego
-
-
-``` r
-tabela &lt;- tribble(
-  ~Escolaridade, ~Empregado, ~Desempregado, ~Total,
-  "Fund/Médio", 180, 70, 250,
-  "Superior", 210, 40, 250,
-  "Total", 390, 110, 500
-)
-tabela
-```
-
-```
-## # A tibble: 3 × 4
-##   Escolaridade Empregado Desempregado Total
-##   &lt;chr&gt;            &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1 Fund/Médio         180           70   250
-## 2 Superior           210           40   250
-## 3 Total              390          110   500
-```
-
-\\(B=\\) "ensino superior", \\(A=\\) "desempregado". \\(P(A\mid B) = \frac{40/500}{250/500} = 0{,}16\\).
-
-Compare com \\(P(A)=110/500=0{,}22\\) (não condicional): saber a escolaridade muda a probabilidade de
-desemprego, de 22% para 16%.
-
----
-
-## Condicionar também pode aumentar a probabilidade
-
-Distribuição de 200 alunos de uma faculdade, por curso e sexo:
-
-| Curso | Mulheres | Homens | Total |
-|---|---|---|---|
-| História | 20 | 10 | 30 |
-| Outros cursos | 65 | 105 | 170 |
-| Total | 85 | 115 | 200 |
-
-\\(P(\text{mulher}) = 85/200 = 0{,}425\\). Condicionando em \\(H=\\) "cursa história":
-\\(P(\text{mulher}\mid H) = 20/30 \approx 0{,}667\\).
-
---
-
-No exemplo anterior, condicionar **diminuiu** a probabilidade (de 22% para 16%); aqui condicionar
-**aumenta** (de 42,5% para 66,7%). A definição de \\(P(A\mid B)\\) não diz em que direção a
-probabilidade muda, isso depende inteiramente dos dados, não da fórmula.
-
----
-
-## Sequência de eventos: regra do produto
-
-Uma urna de crédito tem 8 empréstimos bons e 2 ruins. Sorteiam-se 2, sem reposição. Qual a
-probabilidade de os dois serem bons?
-
-
-``` r
-p_primeiro_bom  &lt;- 8/10
-p_segundo_bom_dado_primeiro &lt;- 7/9   # sobrou 1 bom a menos, 1 total a menos
-p_ambos_bons &lt;- p_primeiro_bom * p_segundo_bom_dado_primeiro
-p_ambos_bons
-```
-
-```
-## [1] 0.6222222
-```
-
-$$
-P(1^\circ\text{ bom} \cap 2^\circ\text{ bom}) = P(1^\circ\text{ bom})\times P(2^\circ\text{ bom}\mid 1^\circ\text{ bom}) = \tfrac{8}{10}\times\tfrac{7}{9}
-$$
-
----
-
-## Simulando probabilidade condicional: teórico vs. empírico
-
-A definição \\(P(A\mid B)=P(A\cap B)/P(B)\\) também é uma afirmação sobre frequências. Recriamos a
-população da tabela de escolaridade e desemprego (500 pessoas, nas mesmas proporções) e sorteamos
-dela repetidamente, com reposição:
-
-
-``` r
-set.seed(11)
-populacao &lt;- tibble(
-  escolaridade = rep(c("Fund/Médio", "Superior"), each = 250),
-  situacao = c(rep("Empregado", 180), rep("Desempregado", 70),     # Fund/Médio
-               rep("Empregado", 210), rep("Desempregado", 40))     # Superior
-)
-
-n_sim &lt;- 100000
-sorteio &lt;- populacao[sample(nrow(populacao), n_sim, replace = TRUE), ]
-
-p_dado_superior_sim &lt;- sorteio |&gt;
-  filter(escolaridade == "Superior") |&gt;
-  summarise(mean(situacao == "Desempregado")) |&gt;
-  pull()
-
-c(simulado = p_dado_superior_sim, teorico = 40/250)
-```
-
-```
-##  simulado   teorico 
-## 0.1620736 0.1600000
-```
-
----
-
-## Interpretando a simulação
-
-Restringir (`filter()`) o sorteio aos casos com \\(B=\\) "superior" é, em código, exatamente a mesma
-operação que restringir o espaço amostral na definição de \\(P(A\mid B)\\): a frequência relativa de
-"desempregado" **dentro** desse subconjunto converge para \\(0{,}16\\), o mesmo valor calculado à mão
-no slide anterior.
-
----
-
-## Assimetria: \\(P(A\mid B)\\) não é \\(P(B\mid A)\\)
-
-Um dado honesto é lançado. Seja \\(A=\\) "o resultado é 2" e \\(B=\\) "o resultado é par". Como o
-único resultado par igual a 2 é o próprio 2, \\(P(A\cap B)=P(A)=1/6\\) e \\(P(B)=3/6\\):
-
-$$
-P(A\mid B) = \frac{1/6}{3/6} = \frac13, \qquad P(B\mid A) = \frac{1/6}{1/6} = 1
-$$
-
---
-
-Saber que saiu um número par dá 1 chance em 3 de ter sido exatamente o 2; saber que saiu
-exatamente o 2 garante, com certeza, que o número é par. \\(P(A\mid B)\\) e \\(P(B\mid A)\\) respondem
-perguntas diferentes, guarde essa assimetria para a Rodada 2.
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 3: Discussão (bloco central da aula)
+# Parte 2: tabelas de contingência com a PNAD
+
+### 50 minutos
 
 ---
 
-## Rodada 1: resolvendo a provocação inicial
+## Uma tabela, três tipos de probabilidade .tempo[0–12 min]
 
-**1.** Volte à frase de abertura sobre reeleição. Escreva explicitamente \\(P(A\mid B)\\) com \\(A=\\)
-"reeleito" e \\(B=\\) "bem avaliado". Se a mesma pesquisa dissesse apenas "80% dos prefeitos são
-reeleitos" (sem a condição "bem avaliados"), essa seria a mesma afirmação? Por quê?
+Pessoas de 14 anos ou mais, Brasil, 2º trimestre de 2026 (mil pessoas):
 
-**2.** No exemplo do crédito, por que a segunda probabilidade é \\(7/9\\) e não \\(8/10\\)? O que mudaria
-se o sorteio fosse **com** reposição? Refaça a conta para o caso com reposição.
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Sexo &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Ocupados &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Desocupados &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Fora da força &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Homens &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.293 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.803 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.465 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 84.561 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mulheres &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44.765 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.059 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43.016 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 90.840 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 103.058 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.862 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.481 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 175.401 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.fonte[Fonte: IBGE, PNAD Contínua, tabela 4093. Totais podem diferir em 1 por arredondamento.]
+
+--
+
+.small[
+
+| Tipo | Pergunta | Cálculo |
+|:---|:---|:---|
+| **Conjunta** | chance de \\(A\\) **e** \\(B\\) | célula / total geral |
+| **Marginal** | chance de \\(A\\) | total da linha (ou coluna) / total geral |
+| **Condicional** | chance de \\(B\\) **entre** os que têm \\(A\\) | célula / total da **linha** (ou **coluna**) |
+
+]
 
 ---
 
-## Rodada 2: a falácia da inversão
+## Lendo a tabela
 
-**3.** Calcule \\(P(\text{superior}\mid\text{desempregado})\\) a partir da mesma tabela do exemplo
-(dica: você precisa da coluna "Desempregado", não da linha "Superior"). Compare com
-\\(P(\text{desempregado}\mid\text{superior})=0{,}16\\). São iguais? O erro de supor que são iguais tem
-um nome, pesquise ou arrisque um palpite sobre por que ele é perigoso em contextos jurídicos
-("dado que a evidência bate com o suspeito, ele é culpado" vs. "dado que é culpado, a evidência
-bateria").
 
-**4.** Se \\(B\subseteq A\\) (todo resultado de \\(B\\) também está em \\(A\\)), o que se pode concluir sobre
-\\(P(A\mid B)\\) sem fazer nenhuma conta numérica? Justifique só com a definição.
+
+- **Conjunta:** \\(P(\text{mulher} \cap \text{fora}) = 43.016 / 175.401 \approx 0{,}245\\).
+- **Marginal:** \\(P(\text{mulher}) \approx 0{,}518\\); \\(P(\text{fora}) \approx 0{,}379\\).
+
+--
+
+- **Perfil-linha:** \\(P(\text{fora} \mid \text{mulher}) \approx 0{,}474\\) e \\(P(\text{fora} \mid \text{homem}) \approx 0{,}277\\).
+- **Perfil-coluna:** \\(P(\text{mulher} \mid \text{fora}) \approx 0{,}647\\).
+
+--
+
+.caixa-aplicacao[
+**Marginais são probabilidades totais:** cada conjunta é "condicional × marginal", e a margem soma as conjuntas:
+
+$$
+P(\text{fora}) = P(\text{fora} \mid H)\\, P(H) + P(\text{fora} \mid M)\\, P(M)
+$$
+]
+
+---
+
+## Taxa ou nível? O condicionante muda a resposta .tempo[12–20 min]
+
+O IBGE publica **dois** indicadores de desocupação, que diferem **só** no evento condicionante:
+
+.caixa-aplicacao[
+**Taxa de desocupação** \\(= P(\text{desocupado} \mid \text{na força de trabalho}) = 5.861 / 108.919 \approx 0{,}054\\)
+
+**Nível da desocupação** \\(= P(\text{desocupado} \mid \text{14 anos ou mais}) = 5.861 / 175.400 \approx 0{,}033\\)
+]
+
+--
+
+- A **taxa** pergunta: entre quem participa do mercado de trabalho, quantos não conseguem emprego?
+- O **nível** pergunta: na população em idade de trabalhar, quantos procuram emprego sem conseguir?
+
+--
+
+.caixa-discussao[
+Se muitos desocupados desistem de procurar emprego (passam para "fora da força"), o que acontece com a **taxa**?
+A economia melhorou?
+]
+
+---
+
+## Falácia da inversão com dados reais .tempo[20–30 min]
+
+&lt;img src="MATF14-11_files/figure-html/instrucao-1.png" alt="" width="100%" /&gt;
+
+.small[
+Quem tem **médio completo** é 44,2% dos desocupados (maior fatia), mas a taxa do grupo é 6,3%, perto da média. "O desemprego atinge principalmente quem tem ensino médio" lê a direita como se fosse a esquerda.
+]
+
+.fonte[Fonte: IBGE, PNAD Contínua, 2º trimestre de 2026, tabela 4095.]
+
+---
+
+## Confundimento: a idade por trás da escolaridade .tempo[30–40 min]
+
+.pull-left-40[
+Quem **não tem instrução** tem taxa (4,4%) **menor** que quem tem médio incompleto (9,0%).
+Estudar protege menos?
+
+Não: só 22,2% das pessoas sem instrução estão na força de trabalho (muitas são idosas), e o
+médio incompleto concentra **jovens**.
+]
+
+.pull-right-60[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Idade &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Taxa de desocupação &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Participação na força &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 14 a 17 anos &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22,6% &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15,1% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 18 a 24 anos &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11,7% &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69,8% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 25 a 39 anos &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5,0% &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 81,5% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 40 a 59 anos &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3,5% &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 75,7% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 60 anos ou mais &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2,3% &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25,3% &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.fonte[Fonte: IBGE, PNAD Contínua, 2º tri 2026, tabela 4094.]
+]
+
+.clear[]
+
+.caixa-aplicacao[
+A **idade** é uma **variável de confundimento**: está associada à escolaridade **e** à desocupação. Comparar taxas de
+grupos com composições diferentes mistura os dois efeitos.
+]
+
+---
+
+## O paradoxo de Simpson
+
+Dois bancos analisam pedidos de crédito (dados ilustrativos):
+
+| | Banco A: pedidos | aprovados | Banco B: pedidos | aprovados |
+|:---|:---:|:---:|:---:|:---:|
+| Risco baixo | 800 | 720 (90%) | 200 | 190 (95%) |
+| Risco alto | 200 | 100 (50%) | 800 | 440 (55%) |
+| **Total** | 1.000 | **820 (82%)** | 1.000 | **630 (63%)** |
+
+--
+
+O Banco B aprova **mais** em **cada** classe e **menos** no total. A taxa total é uma **média ponderada**:
+
+$$
+P(\text{aprov}) = P(\text{aprov} \mid \text{baixo})\\, P(\text{baixo}) + P(\text{aprov} \mid \text{alto})\\, P(\text{alto})
+$$
+
+com pesos diferentes: 80% dos pedidos do A são de risco baixo; no B, só 20%.
+
+.small[
+Caso real: admissões na pós-graduação de Berkeley em 1973 (Bickel, Hammel e O'Connell, 1975).
+]
+
+---
+
+## Atividade 2 (duplas) .tempo[40–47 min]
+
+.caixa-atividade[
+Com a tabela de sexo e condição na força de trabalho:
+
+**a)** Calcule \\(P(\text{desocupado} \mid \text{mulher})\\) e \\(P(\text{desocupado} \mid \text{mulher, na força de trabalho})\\). Por que
+são tão diferentes?
+
+**b)** Calcule \\(P(\text{homem} \mid \text{ocupado})\\) e compare com \\(P(\text{ocupado} \mid \text{homem})\\).
+
+**c)** A taxa de desocupação do Brasil pode cair mesmo que a taxa de **cada** grupo de idade suba? Que mudança na
+composição da força de trabalho produziria isso?
+]
+
+---
+
+## Atividade 2: respostas
+
+.caixa-resposta[
+**a)** \\(3.059 / 90.840 \approx 0{,}034\\) e
+\\(3.059 / 47.823 \approx 0{,}064\\). O segundo condiciona num evento
+menor: quase metade das mulheres está fora da força de trabalho.
+
+**b)** \\(P(\text{homem} \mid \text{ocupado}) = 58.293 / 103.057 \approx 0{,}566\\);
+\\(P(\text{ocupado} \mid \text{homem}) = 58.293 / 84.560 \approx 0{,}689\\).
+
+**c)** Sim (Simpson): se a força de trabalho **envelhece**, cresce o peso dos grupos com taxas menores (40 anos ou
+mais) e a média ponderada pode cair mesmo com todas as taxas subindo.
+]
+
+---
+
+## Uso do R: tabelas e probabilidades .tempo[47–50 min]
+
+
+``` r
+m &lt;- matrix(c(pn_h$ocupadas, pn_h$desocupadas, pn_h$fora,
+              pn_m$ocupadas, pn_m$desocupadas, pn_m$fora), nrow = 2, byrow = TRUE,
+            dimnames = list(c("Homens", "Mulheres"), c("Ocup", "Desoc", "Fora")))
+round(prop.table(m), 3)              # conjuntas
+```
+
+```
+##           Ocup Desoc  Fora
+## Homens   0.332 0.016 0.134
+## Mulheres 0.255 0.017 0.245
+```
+
+``` r
+round(prop.table(m, margin = 1), 3)  # perfil-linha: P(condição | sexo)
+```
+
+```
+##           Ocup Desoc  Fora
+## Homens   0.689 0.033 0.277
+## Mulheres 0.493 0.034 0.474
+```
+
+``` r
+round(prop.table(m, margin = 2), 3)  # perfil-coluna: P(sexo | condição)
+```
+
+```
+##           Ocup Desoc  Fora
+## Homens   0.566 0.478 0.353
+## Mulheres 0.434 0.522 0.647
+```
+
+---
+
+## Resumo
+
+- **Probabilidade geométrica:** razão de comprimentos ou áreas; um ponto tem probabilidade zero.
+- **Condicional:** \\(P(B \mid A) = P(A \cap B)/P(A)\\); em geral \\(P(A \mid B) \neq P(B \mid A)\\).
+- **Multiplicação:** \\(P(A \cap B) = P(A)\\, P(B \mid A)\\); árvores.
+- **Tabelas de contingência:** conjunta (célula/total), marginal (margem/total), condicional (célula/linha ou coluna).
+- **Taxa × nível de desocupação:** mesmo numerador, condicionantes diferentes.
+- **Confundimento e Simpson:** taxas totais são médias ponderadas; compare grupos com composições parecidas.
+
+.small[Livro: Seções 2.5, 2.6 e 2.7. Lista 06.]
 
 ---
 
@@ -231,7 +571,7 @@ class: inverse, center, middle
 
 # Próxima aula (05/10)
 
-## Independência estatística
+## Independência estatística, risco relativo e razão de chances
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

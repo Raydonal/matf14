@@ -21,267 +21,598 @@ class: inverse, center, middle
 
 # Aula 06: Medidas de dispersão
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Duas ações, mesmo retorno médio: mesma qualidade?
+## Roteiro da aula (100 minutos)
 
-&gt; Duas ações têm o mesmo retorno médio anual de 12%. Uma variou entre 8% e 16% nos últimos 5 anos;
-&gt; a outra, entre -30% e 45%. Um investidor avesso a risco as consideraria igualmente atraentes?
+.roteiro[
 
---
+| Tempo | Parte 1: amplitude, variância e desvio padrão |
+|:---|:---|
+| 0–8 min | Provocação: qual cidade é mais quente? |
+| 8–20 min | Medidas de dispersão; amplitude total; **Atividade 1**: notas |
+| 20–35 min | Desvios, variância, desvio padrão |
+| 35–50 min | **Atividade 2**: desvio padrão das cidades |
 
-&gt; E se eu disser que o desvio padrão de "faturamento em R$ mil" de uma empresa é maior que o de
-&gt; "número de funcionários"? Isso já me diz qual variável é "mais arriscada"?
+| Tempo | Parte 2: coeficiente de variação e aplicações |
+|:---|:---|
+| 0–12 min | Comparando variabilidades; coeficiente de variação |
+| 12–24 min | Duas ações com o mesmo retorno médio |
+| 24–32 min | Empresas: faturamento e empregados; dispersão por porte |
+| 32–40 min | Dados reais: estados e agregados monetários |
+| 40–46 min | **Atividade 3**: escolhendo a medida certa; limites do CV |
+| 46–50 min | Uso do R e resumo |
 
----
-
-## As duas ações da provocação, ano a ano
-
-Exatamente as duas ações da provocação, ano a ano:
-
-&lt;img src="MATF14-06_files/figure-html/fig-duas-acoes-1.png" alt="" width="504" /&gt;
-
---
-
-
-```
-## # A tibble: 2 × 3
-##   acao           media    dp
-##   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;
-## 1 A (8% a 16%)      12   2.8
-## 2 B (-30% a 45%)    12  24.8
-```
-
-Mesma linha tracejada (média = 12% nas duas), desvios padrão completamente diferentes, essa é
-exatamente a informação que a média sozinha esconde.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: amplitude, variância e desvio padrão
+
+### 50 minutos
+
+---
+
+## Provocação: qual cidade é mais quente? .tempo[0–8 min]
+
+&lt;img src="images/dispersao_variacao_termica_cnn.png" alt="" width="70%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: CNN Brasil.]
+
+--
+
+Temperatura (°C) medida em duas cidades, em cinco horários do mesmo dia:
+
+| Cidade | hora 1 | hora 2 | hora 3 | hora 4 | hora 5 | **Média** |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| A | 24 | 26 | 32 | 28 | 25 | **27** |
+| B | 20 | 26 | 36 | 28 | 25 | **27** |
+
+--
+
+.caixa-discussao[
+Pela média, as cidades são **iguais**. Mas você se vestiria da mesma forma para passar o dia em A e
+em B? O que a média **não** está contando?
+]
+
+---
+
+## Medidas de tendência central não bastam
+
+- A média, a mediana e a moda resumem os dados com **um único valor**.
+- Elas **não** informam o quanto os dados **variam** em torno desse valor.
+
+--
+
+Resumo das duas cidades com o que já sabemos (quartis da aula passada):
+
+| Cidade | \\(Q\_1\\) | Mediana | \\(Q\_3\\) | \\(IQR\\) | Média |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| A | 25 | 26 | 28 | 3 | 27 |
+| B | 25 | 26 | 28 | 3 | 27 |
+
+--
+
+.caixa-aplicacao[
+**Tudo igual**, até a distância interquartil! Mas a cidade B chegou a 20 °C e a 36 °C. Existem
+**diferentes** medidas de dispersão, e precisamos saber qual é a mais adequada em cada situação.
+]
+
+---
+
+## Medidas de dispersão (variabilidade) .tempo[8–20 min]
+
+- Medem o **grau de variabilidade** dos valores de um conjunto de dados.
+- Em geral medem a variabilidade **em torno** de uma medida de tendência central (média ou mediana).
+
+.pull-left[
+**Já vimos:**
+
+- Distância interquartil: \\(IQR = Q\_3 - Q\_1\\)
+]
+
+.pull-right[
+**Hoje:**
+
+- Amplitude total \\((AT)\\)
+- Variância \\((var)\\)
+- Desvio padrão \\((dp)\\)
+- Coeficiente de variação \\((CV)\\)
+]
 
 ---
 
 ## Amplitude total
 
+Sendo \\(x\_{\max}\\) e \\(x\_{\min}\\) o máximo e o mínimo dos dados:
+
 $$
 AT = x\_{\max} - x\_{\min}
 $$
 
-Simples, mas sensível a **um único** valor extremo, e cega a tudo que acontece entre os dois
-pontos.
+--
+
+**Cidades:** \\(AT\_A = 32 - 24 = 8\\) °C e \\(AT\_B = 36 - 20 = 16\\) °C.
+
+A "variação térmica de 16 °C" da manchete é exatamente uma **amplitude total**.
+
+--
+
+.pull-left[
+.caixa-aplicacao[
+**Vantagens**
+
+- Cálculo e interpretação simples.
+]
+]
+
+.pull-right[
+.caixa-discussao[
+**Limitações**
+
+- Pode ser influenciada por **outliers**.
+- Usa **só dois** valores: não capta a variabilidade entre o máximo e o mínimo.
+]
+]
 
 ---
 
-## Construindo a variância do zero: cidades A e B
+## Exercício: notas de dois alunos
 
-Temperaturas (°C) em 5 dias: A = \\(24, 26, 32, 28, 25\\); B = \\(20, 26, 36, 28, 25\\). Ambas têm
-**média 27**. \\(AT\_A=8\\), \\(AT\_B=16\\), já sugere B mais dispersa.
+Dois alunos, A e B, tiveram cinco notas em um curso:
 
---
+.pull-left[
+- **Aluno A:** 2, 10, 6, 6, 6
+- **Aluno B:** 2, 6, 10, 4, 8
+]
 
-Desvios em torno da média, \\(x\_i-\bar x\\):
+.pull-right[
+**a)** Qual é a nota média de cada aluno?
 
+**b)** Qual é a amplitude total das notas?
 
-``` r
-A &lt;- c(24, 26, 32, 28, 25); B &lt;- c(20, 26, 36, 28, 25)
-A - mean(A); sum(A - mean(A))
-```
+**c)** Quem teve notas com maior variabilidade?
+]
 
-```
-## [1] -3 -1  5  1 -2
-```
-
-```
-## [1] 0
-```
-
-``` r
-B - mean(B); sum(B - mean(B))
-```
-
-```
-## [1] -7 -1  9  1 -2
-```
-
-```
-## [1] 0
-```
+.clear[]
 
 --
 
-Os desvios **sempre** somam zero (\\(\sum\_i(x\_i-\bar x) = \sum\_i x\_i - n\bar x = 0\\)), uma
-medida de dispersão baseada na soma direta dos desvios é inútil. Daí a ideia de **elevar ao
-quadrado** antes de somar.
+.caixa-resposta[
+**a)** \\(\bar x\_A = (2+10+6+6+6)/5 = 30/5 = 6\\) e \\(\bar x\_B = (2+6+10+4+8)/5 = 30/5 = 6\\).
+
+**b)** \\(AT\_A = 10 - 2 = 8\\) e \\(AT\_B = 10 - 2 = 8\\).
+
+**c)** Visualmente, o aluno B tem notas **mais afastadas** da média; o aluno A tirou 6 em três das
+cinco provas. Mas a amplitude total é **igual**: ela não capta essa diferença.
+]
 
 ---
 
-## Variância e desvio padrão
+## Como medir o afastamento em relação à média? .tempo[20–35 min]
 
+&lt;img src="MATF14-06_files/figure-html/pontos-alunos-1.png" alt="" width="85%" /&gt;
 
-``` r
-c(var_A = mean((A - mean(A))^2), var_B = mean((B - mean(B))^2))
-```
+Os **desvios** em relação à média \\((x\_i - \bar x)\\), com os dados ordenados:
 
-```
-## var_A var_B 
-##   8.0  27.2
-```
-
-$$
-\mathrm{Var}(A) = 8 \Rightarrow dp(A)\approx2{,}83 \qquad
-\mathrm{Var}(B) = 27{,}2 \Rightarrow dp(B)\approx5{,}22
-$$
-
-O \\(IQR\\) das duas cidades é o **mesmo** (\\(=3\\)), só a variância revela a diferença que a
-\\(AT\\) já indicava.
+| | Notas | Desvios \\(x\_i - 6\\) | Soma dos desvios |
+|:---:|:---|:---|:---:|
+| A | 2, 6, 6, 6, 10 | \\(-4,\ 0,\ 0,\ 0,\ 4\\) | 0 |
+| B | 2, 4, 6, 8, 10 | \\(-4,\ -2,\ 0,\ 2,\ 4\\) | 0 |
 
 --
 
+.caixa-discussao[
+A média dos desvios dá **zero** nos dois casos. Isso é azar deste exemplo, ou vale sempre?
+]
+
+---
+
+## Os desvios sempre somam zero
+
+Para **qualquer** conjunto de dados:
+
 $$
-\mathrm{Var}(X) = \frac{1}{n}\sum\_{i=1}^n (x\_i-\bar x)^2
-\qquad
-dp(X) = \sqrt{\mathrm{Var}(X)}
+\sum\_{i=1}^{n}(x\_i - \bar x) = \sum\_{i=1}^{n} x\_i - n\,\bar x = n\,\bar x - n\,\bar x = 0.
 $$
 
-O desvio padrão devolve a dispersão à unidade original dos dados (a variância fica ao quadrado).
+Os desvios positivos e negativos se **cancelam**. Uma saída é elevar os desvios **ao quadrado**
+antes de somar:
+
+| | Desvios | Desvios ao quadrado | Média dos quadrados |
+|:---:|:---|:---|:---:|
+| A | \\(-4,\ 0,\ 0,\ 0,\ 4\\) | \\(16,\ 0,\ 0,\ 0,\ 16\\) | \\(32/5 = 6{,}4\\) |
+| B | \\(-4,\ -2,\ 0,\ 2,\ 4\\) | \\(16,\ 4,\ 0,\ 4,\ 16\\) | \\(40/5 = 8\\) |
 
 --
 
-**Atenção**: nesta disciplina, variância descritiva usa divisor \\(n\\). Em inferência/econometria, o
-divisor passa a ser \\(n-1\\) (correção de Bessel) quando os dados são vistos como amostra usada para
-**estimar** a variância populacional, o padrão da função `var()` do R.
+.caixa-aplicacao[
+Agora o aluno B aparece com **maior** variabilidade (8 contra 6,4). Essa média dos desvios ao
+quadrado tem nome: **variância**.
+]
+
+---
+
+## Variância
+
+Sejam \\(x\_1, \ldots, x\_n\\) os \\(n\\) valores e \\(\bar x\\) a sua média. A **variância** é
+
+$$
+var(X) = \frac{\sum\_{i=1}^{n}(x\_i - \bar x)^2}{n} = \frac{(x\_1 - \bar x)^2 + (x\_2 - \bar x)^2 + \cdots + (x\_n - \bar x)^2}{n}
+$$
+
+- **Todos** os valores são usados no cálculo.
+- Desvios grandes pesam **muito mais** que desvios pequenos (um desvio de 4 contribui 16; um de 2,
+  só 4).
+
+--
+
+.caixa-discussao[
+**Observação:** a unidade de medida fica **ao quadrado**. A variância de pesos em kg é um número em
+kg². O que significa "27,2 °C²" de variância de temperatura?
+]
+
+---
+
+## Desvio padrão
+
+O **desvio padrão** é a **raiz quadrada** da variância:
+
+$$
+dp(X) = \sqrt{var(X)} = \sqrt{\frac{\sum\_{i=1}^{n}(x\_i - \bar x)^2}{n}}
+$$
+
+--
+
+- Tem a **mesma unidade** dos dados, o que facilita a interpretação.
+- Ex.: o desvio padrão de pesos em kg também está em kg.
+
+--
+
+**Alunos:** \\(dp\_A = \sqrt{6{,}4} \approx 2{,}53\\) e \\(dp\_B = \sqrt{8} \approx 2{,}83\\) pontos.
+
+.caixa-aplicacao[
+Leitura: as notas do aluno B se afastam da média, "tipicamente", cerca de 2,8 pontos; as do aluno A,
+cerca de 2,5 pontos.
+]
+
+---
+
+## Exercício: desvio padrão das cidades .tempo[35–50 min]
+
+Calcule o desvio padrão da temperatura de cada cidade. Qual tem maior variabilidade?
+
+--
+
+.pull-left[.small[
+**Cidade A** \\((\bar x = 27)\\)
+
+| \\(x\_i\\) | \\(x\_i - 27\\) | \\((x\_i - 27)^2\\) |
+|:---:|:---:|:---:|
+| 24 | \\(-3\\) | 9 |
+| 26 | \\(-1\\) | 1 |
+| 32 | 5 | 25 |
+| 28 | 1 | 1 |
+| 25 | \\(-2\\) | 4 |
+| **Soma** | **0** | **40** |
+
+\\(var = 40/5 = 8\\) \\(\Rightarrow dp\_A = \sqrt 8 \approx 2{,}83\\) °C
+]]
+
+.pull-right[.small[
+**Cidade B** \\((\bar x = 27)\\)
+
+| \\(x\_i\\) | \\(x\_i - 27\\) | \\((x\_i - 27)^2\\) |
+|:---:|:---:|:---:|
+| 20 | \\(-7\\) | 49 |
+| 26 | \\(-1\\) | 1 |
+| 36 | 9 | 81 |
+| 28 | 1 | 1 |
+| 25 | \\(-2\\) | 4 |
+| **Soma** | **0** | **136** |
+
+\\(var = 136/5 = 27{,}2\\) \\(\Rightarrow dp\_B = \sqrt{27{,}2} \approx 5{,}22\\) °C
+]]
+
+.clear[]
+
+--
+
+.caixa-resposta[
+A cidade **B** tem maior variabilidade: seu desvio padrão é quase o **dobro** do de A. O \\(IQR\\)
+(igual a 3 nas duas) não enxergava isso, porque só olha os 50% centrais.
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: coeficiente de variação e aplicações
+
+### 50 minutos
+
+---
+
+## Comparando variabilidades de naturezas diferentes .tempo[0–12 min]
+
+Às vezes queremos comparar a variabilidade de dados de **naturezas diferentes**: pesos e alturas,
+taxas de juros e receitas, notas de 0 a 10 e temperaturas.
+
+--
+
+| Variável | Média | \\(AT\\) | \\(dp\\) |
+|:---|:---:|:---:|:---:|
+| Temperatura da cidade B (°C) | 27 | 16 | 5,22 |
+| Notas do aluno B (pontos) | 6 | 8 | 2,83 |
+
+--
+
+.caixa-discussao[
+**Cuidado!** Dados de magnitude alta tendem a ter desvio padrão mais alto. A temperatura "varia
+mais" que as notas só porque seus valores são maiores? Uma opção é **normalizar** a medida de
+variabilidade **pela média**.
+]
 
 ---
 
 ## Coeficiente de variação
 
+Sejam \\(\bar x\\) e \\(dp(X)\\) a média e o desvio padrão dos valores \\(x\_1, \ldots, x\_n\\). O
+**coeficiente de variação** é
+
 $$
 CV(X) = \frac{dp(X)}{\bar x}
 $$
 
-Adimensional, permite comparar a dispersão **relativa** de variáveis em unidades diferentes, ou
-com médias muito diferentes (faturamento em R$ mil vs. número de empregados).
-
----
-
-## Por que normalizar: duas naturezas bem diferentes
-
-Considere as notas de um aluno B em 5 avaliações: \\(2, 6, 10, 4, 8\\) (média \\(6\\)) e compare com a
-temperatura da cidade B desta aula (média \\(27\\), \\(dp\approx5{,}21\\)):
-
-| | Média | \\(AT\\) | \\(dp\\) | \\(CV\\) |
-|---|---|---|---|---|
-| Temp. cidade B | 27 | 16 | 5,21 | 0,19 |
-| Notas do aluno B | 6 | 8 | 2,82 | 0,47 |
+É **adimensional** (a unidade se cancela) e costuma ser apresentado em **porcentagem**.
 
 --
 
-Em valor absoluto, \\(dp(\text{temp. B}) = 5{,}21 &gt; dp(\text{notas B}) = 2{,}82\\): pareceria que a
-temperatura "varia mais". O \\(CV\\) **inverte** essa conclusão: relativamente à própria média, as
-notas do aluno B são mais do que **duas vezes** mais dispersas (\\(0{,}47\\) contra \\(0{,}19\\)).
-Comparar desvios padrão de variáveis de naturezas diferentes sem normalizar pela média é um erro
-comum — e é exatamente o problema que o \\(CV\\) resolve.
+| Variável | Média | \\(AT\\) | \\(dp\\) | \\(CV\\) |
+|:---|:---:|:---:|:---:|:---:|
+| Temperatura da cidade B | 27 | 16 | 5,22 | \\(5{,}22/27 \approx 0{,}19\\) (19%) |
+| Notas do aluno B | 6 | 8 | 2,83 | \\(2{,}83/6 \approx 0{,}47\\) (47%) |
+
+--
+
+.caixa-aplicacao[
+Em termos **relativos** à própria média, as notas do aluno B são **mais de duas vezes** mais
+dispersas que a temperatura da cidade B. O \\(CV\\) inverteu a conclusão do desvio padrão.
+]
 
 ---
 
-class: inverse, center, middle
+## Duas ações com o mesmo retorno médio .tempo[12–24 min]
 
-# Bloco 2: Aplicação
+Retorno anual (%) de duas ações nos últimos 5 anos:
+
+&lt;img src="MATF14-06_files/figure-html/fig-duas-acoes-1.png" alt="" width="85%" /&gt;
+
+| Ação | Retornos (%) | Média | \\(dp\\) | \\(CV\\) |
+|:---:|:---|:---:|:---:|:---:|
+| A | 8, 10, 12, 14, 16 | 12 | \\(\sqrt{8} \approx 2{,}83\\) | 0,24 |
+| B | \\(-30\\), 5, 15, 25, 45 | 12 | \\(\sqrt{616} \approx 24{,}8\\) | 2,07 |
 
 ---
 
-## Comparando dispersão relativa
+## A conta da ação B, passo a passo
+
+| Retorno \\(x\_i\\) | \\(x\_i - 12\\) | \\((x\_i - 12)^2\\) |
+|:---:|:---:|:---:|
+| \\(-30\\) | \\(-42\\) | 1.764 |
+| 5 | \\(-7\\) | 49 |
+| 15 | 3 | 9 |
+| 25 | 13 | 169 |
+| 45 | 33 | 1.089 |
+| **Soma** | **0** | **3.080** |
+
+$$
+var = \frac{3.080}{5} = 616 \qquad dp = \sqrt{616} \approx 24{,}8 \text{ pontos percentuais}
+$$
+
+.caixa-economia[
+Em finanças, o desvio padrão dos retornos é a medida mais simples de **risco** (volatilidade). A
+média, sozinha, esconde que a ação B perdeu 30% em um dos anos.
+]
+
+---
+
+## Empresas: faturamento ou número de empregados? .tempo[24–32 min]
 
 
 ``` r
 empresas |&gt; summarise(
-  cv_faturamento = dp_n(faturamento99) / mean(faturamento99),
-  cv_empregados  = dp_n(empregados99) / mean(empregados99)
-)
+  media_fat = mean(faturamento99), dp_fat = dp_n(faturamento99),
+  media_emp = mean(empregados99),  dp_emp = dp_n(empregados99)) |&gt;
+  mutate(cv_fat = dp_fat / media_fat, cv_emp = dp_emp / media_emp) |&gt; round(3)
 ```
 
 ```
-##   cv_faturamento cv_empregados
-## 1      0.3149947      1.118723
+##   media_fat   dp_fat media_emp dp_emp cv_fat cv_emp
+## 1  334264.9 105291.7    60.736 67.947  0.315  1.119
 ```
 
-Não faz sentido comparar diretamente o desvio padrão de "faturamento" (ordem de centenas de
-milhares) com o de "nº de empregados" (ordem de dezenas), são unidades incomparáveis. O \\(CV\\)
-resolve isso.
+--
+
+.caixa-aplicacao[
+O desvio padrão do faturamento (≈ 105 mil) é milhares de vezes maior que o do número de empregados
+(≈ 68), mas as unidades são **incomparáveis**. Pelo \\(CV\\), o número de empregados é **muito mais
+disperso** em termos relativos (112% contra 31%).
+]
 
 ---
 
-## A mesma lógica em finanças
-
-A mesma ideia é usada para comparar a **volatilidade relativa** de duas ações com preços médios
-muito diferentes: um desvio padrão de R$ 5 é enorme para uma ação de R$ 10 (CV alto) e pequeno
-para uma de R$ 500 (CV baixo).
+## Dispersão relativa dentro de cada porte
 
 
-|Ação            | Preço médio| Desvio padrão|   CV|
-|:---------------|-----------:|-------------:|----:|
-|A (preço baixo) |          10|           2.5| 0.25|
-|B (preço alto)  |         500|          40.0| 0.08|
+``` r
+empresas |&gt; group_by(porte) |&gt;
+  summarise(n = n(), media = mean(faturamento99), dp = dp_n(faturamento99)) |&gt;
+  mutate(cv = dp / media) |&gt; arrange(cv)
+```
 
----
+```
+## # A tibble: 3 × 5
+##   porte       n   media     dp    cv
+##   &lt;chr&gt;   &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 Grande     23 477432. 69766. 0.146
+## 2 Média      70 315874. 55870. 0.177
+## 3 Pequena    13 179997. 55622. 0.309
+```
 
-class: inverse, center, middle
+--
 
-# Bloco 3: Discussão (bloco central da aula)
-
----
-
-## Rodada 1: resolvendo a provocação inicial
-
-**1.** Volte ao gráfico das duas ações da abertura: mesma média (12%), desvios padrão bem
-diferentes. Um investidor avesso a risco, olhando só a média divulgada por um banco, cometeria que
-erro?
-
-**2.** Um gestor de risco reporta apenas "desvio padrão mensal de 2%" para um fundo. Isso basta
-para saber se há meses de perdas catastróficas raras escondidos numa distribuição majoritariamente
-estável? Que medida, ainda não vista (mas você pode arriscar um palpite), ajudaria a responder?
+.caixa-discussao[
+Em valores absolutos, o desvio padrão das empresas grandes é maior. Mas, **em relação à média do
+grupo**, o faturamento das pequenas é o mais heterogêneo (CV ≈ 31%, contra ≈ 15% das grandes). Para
+um banco que usa o porte como critério de crédito, em qual grupo o porte é **menos** informativo?
+]
 
 ---
 
-## Rodada 2: o coeficiente de variação e seus limites
+## Dados reais: dispersão entre estados e na moeda .tempo[32–40 min]
 
-**3.** Um artigo afirma "o Brasil é mais desigual que a Argentina" citando apenas a renda média per
-capita dos dois países. Que medida de dispersão seria indispensável para essa afirmação ter
-qualquer sentido?
 
-**4.** O \\(CV\\) pode ser enganoso quando a média da variável está próxima de zero. Explique por que
-(pense no que acontece com uma fração quando o denominador se aproxima de zero) e dê um exemplo
-econômico em que isso seria um problema real (por exemplo, uma variável que pode ser positiva ou
-negativa, como lucro).
+
+.pull-left[
+**PIB per capita dos 27 estados (2021)**
+
+- Média: R$ 36.683; desvio padrão: R$ 17.794.
+- \\(CV = 49\\)%: grande desigualdade regional.
+- Amplitude: do Maranhão (R$ 17.472) ao Distrito Federal (R$ 92.732).
+]
+
+.pull-right[
+**Crescimento em 12 meses dos meios de pagamento (2011–2026)**
+
+- M1: média 6,8%, desvio padrão 11,1 p.p.
+- M4: média 11,5%, desvio padrão 2,7 p.p.
+- O M1 (dinheiro e depósitos à vista) é **muito** mais volátil.
+]
+
+.clear[]
+
+.caixa-discussao[
+Por que faz sentido comparar os **desvios padrão** do M1 e do M4 (mesma unidade: pontos percentuais), mas não o desvio padrão
+do PIB per capita com o do crescimento do M1? Que medida você usaria nesse caso?
+]
+
+.fonte[Fontes: IBGE, tabelas 5938 e 6579; Banco Central do Brasil, SGS 27791 e 27815.]
 
 ---
 
-class: inverse, center, middle
+## Atividade 3: escolhendo a medida certa .tempo[40–46 min]
 
-# Bloco 4: Uso do R
+**1.** Volte às duas ações. Um investidor avesso a risco que olhasse só a média divulgada pelo banco
+cometeria que erro? Que número você exigiria ver ao lado da média?
+
+**2.** O \\(IQR\\) das duas cidades é igual, mas o desvio padrão é muito diferente. Em que situação o
+\\(IQR\\) seria a medida **preferível**? (Pense em um sensor de temperatura com defeito que registra
+um único valor de 60 °C.)
+
+--
+
+**3.** Manchete: "variação térmica de 16 °C". Subtítulo: "temperaturas oscilam entre 17 °C e
+35 °C na região". Os dois números são compatíveis? O que cada um está medindo?
 
 ---
+
+## Atividade 3 (cont.): os limites do coeficiente de variação
+
+**4.** Uma notícia afirma que "o Brasil é mais desigual que outro país" citando só a **renda média**
+per capita dos dois. Que medida de dispersão seria indispensável para essa afirmação fazer sentido?
+
+**5.** O \\(CV\\) pode enganar quando a média é **próxima de zero**. Explique por quê (o que acontece
+com uma fração quando o denominador se aproxima de zero?) e dê um exemplo econômico: lucro trimestral
+de uma empresa que alterna prejuízos e lucros, saldo da balança comercial...
+
+**6.** Faz sentido calcular o \\(CV\\) de temperaturas em graus Celsius? E se as mesmas temperaturas
+fossem medidas em Fahrenheit, o \\(CV\\) mudaria?
+
+--
+
+.caixa-resposta[
+**6.** Muda. Ao converter para Fahrenheit \\((F = 1{,}8\,C + 32)\\), o desvio padrão é multiplicado
+por 1,8, mas a média ganha também o "+32": a razão \\(dp/\bar x\\) se altera. O \\(CV\\) das
+temperaturas em °C que usamos acima só vale **nessa escala**. Por isso o \\(CV\\) é mais confiável
+para variáveis com **zero absoluto** (renda, peso, número de empregados).
+]
+
+---
+
+## Uso do R: medidas de dispersão .tempo[46–50 min]
+
+
+``` r
+b &lt;- c(20, 26, 36, 28, 25)        # temperaturas da cidade B
+
+max(b) - min(b)                   # amplitude total: 16
+diff(range(b))                    # o mesmo, 16
+IQR(b)                            # distância interquartil
+
+var(b)                            # 34  &lt;- ATENÇÃO: divide por n - 1
+sd(b)                             # 5,83
+
+# as fórmulas desta aula dividem por n:
+var_n &lt;- function(x) mean((x - mean(x))^2)
+var_n(b)                          # 27,2
+sqrt(var_n(b))                    # 5,22
+sqrt(var_n(b)) / mean(b)          # CV: 0,19
+```
+
+.caixa-r[
+`var()` e `sd()` do R dividem por \\(n-1\\) (versão **amostral**, que você verá em Inferência).
+Nesta disciplina e nas provas usamos o divisor \\(n\\), como no formulário.
+]
+
+---
+
+## Uso do R: com a base de empresas
 
 
 ``` r
 library(tidyverse)
 empresas &lt;- read.csv("empresas.csv")
 
-var_n &lt;- function(x) mean((x - mean(x))^2)   # variância descritiva (divisor n)
-dp_n  &lt;- function(x) sqrt(var_n(x))
-
-empresas |&gt; summarise(
-  dp_n(faturamento99),
-  var_n(faturamento99),
-  cv = dp_n(faturamento99) / mean(faturamento99)
-)
-
-var(empresas$faturamento99)   # ATENÇÃO: usa divisor n-1, não n
+empresas |&gt;
+  group_by(porte) |&gt;
+  summarise(
+    AT  = max(faturamento99) - min(faturamento99),
+    IQR = IQR(faturamento99),
+    dp  = sqrt(mean((faturamento99 - mean(faturamento99))^2)),
+    CV  = dp / mean(faturamento99)
+  )
 ```
+
+.caixa-r[
+**Exercício:** repita para `empregados99` e para a idade dos prefeitos (`dados_prefeitos.csv`) por
+`Regiao`. Em qual região a idade dos prefeitos é mais homogênea?
+]
+
+---
+
+## Resumo
+
+- **Medidas de dispersão** medem a variabilidade dos dados.
+- **Distância interquartil:** \\(Q\_3 - Q\_1\\), só os 50% centrais; robusta a extremos.
+- **Amplitude total:** \\(x\_{\max} - x\_{\min}\\); simples, mas usa só dois valores.
+- **Variância:** média dos desvios ao quadrado; unidade ao quadrado.
+- **Desvio padrão:** \\(dp = \sqrt{var}\\); mesma unidade dos dados.
+- **Coeficiente de variação:** \\(CV = dp/\bar x\\); adimensional, compara variabilidades
+  **relativas** (só para variáveis com zero absoluto e média longe de zero).
+- A escolha da medida depende do **tipo de dado** e da **pergunta** da análise.
 
 ---
 

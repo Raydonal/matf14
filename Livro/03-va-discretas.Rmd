@@ -1,572 +1,484 @@
 # Variáveis Aleatórias Discretas {#variaveis-aleatorias-discretas}
 
 ```{r setup-cap3, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.align = "center",
+                      out.width = "75%")
 suppressPackageStartupMessages({
   library(tidyverse)
   library(kableExtra)
+  library(patchwork)
 })
+source("R/fda.R")
 options(scipen = 999)
+barras_prob <- function(k, p, xlab = "k", cor = "#3b5bdb", destaque = NULL) {
+  d <- tibble(k = k, p = p, dest = if (is.null(destaque)) FALSE else k %in% destaque)
+  ggplot(d, aes(k, p, fill = dest)) + geom_col(width = 0.5, show.legend = FALSE) +
+    scale_fill_manual(values = c(`FALSE` = cor, `TRUE` = "#c0392b")) +
+    labs(x = xlab, y = "P(X = k)") + theme_minimal(base_size = 13)
+}
 ```
 
-Os Capítulos 1 e 2 trataram de dados observados e de probabilidades de eventos. Este capítulo
-introduz o conceito que une os dois: a **variável aleatória**, uma função que associa um número a
-cada resultado de um experimento aleatório, permitindo calcular médias e variâncias de quantidades
-*ainda incertas*, exatamente como fizemos no Capítulo 1 para dados já observados. A diferença é
-sutil e importante: no Capítulo 1, $\bar x$ e $\mathrm{Var}(X)$ resumiam uma amostra já coletada;
-aqui, $E(X)$ e $\mathrm{Var}(X)$ descrevem um **modelo probabilístico**, o que se espera *antes* de
-observar o resultado.
-
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: antes de qualquer fórmula</strong>
-
-<p><strong>1.</strong> Uma seguradora conhece a distribuição histórica do número de sinistros por
-apólice ao longo de um ano. Ela sabe, hoje, quantos sinistros uma apólice específica vai gerar este
-ano? O que ela sabe, então, e por que isso ainda é útil para fixar o valor do prêmio?</p>
-
-<p><strong>2.</strong> Pense em três variáveis aleatórias discretas do seu interesse (finanças,
-mercado de trabalho, política pública). Para cada uma, diga rapidamente qual seria um valor
-"esperado" plausível, mesmo sem calcular nada ainda, essa intuição será formalizada ao longo do
-capítulo.</p>
-</div>
-```
+Nos Capítulos 1 e 2 estudamos dados e eventos. Com muita frequência, o interesse está em um **número**
+associado ao resultado de um fenômeno aleatório: o número de gols de uma partida, o número de clientes
+inadimplentes de uma carteira, o valor que uma seguradora paga a um cliente. Este capítulo (Unidade 3 da
+ementa, Aulas 17 a 22) formaliza essa ideia, a **variável aleatória**, e apresenta os modelos discretos
+mais usados: Bernoulli, Binomial e Poisson. O texto segue
+[@morettinbussab2012; @ross2010probabilidade].
 
 ## Conceituação de variável aleatória discreta {#va-discreta-conceito}
 
-Uma **variável aleatória (VA)** $X$ é uma função que associa um número real a cada resultado
-$\omega$ de um espaço amostral $\Omega$. É **discreta** quando assume valores em um conjunto finito
-ou enumerável $\{x_1, x_2, x_3, \ldots\}$.
-
-A **função de probabilidade** (ou função de massa de probabilidade) de $X$ é
-
-$$
-p(x_i) = P(X = x_i),
-$$
-
-satisfazendo $p(x_i) \ge 0$ para todo $i$ e $\sum_i p(x_i) = 1$, o análogo, para um modelo
-probabilístico, da propriedade de frequências relativas somarem 1 (Capítulo 1).
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: número de sinistros em uma apólice</strong>: uma
-seguradora de automóveis modela \(X=\) "número de sinistros registrados por uma apólice em um ano",
-com histórico sugerindo a distribuição:</div>
+```{r fig-gols, echo=FALSE, out.width="45%", fig.cap="Quantos gols vai ter o jogo? Fonte: CNN Brasil (28/04/2026)."}
+knitr::include_graphics("images/noticia_gols.jpg")
 ```
 
-```{r fmp-sinistros}
-sinistros <- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01))
-sum(sinistros$p)   # deve ser 1
-sinistros |>
-  kbl(col.names = c("x (nº de sinistros)", "p(x)")) |>
-  kable_styling(full_width = FALSE)
+Antes do apito inicial, ninguém sabe **quantos** gols uma partida terá; mas 0, 1, 2 ou 3 gols são
+resultados comuns, e 9 gols (como em PSG 5 x 4 Bayern) é raro. Transformar essa intuição em números é o
+papel da variável aleatória.
+
+::: {.caixa-aplicacao}
+Uma **variável aleatória** é uma **função** definida no espaço amostral que associa um **número real** a
+cada resultado de um fenômeno aleatório. Variáveis aleatórias são denotadas por letras maiúsculas
+($X$, $Y$, $N$) e os valores observados por minúsculas ($x$, $k$). Ex.: $P(X = 1)$.
+:::
+
+**Exemplo.** No lançamento de duas moedas (K = cara, C = coroa), $S = \{CC, KC, CK, KK\}$ e $X$ = número de
+caras associa $CC \mapsto 0$, $KC \mapsto 1$, $CK \mapsto 1$ e $KK \mapsto 2$.
+
+- **Discretas** assumem valores em um conjunto **enumerável**: número de gols, de doentes numa semana, de
+  dias sem chuva numa semana.
+- **Contínuas** assumem valores em **intervalos**: peso de um bebê ao nascer, quantidade de chuva num dia,
+  lucro de uma empresa (Capítulo 4).
+
+::: {.caixa-aplicacao}
+Se $X$ é **discreta**, com valores em $\{x_1, x_2, \ldots\}$, então $P(X = x_i) \geq 0$ para todo $i$,
+$P(X = x) = 0$ para $x$ fora desse conjunto e $\sum_i P(X = x_i) = 1$. A **distribuição de probabilidade** de
+$X$ lista os valores possíveis e as suas probabilidades.
+:::
+
+Para obter a distribuição: **(1)** liste os valores possíveis de $X$; **(2)** calcule a probabilidade de cada
+um. As probabilidades devem estar entre 0 e 1 e somar 1.
+
+**Exemplos.**
+
+- Uma moeda honesta: $P(X = 0) = P(X = 1) = 0{,}5$.
+- Duas moedas: $P(X = 0) = 1/4$, $P(X = 1) = P(\{KC, CK\}) = 2/4$, $P(X = 2) = 1/4$.
+- Um dado honesto: $P(X = k) = 1/6$, $k = 1, \ldots, 6$; $P(X > 4) = 2/6$.
+- Um lote de 10 peças com 3 defeituosas, amostra de 2 sem reposição, $X$ = defeituosas na amostra:
+  $P(X = 0) = \binom{7}{2}/\binom{10}{2} = 21/45$, $P(X = 1) = \binom{3}{1}\binom{7}{1}/45 = 21/45$, $P(X = 2) = 3/45$.
+
+```{r fig-dist-exemplos, echo=FALSE, fig.height=2.8, fig.width=10, out.width="95%", fig.cap="Distribuições do número de caras em duas moedas e do número de peças defeituosas na amostra."}
+barras_prob(0:2, c(0.25, 0.5, 0.25), "Número de caras") + barras_prob(0:2, c(21, 21, 3) / 45, "Peças defeituosas", cor = "#c0392b")
 ```
 
-```{r grafico-fmp, fig.height=3.5, echo=FALSE}
-ggplot(sinistros, aes(x = factor(x), y = p)) +
-  geom_col(fill = "#0d3b54") +
-  labs(x = "Número de sinistros", y = "p(x)") + theme_minimal(base_size = 13)
-```
+**Exercício 1: a seguradora.** Uma apólice paga R\$ 100.000 se o cliente morre e R\$ 50.000 se fica
+permanentemente incapacitado. A taxa anual de morte é 1/1.000 e a de incapacidade permanente, 2/1.000.
+Qual é a distribuição do pagamento anual a um cliente?
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
+::: {.caixa-resposta}
+| Pagamento (R\$) | 100.000 | 50.000 | 0 |
+|:---|:---:|:---:|:---:|
+| Probabilidade | 1/1.000 | 2/1.000 | 997/1.000 |
+:::
 
-<p><strong>1.</strong> Verifique, sem olhar a soma já calculada, que os cinco valores de \(p(x)\)
-somam 1. O que aconteceria se um analista, ao construir essa tabela a partir de dados históricos,
-esquecesse uma categoria rara (por exemplo, "5 ou mais sinistros")? A tabela ainda seria uma função
-de probabilidade válida?</p>
-
-<p><strong>2.</strong> A tabela mostra \(P(X=0)=0{,}60\): 60% das apólices não registram nenhum
-sinistro no ano. Isso significa que 60% dos segurados "não precisavam" do seguro? Que erro de
-raciocínio (relevante para precificação de seguros) essa conclusão cometeria?</p>
-</div>
-```
+::: {.caixa-economia}
+**Leitura econômica.** O número de sinistros por apólice de automóvel em um ano (dados ilustrativos) tem
+$P(0) = 0{,}72$, $P(1) = 0{,}19$, $P(2) = 0{,}06$, $P(3) = 0{,}02$ e $P(\geq 4) = 0{,}01$. A probabilidade de pelo menos um
+sinistro é $1 - 0{,}72 = 0{,}28$. É com distribuições assim que seguradoras precificam apólices.
+:::
 
 ## Esperança e variância {#va-discreta-esperanca-variancia}
 
+```{r fig-microsoft, echo=FALSE, out.width="45%", fig.cap="Resultado 'acima do esperado'. Fonte: TI Inside (30/04/2025)."}
+knitr::include_graphics("images/esperado_microsoft_tiinside.jpg")
+```
+
 ### Definição
 
-A **esperança** (ou valor esperado, ou média) de uma VA discreta $X$ é
+Se o experimento fosse repetido muitas vezes, qual seria a **média** dos valores de $X$? Com 1.000 clientes
+exatamente como na distribuição da seguradora, a média dos pagamentos seria
 
 $$
-E(X) = \mu = \sum_{i} x_i\, p(x_i),
+\frac{100.000 \times 1 + 50.000 \times 2 + 0 \times 997}{1.000} = 100.000 \cdot \frac{1}{1.000} + 50.000 \cdot \frac{2}{1.000} + 0 \cdot \frac{997}{1.000} = 200.
 $$
 
-uma **média ponderada** dos valores possíveis de $X$, com pesos dados pelas próprias
-probabilidades, o análogo probabilístico da média aritmética do Capítulo 1, mas ponderada por
-$p(x_i)$ em vez de por frequência relativa observada $f_i/n$.
-
-A **variância** mede a dispersão de $X$ em torno de $E(X)$:
+::: {.caixa-aplicacao}
+O **valor esperado** (ou esperança) de $X$, com valores $x_1, \ldots, x_k$, é
 
 $$
-\mathrm{Var}(X) = \sigma^2 = E\big[(X-\mu)^2\big] = \sum_i (x_i-\mu)^2\, p(x_i).
+E(X) = \sum_{i=1}^{k} x_i \cdot P(X = x_i).
 $$
 
-O **desvio padrão** é $\sigma = \sqrt{\mathrm{Var}(X)}$.
+Para uma função $g$, $E[g(X)] = \sum_i g(x_i)\, P(X = x_i)$. A **variância** e o **desvio padrão** são
 
-```{r esperanca-sinistros}
-mu <- sum(sinistros$x * sinistros$p)
-var_x <- sum((sinistros$x - mu)^2 * sinistros$p)
-c(E_X = mu, Var_X = var_x, dp_X = sqrt(var_x))
+$$
+Var(X) = E[(X - \mu)^2] = \sum_i (x_i - \mu)^2 P(X = x_i) = E(X^2) - \mu^2, \qquad dp(X) = \sqrt{Var(X)},
+$$
+
+com $\mu = E(X)$.
+:::
+
+A estrutura é a da média de uma tabela de frequências (Capítulo 1), com **probabilidades** no lugar das
+**frequências relativas**. O valor esperado não precisa ser um valor possível: nenhum cliente recebe
+R\$ 200.
+
+**Exemplo: avaliação de um posto de saúde.** A nota $X$ (1 a 4) tem distribuição $0{,}15$, $0{,}25$, $0{,}40$ e $0{,}20$.
+
+- $E(X) = 1(0{,}15) + 2(0{,}25) + 3(0{,}40) + 4(0{,}20) = 2{,}65$.
+- $E(X^2) = 1(0{,}15) + 4(0{,}25) + 9(0{,}40) + 16(0{,}20) = 7{,}95$ (note que $E(X^2) \neq [E(X)]^2 = 7{,}02$).
+- $Var(X) = 7{,}95 - 2{,}65^2 = 0{,}9275$; $dp(X) \approx 0{,}963$.
+
+```{r fig-posto, echo=FALSE, out.width="40%", fig.cap="Histograma de 100 notas do posto de saúde; a linha vermelha é o valor esperado."}
+knitr::include_graphics("images/histograma_notas_posto.png")
 ```
 
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, \(E(X)\approx
-`r round(mu,2)`\) sinistros por apólice ao ano é exatamente o número que a seguradora usa para
-precificar o prêmio puro (antes de margens e custos administrativos): se ela cobrar um prêmio
-proporcional a esse valor, no agregado de milhares de apólices semelhantes, as mensalidades cobrem,
-em média, o custo dos sinistros pagos, a lógica de precificação atuarial inteira nasce dessa
-conta.</div>
-```
+**Mais exemplos.** Dado honesto: $E(Y) = 21/6 = 3{,}5$ e $E(Y^2) = 91/6 \approx 15{,}17$. Com $X \in \{-1, 0, 1\}$ e
+probabilidades $0{,}2$, $0{,}5$, $0{,}3$: $E(X) = 0{,}1$, $E(X^2) = 0{,}5$, $Var(X) = 0{,}49$, $dp(X) = 0{,}7$. Número de caras em
+duas moedas: $E(X) = 1$, $Var(X) = 1/2$.
 
 ### Propriedades da esperança e da variância
 
-Para constantes $a, b$ e variáveis aleatórias $X, Y$:
+Para constantes $a$, $b$, $c$ e variáveis aleatórias $X$, $Y$:
 
-$$
-E(aX+b) = aE(X)+b \qquad\qquad \mathrm{Var}(aX+b) = a^2\,\mathrm{Var}(X).
-$$
+| Esperança | Variância |
+|:---|:---|
+| $E(cX) = c\,E(X)$ | $Var(c + X) = Var(X)$ |
+| $E(c + X) = c + E(X)$ | $Var(cX) = c^2\, Var(X)$ |
+| $E(X + Y) = E(X) + E(Y)$ | $Var(X + Y) = Var(X) + Var(Y)$, se **independentes** |
+| $E(XY) = E(X)\,E(Y)$, se **independentes** | |
 
-$$
-E(X+Y) = E(X)+E(Y) \quad\text{(sempre)}.
-$$
+::: {.caixa-economia}
+**Dois investimentos com o mesmo retorno esperado.** A rende $+10\%$ ou $-2\%$ e B rende $+20\%$ ou $-12\%$, cada
+um com probabilidade 0,5. $E(A) = E(B) = 4\%$, mas $dp(A) = 6$ e $dp(B) = 16$ pontos percentuais: mesma média,
+riscos muito diferentes.
 
-$$
-\mathrm{Var}(X+Y) = \mathrm{Var}(X)+\mathrm{Var}(Y) \quad\text{(se $X,Y$ independentes)}.
-$$
+**Diversificação em seguros.** O pagamento por apólice da seguradora tem $E = 200$ e $dp \approx 3.868$. Com 1.000
+apólices independentes, o total tem média 200.000 e desvio padrão $\sqrt{1.000} \times 3.868 \approx 122.300$: a média
+cresce 1.000 vezes e o desvio padrão só cerca de 32 vezes. O risco **relativo** cai.
+:::
 
-Note que $\mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)$, o deslocamento $b$ não afeta a dispersão (faz
-sentido: somar uma constante desloca todos os valores igualmente, sem mudar o espalhamento), mas o
-fator de escala $a$ afeta a variância ao quadrado, um eco direto da propriedade de invariância de
-escala que já vimos para o coeficiente de variação no Capítulo 1.
+**Exercício 2.** Uma rifa vende 1.000 bilhetes a R\$ 10 e sorteia um prêmio de R\$ 5.000. Qual é o ganho
+líquido esperado de quem compra um bilhete?
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: o bloco mais denso do capítulo</strong>
-
-<p><strong>1.</strong> \(E(X+Y)=E(X)+E(Y)\) vale <em>sempre</em>, mesmo se \(X\) e \(Y\) forem
-dependentes; já a fórmula da variância da soma só vale sob independência (o caso geral inclui um
-termo de covariância, fora do escopo deste curso). Por que faz sentido que a esperança "não
-perceba" dependência, mas a variância sim? Pense no que a covariância mede intuitivamente, ela
-aparece quando \(X\) e \(Y\) tendem a se mover juntos.</p>
-
-<p><strong>2.</strong> Uma seguradora com 10.000 apólices semelhantes usa \(E(X_1+\cdots+X_{10000})
-=\sum_i E(X_i)\) para obter o número esperado total de sinistros da carteira, mesmo sem assumir que
-as apólices são independentes entre si. Por que essa soma de esperanças continua válida mesmo se,
-digamos, todas as apólices tendessem a sofrer mais sinistros num ano de crise econômica (evento que
-as tornaria dependentes entre si)?</p>
-
-<p><strong>3.</strong> Se a mesma seguradora quisesse calcular a <em>variância</em> do número total
-de sinistros da carteira, a fórmula \(\mathrm{Var}(X_1+\cdots+X_{10000})=\sum_i\mathrm{Var}(X_i)\)
-continuaria válida no cenário de dependência do item anterior? O que isso implica sobre o risco
-real da carteira em anos de crise, comparado ao que a fórmula simplificada (assumindo
-independência) prediria?</p>
-</div>
-```
+::: {.caixa-resposta}
+$E(G) = 4.990 \cdot \frac{1}{1.000} + (-10) \cdot \frac{999}{1.000} = -5$: em média, cada comprador perde R\$ 5.
+:::
 
 ## Função de distribuição acumulada {#va-discreta-fda}
 
-A **função de distribuição acumulada (FDA)** de $X$ é
+```{r fig-inflacao, echo=FALSE, out.width="40%", fig.cap="Inflação 'abaixo do teto' da meta: probabilidades do tipo P(X ≤ k). Fonte: O Globo (20/10/2025)."}
+knitr::include_graphics("images/inflacao_teto.jpg")
+```
+
+Muitas perguntas são sobre ficar **abaixo** de um limite: inflação menor que o teto da meta, chuva menor
+que 123 mm, menos de 50 acidentes num feriado.
+
+::: {.caixa-aplicacao}
+A **função de distribuição acumulada** (FDA) de $X$ é $F(x) = P(X \leq x)$, definida para **todo** $x$ real.
+Para $X$ discreta com valores $x_1 \leq x_2 \leq \cdots$,
 
 $$
-F(x) = P(X \le x) = \sum_{x_i \le x} p(x_i).
+F(x) = \sum_{i:\ x_i \leq x} P(X = x_i).
 $$
+:::
 
-Para uma VA discreta, $F$ é uma função **em escada**: constante entre os valores possíveis de $X$,
-com um salto de tamanho $p(x_i)$ em cada $x_i$.
+**Exemplo: o dado.** $F(x) = 0$ para $x < 1$; $1/6$ em $[1, 2)$; $2/6$ em $[2, 3)$; ...; $1$ para $x \geq 6$. Assim,
+$F(2{,}7) = 2/6$, $F(-3) = 0$ e $F(100) = 1$.
 
-```{r fda-sinistros}
-sinistros <- sinistros |> mutate(F = cumsum(p))
-sinistros |> kbl(col.names = c("x", "p(x)", "F(x)")) |> kable_styling(full_width = FALSE)
+A FDA de uma variável discreta é uma **função degrau**: constante entre valores possíveis, com um salto de
+tamanho $P(X = x_i)$ em cada $x_i$.
+
+```{r fig-fdas, echo=FALSE, fig.height=3.2, fig.width=10, out.width="100%", fig.cap="FDA do lançamento de um dado e FDA de Y com P(1) = 0,25, P(2) = 0,5, P(3) = P(4) = 0,125. Bolinha cheia: valor de F no ponto."}
+(fda_plot(1:6, rep(1/6, 6), xlim = c(0, 7)) + ggtitle("Dado")) +
+  (fda_plot(1:4, c(0.25, 0.5, 0.125, 0.125), xlim = c(0, 5)) + ggtitle("Y"))
 ```
 
-```{r grafico-fda, fig.height=3.5, echo=FALSE}
-ggplot(sinistros, aes(x = x, y = F)) +
-  geom_step(color = "#0d3b54", linewidth = 1) +
-  geom_point(color = "#c9971e", size = 2) +
-  labs(x = "x", y = "F(x) = P(X ≤ x)", title = "FDA, número de sinistros") +
-  theme_minimal(base_size = 13)
-```
+**Propriedades.** $F$ é não decrescente; $F(x) \to 0$ quando $x \to -\infty$ e $F(x) \to 1$ quando $x \to \infty$; $F$ é
+contínua à direita. O tamanho de cada salto recupera a distribuição: $P(X = x_i) = F(x_i) - F(x_{i-1})$.
 
-A FDA permite responder perguntas de intervalo diretamente: $P(X \le 2) = F(2) = 0{,}95$;
-$P(X > 2) = 1 - F(2) = 0{,}05$; $P(X \ge 2) = 1 - F(1) = 1-0{,}85=0{,}15$ (atenção ao "$\ge$" vs.
-"$>$" em variáveis discretas, a diferença de um ponto importa, ao contrário do caso contínuo do
-Capítulo 4).
+Para variáveis com valores **inteiros**:
 
-```{r fig-fda-dado, echo=FALSE, out.width="65%", fig.cap="FDA do resultado do lançamento de um dado honesto: seis saltos de tamanho 1/6, uma escada perfeitamente regular."}
-knitr::include_graphics("images/fda_lancamento_dado.png")
-```
+| Probabilidade | Em termos de $F$ |
+|:---|:---|
+| $P(X \leq k)$ | $F(k)$ |
+| $P(X < k)$ | $F(k - 1)$ |
+| $P(X > k)$ | $1 - F(k)$ |
+| $P(X \geq k)$ | $1 - F(k - 1)$ |
+| $P(a < X \leq b)$ | $F(b) - F(a)$ |
 
-O caso mais simples de FDA em escada é o de um dado honesto: seis saltos, todos do mesmo tamanho
-$1/6$, refletindo a distribuição uniforme discreta $p(x)=1/6$ para $x\in\{1,\ldots,6\}$. Compare
-com a FDA dos sinistros acima: lá, os saltos têm tamanhos diferentes (proporcionais a cada
-$p(x_i)$), porque a distribuição não é uniforme.
+**Exercício 3.** O número de sinistros por ano tem $P(0) = 0{,}60$, $P(1) = 0{,}25$, $P(2) = 0{,}10$, $P(3) = 0{,}04$ e
+$P(4) = 0{,}01$. Calcule $P(X \leq 2)$, $P(X > 2)$, $P(X \geq 2)$ e $P(1 < X \leq 3)$.
 
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
-
-<p><strong>1.</strong> Explique, em palavras, por que \(P(X\ge2)\) usa \(F(1)\) e não \(F(2)\) na
-fórmula acima. Em que ponto exatamente \(1-F(2)\) e \(1-F(1)\) diferem, e o que cada expressão
-representa?</p>
-
-<p><strong>2.</strong> Se você só tivesse a FDA \(F(x)\) (não a tabela \(p(x)\)), como recuperaria
-\(p(x_i)\) a partir dela? Escreva a fórmula geral.</p>
-</div>
-```
+::: {.caixa-resposta}
+$F = 0{,}60;\ 0{,}85;\ 0{,}95;\ 0{,}99;\ 1$. $P(X \leq 2) = 0{,}95$; $P(X > 2) = 0{,}05$; $P(X \geq 2) = 1 - F(1) = 0{,}15$;
+$P(1 < X \leq 3) = 0{,}99 - 0{,}85 = 0{,}14$. No caso discreto, $\geq$ e $>$ dão resultados **diferentes**.
+:::
 
 ## Alguns modelos probabilísticos {#modelos-discretos}
 
+Algumas distribuições aparecem com muito mais frequência. Um **modelo probabilístico** é uma família de
+distribuições que depende de **parâmetros**: conhecidos os parâmetros, calculamos qualquer probabilidade,
+média, variância ou FDA.
+
 ### Distribuição de Bernoulli
 
-Modela um experimento com exatamente dois resultados: "sucesso" ($X=1$, probabilidade $p$) ou
-"fracasso" ($X=0$, probabilidade $1-p$). É a VA discreta mais simples e o bloco de construção da
-Binomial.
-
-$$
-p(x) = p^x(1-p)^{1-x}, \quad x\in\{0,1\} \qquad E(X)=p \qquad \mathrm{Var}(X)=p(1-p).
-$$
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação</strong>, "um cliente aprovado para crédito
-inadimple no primeiro ano" é uma Bernoulli com \(p=\) taxa de inadimplência histórica daquele
-segmento.</div>
-```
-
-```{r fig-pesquisa-celular, echo=FALSE, out.width="70%", fig.cap="86% dos brasileiros apoiam restrição de celular nas escolas, segundo pesquisa Datafolha/Agência Brasil."}
+```{r fig-celular, echo=FALSE, out.width="45%", fig.cap="Pesquisa de opinião: cada resposta é a favor ou contra. Fonte: Agência Brasil (14/11/2024)."}
 knitr::include_graphics("images/pesquisa_celular.jpg")
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: de pesquisa de opinião a Binomial</strong>. Se
-86% da população realmente apoia a medida (\(p=0{,}86\)), e uma nova amostra de 20 pessoas for
-entrevistada, o número \(X\) de entrevistados favoráveis segue \(X\sim\text{Bin}(20;\,0{,}86)\): soma
-de 20 Bernoullis independentes, uma por entrevistado, cada uma valendo 1 se a pessoa apoia e 0 caso
-contrário. É exatamente essa Binomial que, mais adiante em disciplinas de inferência, permite
-calcular a margem de erro de uma pesquisa de opinião a partir do tamanho da amostra.</div>
-```
+Variáveis **binárias** registram a ocorrência ou não de um evento: concordar ou não com algo (opinião),
+acionar ou não o seguro (finanças), contrair ou não uma doença (saúde).
+
+::: {.caixa-aplicacao}
+$X \sim \text{Bernoulli}(p)$ se $X = 1$ (sucesso) com probabilidade $p$ e $X = 0$ (fracasso) com probabilidade
+$1 - p$:
+
+$$
+P(X = k) = p^k (1-p)^{1-k}, \quad k \in \{0, 1\}, \qquad E(X) = p, \qquad Var(X) = p(1-p).
+$$
+:::
+
+Ex.: uma pessoa sorteada tem uma doença com probabilidade 1%: $X \sim \text{Bernoulli}(0{,}01)$. Um equipamento
+apresenta defeito em 5 anos com probabilidade 10%: $Y \sim \text{Bernoulli}(0{,}1)$.
 
 ### Distribuição Binomial
 
-Se $X_1,\ldots,X_n$ são Bernoulli($p$) **independentes** (mesma probabilidade $p$ em cada
-tentativa), então $X=\sum_{i=1}^n X_i$ (número total de sucessos em $n$ tentativas) segue uma
-**distribuição Binomial** com parâmetros $n$ e $p$, notação $X\sim \text{Bin}(n,p)$:
-
-$$
-p(x) = \binom{n}{x} p^x (1-p)^{n-x}, \quad x=0,1,\ldots,n
-\qquad E(X)=np \qquad \mathrm{Var}(X)=np(1-p).
-$$
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: inadimplência em uma carteira pequena</strong>:
-um microcrédito tem 20 tomadores independentes, cada um com probabilidade de inadimplência
-\(p=0{,}08\). \(X=\) número de inadimplentes na carteira segue \(\text{Bin}(20; 0{,}08)\).</div>
+```{r fig-datafolha, echo=FALSE, out.width="45%", fig.cap="8 em cada 10 brasileiros são a favor da demissão de servidores por má performance. Fonte: CNN Brasil (17/11/2024)."}
+knitr::include_graphics("images/pesquisa_opiniao.jpg")
 ```
 
-Antes de qualquer chamada ao R, vale expandir a fórmula à mão pelo menos uma vez, para deixar claro
-de onde vêm os números que `dbinom()`/`pbinom()` calculam por trás dos panos.
+::: {.caixa-aplicacao}
+Sejam $n$ repetições **independentes** de um experimento de Bernoulli com probabilidade de sucesso $p$. O
+**número de sucessos** $X$ tem distribuição **Binomial**, $X \sim \text{Bin}(n, p)$, com $X \in \{0, 1, \ldots, n\}$ e
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: garantia por peça defeituosa (cálculo
-manual antes do R)</strong>: uma fábrica produz peças com \(1\%\) de probabilidade de defeito,
-independentemente umas das outras. Cada pacote tem 10 peças, e a fábrica devolve o dinheiro se
-<strong>mais de uma</strong> peça do pacote for defeituosa. Qual a probabilidade de a fábrica
-precisar devolver o dinheiro por um pacote sorteado ao acaso?</div>
+$$
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad E(X) = np, \qquad Var(X) = np(1-p).
+$$
+:::
+
+**De onde vem a fórmula.** Três clientes independentes pagam um empréstimo com probabilidade 0,9 cada. As
+sequências com exatamente 2 pagamentos (P) são PPC, PCP e CPP: cada uma tem probabilidade
+$0{,}9^2 \times 0{,}1 = 0{,}081$ (independência), e há $\binom{3}{2} = 3$ delas. Logo $P(X = 2) = 3 \times 0{,}081 = 0{,}243$.
+
+**Média e variância.** Com $I_j \sim \text{Bernoulli}(p)$ o resultado da tentativa $j$, $X = I_1 + \cdots + I_n$, e as
+propriedades dão $E(X) = np$ e $Var(X) = np(1-p)$.
+
+As **quatro condições** da Binomial: $n$ fixo; dois resultados por tentativa; $p$ constante; tentativas
+independentes.
+
+```{r fig-binomiais, echo=FALSE, fig.height=3, fig.width=10, out.width="100%", fig.cap="A forma da Binomial com n = 10 depende de p."}
+bb <- function(p) barras_prob(0:10, dbinom(0:10, 10, p)) + scale_x_continuous(breaks = 0:10) + ggtitle(paste0("Bin(10; ", format(p, decimal.mark = ","), ")"))
+bb(0.1) + bb(0.5) + bb(0.86)
 ```
 
-Sejam $p=0{,}01$ e $X\sim\text{Bin}(10; 0{,}01)$ o número de peças defeituosas no pacote. Queremos
-$P(X>1) = 1-P(X\le 1) = 1-P(X=0)-P(X=1)$. Expandindo a fórmula da Binomial para cada termo:
+**Exemplo: garantia de qualidade.** Peças com 1% de defeito, pacotes de 10, devolução se houver **mais de uma**
+defeituosa. Com $X \sim \text{Bin}(10;\ 0{,}01)$:
 
 $$
-P(X=0) = \binom{10}{0}(0{,}01)^0(0{,}99)^{10} = 1\cdot 1\cdot(0{,}99)^{10} \approx 0{,}9044,
+P(X > 1) = 1 - P(X = 0) - P(X = 1) = 1 - 0{,}99^{10} - 10(0{,}01)(0{,}99)^9
 $$
 
 $$
-P(X=1) = \binom{10}{1}(0{,}01)^1(0{,}99)^{9} = 10\cdot 0{,}01\cdot(0{,}99)^{9}
-\approx 10\times 0{,}01\times 0{,}9135 \approx 0{,}0914.
+\approx 1 - 0{,}9044 - 0{,}0914 = 0{,}0043.
 $$
 
-Logo, $P(X>1) \approx 1-0{,}9044-0{,}0914 = 0{,}0042$: cerca de 0,42% dos pacotes exigirão
-devolução. Conferindo no R (que usa mais casas decimais e por isso é ligeiramente mais preciso que
-o cálculo manual arredondado acima):
+**Exercício 4.** Peças com 10% de defeito em pacotes de 5. **a)** Probabilidade de 4 peças boas? **b)** De 2
+defeituosas?
 
-```{r binomial-garantia}
-1 - pbinom(1, size = 10, prob = 0.01)
-```
+::: {.caixa-resposta}
+$X \sim \text{Bin}(5;\ 0{,}1)$. **a)** $P(X = 1) = 5(0{,}1)(0{,}9)^4 \approx 0{,}328$. **b)** $P(X = 2) = 10(0{,}1)^2(0{,}9)^3 \approx 0{,}0729$.
+:::
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: de quanto preciso amostrar?</strong>: ainda
-com \(p=0{,}01\) de defeito, qual o menor tamanho de amostra \(n\) tal que a probabilidade de encontrar
-<strong>pelo menos um</strong> item defeituoso seja de no mínimo 95%?</div>
-```
+**Exercício 5.** Cinco moedas honestas: probabilidade de mais de três caras, média e variância do número de
+caras.
 
-Com $X\sim\text{Bin}(n; 0{,}01)$, temos $P(X\ge 1) = 1-P(X=0) = 1-(0{,}99)^n$. Queremos
+::: {.caixa-resposta}
+$P(X > 3) = \binom{5}{4}0{,}5^5 + \binom{5}{5}0{,}5^5 = 6/32 = 0{,}1875$; $E(X) = 2{,}5$; $Var(X) = 1{,}25$.
+:::
 
-$$
-1-(0{,}99)^n \ge 0{,}95 \iff (0{,}99)^n \le 0{,}05.
-$$
+::: {.caixa-economia}
+**Tamanho de amostra para detectar um defeito.** Com itens 1% defeituosos, o menor $n$ com
+$P(\text{pelo menos um defeituoso}) = 1 - 0{,}99^n \geq 0{,}95$ é $n \geq \log 0{,}05 / \log 0{,}99 \approx 298{,}07$, ou seja, $n = 299$. Detectar
+problemas raros por amostragem é caro.
 
-Aplicando logaritmo em ambos os lados (a desigualdade se inverte porque $\log(0{,}99)<0$):
+**Pesquisa de opinião.** Se 86% da população apoia uma medida, em 10 entrevistas $P(X = 8) \approx 0{,}264$,
+$P(X \geq 8) \approx 0{,}845$ e $P(X \leq 6) \approx 0{,}040$: encontrar só 6 apoiadores seria raro, e sugeriria apoio menor ou
+amostra não aleatória.
+:::
 
-$$
-n \ge \frac{\log(0{,}05)}{\log(0{,}99)} \approx \frac{-2{,}996}{-0{,}01005} \approx 298{,}07
-\ \Longrightarrow\ n=299.
-$$
-
-```{r binomial-n-minimo, fig.height=3.4}
-n_vals <- 1:400
-prob_pelo_menos_um <- 1 - dbinom(0, size = n_vals, prob = 0.01)
-which(prob_pelo_menos_um >= 0.95)[1]   # confirma n = 299
-```
-
-```{r grafico-n-minimo, echo=FALSE, fig.height=3.4}
-ggplot(tibble(n = n_vals, prob = prob_pelo_menos_um), aes(n, prob)) +
-  geom_line(color = "#0d3b54") +
-  geom_hline(yintercept = 0.95, color = "#c9971e", linetype = "dashed") +
-  labs(x = "Tamanho da amostra (n)", y = "P(pelo menos 1 defeituoso)") +
-  theme_minimal(base_size = 13)
-```
-
-```{r binomial-r, fig.height=3.6}
-n <- 20; p <- 0.08
-x <- 0:n
-fmp <- dbinom(x, size = n, prob = p)
-
-E_X <- n*p; Var_X <- n*p*(1-p)
-c(E_X = E_X, Var_X = Var_X)
-
-# probabilidade de mais de 3 inadimplentes
-1 - pbinom(3, size = n, prob = p)
-```
-
-```{r grafico-binomial, echo=FALSE, fig.height=3.6}
-ggplot(tibble(x, fmp), aes(x, fmp)) +
-  geom_col(fill = "#0d3b54") +
-  labs(x = "Nº de inadimplentes (de 20)", y = "P(X = x)",
-       title = "Binomial(n=20, p=0,08)") + theme_minimal(base_size = 13)
-```
-
-`dbinom()` calcula $p(x)$; `pbinom()` calcula $F(x)=P(X\le x)$, funções análogas existem para
-todas as distribuições nativas do R (prefixo `d` para densidade/massa, `p` para acumulada, `q` para
-quantil, `r` para gerar valores aleatórios).
-
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir</strong>
-
-<p><strong>1.</strong> A Binomial exige quatro condições: número de tentativas \(n\) fixo, apenas
-dois resultados por tentativa, probabilidade \(p\) constante, e tentativas independentes. Para
-"número de clientes que cancelam um plano de assinatura este mês, entre 1.000 clientes", qual
-dessas quatro condições é mais provável de ser violada na prática (por exemplo, se um concorrente
-lançar uma promoção agressiva no meio do mês)? O que aconteceria com a variância real da carteira
-se essa condição falhasse, comparado com o que a fórmula \(\mathrm{Var}(X)=np(1-p)\) prevê?</p>
-
-<p><strong>2.</strong> \(E(X)=np\): dobrar \(n\) dobra o número esperado de sucessos; dobrar \(p\)
-também dobra \(E(X)\). O efeito sobre \(\mathrm{Var}(X)=np(1-p)\) é o mesmo nos dois casos? Calcule
-para confirmar.</p>
-</div>
+```{r binomial-r}
+c(dbinom(2, 5, 0.1), 1 - pbinom(1, 10, 0.01), 1 - pbinom(7, 10, 0.86), min(which(1 - 0.99^(1:400) >= 0.95)))
 ```
 
 ### Distribuição de Poisson
 
-Modela o número de ocorrências de um evento raro em um intervalo fixo de tempo ou espaço, quando
-os eventos ocorrem de forma independente a uma taxa média constante $\lambda$:
-
-$$
-p(x) = \frac{e^{-\lambda}\lambda^x}{x!}, \quad x=0,1,2,\ldots
-\qquad E(X)=\lambda \qquad \mathrm{Var}(X)=\lambda.
-$$
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: calculando \(P(X=x)\) à mão</strong>: uma
-central de atendimento recebe, em média, \(\lambda=3{,}2\) chamadas por minuto. Qual a probabilidade
-de receber exatamente 4 chamadas em um minuto?</div>
-```
-
-$$
-P(X=4) = \frac{e^{-3{,}2}\,(3{,}2)^4}{4!} = \frac{0{,}0408\times 104{,}8576}{24} \approx 0{,}1781.
-$$
-
-Conferindo no R, o cálculo manual e a função pronta devem coincidir (a menos de arredondamento):
-
-```{r poisson-manual}
-exp(-3.2) * 3.2^4 / factorial(4)   # cálculo manual, passo a passo
-dpois(4, lambda = 3.2)             # função pronta do R
-```
-
-Uma propriedade notável: **média e variância são iguais**, se a variância observada de uma
-contagem for muito maior que a média (fenômeno chamado de *superdispersão*), o modelo Poisson puro
-tende a ser inadequado, um diagnóstico rápido muito usado em modelagem de contagens econômicas.
-
-```{=html}
-<div class="caixa-economia"><strong>Leitura econômica</strong>, a Poisson é o modelo padrão para
-"número de transações fraudulentas detectadas por dia", "número de aberturas de empresas por mês em
-um município pequeno", ou "número de chamadas a uma central de atendimento por hora", contagens
-raras e aproximadamente independentes ao longo do tempo. É também a base de modelos de
-sinistralidade em seguros (número de sinistros por apólice, retomando o exemplo da Seção
-3.1) e de modelos de contagem em econometria aplicada
-(Wooldridge (<a href="#ref-wooldridge2016introducao">2016</a>)).</div>
-```
-
-A Poisson também aproxima bem a Binomial quando $n$ é grande, $p$ é pequeno, e $np=\lambda$ é
-moderado, útil quando se conhece a taxa média de um evento raro, mas não o "$n$" e o "$p$"
-separadamente que o gerariam.
-
-```{r fig-noticia-acidentes, echo=FALSE, out.width="65%", fig.cap="PRF registra 165 mortes em rodovias federais na semana do Natal de 2024, ante 90 mortes no mesmo período de 2023."}
+```{r fig-acidentes, echo=FALSE, out.width="40%", fig.cap="Mortes em rodovias federais na semana do Natal. Fonte: CBN (26/12/2024)."}
 knitr::include_graphics("images/noticia_acidentes.jpg")
 ```
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: mortes no trânsito como contagem Poisson</strong>.
-O número de mortes em rodovias federais durante uma semana específica é uma contagem de eventos
-raros ocorrendo de forma aproximadamente independente ao longo do tempo, exatamente o retrato de
-uma Poisson. A notícia contrasta 165 mortes na semana do Natal de 2024 com 90 no mesmo período de
-2023, quase o dobro: sob um modelo Poisson com taxa \(\lambda\) estimada pelo histórico da própria
-semana em anos anteriores, esse salto exige perguntar se \(\lambda\) de fato mudou (mais tráfego,
-menos fiscalização) ou se é apenas variação natural em torno de uma mesma taxa média, a mesma
-lógica de diagnóstico de superdispersão discutida acima.</div>
+Alguns experimentos envolvem um número **alto** de "tentativas" e probabilidade **baixa** de "sucesso": acidentes
+entre todos os carros de uma via, pessoas que vivem mais de 100 anos, clientes que entram em uma loja em um
+dia. A Binomial serviria, mas as contas com $n$ grande são difíceis (e muitas vezes nem conhecemos $n$).
+
+::: {.caixa-aplicacao}
+$X \sim \text{Poisson}(\lambda)$, com $\lambda > 0$, se
+
+$$
+P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k \in \{0, 1, 2, \ldots\}, \qquad E(X) = Var(X) = \lambda.
+$$
+
+O parâmetro $\lambda$ é a **taxa média** de ocorrências no intervalo considerado.
+:::
+
+**Exemplo: Poisson(1).** É uma distribuição legítima, pois $\sum_k e^{-1}/k! = e^{-1} e^{1} = 1$ (série da
+exponencial). $P(X = 2) = e^{-1}/2 \approx 0{,}1839$ e $P(X \geq 2) = 1 - 2e^{-1} \approx 0{,}2642$.
+
+**Exemplos.** Erros tipográficos por página com $\lambda = 1/2$: $P(X \geq 1) = 1 - e^{-1/2} \approx 0{,}3935$. Uma central recebe
+em média 5 chamadas por minuto: $P(N = 0) = e^{-5} \approx 0{,}0067$; em 30 segundos, $\lambda = 2{,}5$ e $P = e^{-2{,}5} \approx 0{,}082$.
+
+**Aproximação da Binomial.** Se $X \sim \text{Bin}(n, p)$ com $n$ grande e $p$ pequeno, então $X$ é aproximadamente
+$\text{Poisson}(np)$. Ideia da prova: com $p = \lambda/n$,
+
+$$
+\binom{n}{k}p^k(1-p)^{n-k} = \frac{n(n-1)\cdots(n-k+1)}{n^k} \cdot \frac{\lambda^k}{k!} \cdot \frac{(1-\lambda/n)^n}{(1-\lambda/n)^k} \longrightarrow \frac{e^{-\lambda}\lambda^k}{k!}.
+$$
+
+Ex.: produto com 10% de defeito, amostra de 10: pela Binomial, $P(X \leq 1) = 0{,}7361$; pela Poisson(1),
+$2e^{-1} \approx 0{,}7358$.
+
+```{r fig-poisson-binomial, echo=FALSE, fig.height=3, fig.width=8, out.width="70%", fig.cap="Bin(100; 0,05) e sua aproximação Poisson(5)."}
+kk <- 0:15
+tibble(k = rep(kk, 2), p = c(dbinom(kk, 100, 0.05), dpois(kk, 5)), modelo = rep(c("Bin(100; 0,05)", "Poisson(5)"), each = 16)) |>
+  ggplot(aes(k, p, fill = modelo)) + geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c("#3b5bdb", "#c9971e")) + labs(y = "P(X = k)", fill = NULL) + theme_minimal(base_size = 12)
 ```
 
-```{r fig-noticia-gols, echo=FALSE, out.width="65%", fig.cap="PSG 5 x 4 Bayern: recorde de gols em uma partida de ida de semifinal da Champions League (abril de 2026)."}
-knitr::include_graphics("images/noticia_gols.jpg")
-```
+::: {.caixa-economia}
+**Leitura econômica.** Se as mortes nas rodovias federais em semanas de fim de ano seguissem uma Poisson com
+a média de 2023 ($\lambda = 90$), o desvio padrão seria $\sqrt{90} \approx 9{,}5$ e 165 mortes estariam quase 8 desvios padrão
+acima: praticamente impossível. A **taxa** mudou em 2024. Quando a variância de contagens reais é muito
+maior que a média, eventos dependentes (acidentes com muitas vítimas) violam o modelo.
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Aplicação: gols em uma partida</strong>. O número de gols de
-um time em uma partida é outro exemplo clássico de contagem Poisson: muitas chances raras de gol ao
-longo de 90 minutos, cada uma com probabilidade pequena de se concretizar, somando-se numa taxa
-média \(\lambda\) (gols esperados) que depende da qualidade ofensiva dos times. Uma partida com 9
-gols somados é um evento na cauda direita dessa distribuição, raro, mas não surpreendente o
-suficiente para descartar o modelo: é justamente esse tipo de evento extremo que os modelos de "gols
-esperados" (xG), usados por clubes e casas de apostas, tentam calibrar a partir de \(\lambda\).</div>
-```
+**Estimando $\lambda$.** Mortes anuais por uma doença em 7 anos: $2, 3, 3, 2, 2, 1, 1$. Com $\hat\lambda = \bar x = 2$,
+$P(X \geq 4) = 1 - e^{-2}(1 + 2 + 2 + 4/3) \approx 0{,}143$.
+:::
 
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: Binomial vs. aproximação Poisson</strong>:
-um produto tem \(1\%\) de probabilidade de defeito. Numa amostra de 200 unidades, qual a
-probabilidade de no máximo 2 serem defeituosas? Calculando exatamente pela Binomial e pela
-aproximação Poisson com \(\lambda=np=200\times 0{,}01=2\):</div>
-```
-
-```{r binom-vs-poisson-livro}
-pbinom(2, size = 200, prob = 0.01)   # exato, Bin(200; 0,01)
-ppois(2, lambda = 2)                 # aproximação, Poisson(2)
-```
-
-As duas probabilidades praticamente coincidem (diferença apenas na quarta casa decimal),
-confirmando que, com $n$ grande e $p$ pequeno, a Poisson aproxima muito bem a Binomial, e com um
-cálculo bem mais simples (sem fatoriais de 200).
-
-```{=html}
-<div class="caixa-aplicacao"><strong>Exemplo resolvido: estimando \(\lambda\) a partir de
-dados</strong>: o número de mortes causadas por uma doença, nos últimos sete anos, foi
-\(2, 3, 3, 2, 2, 1, 1\). Supondo um modelo Poisson adequado, qual a probabilidade de 4 ou mais mortes
-no ano seguinte?</div>
-```
-
-O parâmetro $\lambda$ de uma Poisson é também a sua média, então a estimativa natural é a média
-amostral: $\hat\lambda = \bar x = (2+3+3+2+2+1+1)/7 = 2$. Sob o modelo $\text{Poisson}(2)$:
-
-```{r poisson-estimacao}
-mortes <- c(2, 3, 3, 2, 2, 1, 1)
-lambda_hat <- mean(mortes)
-lambda_hat
-1 - ppois(3, lambda = lambda_hat)   # P(X >= 4) = 1 - P(X <= 3)
-```
-
-Esse é um primeiro exemplo, ainda informal, de uma ideia que disciplinas de inferência formalizam
-mais adiante: **estimar um parâmetro a partir de dados observados** e usá-lo para prever o
-comportamento futuro da variável aleatória.
-
-```{r poisson-r, fig.height=3.6}
-lambda <- 3.2   # nº médio de chamadas por minuto numa central
-x <- 0:12
-fmp_pois <- dpois(x, lambda)
-
-# probabilidade de receber mais de 6 chamadas em um minuto
-1 - ppois(6, lambda)
-```
-
-```{r grafico-poisson, echo=FALSE, fig.height=3.6}
-ggplot(tibble(x, fmp_pois), aes(x, fmp_pois)) +
-  geom_col(fill = "#c9971e") +
-  labs(x = "Nº de chamadas por minuto", y = "P(X = x)",
-       title = paste0("Poisson(λ=", lambda, ")")) + theme_minimal(base_size = 13)
-```
-
-```{=html}
-<div class="caixa-r"><strong>Uso do R</strong>, para as três distribuições desta seção, o R segue
-o mesmo padrão de nomes: <code>dbinom/pbinom/qbinom/rbinom</code> e
-<code>dpois/ppois/qpois/rpois</code> (e, para Bernoulli, basta usar
-<code>dbinom(x, size=1, prob=p)</code>, não há função dedicada, pois Bernoulli é só a Binomial com
-\(n=1\)).</div>
-```
-
-```{=html}
-<div class="caixa-discussao"><strong>Para discutir: síntese do capítulo</strong>
-
-<p><strong>1.</strong> Compare as condições de aplicabilidade de Bernoulli, Binomial e Poisson.
-Para "número de sinistros de apólices de uma seguradora em um ano" (o exemplo de abertura do
-capítulo), qual dos três modelos parece mais adequado, e por quê?</p>
-
-<p><strong>2.</strong> Se a variância observada de uma contagem real for muito maior que a sua
-média (superdispersão), isso invalida o uso de \(E(X)\) como estimativa útil do "valor esperado", ou
-só invalida o uso da fórmula \(\mathrm{Var}(X)=\lambda\) da Poisson para a dispersão? A distinção
-importa para decisões de precificação de seguro?</p>
-
-<p><strong>3.</strong> Retome a Discussão de abertura do capítulo (pergunta 1, sobre a seguradora
-"saber" quantos sinistros uma apólice específica vai gerar). Depois de todo o capítulo, reformule
-sua resposta com o vocabulário formal agora disponível: esperança, variância, FDA.</p>
-</div>
+```{r poisson-r}
+c(dpois(2, 1), 1 - ppois(1, 1), 1 - dpois(0, 0.5), dpois(0, 5), pbinom(1, 10, 0.1), ppois(1, 1), 1 - ppois(3, 2))
 ```
 
 ## Da fórmula à simulação {#va-discreta-simulacao}
 
-Até aqui, cada distribuição foi tratada apenas analiticamente: uma fórmula para $p(x)$, calculada
-via `dbinom()`/`dpois()`. Há uma segunda forma, complementar, de entender essas distribuições:
-**simular** milhares de repetições do experimento aleatório e comparar as estatísticas simuladas
-(média, variância amostral) com os valores teóricos $E(X)$ e $\mathrm{Var}(X)$. Essa é a mesma
-lógica por trás de qualquer simulação de Monte Carlo, mencionada informalmente no Capítulo
-\@ref(variaveis-aleatorias-continuas), e que colocamos em prática aqui pela primeira vez.
+As distribuições podem ser estudadas **simulando** milhares de repetições do experimento e comparando
+frequências, média e variância simuladas com os valores teóricos (Aula 22).
 
-A função mais básica para isso é `sample()`, que sorteia valores de um conjunto com probabilidades
-dadas. Uma Bernoulli($p$) nada mais é que `sample(c(0,1), n, prob = c(1-p, p), replace = TRUE)`:
-
-```{r simula-bernoulli}
-set.seed(42)
-p <- 0.3
-x <- sample(c(0, 1), size = 1000, prob = c(1 - p, p), replace = TRUE)
-c(media_simulada = mean(x), media_teorica = p)
-c(var_simulada = var(x), var_teorica = p * (1 - p))
+```{r simulacao, fig.height=3, fig.width=9, out.width="85%"}
+set.seed(22)
+x <- sample(c(0, 1), 10000, prob = c(0.7, 0.3), replace = TRUE)     # Bernoulli(0,3)
+y <- rbinom(10000, size = 10, prob = 0.86)                          # Bin(10; 0,86)
+z <- rpois(10000, lambda = 2)                                       # Poisson(2)
+rbind(bernoulli = c(media = mean(x), teorica = 0.3, var = var(x), var_teorica = 0.21),
+      binomial  = c(mean(y), 8.6, var(y), 10 * 0.86 * 0.14),
+      poisson   = c(mean(z), 2, var(z), 2))
+barplot(rbind(prop.table(table(factor(z, levels = 0:9))), dpois(0:9, 2)), beside = TRUE, names.arg = 0:9,
+        legend.text = c("simulado", "teórico"), args.legend = list(x = "topright"))
 ```
 
-Para Binomial e Poisson, o R já tem geradores dedicados, `rbinom()` e `rpois()`, que fazem
-internamente algo equivalente a somar $n$ Bernoullis (Binomial) ou sortear contagens raras
-(Poisson):
+::: {.caixa-r}
+**Uso do R.** Para cada distribuição: `d...` dá $P(X = k)$, `p...` dá a FDA $P(X \leq k)$, `q...` dá quantis e
+`r...` gera valores aleatórios (`dbinom`, `pbinom`, `rbinom`, `dpois`, `ppois`, `rpois`). A simulação nunca dá
+exatamente o valor teórico, mas a diferença diminui quando o número de repetições cresce.
+:::
 
-```{r simula-binom-pois}
-y <- rbinom(1000, size = 20, prob = 0.08)   # carteira de microcrédito, seção anterior
-c(media_simulada = mean(y), media_teorica = 20 * 0.08)
-c(var_simulada = var(y), var_teorica = 20 * 0.08 * (1 - 0.08))
+## Aplicação macroeconômica: recessões e deflação {#va-discreta-macro}
 
-z <- rpois(1000, lambda = 3.2)                 # central de atendimento
-c(media_simulada = mean(z), media_teorica = 3.2)
-c(var_simulada = var(z), var_teorica = 3.2)
+```{r macro3-setup, include=FALSE}
+m3_nb <- function(x, d = 3) format(round(x, d), nsmall = d, decimal.mark = ",", big.mark = ".")
+m3_nbm <- function(x, d = 3) gsub(",", "{,}", m3_nb(x, d), fixed = TRUE)
+m3_tx <- read_csv("data/pib_trimestral_taxas.csv", show_col_types = FALSE) |>
+  filter(componente == "PIB a preços de mercado", grepl("imediatamente", taxa)) |>
+  mutate(ano = trimestre %/% 100)
+m3_ipca <- read_csv("data/ipca_mensal.csv", show_col_types = FALSE) |> mutate(ano = as.integer(substr(data, 1, 4)))
 ```
 
-Em todos os três casos, média e variância simuladas ficam próximas dos valores teóricos, mas não
-idênticas: a diferença encolhe à medida que o número de repetições simuladas cresce, a mesma
-lógica de estabilização de frequências relativas discutida no Capítulo 2. Essa é a ideia central de
-qualquer simulação de Monte Carlo: usar sorteios aleatórios repetidos como substituto
-computacional para um cálculo teórico, útil sobretudo quando o cálculo exato é difícil ou
-impossível de obter analiticamente.
+Os modelos deste capítulo servem para fenômenos macroeconômicos, mas as hipóteses precisam ser checadas
+com dados. Dois exemplos com séries oficiais [@ibge2026cnt; @bcb2026sgs] mostram um caso em que o
+modelo falha e outro em que funciona.
 
-```{=html}
-<div class="caixa-r"><strong>Uso do R</strong>: o padrão <code>r</code> + nome da distribuição
-(<code>rbinom</code>, <code>rpois</code> e, de forma mais genérica, <code>sample()</code>) gera
-valores aleatórios; combinado com <code>mean()</code> e <code>var()</code>, permite checar
-empiricamente qualquer fórmula teórica de \(E(X)\) e \(\mathrm{Var}(X)\) vista neste capítulo.</div>
+### Quantos trimestres de queda do PIB em um ano? Binomial e dependência
+
+Seja $X$ o número de trimestres, em um ano, em que o PIB (com ajuste sazonal) **caiu** em relação ao
+trimestre anterior. $X$ assume valores em $\{0, 1, 2, 3, 4\}$. Se cada trimestre tivesse a mesma
+probabilidade $p$ de queda **e** os trimestres fossem **independentes**, teríamos $X \sim \text{Bin}(4, p)$.
+
+```{r macro3-quedas}
+m3_anos <- m3_tx |> filter(ano >= 1997, ano <= 2025) |> group_by(ano) |>
+  summarise(quedas = sum(valor_pct < 0))
+m3_p <- mean(m3_tx$valor_pct[m3_tx$ano >= 1997 & m3_tx$ano <= 2025] < 0)   # proporção de trimestres com queda
+m3_emp <- as.numeric(prop.table(table(factor(m3_anos$quedas, levels = 0:4))))
+m3_bin <- dbinom(0:4, 4, m3_p)
+round(rbind(empirica = m3_emp, binomial = m3_bin), 3)
+c(p = m3_p, media_emp = mean(m3_anos$quedas), media_bin = 4 * m3_p,
+  var_emp = mean((m3_anos$quedas - mean(m3_anos$quedas))^2), var_bin = 4 * m3_p * (1 - m3_p))
 ```
+
+```{r fig-macro3-quedas, echo=FALSE, fig.height=3, fig.width=8, fig.cap="Número de trimestres de queda do PIB por ano, 1997 a 2025: distribuição observada (29 anos) e Binomial(4; p) com a mesma média. Fonte: IBGE, tabela 5932."}
+tibble(k = rep(0:4, 2), prob = c(m3_emp, m3_bin), fonte = rep(c("Observada", "Binomial"), each = 5)) |>
+  ggplot(aes(k, prob, fill = fonte)) + geom_col(position = "dodge", width = 0.6) +
+  scale_fill_manual(values = c("#c9971e", "#0d3b54")) +
+  labs(x = "Trimestres de queda no ano", y = "Probabilidade", fill = NULL) + theme_minimal(base_size = 13)
+```
+
+Nos `r nrow(m3_anos)` anos, o PIB caiu em `r m3_nb(100 * m3_p, 1)`% dos trimestres. A Binomial com esse $p$ acerta a **média**
+(`r m3_nb(4 * m3_p, 2)` trimestre de queda por ano), mas erra a **forma**: observamos muito mais anos **sem nenhuma**
+queda (`r m3_nb(100 * m3_emp[1], 1)`% contra `r m3_nb(100 * m3_bin[1], 1)`%) e mais anos com **duas ou mais** quedas
+(`r m3_nb(100 * sum(m3_emp[3:5]), 1)`% contra `r m3_nb(100 * sum(m3_bin[3:5]), 1)`%). A variância observada é quase o dobro da binomial.
+
+::: {.caixa-economia}
+**Leitura econômica.** O que falhou foi a **independência**: recessões duram vários trimestres. Saber que o
+PIB caiu no 1º trimestre **aumenta** a chance de queda no 2º. Anos com duas ou mais quedas foram
+`r paste(m3_anos$ano[m3_anos$quedas >= 2], collapse = ", ")`: crises que se estenderam por mais de um trimestre. Um modelo
+que trata trimestres como moedas independentes **subestima** a probabilidade de anos ruins, exatamente o tipo de
+erro que importa para planejamento fiscal e gestão de risco.
+:::
+
+### Quantos meses de deflação em um ano? Poisson
+
+Seja $Y$ o número de meses, em um ano, com **inflação negativa** (IPCA mensal abaixo de zero). Deflação é um
+evento **raro**, que pode acontecer em qualquer mês: um candidato natural é a Poisson.
+
+```{r macro3-deflacao}
+m3_defl <- m3_ipca |> filter(ano >= 2000, ano <= 2025) |> group_by(ano) |>
+  summarise(meses = sum(ipca_mensal_pct < 0))
+m3_lambda <- mean(m3_defl$meses)
+round(rbind(empirica = as.numeric(prop.table(table(factor(m3_defl$meses, levels = 0:4)))),
+            poisson = dpois(0:4, m3_lambda)), 3)
+c(lambda = m3_lambda, variancia = mean((m3_defl$meses - m3_lambda)^2))
+```
+
+Entre 2000 e 2025, houve em média $\hat\lambda = `r m3_nbm(m3_lambda, 2)`$ mês de deflação por ano, e a variância observada é
+próxima da média, como a Poisson exige ($E = Var = \lambda$). As probabilidades da Poisson ficam perto das
+frequências observadas. Pelo modelo, a chance de um ano com **três ou mais** meses de deflação é
+$1 - P(Y \leq 2) = `r m3_nbm(1 - ppois(2, m3_lambda), 3)`$: raro, mas aconteceu em
+`r paste(m3_defl$ano[m3_defl$meses >= 3], collapse = ", ")`, com a queda de preços de combustíveis e energia após a redução de impostos.
+
+::: {.caixa-discussao}
+**Discussão.** Por que a Poisson funcionou para os meses de deflação e a Binomial falhou para os trimestres de
+queda do PIB? Pense em quanto um mês de deflação "puxa" o seguinte, comparado com um trimestre de recessão.
+Que outros eventos econômicos você modelaria com Poisson (falências de bancos por ano, greves por mês)? Que
+hipótese precisaria verificar em cada caso?
+:::
 
 ## Fechando o capítulo
 
-Este capítulo tratou de contagens: sucessos discretos, sinistros, inadimplências, chamadas. O
-Capítulo \@ref(variaveis-aleatorias-continuas) estende os mesmos conceitos, esperança, variância,
-FDA, para variáveis que podem assumir qualquer valor real em um intervalo, como tempo, renda ou
-taxa de retorno, exigindo a ferramenta do cálculo integral revisada no Apêndice
-\@ref(revisao-de-calculo).
+| Tópico | O essencial |
+|:---|:---|
+| Variável aleatória discreta | valores enumeráveis; $P(X = x_i) \geq 0$ e $\sum P(X = x_i) = 1$ |
+| Esperança e variância | $E(X) = \sum x_i P(X = x_i)$; $Var(X) = E(X^2) - [E(X)]^2$ |
+| Propriedades | $E(aX + b) = aE(X) + b$; $Var(aX + b) = a^2 Var(X)$; independentes somam variâncias |
+| FDA | $F(x) = P(X \leq x)$, função degrau; $\leq$ e $<$ fazem diferença |
+| Bernoulli$(p)$ | $E = p$, $Var = p(1-p)$ |
+| Binomial$(n, p)$ | $\binom{n}{k}p^k(1-p)^{n-k}$; $E = np$, $Var = np(1-p)$ |
+| Poisson$(\lambda)$ | $e^{-\lambda}\lambda^k/k!$; $E = Var = \lambda$; aproxima $\text{Bin}(n, p)$ com $\lambda = np$ |
+| Modelos e dados | compare frequências observadas e probabilidades do modelo; dependência infla a variância (recessões) |
+
+As Listas 09 e 10 e o Simulado da Prova 2 (Lista 13) cobrem este capítulo.

@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 03}{Amplitude total, desvio padrão, variância e coeficiente de variação (Cap. 1, Aula 06)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito03.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Cálculo direto: retorno de dois fundos de investimento)}
 
@@ -92,5 +92,75 @@ linhas, um argumento para convencê-lo de que omitir essa informação pode ser 
 cliente do que divulgá-la, e proponha uma forma simples de comunicar risco a um público
 não técnico, sem recorrer só ao termo "desvio padrão".
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Dois alunos tiveram cinco notas em um curso. Aluno A: 2, 10, 6, 6, 6. Aluno B: 2, 6, 10, 4, 8.
+\begin{enumerate}[label=(\alph*)]
+  \item Qual é a nota média de cada aluno?
+  \item Qual é a amplitude total das notas de cada aluno?
+  \item Calcule a variância e o desvio padrão (divisor $n$) das notas de cada aluno. Quem teve maior variabilidade?
+\end{enumerate}
+\item Temperaturas (°C) em duas cidades, em cinco horários. Cidade A: 24, 26, 32, 28, 25. Cidade B: 20, 26, 36, 28, 25.
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que as duas cidades têm a mesma média e o mesmo $IQR$.
+  \item Calcule o desvio padrão de cada cidade. Qual é mais variável?
+  \item Calcule o coeficiente de variação da cidade B e compare com o das notas do aluno B da questão anterior. O que o $CV$ permite concluir que o desvio padrão não permite?
+\end{enumerate}
+\item O número de crianças em 20 casas visitadas numa pesquisa foi: 2, 0, 0, 1, 5, 3, 4, 0, 1, 1, 2, 1, 3, 0, 4, 6, 3, 2, 0, 2.
+\begin{enumerate}[label=(\alph*)]
+  \item Construa a tabela de frequências absolutas.
+  \item Usando a tabela, calcule a moda, a mediana e a média.
+  \item Usando a tabela, calcule a variância e o desvio padrão.
+  \item Use os salários da Companhia MB (Lista 01, questão C3) e calcule a amplitude total, o $IQR$ e o coeficiente de variação dos salários.
+\end{enumerate}
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: contas nacionais e dados reais}
+\noindent\textit{Exercícios com dados oficiais, ligados à seção de contas nacionais do Capítulo 1 do livro. Use variância com divisor $n$, como em aula.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Multiplicadores de insumo-produto.)} Na matriz de insumo-produto, o multiplicador de produção de um setor indica quantos reais
+de produção são gerados em toda a economia por R\$ 1,00 a mais de demanda final por produtos desse setor (soma da coluna da matriz inversa de Leontief).
+Multiplicadores de 12 setores (IBGE, Matriz de Insumo-Produto 2015):
+\begin{center}
+\small
+\begin{tabular}{lc|lc}
+\toprule
+Setor & Mult. & Setor & Mult. \\
+\midrule
+Agropecuária & 1,72 & Comércio & 1,53 \\
+Indústrias extrativas & 1,77 & Transporte e armazenagem & 1,84 \\
+Indústrias de transformação & 2,15 & Informação e comunicação & 1,64 \\
+Eletricidade, gás, água e esgoto & 1,95 & Atividades financeiras & 1,49 \\
+Construção & 1,81 & Atividades imobiliárias & 1,11 \\
+ & & Outros serviços & 1,53 \\
+ & & Administração pública & 1,38 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a amplitude total, a média, a variância, o desvio padrão e o coeficiente de variação dos multiplicadores.
+  \item Interprete o multiplicador da indústria de transformação. Por que o das atividades imobiliárias é tão próximo de 1?
+  \item Um governo quer maximizar o efeito de R\$ 1 bilhão em compras sobre a produção. Os multiplicadores são suficientes para essa decisão? Discuta.
+\end{enumerate}
+
+\item \textbf{(Volatilidade dos componentes da demanda.)} Taxas de variação em relação ao trimestre anterior, com ajuste sazonal, do 1º trimestre de 2023 ao
+2º trimestre de 2026 (\%; IBGE, Contas Nacionais Trimestrais). Resumos: consumo das famílias, média 0,60 e desvio padrão 0,73; FBCF,
+média 0,49 e desvio padrão 2,37; PIB, média 0,69 e desvio padrão 0,50.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule o coeficiente de variação de cada série.
+  \item O CV da FBCF é quase 5. Por que o CV é uma medida pouco confiável para essas séries? Que medida é mais adequada para comparar a volatilidade
+    delas? (Dica: todas estão na mesma unidade, pontos percentuais.)
+  \item Por que o investimento costuma ser muito mais volátil que o consumo? Relacione com a sua resposta a (b).
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

@@ -1,0 +1,21 @@
+recorte,categoria,pop14,forca,ocupadas,desocupadas,fora,informais,taxa_desocupacao
+total,Brasil,175400,108919,103057,5861,66481,38579,5.4
+sexo,Homens,84560,61095,58293,2803,23465,22717,4.6
+sexo,Mulheres,90840,47823,44765,3059,43016,15862,6.4
+regiao,Norte,14462,8723,8191,531,5739,4126,6.1
+regiao,Nordeste,46431,25161,23249,1912,21270,11332,7.6
+regiao,Sudeste,74489,48417,45909,2508,26072,15317,5.2
+regiao,Sul,26079,17289,16737,552,8790,4820,3.2
+regiao,Centro-Oeste,13939,9329,8971,358,4610,2984,3.8
+instrucao,Sem instrução e menos de 1 ano de estudo,7028,1562,1494,68,5466,1055,4.4
+instrucao,Ensino fundamental incompleto ou equivalente,41182,17398,16519,878,23784,10448,5.0
+instrucao,Ensino fundamental completo ou equivalente,13945,6885,6456,428,7060,3421,6.2
+instrucao,Ensino médio incompleto ou equivalente,14257,7556,6877,678,6701,3517,9.0
+instrucao,Ensino médio completo ou equivalente,56456,41245,38654,2591,15211,13372,6.3
+instrucao,Ensino superior incompleto ou equivalente,10345,7653,7226,427,2691,1987,5.6
+instrucao,Ensino superior completo ou equivalente,32187,26620,25830,790,5567,4779,3.0
+idade,14 a 17 anos,11760,1776,1375,401,9984,975,22.6
+idade,18 a 24 anos,21084,14710,12990,1720,6375,5099,11.7
+idade,25 a 39 anos,48539,39581,37583,1998,8958,12730,5.0
+idade,40 a 59 anos,57702,43655,42121,1534,14047,15113,3.5
+idade,60 anos ou mais,36315,9197,8988,209,27118,4661,2.3

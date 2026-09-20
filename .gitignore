@@ -2,7 +2,16 @@
 # Alunos têm acesso a este material (diretamente ou via página do curso
 # alimentada por ele) — as respostas ficam em repositório privado separado
 # (matf14-gabaritos-privado).
-Apoio/Listas/Gabarito_lista_*.pdf
-Apoio/Listas/gabarito_lista_*.pdf
 Listas2026/Gabarito*.pdf
 Listas2026/Gabarito*.tex
+
+# Kept on disk for whoever edits the course locally, never published: this file
+# documents Claude Code's own working conventions, and the professor does not
+# want any trace of AI-assistant tooling reachable on the published site.
+CLAUDE.md
+
+# Material do professor anterior, provas já aplicadas com gabarito, e PDF de
+# livro-texto de terceiros (Rodney) — mesma política do curso irmão MATD48:
+# fora do repositório público, cópia completa preservada fora do git em
+# matf14-arquivo-nao-publico/.
+Apoio/

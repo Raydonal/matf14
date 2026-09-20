@@ -15,227 +15,247 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
 suppressPackageStartupMessages(library(tidyverse))
-empresas   <- read.csv("empresas.csv")
-prefeitos  <- read.csv("dados_prefeitos.csv")
+empresas  <- read.csv("empresas.csv")
+prefeitos <- read.csv("dados_prefeitos.csv")
+
+# diagrama: população -> amostra -> inferência
+caixa <- function(x, y, rot, cor = "#b5173d") {
+  annotate("label", x = x, y = y, label = rot, size = 6, fill = cor, color = "white",
+           label.padding = unit(0.7, "lines"), label.r = unit(0.9, "lines"))
+}
 ```
 
 class: inverse, center, middle
 
 # MATF14: Estatística Econômica I
 
-### Aula 01: Apresentação, metodologia, calendário · População e amostra · Tipos de variáveis
+### Aula 01: Apresentação da disciplina · População e amostra · Tipos de variáveis
 
-Prof. colaborador: Raydonal Ospina · Depto. de Estatística, UFBA, 2026.2
+Raydonal Ospina · Departamento de Estatística, UFBA · 2026.2
 
-Encontros às **2ª e 4ª-feira, 10:40–12:30**
+2ª e 4ª-feira, 10:40–12:30 · Sala 22, PAF I
 
----
-
-## Você já decide com números incertos (1/2)
-
-> Vale a pena trocar a poupança por um fundo multimercado, sabendo que o retorno pode ser maior,
-> mas também negativo em algum mês?
-
---
-
-> Uma pesquisa mostra o candidato A com 52% e o B com 48%, margem de erro de 3 pontos, a eleição
-> já está decidida?
-
---
-
-> O IBGE diz que a inflação veio "dentro da meta", meta de quem, medida em que amostra, com que
-> margem de erro?
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## A segunda pergunta, em figura
+## Roteiro da aula (100 minutos)
 
-```{r fig-poll, echo=FALSE, out.width="72%", fig.width=7, fig.height=4}
-poll <- tibble(candidato = c("A", "B"), pct = c(52, 48), erro = c(3, 3))
-ggplot(poll, aes(candidato, pct, fill = candidato)) +
-  geom_col(width = 0.45, alpha = 0.9) +
-  geom_errorbar(aes(ymin = pct - erro, ymax = pct + erro), width = 0.12, linewidth = 1) +
-  geom_hline(yintercept = 50, linetype = "dashed", color = "grey40") +
-  scale_fill_manual(values = c(A = "#3b5bdb", B = "#c9971e")) +
-  labs(x = NULL, y = "% das intenções de voto") +
-  theme_minimal(base_size = 17) +
-  theme(legend.position = "none")
+.roteiro[
+
+| Tempo | Parte 1: a disciplina e por que estudar Estatística |
+|:---|:---|
+| 0–10 min | Provocação: dados por toda parte; turistas; você já decide com números incertos |
+| 10–28 min | Apresentação da disciplina: ementa, aulas, avaliação, bibliografia |
+| 28–40 min | Por que estudar Estatística: descritiva e inferência; temperatura em Salvador |
+| 40–50 min | **Atividade 1**: da análise exploratória à inferência |
+
+| Tempo | Parte 2: população, amostra e variáveis |
+|:---|:---|
+| 0–20 min | População e amostra; viés de quem fica de fora; amostragem |
+| 20–35 min | Tipos de variáveis; PNAD Contínua; contas nacionais |
+| 35–45 min | **Atividade 2**: classificando bases reais; exercício-síntese |
+| 45–50 min | Discussão final e resumo |
+
+]
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: a disciplina e por que estudar Estatística
+
+### 50 minutos
+
+---
+
+## Provocação: dados por toda parte .tempo[0–10 min]
+
+.pull-left[
+```{r economia-bbc, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/noticias_economia_bbc.jpg")
 ```
 
---
+.fonte[Fonte: BBC News Brasil, editoria de Economia, janeiro de 2026.]
+]
 
-Os intervalos (52%±3 e 48%±3) se **sobrepõem** entre 49% e 55%: com a incerteza da amostragem, os
-dois candidatos podem estar empatados, ou até B na frente. "52% contra 48%" isolado esconde essa
-sobreposição, é exatamente essa leitura que a Unidade 2 (Probabilidade) vai formalizar.
+.pull-right[
+Abra qualquer página de notícias de economia: quase toda manchete depende de um **número**.
 
----
+- Quem coletou esse número?
+- Sobre **quem** ele fala: todos os brasileiros? Uma amostra?
+- Ele é **exato** ou uma **estimativa**?
+- O que dá, e o que **não** dá, para concluir a partir dele?
 
-## Você já decide com números incertos (2/2)
-
-> Um banco oferece crédito porque seu escore está "acima da média", acima de que distribuição,
-> exatamente?
-
---
-
-> Uma seguradora cobra mais de condutores jovens, isso reflete risco medido, ou só estereótipo
-> com aparência de número?
-
---
-
-> "O brasileiro médio ganha R$ 3.100 por mês", essa frase descreve alguém que realmente existe,
-> ou é uma conta que nenhum brasileiro em particular corresponde?
+.caixa-discussao[
+Esta disciplina é sobre fazer essas quatro perguntas com rigor.
+]
+]
 
 ---
 
-## A última pergunta, em figura
+## Um exemplo: o recorde de turistas em 2025
 
-```{r fig-skew, echo=FALSE, out.width="72%", fig.width=7, fig.height=4, warning=FALSE}
-media_fat <- mean(empresas$faturamento99)
-mediana_fat <- median(empresas$faturamento99)
-ggplot(empresas, aes(faturamento99)) +
-  geom_histogram(bins = 22, fill = "#2e8b57", alpha = 0.85) +
-  geom_vline(xintercept = media_fat, color = "#c0392b", linewidth = 1) +
-  geom_vline(xintercept = mediana_fat, color = "#2980b9", linewidth = 1, linetype = "dashed") +
-  labs(x = "Faturamento 1999 (R$)", y = "Nº de empresas") +
-  theme_minimal(base_size = 16)
+.pull-left-60[
+```{r turismo-texto, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/turismo_texto_bbc.jpg")
 ```
 
+.fonte[Fonte: BBC News Brasil (2026), com dados do Ministério do Turismo, Embratur e Banco Central.]
+]
+
+.pull-right-40[
+```{r turismo-serie, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/turismo_serie_bbc.jpg")
+```
+
+]
+
+---
+
+## Dados históricos, atuais e projeções
+
+.pull-left-40[
+```{r turismo-nac, echo=FALSE, out.width="88%"}
+knitr::include_graphics("images/turismo_nacionalidades_bbc.jpg")
+```
+
+]
+
+.pull-right-60[
+- **Dados históricos:** a série de visitantes começa em 1970; 2025 é o maior valor observado.
+- **Dados atuais:** 9,3 milhões de turistas; 36% eram argentinos.
+- **Uma queda que precisa de explicação:** 0,8 milhão em 2021.
+
+.caixa-discussao[
+**1.** Que evento explica a queda de 2020–2021? Um analista que olhasse **só** a média de 2016 a
+2025 veria esse evento?
+
+**2.** "Crescimento de 37,1% em relação a 2024": que fórmula está por trás desse número?
+
+**3.** Com esses dados, dá para **prever** quantos turistas virão em 2026? Com que segurança?
+]
+]
+
+---
+
+## Você já decide com números incertos
+
+- Uma pesquisa mostra a candidata A com **52%** e o candidato B com **48%**, margem de erro de 3
+  pontos. A eleição está decidida?
+- O IBGE divulga que o desemprego caiu para **6,4%**. O IBGE perguntou para **todos** os
+  trabalhadores do país?
+- Um banco oferece crédito "porque seu score está acima da média". Acima da média **de quem**?
+
 --
 
-Faturamento de `r nrow(empresas)` empresas. A linha vermelha é a **média**; a azul tracejada, a
-**mediana**, mais baixa, puxada para a esquerda pelas poucas empresas de faturamento muito alto.
-"Faturamento médio" descreve bem uma empresa *típica* desta amostra? Guarde a pergunta.
+.caixa-aplicacao[
+Nas três situações há uma **população** de interesse, uma **amostra** efetivamente observada e
+**variáveis** de tipos diferentes. São exatamente os três conceitos desta primeira aula.
+]
 
 ---
 
-Esta disciplina constrói o vocabulário formal, e o hábito de rigor, por trás de cada uma dessas
-perguntas. As fórmulas em si são poucas; a dificuldade real está em saber **qual pergunta cada
-uma responde, e qual não responde**.
+class: inverse, center, middle
+
+# Apresentação da disciplina
 
 ---
 
-## Identificação do componente curricular
+## Identificação do componente curricular .tempo[10–28 min]
 
 | | |
-|---|---|
-| **Código** | MATF14 |
-| **Nome** | Estatística Econômica I |
-| **Departamento** | Estatística, UFBA |
-| **Carga horária** | 60h (teórico-prática) |
-| **Pré-requisito** | MAT047 (Cálculo I) |
-| **Modalidade** | Presencial, quadro + slides + laboratório de informática |
-| **Horário** | 2ª e 4ª-feira, 10:40 – 12:30 |
-| **Início** | 24/08/2026 |
+|:---|:---|
+| **Código e nome** | MATF14 · Estatística Econômica I |
+| **Departamento** | Estatística, Instituto de Matemática e Estatística, UFBA |
+| **Carga horária** | 60 h |
+| **Pré-requisito** | MAT047 |
+| **Horário e local** | 2ª e 4ª-feira, 10:40–12:30 · Sala 22, PAF I |
+| **Período** | 24/08/2026 a 16/12/2026 |
+| **Página do curso** | [raydonal.github.io/matf14](https://raydonal.github.io/matf14/) |
 
 --
 
-Disciplina de serviço para os cursos de **Economia** e **Estatística**: o objetivo não é treinar
-matemáticos, é dar a quem vai trabalhar com dados econômicos (preços, renda, câmbio, desemprego,
-pesquisas de opinião) o ferramental para ler um número com rigor antes de opinar sobre ele.
+Disciplina de serviço para os cursos de **Economia** e **Estatística**: o objetivo é dar a quem vai
+trabalhar com dados econômicos (preços, renda, câmbio, desemprego, pesquisas de opinião) o
+ferramental para **ler um número com rigor** antes de opinar sobre ele.
 
 ---
 
-## Propósito e objetivos
+## Ementa: quatro unidades
 
-**Propósito.** A Economia é feita quase inteiramente de inferências a partir de dados
-incompletos e ruidosos: séries curtas, amostras enviesadas, choques que não se repetem
-exatamente. A Estatística é o ferramental que formaliza *o que dá e o que não dá* para concluir a
-partir desse tipo de evidência.
-
---
-
-**Objetivo geral.** Proporcionar o conhecimento teórico-prático de Estatística Descritiva,
-Probabilidade e Variáveis Aleatórias necessário para uso em situações da área de Economia e
-Estatística, e como base para disciplinas subsequentes (Econometria, Microeconomia, Inferência
-Estatística).
-
---
-
-**Objetivos específicos.** Ao final da disciplina, o aluno deve ser capaz de: (i) resumir e
-representar corretamente um conjunto de dados, respeitando o tipo de cada variável; (ii)
-calcular e interpretar probabilidades, inclusive condicionais; (iii) modelar fenômenos discretos
-e contínuos com as principais distribuições de probabilidade; (iv) **reconhecer os limites** de
-cada uma dessas ferramentas diante de um caso concreto, não só aplicar a fórmula.
-
----
-
-## Ementa oficial: Unidades 1 e 2
-
-**Unidade 1 · Estatística Descritiva e Exploratória de Dados**
+.pull-left[
+**Unidade 1 · Estatística descritiva**
 - População e amostra; tipos de variáveis.
-- Apresentação tabular e principais tipos de representação gráfica.
-- Medidas de tendência central e suas relações.
-- Medidas de dispersão: amplitude total e interquartílica; desvio padrão; variância; coeficiente
-  de variação.
-- Medidas de assimetria e curtose.
+- Tabelas e gráficos.
+- Medidas de tendência central.
+- Medidas de dispersão.
+- Correlação, assimetria e curtose.
 
---
+**Unidade 2 · Probabilidade**
+- Espaço amostral, eventos e propriedades.
+- Probabilidade condicional e independência.
+- Teorema de Bayes.
+]
 
-**Unidade 2 · Introdução à Teoria das Probabilidades**
-- Espaço amostral e eventos; conceitos e propriedades de probabilidade.
-- Probabilidade condicional; independência estatística.
-- Teoremas básicos de probabilidade; Teorema de Bayes.
-
----
-
-## Ementa oficial: Unidades 3 e 4
-
-**Unidade 3 · Variáveis Aleatórias Discretas**
-- Conceituação; esperança e variância (definição e propriedades).
+.pull-right[
+**Unidade 3 · Variáveis aleatórias discretas**
+- Conceito, esperança e variância.
 - Função de distribuição acumulada.
-- Modelos: Bernoulli, Binomial, Poisson.
+- Bernoulli, Binomial e Poisson.
 
---
-
-**Unidade 4 · Variáveis Aleatórias Contínuas**
-- Conceituação; esperança e variância; função de distribuição acumulada.
-- Modelos: Uniforme, Normal.
-
---
-
-O livro-texto (`Livro/`) segue **exatamente** essa numeração, capítulo a capítulo, seção a seção,
-para que qualquer tópico cobrado em prova seja localizável diretamente pelo número da ementa.
+**Unidade 4 · Variáveis aleatórias contínuas**
+- Conceito, esperança e variância.
+- Função de distribuição acumulada.
+- Uniforme e Normal.
+]
 
 ---
 
 ## Como as aulas funcionam
 
-- Aulas **teóricas** (quadro + slides) e aulas **práticas**: laboratório em R (3 ao longo do
-  semestre) e aulas de exercícios/revisão.
-- Material de apoio: livro-texto (`Livro/`), slides de cada aula (`Aulas2026/`) e listas de
-  exercícios com gabarito (`Listas2026/`).
-- O livro cobre **com mais vagar** o que o slide de cada bloco apresenta de forma resumida em
-  sala, é a referência para estudar depois da aula, não durante.
-- As listas de exercícios **não valem nota**, mas cobrem exatamente o estilo de questão cobrado
-  nas provas, resolver a lista antes de olhar o gabarito é a forma mais eficiente de estudar.
+Cada encontro equivale a **duas aulas de 50 minutos**, com um intervalo entre elas. Todo deck começa com um
+**roteiro cronometrado** e cada slide traz, no canto, o tempo previsto.
+
+| Momento | O que acontece |
+|:---|:---|
+| **Provocação** | uma notícia ou pergunta real que motiva o tema |
+| **Teoria** | definições e fórmulas, sempre com conta feita **na mão** |
+| **Aplicação** | exemplos com dados reais (IBGE, Banco Central, empresas, prefeitos, notícias) |
+| **Atividades** | em duplas, **em sala**: você resolve antes de ver a resposta |
+| **Uso do R** | como fazer a mesma análise no computador |
+
+--
+
+- **Não há laboratório presencial** neste semestre: as aulas com R usam o **Google Colab**, no
+  navegador, sem instalar nada.
+- **Material:** livro-texto, slides de cada aula e listas de exercícios, todos na página do curso.
+- As **listas não valem nota** e os **gabaritos não são publicados**: resolva antes de conferir com
+  colegas e em sala.
 
 ---
 
 ## Por que as discussões valem tanto quanto as contas
 
-Um erro comum de quem estuda Estatística pela primeira vez é tratar cada aula como uma coleção de
-fórmulas a decorar e aplicar. As fórmulas deste curso são, de fato, poucas e simples, a
-dificuldade real está em **saber qual pergunta cada fórmula responde, e qual não responde**.
+As fórmulas deste curso são poucas e simples. A dificuldade real está em saber **qual pergunta cada
+fórmula responde, e qual não responde**.
 
 --
 
-Uma correlação de 0,86 entre gasto em propaganda e vendas prova que a propaganda *causa* as
-vendas? Um teste de fraude com 95% de acerto significa que 95% dos alarmes são fraudes de
-verdade? Uma média salarial de R$ 6.000 descreve bem o "trabalhador típico" de uma categoria?
+- Uma correlação de 0,86 entre gasto em propaganda e vendas prova que a propaganda **causa** as
+  vendas?
+- Um teste de fraude com 95% de acerto significa que 95% dos alarmes são fraudes de verdade?
+- Um salário médio de R$ 6.000 descreve bem o trabalhador **típico** de uma categoria?
 
 --
 
-Cada bloco de aula traz perguntas abertas, **não são preenchimento de tempo**: nas provas, a
-diferença entre nota alta e mediana quase sempre está aqui, não em saber a fórmula, mas em saber
-quando ela se aplica e o que ela deixa de fora. Espere ser chamado a responder, não só a ouvir.
-
---
-
-O formato é flexível, sozinho, em dupla, em grupo pequeno, ou como discussão coletiva conduzida
-por mim, o que funcionar melhor no dia e no tamanho da turma. O que não muda é o hábito: parar e
-responder por escrito ou em voz alta, antes de ver a resposta pronta.
+.caixa-discussao[
+Nas provas, a diferença entre nota alta e nota mediana quase sempre está aqui: não em saber a
+fórmula, mas em saber **quando ela se aplica** e **o que ela deixa de fora**.
+]
 
 ---
 
@@ -245,313 +265,621 @@ $$
 NF = \frac{P\_1 + P\_2 + P\_3}{3}
 $$
 
-| Prova | Cobertura |
-|---|---|
-| P1 | Unidade 1 (Estatística Descritiva) |
-| P2 | Unidades 2 e 3 (Probabilidade e VA discretas) |
-| P3 | Unidade 4 (VA contínuas) |
-
-Datas oficiais conforme calendário divulgado em sala.
+| Prova | Data | Conteúdo |
+|:---:|:---:|:---|
+| P1 | 23/09/2026 | Unidade 1: estatística descritiva |
+| P2 | 18/11/2026 | Unidades 2 e 3: probabilidade e VA discretas |
+| P3 | 16/12/2026 | Unidade 4: VA contínuas |
 
 --
 
-- Aprovação: frequência $\ge 75\%$ **e** $NF \ge 5{,}0$.
-- **2ª chamada**, destinada exclusivamente a quem não realizou **uma** das provas por motivo
-  comprovável (atestado médico ou de trabalho); cobre **todo** o conteúdo da disciplina, não só a
-  unidade da prova perdida.
-- Sem projetos nesta disciplina, o foco é dominar os conceitos e resolver problemas sob prova.
+- Aprovação: frequência de pelo menos **75%** e \\(NF \geq 5{,}0\\).
+- **Segunda chamada:** a combinar ao final do semestre, para quem perdeu uma prova por motivo
+  justificado.
+- Não há trabalhos ou projetos: listas de exercícios são para estudo e **não valem nota**.
 
 ---
 
 ## Bibliografia
 
-**Básica**
+**Referências principais**
 
-- Hoffmann, R. *Estatística para Economistas*. Thomson, 2006.
-- Morettin, P. A.; Bussab, W. O. *Estatística Básica*. Saraiva, 2012.
-- Magalhães, M. N. *Probabilidade e Variáveis Aleatórias*. EDUSP, 2004.
-- Ross, S. *Probabilidade: um curso moderno com aplicações*. Bookman, 2010.
+- HOFFMANN, R. *Estatística para economistas*. São Paulo: Thomson, 2006.
+- MORETTIN, P. A.; BUSSAB, W. O. *Estatística básica*. São Paulo: Saraiva, 2012.
+- ROSS, S. *Probabilidade: um curso moderno com aplicações*. 6. ed. Porto Alegre: Bookman, 2010.
 
-**Complementar**
+**Complementares**
 
-- Dantas, C. A. B. *Probabilidade: um curso introdutório*. EDUSP, 1997.
-- Hogg, R.; McKean, J.; Craig, A. *Introduction to Mathematical Statistics*. Pearson, 2013.
-- Triola, M. F. *Introdução à Estatística*. LTC, 2007.
-
----
-
-class: inverse, center, middle
-
-# Discussão de abertura
-
----
-
-## Para discutir agora
-
-**1.** Cite uma manchete de jornal ou rede social recente que usou (bem ou mal) um número
-estatístico para embasar uma afirmação econômica.
-
-**2.** O que precisaria ser verdade sobre *como aquele número foi calculado* para que a afirmação
-fosse confiável? Liste ao menos duas condições.
-
-**3.** Retome as seis perguntas do início da aula. Escolha uma e tente, sem nenhum conceito
-formal ainda, esboçar em uma frase por que ela é difícil de responder "no olho".
-
-**4.** Você conhece alguém (familiar, colega, você mesmo) que já tomou uma decisão financeira
-importante baseada em uma estatística mal interpretada? O que deu errado na leitura do número, não
-no número em si?
+- MAGALHÃES, M. N. *Probabilidade e variáveis aleatórias*. São Paulo: EDUSP, 2006.
+- TRIOLA, M. F. *Introdução à estatística*. Rio de Janeiro: LTC, 2017.
 
 --
 
-Guarde essas respostas, vamos revisitar esse tipo de exemplo ao longo do semestre, à medida que
-formos construindo as ferramentas para avaliá-lo com rigor.
+.caixa-aplicacao[
+O **livro-texto do curso** (na página da disciplina) segue a numeração da ementa e traz, para cada
+aula, os mesmos exemplos com mais detalhes e contas passo a passo.
+]
 
 ---
 
-class: inverse, center, middle
+## Por que aprender Estatística? .tempo[28–40 min]
 
-# Bloco 1: População e amostra
-
----
-
-## Antes da teoria: três casos para pensar
-
-> O Censo Demográfico tenta visitar todo domicílio do país, população ou amostra?
-
---
-
-> A PNAD Contínua entrevista ~211 mil domicílios por trimestre, de mais de 70 milhões no Brasil,
-> e vira manchete nacional sobre "o desemprego no Brasil". É uma generalização legítima?
+- Dados são coletados **a todo momento**: compras com cartão, aplicativos, censos, pesquisas de
+  emprego, preços do supermercado.
+- Precisamos ser capazes de **interpretar e analisar** os dados que nos rodeiam, e de desconfiar dos
+  que estão mal apresentados.
+- Na Economia, quase toda decisão (juros, salário mínimo, políticas sociais) é tomada com base em
+  **dados incompletos**.
 
 --
 
-> Uma corretora usa os `r nrow(empresas)` clientes que fecharam negócio no mês passado para
-> decidir sua política de crédito do mês seguinte. Quem ela está *deixando de observar* nessa
-> análise?
+## Duas grandes divisões da Estatística
 
---
-
-Guarde suas intuições, vamos formalizar a seguir.
-
----
-
-## População vs. amostra
-
-- **População**: conjunto de **todas** as unidades (pessoas, empresas, municípios, transações)
-  sobre as quais se quer concluir algo.
-- **Amostra**: subconjunto da população efetivamente observado.
-
---
-
-A diferença não é de *tamanho*, é de *papel*.
-
-<div class="caixa-aplicacao"><strong>Aplicação: as duas bases desta aula</strong><br>
-<code>prefeitos</code>: `r nrow(prefeitos)` municípios brasileiros com eleição em
-2020, é dado <strong>censitário</strong>, todos foram observados, é a <strong>população</strong>
-de municípios.<br>
-<code>empresas</code>: `r nrow(empresas)` empresas brasileiras, é uma
-<strong>amostra</strong> de um universo muito maior de empresas do país.</div>
-
-```{r populacao-amostra-n}
-nrow(prefeitos)  # população: municípios com eleição em 2020
-nrow(empresas)   # amostra: empresas observadas
+```{r divisoes, echo=FALSE, fig.height=1.9, fig.width=9, out.width="85%"}
+ggplot() + xlim(0, 10) + ylim(0, 2) + theme_void() +
+  caixa(2.6, 1, "Análise exploratória de dados\n(Estatística descritiva)") +
+  caixa(7.4, 1, "Inferência estatística\n(probabilidade + estatística)")
 ```
 
-Repare que esses números vêm do próprio código, não de memória, é assim que se evita repetir um
-dado desatualizado numa apresentação.
-
 ---
 
-## Parâmetro vs. estatística
-
-| | População | Amostra |
-|---|---|---|
-| Resumo numérico | **Parâmetro** ($\mu$, $\sigma$) | **Estatística** ($\bar x$, $s$) |
-| Natureza | Fato (sem incerteza de amostragem) | Estimativa (varia entre amostras) |
-
---
-
-Quando o IBGE divulga a taxa de desemprego trimestral pela PNAD Contínua, ele **não** entrevista
-toda a força de trabalho, entrevista uma amostra de domicílios e generaliza. É por isso que a taxa
-vem sempre acompanhada de um intervalo de confiança nos relatórios técnicos, mesmo que a manchete
-mostre só o número central.
-
---
-
-A Estatística Descritiva desta unidade **não trata dessa incerteza**: ela resume o que foi
-observado, seja população ou amostra. A pergunta "o que esse número diria se eu tivesse coletado
-outra amostra?" é o assunto da Inferência Estatística, fora do escopo desta disciplina, mas que se
-apoia inteiramente no vocabulário construído aqui.
-
----
-
-## Discussão intermediária: antes de seguir para tipos de variável
-
-**1.** Retome o caso da PNAD Contínua: se a amostra fosse recrutada só em capitais (mais barato
-entrevistar), que tipo de erro isso introduziria, de *tamanho* de amostra, ou de outra natureza?
-
-**2.** Uma enquete informal em rede social recebe 50 mil respostas em um dia sobre uma pauta
-econômica. Compare, em confiabilidade, com uma pesquisa profissional de 2 mil pessoas por
-amostragem probabilística. Por que "mais respostas" não é "amostra melhor"?
-
-**3.** O Boletim Focus do Banco Central usa a mediana das expectativas de mais de 100 instituições
-financeiras. Essas instituições são população ou amostra de "todo mundo que tem uma opinião sobre
-inflação"? Isso muda como você lê o número publicado?
-
----
-
-class: inverse, center, middle
-
-# Bloco 2: Tipos de variáveis
-
----
-
-## Tipos de variáveis: visão geral
+## Exemplo: temperatura em Salvador, agosto de 2024
 
 .pull-left[
-**Qualitativas (categóricas)**
-- Nominais, sem ordem (setor, região, sexo)
-- Ordinais, com ordem (escolaridade, porte)
+```{r salvador-planilha, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/salvador_temperatura_planilha.png")
+```
+
+.fonte[Fonte: INMET, estação automática de Salvador (tempo.inmet.gov.br).]
 ]
 
 .pull-right[
-**Quantitativas (numéricas)**
-- Discretas, contagem (nº de empregados)
-- Contínuas, mensuráveis (faturamento, renda)
+- Dados meteorológicos registrados **a cada hora** durante o mês inteiro: centenas de linhas.
+- Temperatura máxima e mínima de cada hora, umidade, vento...
+
+.caixa-discussao[
+Olhando só a planilha, dá para dizer se agosto foi um mês quente? Se a temperatura variou muito?
+Fica **difícil extrair informação** dos dados brutos.
+]
+]
+
+---
+
+## Os mesmos dados, organizados
+
+```{r salvador-linhas, echo=FALSE, out.width="52%", fig.align="center"}
+knitr::include_graphics("images/salvador_temperatura_linhas.png")
+```
+
+.pull-left[
+- A temperatura **média** foi de 24,13 °C.
+- **Metade** dos registros ficou entre 22,57 °C e 25,12 °C.
+]
+
+.pull-right[
+- A temperatura segue um **padrão cíclico**: sobe durante o dia e cai à noite.
+]
+
+.clear[]
+
+.caixa-aplicacao[
+**Toda análise estatística começa por uma análise exploratória**: organizar, apresentar, simplificar
+e descrever os dados, em gráficos, tabelas e medidas-resumo.
+]
+
+---
+
+## Da análise exploratória à inferência .tempo[40–50 min]
+
+- Conjuntos de dados geralmente apresentam **regularidade**: um **padrão de variação** (como o ciclo
+  diário da temperatura).
+- **Intuito:** usar essa regularidade para construir um **modelo** que possa ser usado na
+  inferência.
+
+--
+
+**Inferência estatística:** tirar conclusões sobre a **população** com base em uma **amostra**.
+
+```{r ciclo-inferencia, echo=FALSE, fig.height=2.6, fig.width=9, out.width="82%"}
+ggplot() + xlim(0, 10) + ylim(0, 3) + theme_void() +
+  annotate("curve", x = 3.2, y = 1.9, xend = 6.8, yend = 1.9, curvature = -0.3,
+           arrow = arrow(length = unit(0.25, "cm")), linewidth = 1) +
+  annotate("curve", x = 6.8, y = 1.1, xend = 3.2, yend = 1.1, curvature = -0.3,
+           arrow = arrow(length = unit(0.25, "cm")), linewidth = 1) +
+  annotate("text", x = 5, y = 2.75, label = "Amostragem", size = 5.5) +
+  annotate("text", x = 5, y = 0.3, label = "Inferência (usa probabilidade)", size = 5.5) +
+  caixa(2, 1.5, "População") + caixa(8, 1.5, "Amostra")
+```
+
+.small[A **probabilidade** (Unidades 2 a 4) é o que permite medir o quanto podemos confiar na
+volta, da amostra para a população.]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: população, amostra e variáveis
+
+### 50 minutos
+
+---
+
+## O que você entende por população e amostra? .tempo[0–20 min]
+
+.pull-left[
+```{r multidao, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/populacao_brasil_multidao.jpg")
+```
+
+.fonte[Imagem de notícia sobre a prévia do Censo 2022 (IBGE).]
+]
+
+.pull-right[
+Na linguagem comum, "população" é o conjunto de **pessoas** de um lugar.
+
+Em Estatística, o conceito é **mais amplo**:
+
+- os preços de **todos** os produtos de um supermercado em um dia;
+- **todas** as empresas industriais do Nordeste;
+- **todas** as viagens feitas por um aplicativo de transporte em 2025.
+
+.caixa-discussao[
+Nenhum desses exemplos é um conjunto de pessoas. O que eles têm em comum?
+]
+]
+
+---
+
+## Por que definir bem a população importa
+
+.pull-left[
+```{r enem-redacao, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/enem2023_redacao_cuidado.png")
+```
+
+.fonte[Tema da redação do ENEM 2023.]
+]
+
+.pull-right[
+```{r mulheres-capa, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/mulheres_invisiveis_capa.jpg")
+```
+
+.fonte[Criado Perez, C. *Mulheres invisíveis* (Intrínseca).]
+]
+
+---
+
+## O viés de quem fica de fora
+
+```{r mulheres-dados, echo=FALSE, out.width="28%", fig.align="center"}
+knitr::include_graphics("images/mulheres_invisiveis_dados.jpg")
+```
+
+.caixa-aplicacao[
+O livro *Mulheres invisíveis* reúne casos em que produtos e políticas foram desenhados com dados que
+**deixavam as mulheres de fora**:
+
+- a temperatura "padrão" de escritórios foi calibrada para o metabolismo de homens;
+- testes de segurança de carros usaram, por décadas, bonecos com medidas masculinas, e a
+  probabilidade de uma mulher sair gravemente ferida em acidentes é **47%** maior;
+- o trabalho de cuidado não remunerado, feito majoritariamente por mulheres, **não entra** nas
+  estatísticas oficiais de produção (o tema da redação do ENEM 2023).
 ]
 
 --
 
-A pergunta prática: *dá para fazer conta com isso, e a conta significa alguma coisa?*
-Média de "setor" (Comércio, Indústria, Serviços) não significa nada. Média de faturamento, sim.
+.caixa-discussao[
+Nos três casos, os dados usados não representavam a **população** afetada pelas decisões. Que outro
+grupo costuma ficar "invisível" nos dados econômicos brasileiros?
+]
 
 ---
 
-## Por que a classificação importa: um experimento
+## População
 
-Suponha que você codifique `porte` como número: Pequena, Média, Grande viram 1, 2, 3, e calcula a
-"média do porte". Parece inofensivo. Vamos testar duas codificações igualmente "razoáveis":
+**População:** conjunto de **todos** os elementos ou resultados sob investigação.
 
-```{r porte-coding1}
-mean(as.numeric(factor(empresas$porte)))  # ordem alfabética: Grande=1, Média=2, Pequena=3
+Exemplos:
+
+- conjunto de todos os alunos da UFBA;
+- conjunto de todos os habitantes de Salvador;
+- tempo de duração de **todas** as viagens de carro feitas em uma cidade.
+
+--
+
+.caixa-discussao[
+Diversas vezes, **não temos como coletar dados da população inteira**. Por quê?
+]
+
+--
+
+## Dificuldades para acessar a população
+
+- Pesquisas são feitas com **tempo e recursos limitados**.
+- Dificilmente é possível estudar **todos** os elementos (o Censo do IBGE é feito só a cada 10 anos).
+- Às vezes estudar um elemento o **destrói**: testar a durabilidade de uma lâmpada, provar um lote
+  de vinho.
+
+---
+
+## Amostra
+
+**Amostra:** qualquer **subconjunto** da população.
+
+Exemplos:
+
+- as idades dos alunos de Economia da UFBA (população: alunos da UFBA);
+- a renda dos moradores do bairro de Ondina (população: moradores de Salvador);
+- o tempo das viagens de carro realizadas **por um aplicativo** (população: todas as viagens).
+
+--
+
+.caixa-aplicacao[
+**Ideia:** usar um número menor de elementos, uma **amostra**, de forma que ela **represente bem** a
+população investigada.
+]
+
+--
+
+.caixa-discussao[
+A renda dos moradores de **Ondina** representa bem a renda de **Salvador**? Por quê?
+]
+
+---
+
+## Noções de amostragem
+
+**Amostragem** é o método escolhido para coletar a amostra: sorteio, facilidade de coleta, rapidez...
+A escolha depende dos **recursos disponíveis** e das **características** da população.
+
+--
+
+Você faz amostragem no dia a dia:
+
+- provar uma colher para **checar o sal** de uma panela inteira de sopa;
+- **escolher frutas** em uma banca olhando algumas delas;
+- usar o **período de teste** gratuito de um aplicativo antes de assinar.
+
+--
+
+.caixa-discussao[
+Por que uma colher basta para avaliar o sal da sopa, mas olhar as frutas de cima da pilha pode
+enganar? (Pense no que acontece antes de provar: você **mexe** a sopa.)
+]
+
+---
+
+## Métodos de amostragem
+
+Amostras podem ser **aleatórias** ou **não aleatórias**, dependendo da chance de cada elemento da
+população pertencer à amostra.
+
+.pull-left[
+.caixa-aplicacao[
+**Aleatórias:** chance **conhecida** (em geral igual) de cada elemento ser selecionado.
+
+Ex.: sorteio de um certo número de elementos da população.
+]
+]
+
+.pull-right[
+.caixa-discussao[
+**Não aleatórias:** chance **diferente** (ou desconhecida) de ser selecionado.
+
+Ex.: o pesquisador entrevista só os seus amigos; enquete em rede social.
+]
+]
+
+.clear[]
+
+---
+
+## Amostra aleatória simples
+
+Os elementos da amostra são **sorteados** dentre **todos** os elementos da população, com a **mesma
+chance**.
+
+```{r aas, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("images/amostra_aleatoria_simples.png")
 ```
 
-```{r porte-coding2}
-mean(as.numeric(factor(empresas$porte,
-                        levels = c("Pequena", "Média", "Grande"))))  # ordem lógica
+.fonte[Fonte: L. F. C. Alves, material online (bookdown.org/luisfca).]
+
+---
+
+## Amostra aleatória simples na prática
+
+- Exige uma **lista completa** dos elementos da população (cadastro), para sortear itens dela.
+- Pode ser **difícil** de aplicar quando a população é grande ou não há cadastro.
+
+--
+
+.caixa-economia[
+A **PNAD Contínua** do IBGE, que mede o desemprego no Brasil, não entrevista todos os brasileiros:
+visita cerca de **211 mil domicílios** por trimestre, escolhidos por **sorteio** em várias etapas.
+É uma amostra aleatória, só que mais elaborada que a simples.
+]
+
+--
+
+## Parâmetro e estatística
+
+| | População | Amostra |
+|:---|:---|:---|
+| Medida-resumo | **parâmetro** (ex.: taxa real de desemprego) | **estatística** (ex.: taxa estimada pela PNAD) |
+| Natureza | valor fixo, em geral **desconhecido** | **varia** de uma amostra para outra |
+
+---
+
+## O que são variáveis? .tempo[20–35 min]
+
+.pull-left-40[
+```{r esus, echo=FALSE, out.width="92%"}
+knitr::include_graphics("images/variaveis_cadastro_esus.jpg")
+```
+
+.fonte[Fonte: Prefeitura de Barreiras (BA), cadastro individual do e-SUS.]
+]
+
+.pull-right-60[
+- Dados geralmente são **medidas de características** de uma população ou amostra.
+- Cada uma dessas características é chamada de **variável**.
+
+Um cadastro do SUS pergunta nome, data de nascimento, sexo, raça/cor, escolaridade, se a pessoa tem
+plano de saúde...
+
+.caixa-discussao[
+Cada campo do formulário é uma **variável**. Cada pessoa cadastrada é uma **observação**. Que tipos
+de **valores** cada campo aceita?
+]
+]
+
+---
+
+## Exemplo: variáveis na PNAD Contínua
+
+.pull-left[
+```{r pnad, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/variaveis_pnad_desemprego.png")
+```
+
+.fonte[Fonte: Secom/Governo Federal (31/10/2024), com dados do IBGE.]
+]
+
+.pull-right[
+A **PNAD** (Pesquisa Nacional por Amostra de Domicílios) coleta dados para acompanhar a força de
+trabalho no Brasil. Em cada domicílio visitado são registradas variáveis como:
+
+- número de pessoas com 14 anos ou mais;
+- número de pessoas fora da força de trabalho;
+- número de pessoas com e sem carteira assinada;
+- rendimento do trabalho, horas trabalhadas, setor de atividade...
+]
+
+---
+
+## Exercício: questionário de saúde da turma
+
+Queremos aplicar um questionário para coletar informações sobre a saúde dos alunos de MATF14.
+
+**a)** Quais variáveis poderiam ser coletadas? **b)** Que tipos de **valores** elas podem assumir?
+
+--
+
+.caixa-resposta[
+- **CPF:** um número, mas funciona como **código** (identificação).
+- **Sexo:** categorias (feminino, masculino).
+- **Idade:** número inteiro (anos completos).
+- **Altura:** número "quebrado" (em metros).
+- **Peso:** número em kg.
+- **Tem plano de saúde?** Sim ou não.
+- **Faz atividade física?** Sim, não, às vezes.
+]
+
+.caixa-discussao[
+As variáveis assumem **tipos de valores diferentes**. Isso muda o tipo de análise que podemos fazer?
+]
+
+---
+
+## Exemplo: variáveis das contas nacionais
+
+As **Contas Nacionais Trimestrais** do IBGE publicam, a cada trimestre, uma base com várias variáveis. Classifique:
+
+| Variável | Exemplo de valor | Tipo |
+|:---|:---|:---|
+| PIB a preços correntes (R$ milhões) | 3.425.728 | quantitativa contínua |
+| Crescimento sobre o trimestre anterior (%) | 0,5 | quantitativa contínua |
+| Setor de atividade | Agropecuária, Serviços | qualitativa nominal |
+| Trimestre de referência | 2º tri. de 2026 | qualitativa ordinal |
+| Trimestres de queda do PIB no ano | 0, 1, 2, 3 ou 4 | quantitativa discreta |
+
+.caixa-discussao[
+"Setor de atividade" tem códigos numéricos no IBGE (01, 02, ...). Isso o torna quantitativo? E o **ano**, é uma variável
+quantitativa ou qualitativa ordinal? Depende do uso?
+]
+
+.fonte[Fonte: IBGE, Contas Nacionais Trimestrais (PIB e crescimento do 2º trimestre de 2026).]
+
+---
+
+## Nem todo número é uma variável quantitativa
+
+.pull-left-40[
+```{r racas, echo=FALSE, out.width="62%"}
+knitr::include_graphics("images/variaveis_racas_caes_petlove.png")
+```
+
+.fonte[Fonte: Petlove.]
+]
+
+.pull-right-60[
+Neste ranking, o "número" de cada raça (1º, 2º, ..., 10º) indica apenas a **posição**.
+
+- Faz sentido dizer que a raça em 4º lugar é "duas vezes" a raça em 2º?
+- Faz sentido calcular a "posição média" das raças?
+
+.caixa-aplicacao[
+**O tipo de variável indica o tipo de análise** que pode ser feita. Números usados como **códigos**
+(CPF, CEP, código do município) ou **posições** não são quantidades.
+]
+]
+
+---
+
+## Tipos de variáveis
+
+```{r arvore-tipos, echo=FALSE, fig.height=2.9, fig.width=10, out.width="92%"}
+ggplot() + xlim(0, 10) + ylim(0, 3.3) + theme_void() +
+  annotate("segment", x = 5, y = 2.8, xend = c(2.5, 7.5), yend = 2.05, linewidth = 0.8) +
+  annotate("segment", x = 2.5, y = 1.55, xend = c(1.2, 3.8), yend = 0.85, linewidth = 0.8) +
+  annotate("segment", x = 7.5, y = 1.55, xend = c(6.2, 8.8), yend = 0.85, linewidth = 0.8) +
+  annotate("label", x = 5, y = 3, label = "Variável", size = 6, label.padding = unit(0.5, "lines")) +
+  caixa(2.5, 1.8, "Qualitativa", "#d98324") + caixa(7.5, 1.8, "Quantitativa", "#3b5bdb") +
+  caixa(1.2, 0.55, "Nominal", "#e8a65a") + caixa(3.8, 0.55, "Ordinal", "#e8a65a") +
+  caixa(6.2, 0.55, "Discreta", "#7b93e6") + caixa(8.8, 0.55, "Contínua", "#7b93e6")
+```
+
+.pull-left[.small[
+**Qualitativas:** valores que representam **atributos** ou qualidades.
+
+- **Nominal:** sem ordem (bairro, curso, etnia).
+- **Ordinal:** com ordem (grau de instrução; satisfação: péssimo, ruim, bom, excelente).
+]]
+
+.pull-right[.small[
+**Quantitativas:** valores numéricos de **contagens** ou **mensurações**.
+
+- **Discreta:** contagens, valores inteiros (nº de filhos, nº de defeitos num carro).
+- **Contínua:** mensurações, qualquer valor real (peso, altura, temperatura, duração de uma ligação).
+]]
+
+---
+
+## Classificando uma base real: as 106 empresas .tempo[35–45 min]
+
+```{r classifica-empresas, echo=FALSE}
+tibble(
+  Variável = c("constituicao", "porte", "empregados99", "faturamento99", "idade", "cidade", "setor"),
+  Exemplo = c("Ltda., S.A.", "Pequena, Média, Grande", "9, 31, 119", "74392, 251488", "15, 5, 21",
+              "Salvador, São Paulo", "Embalagens, Industrial"),
+  Tipo = c("Qualitativa nominal", "Qualitativa ordinal", "Quantitativa discreta",
+           "Quantitativa contínua", "Quantitativa discreta (anos completos)",
+           "Qualitativa nominal", "Qualitativa nominal")) |>
+  knitr::kable(format = "html")
 ```
 
 --
 
-<div class="caixa-r"><strong>O que aconteceu</strong>: a mesma variável, a mesma amostra, dois
-resultados numéricos diferentes, só porque o R escolheu uma ordem de categorias diferente em cada
-codificação. Um número que muda de valor dependendo de uma escolha arbitrária de codificação
-<strong>não é uma medida de nada</strong>, é um artefato de programação. É exatamente esse tipo de
-erro, calcular a "nota média" de algo ordinal, que aparece com frequência em relatórios (e em
-provas) sem que ninguém perceba.</div>
-
----
-
-## Classificando uma base real de empresas
-
-```{r dados-empresas}
-str(empresas[, c("porte", "empregados99", "faturamento99", "regiao")])
-```
-
---
-
-| Variável | Tipo |
-|---|---|
-| `porte` | Qualitativa ordinal (Pequena < Média < Grande) |
-| `regiao` | Qualitativa nominal |
-| `empregados99` | Quantitativa discreta |
-| `faturamento99` | Quantitativa contínua |
+.caixa-discussao[
+A variável `Empresa` vai de 1 a 106. Ela é quantitativa? E a **idade da empresa**: se fosse medida
+em dias, ou em anos com casas decimais, mudaria de tipo?
+]
 
 ---
 
 ## Um segundo exemplo: prefeitos eleitos em 2020
 
-```{r dados-prefeitos}
-table(prefeitos$escolaridade) |> head(4)
+```{r prefeitos-glimpse, echo=FALSE}
+tibble(
+  Variável = c("CodMun", "Pop.estimada.2021", "Faixa_pop", "sexo", "idade", "raca", "escolaridade"),
+  Exemplo = c(as.character(prefeitos$CodMun[1]), format(prefeitos$Pop.estimada.2021[1], big.mark = "."),
+              prefeitos$Faixa_pop[1], prefeitos$sexo[1], prefeitos$idade[1], prefeitos$raca[1],
+              prefeitos$escolaridade[1]),
+  Tipo = c("Qualitativa nominal (código!)", "Quantitativa discreta", "Qualitativa ordinal",
+           "Qualitativa nominal", "Quantitativa discreta", "Qualitativa nominal", "Qualitativa ordinal")) |>
+  knitr::kable(format = "html")
 ```
 
-`escolaridade` é **ordinal**: sabemos que "Ensino superior completo" é mais que "Ensino médio", mas
-não que a distância entre dois níveis consecutivos seja sempre "igual" em algum sentido numérico.
-Já `sexo` e `raca` são **nominais**: não há ordem natural entre as categorias.
-
---
-
-O código IBGE do município (ex.: 2927408 para Salvador) **parece** um número, mas não é uma
-variável quantitativa: somar ou tirar a média de dois códigos de município não produz nada
-interpretável. O que importa não é a variável "ser um número", é se as operações aritméticas sobre
-ela fazem sentido.
+.caixa-aplicacao[
+`CodMun` é um **número**, mas é um **código** do IBGE: somar ou tirar a média não faz sentido. Já
+`Faixa_pop` agrupa a população em faixas **ordenadas**: virou qualitativa ordinal.
+]
 
 ---
 
-## Exercício-síntese: população, amostra e tipos, juntos
+## Exercício-síntese
 
-Uma empresa tem **5.000 clientes** cadastrados. Para uma pesquisa de satisfação, sorteia **500**
-deles e registra, para cada um: sexo, idade, satisfação (nota de 1 a 5) e número de itens
-comprados no último mês.
+Uma empresa tem **5.000 clientes** e fez uma pesquisa com **500** deles. De cada um coletou: sexo,
+idade (anos completos), altura, grau de satisfação (insatisfeito, satisfeito) e número de itens
+comprados.
 
---
-
-| Pergunta | Resposta |
-|---|---|
-| População | 5.000 clientes cadastrados |
-| Amostra | 500 clientes sorteados |
-| `sexo` | Qualitativa nominal |
-| `idade` | Quantitativa discreta (anos completos) |
-| `satisfação` (1 a 5) | Qualitativa ordinal |
-| `nº de itens comprados` | Quantitativa discreta |
+**a)** Qual é a população? **b)** Qual é a amostra? **c)** Qual é o tipo de cada variável?
 
 --
 
-Note que **nenhuma** dessas seis respostas depende de "achismo": população e amostra vêm da
-pergunta "quem foi efetivamente observado?"; o tipo de cada variável vem da pergunta "que operação
-aritmética faz sentido nela?" (a nota de satisfação tem ordem, mas a distância entre 3 e 4 não é
-necessariamente "igual" à distância entre 4 e 5, por isso é ordinal, não quantitativa).
+.caixa-resposta[
+**a)** Os 5.000 clientes. **b)** Os 500 clientes selecionados.
+
+**c)** Sexo: qualitativa nominal · idade: quantitativa discreta · altura: quantitativa contínua ·
+grau de satisfação: qualitativa ordinal · número de itens: quantitativa discreta.
+]
+
+--
+
+.caixa-discussao[
+Se os 500 clientes foram os que **responderam espontaneamente** a um e-mail, a amostra é
+aleatória? Quem tende a responder pesquisas de satisfação?
+]
 
 ---
 
-class: inverse, center, middle
+## Para discutir (1/2) .tempo[45–50 min]
 
-# Bloco 3: Discussão final (a mais longa da aula)
+**1.** O IBGE registra "faixa de renda domiciliar" (até 1 salário mínimo, de 1 a 2, ...) em vez da
+renda exata. A variável deixou de ser quantitativa? O que se ganha e o que se perde com essa
+transformação?
 
----
+**2.** Uma nota de 0 a 10 dada por um cliente a um aplicativo é quantitativa ou qualitativa ordinal?
+Faz sentido dizer que a nota 8 é "o dobro" da nota 4?
 
-## Para discutir: 15 minutos (1/2)
-
-**1.** O IBGE registra "faixa de renda domiciliar" cortando uma variável contínua (renda em R$)
-em intervalos. A variável derivada é discreta, contínua ou qualitativa? O que se ganha e o que se
-perde nessa transformação?
-
-**2.** Um índice de "nota de bem-estar" de 0 a 10, atribuído por uma pesquisa a cada município, é
-ordinal ou quantitativo? De que depende a resposta?
-
---
-
-**3.** Um aplicativo de delivery classifica cada pedido em uma "nota de satisfação" de 1 a 5
-estrelas, e a empresa calcula e divulga a "nota média". Isso é defensável? Sob que condição bem
-específica faria mais sentido tratar essa variável como quantitativa em vez de ordinal?
-
-**4.** Se você tivesse acesso à população *inteira* de contribuintes do imposto de renda do Brasil,
-ainda faria sentido falar em "amostra" em algum ponto da sua análise? Em que ponto?
+**3.** Uma enquete em rede social pergunta "você aprova o governo?" e recebe 50 mil respostas. Uma
+pesquisa com 2 mil pessoas sorteadas diz outra coisa. Em qual você confia mais? Por quê?
 
 ---
 
-## Para discutir: 15 minutos (2/2)
+## Para discutir (2/2)
 
-**5.** Volte à sua base de dados trazida de casa: classifique cada variável dela (nominal, ordinal,
-discreta, contínua) e identifique se a base é população ou amostra em relação à pergunta que você
-tinha em mente ao coletá-la.
+**4.** O desemprego medido pela PNAD é um **parâmetro** ou uma **estatística**? Se o IBGE repetisse a
+pesquisa na mesma semana, com outros domicílios sorteados, o número seria idêntico?
+
+**5.** Escolha uma notícia econômica recente. Identifique: a população, a amostra (se houver), duas
+variáveis e seus tipos.
 
 --
 
-**6.** Um erro clássico de prova: tratar uma variável ordinal (como classe social A/B/C/D/E) como
-se fosse quantitativa e calcular sua "média". Reproduza, como fizemos com `porte`, esse erro com
-duas codificações diferentes e mostre que o resultado muda, isso já é a prova de que a operação
-não tem significado.
+.caixa-r[
+**Já no R:** a função `str()` mostra como o computador leu cada variável. O R lê `CodMun` como
+número inteiro (`int`), mas **você** sabe que é um código. O tipo **estatístico** de uma variável
+é uma decisão de quem analisa, não do software.
+]
+
+```{r str-exemplo, eval=FALSE}
+prefeitos <- read.csv("dados_prefeitos.csv")
+str(prefeitos)
+```
+
+---
+
+## Resumo
+
+- **Divisões da Estatística:** análise exploratória (descritiva) e inferência.
+- **População:** todos os elementos do fenômeno ou problema investigado.
+- **Amostra:** subconjunto da população; deve **representar bem** a população.
+- **Amostragem aleatória simples:** todo elemento da população tem a **mesma chance** de ser sorteado.
+- **Variável:** característica medida em cada elemento.
+  - **Qualitativa:** nominal ou ordinal.
+  - **Quantitativa:** discreta ou contínua.
+- Números usados como **códigos** ou **posições** não são variáveis quantitativas.
 
 ---
 
@@ -560,7 +888,3 @@ class: inverse, center, middle
 # Próxima aula (26/08)
 
 ## Apresentação tabular e representação gráfica
-
-Traga um exemplo de base de dados (uma planilha, uma tabela de um relatório) que você já tenha
-visto na sua área de interesse, vamos classificar as variáveis dela e começar a resumi-la em
-tabelas e gráficos.

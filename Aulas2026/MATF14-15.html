@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Revisão intermediária + exercícios: Unidades 1 e 2</title>
+    <title>Revisão intermediária e exercícios: Unidades 1 e 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Raydonal Ospina" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
@@ -18,209 +18,543 @@
 
 class: inverse, center, middle
 
-# Aula 15: Revisão intermediária + exercícios
+# Aula 15: Revisão intermediária e exercícios
 
-## Unidade 1 (já avaliada em P1) e Unidade 2 (entra em P2, junto com a Unidade 3)
+### Unidade 1 (estatística descritiva) e Unidade 2 (probabilidade)
 
----
-
-## Mapa da Unidade 1: Estatística Descritiva
-
-| Tópico | Fórmula-chave |
-|---|---|
-| Média | \\(\bar x = \frac1n\sum\_i x\_i\\) |
-| Mediana | valor central dos dados ordenados |
-| Quartis / IQR | \\(Q\_1,Q\_2,Q\_3\\); \\(IQR=Q\_3-Q\_1\\) |
-| Variância | \\(\mathrm{Var}(X)=\frac1n\sum\_i(x\_i-\bar x)^2\\) |
-| Desvio padrão | \\(dp(X)=\sqrt{\mathrm{Var}(X)}\\) |
-| CV | \\(dp(X)/\bar x\\) |
-| Correlação | \\(r=\frac{\sum(x\_i-\bar x)(y\_i-\bar y)}{\sqrt{\sum(x\_i-\bar x)^2}\sqrt{\sum(y\_i-\bar y)^2}}\\) |
-| Assimetria | 3º momento padronizado |
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Mapa da Unidade 2: Probabilidade
+## Roteiro da aula (100 minutos)
 
-| Tópico | Fórmula-chave |
-|---|---|
-| Axiomas | \\(P(A)\ge0\\), \\(P(\Omega)=1\\), aditividade |
-| Adição geral | \\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\\) |
-| Equiprovável | \\(P(A)=\\#A/\\#\Omega\\) |
-| Combinação | \\(\binom{n}{k}=\frac{n!}{k!(n-k)!}\\) |
-| Condicional | \\(P(A\mid B)=\frac{P(A\cap B)}{P(B)}\\) |
-| Independência | \\(P(A\cap B)=P(A)P(B)\\) |
-| Prob. total | \\(P(A)=\sum\_i P(A\mid B\_i)P(B\_i)\\) |
-| Bayes | \\(P(B\_i\mid A)=\frac{P(A\mid B\_i)P(B\_i)}{\sum\_j P(A\mid B\_j)P(B\_j)}\\) |
+.roteiro[
+
+| Tempo | Parte 1: eventos, contagem e áreas |
+|:---|:---|
+| 0–10 min | Como usar a aula; mapa da Unidade 2; erros comuns |
+| 10–22 min | Exercícios 1 e 2: espaço amostral; doação de sangue |
+| 22–37 min | Exercícios 3 e 4: contagem (auditoria) e probabilidade geométrica |
+| 37–50 min | Exercício 5: tabela de opinião (união e interseção) |
+
+| Tempo | Parte 2: condicional, associação e Bayes |
+|:---|:---|
+| 0–10 min | Exercício 6: compras online |
+| 10–22 min | Exercício 7: desocupação e sexo (PNAD): taxa, composição, RR e OR |
+| 22–38 min | Exercícios 8 e 9: exame de sangue (Bayes) e pressão e colesterol |
+| 38–50 min | Discussão, Uso do R e checklist da P2 |
+
+]
+
+.small[
+Os exercícios da Unidade 1 (já avaliada na P1) ficam no fim, como material extra.
+]
 
 ---
 
-## Os 5 erros mais comuns em prova (edições anteriores)
+## Como usar esta aula .tempo[0–10 min]
 
-1. Confundir divisor \\(n\\) (descritiva, usado neste curso) com \\(n-1\\) (o `var()` do R).
-2. Aplicar \\(P(A\cup B)=P(A)+P(B)\\) sem checar se \\(A,B\\) são mutuamente exclusivos.
-3. Confundir "mutuamente exclusivos" com "independentes" (são opostos, não sinônimos, quando
-   ambas têm probabilidade positiva).
-4. Esquecer de calcular \\(P(A)\\) (probabilidade total) antes de aplicar Bayes.
-5. Interpretar \\(r\approx 0\\) como "não há relação nenhuma", ignorando que \\(r\\) só mede relação
-   **linear**.
+- A **Unidade 1** já foi avaliada na P1, mas as suas ferramentas (tabelas, média, variância) voltam
+  **o tempo todo** nas Unidades 3 e 4.
+- A **Unidade 2** entra na **P2** (18/11), junto com a Unidade 3.
+
+--
+
+.caixa-aplicacao[
+**Formato:** cada exercício aparece primeiro **sem** resposta. Resolva **no papel**, sozinho ou em
+dupla, **antes** de avançar o slide. A resolução comentada vem logo depois.
+]
+
+--
+
+.caixa-discussao[
+Os exercícios estão no mesmo nível das provas.
+]
+
+---
+
+## Mapa da Unidade 2
+
+.small[
+
+| Tópico | O essencial |
+|:---|:---|
+| Espaço amostral e eventos | \\(S\\); eventos são subconjuntos; \\(\cup\\), \\(\cap\\), complementar; De Morgan |
+| Axiomas | \\(P(A) \geq 0\\), \\(P(S) = 1\\), aditividade; \\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\\); Boole |
+| Clássica e contagem | \\(P(A) = \\#A/\\#S\\) **só** se equiprovável; \\(n^r\\), \\(n!/(n-r)!\\), \\(\binom{n}{r}\\); hipergeométrica |
+| Geométrica | razão de comprimentos ou áreas |
+| Condicional e tabelas | \\(P(B \mid A) = P(A \cap B)/P(A)\\); conjunta, marginal, perfis linha e coluna; Simpson |
+| Independência | \\(P(A \cap B) = P(A)P(B)\\); independentes \\(\neq\\) disjuntos |
+| Risco e chance | \\(RR = R\_1/R\_0\\); \\(O = p/(1-p)\\); \\(OR = ad/(bc)\\) |
+| Total e Bayes | \\(P(A) = \sum P(A \mid B\_i)P(B\_i)\\); \\(P(B\_j \mid A) \propto P(A \mid B\_j)P(B\_j)\\); VPP depende da prevalência |
+
+]
+
+---
+
+## Os erros mais comuns em prova
+
+1. Usar a **fórmula errada** para o tipo de variável (média de uma variável nominal).
+2. Calcular a **mediana sem ordenar** os dados, ou esquecer o caso de \\(n\\) par.
+3. Dividir a variância por \\(n - 1\\) quando o formulário pede \\(n\\) (ou vice-versa sem avisar).
+4. Somar \\(P(A) + P(B)\\) sem descontar \\(P(A \cap B)\\) quando os eventos **não** são disjuntos.
+5. Confundir \\(P(A \mid B)\\) com \\(P(B \mid A)\\), ou com \\(P(A \cap B)\\).
+6. Tratar eventos **disjuntos** como **independentes**.
+7. Em "pelo menos um", fazer contas longas em vez de usar o **complementar**.
+8. Dividir casos favoráveis por casos possíveis quando os resultados **não** são igualmente prováveis.
+9. Ler uma razão de chances como se fosse risco relativo.
 
 ---
 
 class: inverse, center, middle
 
-# Agora, quatro problemas resolvidos
+# Parte 1: eventos, contagem e áreas
 
-## Cobrindo os pontos mais cobrados em prova nas duas unidades
-
----
-
-## Roteiro dos exercícios
-
-Tente resolver cada um por conta própria antes de ver a solução no slide seguinte (clique para
-avançar), e, mais importante: para cada um, tente antecipar *qual erro conceitual*, dos cinco
-listados acima, um colega desatento cometeria antes de olhar a solução.
-
-1. Média/mediana/assimetria com dado agrupado.
-2. Coeficiente de variação, comparação entre variáveis.
-3. Probabilidade condicional com tabela de dupla entrada.
-4. Teorema de Bayes, dois estágios.
+### 50 minutos
 
 ---
 
-## Problema 1
+## Exercício 1: espaço amostral e eventos .tempo[10–22 min]
 
-Os prêmios pagos (em R$ mil) por uma seguradora em 7 sinistros do mês foram:
-\\(12, 15, 14, 13, 16, 14, 95\\). Calcule média e mediana, e diga o que a comparação entre elas revela.
+Descreva os elementos do espaço amostral e do evento indicado:
+
+**a)** Dois dados são lançados independentemente. \\(A\\): a soma das faces é sete.
+
+**b)** Uma moeda e um dado são lançados e observamos os dois resultados. \\(B\\): obter o número três no
+dado.
+
+**c)** Numa linha de produção, contamos o número de peças defeituosas em 1 hora. \\(C\\): obter pelo
+menos 3 peças defeituosas.
 
 --
 
-**Solução.** Soma \\(=179\\), \\(n=7\\), \\(\bar x = 179/7\approx 25{,}57\\). Ordenados:
-\\(12,13,14,14,15,16,95\\), mediana (4º valor) \\(=14\\).
+.caixa-resposta[
+**a)** \\(S = \\{(1,1), (1,2), \ldots, (6,6)\\}\\), com 36 elementos.
+\\(A = \\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\\}\\).
 
---
+**b)** \\(S = \\{(1,K), (1,C), \ldots, (6,K), (6,C)\\}\\), com 12 elementos. \\(B = \\{(3,K), (3,C)\\}\\).
 
-Média \\(\gg\\) mediana \\(\Rightarrow\\) assimetria forte à direita: um sinistro atípico (R$ 95 mil,
-possivelmente um evento raro de grande porte) puxa a média muito acima do "sinistro típico" do mês
-(mediana R$ 14 mil).
-
-**Erro comum a evitar**: reportar só a média ("prêmio médio pago: R$ 25,57 mil") sem checar a
-mediana, dá uma falsa impressão de que sinistros "grandes" são o padrão, não a exceção.
+**c)** \\(S = \\{0, 1, 2, 3, \ldots\\}\\) (enumerável, sem limite). \\(C = \\{3, 4, 5, \ldots\\}\\).
+]
 
 ---
 
-## Problema 2
+## Exercício 2: doação de sangue
 
-Uma corretora compara dois ativos: Ativo X (retorno médio 8%, dp 2%) e Ativo Y (retorno médio 20%,
-dp 4%). Qual ativo é relativamente mais arriscado?
+Na população de um país, a distribuição do tipo sanguíneo é: **45%** tipo O, **40%** tipo A, **11%**
+tipo B e o restante tipo AB. Três pessoas **independentes** se voluntariam para doar sangue. Qual é
+a probabilidade de:
+
+**a)** todos os doadores terem sangue do tipo O?
+
+**b)** nenhum ter sangue do tipo AB?
+
+**c)** nem todos terem sangue do tipo A?
 
 --
 
-**Solução.** Desvio padrão bruto sugere Y (4% &gt; 2%), mas as médias são muito diferentes, então
-compare via \\(CV\\):
+.caixa-resposta[
+**a)** \\(0{,}45 \times 0{,}45 \times 0{,}45 \approx 0{,}0911\\).
+
+**b)** \\(P(AB) = 1 - 0{,}45 - 0{,}40 - 0{,}11 = 0{,}04\\), logo \\(P(\text{não } AB) = 0{,}96\\) e
+\\(0{,}96^3 \approx 0{,}8847\\).
+
+**c)** \\(P(\text{todos } A) = 0{,}4^3 = 0{,}064\\). Pelo complementar, \\(P(\text{nem todos } A) = 1 - 0{,}064 = 0{,}936\\).
+]
+
+---
+
+## Exercício 3: auditoria por amostragem .tempo[22–37 min]
+
+Um lote tem **15 contratos**, dos quais **4** têm cláusulas irregulares. A auditoria sorteia **3** contratos,
+sem reposição.
+
+**a)** Quantas amostras diferentes são possíveis? **b)** Qual a probabilidade de a amostra conter **exatamente
+um** contrato irregular? **c)** E de conter **pelo menos um**?
+
+--
+
+.caixa-resposta[
+**a)** \\(\binom{15}{3} = 455\\) amostras (a ordem não importa).
+
+**b)** \\(\dfrac{\binom{4}{1}\binom{11}{2}}{\binom{15}{3}} = \dfrac{4 \times 55}{455} = \dfrac{220}{455} \approx 0{,}484\\).
+
+**c)** \\(1 - \dfrac{\binom{11}{3}}{\binom{15}{3}} = 1 - \dfrac{165}{455} \approx 0{,}637\\).
+]
+
+---
+
+## Exercício 4: probabilidade geométrica
+
+Um entregador chega a um condomínio num instante ao acaso entre 14h e 15h. O porteiro faz uma pausa de 20
+minutos que começa num instante ao acaso entre 14h e 14h40, independentemente do entregador.
+
+**a)** Qual a probabilidade de o entregador chegar **durante** a pausa? (Dica: desenhe o retângulo
+\\([0, 40] \times [0, 60]\\), com o início da pausa \\(u\\) no eixo horizontal e a chegada \\(t\\) no vertical.)
+
+--
+
+.caixa-resposta[
+O evento é \\(u \leq t \leq u + 20\\): para cada \\(u\\) entre 0 e 40, uma faixa vertical de altura 20. Área favorável:
+\\(40 \times 20 = 800\\); área total: \\(40 \times 60 = 2.400\\). Logo \\(P = 800/2.400 = 1/3\\). Faz sentido: qualquer que seja
+o início, a pausa cobre 20 dos 60 minutos.
+]
+
+---
+
+## Exercício 5: preocupação com a segurança da comida .tempo[37–50 min]
+
+Pessoas foram questionadas se concordam com a frase "Estou preocupado com a segurança da comida que
+consumo":
+
+| Idade | Concorda | Sem opinião | Discorda | Não sabe | Total |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 13–19 | 661 | 368 | 452 | 32 | 1.513 |
+| 20–29 | 816 | 365 | 336 | 16 | 1.533 |
+| 30–39 | 871 | 355 | 290 | 9 | 1.525 |
+| 40–49 | 914 | 335 | 266 | 6 | 1.521 |
+| 50+ | 966 | 339 | 283 | 10 | 1.598 |
+| **Total** | 4.228 | 1.762 | 1.627 | 73 | 7.690 |
+
+Sorteando alguém dessa amostra, qual é a probabilidade de que ele: **a)** tenha menos de 50 anos
+**e** tenha concordado? **b)** tenha menos de 50 anos **ou** tenha concordado?
+
+---
+
+## Exercício 5: resolução
+
+Seja \\(M\\) = {menos de 50 anos} e \\(C\\) = {concorda}.
+
+--
+
+**a)** \\(M \cap C\\): somar a coluna "Concorda" nas quatro primeiras linhas.
 
 $$
-CV\_X = 2/8 = 0{,}25 \qquad CV\_Y = 4/20 = 0{,}20
+P(M \cap C) = \frac{661 + 816 + 871 + 914}{7.690} = \frac{3.262}{7.690} \approx 0{,}42
 $$
-
-X é **relativamente** mais arriscado (maior dispersão por unidade de retorno esperado), mesmo com
-desvio padrão absoluto menor que Y.
-
-**Erro comum a evitar**: comparar diretamente os desvios padrão (4% vs. 2%) sem normalizar pela
-média, é o erro mais frequente de prova nesse tipo de questão.
-
----
-
-## Problema 3
-
-De 300 clientes de um banco, 180 têm conta poupança, 90 têm cartão de crédito, e 50 têm ambos.
-Escolhendo um cliente ao acaso, qual a probabilidade de ter cartão de crédito, dado que tem
-poupança?
 
 --
 
-**Solução.** \\(B=\\)"poupança" (\\(P(B)=180/300\\)), \\(A=\\)"cartão" (\\(P(A\cap B)=50/300\\), a interseção
-"ambos"):
+**b)** \\(P(M) = \frac{7.690 - 1.598}{7.690} = \frac{6.092}{7.690}\\) e \\(P(C) = \frac{4.228}{7.690}\\).
 
 $$
-P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{50/300}{180/300} = \frac{50}{180} \approx 0{,}278
+P(M \cup C) = \frac{6.092 + 4.228 - 3.262}{7.690} = \frac{7.058}{7.690} \approx 0{,}92
 $$
 
-**Erro comum a evitar**: usar \\(90/300\\) (a probabilidade não condicional de ter cartão) em vez de
-condicionar corretamente ao subconjunto "tem poupança".
+.caixa-aplicacao[
+**Atalho pelo complementar:** \\((M \cup C)^c\\) = "50+ **e** não concorda" \\(= 339 + 283 + 10 = 632\\), e
+\\(1 - 632/7.690 = 7.058/7.690\\).
+]
 
 ---
 
-## Problema 4
+class: inverse, center, middle
 
-Uma fábrica recebe peças de dois fornecedores: 70% do fornecedor A (taxa de defeito 2%) e 30% do
-fornecedor B (taxa de defeito 8%). Uma peça é sorteada e está defeituosa. Qual a probabilidade de
-ter vindo do fornecedor B?
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: condicional, associação e Bayes
+
+### 50 minutos
+
+---
+
+## Exercício 6: compras online .tempo[0–10 min]
+
+Uma empresa quer saber se seus compradores estão preocupados com transações online. Das **42**
+pessoas da amostra, **24** estão preocupadas e **18** não estão. **Oito** das preocupadas são homens
+e **seis** das não preocupadas são homens.
+
+Selecionando um respondente ao acaso, qual é a probabilidade de ele:
+
+**a)** ser homem, dado que **não** está preocupado?
+**b)** **não** estar preocupado, dado que é mulher?
+**c)** ser mulher, dado que está preocupado?
 
 --
 
-**Solução.** \\(P(A)=0{,}7\\), \\(P(B)=0{,}3\\), \\(P(D\mid A)=0{,}02\\), \\(P(D\mid B)=0{,}08\\).
+.pull-left-40[
+| | Homem | Mulher | Total |
+|:---|:---:|:---:|:---:|
+| Preocupado | 8 | 16 | 24 |
+| Não preocupado | 6 | 12 | 18 |
+| **Total** | 14 | 28 | 42 |
+]
+
+.pull-right-60[
+.caixa-resposta[
+Primeiro, **monte a tabela** (à esquerda).
+
+**a)** \\(6/18 \approx 0{,}33\\). **b)** \\(12/28 \approx 0{,}43\\). **c)** \\(16/24 \approx 0{,}67\\).
+]
+
+.caixa-discussao[
+\\(P(H \mid \text{não preoc.}) = 6/18 = 1/3\\) e \\(P(H) = 14/42 = 1/3\\). O que isso diz sobre sexo e
+preocupação?
+]
+]
+
+---
+
+## Exercício 7: desocupação e sexo (PNAD Contínua) .tempo[10–22 min]
+
+Força de trabalho no 2º trimestre de 2026 (mil pessoas):
+
+| | Desocupadas | Ocupadas | Total |
+|:---|:---:|:---:|:---:|
+| Mulheres | 3.059 | 44.765 | 47.824 |
+| Homens | 2.803 | 58.293 | 61.096 |
+| **Total** | 5.862 | 103.058 | 108.920 |
+
+.fonte[Fonte: IBGE, PNAD Contínua, tabela 4093 (totais recalculados a partir das células).]
+
+**a)** Calcule a taxa de desocupação de mulheres e de homens. **b)** Qual a proporção de mulheres **entre** os
+desocupados? **c)** Calcule \\(RR\\) e \\(OR\\) de desocupação das mulheres em relação aos homens.
+
+---
+
+## Exercício 7: resolução
+
+.caixa-resposta[
+**a)** Mulheres: \\(3.059/47.824 \approx 0{,}064\\); homens: \\(2.803/61.096 \approx 0{,}046\\).
+
+**b)** \\(P(\text{mulher} \mid \text{desocupada}) = 3.059/5.862 \approx 0{,}522\\). Não confunda com (a): mesmo numerador, denominador
+diferente.
+
+**c)** \\(RR = 0{,}064/0{,}046 \approx 1{,}39\\); \\(OR = \dfrac{3.059 \times 58.293}{44.765 \times 2.803} \approx 1{,}42\\). Como a desocupação é
+relativamente rara, \\(OR \approx RR\\).
+]
+
+.caixa-discussao[
+Uma manchete diz: "mulheres são a maioria dos desocupados". Outra: "a taxa de desocupação das mulheres é 39% maior".
+As duas estão certas? Qual delas informa melhor sobre o **risco** de uma mulher estar desocupada?
+]
+
+---
+
+## Exercício 8: exame de sangue .tempo[22–38 min]
+
+Um exame de sangue tem eficiência de **95%** na detecção de uma doença quando ela está presente. O
+teste também dá "falso positivo" em **1%** das pessoas saudáveis. Se **0,5%** da população tem a
+doença, qual é a probabilidade de uma pessoa ter a doença **dado que** o resultado é positivo?
+
+--
+
+.caixa-resposta[
+Partição: \\(D\\) (doente) e \\(D^c\\). Informação: \\(+\\) (positivo).
+
+\\(P(D) = 0{,}005\\), \\(P(D^c) = 0{,}995\\), \\(P(+ \mid D) = 0{,}95\\), \\(P(+ \mid D^c) = 0{,}01\\).
+
+\\(P(D \mid +) = \dfrac{0{,}95 \times 0{,}005}{0{,}95 \times 0{,}005 + 0{,}01 \times 0{,}995} = \dfrac{0{,}00475}{0{,}00475 + 0{,}00995} = \dfrac{0{,}00475}{0{,}0147} \approx 0{,}323\\).
+]
+
+--
+
+.caixa-discussao[
+Com um exame "95% eficiente", **dois em cada três** positivos são pessoas saudáveis. Por que
+exames de triagem costumam ser **repetidos** antes do diagnóstico?
+]
+
+---
+
+## Exercício 9: pressão e colesterol
+
+Uma empresa pensa em produzir uma pílula para controlar pressão **e** colesterol altos. Proporções de
+adultos:
+
+| | Pressão alta | Pressão normal |
+|:---|:---:|:---:|
+| Colesterol alto | 0,11 | 0,21 |
+| Colesterol normal | 0,16 | 0,52 |
+
+Um adulto é selecionado ao acaso. Qual é a probabilidade de ele ter: **a)** pressão alta **ou**
+colesterol alto? **b)** pressão alta **e** colesterol alto? **c)** pressão alta, **dado que** tem
+colesterol alto?
+
+--
+
+.caixa-resposta[
+**a)** \\(0{,}11 + 0{,}16 + 0{,}21 = 0{,}48\\) (ou \\(1 - 0{,}52\\)). **b)** \\(0{,}11\\).
+
+**c)** \\(P(PA \mid CA) = \dfrac{0{,}11}{0{,}11 + 0{,}21} = \dfrac{0{,}11}{0{,}32} \approx 0{,}34\\).
+]
+
+---
+
+## A prova não é só conta .tempo[38–46 min]
+
+**1.** No exercício 8, o que acontece com \\(P(D \mid +)\\) se o exame for aplicado **só** em pessoas com
+sintomas, entre as quais 20% têm a doença? Refaça a conta.
+
+**2.** No exercício 9, pressão alta e colesterol alto são **independentes**? Justifique com números.
+
+**3.** No exercício 3, calcule a probabilidade de **nenhum** contrato irregular de duas formas: com combinações e com a
+regra da multiplicação (\\(\frac{11}{15} \cdot \frac{10}{14} \cdot \frac{9}{13}\\)). Por que dão o mesmo resultado?
+
+--
+
+.caixa-resposta[
+**1.** \\(\frac{0{,}95 \times 0{,}2}{0{,}95 \times 0{,}2 + 0{,}01 \times 0{,}8} = \frac{0{,}19}{0{,}198} \approx 0{,}96\\).
+**2.** \\(P(PA)P(CA) = 0{,}27 \times 0{,}32 = 0{,}0864 \neq 0{,}11\\): **dependentes**.
+**3.** \\(\frac{165}{455} = \frac{11 \cdot 10 \cdot 9}{15 \cdot 14 \cdot 13} \approx 0{,}363\\): contar subconjuntos ou multiplicar condicionais descreve o mesmo sorteio.
+]
+
+---
+
+## Uso do R: conferindo as contas .tempo[46–50 min]
 
 
 ``` r
-p_D &lt;- 0.02*0.7 + 0.08*0.3
-p_B_dado_D &lt;- (0.08*0.3)/p_D
-round(p_B_dado_D, 3)
+c(ex3b = choose(4, 1) * choose(11, 2) / choose(15, 3), ex3c = 1 - choose(11, 3) / choose(15, 3))
 ```
 
 ```
-## [1] 0.632
+##      ex3b      ex3c 
+## 0.4835165 0.6373626
 ```
 
-Apesar de o fornecedor B fornecer só 30% das peças, ele responde por
-63% das peças defeituosas, sua taxa de defeito 4x maior pesa
-mais que sua participação menor.
+``` r
+c(RR = (3059 / 47824) / (2803 / 61096), OR = (3059 * 58293) / (44765 * 2803))
+```
 
-**Erro comum a evitar**: esquecer de calcular \\(P(D)\\) (probabilidade total) antes de aplicar Bayes,
-ou confundir \\(P(D\mid B)\\) com \\(P(B\mid D)\\) (a própria pergunta do problema).
+```
+##       RR       OR 
+## 1.394194 1.421131
+```
+
+``` r
+bayes &lt;- function(priori, verossim) priori * verossim / sum(priori * verossim)
+bayes(c(0.005, 0.995), c(0.95, 0.01))   # exame de sangue: P(D | +) e P(D^c | +)
+```
+
+```
+## [1] 0.3231293 0.6768707
+```
 
 ---
 
-## Discussão: a prova não é só conta
+## Checklist de estudo para a P2
 
-Nas provas anteriores desta disciplina, a diferença entre uma resposta de nota alta e uma de nota
-mediana raramente está no cálculo em si: está na **interpretação** que acompanha o número.
-Reserve um tempo para responder, sem consultar nada, cada uma destas perguntas de síntese:
-
-**1.** Dos cinco erros comuns listados no início da aula, qual você mais reconheceu em si mesmo ao
-tentar resolver os quatro problemas antes de ver a solução?
-
-**2.** Se uma questão pedir para calcular uma correlação e depois perguntar "isso prova que \\(X\\)
-causa \\(Y\\)?", que resposta em uma frase você daria, e que exemplo alternativo (variável de
-confusão) você citaria para justificá-la?
-
-**3.** Se uma questão de Bayes pedir a probabilidade de uma "causa" dado um "sintoma"/"evidência",
-e você só tiver \\(P(\text{sintoma}\mid\text{causa})\\), que passo intermediário você **precisa**
-calcular antes de aplicar a fórmula final?
-
-**4.** Escolha um dos quatro problemas resolvidos e reformule o enunciado trocando o contexto
-(seguro por mercado de trabalho, crédito por eleição, etc.), mantendo a mesma estrutura matemática.
-Isso ajuda a confirmar que você entendeu a lógica, não decorou o contexto específico.
-
----
-
-## Checklist de estudo
-
-- P1 (Unidade 1) já foi aplicada: use as Listas 01-04 para revisão de erros, não mais para
-  preparação.
-- P2 cobrirá as Unidades 2 **e** 3 juntas: continue as Listas 05-08 (Probabilidade) e, ao final da
-  Unidade 3, as Listas 09-10 (VA discretas), antes da data oficial de P2.
-- Revise os exemplos "leitura econômica" e os blocos de discussão dos Capítulos 1-2 do livro-texto:
-  a prova cobra interpretação, não só cálculo.
+- [ ] Refazer os exercícios desta aula **sem** olhar as resoluções.
+- [ ] Listas 05, 06 e 07 (Unidade 2) e o **Simulado da P2** (Lista 13).
+- [ ] Saber montar uma **tabela de dupla entrada** a partir de um enunciado em texto e distinguir perfil-linha de perfil-coluna.
+- [ ] Decidir, em cada problema de contagem, se a **ordem importa** e se há **repetição**.
+- [ ] Saber identificar, no enunciado, **o que é dado** (\\(P(A \mid B)\\)?) e **o que é pedido** (\\(P(B \mid A)\\)?).
+- [ ] Revisar o formulário: quais fórmulas **estão** nele e quais você precisa **entender**.
 
 ---
 
 class: inverse, center, middle
 
-# Próxima aula (21/10)
+# Material extra: Unidade 1
+
+### Para revisar em casa
+
+---
+
+## Mapa da Unidade 1
+
+| Tópico | O essencial |
+|:---|:---|
+| Tipos de variáveis | qualitativa (nominal, ordinal); quantitativa (discreta, contínua) |
+| Tabelas e gráficos | frequência absoluta e relativa; classes; histograma |
+| Tendência central | moda, mediana \\((n\\) par ou ímpar\\()\\), média \\(\bar x = \frac{1}{n}\sum x\_i = \sum f\_i x\_i\\) |
+| Separatrizes | percentil: \\(k = P \cdot n/100\\); quartis; \\(IQR = Q\_3 - Q\_1\\); boxplot |
+| Dispersão | \\(AT\\), \\(var = \frac{1}{n}\sum (x\_i - \bar x)^2\\), \\(dp = \sqrt{var}\\), \\(CV = dp/\bar x\\) |
+| Associação | \\(cor(X,Y) = \frac{1}{n}\sum \frac{(x\_i - \bar x)}{dp(X)}\frac{(y\_i - \bar y)}{dp(Y)}\\) |
+| Forma | assimetria (ref. 0) e curtose (ref. 3) |
+
+---
+
+## Extra A: crianças por domicílio
+
+O número de crianças em 20 casas visitadas numa pesquisa foi:
+
+$$
+2,\ 0,\ 0,\ 1,\ 5,\ 3,\ 4,\ 0,\ 1,\ 1,\ 2,\ 1,\ 3,\ 0,\ 4,\ 6,\ 3,\ 2,\ 0,\ 2
+$$
+
+**a)** Construa uma tabela de frequências absolutas.
+
+Usando a tabela de frequências, calcule: **b)** a moda; **c)** a mediana; **d)** a média; **e)** a
+variância.
+
+---
+
+## Extra A: resolução
+
+.pull-left-40[
+| Nº de crianças | Freq. abs. | Acumulada |
+|:---:|:---:|:---:|
+| 0 | 5 | 5 |
+| 1 | 4 | 9 |
+| 2 | 4 | 13 |
+| 3 | 3 | 16 |
+| 4 | 2 | 18 |
+| 5 | 1 | 19 |
+| 6 | 1 | 20 |
+| **Total** | **20** | |
+]
+
+.pull-right-60[
+**b)** Moda \\(= 0\\) (frequência 5).
+
+**c)** \\(n = 20\\) é par: média das posições 10 e 11. As duas estão na linha de acumulada 13, ou
+seja, \\(x = 2\\). **Mediana = 2**.
+
+**d)** \\(\bar x = \frac{0\cdot5 + 1\cdot4 + 2\cdot4 + 3\cdot3 + 4\cdot2 + 5\cdot1 + 6\cdot1}{20} = \frac{40}{20} = 2\\).
+
+**e)** Desvios ao quadrado ponderados pelas frequências:
+
+\\(var = \frac{5(0-2)^2 + 4(1-2)^2 + 4(0)^2 + 3(1)^2 + 2(2)^2 + 1(3)^2 + 1(4)^2}{20}\\)
+
+\\(= \frac{20 + 4 + 0 + 3 + 8 + 9 + 16}{20} = \frac{60}{20} = 3\\).
+]
+
+---
+
+## Extra B: leitura de boxplot
+
+.pull-left[
+&lt;img src="MATF14-15_files/figure-html/box-galinhas-1.png" alt="" width="100%" /&gt;
+
+.fonte[Dados `chickwts`, disponíveis no R.]
+]
+
+.pull-right[
+O boxplot apresenta a distribuição do peso de galinhas segundo o tipo de ração consumida. Qual
+tipo de ração teve:
+
+**a)** o peso mais alto?
+
+**b)** o peso mais baixo?
+
+**c)** a menor variabilidade?
+
+**d)** o melhor desempenho em termos do **percentil 75%** mais alto?
+]
+
+--
+
+.pull-right[
+.caixa-resposta[
+**a)** Girassol (ponto mais alto). **b)** Fava. **c)** Girassol (menor caixa, menor \\(IQR\\)).
+**d)** Caseína (topo da caixa, \\(Q\_3\\), mais alto).
+]
+]
+
+---
+
+class: inverse, center, middle
+
+# Próxima aula (21/10): início da Unidade 3
 
 ## Variável aleatória discreta: conceituação
-
-### P2 (Unidades 2 e 3) só acontece ao final da Unidade 3: aproveite para consolidar Probabilidade agora
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

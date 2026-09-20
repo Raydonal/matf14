@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 07}{Teorema da probabilidade total e Teorema de Bayes (Cap. 2, Aula 14)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito07.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Probabilidade total: inadimplência em carteira segmentada)}
 
@@ -82,5 +82,72 @@ espaço amostral, probabilidade condicional, independência, teorema da probabil
 Teorema de Bayes. Não é preciso resolver numericamente: o objetivo é identificar qual ferramenta se
 aplica e justificar a escolha.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Três máquinas, A, B e C, produzem 60\%, 30\% e 10\% das peças de uma fábrica, com 3\%, 4\% e 5\% de peças defeituosas, respectivamente. Uma peça é sorteada.
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de ser defeituosa?
+  \item Se é defeituosa, qual a probabilidade de ter sido produzida pela máquina C?
+\end{enumerate}
+\item A urna A tem 8 bolas brancas e 2 pretas; a urna B, 8 pretas e 2 brancas. Uma pessoa escolhe uma urna ao acaso e retira, sem reposição, 2 bolas. Sabendo que as duas são pretas, qual a probabilidade de ter escolhido a urna A?
+\item Num país há dois bancos, Alfa e Beta. Alfa tem três vezes mais clientes que Beta; 20\% dos clientes de Alfa e 10\% dos de Beta são aposentados. Um cliente é sorteado.
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de ser do banco Beta?
+  \item Sabendo que é aposentado, qual a probabilidade de ser do banco Beta?
+\end{enumerate}
+\item Um exame de sangue detecta uma doença em 95\% dos doentes e dá falso positivo em 1\% dos saudáveis. Se 0,5\% da população tem a doença, qual a probabilidade de uma pessoa com resultado positivo estar doente? Refaça supondo que o exame é aplicado só a pessoas com sintomas, das quais 20\% têm a doença.
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: novos tópicos e dados reais}
+\noindent\textit{Exercícios sobre os tópicos acrescentados ao Capítulo 2 do livro e às aulas.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+
+\item \textbf{(Probabilidade total com dados reais.)} A força de trabalho do Brasil no 2º trimestre de 2026 (mil pessoas; IBGE, PNAD Contínua):
+\begin{center}
+\begin{tabular}{l|ccccc}
+\toprule
+ & Norte & Nordeste & Sudeste & Sul & Centro-Oeste \\
+\midrule
+Força de trabalho & 8.723 & 25.161 & 48.417 & 17.289 & 9.329 \\
+Desocupados & 531 & 1.912 & 2.508 & 552 & 358 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a taxa de desocupação de cada região e a participação de cada região na força de trabalho.
+  \item Use o teorema da probabilidade total para obter a taxa de desocupação do Brasil.
+  \item Uma pessoa desocupada é sorteada. Qual a probabilidade de ela morar no Nordeste? Compare com a participação do Nordeste na força de trabalho.
+\end{enumerate}
+
+\item \textbf{(Valor preditivo e prevalência.)} Um teste tem sensibilidade 0,90 e especificidade 0,95. Calcule o valor preditivo positivo
+quando a prevalência da condição é 1\%, 10\% e 30\%. O que acontece com a utilidade do teste quando a condição é rara?
+
+\item \textbf{(Bayes na forma de chances.)} A inadimplência de uma carteira é 4\%. Um modelo classifica como ``alto risco'' 85\% dos futuros
+inadimplentes e 12\% dos bons pagadores.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule a chance a priori de inadimplência e a razão de verossimilhança do sinal ``alto risco''.
+  \item Obtenha a chance e a probabilidade a posteriori de inadimplência para um cliente classificado como alto risco.
+  \item Um segundo modelo, independente do primeiro dada a situação real e com a mesma precisão, também classifica o cliente como alto risco.
+    Qual passa a ser a probabilidade de inadimplência?
+\end{enumerate}
+
+\item \textbf{(Transições no mercado de trabalho.)} A cada trimestre, um ocupado perde o emprego com probabilidade $s$ e um desocupado
+encontra emprego com probabilidade $f$. Ignorando entradas e saídas da força de trabalho, a taxa de desocupação de longo prazo é
+$u^* = s/(s + f)$.
+\begin{enumerate}[label=(\alph*)]
+  \item Mostre que, com $u^*$, o número de pessoas que entram no desemprego em um trimestre é igual ao número das que saem.
+  \item Calcule $u^*$ para $s = 0{,}03$ e $f = 0{,}25$, e depois para $f = 0{,}35$. Interprete.
+  \item $s$ e $f$ são probabilidades condicionais. Escreva cada uma na notação $P(\cdot \mid \cdot)$.
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

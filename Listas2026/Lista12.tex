@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 12}{Distribuições Uniforme e Normal (Cap. 4, Aulas 27--28)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito12.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Uniforme: horário de chegada de um ônibus)}
 
@@ -85,5 +85,59 @@ Capítulo 1). Escreva um parágrafo explicando, para um investidor não técnico
 distribuição Normal para estimar a probabilidade de uma perda extrema pode ser perigoso, e o que
 "caudas gordas" significam em termos práticos de risco.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Sejam $a$ e $\theta$ positivos e $g(y) = 1/\theta$ para $a \leq y \leq a + \theta$, zero fora.
+\begin{enumerate}[label=(\alph*)]
+  \item Identifique a distribuição de $Y$.
+  \item Calcule $E(Y)$ e $Var(Y)$.
+  \item $Var(Y)$ depende de $\theta$ mas não de $a$. Interprete.
+\end{enumerate}
+\item A mediana de uma variável contínua com FDA $F$ é o valor $m$ com $F(m) = 1/2$. Encontre a mediana de $X \sim Unif(\alpha, \beta)$ e de $X \sim N(\mu, \sigma^2)$.
+\item As vendas mensais de um produto são normais com média 500 e desvio padrão 50 unidades. Se a empresa fabricar 600 unidades num mês, qual a probabilidade de não atender todos os pedidos?
+\item As notas do SAT (exame semelhante ao ENEM nos EUA) são normais com média 500 e desvio padrão 100. Que porcentagem das notas está
+\begin{enumerate}[label=(\alph*)]
+  \item entre 500 e 600?
+  \item entre 400 e 600?
+  \item acima de 600?
+  \item abaixo de 300?
+\end{enumerate}
+\item A carga de trabalho de agentes de liberdade condicional é normal com média 115 casos e desvio padrão 10. Qual a probabilidade de
+\begin{enumerate}[label=(\alph*)]
+  \item um agente ter entre 90 e 105 casos?
+  \item um agente ter mais de 135 casos?
+  \item quatro agentes independentes terem, todos, mais de 135 casos?
+\end{enumerate}
+\item O retorno anual de um fundo é normal com média 8\% e desvio padrão 20\%. Calcule a probabilidade de o retorno ser maior que 10\% e de ser menor que $-5\%$.
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: modelos probabilísticos e dados reais}
+\noindent\textit{Exercícios ligados à seção de aplicação macroeconômica do Capítulo 4 do livro.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(Erro de arredondamento e a Uniforme.)} O IBGE divulga as taxas de crescimento do PIB com uma casa decimal. Suponha que o erro de
+arredondamento $U$ (valor verdadeiro menos valor divulgado, em pontos percentuais) seja uniforme em $[-0{,}05;\ 0{,}05]$.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $E(U)$, $\mathrm{Var}(U)$ e o desvio padrão de $U$.
+  \item Calcule $P(|U| > 0{,}03)$.
+  \item A taxa divulgada foi 0,1\%. Qual a probabilidade de a taxa verdadeira ter sido maior que 0,12\%?
+\end{enumerate}
+
+\item \textbf{(O crescimento do PIB é normal?)} As 121 taxas de variação do PIB em relação ao trimestre anterior (2º trimestre de 1996 ao 2º trimestre de 2026;
+IBGE) têm média $0{,}58\%$ e desvio padrão $1{,}58\%$. O PIB caiu em 27 trimestres; caiu mais de 2\% em 4 trimestres; e 102 taxas ficaram a menos de um desvio padrão da média.
+\begin{enumerate}[label=(\alph*)]
+  \item Supondo $X \sim N(0{,}58;\ 1{,}58^2)$, calcule $P(X < 0)$, $P(X < -2)$ e $P(|X - 0{,}58| < 1{,}58)$.
+  \item Compare com as proporções observadas. Os dados são mais ou menos concentrados em torno da média do que a normal prevê?
+  \item A curtose das taxas é 16,0 (a da normal é 3). Relacione esse número com a sua resposta a (b) e com os trimestres de 2020.
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

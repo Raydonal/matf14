@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xml:lang="pt-BR">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.4 Técnicas de contagem e probabilidade clássica | Estatística Econômica I</title>
+  <meta name="description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.4 Técnicas de contagem e probabilidade clássica | Estatística Econômica I" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.4 Técnicas de contagem e probabilidade clássica | Estatística Econômica I" />
+  
+  <meta name="twitter:description" content="Livro-texto de apoio à disciplina MATF14 (Estatística Econômica I), Departamento de Estatística, UFBA." />
+  
+
+<meta name="author" content="Raydonal Ospina" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="conceitos-probabilidade.html"/>
+<link rel="next" href="probabilidade-geometrica.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><strong>Estatística Econômica I</strong></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a>
+<ul>
+<li class="chapter" data-level="" data-path="para-quem-é-este-livro.html"><a href="para-quem-é-este-livro.html"><i class="fa fa-check"></i>Para quem é este livro</a></li>
+<li class="chapter" data-level="" data-path="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><a href="por-que-as-discussões-importam-tanto-quanto-as-contas.html"><i class="fa fa-check"></i>Por que as discussões importam tanto quanto as contas</a></li>
+<li class="chapter" data-level="" data-path="como-o-material-está-organizado.html"><a href="como-o-material-está-organizado.html"><i class="fa fa-check"></i>Como o material está organizado</a></li>
+<li class="chapter" data-level="" data-path="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><a href="um-fio-condutor-três-lentes-sobre-os-mesmos-dados.html"><i class="fa fa-check"></i>Um fio condutor: três lentes sobre os mesmos dados</a></li>
+<li class="chapter" data-level="" data-path="convenções-tipográficas.html"><a href="convenções-tipográficas.html"><i class="fa fa-check"></i>Convenções tipográficas</a></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografia</a></li>
+<li class="chapter" data-level="" data-path="agradecimentos.html"><a href="agradecimentos.html"><i class="fa fa-check"></i>Agradecimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="estatística-descritiva-e-exploratória-de-dados.html"><a href="estatística-descritiva-e-exploratória-de-dados.html"><i class="fa fa-check"></i><b>1</b> Estatística Descritiva e Exploratória de Dados</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html"><i class="fa fa-check"></i><b>1.1</b> População e amostra</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-estudar-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.1</b> Por que estudar Estatística?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="populacao-amostra.html"><a href="populacao-amostra.html#popula%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.1.2</b> População</a></li>
+<li class="chapter" data-level="1.1.3" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostra"><i class="fa fa-check"></i><b>1.1.3</b> Amostra</a></li>
+<li class="chapter" data-level="1.1.4" data-path="populacao-amostra.html"><a href="populacao-amostra.html#por-que-definir-bem-a-popula%C3%A7%C3%A3o-importa"><i class="fa fa-check"></i><b>1.1.4</b> Por que definir bem a população importa</a></li>
+<li class="chapter" data-level="1.1.5" data-path="populacao-amostra.html"><a href="populacao-amostra.html#amostragem"><i class="fa fa-check"></i><b>1.1.5</b> Amostragem</a></li>
+<li class="chapter" data-level="1.1.6" data-path="populacao-amostra.html"><a href="populacao-amostra.html#par%C3%A2metro-e-estat%C3%ADstica"><i class="fa fa-check"></i><b>1.1.6</b> Parâmetro e estatística</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html"><i class="fa fa-check"></i><b>1.2</b> Tipos de variáveis</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classifica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.2.1</b> Classificação</a></li>
+<li class="chapter" data-level="1.2.2" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#nem-todo-n%C3%BAmero-%C3%A9-uma-vari%C3%A1vel-quantitativa"><i class="fa fa-check"></i><b>1.2.2</b> Nem todo número é uma variável quantitativa</a></li>
+<li class="chapter" data-level="1.2.3" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#classificando-bases-reais"><i class="fa fa-check"></i><b>1.2.3</b> Classificando bases reais</a></li>
+<li class="chapter" data-level="1.2.4" data-path="tipos-variaveis.html"><a href="tipos-variaveis.html#exerc%C3%ADcios-resolvidos"><i class="fa fa-check"></i><b>1.2.4</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html"><i class="fa fa-check"></i><b>1.3</b> Apresentação tabular e principais tipos de representação gráfica</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas"><i class="fa fa-check"></i><b>1.3.1</b> Tabelas</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#distribui%C3%A7%C3%A3o-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.3.2</b> Distribuição de frequências</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#vari%C3%A1veis-quantitativas-classes"><i class="fa fa-check"></i><b>1.3.3</b> Variáveis quantitativas: classes</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#raz%C3%A3o-e-taxa-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.3.4</b> Razão e taxa de variação</a></li>
+<li class="chapter" data-level="1.3.5" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#tabelas-de-dupla-entrada"><i class="fa fa-check"></i><b>1.3.5</b> Tabelas de dupla entrada</a></li>
+<li class="chapter" data-level="1.3.6" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#gr%C3%A1ficos"><i class="fa fa-check"></i><b>1.3.6</b> Gráficos</a></li>
+<li class="chapter" data-level="1.3.7" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#histograma"><i class="fa fa-check"></i><b>1.3.7</b> Histograma</a></li>
+<li class="chapter" data-level="1.3.8" data-path="tabelas-graficos.html"><a href="tabelas-graficos.html#exerc%C3%ADcios-resolvidos-1"><i class="fa fa-check"></i><b>1.3.8</b> Exercícios resolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="tendencia-central.html"><a href="tendencia-central.html"><i class="fa fa-check"></i><b>1.4</b> Medidas de tendência central e suas relações</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="tendencia-central.html"><a href="tendencia-central.html#moda"><i class="fa fa-check"></i><b>1.4.1</b> Moda</a></li>
+<li class="chapter" data-level="1.4.2" data-path="tendencia-central.html"><a href="tendencia-central.html#mediana"><i class="fa fa-check"></i><b>1.4.2</b> Mediana</a></li>
+<li class="chapter" data-level="1.4.3" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia"><i class="fa fa-check"></i><b>1.4.3</b> Média</a></li>
+<li class="chapter" data-level="1.4.4" data-path="tendencia-central.html"><a href="tendencia-central.html#sensibilidade-a-valores-extremos"><i class="fa fa-check"></i><b>1.4.4</b> Sensibilidade a valores extremos</a></li>
+<li class="chapter" data-level="1.4.5" data-path="tendencia-central.html"><a href="tendencia-central.html#quando-usar-cada-medida"><i class="fa fa-check"></i><b>1.4.5</b> Quando usar cada medida</a></li>
+<li class="chapter" data-level="1.4.6" data-path="tendencia-central.html"><a href="tendencia-central.html#m%C3%A9dia-a-partir-de-uma-tabela-de-frequ%C3%AAncias"><i class="fa fa-check"></i><b>1.4.6</b> Média a partir de uma tabela de frequências</a></li>
+<li class="chapter" data-level="1.4.7" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-agrupados-em-classes-as-notas-de-uma-turma"><i class="fa fa-check"></i><b>1.4.7</b> Dados agrupados em classes: as notas de uma turma</a></li>
+<li class="chapter" data-level="1.4.8" data-path="tendencia-central.html"><a href="tendencia-central.html#dados-reais-prefeitos-e-munic%C3%ADpios"><i class="fa fa-check"></i><b>1.4.8</b> Dados reais: prefeitos e municípios</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="dispersao.html"><a href="dispersao.html"><i class="fa fa-check"></i><b>1.5</b> Medidas de dispersão: amplitude, quantis, variância e coeficiente de variação</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="dispersao.html"><a href="dispersao.html#percentis"><i class="fa fa-check"></i><b>1.5.1</b> Percentis</a></li>
+<li class="chapter" data-level="1.5.2" data-path="dispersao.html"><a href="dispersao.html#quartis-e-dist%C3%A2ncia-interquartil"><i class="fa fa-check"></i><b>1.5.2</b> Quartis e distância interquartil</a></li>
+<li class="chapter" data-level="1.5.3" data-path="dispersao.html"><a href="dispersao.html#boxplot"><i class="fa fa-check"></i><b>1.5.3</b> Boxplot</a></li>
+<li class="chapter" data-level="1.5.4" data-path="dispersao.html"><a href="dispersao.html#amplitude-total"><i class="fa fa-check"></i><b>1.5.4</b> Amplitude total</a></li>
+<li class="chapter" data-level="1.5.5" data-path="dispersao.html"><a href="dispersao.html#vari%C3%A2ncia-e-desvio-padr%C3%A3o"><i class="fa fa-check"></i><b>1.5.5</b> Variância e desvio padrão</a></li>
+<li class="chapter" data-level="1.5.6" data-path="dispersao.html"><a href="dispersao.html#coeficiente-de-varia%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.5.6</b> Coeficiente de variação</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="correlacao.html"><a href="correlacao.html"><i class="fa fa-check"></i><b>1.6</b> Coeficiente de correlação</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="correlacao.html"><a href="correlacao.html#gr%C3%A1fico-de-dispers%C3%A3o"><i class="fa fa-check"></i><b>1.6.1</b> Gráfico de dispersão</a></li>
+<li class="chapter" data-level="1.6.2" data-path="correlacao.html"><a href="correlacao.html#defini%C3%A7%C3%A3o-e-c%C3%A1lculo"><i class="fa fa-check"></i><b>1.6.2</b> Definição e cálculo</a></li>
+<li class="chapter" data-level="1.6.3" data-path="correlacao.html"><a href="correlacao.html#interpreta%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>1.6.3</b> Interpretação</a></li>
+<li class="chapter" data-level="1.6.4" data-path="correlacao.html"><a href="correlacao.html#aplica%C3%A7%C3%B5es-com-as-bases"><i class="fa fa-check"></i><b>1.6.4</b> Aplicações com as bases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html"><i class="fa fa-check"></i><b>1.7</b> Medidas de assimetria e curtose</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#assimetria"><i class="fa fa-check"></i><b>1.7.1</b> Assimetria</a></li>
+<li class="chapter" data-level="1.7.2" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#curtose"><i class="fa fa-check"></i><b>1.7.2</b> Curtose</a></li>
+<li class="chapter" data-level="1.7.3" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#exemplo-na-m%C3%A3o"><i class="fa fa-check"></i><b>1.7.3</b> Exemplo na mão</a></li>
+<li class="chapter" data-level="1.7.4" data-path="assimetria-curtose.html"><a href="assimetria-curtose.html#as-bases-do-cap%C3%ADtulo"><i class="fa fa-check"></i><b>1.7.4</b> As bases do capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="contas-nacionais.html"><a href="contas-nacionais.html"><i class="fa fa-check"></i><b>1.8</b> Aplicação: contas nacionais, regionais e monetárias</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="contas-nacionais.html"><a href="contas-nacionais.html#agregados-macroecon%C3%B4micos-as-tr%C3%AAs-%C3%B3ticas-do-pib"><i class="fa fa-check"></i><b>1.8.1</b> Agregados macroeconômicos: as três óticas do PIB</a></li>
+<li class="chapter" data-level="1.8.2" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-trimestrais-quatro-taxas-para-a-mesma-pergunta"><i class="fa fa-check"></i><b>1.8.2</b> Contas trimestrais: quatro taxas para a mesma pergunta</a></li>
+<li class="chapter" data-level="1.8.3" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-regionais-desigualdade-entre-os-estados"><i class="fa fa-check"></i><b>1.8.3</b> Contas regionais: desigualdade entre os estados</a></li>
+<li class="chapter" data-level="1.8.4" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-econ%C3%B4micas-integradas-da-produ%C3%A7%C3%A3o-ao-financiamento"><i class="fa fa-check"></i><b>1.8.4</b> Contas Econômicas Integradas: da produção ao financiamento</a></li>
+<li class="chapter" data-level="1.8.5" data-path="contas-nacionais.html"><a href="contas-nacionais.html#contas-monet%C3%A1rias-e-financeiras-moeda-e-liquidez"><i class="fa fa-check"></i><b>1.8.5</b> Contas monetárias e financeiras: moeda e liquidez</a></li>
+<li class="chapter" data-level="1.8.6" data-path="contas-nacionais.html"><a href="contas-nacionais.html#modelo-de-insumo-produto-como-os-setores-dependem-uns-dos-outros"><i class="fa fa-check"></i><b>1.8.6</b> Modelo de insumo-produto: como os setores dependem uns dos outros</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="fechando-o-capítulo.html"><a href="fechando-o-capítulo.html"><i class="fa fa-check"></i><b>1.9</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducao-a-teoria-das-probabilidades.html"><a href="introducao-a-teoria-das-probabilidades.html"><i class="fa fa-check"></i><b>2</b> Introdução à Teoria das Probabilidades</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prob-introducao.html"><a href="prob-introducao.html"><i class="fa fa-check"></i><b>2.1</b> Fenômenos aleatórios</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="prob-introducao.html"><a href="prob-introducao.html#probabilidade-te%C3%B3rica-e-probabilidade-emp%C3%ADrica"><i class="fa fa-check"></i><b>2.1.1</b> Probabilidade teórica e probabilidade empírica</a></li>
+<li class="chapter" data-level="2.1.2" data-path="prob-introducao.html"><a href="prob-introducao.html#o-que-%C3%A9-afinal-uma-probabilidade-quatro-interpreta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.1.2</b> O que é, afinal, uma probabilidade? Quatro interpretações</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html"><i class="fa fa-check"></i><b>2.2</b> Espaço amostral e eventos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#tipos-de-espa%C3%A7o-amostral"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de espaço amostral</a></li>
+<li class="chapter" data-level="2.2.2" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#opera%C3%A7%C3%B5es-com-eventos-revis%C3%A3o-de-conjuntos"><i class="fa fa-check"></i><b>2.2.2</b> Operações com eventos (revisão de conjuntos)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="espaco-amostral-eventos.html"><a href="espaco-amostral-eventos.html#propriedades-das-opera%C3%A7%C3%B5es-e-leis-de-de-morgan"><i class="fa fa-check"></i><b>2.2.3</b> Propriedades das operações e leis de De Morgan</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html"><i class="fa fa-check"></i><b>2.3</b> Axiomas de Kolmogorov e propriedades da probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#por-que-precisamos-de-axiomas"><i class="fa fa-check"></i><b>2.3.1</b> Por que precisamos de axiomas</a></li>
+<li class="chapter" data-level="2.3.2" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#espa%C3%A7o-de-probabilidade"><i class="fa fa-check"></i><b>2.3.2</b> Espaço de probabilidade</a></li>
+<li class="chapter" data-level="2.3.3" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#os-axiomas-de-kolmogorov"><i class="fa fa-check"></i><b>2.3.3</b> Os axiomas de Kolmogorov</a></li>
+<li class="chapter" data-level="2.3.4" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#consequ%C3%AAncias-dos-axiomas-com-demonstra%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.3.4</b> Consequências dos axiomas (com demonstração)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#como-atribuir-probabilidades"><i class="fa fa-check"></i><b>2.3.5</b> Como atribuir probabilidades</a></li>
+<li class="chapter" data-level="2.3.6" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#defini%C3%A7%C3%A3o-cl%C3%A1ssica"><i class="fa fa-check"></i><b>2.3.6</b> Definição clássica</a></li>
+<li class="chapter" data-level="2.3.7" data-path="conceitos-probabilidade.html"><a href="conceitos-probabilidade.html#probabilidades-a-partir-de-tabelas"><i class="fa fa-check"></i><b>2.3.7</b> Probabilidades a partir de tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html"><i class="fa fa-check"></i><b>2.4</b> Técnicas de contagem e probabilidade clássica</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve"><i class="fa fa-check"></i><b>2.4.1</b> Quando contar resolve, e quando não resolve</a></li>
+<li class="chapter" data-level="2.4.2" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo"><i class="fa fa-check"></i><b>2.4.2</b> Princípios aditivo e multiplicativo</a></li>
+<li class="chapter" data-level="2.4.3" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.4.3</b> Os quatro tipos de seleção</a></li>
+<li class="chapter" data-level="2.4.4" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.4</b> Permutações</a></li>
+<li class="chapter" data-level="2.4.5" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#arranjos"><i class="fa fa-check"></i><b>2.4.5</b> Arranjos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es"><i class="fa fa-check"></i><b>2.4.6</b> Combinações</a></li>
+<li class="chapter" data-level="2.4.7" data-path="tecnicas-contagem.html"><a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos"><i class="fa fa-check"></i><b>2.4.7</b> Da contagem à probabilidade: exemplos desenvolvidos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="probabilidade-geometrica.html"><a href="probabilidade-geometrica.html"><i class="fa fa-check"></i><b>2.5</b> Probabilidade geométrica</a></li>
+<li class="chapter" data-level="2.6" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html"><i class="fa fa-check"></i><b>2.6</b> Probabilidade condicional</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="probabilidade-condicional.html"><a href="probabilidade-condicional.html#regra-da-multiplica%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.6.1</b> Regra da multiplicação</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html"><i class="fa fa-check"></i><b>2.7</b> Tabelas de contingência: probabilidades conjuntas, marginais e condicionais</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#mercado-de-trabalho-brasileiro-sexo-e-condi%C3%A7%C3%A3o-na-for%C3%A7a-de-trabalho"><i class="fa fa-check"></i><b>2.7.1</b> Mercado de trabalho brasileiro: sexo e condição na força de trabalho</a></li>
+<li class="chapter" data-level="2.7.2" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#taxa-ou-n%C3%ADvel-o-evento-condicionante-muda-a-resposta"><i class="fa fa-check"></i><b>2.7.2</b> Taxa ou nível? O evento condicionante muda a resposta</a></li>
+<li class="chapter" data-level="2.7.3" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#a-fal%C3%A1cia-da-invers%C3%A3o-com-dados-reais-escolaridade-e-desocupa%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.3</b> A falácia da inversão com dados reais: escolaridade e desocupação</a></li>
+<li class="chapter" data-level="2.7.4" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#confundimento-e-composi%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>2.7.4</b> Confundimento e composição</a></li>
+<li class="chapter" data-level="2.7.5" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#o-paradoxo-de-simpson"><i class="fa fa-check"></i><b>2.7.5</b> O paradoxo de Simpson</a></li>
+<li class="chapter" data-level="2.7.6" data-path="tabelas-contingencia.html"><a href="tabelas-contingencia.html#independ%C3%AAncia-em-tabelas"><i class="fa fa-check"></i><b>2.7.6</b> Independência em tabelas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="medidas-associacao.html"><a href="medidas-associacao.html"><i class="fa fa-check"></i><b>2.8</b> Risco, chance e razão de chances</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="medidas-associacao.html"><a href="medidas-associacao.html#preval%C3%AAncia-e-incid%C3%AAncia"><i class="fa fa-check"></i><b>2.8.1</b> Prevalência e incidência</a></li>
+<li class="chapter" data-level="2.8.2" data-path="medidas-associacao.html"><a href="medidas-associacao.html#risco-diferen%C3%A7a-de-riscos-e-risco-relativo"><i class="fa fa-check"></i><b>2.8.2</b> Risco, diferença de riscos e risco relativo</a></li>
+<li class="chapter" data-level="2.8.3" data-path="medidas-associacao.html"><a href="medidas-associacao.html#chance-odds"><i class="fa fa-check"></i><b>2.8.3</b> Chance (odds)</a></li>
+<li class="chapter" data-level="2.8.4" data-path="medidas-associacao.html"><a href="medidas-associacao.html#raz%C3%A3o-de-chances-odds-ratio"><i class="fa fa-check"></i><b>2.8.4</b> Razão de chances (odds ratio)</a></li>
+<li class="chapter" data-level="2.8.5" data-path="medidas-associacao.html"><a href="medidas-associacao.html#exemplo-com-dados-reais-sexo-e-mercado-de-trabalho"><i class="fa fa-check"></i><b>2.8.5</b> Exemplo com dados reais: sexo e mercado de trabalho</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="independencia.html"><a href="independencia.html"><i class="fa fa-check"></i><b>2.9</b> Independência estatística</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="independencia.html"><a href="independencia.html#tr%C3%AAs-ou-mais-eventos"><i class="fa fa-check"></i><b>2.9.1</b> Três ou mais eventos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html"><i class="fa fa-check"></i><b>2.10</b> Teoremas básicos de probabilidade</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="teoremas-basicos.html"><a href="teoremas-basicos.html#parti%C3%A7%C3%A3o-e-teorema-da-probabilidade-total"><i class="fa fa-check"></i><b>2.10.1</b> Partição e teorema da probabilidade total</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html"><i class="fa fa-check"></i><b>2.11</b> Teorema de Bayes</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#eventos-raros-e-falsos-alarmes"><i class="fa fa-check"></i><b>2.11.1</b> Eventos raros e falsos alarmes</a></li>
+<li class="chapter" data-level="2.11.2" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#sensibilidade-especificidade-e-valores-preditivos"><i class="fa fa-check"></i><b>2.11.2</b> Sensibilidade, especificidade e valores preditivos</a></li>
+<li class="chapter" data-level="2.11.3" data-path="teorema-de-bayes.html"><a href="teorema-de-bayes.html#bayes-na-forma-de-chances"><i class="fa fa-check"></i><b>2.11.3</b> Bayes na forma de chances</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="fechando-o-capítulo-1.html"><a href="fechando-o-capítulo-1.html"><i class="fa fa-check"></i><b>2.12</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="variaveis-aleatorias-discretas.html"><a href="variaveis-aleatorias-discretas.html"><i class="fa fa-check"></i><b>3</b> Variáveis Aleatórias Discretas</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="va-discreta-conceito.html"><a href="va-discreta-conceito.html"><i class="fa fa-check"></i><b>3.1</b> Conceituação de variável aleatória discreta</a></li>
+<li class="chapter" data-level="3.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html"><i class="fa fa-check"></i><b>3.2</b> Esperança e variância</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#defini%C3%A7%C3%A3o"><i class="fa fa-check"></i><b>3.2.1</b> Definição</a></li>
+<li class="chapter" data-level="3.2.2" data-path="va-discreta-esperanca-variancia.html"><a href="va-discreta-esperanca-variancia.html#propriedades-da-esperan%C3%A7a-e-da-vari%C3%A2ncia"><i class="fa fa-check"></i><b>3.2.2</b> Propriedades da esperança e da variância</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="va-discreta-fda.html"><a href="va-discreta-fda.html"><i class="fa fa-check"></i><b>3.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="3.4" data-path="modelos-discretos.html"><a href="modelos-discretos.html"><i class="fa fa-check"></i><b>3.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fa fa-check"></i><b>3.4.1</b> Distribuição de Bernoulli</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-binomial"><i class="fa fa-check"></i><b>3.4.2</b> Distribuição Binomial</a></li>
+<li class="chapter" data-level="3.4.3" data-path="modelos-discretos.html"><a href="modelos-discretos.html#distribui%C3%A7%C3%A3o-de-poisson"><i class="fa fa-check"></i><b>3.4.3</b> Distribuição de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="va-discreta-simulacao.html"><a href="va-discreta-simulacao.html"><i class="fa fa-check"></i><b>3.5</b> Da fórmula à simulação</a></li>
+<li class="chapter" data-level="3.6" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html"><i class="fa fa-check"></i><b>3.6</b> Aplicação macroeconômica: recessões e deflação</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-trimestres-de-queda-do-pib-em-um-ano-binomial-e-depend%C3%AAncia"><i class="fa fa-check"></i><b>3.6.1</b> Quantos trimestres de queda do PIB em um ano? Binomial e dependência</a></li>
+<li class="chapter" data-level="3.6.2" data-path="va-discreta-macro.html"><a href="va-discreta-macro.html#quantos-meses-de-defla%C3%A7%C3%A3o-em-um-ano-poisson"><i class="fa fa-check"></i><b>3.6.2</b> Quantos meses de deflação em um ano? Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="fechando-o-capítulo-2.html"><a href="fechando-o-capítulo-2.html"><i class="fa fa-check"></i><b>3.7</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variaveis-aleatorias-continuas.html"><a href="variaveis-aleatorias-continuas.html"><i class="fa fa-check"></i><b>4</b> Variáveis Aleatórias Contínuas</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html"><i class="fa fa-check"></i><b>4.1</b> Conceituação de variável aleatória contínua</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#probabilidade-como-%C3%A1rea"><i class="fa fa-check"></i><b>4.1.1</b> Probabilidade como área</a></li>
+<li class="chapter" data-level="4.1.2" data-path="va-continua-conceito.html"><a href="va-continua-conceito.html#exemplo-distribui%C3%A7%C3%A3o-triangular"><i class="fa fa-check"></i><b>4.1.2</b> Exemplo: distribuição triangular</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="va-continua-esperanca-variancia.html"><a href="va-continua-esperanca-variancia.html"><i class="fa fa-check"></i><b>4.2</b> Esperança e variância</a></li>
+<li class="chapter" data-level="4.3" data-path="va-continua-fda.html"><a href="va-continua-fda.html"><i class="fa fa-check"></i><b>4.3</b> Função de distribuição acumulada</a></li>
+<li class="chapter" data-level="4.4" data-path="modelos-continuos.html"><a href="modelos-continuos.html"><i class="fa fa-check"></i><b>4.4</b> Alguns modelos probabilísticos</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-uniforme"><i class="fa fa-check"></i><b>4.4.1</b> Distribuição Uniforme</a></li>
+<li class="chapter" data-level="4.4.2" data-path="modelos-continuos.html"><a href="modelos-continuos.html#distribui%C3%A7%C3%A3o-normal"><i class="fa fa-check"></i><b>4.4.2</b> Distribuição Normal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="va-continua-macro.html"><a href="va-continua-macro.html"><i class="fa fa-check"></i><b>4.5</b> Aplicação: o crescimento do PIB é normal?</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="va-continua-macro.html"><a href="va-continua-macro.html#crescimento-trimestral-do-pib"><i class="fa fa-check"></i><b>4.5.1</b> Crescimento trimestral do PIB</a></li>
+<li class="chapter" data-level="4.5.2" data-path="va-continua-macro.html"><a href="va-continua-macro.html#infla%C3%A7%C3%A3o-mensal"><i class="fa fa-check"></i><b>4.5.2</b> Inflação mensal</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="fechando-o-capítulo-3.html"><a href="fechando-o-capítulo-3.html"><i class="fa fa-check"></i><b>4.6</b> Fechando o capítulo</a></li>
+</ul></li>
+<li class="appendix"><span><b>Apêndices</b></span></li>
+<li class="chapter" data-level="A" data-path="ferramentas-rpython.html"><a href="ferramentas-rpython.html"><i class="fa fa-check"></i><b>A</b> Ferramentas de Trabalho: R e Python</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="instalação.html"><a href="instalação.html"><i class="fa fa-check"></i><b>A.1</b> Instalação</a></li>
+<li class="chapter" data-level="A.2" data-path="r-e-python-como-calculadora.html"><a href="r-e-python-como-calculadora.html"><i class="fa fa-check"></i><b>A.2</b> R e Python como calculadora</a></li>
+<li class="chapter" data-level="A.3" data-path="leitura-de-dados.html"><a href="leitura-de-dados.html"><i class="fa fa-check"></i><b>A.3</b> Leitura de dados</a></li>
+<li class="chapter" data-level="A.4" data-path="funções.html"><a href="funções.html"><i class="fa fa-check"></i><b>A.4</b> Funções</a></li>
+<li class="chapter" data-level="A.5" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>A.5</b> Loops</a></li>
+<li class="chapter" data-level="A.6" data-path="números-aleatórios.html"><a href="números-aleatórios.html"><i class="fa fa-check"></i><b>A.6</b> Números aleatórios</a></li>
+<li class="chapter" data-level="A.7" data-path="gráficos-básicos.html"><a href="gráficos-básicos.html"><i class="fa fa-check"></i><b>A.7</b> Gráficos básicos</a></li>
+<li class="chapter" data-level="A.8" data-path="para-continuar-estudando-de-graça.html"><a href="para-continuar-estudando-de-graça.html"><i class="fa fa-check"></i><b>A.8</b> Para continuar estudando, de graça</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="revisao-de-calculo.html"><a href="revisao-de-calculo.html"><i class="fa fa-check"></i><b>B</b> Revisão de Cálculo</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="por-que-integrais-aparecem-em-probabilidade.html"><a href="por-que-integrais-aparecem-em-probabilidade.html"><i class="fa fa-check"></i><b>B.1</b> Por que integrais aparecem em probabilidade</a></li>
+<li class="chapter" data-level="B.2" data-path="derivadas-o-essencial.html"><a href="derivadas-o-essencial.html"><i class="fa fa-check"></i><b>B.2</b> Derivadas: o essencial</a></li>
+<li class="chapter" data-level="B.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html"><i class="fa fa-check"></i><b>B.3</b> Integrais: o essencial</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#soma-de-riemann-de-onde-vem-a-integral"><i class="fa fa-check"></i><b>B.3.1</b> Soma de Riemann: de onde vem a integral</a></li>
+<li class="chapter" data-level="B.3.2" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#teorema-fundamental-do-c%C3%A1lculo-vers%C3%A3o-pr%C3%A1tica"><i class="fa fa-check"></i><b>B.3.2</b> Teorema Fundamental do Cálculo (versão prática)</a></li>
+<li class="chapter" data-level="B.3.3" data-path="integrais-o-essencial.html"><a href="integrais-o-essencial.html#integrais-impr%C3%B3prias-intervalo-infinito"><i class="fa fa-check"></i><b>B.3.3</b> Integrais impróprias (intervalo infinito)</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="exercício-de-fixação.html"><a href="exercício-de-fixação.html"><i class="fa fa-check"></i><b>B.4</b> Exercício de fixação</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="formulario.html"><a href="formulario.html"><i class="fa fa-check"></i><b>C</b> Fórmulário e tabelas de referência</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="capítulo-1-estatística-descritiva.html"><a href="capítulo-1-estatística-descritiva.html"><i class="fa fa-check"></i><b>C.1</b> Capítulo 1: Estatística Descritiva</a></li>
+<li class="chapter" data-level="C.2" data-path="capítulo-2-probabilidade.html"><a href="capítulo-2-probabilidade.html"><i class="fa fa-check"></i><b>C.2</b> Capítulo 2: Probabilidade</a></li>
+<li class="chapter" data-level="C.3" data-path="capítulo-3-variáveis-aleatórias-discretas.html"><a href="capítulo-3-variáveis-aleatórias-discretas.html"><i class="fa fa-check"></i><b>C.3</b> Capítulo 3: Variáveis Aleatórias Discretas</a></li>
+<li class="chapter" data-level="C.4" data-path="capítulo-4-variáveis-aleatórias-contínuas.html"><a href="capítulo-4-variáveis-aleatórias-contínuas.html"><i class="fa fa-check"></i><b>C.4</b> Capítulo 4: Variáveis Aleatórias Contínuas</a></li>
+<li class="chapter" data-level="C.5" data-path="apêndice-b-cálculo-resumo.html"><a href="apêndice-b-cálculo-resumo.html"><i class="fa fa-check"></i><b>C.5</b> Cálculo (resumo do Apêndice B)</a></li>
+<li class="chapter" data-level="C.6" data-path="tabela-valores-selecionados-da-normal-padrão.html"><a href="tabela-valores-selecionados-da-normal-padrão.html"><i class="fa fa-check"></i><b>C.6</b> Tabela: valores selecionados da Normal padrão</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="referências.html"><a href="referências.html"><i class="fa fa-check"></i>Referências</a></li>
+<li class="divider"></li>
+<li><a href="https://raydonal.github.io/matf14/" target="_blank">MATF14 — Página do curso</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estatística Econômica I</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tecnicas-contagem" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Técnicas de contagem e probabilidade clássica<a href="tecnicas-contagem.html#tecnicas-contagem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para usar <span class="math inline">\(P(A) = \#A / \#\Omega\)</span> precisamos <strong>contar</strong> quantos elementos têm o evento e o espaço amostral.
+Listar todos os casos costuma ser inviável: só as apostas simples possíveis da Mega-Sena passam de 50
+milhões. Esta seção explica <strong>o que</strong> cada técnica conta, <strong>por que</strong> a fórmula funciona e <strong>quando</strong> a
+contagem vira probabilidade.</p>
+<div id="quando-contar-resolve-e-quando-não-resolve" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Quando contar resolve, e quando não resolve<a href="tecnicas-contagem.html#quando-contar-resolve-e-quando-n%C3%A3o-resolve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Contar casos só produz probabilidades quando os casos são <strong>igualmente prováveis</strong>. O erro mais comum é
+descrever o espaço amostral por resultados que <strong>não</strong> têm a mesma chance.</p>
+<ul>
+<li><strong>Soma de dois dados.</strong> A soma vai de 2 a 12, são 11 valores, mas <span class="math inline">\(P(\text{soma} = 7) \neq 1/11\)</span>. Os
+resultados igualmente prováveis são os <strong>36 pares ordenados</strong> <span class="math inline">\((i, j)\)</span>; a soma 7 aparece em 6 deles, logo
+<span class="math inline">\(P(\text{soma} = 7) = 6/36 = 1/6\)</span>, enquanto a soma 2 só aparece em <span class="math inline">\((1, 1)\)</span>: <span class="math inline">\(1/36\)</span>.</li>
+<li><strong>O erro de d’Alembert.</strong> No século XVIII, o matemático d’Alembert argumentou que, em dois lançamentos de
+moeda, “nenhuma cara”, “uma cara” e “duas caras” teriam chance <span class="math inline">\(1/3\)</span> cada. Mas os resultados
+elementares são <span class="math inline">\(KK, KC, CK, CC\)</span>, e “uma cara” corresponde a dois deles: <span class="math inline">\(P = 2/4 = 1/2\)</span>.</li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tecnicas-contagem.html#cb54-1" tabindex="-1"></a>dados36 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">d1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">d2 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)   <span class="co"># os 36 pares ordenados</span></span>
+<span id="cb54-2"><a href="tecnicas-contagem.html#cb54-2" tabindex="-1"></a><span class="fu">table</span>(dados36<span class="sc">$</span>d1 <span class="sc">+</span> dados36<span class="sc">$</span>d2)               <span class="co"># quantos pares dão cada soma</span></span></code></pre></div>
+<pre><code>## 
+##  2  3  4  5  6  7  8  9 10 11 12 
+##  1  2  3  4  5  6  5  4  3  2  1</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-soma-dados"></span>
+<img src="livro-matf14_files/figure-html/fig-soma-dados-1.png" alt="Distribuição da soma de dois dados: 11 somas possíveis, mas não igualmente prováveis. Os resultados equiprováveis são os 36 pares ordenados." width="75%" />
+<p class="caption">
+Figura 2.7: Distribuição da soma de dois dados: 11 somas possíveis, mas não igualmente prováveis. Os resultados equiprováveis são os 36 pares ordenados.
+</p>
+</div>
+<div class="caixa-aplicacao">
+<p><strong>Regra de ouro.</strong> Antes de contar, descreva <span class="math inline">\(\Omega\)</span> por resultados <strong>elementares</strong> que sejam igualmente
+prováveis por simetria (pares ordenados, sequências, subconjuntos sorteados ao acaso). Só então
+<span class="math inline">\(P(A) = \#A / \#\Omega\)</span> vale. Se não houver simetria, conte o que quiser, mas não divida.</p>
+</div>
+</div>
+<div id="princípios-aditivo-e-multiplicativo" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Princípios aditivo e multiplicativo<a href="tecnicas-contagem.html#princ%C3%ADpios-aditivo-e-multiplicativo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Princípio aditivo.</strong> Se uma escolha pode ser feita de <span class="math inline">\(m\)</span> maneiras de um tipo <strong>ou</strong> de <span class="math inline">\(n\)</span> maneiras de
+outro tipo, sem sobreposição, há <span class="math inline">\(m + n\)</span> maneiras. Um investidor que escolhe <strong>um</strong> fundo entre 8 de renda
+fixa ou 5 de ações tem <span class="math inline">\(8 + 5 = 13\)</span> opções.</p>
+<p><strong>Princípio multiplicativo.</strong> Se uma tarefa é feita em <span class="math inline">\(k\)</span> <strong>etapas sucessivas</strong>, com <span class="math inline">\(n_1\)</span> maneiras para a
+primeira, <span class="math inline">\(n_2\)</span> para a segunda (qualquer que tenha sido a primeira), e assim por diante, a tarefa tem
+<span class="math inline">\(n_1 \times n_2 \times \cdots \times n_k\)</span> maneiras. O diagrama de árvore mostra por quê: cada ramo da primeira etapa se
+abre no mesmo número de ramos na etapa seguinte.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-arvore-contagem"></span>
+<img src="livro-matf14_files/figure-html/fig-arvore-contagem-1.png" alt="Princípio multiplicativo: 3 bancos × 2 prazos = 6 propostas de financiamento. Com 2 tipos de taxa (pré ou pós-fixada), seriam 3 × 2 × 2 = 12." width="80%" />
+<p class="caption">
+Figura 2.8: Princípio multiplicativo: 3 bancos × 2 prazos = 6 propostas de financiamento. Com 2 tipos de taxa (pré ou pós-fixada), seriam 3 × 2 × 2 = 12.
+</p>
+</div>
+<p><strong>Exemplos.</strong></p>
+<ul>
+<li><strong>Placas de veículos</strong> no padrão Mercosul (LLL NLNN: três letras, um número, uma letra, dois números):
+<span class="math inline">\(26^3 \times 10 \times 26 \times 10^2 = 26^4 \times 10^3 = 456.976.000\)</span> placas.</li>
+<li><strong>Senha bancária</strong> de 6 dígitos: <span class="math inline">\(10^6 = 1.000.000\)</span> senhas; um palpite ao acaso acerta com probabilidade
+<span class="math inline">\(1/1.000.000\)</span>.</li>
+<li><strong>Trajetórias da Selic</strong>: com 3 decisões possíveis em cada uma das 8 reuniões anuais do Copom, há <span class="math inline">\(3^8 = 6.561\)</span>
+sequências de decisões.</li>
+<li><strong>Número de eventos</strong> de um espaço finito com <span class="math inline">\(n\)</span> resultados: para formar um evento, decidimos, para cada
+resultado, se ele entra ou não (2 opções, <span class="math inline">\(n\)</span> vezes): <span class="math inline">\(2^n\)</span> eventos.</li>
+</ul>
+<div class="caixa-discussao">
+<p><strong>Cuidado.</strong> O princípio multiplicativo exige que o <strong>número</strong> de opções em cada etapa não dependa das
+escolhas anteriores (as opções podem mudar, a quantidade não). Quantos números de 3 algarismos <strong>distintos</strong>
+existem? Na primeira posição não pode haver zero (9 opções); na segunda, qualquer algarismo menos o já usado
+(9 opções, agora incluindo o zero); na terceira, 8. Total: <span class="math inline">\(9 \times 9 \times 8 = 648\)</span>.</p>
+</div>
+</div>
+<div id="os-quatro-tipos-de-seleção" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Os quatro tipos de seleção<a href="tecnicas-contagem.html#os-quatro-tipos-de-sele%C3%A7%C3%A3o" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Quase todo problema de contagem é uma variação de “selecionar <span class="math inline">\(r\)</span> objetos entre <span class="math inline">\(n\)</span>”. Duas perguntas
+decidem a fórmula: <strong>a ordem importa?</strong> e <strong>pode repetir?</strong></p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left"><strong>Com repetição</strong></th>
+<th align="left"><strong>Sem repetição</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Ordem importa</strong></td>
+<td align="left">sequências: <span class="math inline">\(n^r\)</span></td>
+<td align="left">arranjos: <span class="math inline">\(A_{n,r} = \dfrac{n!}{(n-r)!}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Ordem não importa</strong></td>
+<td align="left">combinações com repetição: <span class="math inline">\(\dbinom{n+r-1}{r}\)</span></td>
+<td align="left">combinações: <span class="math inline">\(\dbinom{n}{r} = \dfrac{n!}{r!\,(n-r)!}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="27%" />
+<col width="27%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Situação</th>
+<th align="center">Ordem importa?</th>
+<th align="center">Repete?</th>
+<th align="left">Conta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Senha de 4 dígitos</td>
+<td align="center">sim</td>
+<td align="center">sim</td>
+<td align="left"><span class="math inline">\(10^4 = 10.000\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Presidente, vice e tesoureiro entre 10 conselheiros</td>
+<td align="center">sim</td>
+<td align="center">não</td>
+<td align="left"><span class="math inline">\(10 \times 9 \times 8 = 720\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Carteira de 4 ações entre 12 aprovadas</td>
+<td align="center">não</td>
+<td align="center">não</td>
+<td align="left"><span class="math inline">\(\binom{12}{4} = 495\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Distribuir 10 parcelas iguais de orçamento entre 3 programas</td>
+<td align="center">não</td>
+<td align="center">sim</td>
+<td align="left"><span class="math inline">\(\binom{12}{2} = 66\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="permutações" class="section level3 hasAnchor" number="2.4.4">
+<h3><span class="header-section-number">2.4.4</span> Permutações<a href="tecnicas-contagem.html#permuta%C3%A7%C3%B5es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Uma <strong>permutação</strong> é uma <strong>ordenação</strong> de <span class="math inline">\(n\)</span> objetos distintos. Há <span class="math inline">\(n\)</span> escolhas para a primeira posição,
+<span class="math inline">\(n - 1\)</span> para a segunda, e assim por diante, até 1 para a última:</p>
+<p><span class="math display">\[
+n! = n \times (n-1) \times \cdots \times 2 \times 1, \qquad 0! = 1.
+\]</span></p>
+<p>A convenção <span class="math inline">\(0! = 1\)</span> (“há uma única forma de ordenar nada”) mantém as fórmulas abaixo válidas nos casos
+extremos. O fatorial cresce muito rápido: <span class="math inline">\(5! = 120\)</span>, <span class="math inline">\(10! = 3.628.800\)</span> e <span class="math inline">\(20! \approx 2{,}4 \times 10^{18}\)</span>, por isso
+listar casos é inviável.</p>
+<p><strong>Exemplos.</strong></p>
+<ul>
+<li>Um comitê ordena 5 projetos de investimento por prioridade: <span class="math inline">\(5! = 120\)</span> rankings possíveis. Se o
+ranking for feito ao acaso, a probabilidade de o melhor projeto (segundo um critério técnico) ficar em
+primeiro é <span class="math inline">\(4!/5! = 1/5\)</span>: fixado o primeiro lugar, sobram <span class="math inline">\(4!\)</span> ordenações.</li>
+<li>Uma turma com 6 homens e 4 mulheres é classificada por nota: <span class="math inline">\(10! = 3.628.800\)</span> classificações; se homens e
+mulheres forem classificados separadamente, <span class="math inline">\(6! \cdot 4! = 17.280\)</span>.</li>
+</ul>
+<p><strong>Permutações com elementos repetidos.</strong> Quando alguns objetos são <strong>iguais entre si</strong>, trocá-los de lugar
+não gera ordenação nova. Com <span class="math inline">\(n\)</span> objetos, dos quais <span class="math inline">\(n_1\)</span> de um tipo, <span class="math inline">\(n_2\)</span> de outro, …, <span class="math inline">\(n_k\)</span> de outro,</p>
+<p><span class="math display">\[
+\frac{n!}{n_1!\, n_2! \cdots n_k!}.
+\]</span></p>
+<p>Dividimos por <span class="math inline">\(n_1!\)</span> porque cada ordenação “distinguível” aparece <span class="math inline">\(n_1!\)</span> vezes entre as <span class="math inline">\(n!\)</span> ordenações
+em que os objetos iguais são tratados como diferentes (e o mesmo para os demais tipos).</p>
+<ul>
+<li><strong>Trajetórias mensais</strong>: em 12 meses, o preço de um ativo subiu em 7 e caiu em 5. Quantas sequências de
+altas (A) e quedas (Q) são possíveis? <span class="math inline">\(12!/(7!\,5!) = 792\)</span>.</li>
+<li><strong>Anagramas</strong> de ECONOMIA (8 letras, com o O repetido): <span class="math inline">\(8!/2! = 20.160\)</span>.</li>
+</ul>
+</div>
+<div id="arranjos" class="section level3 hasAnchor" number="2.4.5">
+<h3><span class="header-section-number">2.4.5</span> Arranjos<a href="tecnicas-contagem.html#arranjos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Um <strong>arranjo</strong> de <span class="math inline">\(r\)</span> objetos entre <span class="math inline">\(n\)</span> é uma <strong>sequência sem repetição</strong>: a ordem importa porque as
+posições são diferentes (cargos, colocações, etapas). Pelo princípio multiplicativo,</p>
+<p><span class="math display">\[
+A_{n,r} = n(n-1)\cdots(n-r+1) = \frac{n!}{(n-r)!}.
+\]</span></p>
+<ul>
+<li>Presidente, vice e tesoureiro escolhidos entre 10 conselheiros: <span class="math inline">\(A_{10,3} = 720\)</span>.</li>
+<li>Os três primeiros colocados em uma licitação com 8 empresas: <span class="math inline">\(A_{8,3} = 336\)</span>.</li>
+<li>Códigos de 3 dígitos com <span class="math inline">\(\{1, 2, 3, 4, 5\}\)</span> sem repetição: <span class="math inline">\(5 \times 4 \times 3 = 60\)</span>. A probabilidade de um código
+sorteado começar com 1 é <span class="math inline">\(A_{4,2}/60 = 12/60 = 1/5\)</span>.</li>
+</ul>
+</div>
+<div id="combinações" class="section level3 hasAnchor" number="2.4.6">
+<h3><span class="header-section-number">2.4.6</span> Combinações<a href="tecnicas-contagem.html#combina%C3%A7%C3%B5es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Uma <strong>combinação</strong> de <span class="math inline">\(r\)</span> objetos entre <span class="math inline">\(n\)</span> é um <strong>subconjunto</strong> (grupo) de <span class="math inline">\(r\)</span> elementos: a ordem <strong>não</strong>
+importa. A fórmula vem dos arranjos: cada grupo de <span class="math inline">\(r\)</span> elementos pode ser ordenado de <span class="math inline">\(r!\)</span> maneiras, então
+cada grupo aparece <span class="math inline">\(r!\)</span> vezes na lista de arranjos. Logo</p>
+<p><span class="math display">\[
+\binom{n}{r} = \frac{A_{n,r}}{r!} = \frac{n!}{r!\,(n-r)!}.
+\]</span></p>
+<p><strong>Vendo a divisão por <span class="math inline">\(r!\)</span>.</strong> Um fundo escolhe 2 de 4 empresas, <span class="math inline">\(\{A, B, C, D\}\)</span>. Há <span class="math inline">\(A_{4,2} = 12\)</span> pares
+<strong>ordenados</strong>, mas cada carteira aparece duas vezes (<span class="math inline">\(AB\)</span> e <span class="math inline">\(BA\)</span> são a mesma carteira): <span class="math inline">\(12/2! = 6\)</span> carteiras.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="tecnicas-contagem.html#cb56-1" tabindex="-1"></a>empresas4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)</span>
+<span id="cb56-2"><a href="tecnicas-contagem.html#cb56-2" tabindex="-1"></a>pares_ord <span class="ot">&lt;-</span> <span class="fu">subset</span>(<span class="fu">expand.grid</span>(<span class="at">prim =</span> empresas4, <span class="at">seg =</span> empresas4), prim <span class="sc">!=</span> seg)</span>
+<span id="cb56-3"><a href="tecnicas-contagem.html#cb56-3" tabindex="-1"></a><span class="fu">nrow</span>(pares_ord)                          <span class="co"># 12 arranjos</span></span></code></pre></div>
+<pre><code>## [1] 12</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="tecnicas-contagem.html#cb58-1" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">combn</span>(empresas4, <span class="dv">2</span>), <span class="dv">2</span>, paste, <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)   <span class="co"># as 6 combinações</span></span></code></pre></div>
+<pre><code>## [1] &quot;AB&quot; &quot;AC&quot; &quot;AD&quot; &quot;BC&quot; &quot;BD&quot; &quot;CD&quot;</code></pre>
+<p><strong>Propriedades, com leitura combinatória.</strong></p>
+<ul>
+<li><strong>Simetria</strong>: <span class="math inline">\(\binom{n}{r} = \binom{n}{n-r}\)</span>. Escolher os <span class="math inline">\(r\)</span> que <strong>entram</strong> equivale a escolher os <span class="math inline">\(n - r\)</span> que <strong>ficam de fora</strong>.</li>
+<li><strong>Relação de Pascal</strong>: <span class="math inline">\(\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}\)</span>. Fixe uma empresa específica: os grupos que
+a <strong>contêm</strong> escolhem os outros <span class="math inline">\(r - 1\)</span> entre <span class="math inline">\(n - 1\)</span>; os que <strong>não</strong> a contêm escolhem os <span class="math inline">\(r\)</span> entre <span class="math inline">\(n - 1\)</span>.</li>
+<li><strong>Soma</strong>: <span class="math inline">\(\sum_{r=0}^{n} \binom{n}{r} = 2^n\)</span>. Contar todos os subconjuntos por tamanho dá o mesmo que contar
+“entra ou não entra” para cada elemento.</li>
+<li><strong>Teorema binomial</strong>: <span class="math inline">\((a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^k b^{n-k}\)</span>. Ao expandir o produto de <span class="math inline">\(n\)</span> fatores
+<span class="math inline">\((a + b)\)</span>, o termo <span class="math inline">\(a^k b^{n-k}\)</span> aparece uma vez para cada escolha de quais <span class="math inline">\(k\)</span> fatores contribuem com <span class="math inline">\(a\)</span>. Essa
+identidade é a base da distribuição Binomial (Capítulo 3).</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-pascal"></span>
+<img src="livro-matf14_files/figure-html/fig-pascal-1.png" alt="Triângulo de Pascal: cada número é a soma dos dois acima dele; a linha n traz os coeficientes binomiais, que somam 2ⁿ." width="65%" />
+<p class="caption">
+Figura 2.9: Triângulo de Pascal: cada número é a soma dos dois acima dele; a linha n traz os coeficientes binomiais, que somam 2ⁿ.
+</p>
+</div>
+<p><strong>Combinações com repetição.</strong> Distribuir <span class="math inline">\(r\)</span> unidades <strong>idênticas</strong> entre <span class="math inline">\(n\)</span> categorias (ou escolher <span class="math inline">\(r\)</span>
+itens entre <span class="math inline">\(n\)</span> tipos, podendo repetir o tipo) tem <span class="math inline">\(\binom{n+r-1}{r}\)</span> possibilidades. A ideia (“estrelas e
+barras”): represente as <span class="math inline">\(r\)</span> unidades por estrelas e separe as <span class="math inline">\(n\)</span> categorias com <span class="math inline">\(n - 1\)</span> barras; cada
+arrumação de <span class="math inline">\(r\)</span> estrelas e <span class="math inline">\(n - 1\)</span> barras em <span class="math inline">\(n + r - 1\)</span> posições é uma distribuição. Um orçamento de 10
+parcelas de R$ 1 milhão distribuído entre 3 programas (algum pode ficar sem nada) tem <span class="math inline">\(\binom{12}{10} =
+\binom{12}{2} = 66\)</span> distribuições possíveis.</p>
+</div>
+<div id="da-contagem-à-probabilidade-exemplos-desenvolvidos" class="section level3 hasAnchor" number="2.4.7">
+<h3><span class="header-section-number">2.4.7</span> Da contagem à probabilidade: exemplos desenvolvidos<a href="tecnicas-contagem.html#da-contagem-%C3%A0-probabilidade-exemplos-desenvolvidos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Exemplo 1: Mega-Sena.</strong> Sorteiam-se 6 números entre 60, e todas as <span class="math inline">\(\binom{60}{6} = 50.063.860\)</span> combinações
+são igualmente prováveis. Para uma aposta simples de 6 números:</p>
+<ul>
+<li><strong>Sena</strong> (acertar os 6): 1 caso favorável, <span class="math inline">\(P = 1/50.063.860\)</span>.</li>
+<li><strong>Quina</strong> (acertar exatamente 5): escolher quais 5 dos 6 apostados foram sorteados, <span class="math inline">\(\binom{6}{5} = 6\)</span>, e qual
+dos 54 não apostados completa o sorteio, <span class="math inline">\(\binom{54}{1} = 54\)</span>: <span class="math inline">\(324\)</span> casos, <span class="math inline">\(P \approx 1/154.518\)</span>.</li>
+<li><strong>Quadra</strong> (exatamente 4): <span class="math inline">\(\binom{6}{4}\binom{54}{2} = 15 \times 1.431 = 21.465\)</span> casos, <span class="math inline">\(P \approx 1/2.332\)</span>.</li>
+<li>Uma aposta com <strong>7 números</strong> contém <span class="math inline">\(\binom{7}{6} = 7\)</span> combinações de 6: a chance de sena é 7 vezes maior,
+<span class="math inline">\(7/50.063.860\)</span>, a mesma de 7 apostas simples diferentes.</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="tecnicas-contagem.html#cb60-1" tabindex="-1"></a>total_ms <span class="ot">&lt;-</span> <span class="fu">choose</span>(<span class="dv">60</span>, <span class="dv">6</span>)</span>
+<span id="cb60-2"><a href="tecnicas-contagem.html#cb60-2" tabindex="-1"></a>casos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">sena =</span> <span class="dv">1</span>,</span>
+<span id="cb60-3"><a href="tecnicas-contagem.html#cb60-3" tabindex="-1"></a>           <span class="at">quina =</span> <span class="fu">choose</span>(<span class="dv">6</span>, <span class="dv">5</span>) <span class="sc">*</span> <span class="fu">choose</span>(<span class="dv">54</span>, <span class="dv">1</span>),</span>
+<span id="cb60-4"><a href="tecnicas-contagem.html#cb60-4" tabindex="-1"></a>           <span class="at">quadra =</span> <span class="fu">choose</span>(<span class="dv">6</span>, <span class="dv">4</span>) <span class="sc">*</span> <span class="fu">choose</span>(<span class="dv">54</span>, <span class="dv">2</span>))</span>
+<span id="cb60-5"><a href="tecnicas-contagem.html#cb60-5" tabindex="-1"></a>casos</span></code></pre></div>
+<pre><code>##   sena  quina quadra 
+##      1    324  21465</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="tecnicas-contagem.html#cb62-1" tabindex="-1"></a><span class="fu">round</span>(total_ms <span class="sc">/</span> casos)   <span class="co"># &quot;1 chance em ...&quot;</span></span></code></pre></div>
+<pre><code>##     sena    quina   quadra 
+## 50063860   154518     2332</code></pre>
+<p><strong>Exemplo 2: auditoria fiscal (distribuição hipergeométrica).</strong> Um lote tem 200 notas fiscais, das quais
+12 são irregulares. O auditor sorteia 20 notas, sem reposição. Como todos os <span class="math inline">\(\binom{200}{20}\)</span> subconjuntos
+de 20 notas são igualmente prováveis, a probabilidade de <strong>nenhuma</strong> nota irregular na amostra é</p>
+<p><span class="math display">\[
+P(\text{nenhuma}) = \frac{\binom{12}{0}\binom{188}{20}}{\binom{200}{20}} \approx 0,272,
+\]</span></p>
+<p>e a de encontrar <strong>pelo menos uma</strong> é <span class="math inline">\(1 - 0{,}272 = 0{,}728\)</span>.
+Em geral, com <span class="math inline">\(N\)</span> itens, <span class="math inline">\(K\)</span> “marcados” e amostra de <span class="math inline">\(n\)</span>, a probabilidade de exatamente <span class="math inline">\(k\)</span> marcados é
+<span class="math inline">\(\binom{K}{k}\binom{N-K}{n-k} / \binom{N}{n}\)</span>. Pela mesma lógica, se uma remessa de 150 celulares tem 40
+defeituosos e 20 são escolhidos ao acaso, <span class="math inline">\(P(\text{exatamente 9 defeituosos}) = \binom{40}{9}\binom{110}{11}/\binom{150}{20}
+\approx 0{,}0321\)</span>.</p>
+<div class="caixa-economia">
+<p><strong>Leitura econômica.</strong> Uma auditoria com 20 notas deixa passar um lote com 6% de irregularidades em mais de
+um quarto das vezes. Aumentar a amostra reduz esse risco, mas custa mais horas de auditor: a contagem permite
+calcular o tamanho de amostra que equilibra custo e risco de não detecção.</p>
+</div>
+<p><strong>Exemplo 3: com ou sem ordem, o resultado tem de ser o mesmo.</strong> Um lote tem 10 peças, 4 defeituosas;
+retiram-se 3 sem reposição. Probabilidade de exatamente 2 defeituosas:</p>
+<ul>
+<li><strong>Sem ordem</strong> (subconjuntos): <span class="math inline">\(\dfrac{\binom{4}{2}\binom{6}{1}}{\binom{10}{3}} = \dfrac{6 \times 6}{120} = 0{,}30\)</span>.</li>
+<li><strong>Com ordem</strong> (sequências): há <span class="math inline">\(A_{10,3} = 720\)</span> sequências; a peça boa pode estar em 3 posições, e em cada caso
+há <span class="math inline">\(4 \times 3 \times 6 = 72\)</span> sequências: <span class="math inline">\(\dfrac{3 \times 72}{720} = 0{,}30\)</span>.</li>
+</ul>
+<p>O importante é usar o <strong>mesmo</strong> critério no numerador e no denominador.</p>
+<p><strong>Exemplo 4: o problema do aniversário.</strong> Em um grupo de <span class="math inline">\(k\)</span> pessoas (ignorando anos bissextos e supondo os
+365 dias igualmente prováveis), qual a probabilidade de pelo menos duas fazerem aniversário no mesmo dia? As
+sequências de aniversários são <span class="math inline">\(365^k\)</span> (ordem importa, com repetição); as sequências <strong>sem</strong> coincidência são
+<span class="math inline">\(A_{365,k}\)</span> (sem repetição). Pelo complementar,</p>
+<p><span class="math display">\[
+P(\text{alguma coincidência}) = 1 - \frac{365 \times 364 \times \cdots \times (365 - k + 1)}{365^k}.
+\]</span></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tecnicas-contagem.html#cb64-1" tabindex="-1"></a>aniversario <span class="ot">&lt;-</span> <span class="cf">function</span>(k) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>((<span class="dv">365</span> <span class="sc">-</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">365</span> <span class="sc">/</span> <span class="dv">365</span>)</span>
+<span id="cb64-2"><a href="tecnicas-contagem.html#cb64-2" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">aniversario</span>(<span class="dv">23</span>), <span class="fu">aniversario</span>(<span class="dv">50</span>))</span></code></pre></div>
+<pre><code>## [1] 0.5072972 0.9703736</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig-aniversario"></span>
+<img src="livro-matf14_files/figure-html/fig-aniversario-1.png" alt="Problema do aniversário: com 23 pessoas a chance de coincidência já passa de 50%; com 50, chega a 97%." width="75%" />
+<p class="caption">
+Figura 2.10: Problema do aniversário: com 23 pessoas a chance de coincidência já passa de 50%; com 50, chega a 97%.
+</p>
+</div>
+<p>A intuição falha porque o número de <strong>pares</strong> de pessoas cresce rápido: com 23 pessoas há <span class="math inline">\(\binom{23}{2} = 253\)</span>
+pares, cada um com chance <span class="math inline">\(1/365\)</span> de coincidir.</p>
+<p><strong>Exemplo 5: a composição de uma diretoria foi obra do acaso?</strong> Uma empresa tem 20 executivos elegíveis, 12
+homens e 8 mulheres, e forma uma diretoria de 5 pessoas. Se a escolha fosse ao acaso, a probabilidade de
+<strong>nenhuma</strong> mulher seria</p>
+<p><span class="math display">\[
+\frac{\binom{12}{5}\binom{8}{0}}{\binom{20}{5}} = \frac{792}{15.504} \approx 0{,}051.
+\]</span></p>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> A empresa renova a diretoria a cada ano e, em três renovações seguidas (tratadas como
+independentes), só nomeou homens. Sob a hipótese de escolha ao acaso, isso teria probabilidade
+<span class="math inline">\(0{,}051^3 \approx 0{,}00013\)</span>. Esse cálculo <strong>prova</strong> discriminação? O que ele mostra é que a hipótese “ao acaso” explica
+mal os dados; outras explicações (critérios de promoção, trajetórias de carreira, rede de contatos) precisam
+ser investigadas. É exatamente o raciocínio dos testes de hipóteses, e aparece em processos judiciais sobre
+discriminação no mercado de trabalho.</p>
+</div>
+<div class="caixa-r">
+<p><strong>Uso do R.</strong> <code>factorial(n)</code> calcula <span class="math inline">\(n!\)</span>; <code>choose(n, r)</code> calcula <span class="math inline">\(\binom{n}{r}\)</span>; <code>prod((n - r + 1):n)</code> calcula
+<span class="math inline">\(A_{n,r}\)</span>; <code>combn(x, r)</code> lista as combinações; <code>expand.grid()</code> lista sequências (com repetição). Para conferir
+uma conta por simulação, sorteie com <code>sample()</code> muitas vezes e compare a frequência relativa com a fórmula.</p>
+</div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="tecnicas-contagem.html#cb66-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">placas =</span> <span class="dv">26</span><span class="sc">^</span><span class="dv">4</span> <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span>, <span class="at">copom =</span> <span class="dv">3</span><span class="sc">^</span><span class="dv">8</span>,</span>
+<span id="cb66-2"><a href="tecnicas-contagem.html#cb66-2" tabindex="-1"></a>  <span class="at">conselho =</span> <span class="fu">factorial</span>(<span class="dv">10</span>) <span class="sc">/</span> <span class="fu">factorial</span>(<span class="dv">7</span>), <span class="at">carteiras =</span> <span class="fu">choose</span>(<span class="dv">12</span>, <span class="dv">4</span>),</span>
+<span id="cb66-3"><a href="tecnicas-contagem.html#cb66-3" tabindex="-1"></a>  <span class="at">orcamento =</span> <span class="fu">choose</span>(<span class="dv">12</span>, <span class="dv">2</span>), <span class="at">trajetorias =</span> <span class="fu">choose</span>(<span class="dv">12</span>, <span class="dv">7</span>))</span></code></pre></div>
+<pre><code>##      placas       copom    conselho   carteiras   orcamento trajetorias 
+##   456976000        6561         720         495          66         792</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="tecnicas-contagem.html#cb68-1" tabindex="-1"></a><span class="co"># conferindo a auditoria por simulação: 100 mil amostras de 20 notas</span></span>
+<span id="cb68-2"><a href="tecnicas-contagem.html#cb68-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb68-3"><a href="tecnicas-contagem.html#cb68-3" tabindex="-1"></a>notas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">12</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">188</span>))</span>
+<span id="cb68-4"><a href="tecnicas-contagem.html#cb68-4" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(<span class="fl">1e5</span>, <span class="fu">sum</span>(<span class="fu">sample</span>(notas, <span class="dv">20</span>)) <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>## [1] 0.27135</code></pre>
+<div class="caixa-discussao">
+<p><strong>Discussão.</strong> Um analista estima a chance de “alta do dólar” <strong>ou</strong> “alta de juros” no trimestre como
+<span class="math inline">\(0{,}45 + 0{,}30 = 0{,}75\)</span>. Se a chance de ambos é 0,15, qual é o valor correto e qual foi o erro? Um concurso
+com 200 candidatos para 3 vagas idênticas tem quantos resultados? E se as vagas forem para cargos
+diferentes? Qual das duas contas corresponde a “ordem importa”?</p>
+</div>
+<p><strong>Exercício 6.</strong> <strong>a)</strong> De quantas formas um banco pode escolher 3 de suas 15 agências para um projeto-piloto?
+<strong>b)</strong> E se as 3 agências receberem versões diferentes do projeto (A, B e C)? <strong>c)</strong> Se a escolha em (a) for
+ao acaso e 5 das 15 agências ficam no interior, qual a probabilidade de as 3 escolhidas serem do interior?</p>
+<div class="caixa-resposta">
+<p><strong>a)</strong> <span class="math inline">\(\binom{15}{3} = 455\)</span> (grupos). <strong>b)</strong> <span class="math inline">\(A_{15,3} = 15 \times 14 \times 13 = 2.730\)</span> (a ordem, isto é, qual agência recebe qual
+versão, importa); confira que <span class="math inline">\(2.730 = 455 \times 3!\)</span>. <strong>c)</strong> <span class="math inline">\(\binom{5}{3}/\binom{15}{3} = 10/455 \approx 0{,}022\)</span>.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="conceitos-probabilidade.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="probabilidade-geometrica.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": null,
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

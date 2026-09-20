@@ -18,94 +18,438 @@
 
 class: inverse, center, middle
 
-# Aula 19: FDA de variável discreta
+# Aula 19: Função de distribuição acumulada
 
-### Provocação · Teoria · Aplicação · Discussão
+### Variáveis aleatórias discretas
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Um ponto a menos que faz toda a diferença
+## Roteiro da aula (100 minutos)
 
-&gt; \\(P(X\ge2)\\) e \\(P(X&amp;gt;2)\\) soam quase iguais em português. Para uma variável discreta que só assume
-&gt; valores inteiros, elas são a mesma coisa? E se \\(X\\) fosse contínua?
+.roteiro[
+
+| Tempo | Parte 1: a função de distribuição acumulada |
+|:---|:---|
+| 0–5 min | Provocação: "abaixo do teto da meta" |
+| 5–15 min | Eventos do tipo {X ≤ k}; definição da FDA |
+| 15–28 min | A FDA do dado e o seu gráfico |
+| 28–40 min | **Atividade 1**: duas moedas |
+| 40–50 min | **Atividade 2**: esboce a FDA; propriedades |
+
+| Tempo | Parte 2: aplicações da FDA |
+|:---|:---|
+| 0–8 min | Cuidado com ≤, &lt;, ≥ e &gt; |
+| 8–18 min | Sinistros de uma apólice |
+| 18–26 min | Franquia e bônus do seguro |
+| 26–34 min | Dados reais: FDA dos trimestres de queda do PIB |
+| 34–44 min | **Atividade 3**: um ponto a menos; lendo uma FDA |
+| 44–50 min | Uso do R e resumo |
+
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: a função de distribuição acumulada
+
+### 50 minutos
 
 ---
 
-## Definição
+## Provocação: "abaixo do teto da meta" .tempo[0–5 min]
+
+.pull-left[
+&lt;img src="images/inflacao_teto.jpg" alt="" width="100%" /&gt;
+
+.fonte[Fonte: O Globo (20/10/2025).]
+]
+
+.pull-right[
+Muitas perguntas econômicas não são sobre um valor **exato**, mas sobre ficar **abaixo** (ou
+**acima**) de um limite:
+
+- a inflação ao fim do ano ser **menor que** 4,5% (teto da meta);
+- a chuva num dia ser **menor que** 123 mm;
+- o número de acidentes num feriado ser **menor que** 50.
+
+.caixa-discussao[
+Como calcular \\(P(X \leq k)\\) a partir da distribuição de \\(X\\)? E por que "menor que" e "menor ou
+igual a" podem dar respostas **diferentes**?
+]
+]
+
+---
+
+## Probabilidades de eventos do tipo \\(\\{X \leq k\\}\\) .tempo[5–15 min]
+
+O cálculo é feito a partir da **distribuição** da variável aleatória: somamos as probabilidades de
+todos os valores **até** \\(k\\).
+
+**Ex.:** se \\(X \in \\{1, 2, 3, 4\\}\\), então
 
 $$
-F(x) = P(X\le x) = \sum\_{x\_i\le x} p(x\_i)
+P(X \leq 2) = P(X = 1) + P(X = 2).
 $$
-
-Para VA discreta, \\(F\\) é **função em escada**: constante entre valores possíveis, com salto de
-tamanho \\(p(x\_i)\\) em cada \\(x\_i\\).
 
 --
 
-## Cuidado com \\(\le\\) vs. \\(&amp;lt;\\)
+**Exemplo.** Seja \\(X\\) o número obtido ao lançar um dado honesto, com \\(P(X = k) = 1/6\\) para
+\\(k = 1, \ldots, 6\\). Qual é a probabilidade de:
+
+.pull-left[
+**a)** \\(X \leq 0\\)? **b)** \\(X \leq 3\\)?
+]
+
+.pull-right[
+**c)** \\(X \leq 1\\)? **d)** \\(X \leq 10\\)?
+]
+
+.clear[]
+
+--
+
+.caixa-resposta[
+**a)** \\(P(X \leq 0) = 0\\) (nenhum valor possível é \\(\leq 0\\)). **b)** \\(P(X \leq 3) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{1}{2}\\).
+
+**c)** \\(P(X \leq 1) = P(X = 1) = \frac{1}{6}\\). **d)** \\(P(X \leq 10) = P(X = 1) + \cdots + P(X = 6) = 1\\).
+]
+
+---
+
+## Função de distribuição acumulada
+
+Para uma variável aleatória \\(X\\), a **função de distribuição acumulada** (FDA) é
 
 $$
-P(X &amp;gt; x) = 1-F(x) \qquad P(X\ge x) = 1-F(x-1) \ \text{(para `\(X\)` inteira)}
+F(x) = P(X \leq x), \qquad -\infty &amp;lt; x &amp;lt; \infty.
 $$
 
-A diferença de um ponto **importa** no caso discreto, ao contrário do caso contínuo (Cap. 4).
+- \\(F(x)\\) também é chamada simplesmente de **função de distribuição** de \\(X\\).
+- Ela é definida para **todo número real** \\(x\\), e não só para os valores que \\(X\\) assume.
+
+--
+
+Para \\(X\\) discreta, com valores \\(x\_1 \leq x\_2 \leq x\_3 \leq \cdots\\):
+
+$$
+F(x) = \sum\_{i:\ x\_i \leq x} P(X = x\_i).
+$$
+
+.caixa-aplicacao[
+A FDA é para uma variável aleatória o que a **frequência relativa acumulada** é para uma tabela de
+frequências (Aula 03).
+]
+
+---
+
+## Exemplo: a FDA do dado .tempo[15–28 min]
+
+| \\(k\\) | 1 | 2 | 3 | 4 | 5 | 6 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 | 1/6 |
+
+Acumulando as probabilidades:
+
+| \\(x\\) | \\(x &amp;lt; 1\\) | \\(1 \leq x &amp;lt; 2\\) | \\(2 \leq x &amp;lt; 3\\) | \\(3 \leq x &amp;lt; 4\\) | \\(4 \leq x &amp;lt; 5\\) | \\(5 \leq x &amp;lt; 6\\) | \\(x \geq 6\\) |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| \\(F(x)\\) | 0 | 1/6 | 2/6 | 3/6 | 4/6 | 5/6 | 1 |
+
+--
+
+.caixa-discussao[
+Quanto vale \\(F(2{,}7)\\)? E \\(F(-3)\\)? E \\(F(100)\\)? (O dado não tem face 2,7, mas \\(F(2{,}7)\\) existe.)
+]
+
+--
+
+.caixa-resposta[
+\\(F(2{,}7) = P(X \leq 2{,}7) = P(X \leq 2) = 2/6\\); \\(F(-3) = 0\\); \\(F(100) = 1\\).
+]
+
+---
+
+## Gráfico da função de distribuição
+
+.pull-left[
+\\(F(x)\\) é uma **função degrau**:
+
+- é **constante** nos intervalos \\(&amp;#91;x\_{i-1}, x\_i)\\);
+- dá um **salto** de tamanho \\(P(X = x\_i)\\) em cada valor \\(x\_i\\).
+
+No gráfico:
+
+- **bolinha cheia**: o valor de \\(F\\) **no** ponto;
+- **bolinha vazia**: o valor **imediatamente antes** do salto.
+]
+
+.pull-right[
+&lt;img src="MATF14-19_files/figure-html/fda-dado-1.png" alt="" width="100%" /&gt;
+
+]
+
+---
+
+## Exercício 1: duas moedas .tempo[28–40 min]
+
+Seja \\(X\\) o número de caras no lançamento de duas moedas honestas. Já vimos que
+
+| \\(k\\) | 0 | 1 | 2 |
+|:---:|:---:|:---:|:---:|
+| \\(P(X = k)\\) | 1/4 | 2/4 | 1/4 |
+
+Calcule a função de distribuição acumulada de \\(X\\) e esboce o seu gráfico.
+
+--
+
+.pull-left[
+.caixa-resposta[
+| \\(x\\) | \\(F(x)\\) |
+|:---:|:---:|
+| \\(x &amp;lt; 0\\) | 0 |
+| \\(0 \leq x &amp;lt; 1\\) | 1/4 |
+| \\(1 \leq x &amp;lt; 2\\) | 3/4 |
+| \\(x \geq 2\\) | 1 |
+]
+]
+
+.pull-right[
+&lt;img src="MATF14-19_files/figure-html/fda-moedas-1.png" alt="" width="100%" /&gt;
+
+]
+
+---
+
+## Exercício 2: esboce a FDA .tempo[40–50 min]
+
+Seja \\(Y\\) uma variável aleatória com distribuição
+
+| \\(k\\) | 1 | 2 | 3 | 4 |
+|:---:|:---:|:---:|:---:|:---:|
+| \\(P(Y = k)\\) | 0,25 | 0,5 | 0,125 | 0,125 |
+
+Calcule a função de distribuição de \\(Y\\) e faça um esboço do seu gráfico.
+
+--
+
+.pull-left[
+.caixa-resposta[
+| \\(y\\) | \\(F(y)\\) |
+|:---:|:---:|
+| \\(y &amp;lt; 1\\) | 0 |
+| \\(1 \leq y &amp;lt; 2\\) | 0,25 |
+| \\(2 \leq y &amp;lt; 3\\) | 0,75 |
+| \\(3 \leq y &amp;lt; 4\\) | 0,875 |
+| \\(y \geq 4\\) | 1 |
+]
+]
+
+.pull-right[
+&lt;img src="images/fda_exercicio.png" alt="" width="68%" /&gt;
+
+]
+
+---
+
+## Propriedades da função de distribuição
+
+.pull-left[
+1. \\(F\\) é **não decrescente**: \\(a &amp;lt; b \Rightarrow F(a) \leq F(b)\\).
+2. \\(\displaystyle\lim\_{x \to \infty} F(x) = 1\\).
+3. \\(\displaystyle\lim\_{x \to -\infty} F(x) = 0\\).
+4. \\(F\\) é **contínua à direita**: o limite pela direita coincide com o valor da função (as
+   **bolinhas cheias** ficam no **início** de cada degrau).
+]
+
+.pull-right[
+&lt;img src="MATF14-19_files/figure-html/fda-props-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+--
+
+.caixa-aplicacao[
+**Da FDA de volta à distribuição:** o tamanho de cada salto é a probabilidade do ponto,
+\\(P(X = x\_i) = F(x\_i) - F(x\_{i-1})\\). Ex.: \\(P(Y = 2) = F(2) - F(1) = 0{,}75 - 0{,}25 = 0{,}5\\).
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Intervalo
+
+### 10 minutos
 
 ---
 
-## FDA do número de sinistros
+class: inverse, center, middle
 
+# Parte 2: aplicações da FDA
 
-``` r
-sinistros &lt;- tibble(x = 0:4, p = c(0.60, 0.25, 0.10, 0.04, 0.01)) |&gt;
-  mutate(F = cumsum(p))
-sinistros
-```
-
-```
-## # A tibble: 5 × 3
-##       x     p     F
-##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0  0.6   0.6 
-## 2     1  0.25  0.85
-## 3     2  0.1   0.95
-## 4     3  0.04  0.99
-## 5     4  0.01  1
-```
-
-&lt;img src="MATF14-19_files/figure-html/grafico-fda-1.png" alt="" width="504" /&gt;
+### 50 minutos
 
 ---
 
-## Lendo probabilidades da FDA
+## Cuidado: \\(\leq\\), \\(&amp;lt;\\), \\(\geq\\) e \\(&amp;gt;\\) .tempo[0–8 min]
 
-\\(F(2)\\) não vem de uma função mágica, é a soma na mão das probabilidades individuais até \\(x=2\\):
+Para uma variável discreta com valores **inteiros**:
 
-$$
-F(2) = p(0)+p(1)+p(2) = 0{,}60+0{,}25+0{,}10 = 0{,}95
-$$
+| Probabilidade | Em termos de \\(F\\) |
+|:---|:---|
+| \\(P(X \leq k)\\) | \\(F(k)\\) |
+| \\(P(X &amp;lt; k)\\) | \\(F(k - 1)\\) |
+| \\(P(X &amp;gt; k)\\) | \\(1 - F(k)\\) |
+| \\(P(X \geq k)\\) | \\(1 - F(k - 1)\\) |
+| \\(P(a &amp;lt; X \leq b)\\) | \\(F(b) - F(a)\\) |
 
-$$
-P(X\le 2) = F(2) = 0{,}95 \qquad P(X&amp;gt;2) = 1-F(2) = 0{,}05
-$$
-$$
-P(X\ge 2) = 1-F(1) = 1-0{,}85 = 0{,}15
-$$
+--
+
+.caixa-discussao[
+No caso discreto, incluir ou não um ponto **muda** a probabilidade, porque cada ponto pode ter
+probabilidade positiva. Na Unidade 4 (contínuas) veremos que \\(P(X = k) = 0\\) e essa diferença some.
+]
+
+---
+
+## Sinistros de uma apólice .tempo[8–18 min]
+
+Número de **sinistros por ano** em uma apólice de automóvel (dados ilustrativos):
+
+.pull-left[
+| \\(k\\) | \\(P(X = k)\\) | \\(F(k)\\) |
+|:---:|:---:|:---:|
+| 0 | 0,60 | 0,60 |
+| 1 | 0,25 | 0,85 |
+| 2 | 0,10 | 0,95 |
+| 3 | 0,04 | 0,99 |
+| 4 | 0,01 | 1,00 |
+]
+
+.pull-right[
+&lt;img src="MATF14-19_files/figure-html/fda-sinistros-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+--
+
+**a)** \\(P(X \leq 2)\\); **b)** \\(P(X &amp;gt; 2)\\); **c)** \\(P(X \geq 2)\\); **d)** \\(P(1 &amp;lt; X \leq 3)\\).
+
+.caixa-resposta[
+**a)** \\(F(2) = 0{,}95\\). **b)** \\(1 - F(2) = 0{,}05\\). **c)** \\(1 - F(1) = 0{,}15\\). **d)** \\(F(3) - F(1) = 0{,}99 - 0{,}85 = 0{,}14\\).
+]
+
+---
+
+## Franquia e bônus do seguro .tempo[18–26 min]
+
+A seguradora dá **desconto de bônus** a quem tem **no máximo 1** sinistro no ano e cobra **franquia
+agravada** de quem tem **3 ou mais**.
+
+--
+
+- Proporção de clientes com bônus: \\(P(X \leq 1) = F(1) = 0{,}85\\).
+- Proporção com franquia agravada: \\(P(X \geq 3) = 1 - F(2) = 1 - 0{,}95 = 0{,}05\\).
+
+--
+
+.caixa-economia[
+Em uma carteira de **10.000** apólices, a seguradora espera conceder bônus a cerca de 8.500 clientes
+e cobrar franquia agravada de cerca de 500. É com leituras da FDA como essas que se **precificam**
+descontos e penalidades.
+]
+
+---
+
+
+
+## Dados reais: a FDA dos trimestres de queda do PIB .tempo[26–34 min]
+
+.pull-left-40[
+Com a distribuição observada de \\(X\\) (trimestres de queda do PIB no ano, 1997–2025):
+
+.small[
+
+| \\(k\\) | \\(P(X = k)\\) | \\(F(k) = P(X \leq k)\\) |
+|:---:|:---:|:---:|
+| 0 | 0,517 | 0,517 |
+| 1 | 0,207 | 0,724 |
+| 2 | 0,172 | 0,897 |
+| 3 | 0,069 | 0,966 |
+| 4 | 0,034 | 1,000 |
+
+]
+]
+
+.pull-right-60[
+&lt;img src="MATF14-19_files/figure-html/fda-quedas-1.png" alt="" width="100%" /&gt;
+
+.caixa-discussao[
+Qual a probabilidade de um ano com **no máximo um** trimestre de queda? E com **mais de um**? Leia as duas respostas
+no gráfico e confira na tabela.
+]
+]
+
+---
+
+## Atividade 3: um ponto a menos .tempo[34–44 min]
+
+**1.** \\(P(X \geq 2)\\) e \\(P(X &amp;gt; 2)\\) soam quase iguais. Para os sinistros, elas valem 0,15 e 0,05.
+Explique a diferença **em palavras**.
+
+**2.** Um regulador exige que a probabilidade de uma empresa ter **mais de** 2 autuações ambientais
+por ano seja no máximo 5%. Outro redige a regra como "**2 ou mais**". Qual das duas regras é mais
+exigente?
+
+--
+
+**3.** Uma variável tem FDA com \\(F(3) = 0{,}4\\) e \\(F(3{,}5) = 0{,}4\\). O que isso diz sobre
+\\(P(3 &amp;lt; X \leq 3{,}5)\\)? E se fosse \\(F(3{,}5) = 0{,}7\\)?
+
+---
+
+## Atividade 3 (cont.): lendo uma FDA
+
+.pull-left[
+&lt;img src="MATF14-19_files/figure-html/fda-misterio-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+**4.** A figura mostra a FDA de uma variável \\(W\\).
+
+**a)** Quais são os valores possíveis de \\(W\\)?
+
+**b)** Reconstrua a distribuição \\(P(W = k)\\).
+
+**c)** Calcule \\(E(W)\\) (Aula 18).
+]
+
+.clear[]
+
+--
+
+.caixa-resposta[
+**a)** 0, 1, 2 e 3 (onde há saltos). **b)** \\(P(W = 0) = 0{,}1\\), \\(P(W = 1) = 0{,}4 - 0{,}1 = 0{,}3\\),
+\\(P(W = 2) = 0{,}8 - 0{,}4 = 0{,}4\\), \\(P(W = 3) = 1 - 0{,}8 = 0{,}2\\). **c)** \\(E(W) = 0{,}3 + 0{,}8 + 0{,}6 = 1{,}7\\).
+]
+
+---
+
+## Uso do R: FDA .tempo[44–50 min]
 
 
 ``` r
-sinistros$F[sinistros$x == 2]         # F(2)
+k &lt;- 0:4
+p &lt;- c(0.60, 0.25, 0.10, 0.04, 0.01)
+F &lt;- cumsum(p)                          # probabilidades acumuladas
+F[k == 2]                               # P(X &lt;= 2)
 ```
 
 ```
@@ -113,61 +457,58 @@ sinistros$F[sinistros$x == 2]         # F(2)
 ```
 
 ``` r
-1 - sinistros$F[sinistros$x == 1]     # P(X &gt;= 2) = 1 - F(1)
+1 - F[k == 1]                           # P(X &gt;= 2)
 ```
 
 ```
 ## [1] 0.15
 ```
 
----
+``` r
+diff(c(0, F))                           # de volta às probabilidades pontuais
+```
 
-## Contraste: uma FDA com saltos iguais
+```
+## [1] 0.60 0.25 0.10 0.04 0.01
+```
 
-&lt;img src="images/fda_lancamento_dado.png" alt="" width="40%" /&gt;
 
-Lançamento de um dado honesto: seis saltos, todos de tamanho \\(1/6\\) (distribuição uniforme
-discreta). Na FDA dos sinistros, os saltos têm tamanhos diferentes, proporcionais a cada
-\\(p(x\_i)\\), porque ali a distribuição não é uniforme. Mesma definição de \\(F\\), formato da escada
-diferente porque \\(p(x)\\) é diferente.
-
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (bloco central da aula)
+``` r
+plot(stepfun(k, c(0, F)), verticals = FALSE, main = "FDA dos sinistros", xlab = "x", ylab = "F(x)")
+```
 
 ---
 
-## Rodada 1: resolvendo a provocação inicial
+## Uso do R: FDA empírica e dados simulados
 
-**1.** Volte à pergunta de abertura: \\(P(X\ge2)\\) e \\(P(X&amp;gt;2)\\) são iguais para \\(X\\) discreta? Calcule as
-duas usando a tabela e confirme numericamente.
 
-**2.** Por que \\(P(X\ge2)\\) usa \\(F(1)\\) (não \\(F(2)\\)) na fórmula? Em que ponto exatamente \\(1-F(2)\\) e
-\\(1-F(1)\\) diferem, e o que cada expressão representa em termos do gráfico em escada?
+``` r
+set.seed(19)
+amostra &lt;- sample(0:4, 500, replace = TRUE, prob = p)
+Fn &lt;- ecdf(amostra)                     # FDA empírica: proporção de valores &lt;= x
+c(Fn(2), F[k == 2])                     # empírica x teórica
+```
+
+```
+## [1] 0.948 0.950
+```
+
+``` r
+plot(Fn, main = "FDA empírica (500 apólices simuladas)", xlab = "x", ylab = "F(x)")
+```
+
+&lt;img src="MATF14-19_files/figure-html/uso-r-3-1.png" alt="" width="85%" /&gt;
 
 ---
 
-## Rodada 2: leia outra FDA
+## Resumo
 
-&lt;img src="images/fda_exercicio.png" alt="" width="50%" /&gt;
-
-**3.** Nesse gráfico, o círculo **cheio** marca o ponto que pertence à escada (o valor de \\(F\\) ali),
-o círculo **aberto** marca o valor que a escada está deixando para trás no salto seguinte. Leia
-\\(F(2)\\), \\(P(X&amp;gt;2)\\) e \\(P(X=3)\\) diretamente do gráfico.
-
----
-
-## Rodada 2: continuação
-
-**4.** A partir só do gráfico anterior (sem nenhuma tabela de \\(p(x)\\)), como você recuperaria
-\\(p(x\_i)\\) para cada \\(x\_i\\)? Escreva a fórmula geral usando a diferença de dois valores de \\(F\\), e
-confira aplicando-a aos saltos que você acabou de ler.
-
-**5.** Um contrato de seguro paga um bônus se "o segurado tiver no máximo 1 sinistro no ano". Um
-segundo contrato paga o mesmo bônus se "o segurado tiver menos de 2 sinistros". Para uma variável
-discreta como esta, os dois contratos pagam exatamente nas mesmas condições? Formalize com \\(F\\).
+- A **função de distribuição acumulada** de \\(X\\) é \\(F(x) = P(X \leq x)\\), definida para todo \\(x\\) real.
+- Para \\(X\\) discreta, \\(F\\) é uma **função degrau**, com saltos de tamanho \\(P(X = x\_i)\\).
+- **Propriedades:** \\(0 \leq F \leq 1\\); não decrescente; tende a 0 em \\(-\infty\\) e a 1 em \\(+\infty\\);
+  contínua à direita.
+- **Leituras:** \\(P(X \leq k) = F(k)\\); \\(P(X &amp;gt; k) = 1 - F(k)\\); \\(P(a &amp;lt; X \leq b) = F(b) - F(a)\\).
+- No caso discreto, \\(\leq\\) e \\(&amp;lt;\\) **fazem diferença**.
 
 ---
 
@@ -175,7 +516,7 @@ class: inverse, center, middle
 
 # Próxima aula (04/11)
 
-## Distribuição de Bernoulli e Distribuição Binomial
+## Distribuição de Bernoulli e distribuição Binomial
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

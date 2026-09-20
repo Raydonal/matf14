@@ -15,171 +15,669 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+source("R/venn.R")
+tres <- data.frame(x0 = c(3.6, 6.4, 5), y0 = c(3.4, 3.4, 2.1), r = 1.7, nome = c("A", "B", "C"))
 ```
 
 class: inverse, center, middle
 
-# Aula 10: Propriedades de probabilidade e contagem
+# Aula 10: Axiomas de probabilidade e métodos de contagem
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min): axiomas de Kolmogorov · intervalo · Parte 2 (50 min): contagem
 
 ---
 
-## Uma armadilha clássica
+## Roteiro da aula (100 minutos)
 
-> Um analista calcula a probabilidade de "alta do dólar" ou "alta de juros" no trimestre somando
-> diretamente as duas probabilidades individuais: \\(0{,}45+0{,}30=0{,}75\\). Ele está contando algo
-> duas vezes, o quê?
+.roteiro[
+
+| Tempo | Parte 1: as regras da probabilidade |
+|:---|:---|
+| 0–5 min | Provocação: o risco de uma carteira de títulos |
+| 5–20 min | Espaço de probabilidade e axiomas de Kolmogorov |
+| 20–35 min | Consequências demonstradas: complementar, monotonicidade, adição, inclusão-exclusão |
+| 35–42 min | Boole e Bonferroni: limites para o risco |
+| 42–50 min | **Atividade 1**: tabelas e dívidas das famílias |
+
+| Tempo | Parte 2: contar para calcular |
+|:---|:---|
+| 0–8 min | Probabilidade clássica e quando ela falha |
+| 8–18 min | Princípios aditivo e multiplicativo |
+| 18–32 min | Permutações, arranjos e combinações |
+| 32–42 min | Da contagem à probabilidade: Mega-Sena, auditoria, aniversário |
+| 42–50 min | **Atividade 2** e Uso do R |
+
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: as regras da probabilidade
+
+### 50 minutos
 
 ---
 
-## Axiomas de Kolmogorov
+## Provocação: qual o risco da carteira? .tempo[0–5 min]
+
+Uma carteira tem **10 títulos** de empresas diferentes. Cada um tem probabilidade de **2%** de dar calote
+no próximo ano.
+
+.caixa-discussao[
+Qual a probabilidade de **pelo menos um** calote na carteira?
+
+- 20%, somando as dez probabilidades?
+- 2%, porque é a chance de cada título?
+- Não dá para saber?
+]
+
+--
+
+Até o fim desta parte vamos mostrar que, **sem nenhuma hipótese extra**, as regras da probabilidade já
+garantem que a resposta está **entre 2% e 20%**, e que o que decide o valor exato é a **dependência**
+entre os calotes.
+
+---
+
+## Por que precisamos de axiomas? .tempo[5–20 min]
+
+- A definição **clássica** exige resultados finitos e **igualmente prováveis**.
+- A **frequentista** exige **repetição** nas mesmas condições.
+
+--
+
+Mas queremos falar de probabilidade em situações:
+
+- **sem simetria**: a categoria de risco de um empréstimo (AA, A, B, C);
+- com **infinitos** resultados: quantos meses até a próxima alta de juros;
+- **contínuas**: a variação do PIB no trimestre.
+
+--
+
+.caixa-aplicacao[
+Em 1933, **Andrei Kolmogorov** inverteu a pergunta: em vez de dizer **o que** a probabilidade é, listou
+as poucas **regras** que **qualquer** atribuição de probabilidades precisa obedecer. Todo o resto é
+**demonstrado** a partir delas.
+]
+
+---
+
+## Espaço de probabilidade \\((\Omega, \mathcal{F}, P)\\)
+
+.caixa-aplicacao[
+**1.** \\(\Omega\\): o **espaço amostral**.
+
+**2.** \\(\mathcal{F}\\): a coleção dos **eventos**, os subconjuntos de \\(\Omega\\) que recebem probabilidade. Ela
+contém \\(\Omega\\), contém o **complementar** de cada evento e contém a **união** de qualquer sequência de
+eventos (uma **σ-álgebra**).
+
+**3.** \\(P\\): uma função que dá a cada evento um número \\(P(A)\\), obedecendo aos **axiomas**.
+]
+
+--
+
+.pull-left[
+**Por que essas exigências?** Se faz sentido perguntar \\(P(A)\\), faz sentido perguntar \\(P(A^c)\\) e
+\\(P(A \cup B)\\).
+]
+
+.pull-right[
+**Quantos eventos?** Com \\(\Omega\\) finito de \\(n\\) resultados, todo subconjunto é evento: \\(2^n\\) eventos.
+Com \\(\\{AA, A, B, C\\}\\): \\(2^4 = 16\\).
+]
+
+---
+
+## Os axiomas de Kolmogorov
+
+.caixa-aplicacao[
+**(A1) Não negatividade:** \\(P(A) \geq 0\\) para todo evento \\(A\\).
+
+**(A2) Normalização:** \\(P(\Omega) = 1\\).
+
+**(A3) Aditividade enumerável:** se \\(A\_1, A\_2, A\_3, \ldots\\) são **disjuntos dois a dois**, então
 
 $$
-P(A)\ge 0 \qquad P(\Omega)=1 \qquad A\cap B=\emptyset \Rightarrow P(A\cup B)=P(A)+P(B)
+P\left(\bigcup\_{i=1}^{\infty} A\_i\right) = \sum\_{i=1}^{\infty} P(A\_i).
+$$
+]
+
+--
+
+- (A3) fala de sequências **infinitas** porque espaços como \\(\\{0, 1, 2, \ldots\\}\\) exigem somar infinitas
+  parcelas.
+- A versão com duas ou \\(n\\) parcelas é uma **consequência** (próximo slide).
+
+---
+
+## Consequências (demonstradas em 1 linha cada) .tempo[20–35 min]
+
+**P1.** \\(P(\emptyset) = 0\\). Tome \\(A\_1 = \Omega\\) e \\(A\_2 = A\_3 = \cdots = \emptyset\\) em (A3): \\(P(\Omega) = P(\Omega) + \sum\_{i \geq 2} P(\emptyset)\\),
+logo cada \\(P(\emptyset) = 0\\).
+
+--
+
+**P2. Aditividade finita.** Complete \\(A\_1, \ldots, A\_n\\) com conjuntos vazios e use (A3) e P1.
+
+--
+
+**P3. Complementar.** \\(A\\) e \\(A^c\\) são disjuntos e \\(A \cup A^c = \Omega\\), logo \\(P(A) + P(A^c) = 1\\):
+
+$$
+P(A^c) = 1 - P(A).
 $$
 
 --
 
-Consequências imediatas:
+**P4. Monotonicidade.** Se \\(A \subset B\\), então \\(B = A \cup (B \cap A^c)\\), disjuntos, e
 
 $$
-P(A^c) = 1-P(A) \qquad P(\emptyset)=0 \qquad P(A\cup B) = P(A)+P(B)-P(A\cap B)
+P(B) = P(A) + P(B \cap A^c) \geq P(A).
 $$
 
-A última é a **regra da adição geral**, subtrai a interseção para não contar duas vezes.
+**P5.** \\(0 \leq P(A) \leq 1\\): use (A1) e P4 com \\(B = \Omega\\).
 
 ---
 
-## Espaço equiprovável e contagem
+## Regra da adição
 
-Quando todo resultado de \\(\Omega\\) (finito) é igualmente provável:
+.pull-left-60[
+Para **quaisquer** eventos \\(A\\) e \\(B\\):
 
 $$
-P(A) = \frac{|A|}{|\Omega|}
+P(A \cup B) = P(A) + P(B) - P(A \cap B).
+$$
+
+**Demonstração.** \\(A \cup B = A \cup (B \cap A^c)\\) e \\(B = (B \cap A) \cup (B \cap A^c)\\), ambas disjuntas. Por P2:
+
+$$
+P(A \cup B) = P(A) + P(B \cap A^c)
+$$
+
+$$
+P(B \cap A^c) = P(B) - P(A \cap B)
+$$
+
+Substituindo, sai a regra.
+]
+
+.pull-right-40[
+```{r venn-adicao, echo=FALSE, fig.height=3, fig.width=5, out.width="100%"}
+venn(function(a, b, c) a | b, dois, data.frame(x = c(3, 5, 7), y = 2.9, lab = c("A∩Bᶜ", "A∩B", "B∩Aᶜ")))
+```
+
+.small[
+Somar \\(P(A) + P(B)\\) conta a região central **duas vezes**.
+]
+]
+
+---
+
+## Inclusão-exclusão para três eventos
+
+.pull-left-60[
+$$
+\begin{aligned}
+P(A \cup B \cup C) = {} & P(A) + P(B) + P(C) \\\\
+& - P(A \cap B) - P(A \cap C) - P(B \cap C) \\\\
+& + P(A \cap B \cap C)
+\end{aligned}
+$$
+
+A região central é somada **3 vezes**, subtraída **3 vezes** e precisa voltar **1 vez**.
+]
+
+.pull-right-40[
+```{r venn-tres, echo=FALSE, fig.height=3.4, fig.width=5, out.width="100%"}
+venn(function(a, b, c) a | b | c, tres,
+     data.frame(x = c(5, 3.3, 6.7, 5, 4.2, 5.8, 5), y = c(4.1, 3.7, 3.7, 1.3, 2.7, 2.7, 3.1),
+                lab = c("2", "1", "1", "1", "2", "2", "3")))
+```
+
+.small[
+Número de vezes que cada região entra em \\(P(A) + P(B) + P(C)\\).
+]
+]
+
+---
+
+## Desigualdades de Boole e Bonferroni .tempo[35–42 min]
+
+**Boole:** \\(P(A\_1 \cup \cdots \cup A\_n) \leq P(A\_1) + \cdots + P(A\_n)\\), porque as interseções só **diminuem** a união.
+
+**Bonferroni:** \\(P(A \cap B) \geq P(A) + P(B) - 1\\), porque \\(P(A \cup B) \leq 1\\).
+
+--
+
+.caixa-economia[
+**Voltando à carteira de 10 títulos (2% cada):**
+
+- **Boole:** \\(P(\text{pelo menos um calote}) \leq 10 \times 0{,}02 = 0{,}20\\);
+- **monotonicidade:** \\(P(\text{pelo menos um}) \geq 0{,}02\\) (contém o calote do primeiro título);
+- se os calotes fossem **independentes** (Aula 12): \\(1 - 0{,}98^{10} \approx 0{,}183\\);
+- se todos ocorressem **juntos** (crise sistêmica): \\(0{,}02\\).
+]
+
+--
+
+.caixa-economia[
+**Bonferroni:** se 70% das empresas inovaram e 60% exportam, **pelo menos** \\(0{,}70 + 0{,}60 - 1 = 30\\%\\) fazem
+as duas coisas, qualquer que seja a relação entre inovar e exportar.
+]
+
+---
+
+## Como atribuir probabilidades
+
+Os axiomas dão as **regras**; os **números** vêm do problema.
+
+.small[
+
+| Espaço amostral | Como atribuir | Exemplo |
+|:---|:---|:---|
+| **Finito** (não equiprovável) | pesos \\(p(\omega) \geq 0\\) somando 1 | novos empréstimos: \\(p(AA) = 0{,}15\\), \\(p(A) = 0{,}45\\), \\(p(B) = 0{,}30\\), \\(p(C) = 0{,}10\\) |
+| **Enumerável infinito** | série que soma 1 | mês \\(k\\) da primeira alta de juros: \\(p(k) = (1/2)^k\\) |
+| **Finito equiprovável** | \\(P(A) = \\#A / \\#\Omega\\) (clássica) | Mega-Sena, sorteio de empresas |
+| **Contínuo** | comprimentos, áreas, densidades | tempo de espera, PIB (Aula 11 e Unidade 4) |
+
+]
+
+--
+
+.caixa-resposta[
+No primeiro exemplo, \\(P(\text{risco elevado}) = p(B) + p(C) = 0{,}40\\). No segundo,
+\\(\sum\_{k \geq 1} (1/2)^k = 1\\) (série geométrica) e \\(P(k \geq 4) = 1 - \frac12 - \frac14 - \frac18 = \frac18\\).
+]
+
+---
+
+## Atividade 1 (duplas) .tempo[42–50 min]
+
+.pull-left-40[
+.small[
+
+| Curso | Masc. | Fem. | Total |
+|:---|:---:|:---:|:---:|
+| Medicina | 70 | 40 | 110 |
+| Direito | 15 | 15 | 30 |
+| História | 10 | 20 | 30 |
+| Física | 20 | 10 | 30 |
+| **Total** | **115** | **85** | **200** |
+
+]
+]
+
+.pull-right-60[
+.caixa-atividade[
+**1.** Um aluno é sorteado. Calcule **a)** \\(P(\text{Direito})\\); **b)** \\(P(\text{homem ou Direito})\\);
+**c)** \\(P(\text{nem homem nem Direito})\\) usando De Morgan.
+
+**2.** Numa cidade, 45% das famílias têm cartão de crédito (\\(A\\)), 30% financiamento imobiliário (\\(B\\)) e
+20% consignado (\\(C\\)); 15% têm \\(A\\) e \\(B\\), 10% \\(A\\) e \\(C\\), 5% \\(B\\) e \\(C\\), 3% os três. Qual a probabilidade
+de **nenhuma** dessas dívidas?
+]
+]
+
+---
+
+## Atividade 1: respostas
+
+.caixa-resposta[
+**1a)** \\(30/200 = 0{,}15\\).
+
+**1b)** \\(P(H \cup D) = \frac{115}{200} + \frac{30}{200} - \frac{15}{200} = \frac{130}{200} = 0{,}65\\).
+
+**1c)** \\(P(H^c \cap D^c) = P((H \cup D)^c) = 1 - 0{,}65 = 0{,}35\\). Conferindo: mulheres fora do Direito, \\(70/200\\).
+]
+
+.caixa-resposta[
+**2.** \\(P(A \cup B \cup C) = 0{,}45 + 0{,}30 + 0{,}20 - 0{,}15 - 0{,}10 - 0{,}05 + 0{,}03 = 0{,}68\\).
+
+\\(P(\text{nenhuma}) = P(A^c \cap B^c \cap C^c) = 1 - 0{,}68 = 0{,}32\\).
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: contar para calcular
+
+### 50 minutos
+
+---
+
+## Probabilidade clássica: um caso particular .tempo[0–8 min]
+
+.caixa-aplicacao[
+Se \\(\Omega\\) tem \\(n\\) resultados **igualmente prováveis**, cada um recebe peso \\(1/n\\) e
+
+$$
+P(A) = \frac{\\#A}{\\#\Omega} = \frac{\text{casos favoráveis}}{\text{casos possíveis}}.
+$$
+]
+
+--
+
+.pull-left[
+**Cuidado 1: soma de dois dados.** As somas vão de 2 a 12 (11 valores), mas
+\\(P(\text{soma} = 7) \neq 1/11\\). Os resultados equiprováveis são os **36 pares**; a soma 7 aparece em 6:
+\\(P = 6/36\\).
+
+**Cuidado 2 (d'Alembert):** em duas moedas, "0, 1 ou 2 caras" **não** têm chance \\(1/3\\) cada:
+\\(P(\text{uma cara}) = 2/4\\).
+]
+
+.pull-right[
+```{r soma-dados, echo=FALSE, fig.height=3.2, fig.width=5, out.width="100%"}
+pares <- expand.grid(d1 = 1:6, d2 = 1:6)
+soma <- as.data.frame(table(soma = pares$d1 + pares$d2)) |> mutate(p = Freq / 36)
+ggplot(soma, aes(soma, p)) + geom_col(fill = "#3b5bdb") +
+  geom_hline(yintercept = 1/11, linetype = "dashed", color = "#c0392b") +
+  annotate("text", x = 10, y = 1/11 + 0.015, label = "1/11 (errado)", color = "#c0392b", size = 4.5) +
+  labs(x = "Soma dos dois dados", y = "Probabilidade") + theme_minimal(base_size = 13)
+```
+
+]
+
+---
+
+## Princípios aditivo e multiplicativo .tempo[8–18 min]
+
+**Aditivo:** 8 fundos de renda fixa **ou** 5 de ações: \\(8 + 5 = 13\\) opções.
+
+**Multiplicativo:** etapas sucessivas com \\(n\_1, n\_2, \ldots, n\_k\\) opções: \\(n\_1 \times n\_2 \times \cdots \times n\_k\\).
+
+```{r arvore, echo=FALSE, fig.height=2.6, fig.width=9, out.width="72%"}
+bancos <- tibble(x = 3, y = c(2, 0, -2), lab = c("Banco 1", "Banco 2", "Banco 3"))
+prazos <- tibble(x = 7, y = c(2.6, 1.4, 0.6, -0.6, -1.4, -2.6), lab = rep(c("24 meses", "36 meses"), 3),
+                 y0 = rep(c(2, 0, -2), each = 2))
+ggplot() +
+  geom_segment(data = bancos, aes(x = 0, y = 0, xend = x, yend = y), color = "grey50") +
+  geom_segment(data = prazos, aes(x = 3, y = y0, xend = x, yend = y), color = "grey50") +
+  geom_point(aes(0, 0)) + geom_label(data = bancos, aes(x, y, label = lab), fill = "#dbe4ff", size = 5) +
+  geom_label(data = prazos, aes(x, y, label = lab), fill = "#fff3bf", size = 5) +
+  annotate("text", x = 8.6, y = prazos$y, label = paste("proposta", 1:6), hjust = 0, size = 5) +
+  xlim(-0.3, 10.5) + theme_void()
+```
+
+--
+
+.small[
+- **Placas Mercosul** (LLL NLNN): \\(26^4 \times 10^3 = 456.976.000\\).
+- **Trajetórias da Selic** em 8 reuniões do Copom: \\(3^8 = 6.561\\). **Eventos** de um \\(\Omega\\) com \\(n\\) resultados: \\(2^n\\).
+]
+
+---
+
+## Os quatro tipos de seleção
+
+Selecionar \\(r\\) objetos entre \\(n\\). Duas perguntas decidem a fórmula: **a ordem importa? pode repetir?**
+
+| | **Com repetição** | **Sem repetição** |
+|:---|:---:|:---:|
+| **Ordem importa** | \\(n^r\\) | \\(A\_{n,r} = \dfrac{n!}{(n-r)!}\\) |
+| **Ordem não importa** | \\(\binom{n+r-1}{r}\\) | \\(\binom{n}{r} = \dfrac{n!}{r!\,(n-r)!}\\) |
+
+--
+
+.small[
+
+| Situação | Ordem? | Repete? | Conta |
+|:---|:---:|:---:|:---|
+| Senha de 4 dígitos | sim | sim | \\(10^4 = 10.000\\) |
+| Presidente, vice e tesoureiro entre 10 conselheiros | sim | não | \\(10 \times 9 \times 8 = 720\\) |
+| Carteira de 4 ações entre 12 aprovadas | não | não | \\(\binom{12}{4} = 495\\) |
+| 10 parcelas iguais de orçamento entre 3 programas | não | sim | \\(\binom{12}{2} = 66\\) |
+
+]
+
+---
+
+## Permutações: ordenar tudo .tempo[18–32 min]
+
+**Ordenações** de \\(n\\) objetos distintos: \\(n\\) opções para o 1º lugar, \\(n - 1\\) para o 2º, ...
+
+$$
+n! = n \times (n-1) \times \cdots \times 2 \times 1, \qquad 0! = 1
+$$
+
+\\(5! = 120\\), \\(10! = 3.628.800\\), \\(20! \approx 2{,}4 \times 10^{18}\\): listar é inviável.
+
+--
+
+- Um comitê ordena **5 projetos** por prioridade: \\(5! = 120\\) rankings. Ao acaso, o melhor fica em 1º com
+  probabilidade \\(4!/5! = 1/5\\).
+- 6 homens e 4 mulheres ordenados por nota: \\(10!\\); separadamente: \\(6! \cdot 4! = 17.280\\).
+
+--
+
+.caixa-aplicacao[
+**Com elementos repetidos:** \\(\dfrac{n!}{n\_1!\, n\_2! \cdots n\_k!}\\). Em 12 meses, um ativo subiu em 7 e caiu em 5:
+\\(12!/(7!\,5!) = 792\\) trajetórias possíveis.
+]
+
+---
+
+## Arranjos e combinações
+
+.pull-left[
+**Arranjo**: sequência **sem repetição**, a ordem importa (cargos, colocações).
+
+$$
+A\_{n,r} = n(n-1)\cdots(n-r+1) = \frac{n!}{(n-r)!}
+$$
+
+3 primeiros colocados de uma licitação com 8 empresas: \\(A\_{8,3} = 336\\).
+]
+
+.pull-right[
+**Combinação**: **subconjunto**, a ordem não importa (grupos, carteiras).
+
+$$
+\binom{n}{r} = \frac{A\_{n,r}}{r!} = \frac{n!}{r!\,(n-r)!}
+$$
+
+Cada grupo de \\(r\\) aparece \\(r!\\) vezes entre os arranjos.
+]
+
+.clear[]
+
+--
+
+.caixa-aplicacao[
+**Vendo a divisão por \\(r!\\):** carteiras de 2 empresas entre \\(\\{A, B, C, D\\}\\). Pares **ordenados**: \\(A\_{4,2} = 12\\)
+(AB, BA, AC, CA, ...). Carteiras: \\(12/2! = 6\\) (AB, AC, AD, BC, BD, CD).
+]
+
+---
+
+## Propriedades das combinações
+
+.pull-left-60[
+- **Simetria:** \\(\binom{n}{r} = \binom{n}{n-r}\\): escolher quem **entra** = escolher quem **fica de fora**.
+- **Pascal:** \\(\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}\\): grupos **com** uma empresa fixada + grupos **sem** ela.
+- **Soma:** \\(\sum\_{r=0}^{n} \binom{n}{r} = 2^n\\): todos os subconjuntos.
+- **Binômio:** \\((a + b)^n = \sum\_{k} \binom{n}{k} a^k b^{n-k}\\), base da distribuição **Binomial** (Unidade 3).
+]
+
+.pull-right-40[
+```{r pascal, echo=FALSE, fig.height=3.4, fig.width=5, out.width="100%"}
+pascal <- map_dfr(0:6, function(n) tibble(n = n, r = 0:n, v = choose(n, 0:n)))
+ggplot(pascal, aes(x = r - n / 2, y = -n, label = v)) + geom_label(fill = "#fff3bf", size = 4.5) +
+  annotate("text", x = 4.3, y = -(0:6), label = 2^(0:6), hjust = 1, color = "grey40", size = 4) +
+  annotate("text", x = 4.3, y = 0.8, label = "soma", hjust = 1, color = "grey40", size = 4) +
+  xlim(-3.6, 4.4) + theme_void()
+```
+
+]
+
+---
+
+## Da contagem à probabilidade: Mega-Sena .tempo[32–42 min]
+
+Sorteiam-se 6 números entre 60: \\(\binom{60}{6} = 50.063.860\\) resultados igualmente prováveis.
+
+| Prêmio | Casos favoráveis | Probabilidade |
+|:---|:---|:---|
+| **Sena** (6 acertos) | \\(1\\) | 1 em 50.063.860 |
+| **Quina** (exatamente 5) | \\(\binom{6}{5}\binom{54}{1} = 324\\) | 1 em 154.518 |
+| **Quadra** (exatamente 4) | \\(\binom{6}{4}\binom{54}{2} = 21.465\\) | 1 em 2.332 |
+
+--
+
+.caixa-discussao[
+Uma aposta com **7 números** contém \\(\binom{7}{6} = 7\\) combinações de 6. A chance de sena é maior, menor ou igual
+à de 7 apostas simples diferentes?
+]
+
+---
+
+## Auditoria fiscal: a distribuição hipergeométrica
+
+Um lote tem **200 notas fiscais**, **12 irregulares**. O auditor sorteia **20**, sem reposição.
+
+$$
+P(\text{nenhuma irregular}) = \frac{\binom{12}{0}\binom{188}{20}}{\binom{200}{20}} \approx 0{,}272
 $$
 
 --
 
-| Regra | Fórmula | Quando usar |
-|---|---|---|
-| Multiplicativa | \\(k\_1\times k\_2\times\cdots\\) | escolhas sucessivas independentes |
-| Permutação | \\(n!\\) | ordenar \\(n\\) objetos distintos |
-| Combinação | \\(\binom{n}{k}=\frac{n!}{k!(n-k)!}\\) | escolher \\(k\\) de \\(n\\), ordem não importa |
-
----
-
-class: inverse, center, middle
-
-# Bloco 2: Aplicação
-
----
-
-## Caindo na malha fina
-
-A Receita Federal cruza renda declarada e resultado do cruzamento (dados em milhares de
-declarações, 80,2 milhões no total):
-
-| Faixa de renda | Malha fina | Não caiu | Total |
-|---|---|---|---|
-| D, abaixo de 25 mil | 90 | 14010 | 14100 |
-| C, 25 a 49.999 | 71 | 30629 | 30700 |
-| B, 50 a 99.999 | 69 | 24631 | 24700 |
-| A, acima de 100 mil | 80 | 10620 | 10700 |
-| **Total** | **310** | **79890** | **80200** |
-
-```{r malha-fina}
-P_Z  <- 310/80200                    # caiu na malha fina
-P_Y  <- 10700/80200                  # faixa A (renda mais alta)
-P_ZY <- 80/80200                     # os dois juntos
-P_Y + P_Z - P_ZY                     # regra da adição: P(Y ∪ Z)
-```
-
----
-
-## Auditoria por amostragem
-
-Um auditor escolhe 3 contratos, de 10, para checagem, a ordem não importa.
-
-```{r combinacoes}
-choose(10, 3)   # total de amostras possíveis de tamanho 3
-```
-
-Se 2 dos 10 contratos têm um problema real, qual a probabilidade de a amostra sorteada pegar
-**pelo menos um** deles?
-
-```{r pelo-menos-um}
-p_nenhum <- choose(8, 3) / choose(10, 3)   # nenhum dos 2 problemáticos entra
-1 - p_nenhum
-```
-
----
-
-## Resolvendo a armadilha da abertura
-
-Probabilidade de uma empresa ser afetada por "alta de juros" (\\(J\\)) **ou** "desvalorização
-cambial" (\\(C\\)) no trimestre, com \\(P(J)=0{,}4\\), \\(P(C)=0{,}3\\), \\(P(J\cap C)=0{,}15\\) (não são
-mutuamente exclusivos, o Banco Central às vezes sobe juros em resposta à pressão cambial):
-
 $$
-P(J\cup C) = 0{,}4 + 0{,}3 - 0{,}15 = 0{,}55
+P(\text{pelo menos uma}) = 1 - 0{,}272 = 0{,}728
 $$
 
-O erro do analista da abertura: contar duas vezes o cenário em que **ambos** ocorrem juntos.
+.caixa-aplicacao[
+Em geral: \\(N\\) itens, \\(K\\) marcados, amostra de \\(n\\):
+\\(P(\text{exatamente } k \text{ marcados}) = \dfrac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}\\).
+]
+
+--
+
+.caixa-economia[
+Uma auditoria de 20 notas deixa passar um lote com 6% de irregularidades em **mais de um quarto** das vezes.
+A contagem permite escolher o tamanho de amostra que equilibra **custo** e **risco de não detecção**.
+]
 
 ---
 
-class: inverse, center, middle
+## O problema do aniversário
 
-# Bloco 3: Discussão (bloco central da aula)
+.pull-left[
+Em um grupo de \\(k\\) pessoas, qual a chance de **pelo menos duas** fazerem aniversário no mesmo dia?
 
----
+- Sequências de aniversários: \\(365^k\\) (ordem importa, com repetição).
+- Sem coincidência: \\(A\_{365,k}\\) (sem repetição).
 
-## Rodada 1
+$$
+P = 1 - \frac{365 \times 364 \times \cdots \times (365-k+1)}{365^k}
+$$
 
-**1.** No exemplo de juros e câmbio, explique, em palavras, não em símbolos, por que
-\\(P(J)+P(C)\\) conta o cenário "os dois ocorrem" duas vezes, e por que subtrair \\(P(J\cap C)\\) uma única
-vez corrige isso.
+Com 23 pessoas: **50,7%**. Com 50: **97%**.
+]
 
-**2.** Recalcule a probabilidade da auditoria por amostragem se, em vez de 2, houvesse 4 dos 10
-contratos problemáticos. A probabilidade de pegar pelo menos um cresce muito? Antes de calcular,
-arrisque um palpite sobre a direção do efeito.
-
----
-
-## Rodada 2
-
-**3.** Em que situação prática você usaria permutação (ordem importa) em vez de combinação (ordem
-não importa) para contar possibilidades? Dê um exemplo econômico de cada, por exemplo, formar uma
-carteira de ações vs. definir a ordem de execução de um conjunto de operações.
-
-**4.** Um concurso público tem 200 candidatos disputando 3 vagas idênticas. Isso é um problema de
-permutação ou de combinação? E se as 3 vagas fossem para cargos diferentes (1º, 2º, 3º lugar com
-funções distintas)?
-
----
-
-class: inverse, center, middle
-
-# Bloco 4: Uso do R
-
----
-
-```{r uso-r, eval=FALSE}
-choose(10, 3)      # combinações C(10,3)
-factorial(5)        # permutações 5!
-choose(8, 3) / choose(10, 3)   # probabilidade via razão de contagens
+.pull-right[
+```{r aniversario, echo=FALSE, fig.height=3.6, fig.width=5, out.width="100%"}
+aniv <- tibble(k = 1:60, p = sapply(1:60, function(k) 1 - prod((365 - k + 1):365 / 365)))
+ggplot(aniv, aes(k, p)) + geom_line(color = "#3b5bdb", linewidth = 1.2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  geom_point(data = filter(aniv, k %in% c(23, 50)), color = "#c0392b", size = 3) +
+  labs(x = "Número de pessoas", y = "P(coincidência)") + theme_minimal(base_size = 14)
 ```
 
-`choose(n, k)` calcula \\(\binom{n}{k}\\) diretamente, evita overflow de calcular \\(n!\\), \\(k!\\) e
-\\((n-k)!\\) separadamente para \\(n\\) grande.
+.small[
+Com 23 pessoas há \\(\binom{23}{2} = 253\\) **pares**.
+]
+]
+
+---
+
+## Atividade 2 (duplas) .tempo[42–50 min]
+
+.caixa-atividade[
+**1.** De quantas formas um banco escolhe **3 de suas 15 agências** para um projeto-piloto? E se as 3 recebem
+versões **diferentes** (A, B e C) do projeto?
+
+**2.** Se a escolha em (1) for ao acaso e **5 das 15** agências ficam no interior, qual a probabilidade de as 3
+escolhidas serem do interior?
+
+**3.** Uma empresa tem 20 executivos elegíveis, 12 homens e 8 mulheres, e forma uma diretoria de 5. Se a escolha
+fosse ao acaso, qual a probabilidade de **nenhuma** mulher? Se isso acontecer três anos seguidos, o que você
+concluiria?
+]
+
+---
+
+## Atividade 2: respostas
+
+.caixa-resposta[
+**1.** \\(\binom{15}{3} = 455\\) grupos. Com versões diferentes, a ordem importa: \\(A\_{15,3} = 15 \times 14 \times 13 = 2.730 = 455 \times 3!\\).
+
+**2.** \\(\binom{5}{3}/\binom{15}{3} = 10/455 \approx 0{,}022\\).
+
+**3.** \\(\binom{12}{5}/\binom{20}{5} = 792/15.504 \approx 0{,}051\\). Três anos seguidos (independentes): \\(0{,}051^3 \approx 0{,}00013\\).
+]
+
+.caixa-discussao[
+Isso **prova** discriminação? Mostra que a hipótese "ao acaso" explica mal os dados; outras explicações
+(critérios de promoção, trajetórias de carreira) precisam ser investigadas. É o raciocínio dos **testes de
+hipóteses**.
+]
+
+---
+
+## Uso do R: contagem
+
+```{r uso-r-1}
+factorial(5)                          # 5! rankings de projetos
+prod(15:13)                           # arranjo A(15,3)
+choose(15, 3)                         # combinações
+choose(60, 6) / c(1, 6 * 54, 15 * choose(54, 2))   # Mega-Sena: "1 em ..."
+choose(188, 20) / choose(200, 20)     # auditoria: nenhuma irregular
+1 - prod(365:343 / 365)               # aniversário, 23 pessoas
+```
+
+---
+
+## Uso do R: conferindo por simulação
+
+```{r uso-r-2}
+set.seed(2026)
+notas <- c(rep(1, 12), rep(0, 188))              # 1 = irregular
+mean(replicate(20000, sum(sample(notas, 20)) == 0))   # perto de 0,272
+
+aniv_sim <- replicate(20000, any(duplicated(sample(1:365, 23, replace = TRUE))))
+mean(aniv_sim)                                   # perto de 0,507
+```
+
+.caixa-r[
+**Exercício:** simule a soma de dois dados 10.000 vezes com `sample(1:6, 10000, replace = TRUE)` e confira que
+a proporção de somas iguais a 7 fica perto de \\(6/36\\), e não de \\(1/11\\).
+]
+
+---
+
+## Resumo
+
+- **Espaço de probabilidade** \\((\Omega, \mathcal{F}, P)\\); **axiomas**: \\(P(A) \geq 0\\), \\(P(\Omega) = 1\\), aditividade para disjuntos.
+- **Consequências:** \\(P(\emptyset) = 0\\); \\(P(A^c) = 1 - P(A)\\); \\(A \subset B \Rightarrow P(A) \leq P(B)\\);
+  \\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\\); inclusão-exclusão; Boole e Bonferroni.
+- **Clássica:** \\(P(A) = \\#A/\\#\Omega\\) **só** com resultados igualmente prováveis.
+- **Contagem:** \\(n!\\); \\(n^r\\); \\(A\_{n,r} = n!/(n-r)!\\); \\(\binom{n}{r}\\); \\(\binom{n+r-1}{r}\\); hipergeométrica.
+- Conte favoráveis e possíveis com a **mesma** regra (com ou sem ordem).
+
+.small[Livro: Seções 2.3 e 2.4. Lista 05.]
 
 ---
 
@@ -187,4 +685,4 @@ class: inverse, center, middle
 
 # Próxima aula (30/09)
 
-## Probabilidade condicional
+## Probabilidade geométrica, probabilidade condicional e tabelas de contingência

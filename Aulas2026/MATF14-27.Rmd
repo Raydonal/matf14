@@ -15,159 +15,466 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2, fig.height=4)
-suppressPackageStartupMessages(library(tidyverse))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.retina = 2,
+                      dev.args = list(bg = "transparent"))
+suppressPackageStartupMessages({library(tidyverse); library(patchwork)})
+unif_plot <- function(alfa, beta, xlim, a = NULL, b = NULL, tipo = "d", titulo = NULL) {
+  d <- tibble(x = seq(xlim[1], xlim[2], length.out = 1000),
+              y = if (tipo == "d") dunif(x, alfa, beta) else punif(x, alfa, beta))
+  g <- ggplot(d, aes(x, y))
+  if (!is.null(a)) g <- g + geom_area(data = filter(d, x >= a, x <= b), fill = "#f4a6a6", alpha = 0.9)
+  g + geom_line(color = if (tipo == "d") "#1f3fbf" else "#c0392b", linewidth = 1.2) +
+    labs(x = "x", y = if (tipo == "d") "f(x)" else "F(x)", title = titulo) + theme_minimal(base_size = 13)
+}
 ```
 
 class: inverse, center, middle
 
 # Aula 27: Distribuição Uniforme
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## A distribuição "sem opinião"
+## Roteiro da aula (100 minutos)
 
-> A Uniforme diz "todo valor no intervalo é igualmente provável", é a distribuição que representa
-> a ausência total de informação adicional sobre onde, dentro do intervalo, o valor deve cair. Você
-> consegue pensar em uma variável econômica real para a qual isso seria uma suposição defensável, e
-> outra para a qual seria claramente ingênua?
+.roteiro[
 
----
+| Tempo | Parte 1: a Uniforme em (0, 1) |
+|:---|:---|
+| 0–8 min | Provocação e modelos contínuos usados na prática |
+| 8–20 min | Uniforme em (0, 1); cálculo de probabilidades |
+| 20–30 min | Exemplo |
+| 30–40 min | **Atividade 1**: média e variância da Unif(0, 1) |
+| 40–50 min | Valores simulados |
 
-class: inverse, center, middle
+| Tempo | Parte 2: a Uniforme em (α, β) e aplicações |
+|:---|:---|
+| 0–12 min | Uniforme em (α, β); FDA |
+| 12–22 min | Média e variância; **Atividade 2** |
+| 22–30 min | Espera pelo metrô; preços em um leilão |
+| 30–38 min | Da probabilidade geométrica à Uniforme: o encontro |
+| 38–44 min | **Atividade 3**: discussão |
+| 44–50 min | Uso do R e resumo |
 
-# Bloco 1: Teoria
-
----
-
-## Uniforme(\\(a,b\\))
-
-Densidade **constante** em \\([a,b]\\), zero fora, todos os subintervalos de mesmo comprimento têm a
-mesma probabilidade.
-
-$$
-f(x) = \frac{1}{b-a}, \ a\le x\le b
-\qquad E(X)=\frac{a+b}{2} \qquad \mathrm{Var}(X)=\frac{(b-a)^2}{12}
-$$
-
---
-
-Verificação rápida: \\(\int\_a^b \frac{1}{b-a}dx = \frac{1}{b-a}\times(b-a)=1\\) ✓, a densidade é
-válida por construção.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 1: a Uniforme em (0, 1)
+
+### 50 minutos
 
 ---
 
-## Chegada de clientes em uma hora
+## Provocação: modelos contínuos usados na prática .tempo[0–8 min]
 
-\\(X=\\) minuto de chegada de um cliente dentro de uma hora, sem padrão de horário de pico:
-\\(X\sim\text{Unif}(0,60)\\).
-
-```{r uniforme-parametros}
-a <- 0; b <- 60
-c(E_X = (a+b)/2, Var_X = (b-a)^2/12, dp_X = sqrt((b-a)^2/12))
+.pull-left-40[
+```{r midas, echo=FALSE, out.width="90%"}
+knitr::include_graphics("images/formula_midas_bbc.jpg")
 ```
+
+.fonte[Fonte: BBC News Brasil.]
+]
+
+.pull-right-60[
+A "Fórmula de Midas" (modelo de Black-Scholes) precifica opções no mercado financeiro supondo um
+**modelo probabilístico** para o preço das ações.
+
+- Nas Unidades 3 e 4 vimos densidades "feitas à mão" (\\(2x\\), triangular...).
+- Na prática, usamos **famílias** de distribuições, com fórmulas que dependem de **parâmetros**.
+
+.caixa-discussao[
+Um modelo é útil quando as propriedades da densidade **refletem** o fenômeno. O que dá errado quando
+um banco usa um modelo que **não** reflete os dados (como na crise de 2008)?
+]
+]
+
+---
+
+## Modelos contínuos usados na prática
+
+- Algumas distribuições contínuas são **mais comuns** que outras.
+- A densidade tem uma **fórmula** determinada por **parâmetros**.
+- As propriedades da densidade devem **refletir** as características do fenômeno analisado.
 
 --
 
-Na Uniforme, a integral vira só uma razão de comprimentos, sem precisar de tabela nem de
-`integrate()`: \\(P(a'\le X\le b')=\dfrac{b'-a'}{b-a}\\). Calculando à mão
-\\(P(30\le X\le45)\\):
+| Dados de ... | Modelo |
+|:---|:---|
+| tempo, sem valores mais prováveis que outros num intervalo | **Uniforme** |
+| mensurações simétricas em forma de sino | **Normal** (próxima aula) |
+| tempo de espera, duração | Exponencial, Gama (outras disciplinas) |
+| proporções entre 0 e 1 | Beta (outras disciplinas) |
+
+---
+
+## Distribuição Uniforme em \\((0, 1)\\) .tempo[8–20 min]
+
+Uma variável aleatória \\(X\\) tem distribuição **uniforme no intervalo** \\((0, 1)\\) se a sua densidade é
 
 $$
-P(30\le X\le45) = \frac{45-30}{60-0} = \frac{15}{60} = 0{,}25
+f(x) = \begin{cases} 1, & 0 \leq x \leq 1,\\\\ 0, & \text{caso contrário}. \end{cases}
 $$
 
-```{r prob-uniforme}
-(45 - 30) / (60 - 0)                 # a mesma conta, escrita em R
-punif(20, min=a, max=b)              # P(X <= 20)
-punif(45, a, b) - punif(30, a, b)    # P(30 <= X <= 45), confirmação via função pronta
+**Notação:** \\(X \sim \text{Unif}(0, 1)\\).
+
+--
+
+.pull-left[
+\\(f(x)\\) é uma densidade legítima, pois \\(f(x) \geq 0\\) para todo \\(x\\) e
+
+$$
+\int\_{-\infty}^{\infty} f(x)\,dx = \int\_0^1 1\,dx = 1.
+$$
+
+É a área de um **quadrado** de lado 1.
+]
+
+.pull-right[
+```{r unif01, echo=FALSE, fig.height=3, fig.width=5, out.width="100%"}
+unif_plot(0, 1, c(-0.5, 1.5), titulo = "Densidade da Unif(0, 1)")
+```
+
+]
+
+---
+
+## Cálculo de probabilidades
+
+Seja \\(X \sim \text{Unif}(0, 1)\\). A probabilidade de \\(X\\) pertencer a um intervalo \\((a, b)\\) contido em
+\\((0, 1)\\) é o **comprimento** do intervalo:
+
+$$
+P(a &lt; X &lt; b) = \int\_a^b f(x)\,dx = \int\_a^b 1\,dx = b - a.
+$$
+
+--
+
+.caixa-aplicacao[
+- Intervalos de **mesmo comprimento** têm **mesma probabilidade**, onde quer que estejam em \\((0, 1)\\).
+- A densidade não "prefere" nenhum valor: por isso a Uniforme modela situações **sem informação** sobre
+  onde o valor deve cair.
+]
+
+---
+
+## Exemplo .tempo[20–30 min]
+
+Seja \\(X \sim \text{Unif}(0, 1)\\). Calcule: **a)** \\(P(X &lt; 0{,}8)\\); **b)** \\(P(0{,}2 &lt; X &lt; 0{,}9)\\); **c)** \\(P(X &gt; 0{,}5)\\).
+
+--
+
+.caixa-resposta[
+**a)** \\(P(X &lt; 0{,}8) = \int\_{-\infty}^{0{,}8} f(x)\,dx = \int\_0^{0{,}8} 1\,dx = 0{,}8\\).
+
+**b)** \\(P(0{,}2 &lt; X &lt; 0{,}9) = \int\_{0{,}2}^{0{,}9} 1\,dx = 0{,}7\\).
+
+**c)** \\(P(X &gt; 0{,}5) = \int\_{0{,}5}^{\infty} f(x)\,dx = \int\_{0{,}5}^{1} 1\,dx = 0{,}5\\).
+]
+
+```{r ex-areas, echo=FALSE, fig.height=2.3, fig.width=10, out.width="100%"}
+unif_plot(0, 1, c(-0.2, 1.2), -0.2, 0.8, titulo = "P(X < 0,8)") + unif_plot(0, 1, c(-0.2, 1.2), 0.2, 0.9, titulo = "P(0,2 < X < 0,9)") +
+  unif_plot(0, 1, c(-0.2, 1.2), 0.5, 1.2, titulo = "P(X > 0,5)")
 ```
 
 ---
 
-## Visualizando
+## Exercício 1: média e variância da Unif(0, 1) .tempo[30–40 min]
 
-```{r grafico-uniforme, fig.height=3.8}
-ggplot(tibble(x = c(-5,0,0,60,60,65), y = c(0,0,1/60,1/60,0,0)), aes(x,y)) +
-  geom_line(color = "#0d3b54") +
-  geom_area(data = tibble(x=c(30,30,45,45), y=c(0,1/60,1/60,0)), fill="#c9971e", alpha=.6) +
-  labs(x = "minuto da hora", y = "f(x)", title = "P(30 ≤ X ≤ 45)") +
-  theme_minimal(base_size = 13)
-```
+Seja \\(X \sim \text{Unif}(0, 1)\\). Lembrando que
+
+$$
+E(X) = \int\_{-\infty}^{\infty} x\,f(x)\,dx, \qquad E(X^2) = \int\_{-\infty}^{\infty} x^2 f(x)\,dx, \qquad Var(X) = E(X^2) - [E(X)]^2,
+$$
+
+mostre que \\(E(X) = 1/2\\) e \\(Var(X) = 1/12\\).
+
+--
+
+.caixa-resposta[
+\\(E(X) = \int\_0^1 x\,dx = \Big[\frac{x^2}{2}\Big]\_0^1 = \frac{1}{2}\\).
+
+\\(E(X^2) = \int\_0^1 x^2\,dx = \Big[\frac{x^3}{3}\Big]\_0^1 = \frac{1}{3}\\).
+
+\\(Var(X) = \frac{1}{3} - \left(\frac{1}{2}\right)^2 = \frac{4 - 3}{12} = \frac{1}{12}\\).
+]
 
 ---
 
-## Simulação confirma a teoria
+## Valores simulados .tempo[40–50 min]
 
-```{r fig-hist-unif01, echo=FALSE, out.width="55%"}
+.pull-left-60[
+```{r hist-unif, echo=FALSE, out.width="90%"}
 knitr::include_graphics("images/hist_unif01.png")
 ```
 
-1000 valores simulados de Unif(0,1) (`runif(1000)`), agrupados em histograma (barras cinzas, a
-mesma ferramenta do Capítulo 1).
+]
 
----
+.pull-right-40[
+Histograma de **1.000** valores simulados de \\(\text{Unif}(0, 1)\\).
 
-## Lendo o histograma simulado
+- **Vermelho:** a densidade teórica (altura 1).
+- **Azul:** a média teórica, \\(1/2\\).
 
-A curva vermelha é a densidade teórica \\(f(x)=1\\); a linha azul é a média teórica, \\(E(X)=0{,}5\\). O
-histograma, mesmo com ruído amostral, já se aproxima da densidade constante prevista pela teoria,
-exatamente o elo entre "dado observado" e "modelo" que este capítulo constrói.
+.caixa-discussao[
+As barras não têm **todas** altura 1. Por quê? O que acontece com 100 mil valores?
+]
+]
 
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (bloco central da aula)
-
----
-
-## Rodada 1: resolvendo a provocação inicial
-
-**1.** Retome a pergunta de abertura. Dê um exemplo econômico em que a Uniforme é defensável
-(genuína ausência de padrão dentro do intervalo) e outro em que seria ingênuo assumir uniformidade
-(por exemplo, existe claramente um "horário de pico"). O que muda no segundo caso, que tipo de
-modelo (ainda não visto, mas você pode arriscar) capturaria melhor esse padrão?
-
-**2.** \\(\mathrm{Var}(X)=(b-a)^2/12\\) cresce com o **quadrado** do comprimento do intervalo. Compare
-mentalmente Uniforme(0,10) com Uniforme(0,100), a segunda tem 10x mais amplitude, mas quantas
-vezes mais variância?
-
----
-
-## Rodada 2
-
-**3.** Um analista financeiro, sem nenhuma informação sobre a distribuição real de um preço futuro,
-decide modelá-lo como Uniforme entre o mínimo e o máximo histórico. Isso é uma escolha
-conservadora, otimista, ou nenhuma das duas? Que suposição implícita essa escolha carrega sobre
-"quão informativo" é o histórico de preços?
-
-**4.** Compare a Uniforme com a Exponencial das Aulas 24–26. As duas são contínuas, mas uma é
-simétrica (constante) e outra é assimétrica à direita. Que tipo de fenômeno cada uma modela melhor
-, "tempo até um evento raro" ou "posição aleatória sem preferência dentro de um intervalo fixo"?
+.clear[]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 4: Uso do R
+# Intervalo
+
+### 10 minutos
 
 ---
 
-```{r uso-r, eval=FALSE}
-dunif(x, min = a, max = b)   # densidade
-punif(x, min = a, max = b)   # FDA
-qunif(p, min = a, max = b)   # quantil
-runif(m, min = a, max = b)   # m valores simulados
+class: inverse, center, middle
+
+# Parte 2: a Uniforme em (α, β) e aplicações
+
+### 50 minutos
+
+---
+
+## Distribuição Uniforme em \\((\alpha, \beta)\\) .tempo[0–12 min]
+
+\\(X\\) tem distribuição **uniforme no intervalo** \\((\alpha, \beta)\\), \\(X \sim \text{Unif}(\alpha, \beta)\\), se
+
+$$
+f(x) = \begin{cases} \dfrac{1}{\beta - \alpha}, & \alpha \leq x \leq \beta,\\\\ 0, & \text{caso contrário}. \end{cases}
+$$
+
+.small[
+A altura \\(1/(\beta - \alpha)\\) garante área total \\(= \text{base} \times \text{altura} = (\beta - \alpha) \cdot \frac{1}{\beta - \alpha} = 1\\).
+]
+
+--
+
+Intervalos de **mesmo comprimento** em \\((\alpha, \beta)\\) têm **mesma probabilidade**. Para \\(\alpha \leq a &lt; b \leq \beta\\):
+
+$$
+P(a &lt; X &lt; b) = \int\_a^b \frac{1}{\beta - \alpha}\,dx = \frac{b - a}{\beta - \alpha} = \frac{\text{comprimento do intervalo}}{\text{comprimento total}}.
+$$
+
+---
+
+## Função de distribuição acumulada da Unif\\((\alpha, \beta)\\)
+
+- Para \\(t &lt; \alpha\\): \\(P(X \leq t) = 0\\). Para \\(t &gt; \beta\\): \\(P(X \leq t) = 1\\).
+- Para \\(\alpha \leq t \leq \beta\\):
+
+$$
+F(t) = P(X \leq t) = \int\_{\alpha}^{t} \frac{1}{\beta - \alpha}\,dx = \frac{t - \alpha}{\beta - \alpha}.
+$$
+
+--
+
+.pull-left[
+```{r d27, echo=FALSE, fig.height=3, fig.width=5, out.width="100%"}
+unif_plot(2, 7, c(1, 8), titulo = "Densidade da Unif(2, 7)")
 ```
+
+]
+
+.pull-right[
+```{r F27, echo=FALSE, fig.height=3, fig.width=5, out.width="100%"}
+unif_plot(2, 7, c(1, 8), tipo = "p", titulo = "FDA da Unif(2, 7)")
+```
+
+]
+
+.clear[]
+
+.small[
+Densidade: altura \\(1/5 = 0{,}2\\) em \\([2, 7]\\). FDA: uma **rampa** reta de 0 (em 2) até 1 (em 7).
+]
+
+---
+
+## Média e variância da Unif\\((\alpha, \beta)\\) .tempo[12–22 min]
+
+Usando \\(b^2 - a^2 = (b - a)(b + a)\\) e \\(b^3 - a^3 = (b - a)(b^2 + ab + a^2)\\):
+
+$$
+E(X) = \int\_{\alpha}^{\beta} x \cdot \frac{1}{\beta - \alpha}\,dx = \frac{\beta^2 - \alpha^2}{2(\beta - \alpha)} = \frac{\alpha + \beta}{2}
+$$
+
+--
+
+$$
+E(X^2) = \int\_{\alpha}^{\beta} x^2 \cdot \frac{1}{\beta - \alpha}\,dx = \frac{\beta^3 - \alpha^3}{3(\beta - \alpha)} = \frac{\alpha^2 + \alpha\beta + \beta^2}{3}
+$$
+
+--
+
+$$
+Var(X) = \frac{\alpha^2 + \alpha\beta + \beta^2}{3} - \frac{(\alpha + \beta)^2}{4} = \frac{4\alpha^2 + 4\alpha\beta + 4\beta^2 - 3\alpha^2 - 6\alpha\beta - 3\beta^2}{12} = \frac{(\beta - \alpha)^2}{12}
+$$
+
+.caixa-aplicacao[
+**Média:** o **ponto médio** do intervalo. **Variância:** depende só do **comprimento** \\(\beta - \alpha\\). Com
+\\(\alpha = 0\\), \\(\beta = 1\\): \\(1/2\\) e \\(1/12\\). ✓
+]
+
+---
+
+## Exercício 2
+
+Considere \\(X \sim \text{Unif}(0, 10)\\).
+
+**a)** Calcule a função de distribuição acumulada de \\(X\\). **b)** Calcule \\(P(2 &lt; X &lt; 4)\\).
+**c)** Qual é a média e a variância de \\(X\\)?
+
+--
+
+.caixa-resposta[
+**a)** \\(F(t) = 0\\) para \\(t &lt; 0\\); \\(F(t) = t/10\\) para \\(0 \leq t &lt; 10\\); \\(F(t) = 1\\) para \\(t \geq 10\\).
+
+**b)** \\(P(2 &lt; X &lt; 4) = F(4) - F(2) = \frac{4}{10} - \frac{2}{10} = \frac{1}{5}\\).
+
+**c)** \\(E(X) = \frac{0 + 10}{2} = 5\\); \\(Var(X) = \frac{(10 - 0)^2}{12} = \frac{100}{12} \approx 8{,}33\\); \\(dp(X) \approx 2{,}89\\).
+]
+
+---
+
+## Espera pelo metrô .tempo[22–30 min]
+
+Os trens de uma linha de metrô passam **a cada 8 minutos**, pontualmente. Um passageiro chega à
+estação em um instante **aleatório**, sem consultar horários. Seja \\(X\\) o tempo de espera (minutos):
+\\(X \sim \text{Unif}(0, 8)\\).
+
+**a)** Qual é a probabilidade de esperar **mais de 6 minutos**? **b)** Qual é o tempo **médio** de espera e o
+desvio padrão? **c)** Em quanto tempo **90%** dos passageiros embarcam?
+
+--
+
+.caixa-resposta[
+**a)** \\(P(X &gt; 6) = \frac{8 - 6}{8} = 0{,}25\\). **b)** \\(E(X) = 4\\) minutos; \\(dp(X) = \frac{8}{\sqrt{12}} \approx 2{,}31\\) minutos.
+
+**c)** \\(F(q) = q/8 = 0{,}9 \Rightarrow q = 7{,}2\\) minutos.
+]
+
+--
+
+.caixa-economia[
+Se o metrô passasse a cada **4** minutos, a espera média cairia **pela metade** e o desvio padrão
+também. Esse é o tipo de conta que embasa decisões de **frequência** de transporte público.
+]
+
+---
+
+## Preços em um leilão (modelo sem informação)
+
+Um analista sabe apenas que o lance vencedor de um leilão de um imóvel ficará entre **R$ 200 mil** e
+**R$ 320 mil**, sem nenhum valor mais provável. Seja \\(L \sim \text{Unif}(200, 320)\\) (em milhares de reais).
+
+**a)** Qual é a probabilidade de o lance ficar **acima de R$ 290 mil**?
+
+**b)** O imóvel só é vendido se o lance superar o valor mínimo de R$ 230 mil. Qual é a probabilidade de
+venda? **c)** Dado que foi vendido, qual é a probabilidade de o lance ter passado de R$ 290 mil?
+
+--
+
+.caixa-resposta[
+**a)** \\(\frac{320 - 290}{120} = 0{,}25\\). **b)** \\(P(L &gt; 230) = \frac{90}{120} = 0{,}75\\).
+
+**c)** \\(P(L &gt; 290 \mid L &gt; 230) = \frac{P(L &gt; 290)}{P(L &gt; 230)} = \frac{0{,}25}{0{,}75} = \frac{1}{3}\\) (Aula 11!).
+]
+
+---
+
+## Da probabilidade geométrica à Uniforme: o encontro .tempo[30–38 min]
+
+Na Aula 11, comprador e vendedor chegavam **ao acaso** entre 9h e 10h. Em linguagem desta unidade: as chegadas são
+\\(X, Y \sim \text{Unif}(0, 60)\\), independentes, e "ao acaso no quadrado" é a **densidade conjunta constante** \\(1/60^2\\).
+
+.pull-left[
+- \\(P(X \leq 15) = 15/60 = 0{,}25\\): área sob a densidade Uniforme.
+- \\(P(|X - Y| \leq 15) = 7/16\\): área de uma **região** do quadrado, dividida pela área total.
+- Se quem chega primeiro esperasse o outro sem limite, a espera média seria \\(E(|X - Y|) = 20\\) minutos.
+]
+
+.pull-right[
+```{r encontro-sim, collapse=TRUE}
+set.seed(27)
+x <- runif(1e5, 0, 60)
+y <- runif(1e5, 0, 60)
+mean(x <= 15)           # P(X <= 15)
+mean(abs(x - y) <= 15)  # encontro
+mean(abs(x - y))        # E(|X - Y|)
+```
+]
+
+.clear[]
+
+.caixa-discussao[
+Por que a probabilidade geométrica é um caso da Uniforme? A hipótese "chegadas ao acaso" é razoável para quem vai ao trabalho?
+]
+
+---
+
+## Atividade 3: discussão .tempo[38–44 min]
+
+**1.** Um estudante modela a **renda mensal** de uma cidade como \\(\text{Unif}(0, 20.000)\\). Por que esse
+modelo é ruim? Que característica da renda ele ignora? (Pense no histograma da Aula 04.)
+
+**2.** Na espera pelo metrô, a Uniforme é razoável. E se os passageiros **consultarem o aplicativo** e
+chegarem pouco antes do trem? O que muda na distribuição?
+
+**3.** Geradores de números aleatórios de computador (`runif()`) produzem valores \\(\text{Unif}(0, 1)\\). Como
+você usaria `runif()` para simular a espera pelo metrô, \\(\text{Unif}(0, 8)\\)?
+
+--
+
+.caixa-resposta[
+**3.** Se \\(U \sim \text{Unif}(0, 1)\\), então \\(8U \sim \text{Unif}(0, 8)\\); em geral, \\(\alpha + (\beta - \alpha)U \sim \text{Unif}(\alpha, \beta)\\).
+]
+
+---
+
+## Uso do R: `dunif`, `punif`, `qunif`, `runif` .tempo[44–50 min]
+
+```{r uso-r-1}
+c(punif(0.8), punif(0.9) - punif(0.2))                     # Unif(0, 1): 0,8 e 0,7
+punif(4, min = 0, max = 10) - punif(2, min = 0, max = 10)   # 0,2
+c(1 - punif(6, min = 0, max = 8), qunif(0.9, min = 0, max = 8))   # metrô: 0,25 e 7,2
+dunif(3, min = 2, max = 7)                                  # densidade: altura 0,2
+```
+
+.caixa-r[
+O mesmo padrão da Aula 20: `d` densidade, `p` FDA, `q` quantil (inversa da FDA), `r` simulação.
+]
+
+---
+
+## Uso do R: simulando e conferindo
+
+```{r uso-r-2, fig.height=2.2, fig.width=9, out.width="75%"}
+set.seed(27)
+x <- runif(100000, min = 2, max = 7)
+c(media = mean(x), media_teorica = (2 + 7) / 2)
+c(var = mean((x - mean(x))^2), var_teorica = (7 - 2)^2 / 12)
+hist(x, breaks = 50, freq = FALSE, main = "", xlab = "x")
+abline(h = 1 / 5, col = "red", lwd = 2)
+```
+
+---
+
+## Resumo
+
+- \\(X \sim \text{Unif}(\alpha, \beta)\\): densidade **constante** \\(f(x) = \frac{1}{\beta - \alpha}\\) em \\([\alpha, \beta]\\).
+- \\(P(a &lt; X &lt; b) = \frac{b - a}{\beta - \alpha}\\): probabilidade proporcional ao **comprimento**.
+- **FDA:** \\(F(t) = \frac{t - \alpha}{\beta - \alpha}\\) em \\([\alpha, \beta]\\) (0 antes, 1 depois).
+- \\(E(X) = \frac{\alpha + \beta}{2}\\) e \\(Var(X) = \frac{(\beta - \alpha)^2}{12}\\).
+- Caso particular: \\(\text{Unif}(0, 1)\\), com \\(E = 1/2\\) e \\(Var = 1/12\\), base dos geradores de números aleatórios.
 
 ---
 

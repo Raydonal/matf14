@@ -20,310 +20,773 @@ class: inverse, center, middle
 
 # Aula 03: Tabelas e gráficos
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Provocação 1: o mesmo dado, duas leituras
+## Roteiro da aula (100 minutos)
 
-Faturamento médio de 1999 (`empresas.csv`), por região, eixo começando em **zero**:
+.roteiro[
 
-&lt;img src="MATF14-03_files/figure-html/fig-eixo-zero-1.png" alt="" width="504" /&gt;
+| Tempo | Parte 1: tabelas e frequências |
+|:---|:---|
+| 0–8 min | Provocações: os mesmos três números; qual fatia é maior? |
+| 8–20 min | Representação tabular; distribuição de frequências |
+| 20–32 min | Variáveis quantitativas em classes |
+| 32–42 min | Razão e taxa de variação |
+| 42–50 min | Tabela de dupla entrada |
+
+| Tempo | Parte 2: gráficos e aplicações |
+|:---|:---|
+| 0–15 min | Colunas, barras, setores, cartograma, linhas e dispersão; qual gráfico? |
+| 15–25 min | Histograma; histogramas nas notícias |
+| 25–33 min | De volta à pizza; composição do PIB |
+| 33–40 min | ENEM 2023; "gender pay gap" |
+| 40–47 min | **Atividade**: instrução por sexo; força de trabalho |
+| 47–50 min | Uso do R e resumo |
+
+]
 
 ---
 
-## Provocação 1: a mesma base, eixo cortado
+class: inverse, center, middle
 
-Exatamente os **mesmos três números**, eixo começando perto do menor valor:
+# Parte 1: tabelas e frequências
 
-&lt;img src="MATF14-03_files/figure-html/fig-eixo-cortado-1.png" alt="" width="504" /&gt;
+### 50 minutos
+
+---
+
+## Provocação 1: os mesmos três números .tempo[0–8 min]
+
+Faturamento médio (1999) das empresas da nossa base, por região.
+
+.pull-left[
+&lt;img src="MATF14-03_files/figure-html/fig-eixo-zero-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+&lt;img src="MATF14-03_files/figure-html/fig-eixo-cortado-1.png" alt="" width="100%" /&gt;
+
+]
 
 --
 
-Nenhum número está errado nos dois gráficos. O que muda, e por que isso importa para quem decide
-com base neles?
+.caixa-discussao[
+Nenhum número está errado. À direita, o Sudeste parece faturar **o triplo** do Sul; na verdade, a
+diferença é de **7,7%** (342,5 mil contra 318,1 mil). Quem se beneficia de cada versão do gráfico?
+]
 
 ---
 
 ## Provocação 2: qual fatia é maior?
 
-&lt;img src="MATF14-03_files/figure-html/fig-pizza-setor-1.png" alt="" width="432" /&gt;
+.pull-left[
+&lt;img src="MATF14-03_files/figure-html/fig-pizza-setor-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+Setor de atividade das 106 empresas da base.
+
+- "Industrial" e "Laminados plásticos": qual é maior?
+- "Domiciliar e pessoal" ou "Outros"?
+
+
+.caixa-discussao[
+Olhando só a pizza, sem números, dá para responder com confiança? Guarde a resposta: vamos refazer
+esse gráfico hoje de um jeito melhor.
+]
+]
+
+---
+
+## Representação tabular .tempo[8–20 min]
+
+Uma **tabela** resume os dados por meio de **contagens** ou **agrupamentos**, distribuídos em
+linhas e colunas de modo ordenado.
+
+.pull-left-60[
+&lt;table style="font-size:0.9em; margin-top:0.2em;"&gt;
+&lt;caption style="caption-side:top; font-weight:bold; padding-bottom:0.3em;"&gt;Título: o quê? quando? onde?&lt;/caption&gt;
+&lt;tr style="border-top:2px solid #333; border-bottom:1px solid #333;"&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Variável&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;12&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style="border-bottom:2px solid #333;"&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p style="font-size:0.7em; margin-left:2em;"&gt;Fonte: de onde os dados foram obtidos.&lt;/p&gt;
+]
+
+.pull-right-40[.small[
+- **Título:** responde **o quê?**, **quando?** e **onde?**
+- **Cabeçalho:** especifica o conteúdo das colunas.
+- **Corpo:** as linhas com os dados; cada cruzamento é uma **casa** (célula).
+- **Fonte:** sempre abaixo da tabela.
+- Tabelas são **fechadas** em cima e embaixo, mas **não** nas laterais.
+]]
+
+---
+
+## Lendo uma tabela real
+
+&lt;img src="images/tabela_jovens_ensino_medio.png" alt="" width="56%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: Anuário Brasileiro da Educação Básica, 2021 (IBGE/PNAD Contínua; Todos Pela Educação).]
+
+
+.caixa-aplicacao[
+**O quê?** Jovens de 15 a 17 anos, por etapa de ensino. **Quando?** 2020. **Onde?** Brasil.
+Colunas: frequência **absoluta** e **percentual**. 5,6% dos jovens (481.884) não estudam e não
+concluíram o Ensino Médio.
+]
+
+---
+
+## Distribuição de frequências
+
+Interesse: conhecer o comportamento de uma variável, analisando a **ocorrência** de seus possíveis
+valores.
+
+- **Frequência absoluta:** número de observações em cada classe.
+- **Frequência relativa:** proporção das observações em cada classe.
 
 --
 
-**Setor de atividade das 106 empresas da base.** "Industrial" e "Laminados plásticos" parecem do
-mesmo tamanho? "Outros" e "Manilhas, canos e conexões"? Olhando só a pizza, dá para responder com
-confiança?
+Seja \\(n\\) o total de observações e \\(m\\) o total da classe de interesse:
+
+$$
+\text{freq. absoluta} = m \qquad\qquad \text{freq. relativa} = \frac{m}{n} = \left(100\times\frac{m}{n}\right)\%
+$$
+
+--
+
+.caixa-aplicacao[
+Uma empresa tem 100 funcionários, e 30 ganham entre 1 e 2 salários mínimos. A frequência absoluta
+dessa classe é **30** e a relativa é \\(30/100 = 0{,}30 = 30\\%\\).
+]
+
+---
+
+## Frequência na notícia
+
+&lt;img src="images/frequencia_cancer_paho.png" alt="" width="64%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: Organização Pan-Americana da Saúde (OPAS), 01/02/2024.]
+
+--
+
+.caixa-discussao[
+Identifique na notícia uma **frequência absoluta** e uma **frequência relativa**. Com os números de
+câncer de pulmão (2,5 milhões de casos, 12,4% do total), estime o **total** de novos casos de câncer
+no mundo em 2022.
+]
+
+--
+
+.caixa-resposta[
+\\(n \approx 2{,}5 / 0{,}124 \approx 20\\) milhões de novos casos.
+]
+
+---
+
+## Variáveis quantitativas: agrupar em classes .tempo[20–32 min]
+
+Para variáveis quantitativas com muitos valores, **agrupamos** em intervalos (classes).
+
+- As classes devem ser **disjuntas**: nenhuma observação pode pertencer a duas classes.
+- Ex.: "1 a 3 filhos", "4 a 6 filhos", "7 ou mais filhos".
+- Notação: \\([a, b)\\) inclui \\(a\\) e exclui \\(b\\).
+
+--
+
+Número de classes \\(k\\): uma regra usual é a **regra de Sturges**,
+
+$$
+k \approx 1 + \log\_2(n).
+$$
+
+Para as \\(n = 106\\) empresas: \\(k \approx 1 + 6{,}7 = 7{,}7\\), ou seja, 7 ou 8 classes.
+
+---
+
+## Tabela com classes: faturamento das 106 empresas
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Faturamento 1999 (milhares) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq. absoluta &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq. relativa (%) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq. acumulada (%) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [0, 100) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [100, 200) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6,6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8,5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [200, 300) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27,4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35,8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [300, 400) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40,6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 76,4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [400, 500) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17,9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94,3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [500, 600) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4,7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 99,1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [600, 700) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 100,0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+.caixa-aplicacao[
+**76,4%** das empresas (81 de 106) faturaram menos de 400 mil. A classe mais frequente é
+&amp;#91;300, 400), com 43 empresas (40,6%).
+]
+
+---
+
+## Frequência de uma tabela que já vem em classes
+
+&lt;img src="images/tabela_municipios_secretaria_educacao.png" alt="" width="62%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: Anuário Brasileiro da Educação Básica, 2021 (IBGE/Munic; Todos Pela Educação).]
+
+.caixa-discussao[
+A variável "tamanho do município" foi **agrupada** em faixas populacionais. O que significa o
+valor 41,9 na primeira linha de 2018? Por que não faz sentido somar a coluna de 2018?
+]
+
+---
+
+## Razão e taxa de variação .tempo[32–42 min]
+
+**Razão:** com \\(f\_1\\) casos em uma categoria e \\(f\_2\\) em outra, \\(\text{razão} = f\_1/f\_2\\)
+("para cada 1 da categoria 2, há \\(f\_1/f\_2\\) da categoria 1").
+
+--
+
+**Taxa de variação:** para o valor de uma variável em dois instantes, \\(f\_1\\) (antes) e
+\\(f\_2\\) (depois),
+
+$$
+\text{taxa de variação} = 100\times\frac{f\_2 - f\_1}{f\_1}\ \%.
+$$
+
+É a fórmula da **inflação** mês a mês: \\(f\_1\\) é o índice de preços do mês anterior e \\(f\_2\\), o
+do mês atual.
+
+--
+
+**Exemplo:** a empresa 1 da base faturou 64.302 em 1998 e 74.392 em 1999:
+
+$$
+100\times\frac{74.392 - 64.302}{64.302} = 100\times\frac{10.090}{64.302} \approx 15{,}7\%.
+$$
+
+---
+
+## Tabela de dupla entrada .tempo[42–50 min]
+
+Cruza **duas** variáveis. Prefeitos dos 5.232 municípios de até 100 mil habitantes, por região e
+sexo:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Região &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Feminino &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Masculino &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % mulheres &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Norte &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 349 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 416 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16,1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nordeste &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 297 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.427 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.724 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17,2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sudeste &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 118 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.394 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.512 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7,8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sul &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.041 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8,5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Centro-Oeste &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 386 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 442 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12,7 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+.caixa-aplicacao[
+O Nordeste tem **297** prefeitas e o Sudeste, **118**. Mas o Nordeste também tem mais municípios:
+compare pelo **percentual da linha** (17,2% contra 7,8%), e não pelo total geral.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Intervalo
 
----
-
-## Tabela de frequências
-
-Para \\(f\_i\\) casos na categoria \\(i\\), de um total \\(n=\sum\_i f\_i\\):
-
-$$
-\text{Proporção}\_i = \frac{f\_i}{n}, \qquad \text{Porcentagem}\_i = 100\times\frac{f\_i}{n}\,\%
-$$
-
---
-
-Guarde essa definição, ela é exatamente o que está por trás da pizza do slide anterior, e é o que
-o Bloco 2 vai reconstruir como tabela.
-
----
-
-## Razão e taxa de variação
-
-**Razão**: para \\(f\_1\\) casos numa categoria e \\(f\_2\\) em outra, razão\\(\_{1:2} = f\_1/f\_2\\)
-(lida como "para cada \\(n\\) da categoria 2, há \\(n\times f\_1/f\_2\\) da categoria 1").
-
---
-
-**Taxa de variação**: para o valor de uma variável em dois instantes, \\(f\_1\\) e \\(f\_2\\),
-
-$$
-\text{taxa de variação} = 100\times\frac{f\_2-f\_1}{f\_1}\,\%
-$$
-
---
-
-É **literalmente** a fórmula do IPCA mês a mês: \\(f\_1\\) é o índice do mês anterior, \\(f\_2\\) o
-atual.
-
-
-``` r
-e1 &lt;- empresas |&gt; filter(Empresa == 1)
-100 * (e1$faturamento99 - e1$faturamento98) / e1$faturamento98   # taxa de variação, empresa 1
-```
-
-```
-## [1] 15.69158
-```
-
----
-
-## Tabela de dupla entrada
-
-Cruza duas variáveis qualitativas. Exemplo real: prefeitos eleitos em 2020, por região e sexo
-(`dados_prefeitos.csv`).
-
-
-```
-## # A tibble: 5 × 3
-##   Regiao           Feminino Masculino
-##   &lt;chr&gt;               &lt;int&gt;     &lt;int&gt;
-## 1 1 - Norte              67       349
-## 2 2 - Nordeste          297      1427
-## 3 3 - Sudeste           118      1394
-## 4 4 - Sul                97      1041
-## 5 5 - Centro-Oeste       56       386
-```
-
---
-
-Dividir pelo total da **linha** (não do total geral) dá a composição condicional daquela região,
-essencial para comparar regiões de tamanhos diferentes: em toda linha, o número de prefeitas é uma
-fração pequena do de prefeitos.
-
----
-
-## Aplicação histórica: a tabela de Yule (1912)
-
-| | Recuperados | Mortes | Total |
-|---|---|---|---|
-| Vacinados | 197 | 2 | 199 |
-| Não-vacinados | 139 | 19 | 158 |
-| Total | 336 | 21 | 357 |
-
-Yule, G. U. (1912), estudo sobre vacinação contra a varíola, uma das tabelas de dupla entrada mais
-citadas da história da Estatística.
-
---
-
-Proporção de mortes: vacinados \\(2/199\approx1{,}0\%\\); não-vacinados \\(19/158\approx12{,}0\%\\).
-Quatro células já carregam a evidência quantitativa central do argumento a favor da vacinação.
-
----
-
-## Gráfico certo para cada tipo de variável
-
-| Variável | Gráfico típico |
-|---|---|
-| Qualitativa (poucas categorias) | Barras, setores (pizza) |
-| Quantitativa discreta (poucos valores) | Barras |
-| Quantitativa contínua | Histograma |
-| Série temporal (qualquer tipo) | Linha, respeitando a ordem no tempo |
-
---
-
-**Erro comum**: usar gráfico de linha para conectar categorias *sem ordem numérica*, sugere uma
-tendência que não existe.
-
----
-
-## Uso correto de linha: três variáveis ao mesmo tempo
-
-Sexo, raça e o ano (esse sim uma sequência temporal):
-
-&lt;img src="images/forca_trabalho_raca_sexo.jpg" alt="" width="58%" /&gt;
+### 10 minutos
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 2: Aplicação
+# Parte 2: gráficos e aplicações
+
+### 50 minutos
 
 ---
 
-## O "gender pay gap" é um histograma disfarçado de notícia
+## Gráficos de colunas .tempo[0–15 min]
 
-&lt;img src="images/gender_pay_gap.png" alt="" width="52%" /&gt;
+.pull-left[
+&lt;img src="images/grafico_colunas_mvi_regioes.png" alt="" width="100%" /&gt;
 
-Eixo x = classes de diferença salarial; eixo y = número de empresas naquela classe. **É a mesma
-ideia da tabela de frequências**, com barras no lugar de números.
+**Colunas:** compara valores de uma variável entre categorias.
+]
+
+.pull-right[
+&lt;img src="images/grafico_colunas_empilhadas_mvi_idade.png" alt="" width="100%" /&gt;
+
+**Colunas empilhadas:** mostra a **composição** de cada categoria (cada coluna soma 100%).
+]
+
+.fonte[Fonte: Anuário Brasileiro de Segurança Pública, 2024. MVI: mortes violentas intencionais.]
+
+---
+
+## Gráficos de barras
+
+.pull-left[
+&lt;img src="images/grafico_barras_celulares_local.png" alt="" width="100%" /&gt;
+
+**Barras:** colunas "deitadas"; boas quando os **nomes** das categorias são longos.
+]
+
+.pull-right[
+&lt;img src="images/grafico_barras_empilhadas_mvi_sexo.png" alt="" width="100%" /&gt;
+
+**Barras empilhadas:** composição por sexo em cada tipo de ocorrência.
+]
+
+.fonte[Fonte: Anuário Brasileiro de Segurança Pública, 2024.]
+
+---
+
+## Setores (pizza) e cartograma
+
+.pull-left[
+&lt;img src="images/grafico_setores_escola_idade.png" alt="" width="88%" /&gt;
+
+.fonte[Fonte: Anuário Brasileiro da Educação Básica, 2021.]
+
+**Setores:** parte de um todo; funciona com **poucas** categorias e diferenças grandes.
+]
+
+.pull-right[
+&lt;img src="images/grafico_cartograma_mvi.png" alt="" width="88%" /&gt;
+
+.fonte[Fonte: Anuário Brasileiro de Segurança Pública, 2024.]
+
+**Cartograma:** valores associados a regiões **geográficas**.
+]
+
+---
+
+## Linhas e dispersão
+
+.pull-left[
+&lt;img src="images/grafico_linhas_celulares_horario.png" alt="" width="100%" /&gt;
+
+.fonte[Fonte: Anuário Brasileiro de Segurança Pública, 2024.]
+
+**Linhas:** evolução ao longo de uma sequência **ordenada** (tempo, horário). Aqui: celulares
+roubados atingem o pico às 20h.
+]
+
+.pull-right[
+&lt;img src="images/grafico_dispersao_co2_pib.png" alt="" width="80%" /&gt;
+
+.fonte[Fonte: The Washington Post (2023). Ponto verde: Brasil.]
+
+**Dispersão:** relação entre **duas** variáveis quantitativas (PIB per capita e emissão de CO₂ per
+capita).
+]
+
+---
+
+## Qual gráfico para qual variável?
+
+| Variável | Gráficos adequados |
+|:---|:---|
+| Qualitativa nominal | barras, colunas, setores (poucas categorias) |
+| Qualitativa ordinal | barras ou colunas, **respeitando a ordem** das categorias |
+| Quantitativa discreta (poucos valores) | colunas ou bastões |
+| Quantitativa contínua | **histograma**, boxplot |
+| Duas quantitativas | dispersão |
+| Variável ao longo do tempo | linhas |
 
 --
 
-Por isso "78% das empresas pagam mais aos homens" (a maioria das barras está do lado roxo) é mais
-defensável que uma média isolada: usa a distribuição inteira, não um único número resumo.
+.caixa-aplicacao[
+**Considerações sobre gráficos:** **simplicidade** ajuda a análise rápida; **clareza** evita
+interpretações erradas; use **títulos informativos** (o quê? quando? onde?) e sempre cite a **fonte**.
+]
 
 ---
 
-## Tabela de frequências: setor de atividade
+## Histograma .tempo[15–25 min]
 
-A mesma base da pizza da Provocação 2, agora como tabela, dá para comparar "Industrial" e
-"Laminados plásticos" sem adivinhar:
+As frequências de variáveis **quantitativas** agrupadas em classes são representadas por um
+**histograma**:
 
-
-``` r
-empresas |&gt; count(setor, sort = TRUE) |&gt;
-  mutate(pct = round(100*n/sum(n), 1))
-```
-
-```
-##                         setor  n  pct
-## 1                 Embalagens  31 29.2
-## 2                  Industrial 17 16.0
-## 3         Laminados plásticos 17 16.0
-## 4        Domiciliar e pessoal 16 15.1
-## 5                     Outros  13 12.3
-## 6 Manilhas, canos e conexões  12 11.3
-```
-
----
-
-## Gráfico de barras
-
-
-``` r
-ggplot(empresas, aes(x = fct_infreq(setor))) +
-  geom_bar(fill = "#0d3b54") + coord_flip() +
-  labs(x = NULL, y = "Nº de empresas") + theme_minimal(base_size = 13)
-```
-
-&lt;img src="MATF14-03_files/figure-html/grafico-barras-1.png" alt="" width="504" /&gt;
-
----
-
-## Histograma
-
-
-``` r
-ggplot(empresas, aes(x = faturamento99)) +
-  geom_histogram(bins = 20, fill = "#c9971e", color = "white") +
-  labs(x = "Faturamento 1999 (R$ mil)", y = "Frequência") + theme_minimal(base_size = 13)
-```
-
-&lt;img src="MATF14-03_files/figure-html/histograma-1.png" alt="" width="504" /&gt;
-
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (responda antes de ver o próximo bloco)
-
----
-
-## Primeira rodada — Questão 1
-
-Volte às duas Provocações de abertura (eixo cortado; pizza de 6 fatias). Para cada uma, proponha
-o gráfico alternativo que resolveria o problema e explique, formalmente, por que resolve.
-
----
-
-## Primeira rodada — Questão 2
-
-Veja a notícia abaixo, sobre consumo médio de refrigerante por domicílio/ano:
-
-&lt;img src="images/refri_estatisticas.png" alt="" width="50%" /&gt;
+- colunas **justapostas** (sem espaço entre elas), uma por classe;
+- a **base** de cada coluna é o intervalo da classe;
+- a **área** de cada coluna é proporcional à frequência da classe.
 
 --
 
-&lt;img src="MATF14-03_files/figure-html/fig-refri-grafico-1.png" alt="" width="360" /&gt;
+&lt;img src="MATF14-03_files/figure-html/histograma-fat-1.png" alt="" width="88%" /&gt;
 
-Esse gráfico compara **médias entre países**. Que informação um histograma da distribuição de
-consumo *dentro* de um único país acrescentaria, que a barra do valor médio esconde?
-
----
-
-## Primeira rodada — Questão 3
-
-Refaça o histograma de faturamento com `bins = 5` e depois com `bins = 60`. Em cada extremo, que
-conclusão errada um leitor apressado poderia tirar?
+.small[Exatamente a tabela de classes de alguns slides atrás, agora em forma de gráfico.]
 
 ---
 
-class: inverse, center, middle
+## Histogramas nas notícias
 
-# Bloco 4: Uso do R
+.pull-left[
+&lt;img src="images/histograma_crimes_idade_bbc.png" alt="" width="100%" /&gt;
+
+.fonte[Fonte: BBC News (2018).]
+
+Crimes de homofobia no Reino Unido, por **faixa etária** de vítimas e suspeitos: a classe modal
+dos dois é 20–29 anos.
+]
+
+.pull-right[
+&lt;img src="images/histograma_piramide_etaria_2022.png" alt="" width="72%" /&gt;
+
+.fonte[Fonte: BBC News Brasil, com dados do Censo 2022 (IBGE).]
+
+A **pirâmide etária** são dois histogramas "deitados", um para cada sexo.
+]
 
 ---
 
-## Tabela + gráfico, do dado bruto ao resultado
+## De volta à pizza: tabela e barras .tempo[25–33 min]
+
+.pull-left-40[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Setor &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Nº &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; % &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Embalagens &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29,2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Industrial &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16,0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Laminados plásticos &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16,0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Domiciliar e pessoal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15,1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Outros &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12,3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Manilhas, canos e conexões &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11,3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right-60[
+&lt;img src="MATF14-03_files/figure-html/barras-setor-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+.caixa-aplicacao[
+"Industrial" e "Laminados plásticos" **empatam** (17 empresas cada), e "Domiciliar e pessoal"
+(16) supera "Outros" (13). Na pizza isso era quase impossível de ver.
+]
+
+---
+
+## Dados reais: a composição do PIB em 2025
+
+
+
+.pull-left-60[
+&lt;img src="MATF14-03_files/figure-html/pib-despesa-fig-1.png" alt="" width="100%" /&gt;
+]
+
+.pull-right-40[
+PIB de 2025: R$ 12,74 trilhões, soma de consumo, investimento, estoques e exportações, **menos** importações.
+
+.caixa-discussao[
+Por que um gráfico de **pizza** não serve aqui? (Dica: a soma das fatias positivas é 117,5%.)
+]
+]
+
+.fonte[Fonte: IBGE, Contas Nacionais Trimestrais, tabela 1846 (valores correntes, soma dos quatro trimestres).]
+
+---
+
+## ENEM 2023: lendo e checando um histograma .tempo[33–40 min]
+
+.pull-left[
+&lt;img src="images/exercicio_notas_enem2023.png" alt="" width="100%" /&gt;
+
+.fonte[Fonte: Nexo Jornal (17/01/2024), dados do Inep.]
+]
+
+.pull-right[.small[
+A reportagem afirma que **metade** dos participantes tirou entre 450 e 600 pontos. Vamos
+conferir com as frequências do gráfico.
+
+**Total** (soma de todas as colunas): \\(n = 2.734.100\\).
+
+**Entre 450 e 600:** \\(474.387 + 548.739 + 497.944 = 1.521.070\\).
+
+$$
+\text{freq. relativa} = \frac{1.521.070}{2.734.100} \approx 0{,}556 = 55{,}6\%
+$$
+
+"Metade" é um arredondamento razoável. E "apenas 5% tirou mais de 700":
+
+$$
+\frac{100.396 + 27.342 + 2.094 + 2}{2.734.100} \approx 4{,}7\%
+$$
+]]
+
+---
+
+## "Gender pay gap": histograma na notícia
+
+&lt;img src="images/gender_pay_gap.png" alt="" width="46%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: BBC News, dados de empresas do Reino Unido.]
+
+.caixa-aplicacao[
+Eixo horizontal: **classes** de diferença salarial entre homens e mulheres; eixo vertical: número de
+empresas na classe. "78% das empresas pagam mais aos homens" é a **frequência relativa** das colunas à
+direita do zero.
+]
+
+---
+
+## Atividade 1: nível de instrução por sexo .tempo[40–47 min]
+
+.pull-left[
+&lt;img src="images/exercicio_instrucao_sexo_2022.jpg" alt="" width="95%" /&gt;
+
+.fonte[Fonte: BBC News Brasil, com dados da PNAD Contínua 2022 (IBGE).]
+]
+
+.pull-right[
+**a)** Que tipo de gráfico é apresentado?
+
+**b)** Quais variáveis aparecem? Quais são os seus tipos?
+
+**c)** Que conclusões podemos tirar do gráfico?
+
+
+.caixa-resposta[
+**a)** Colunas empilhadas (100%). **b)** Sexo (qualitativa nominal) e nível de instrução
+(qualitativa **ordinal**). **c)** Entre pessoas de 25 anos ou mais, as mulheres têm mais ensino
+superior completo (21,3% contra 16,8%) e menos pessoas sem instrução ou com fundamental incompleto
+(32,7% contra 35,5%).
+]
+]
+
+---
+
+## Atividade 1 (cont.): força de trabalho por sexo e raça
+
+.pull-left[
+&lt;img src="images/exercicio_forca_trabalho_sexo_raca.jpg" alt="" width="100%" /&gt;
+
+.fonte[Fonte: BBC News Brasil, com dados da PNAD Contínua 2012 a 2022 (IBGE).]
+]
+
+.pull-right[
+**a)** Que tipo de gráfico é apresentado?
+
+**b)** Quais variáveis aparecem? Quais são os seus tipos?
+
+**c)** Que conclusões podemos tirar?
+
+
+.caixa-resposta[
+**a)** Linhas (série temporal). **b)** Ano (quantitativa discreta, ordenada no tempo), taxa de
+participação (quantitativa contínua, em %), sexo e raça (qualitativas nominais). **c)** A
+diferença entre **sexos** (cerca de 20 pontos) é muito maior que a diferença entre **raças**
+dentro de cada sexo; há uma queda em 2020 (pandemia).
+]
+]
+
+---
+
+## Atividade 1 (cont.): discussão
+
+**1.** Volte à Provocação 1. Proponha uma regra simples para decidir **quando** um eixo que não
+começa em zero é aceitável (dica: gráfico de **colunas** vs. gráfico de **linhas**).
+
+**2.** Refaça mentalmente o histograma do faturamento com classes de largura **10 mil** e depois
+**300 mil**. Em cada caso extremo, que conclusão errada um leitor apressado poderia tirar?
+
+**3.** Na tabela do Anuário da Educação (municípios com secretaria exclusiva), a porcentagem cresce
+com o tamanho do município. Isso prova que municípios maiores **investem mais** em educação?
+
+**4.** Escolha uma variável de `dados_prefeitos.csv`. Qual tabela você construiria? Qual gráfico?
+Que manchete **enganosa** alguém poderia escrever com esse mesmo dado?
+
+---
+
+## Uso do R: tabelas de frequência .tempo[47–50 min]
 
 
 ``` r
 library(tidyverse)
-empresas &lt;- read.csv("empresas.csv")
+empresas  &lt;- read.csv("empresas.csv")
+prefeitos &lt;- read.csv("dados_prefeitos.csv")
 
-# tabela de frequências
-empresas |&gt; count(setor, sort = TRUE) |&gt;
-  mutate(pct = round(100*n/sum(n), 1))
+table(empresas$setor)                        # frequência absoluta
+prop.table(table(empresas$setor))            # frequência relativa
+round(100 * prop.table(table(empresas$setor)), 1)
 
-# gráfico de barras ordenado por frequência
-ggplot(empresas, aes(x = fct_infreq(setor))) +
-  geom_col(fill = "#0d3b54") + coord_flip()
+# tabela de dupla entrada e percentual por linha
+tab &lt;- table(prefeitos$Regiao, prefeitos$sexo)
+tab
+round(100 * prop.table(tab, margin = 1), 1)  # margin = 1: divide pelo total da linha
 
-# histograma com número de classes ajustado
-ggplot(empresas, aes(x = faturamento99)) +
-  geom_histogram(bins = 20, fill = "#c9971e", color = "white")
-
-# pizza (Provocação 2): por que é mais difícil de ler que a barra acima
-ggplot(empresas, aes(x = "", fill = setor)) +
-  geom_bar(position = "fill") + coord_polar(theta = "y")
+# classes para variável quantitativa
+classes &lt;- cut(empresas$faturamento99, breaks = seq(0, 700000, 100000), right = FALSE)
+table(classes)
+nclass.Sturges(empresas$faturamento99)       # regra de Sturges: 8
 ```
-
-`fct_infreq()` reordena os níveis de um fator pela frequência, essencial para gráficos de barra
-legíveis. `bins =` no histograma sempre deve ser testado com mais de um valor. `coord_cartesian(ylim
-= ...)` (Provocação 1) muda o que se vê sem mudar nenhum número, use com responsabilidade, ou
-melhor, nunca em um gráfico de barras.
 
 ---
 
-## Discussão final: trazendo tudo junto
+## Uso do R: gráficos
 
-**4.** Escolha entre as duas bases do curso (`empresas` ou `prefeitos`) uma variável e diga: (i)
-que tabela você construiria, (ii) que gráfico acompanharia essa tabela, e (iii) uma manchete
-enganosa que alguém *poderia* construir com o mesmo dado, mas um gráfico mal desenhado.
 
-**5.** É possível que dois analistas, ambos "tecnicamente corretos", cheguem a gráficos que sugerem
-conclusões opostas sobre o mesmo conjunto de dados? Dê um exemplo baseado no que foi visto hoje.
+``` r
+# barras ordenadas por frequência
+empresas |&gt;
+  count(setor) |&gt;
+  ggplot(aes(x = n, y = fct_reorder(setor, n))) +
+  geom_col(fill = "steelblue") +
+  labs(x = "Nº de empresas", y = NULL)
+
+# histograma com classes de 100 mil
+ggplot(empresas, aes(x = faturamento99)) +
+  geom_histogram(breaks = seq(0, 700000, 100000), fill = "steelblue", color = "white") +
+  labs(x = "Faturamento em 1999", y = "Nº de empresas")
+
+# colunas empilhadas (100%) de sexo por região
+ggplot(prefeitos, aes(x = Regiao, fill = sexo)) +
+  geom_bar(position = "fill") +
+  labs(x = NULL, y = "Proporção", fill = "Sexo")
+```
+
+.caixa-r[
+**Exercício:** mude `breaks` no histograma para `seq(0, 700000, 25000)`. O que muda na leitura?
+]
+
+---
+
+## Resumo
+
+- **Tabelas** resumem os dados por contagens ou agrupamentos; têm título (o quê, quando, onde),
+  cabeçalho, corpo e fonte.
+- **Frequência absoluta** \\((m)\\) e **relativa** \\((m/n)\\); para variáveis quantitativas,
+  agrupamos em **classes disjuntas**.
+- **Tabela de dupla entrada:** compare pelo percentual da **linha** (ou da coluna), não pelo total.
+- **Gráficos:** colunas, barras, setores, cartograma, linhas, dispersão, cada um para um tipo de
+  pergunta; **histograma** para variáveis quantitativas agrupadas.
+- Gráficos exigem **ter o público-alvo em mente**: simplicidade, clareza, títulos informativos e
+  eixos honestos.
 
 ---
 

@@ -1,0 +1,121 @@
+"otica","item","ano","valor_milhoes"
+"produção","Total",2019,7389131
+"produção","Total",2020,7609597
+"produção","Total",2021,9012142
+"produção","Total",2022,10079676.701
+"produção","Total",2023,10943344.667906
+"produção","Produção",2019,12741791
+"produção","Produção",2020,13306199
+"produção","Produção",2021,16581873
+"produção","Produção",2022,19183532.337
+"produção","Produção",2023,19821133.7866746
+"produção","Impostos sobre produtos",2019,1039340
+"produção","Impostos sobre produtos",2020,1020210
+"produção","Impostos sobre produtos",2021,1302483
+"produção","Impostos sobre produtos",2022,1343201.299
+"produção","Impostos sobre produtos",2023,1384752.22899999
+"produção","Subsídios aos produtos (-)",2019,-6893
+"produção","Subsídios aos produtos (-)",2020,-5550
+"produção","Subsídios aos produtos (-)",2021,-4340
+"produção","Subsídios aos produtos (-)",2022,NA
+"produção","Subsídios aos produtos (-)",2023,NA
+"produção","Consumo intermediário (-)",2019,-6385107
+"produção","Consumo intermediário (-)",2020,-6711262
+"produção","Consumo intermediário (-)",2021,-8867874
+"produção","Consumo intermediário (-)",2022,-10447056.935
+"produção","Consumo intermediário (-)",2023,-10262541.3477686
+"despesa","Total",2019,7389131
+"despesa","Total",2020,7609597
+"despesa","Total",2021,9012142
+"despesa","Total",2022,10079676.693
+"despesa","Total",2023,10943345
+"despesa","Despesa de consumo final",2019,6290192
+"despesa","Despesa de consumo final",2020,6337208
+"despesa","Despesa de consumo final",2021,7202106
+"despesa","Despesa de consumo final",2022,8211541.209
+"despesa","Despesa de consumo final",2023,8969924.1032404
+"despesa","Despesa de consumo das famílias",2019,4705528
+"despesa","Despesa de consumo das famílias",2020,4700085
+"despesa","Despesa de consumo das famílias",2021,5415523
+"despesa","Despesa de consumo das famílias",2022,6356657.665
+"despesa","Despesa de consumo das famílias",2023,6886025.5702404
+"despesa","Despesa de consumo das Instituições sem fins de lucro a serviço das famílias",2019,108051
+"despesa","Despesa de consumo das Instituições sem fins de lucro a serviço das famílias",2020,104919
+"despesa","Despesa de consumo das Instituições sem fins de lucro a serviço das famílias",2021,115048
+"despesa","Despesa de consumo das Instituições sem fins de lucro a serviço das famílias",2022,NA
+"despesa","Despesa de consumo das Instituições sem fins de lucro a serviço das famílias",2023,NA
+"despesa","Despesa de consumo do governo",2019,1476613
+"despesa","Despesa de consumo do governo",2020,1532204
+"despesa","Despesa de consumo do governo",2021,1671535
+"despesa","Despesa de consumo do governo",2022,1854883.544
+"despesa","Despesa de consumo do governo",2023,2083898.533
+"despesa","Formação bruta de capital",2019,1146556
+"despesa","Formação bruta de capital",2020,1226349
+"despesa","Formação bruta de capital",2021,1759340
+"despesa","Formação bruta de capital",2022,1823234.15
+"despesa","Formação bruta de capital",2023,1724741.22546042
+"despesa","Formação bruta de capital fixo",2019,1143185
+"despesa","Formação bruta de capital fixo",2020,1260227
+"despesa","Formação bruta de capital fixo",2021,1614782
+"despesa","Formação bruta de capital fixo",2022,1794223.009
+"despesa","Formação bruta de capital fixo",2023,1795909.5695337
+"despesa","Variação de estoque",2019,3371
+"despesa","Variação de estoque",2020,-33878
+"despesa","Variação de estoque",2021,144558
+"despesa","Variação de estoque",2022,29011.141
+"despesa","Variação de estoque",2023,-71168.34407328
+"despesa","Exportação de bens e serviços",2019,1043561
+"despesa","Exportação de bens e serviços",2020,1252049
+"despesa","Exportação de bens e serviços",2021,1722169
+"despesa","Exportação de bens e serviços",2022,1978717.642
+"despesa","Exportação de bens e serviços",2023,1966445.093
+"despesa","Importação de bens e serviços (-)",2019,-1091178
+"despesa","Importação de bens e serviços (-)",2020,-1206009
+"despesa","Importação de bens e serviços (-)",2021,-1671473
+"despesa","Importação de bens e serviços (-)",2022,-1933816.308
+"despesa","Importação de bens e serviços (-)",2023,-1717766.474
+"renda","Total",2019,7389131
+"renda","Total",2020,7609597
+"renda","Total",2021,9012142
+"renda","Total",2022,NA
+"renda","Total",2023,NA
+"renda","Remuneração dos empregados",2019,3217680
+"renda","Remuneração dos empregados",2020,3192343
+"renda","Remuneração dos empregados",2021,3534648
+"renda","Remuneração dos empregados",2022,NA
+"renda","Remuneração dos empregados",2023,NA
+"renda","Salários",2019,2539693
+"renda","Salários",2020,2531961
+"renda","Salários",2021,2795014
+"renda","Salários",2022,NA
+"renda","Salários",2023,NA
+"renda","Contribuições sociais efetivas",2019,572894
+"renda","Contribuições sociais efetivas",2020,562617
+"renda","Contribuições sociais efetivas",2021,639009
+"renda","Contribuições sociais efetivas",2022,NA
+"renda","Contribuições sociais efetivas",2023,NA
+"renda","Contribuições sociais imputadas",2019,105093
+"renda","Contribuições sociais imputadas",2020,97765
+"renda","Contribuições sociais imputadas",2021,100625
+"renda","Contribuições sociais imputadas",2022,NA
+"renda","Contribuições sociais imputadas",2023,NA
+"renda","Rendimento misto bruto",2019,617592
+"renda","Rendimento misto bruto",2020,633364
+"renda","Rendimento misto bruto",2021,701521
+"renda","Rendimento misto bruto",2022,NA
+"renda","Rendimento misto bruto",2023,NA
+"renda","Excedente operacional bruto",2019,2430341
+"renda","Excedente operacional bruto",2020,2682839
+"renda","Excedente operacional bruto",2021,3376868
+"renda","Excedente operacional bruto",2022,NA
+"renda","Excedente operacional bruto",2023,NA
+"renda","Impostos sobre a produção e importação",2019,1141622
+"renda","Impostos sobre a produção e importação",2020,1114698
+"renda","Impostos sobre a produção e importação",2021,1413401
+"renda","Impostos sobre a produção e importação",2022,NA
+"renda","Impostos sobre a produção e importação",2023,NA
+"renda","Subsídios a produção e importação (-)",2019,-18104
+"renda","Subsídios a produção e importação (-)",2020,-13647
+"renda","Subsídios a produção e importação (-)",2021,-14296
+"renda","Subsídios a produção e importação (-)",2022,NA
+"renda","Subsídios a produção e importação (-)",2023,NA

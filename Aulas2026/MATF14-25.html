@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Esperança e Variância (VA contínua)</title>
+    <title>Esperança e variância (VA contínua)</title>
     <meta charset="utf-8" />
     <meta name="author" content="Raydonal Ospina" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
@@ -18,165 +18,491 @@
 
 class: inverse, center, middle
 
-# Aula 25: Esperança e variância contínuas
+# Aula 25: Esperança e variância
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R
+### Variáveis aleatórias contínuas
+
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
+
+---
+
+## Roteiro da aula (100 minutos)
+
+.roteiro[
+
+| Tempo | Parte 1: esperança |
+|:---|:---|
+| 0–5 min | Provocação: o valor esperado de uma mensuração |
+| 5–18 min | Valor esperado de variáveis contínuas; exemplo f(x) = 2x |
+| 18–28 min | A média em uma amostra simulada |
+| 28–40 min | **Atividade 1** |
+| 40–50 min | Esperança de uma função de X |
+
+| Tempo | Parte 2: variância e aplicações |
+|:---|:---|
+| 0–12 min | Variância; exemplo f(x) = 2x |
+| 12–25 min | **Atividades 2 e 3**: a triangular |
+| 25–33 min | Taxa de inadimplência de uma carteira; a média esconde a maioria |
+| 33–40 min | Dados reais: média e desvio padrão da inflação mensal |
+| 40–45 min | **Atividade 4**: discussão |
+| 45–50 min | Uso do R e resumo |
+
+]
+
+---
+
+class: inverse, center, middle
+
+# Parte 1: esperança
+
+### 50 minutos
+
+---
+
+## Provocação: o valor esperado de uma mensuração .tempo[0–5 min]
+
+.pull-left[
+&lt;img src="images/peso_esperado_aviao.jpg" alt="" width="95%" /&gt;
+
+.fonte[Fonte: CNN Brasil.]
+]
+
+.pull-right[
+Uma companhia aérea reformou aviões porque as cabines da primeira classe **excederam o peso
+esperado** de projeto.
+
+- Peso é uma variável **contínua**.
+- Engenheiros projetam com base no peso **esperado** de passageiros, poltronas e bagagem.
+
+.caixa-discussao[
+Na Aula 18, a esperança era uma **soma** ponderada pelas probabilidades. Como calcular a média de
+uma variável que assume **infinitos** valores, cada um com probabilidade zero?
+]
+]
+
+---
+
+## Valor esperado de variáveis aleatórias .tempo[5–18 min]
+
+A **esperança** (média, valor esperado) de \\(X\\) é o valor que apareceria **em média** se
+coletássemos inúmeras observações de \\(X\\).
+
+--
+
+- **Discreta** (Aula 18): \\(E(X) = \sum\_i x\_i \cdot P(X = x\_i)\\).
+- **Contínua:** o cálculo é **similar**, mas trocamos a **soma** por uma **integral** e \\(P(X = x\_i)\\) pela
+  **densidade** \\(f(x)\\).
+
+--
+
+.caixa-aplicacao[
+Seja \\(X\\) uma variável aleatória com densidade \\(f(x)\\). A **esperança** de \\(X\\) é
+
+$$
+E(X) = \int\_{-\infty}^{\infty} x \cdot f(x)\,dx.
+$$
+
+\\(x\\) são os **valores** da variável; \\(f(x)\,dx\\) é a "**medida de probabilidade**" perto de \\(x\\). A integral é
+calculada **apenas** no intervalo onde \\(f(x) \neq 0\\).
+]
+
+---
+
+## Exemplo: \\(f(x) = 2x\\)
+
+Seja \\(X\\) com f.d.p. \\(f(x) = 2x\\) para \\(0 &amp;lt; x &amp;lt; 1\\) e \\(f(x) = 0\\) caso contrário. Calcule \\(E(X)\\).
+
+--
+
+$$
+E(X) = \int\_{-\infty}^{\infty} x f(x)\,dx = \int\_0^1 x \cdot 2x\,dx = \int\_0^1 2x^2\,dx = \Big[\frac{2x^3}{3}\Big]\_0^1 = \frac{2}{3}.
+$$
+
+--
+
+.pull-left[
+&lt;img src="MATF14-25_files/figure-html/e2x-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+.caixa-discussao[
+\\(E(X) = 2/3\\) está **acima** de \\(1/2\\), o meio do intervalo. Olhando o gráfico: por que isso faz
+sentido?
+]
+]
+
+---
+
+## A média vista em uma amostra simulada .tempo[18–28 min]
+
+.pull-left[
+&lt;img src="MATF14-25_files/figure-html/sim2x-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+- Histograma de uma amostra de **1.000** valores aleatórios de \\(X\\) com densidade \\(f(x) = 2x\\).
+- **Linha vermelha:** densidade **teórica**.
+- **Linha azul:** média da amostra, 0,67, perto de \\(2/3 \approx 0{,}667\\).
+
+.caixa-aplicacao[
+O histograma de uma amostra **aproxima** a densidade; a média da amostra **aproxima** \\(E(X)\\).
+]
+]
+
+---
+
+## Exercício 1 .tempo[28–40 min]
+
+Seja \\(X\\) com f.d.p. \\(f(x) = 2(1 - x)\\) para \\(0 \leq x \leq 1\\) e 0 caso contrário. Calcule \\(E(X)\\).
+
+--
+
+.pull-left[
+.caixa-resposta[
+$$
+E(X) = \int\_0^1 x \cdot 2(1 - x)\,dx = \int\_0^1 2(x - x^2)\,dx
+$$
+
+$$
+= \Big[x^2 - \frac{2x^3}{3}\Big]\_0^1 = 1 - \frac{2}{3} = \frac{1}{3}.
+$$
+]
+]
+
+.pull-right[
+&lt;img src="MATF14-25_files/figure-html/e21x-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+.caixa-discussao[
+As densidades \\(2x\\) e \\(2(1-x)\\) são o **espelho** uma da outra em torno de \\(x = 1/2\\). As médias \\(2/3\\) e \\(1/3\\)
+também são. Coincidência?
+]
+
+---
+
+## Esperança de uma função de \\(X\\) .tempo[40–50 min]
+
+Como no caso discreto, para uma função \\(g\\):
+
+$$
+E[g(X)] = \int\_{-\infty}^{\infty} g(x)\, f(x)\,dx.
+$$
+
+--
+
+**Em particular**, o segundo momento:
+
+$$
+E(X^2) = \int\_{-\infty}^{\infty} x^2\, f(x)\,dx.
+$$
+
+--
+
+.caixa-aplicacao[
+**As propriedades da Aula 18 continuam valendo:** \\(E(aX + b) = aE(X) + b\\) e, para variáveis
+independentes, \\(E(X + Y) = E(X) + E(Y)\\).
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: variância e aplicações
+
+### 50 minutos
+
+---
+
+## Variância de variáveis contínuas .tempo[0–12 min]
+
+A **variância** de \\(X\\) é
+
+$$
+Var(X) = \int\_{-\infty}^{\infty} (x - E(X))^2 \cdot f(x)\,dx,
+$$
+
+em que \\(E(X)\\) é a média de \\(X\\).
+
+--
+
+**Fórmula alternativa** (em geral mais rápida):
+
+$$
+Var(X) = E(X^2) - [E(X)]^2, \qquad \text{com } E(X^2) = \int\_{-\infty}^{\infty} x^2 f(x)\,dx.
+$$
+
+**Desvio padrão:** \\(dp(X) = \sqrt{Var(X)}\\).
+
+.caixa-aplicacao[
+Também valem \\(Var(aX + b) = a^2\,Var(X)\\) e, para independentes, \\(Var(X + Y) = Var(X) + Var(Y)\\).
+]
+
+---
+
+## Exemplo: variância de \\(f(x) = 2x\\)
+
+Seja \\(X\\) com \\(f(x) = 2x\\) para \\(0 &amp;lt; x &amp;lt; 1\\). Sabendo que \\(E(X) = 2/3\\), calcule \\(Var(X)\\).
+
+--
+
+$$
+E(X^2) = \int\_0^1 x^2 \cdot 2x\,dx = \int\_0^1 2x^3\,dx = \Big[\frac{2x^4}{4}\Big]\_0^1 = \frac{1}{2}.
+$$
+
+--
+
+$$
+Var(X) = E(X^2) - [E(X)]^2 = \frac{1}{2} - \left(\frac{2}{3}\right)^2 = \frac{1}{2} - \frac{4}{9} = \frac{9 - 8}{18} = \frac{1}{18}.
+$$
+
+$$
+dp(X) = \sqrt{1/18} \approx 0{,}236.
+$$
+
+---
+
+## Exercício 2 .tempo[12–25 min]
+
+Seja \\(X\\) com \\(f(x) = 2(1 - x)\\) para \\(0 \leq x \leq 1\\). Calcule a variância de \\(X\\).
+
+--
+
+.caixa-resposta[
+$$
+E(X^2) = \int\_0^1 x^2 \cdot 2(1 - x)\,dx = \int\_0^1 2(x^2 - x^3)\,dx = \Big[\frac{2x^3}{3} - \frac{2x^4}{4}\Big]\_0^1 = \frac{2}{3} - \frac{1}{2} = \frac{1}{6}.
+$$
+
+$$
+Var(X) = \frac{1}{6} - \left(\frac{1}{3}\right)^2 = \frac{1}{6} - \frac{1}{9} = \frac{3 - 2}{18} = \frac{1}{18}.
+$$
+]
+
+--
+
+.caixa-discussao[
+As duas densidades têm médias **diferentes** (\\(2/3\\) e \\(1/3\\)) e a **mesma** variância (\\(1/18\\)). Olhe os
+gráficos: por que o "espalhamento" é o mesmo?
+]
+
+---
+
+## Exercício 3: a triangular
+
+Para a densidade triangular da aula passada, \\(f(x) = x\\) em \\([0, 1]\\) e \\(f(x) = 2 - x\\) em \\((1, 2]\\), calcule
+\\(E(X)\\) e \\(Var(X)\\).
+
+--
+
+.caixa-resposta[
+\\(E(X) = \int\_0^1 x^2\,dx + \int\_1^2 x(2 - x)\,dx = \frac{1}{3} + \Big[x^2 - \frac{x^3}{3}\Big]\_1^2 = \frac{1}{3} + \left(\frac{4}{3} - \frac{2}{3}\right) = 1\\) (também por **simetria**).
+
+\\(E(X^2) = \int\_0^1 x^3\,dx + \int\_1^2 x^2(2 - x)\,dx = \frac{1}{4} + \Big[\frac{2x^3}{3} - \frac{x^4}{4}\Big]\_1^2 = \frac{1}{4} + \frac{4}{3} - \frac{5}{12} = \frac{7}{6}\\).
+
+\\(Var(X) = \frac{7}{6} - 1^2 = \frac{1}{6}\\); \\(dp(X) \approx 0{,}408\\).
+]
+
+---
+
+## Taxa de inadimplência de uma carteira .tempo[25–33 min]
+
+A **proporção** \\(X\\) de clientes inadimplentes em uma carteira de crédito (entre 0 e 1) é modelada pela
+densidade \\(f(x) = 2(1 - x)\\): proporções **baixas** são mais prováveis.
+
+A taxa em **porcentagem** é \\(Y = 100X\\). Calcule \\(E(Y)\\) e \\(dp(Y)\\) sem fazer novas integrais.
+
+--
+
+.caixa-resposta[
+Pelas propriedades, com \\(E(X) = 1/3\\) e \\(Var(X) = 1/18\\):
+
+\\(E(Y) = 100\,E(X) = 33{,}3\\%\\); \\(Var(Y) = 100^2\,Var(X) = 10.000/18 \approx 555{,}6\\); \\(dp(Y) \approx 23{,}6\\) pontos percentuais.
+]
+
+--
+
+**E a probabilidade de a inadimplência passar de 50%?**
+
+.caixa-resposta[
+\\(P(X &amp;gt; 0{,}5) = \int\_{0{,}5}^{1} 2(1 - x)\,dx = \Big[2x - x^2\Big]\_{0{,}5}^{1} = 1 - 0{,}75 = 0{,}25\\).
+]
 
 ---
 
 ## A média esconde a maioria
 
-&gt; O tempo médio de espera em uma fila é 5 minutos. Isso significa que a maioria dos clientes espera
-&gt; "perto de 5 minutos"? Guarde a resposta para depois de ver o gráfico da fdp Exponencial.
+.pull-left[
+&lt;img src="MATF14-25_files/figure-html/fila-1.png" alt="" width="100%" /&gt;
+
+]
+
+.pull-right[
+O tempo de espera numa fila de banco (Aula 24) tem **média de 5 minutos**.
+
+- A maioria dos clientes espera "perto de 5 minutos"?
+- \\(P(X \leq 5) = 1 - e^{-1} \approx 0{,}63\\): **63%** esperam **menos** que a média.
+
+.caixa-discussao[
+Quando a distribuição é **assimétrica à direita**, a média fica **acima** do valor típico (Aula 04). Um
+banco que anuncia "espera média de 5 minutos" está escondendo o quê?
+]
+]
 
 ---
 
-class: inverse, center, middle
+## Dados reais: inflação mensal .tempo[33–40 min]
 
-# Bloco 1: Teoria
+
+
+Tratando o IPCA de cada mês como uma variável contínua, a **média** e o **desvio padrão** resumem o "nível" e a
+"incerteza" da inflação em cada período:
+
+.pull-left[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Período &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Média &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Desvio padrão &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000–2008 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,56 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,46 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2009–2016 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,52 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,28 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2017–2025 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,41 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0,39 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.fonte[Fonte: Banco Central do Brasil, SGS 433 (IPCA, % ao mês).]
+]
+
+.pull-right[
+.caixa-economia[
+Uma inflação média mensal de 0,4% equivale a cerca de \\(1{,}004^{12} - 1 \approx 4{,}9\\%\\) ao ano. Para quem faz contratos
+de longo prazo, o **desvio padrão** importa tanto quanto a média: ele mede o risco de a inflação fugir do previsto.
+]
+]
 
 ---
 
-## Definições: soma vira integral
+## Atividade 4: discussão .tempo[40–45 min]
 
-$$
-E(X) = \mu = \int\_{-\infty}^{\infty} x\,f(x)\,dx
-\qquad
-\mathrm{Var}(X) = \sigma^2 = \int\_{-\infty}^{\infty} (x-\mu)^2\,f(x)\,dx
-$$
+**1.** Uma companhia aérea projeta um avião para o **peso esperado** dos passageiros. Por que isso é
+**insuficiente** para a segurança? Que outra medida da distribuição importa?
+
+**2.** Duas carteiras de crédito têm inadimplência esperada de 5%. Na carteira A, o desvio padrão é
+1 ponto percentual; na B, 8 pontos. Qual delas exige **mais capital** de reserva? Por quê?
+
+**3.** Se \\(f(x) = 2x\\) em \\([0, 1]\\) descreve a **nota** (de 0 a 1) em uma prova, e o professor aplica a
+escala \\(N = 10X\\), quais são \\(E(N)\\) e \\(dp(N)\\)?
 
 --
 
-## As mesmas propriedades do Cap. 3, sem alteração
-
-$$
-E(aX+b)=aE(X)+b \qquad \mathrm{Var}(aX+b)=a^2\mathrm{Var}(X)
-$$
-$$
-E(X+Y)=E(X)+E(Y) \ \text{sempre} \qquad \mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y) \ \text{se indep.}
-$$
-
-Só a ferramenta de cálculo mudou (soma → integral); a interpretação é idêntica.
+.caixa-resposta[
+**3.** \\(E(N) = 10 \times 2/3 \approx 6{,}67\\); \\(dp(N) = 10 \times 0{,}236 \approx 2{,}36\\).
+]
 
 ---
 
-class: inverse, center, middle
-
-# Bloco 2: Aplicação
-
----
-
-## Tempo médio de espera
-
-\\(f(x)=0{,}2e^{-0{,}2x}\\), \\(x\ge0\\).
-
-$$
-E(X) = \int\_0^\infty x\cdot 0{,}2e^{-0{,}2x}\,dx
-$$
-
---
-
-Resultado geral (Exponencial de taxa \\(\lambda\\)): \\(E(X)=\int\_0^\infty x\lambda e^{-\lambda
-x}\,dx = 1/\lambda\\). Com \\(\lambda=0{,}2\\):
-
-$$
-E(X) = \frac{1}{0{,}2} = 5.
-$$
+## Uso do R: esperança e variância com `integrate()` .tempo[45–50 min]
 
 
 ``` r
-1 / 0.2   # a fórmula fechada, calculada à mão acima
+f &lt;- function(x) 2 * x                                   # densidade em (0, 1)
+EX  &lt;- integrate(function(x) x * f(x),   0, 1)$value      # E(X)
+EX2 &lt;- integrate(function(x) x^2 * f(x), 0, 1)$value      # E(X^2)
+c(EX = EX, EX2 = EX2, Var = EX2 - EX^2, dp = sqrt(EX2 - EX^2))
 ```
 
 ```
-## [1] 5
+##         EX        EX2        Var         dp 
+## 0.66666667 0.50000000 0.05555556 0.23570226
 ```
 
 ``` r
-integrand &lt;- function(x) x * 0.2*exp(-0.2*x)
-integrate(integrand, lower = 0, upper = Inf)   # confirmação pela integral
+g &lt;- function(x) 2 * (1 - x)
+EY  &lt;- integrate(function(x) x * g(x),   0, 1)$value
+EY2 &lt;- integrate(function(x) x^2 * g(x), 0, 1)$value
+c(EY = EY, Var = EY2 - EY^2)
 ```
 
 ```
-## 5 with absolute error &lt; 3.8e-05
+##         EY        Var 
+## 0.33333333 0.05555556
 ```
-
-\\(E(X)=5\\) minutos de espera média, número usado para dimensionar guichês de atendimento.
 
 ---
 
-## Custo de superlotação
-
-Se cada minuto de espera acima de 5 custa R$ 2 em satisfação do cliente perdida (métrica
-interna), qual o "custo esperado" simplificado \\(2\times E(X)\\)?
+## Uso do R: conferindo por simulação
 
 
 ``` r
-2 * 5
+set.seed(25)
+x &lt;- sqrt(runif(100000))            # valores com densidade 2x em (0, 1)
+y &lt;- 1 - sqrt(runif(100000))        # valores com densidade 2(1 - x) em (0, 1)
+c(media_x = mean(x), var_x = mean((x - mean(x))^2), teorico = 2/3, 1/18)
 ```
 
 ```
-## [1] 10
+##    media_x      var_x    teorico            
+## 0.66646247 0.05542737 0.66666667 0.05555556
 ```
-
-Ilustra como \\(E(\cdot)\\) vira insumo direto de decisões operacionais, não só uma curiosidade
-teórica.
-
----
-
-## \\(E(X)\\) fora da economia: engenharia aeronáutica
-
-&lt;img src="images/peso_esperado_aviao.jpg" alt="" width="58%" /&gt;
-
-Companhias aéreas projetam cabines com base no **peso esperado** por passageiro. Quando o peso real
-passa a exceder sistematicamente o peso de projeto, a estrutura precisa ser refeita, o mesmo
-problema de uma seguradora recalculando \\(E(X)\\) quando o perfil de sinistros muda.
-
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (bloco central da aula)
-
----
-
-## Rodada 1: resolvendo a provocação inicial
-
-**1.** A distribuição Exponencial é assimétrica à direita (Capítulo 1). Isso significa que grande
-parte dos clientes espera *menos* que 5 minutos, com uma minoria esperando bem mais e puxando a
-média para cima, assim como faturamento e renda no Capítulo 1. Calcule \\(P(X&amp;lt;5)\\) com
-`pexp(5, rate=0.2)` (ou espere até a Aula 26, FDA) para confirmar se mais ou menos da metade dos
-clientes espera menos que a média.
-
-**2.** O que isso implica para a gestão de expectativa do cliente ("tempo médio de espera: 5 min")
-comparado à experiência real da *maioria*? Como um gerente de agência poderia comunicar essa
-informação de forma menos enganosa?
-
----
-
-## Rodada 2: generalizando
-
-**3.** As fórmulas de \\(E(aX+b)\\) e \\(\mathrm{Var}(aX+b)\\) são idênticas às do Cap. 3. Por que isso não
-é surpreendente, dado que a integral é só o "análogo contínuo" da soma? Articule a resposta usando
-o Apêndice B (soma de Riemann → integral).
-
----
-
-class: inverse, center, middle
-
-# Bloco 4: Uso do R
-
----
-
 
 ``` r
-f &lt;- function(x) 0.2*exp(-0.2*x)
-integrand &lt;- function(x) x * f(x)
-integrate(integrand, lower = 0, upper = Inf)   # calcula E(X) numericamente
+c(media_y = mean(y), var_y = mean((y - mean(y))^2), teorico = 1/3, 1/18)
 ```
 
-`integrate()` sempre precisa dos limites de integração corretos, inclusive `Inf` quando o suporte
-é ilimitado, omitir isso é um erro comum.
+```
+##    media_y      var_y    teorico            
+## 0.33288066 0.05545114 0.33333333 0.05555556
+```
+
+``` r
+mean(y &gt; 0.5)                       # P(inadimplência &gt; 50%): perto de 0,25
+```
+
+```
+## [1] 0.24855
+```
+
+.caixa-r[
+`sqrt(runif(n))` gera valores com densidade \\(2x\\) (método da transformação inversa, Aula 26: se
+\\(F(x) = x^2\\), então \\(X = \sqrt{U}\\) com \\(U\\) uniforme).
+]
+
+---
+
+## Resumo
+
+- **Esperança:** \\(E(X) = \int\_{-\infty}^{\infty} x\,f(x)\,dx\\) (a soma da Aula 18 vira integral).
+- **Função de \\(X\\):** \\(E[g(X)] = \int g(x)\,f(x)\,dx\\); em particular \\(E(X^2) = \int x^2 f(x)\,dx\\).
+- **Variância:** \\(Var(X) = \int (x - \mu)^2 f(x)\,dx = E(X^2) - \mu^2\\); **desvio padrão:** \\(\sqrt{Var(X)}\\).
+- As **propriedades** de \\(E\\) e \\(Var\\) são as mesmas do caso discreto.
+- A média de uma amostra grande **aproxima** \\(E(X)\\).
 
 ---
 
@@ -184,7 +510,7 @@ class: inverse, center, middle
 
 # Próxima aula (30/11)
 
-## Função de distribuição acumulada (contínua)
+## Função de distribuição acumulada (VA contínua)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

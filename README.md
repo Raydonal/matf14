@@ -12,18 +12,41 @@ projetos; listas de exercícios não valem nota.
 
 ## Estrutura do repositório
 
-- `Apoio/`: material original do professor (slides `.odp` por unidade, laboratórios em R,
-  listas e provas já aplicadas no semestre 2026.1). Não é alterado por este projeto.
 - `Livro/`: livro-texto em [bookdown](https://bookdown.org/) (gitbook), com a mesma numeração da
   ementa oficial (Capítulos 1-4) mais três apêndices (ferramentas de trabalho em R e Python,
-  revisão de cálculo, fórmulário). Renderizar
-  com `bookdown::render_book("Livro/index.Rmd")`.
+  revisão de cálculo, formulário). Os capítulos incorporam exemplos, figuras e exercícios do
+  material original do semestre 2026.1 (slides, laboratórios em R, listas e provas do professor
+  anterior — não faz mais parte deste repositório, ver nota abaixo), com a fonte original indicada
+  (os créditos ficam nos Agradecimentos do livro),
+  e aplicações com dados oficiais (contas nacionais, trimestrais e regionais, contas econômicas
+  integradas, agregados monetários, matriz de insumo-produto, PNAD Contínua) em `Livro/data/`. Renderizar com
+  `bookdown::render_book("Livro")` (requer pandoc ≥ 2.11; o do RStudio/Quarto serve).
 - `Aulas2026/`: slides de aula em [xaringan](https://slides.yihui.org/xaringan/), um deck por
   encontro do cronograma oficial. As aulas 01 e 02 do cronograma original (apresentação da
   disciplina; população/amostra e tipos de variáveis) foram fundidas em um único deck
   (`MATF14-01.Rmd`), assim como as aulas 15 e 16 (revisão intermediária e exercícios das Unidades
   1-2, agora um único deck em `MATF14-15.Rmd`), para caber no novo horário (encontros de 1h50,
-  2ª e 4ª-feira). Renderizar cada deck com `rmarkdown::render("Aulas2026/MATF14-NN.Rmd")`.
+  2ª e 4ª-feira). Não existe `MATF14-16`; `MATF14-02` é material extra de autoestudo (instalação e
+  primeiros passos em R e Python), fora do cronograma. Cada encontro equivale a duas aulas de 50 minutos, e cada deck segue
+  o mesmo roteiro: slide "Roteiro da aula", Parte 1 (50 min), intervalo, Parte 2 (50 min), com o
+  tempo de cada slide indicado no título e atividades em sala marcadas como "Atividade N"; os
+  laboratórios (07, 13 e 22) rodam no Google Colab.
+  Renderizar cada deck com `rmarkdown::render("Aulas2026/MATF14-NN.Rmd")`.
+- `Listas2026/`: listas de exercícios em LaTeX, contextualizadas em cenários de economia e
+  estatística (mercado de trabalho, inflação, finanças, pesquisas eleitorais), organizadas por
+  bloco temático, cada uma com exercícios complementares adaptados das listas e provas do semestre
+  anterior, incluindo três simulados no formato oficial de prova (Listas 08, 13 e 14, um por
+  P1/P2/P3). As Listas 01–07 e 09–12 terminam com uma seção "Aprofundamento" com dados oficiais
+  (contas nacionais, PNAD Contínua, insumo-produto, IPCA) e os tópicos novos de probabilidade. Compilar com `pdflatex ListaNN.tex` dentro de `Listas2026/`. Os gabaritos de `Listas2026` não
+  ficam neste repositório — alunos têm acesso a este material, e as respostas são mantidas em
+  repositório privado separado.
+
+**Nota (setembro/2026):** este repositório público expõe apenas o livro-texto, os slides e as
+listas de exercícios. O material original do professor do semestre anterior (`Apoio/`) — slides,
+laboratórios, listas e provas já aplicadas, incluindo gabaritos — e um PDF de livro-texto de
+terceiros foram removidos do repositório (não apenas desvinculados da página) para não confundir
+os alunos com material do semestre passado e para não expor gabaritos de provas já aplicadas;
+uma cópia completa fica preservada fora do GitHub, para referência do professor.
 
 ### Cronograma 2026.2
 
@@ -31,7 +54,7 @@ Datas conforme o [calendário acadêmico oficial da UFBA para 2026.2](https://su
 (início do período letivo 19/08/2026, fim 19/12/2026): início da turma em 24/08/2026, sem aula nos
 feriados de 07/09 (Independência), 12/10 (N. Sra. Aparecida) e 02/11 (Finados); 28/10 é ponto
 facultativo (aula mantida). Os dias de **P1**, **P2** e **P3** não têm slide próprio, são a
-continuação natural do deck anterior (que já fecha com um slide "Fim da Unidade").
+continuação natural do deck anterior (que já fecha anunciando a prova).
 
 | Data | Dia | Conteúdo |
 |---|---|---|
@@ -42,11 +65,11 @@ continuação natural do deck anterior (que já fecha com um slide "Fim da Unida
 | 09/09 | 4ª | `MATF14-06` — Medidas de dispersão: AT, DP e CV |
 | 14/09 | 2ª | `MATF14-07` — [Laboratório] R para estatística descritiva |
 | 16/09 | 4ª | `MATF14-08` — Correlação. Assimetria e curtose |
-| **21/09** | **2ª** | **Prova 1** (Unidade 1) |
-| 23/09 | 4ª | `MATF14-09` — Espaço amostral e eventos. Revisão de conjuntos |
-| 28/09 | 2ª | `MATF14-10` — Propriedades de probabilidade. Métodos de contagem |
-| 30/09 | 4ª | `MATF14-11` — Probabilidade condicional |
-| 05/10 | 2ª | `MATF14-12` — Independência estatística |
+| 21/09 | 2ª | `MATF14-09` — Espaço amostral e eventos. Revisão de conjuntos |
+| **23/09** | **4ª** | **Prova 1** (Unidade 1) |
+| 28/09 | 2ª | `MATF14-10` — Axiomas e propriedades de probabilidade. Métodos de contagem |
+| 30/09 | 4ª | `MATF14-11` — Probabilidade geométrica. Probabilidade condicional e tabelas de contingência |
+| 05/10 | 2ª | `MATF14-12` — Independência estatística. Risco relativo e razão de chances |
 | 07/10 | 4ª | `MATF14-13` — [Laboratório] Simulação de probabilidade em R |
 | 14/10 | 4ª | `MATF14-14` — Teorema de Bayes |
 | 19/10 | 2ª | `MATF14-15` — Revisão intermediária + exercícios: Unidades 1 e 2 |
@@ -70,12 +93,6 @@ continuação natural do deck anterior (que já fecha com um slide "Fim da Unida
 O cronograma acima usa **todos** os encontros disponíveis entre 24/08 e 16/12 sem folga, então
 qualquer feriado ou paralisação não prevista aqui empurra as datas subsequentes; segunda chamada
 fica, como já era, a combinar ao final do semestre.
-- `Listas2026/`: listas de exercícios em LaTeX, contextualizadas em cenários de economia e
-  estatística (mercado de trabalho, inflação, finanças, pesquisas eleitorais), organizadas por
-  bloco temático, incluindo três simulados no formato oficial de prova (um por P1/P2/P3). Não
-  substituem as listas de `Apoio/Listas`, já em uso. Os gabaritos (tanto de `Apoio/Listas` quanto
-  de `Listas2026`) não ficam neste repositório — alunos têm acesso a este material, e as respostas
-  são mantidas em repositório privado separado.
 
 Este material segue o mesmo padrão de organização adotado no curso irmão
 [MATD48](https://github.com/Raydonal/matd48).

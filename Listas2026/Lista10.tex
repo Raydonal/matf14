@@ -6,7 +6,7 @@
 
 \cabecalho{Lista de Exercícios 10}{Distribuições de Bernoulli, Binomial e Poisson (Cap. 3, Aulas 20--21)}
 
-\noindent \textit{Justifique todas as respostas. O gabarito completo está em \texttt{Gabarito10.pdf}.}
+\noindent \textit{Justifique todas as respostas. As resoluções são discutidas em sala e nos horários de atendimento; não são publicadas neste material.}
 
 \begin{questao}{1} \textbf{(Binomial: carteira de investidores)}
 
@@ -87,5 +87,66 @@ fraudulentas por dia). Argumente, por escrito, se Binomial ou Poisson é o model
 para essa variável, explicitando quais das condições de cada modelo você julga razoavelmente
 satisfeitas e quais são mais frágeis na prática.
 \end{questao}
+
+
+\bigskip
+\section*{Exercícios complementares}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}, leftmargin=*]
+\item Um terço dos adultos de certa região são alfabetizados. Dentre 5 adultos escolhidos ao acaso, qual a probabilidade de
+\begin{enumerate}[label=(\alph*)]
+  \item dois serem alfabetizados e três não?
+  \item mais de dois serem alfabetizados?
+\end{enumerate}
+\item Um exame tem 10 questões de verdadeiro ou falso. Um aluno responde todas ao acaso.
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de acertar exatamente 7?
+  \item Qual a média e o desvio padrão do número de acertos?
+\end{enumerate}
+\item (Distribuição geométrica) Realizam-se tentativas independentes com probabilidade de sucesso $p$. Seja $X$ o número de tentativas até o primeiro sucesso, $X \in \{1, 2, 3, \ldots\}$.
+\begin{enumerate}[label=(\alph*)]
+  \item Calcule $P(X = 2)$ e $P(X = 3)$.
+  \item Deduza $P(X = k)$ para $k \geq 1$.
+  \item Um banco de sangue procura doadores O-Rh negativo, 9\% da população. Qual a probabilidade de o primeiro doador com esse tipo ser a sexta pessoa examinada?
+\end{enumerate}
+\item O número médio de carros abandonados por semana em certa autoestrada é 2,2. Pelo modelo de Poisson, qual a probabilidade de
+\begin{enumerate}[label=(\alph*)]
+  \item nenhum carro ser abandonado na semana seguinte?
+  \item pelo menos 2 carros serem abandonados?
+\end{enumerate}
+\item Parafusos são defeituosos com probabilidade 2\%, independentemente. São vendidos em pacotes de 10, com devolução do dinheiro se houver dois ou mais defeituosos.
+\begin{enumerate}[label=(\alph*)]
+  \item Qual a probabilidade de devolver o dinheiro de um pacote?
+  \item Quem compra dez pacotes independentes, com que probabilidade terá dinheiro devolvido em pelo menos um?
+\end{enumerate}
+\item A probabilidade de um produto ter defeito é 0,01. Calcule a probabilidade de uma amostra de 200 unidades independentes ter no máximo dois defeituosos: (a) pela Binomial; (b) pela aproximação de Poisson.
+\item Sabe-se que 43\% das pessoas de uma população têm sangue tipo A. Numa amostra de 120 pessoas, seja $N$ o número com sangue tipo A. Qual a distribuição de $N$, sua média e seu desvio padrão? A aproximação de Poisson seria boa aqui? Por quê?
+
+\end{enumerate}
+
+\bigskip
+\needspace{12\baselineskip}
+\section*{Aprofundamento: modelos probabilísticos e dados reais}
+\noindent\textit{Exercícios ligados à seção de aplicação macroeconômica do Capítulo 3 do livro.}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}, leftmargin=*]
+\item \textbf{(A Binomial serve para recessões?)} De 1997 a 2025 houve 116 trimestres, e o PIB caiu (em relação ao trimestre anterior, com ajuste sazonal)
+em 26 deles. A distribuição observada do número de quedas por ano está na Lista 09 (15, 6, 5, 2 e 1 anos com 0, 1, 2, 3 e 4 quedas).
+\begin{enumerate}[label=(\alph*)]
+  \item Estime $p$, a probabilidade de queda em um trimestre. Supondo $X \sim \mathrm{Binomial}(4, p)$, calcule $P(X = k)$ para $k = 0, \ldots, 4$ e
+    compare com as frequências relativas observadas.
+  \item Compare $E(X)$ e $\mathrm{Var}(X)$ da Binomial com a média (0,897) e a variância (1,265) observadas.
+  \item Qual hipótese da Binomial falha? Explique usando o que você sabe sobre crises econômicas.
+\end{enumerate}
+
+\item \textbf{(Meses de deflação e a Poisson.)} Seja $Y$ o número de meses de um ano com IPCA negativo. De 2000 a 2025 (26 anos), houve 15 anos com
+nenhum mês de deflação, 8 anos com um mês, 2 anos com dois meses e 1 ano com três meses (IBGE, via BCB-SGS, série 433).
+\begin{enumerate}[label=(\alph*)]
+  \item Estime $\lambda$ pela média de meses de deflação por ano e compare a variância observada com $\lambda$.
+  \item Supondo $Y \sim \mathrm{Poisson}(\lambda)$, calcule $P(Y = 0)$, $P(Y = 1)$ e $P(Y \geq 2)$, e compare com as frequências observadas.
+  \item Dos 15 meses de deflação, 12 ocorreram de 2017 em diante. Isso é compatível com uma taxa $\lambda$ constante ao longo dos 26 anos? Que consequência isso tem para o modelo?
+\end{enumerate}
+
+\end{enumerate}
 
 \end{document}

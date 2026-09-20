@@ -20,223 +20,763 @@ class: inverse, center, middle
 
 # Aula 08: Correlação, assimetria e curtose
 
-### Provocação · Teoria · Aplicação · Discussão · Uso do R · Fechando a Unidade 1
+### Parte 1 (50 min) · intervalo · Parte 2 (50 min)
 
 ---
 
-## Sorvete, afogamento e a última peça do quebra-cabeça
+## Roteiro da aula (100 minutos)
 
-&gt; Ao longo do século XX, vendas de sorvete e número de afogamentos em praias estão fortemente
-&gt; correlacionados. O sorvete causa afogamento?
+.roteiro[
 
---
+| Tempo | Parte 1: correlação |
+|:---|:---|
+| 0–5 min | Provocação: como medir associação? |
+| 5–15 min | Duas variáveis ao mesmo tempo; PIB per capita e IDH; tipos de associação |
+| 15–22 min | **Atividade 1**: faturamento e empregados |
+| 22–35 min | Coeficiente de correlação; exemplo na mão |
+| 35–42 min | Correlação zero; espúria; não é causalidade |
+| 42–50 min | **Atividade 2**: estime a correlação |
 
-&gt; Duas distribuições salariais podem ter a mesma média e o mesmo desvio padrão e ainda parecerem
-&gt; completamente diferentes num histograma. O que mais falta medir?
+| Tempo | Parte 2: assimetria, curtose e aplicações |
+|:---|:---|
+| 0–10 min | Assimetria: simetria e caudas; coeficiente |
+| 10–22 min | Exemplo na mão; curtose |
+| 22–32 min | Dados reais: poupança e investimento; o crescimento do PIB |
+| 32–40 min | Nossas bases de dados |
+| 40–46 min | **Atividade 3**: discussão |
+| 46–50 min | Uso do R e resumo |
 
----
-
-## Duas distribuições, mesma média e desvio padrão
-
-Duas distribuições simuladas, forçadas a ter **exatamente** a mesma média e o mesmo desvio padrão:
-
-&lt;img src="MATF14-08_files/figure-html/fig-mesma-media-dp-1.png" alt="" width="504" /&gt;
-
---
-
-
-```
-## # A tibble: 2 × 3
-##   grupo       media    dp
-##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
-## 1 Assimétrica  99.8  15.1
-## 2 Simétrica    99.8  15.1
-```
-
-Média e desvio padrão, até a casa decimal, são os mesmos nas duas. A resposta para "o que mais
-falta medir" é exatamente o assunto de hoje: assimetria e curtose.
+]
 
 ---
 
 class: inverse, center, middle
 
-# Bloco 1: Teoria
+# Parte 1: correlação
+
+### 50 minutos
 
 ---
 
-## Coeficiente de correlação de Pearson
+## Provocação: como medir associação? .tempo[0–5 min]
 
-$$
-r = \frac{\sum\_{i=1}^n (x\_i-\bar x)(y\_i-\bar y)}{\sqrt{\sum\_i (x\_i-\bar x)^2}\ \sqrt{\sum\_i (y\_i-\bar y)^2}},
-\qquad -1 \le r \le 1
-$$
+.pull-left-40[
+&lt;img src="images/correlacao_gordura_bbc.png" alt="" width="92%" /&gt;
 
-Mede força e sentido da associação **linear** entre duas variáveis quantitativas. \\(r\approx 0\\) não
-implica ausência de qualquer relação, só de relação linear.
+.fonte[Fonte: BBC News Brasil.]
+]
+
+.pull-right-60[
+Até agora resumimos **uma** variável por vez. Mas muitas perguntas envolvem **duas**:
+
+- Pessoas mais altas pesam mais? E quem pesa mais tem mais gordura corporal?
+- Empresas com mais empregados faturam mais?
+- Capitais mais ricas têm maior desenvolvimento humano?
+
+.caixa-discussao[
+Se o peso "acompanha" a altura na maioria das pessoas, é possível alguém ter peso saudável e
+excesso de gordura? O que isso diz sobre **associação** entre variáveis?
+]
+]
+
+---
+
+## Duas variáveis quantitativas ao mesmo tempo .tempo[5–15 min]
+
+Em muitos dados há **várias mensurações** para cada observação:
+
+- peso e altura de cada pessoa numa pesquisa;
+- número de habitantes e área de cada cidade;
+- tempo de duração e preço de cada viagem de carro por aplicativo.
 
 --
 
-## Assimetria
+.caixa-aplicacao[
+O **gráfico de dispersão** é uma forma simples e útil de analisar a associação entre duas variáveis
+quantitativas: cada observação vira um **ponto** \\((x\_i, y\_i)\\) no plano.
+]
+
+---
+
+## PIB per capita e IDH das capitais do Nordeste
+
+.pull-left[.small[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Capital &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PIB per capita (R$) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; IDH &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Recife &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33.094,37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,772 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aracaju &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.139,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,770 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; São Luís &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.827,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,768 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Natal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.409,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,763 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; João Pessoa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.662,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,763 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Salvador &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.483,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,759 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Fortaleza &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.296,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,754 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Teresina &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.279,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,751 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maceió &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.322,00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,721 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.fonte[Fontes: IBGE (PIB per capita de 2021) e PNUD (IDHM 2010).]
+]]
+
+.pull-right[
+&lt;img src="MATF14-08_files/figure-html/disp-capitais-1.png" alt="" width="100%" /&gt;
+
+]
+
+.clear[]
+
+.small[Cada ponto é uma capital. Capitais com PIB per capita mais alto têm uma **leve tendência** a
+ter IDH maior: indício de **associação moderada**.]
+
+---
+
+## Tipos de associação
+
+Variáveis relacionadas (associadas) umas com as outras são chamadas **correlacionadas**.
+
+&lt;img src="MATF14-08_files/figure-html/tipos-assoc-1.png" alt="" width="100%" /&gt;
+
+Queremos uma **medida** que indique o **grau** e o **tipo** de associação entre duas variáveis
+quantitativas.
+
+---
+
+## Exercício 1: faturamento e número de empregados .tempo[15–22 min]
+
+.pull-left[
+&lt;img src="MATF14-08_files/figure-html/disp-empresas-1.png" alt="" width="92%" /&gt;
+
+]
+
+.pull-right[
+Dados de **106 empresas**.
+
+**a)** Qual é o tipo das variáveis?
+
+**b)** Elas parecem ser associadas?
+
+**c)** Qual é o tipo de associação?
+]
+
+--
+
+.pull-right[
+.caixa-resposta[
+**a)** Ambas quantitativas. **b)** Sim: mais empregados, maior tende a ser o faturamento.
+**c)** Linear **positiva**.
+]
+]
+
+---
+
+## Coeficiente de correlação linear .tempo[22–35 min]
+
+Sejam \\((x\_1, y\_1), \ldots, (x\_n, y\_n)\\) pares de valores de duas variáveis \\(X\\) e \\(Y\\). O
+**coeficiente de correlação** entre \\(X\\) e \\(Y\\) é
 
 $$
-\text{Assimetria} = \frac{\frac1n\sum\_i (x\_i-\bar x)^3}{\mathrm{Var}(X)^{3/2}}
+cor(X, Y) = \frac{1}{n}\sum\_{i=1}^{n}\left(\frac{x\_i - \bar x}{dp(X)}\right)\left(\frac{y\_i - \bar y}{dp(Y)}\right),
 $$
 
-Positiva \\(\Rightarrow\\) cauda longa à direita (renda, faturamento). Negativa \\(\Rightarrow\\) cauda
-longa à esquerda. Zero \\(\Rightarrow\\) simetria.
+em que \\(\bar x\\) e \\(\bar y\\) são as médias e \\(dp(X)\\) e \\(dp(Y)\\) os desvios padrão de \\(X\\) e \\(Y\\).
+
+--
+
+.caixa-aplicacao[
+**Intuição.** Cada fator \\((x\_i - \bar x)/dp(X)\\) diz se o ponto está **acima** (positivo) ou
+**abaixo** (negativo) da média de \\(X\\), em "unidades de desvio padrão". O produto é **positivo**
+quando \\(x\_i\\) e \\(y\_i\\) estão do **mesmo lado** das suas médias, e **negativo** quando estão em
+lados opostos.
+]
+
+---
+
+## O sinal de cada produto
+
+&lt;img src="MATF14-08_files/figure-html/quadrantes-1.png" alt="" width="80%" style="display: block; margin: auto;" /&gt;
+
+.small[Linhas tracejadas: \\(\bar x = 27.390\\) e \\(\bar y = 0{,}758\\). Pontos nas regiões verdes
+**aumentam** a correlação; nas laranjas, **diminuem**.]
+
+---
+
+## Exemplo na mão: PIB e IDH das capitais
+
+\\(\bar x = 27.390{,}15\\), \\(dp(X) = 4.735{,}34\\), \\(\bar y = 0{,}7579\\), \\(dp(Y) = 0{,}01462\\).
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Capital &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; x (PIB) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; y (IDH) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; (x - x̄)/dp(X) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; (y - ȳ)/dp(Y) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Produto &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Recife &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33.094 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,772 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,205 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,162 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aracaju &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.139 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,770 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,053 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,828 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,044 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; São Luís &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.827 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,768 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,993 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,691 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,378 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Natal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.409 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,763 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,349 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,075 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; João Pessoa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.662 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,763 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1,210 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,349 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,423 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Salvador &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.483 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,759 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,231 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,076 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,018 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Fortaleza &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.296 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,754 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,653 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,266 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,174 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Teresina &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.279 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,751 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1,079 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,471 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,508 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Maceió &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.322 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,721 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0,648 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2,522 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,634 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+Somando a última coluna: \\(1{,}162 - 0{,}044 + 1{,}378 + 0{,}075 - 0{,}423 + 0{,}018 + 0{,}174 + 0{,}508 + 1{,}634 = 4{,}483\\).
+
+$$
+cor(X, Y) = \frac{4{,}483}{9} \approx 0{,}498
+$$
+
+---
+
+## Interpretação do coeficiente de correlação
+
+- \\(cor(X, Y)\\) é **sempre** um número entre \\(-1\\) e \\(1\\).
+- \\(cor(X, Y) \approx 0\\): **ausência de relação linear** entre as variáveis.
+- \\(cor(X, Y)\\) próximo de \\(1\\) ou de \\(-1\\): indícios de que as variáveis são **linearmente
+  associadas**.
+  - \\(cor(X, Y) \approx 1\\): associação linear **positiva**;
+  - \\(cor(X, Y) \approx -1\\): associação linear **negativa**.
+
+--
+
+.caixa-aplicacao[
+**PIB e IDH das capitais:** \\(cor = 0{,}498\\), associação linear **positiva moderada**.
+]
+
+--
+
+.caixa-discussao[
+**Cuidado!**
+
+- \\(cor(X, Y) \approx 0\\) **não** significa ausência total de associação: ela pode ser
+  **não linear**.
+- Correlação alta **não** implica causalidade: a correlação pode ser **espúria**.
+]
+
+---
+
+## Correlação zero, associação perfeita .tempo[35–42 min]
+
+Considere \\(X = -2, -1, 0, 1, 2\\) e \\(Y = X^2 = 4, 1, 0, 1, 4\\).
+
+--
+
+- \\(\bar x = 0\\) e \\(\bar y = (4+1+0+1+4)/5 = 2\\).
+- Produtos dos desvios \\((x\_i - \bar x)(y\_i - \bar y)\\):
+  \\((-2)(2) + (-1)(-1) + (0)(-2) + (1)(-1) + (2)(2) = -4 + 1 + 0 - 1 + 4 = 0\\).
+
+Logo, \\(cor(X, Y) = 0\\), embora \\(Y\\) seja **totalmente determinado** por \\(X\\)!
+
+--
+
+.pull-left[
+&lt;img src="MATF14-08_files/figure-html/parabola-1.png" alt="" width="82%" /&gt;
+
+]
+
+.pull-right[
+&lt;img src="images/correlacao_zero_temperatura_salvador.png" alt="" width="58%" /&gt;
+
+.small[
+Temperatura em Salvador (01/08/2024) por hora do dia: \\(cor = -0{,}0418\\).
+]
+
+]
+
+---
+
+## Correlação espúria
+
+&lt;img src="images/correlacao_espuria_margarina.png" alt="" width="62%" style="display: block; margin: auto;" /&gt;
+
+.fonte[Fonte: Tyler Vigen, *Spurious correlations* (tylervigen.com).]
+
+.caixa-discussao[
+Consumo de margarina nos EUA e taxa de divórcio no estado do Maine: \\(r = 0{,}993\\). Comer menos
+margarina **salva casamentos**? O que as duas séries têm em comum (olhe o eixo horizontal)?
+]
+
+---
+
+## Correlação não é causalidade
+
+.pull-left[
+&lt;img src="images/correlacao_mascaras_estadao.png" alt="" width="100%" /&gt;
+
+.fonte[Fonte: Estadão Verifica.]
+
+.small[Um estudo mostrou correlação positiva \\((\rho = 0{,}477)\\) entre o **uso de máscaras** e o
+**excesso de mortes** em 24 países europeus durante a pandemia.]
+]
+
+.pull-right[
+&lt;img src="images/correlacao_mascaras_tausk.png" alt="" width="80%" /&gt;
+
+.fonte[Tausk &amp; Spira (2025), *BMC Public Health*.]
+]
+
+.clear[]
+
+.caixa-discussao[
+A correlação prova que máscaras **causam** mortes? Pense na direção inversa: países onde a epidemia
+estava **pior** tendiam a usar **mais** máscaras.
+]
+
+---
+
+## Exercícios 2 e 3: estime a correlação .tempo[42–50 min]
+
+.pull-left[
+&lt;img src="MATF14-08_files/figure-html/ex2-1.png" alt="" width="95%" /&gt;
+
+**2.** Faturamento e empregados (106 empresas):
+
+\\(-0{,}81\\) · \\(-0{,}15\\) · \\(0{,}21\\) · \\(0{,}74\\)
+]
+
+.pull-right[
+&lt;img src="MATF14-08_files/figure-html/ex3-1.png" alt="" width="95%" /&gt;
+
+**3.** População e idade do prefeito (5.232 municípios):
+
+\\(-0{,}81\\) · \\(-0{,}25\\) · \\(0{,}05\\) · \\(0{,}54\\)
+]
+
+---
+
+## Exercícios 2 e 3: respostas
+
+.caixa-resposta[
+**2.** \\(0{,}74\\). As variáveis têm associação linear **positiva** considerável, então a correlação
+deve ser um valor positivo e próximo de 1. (No R: `cor(empresas$empregados99, empresas$faturamento99)`
+\\(= 0{,}747\\).)
+
+**3.** \\(0{,}05\\). Os pontos formam uma "nuvem" sem padrão aparente: idade do prefeito e população
+do município **não** são correlacionadas. (No R: \\(0{,}053\\).)
+]
+
+--
+
+.caixa-discussao[
+No exercício 3 há mais de 5 mil pontos. Uma correlação de 0,05 com tantos dados é "zero"? E faria
+sentido dizer que a população **causa** a idade do prefeito?
+]
+
+---
+
+class: inverse, center, middle
+
+# Intervalo
+
+### 10 minutos
+
+---
+
+class: inverse, center, middle
+
+# Parte 2: assimetria, curtose e aplicações
+
+### 50 minutos
+
+---
+
+## O que é uma distribuição ser assimétrica? .tempo[0–10 min]
+
+.pull-left-60[
+&lt;img src="images/gender_pay_gap.png" alt="" width="100%" /&gt;
+
+.fonte[Fonte: BBC News (2018), diferença salarial mediana entre homens e mulheres em empresas do Reino Unido.]
+]
+
+.pull-right-40[
+- A distribuição de uma variável quantitativa costuma ser representada por um **histograma**.
+- A distribuição é **simétrica** se as metades de cada lado do centro são aproximadamente imagens
+  num **espelho**.
+- Neste histograma, a "cauda" da direita (empresas que pagam **mais aos homens**) é bem mais longa
+  que a da esquerda.
+]
+
+---
+
+## Simetria e caudas
+
+&lt;img src="MATF14-08_files/figure-html/formas-assim-1.png" alt="" width="100%" /&gt;
+
+- As extremidades da distribuição são as **caudas**.
+- Se uma cauda é **mais longa** que a outra, a distribuição é **assimétrica para o lado da cauda maior**.
+
+---
+
+## Coeficiente de assimetria
+
+A medida de assimetria de \\(x\_1, \ldots, x\_n\\) é
+
+$$
+\frac{\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^3}{var(X)^{3/2}} = \frac{\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^3}{\left(\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^2\right)^{3/2}}
+$$
+
+--
+
+- O valor de **referência é 0**, que corresponde a uma distribuição **simétrica**.
+- Assimetria **&amp;gt; 0**: distribuição assimétrica **à direita**.
+- Assimetria **≈ 0**: distribuição **simétrica**.
+- Assimetria **&amp;lt; 0**: distribuição assimétrica **à esquerda**.
+
+--
+
+.caixa-aplicacao[
+Por que o **cubo**? Ele preserva o **sinal** dos desvios: um desvio grande para a direita pesa muito
+e é positivo; um grande para a esquerda pesa muito e é negativo. Numa distribuição simétrica, eles se
+cancelam.
+]
+
+---
+
+## Exemplo na mão: dados 1, 2, 3, 4, 10 .tempo[10–22 min]
+
+\\(n = 5\\) e \\(\bar x = 20/5 = 4\\).
+
+| \\(x\_i\\) | \\(x\_i - \bar x\\) | \\((x\_i - \bar x)^2\\) | \\((x\_i - \bar x)^3\\) | \\((x\_i - \bar x)^4\\) |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | \\(-3\\) | 9 | \\(-27\\) | 81 |
+| 2 | \\(-2\\) | 4 | \\(-8\\) | 16 |
+| 3 | \\(-1\\) | 1 | \\(-1\\) | 1 |
+| 4 | 0 | 0 | 0 | 0 |
+| 10 | 6 | 36 | 216 | 1.296 |
+| **Soma** | **0** | **50** | **180** | **1.394** |
+
+--
+
+\\(var(X) = 50/5 = 10\\). **Assimetria:**
+
+$$
+\frac{180/5}{10^{3/2}} = \frac{36}{31{,}62} \approx 1{,}14 &gt; 0 \quad \Rightarrow \quad \text{assimétrica à direita}
+$$
 
 ---
 
 ## Curtose
 
+Há diferentes tipos de distribuições **simétricas**, que variam de acordo com o **pico** e as
+**caudas**: a **curtose**.
+
+&lt;img src="MATF14-08_files/figure-html/formas-curt-1.png" alt="" width="100%" /&gt;
+
+- **Leptocúrtica:** pico **afunilado** e caudas pesadas (valores extremos mais frequentes).
+- **Mesocúrtica:** formato de **sino**, como a distribuição normal.
+- **Platicúrtica:** distribuição **achatada**.
+
+---
+
+## Coeficiente de curtose
+
+A medida de curtose de \\(x\_1, \ldots, x\_n\\) é
+
 $$
-\text{Curtose} = \frac{\frac1n\sum\_i (x\_i-\bar x)^4}{\mathrm{Var}(X)^{2}}
+\frac{\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^4}{var(X)^{2}} = \frac{\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^4}{\left(\frac{1}{n}\sum\_{i=1}^{n}(x\_i - \bar x)^2\right)^{2}}
 $$
 
-Referência: Normal tem curtose \\(=3\\). Maior que 3 (leptocúrtica) \\(\Rightarrow\\) caudas mais pesadas,
-mais eventos extremos que sob normalidade, relevante para gestão de risco financeiro.
+- O valor de **referência é 3**, que corresponde a uma distribuição **mesocúrtica** (a normal).
+- Curtose **&amp;gt; 3**: distribuição **afunilada** (leptocúrtica).
+- Curtose **≈ 3**: formato similar à **curva de sino**.
+- Curtose **&amp;lt; 3**: distribuição **achatada** (platicúrtica).
+
+--
+
+**Dados 1, 2, 3, 4, 10:**
+
+$$
+\frac{1.394/5}{10^2} = \frac{278{,}8}{100} \approx 2{,}79
+$$
+
+.small[Pouco abaixo de 3. Com só 5 observações, porém, curtose (e assimetria) são medidas **muito
+instáveis**: um único valor muda tudo.]
 
 ---
 
-class: inverse, center, middle
-
-# Bloco 2: Aplicação
-
----
-
-## Correlação: empregados × faturamento
+## Dados reais: poupança, investimento e crescimento .tempo[22–32 min]
 
 
-``` r
-r &lt;- cor(empresas$empregados99, empresas$faturamento99)
-ggplot(empresas, aes(empregados99, faturamento99)) +
-  geom_point(alpha=.6, color="#0d3b54") + geom_smooth(method="lm", se=FALSE, color="#c9971e") +
-  labs(title = paste0("r = ", round(r,2)), x = "Empregados", y = "Faturamento (R$ mil)") +
-  theme_minimal(base_size=13)
-```
 
-&lt;img src="MATF14-08_files/figure-html/cor-emp-1.png" alt="" width="504" /&gt;
+.pull-left-60[
+&lt;img src="MATF14-08_files/figure-html/cn-corr-fig-1.png" alt="" width="100%" /&gt;
+]
 
----
+.pull-right-40[
+**Poupança × investimento** (2000–2025): \\(r = 0{,}72\\). Países que poupam mais tendem a investir
+mais: a regularidade de Feldstein e Horioka (1980).
 
-## Assimetria e curtose do faturamento
+**Crescimento trimestral do PIB:** assimetria -1,18, curtose 16,0 (caudas muito pesadas).
+]
 
+.clear[]
 
-``` r
-empresas |&gt; summarise(
-  assimetria = assimetria(faturamento99),
-  curtose    = curtose(faturamento99)
-)
-```
-
-```
-##   assimetria curtose
-## 1  0.3574092  3.5838
-```
-
-Assimetria bem positiva (cauda à direita) e curtose alta, coerente com o que já vimos: poucas
-empresas muito grandes, muitas pequenas.
+.fonte[Fonte: IBGE, Contas Nacionais Trimestrais, tabelas 2072 e 5932.]
 
 ---
 
-## Fechando a provocação inicial
+## Nossas bases de dados .tempo[32–40 min]
 
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Variável &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Média &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mediana &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Assimetria &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Curtose &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Faturamento (empresas) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 334.264,91 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 327.898,0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3,58 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nº de empregados (empresas) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60,74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34,0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1,73 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4,96 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Idade do prefeito &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49,84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50,0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0,12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2,60 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; População do município &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.194,60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.932,5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2,05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7,44 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
-```
-## # A tibble: 2 × 3
-##   grupo       assimetria curtose
-##   &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Assimétrica       1.38    5.79
-## 2 Simétrica        -0.01    3.07
-```
+--
 
-Média e desvio padrão idênticos (slide de abertura), assimetria e curtose bem diferentes: essas
-duas medidas enxergam exatamente a diferença de forma que o histograma já mostrava a olho nu.
-
----
-
-class: inverse, center, middle
-
-# Bloco 3: Discussão (a mais longa da aula: fecha a Unidade 1)
-
----
-
-## Rodada 1: a provocação do sorvete
-
-**1.** Identifique a variável de confusão que explica a correlação sorvete×afogamento sem que uma
-cause a outra.
-
-**2.** O número de empregados de uma empresa poderia *causar* maior faturamento, o faturamento
-poderia causar o número de empregados, ou uma terceira variável (porte, setor) poderia causar
-ambos. Os dados de correlação, sozinhos, distinguem essas três histórias? Que dado adicional
-ajudaria?
-
-**3.** Construa mentalmente um exemplo em que \\(X\\) e \\(Y\\) têm relação forte e previsível (para cada
-\\(x\\) existe um único \\(y\\)), mas \\(r\approx0\\). (Dica: pense numa relação em forma de "U".)
-
----
-
-## Rodada 2: forma da distribuição
-
-**4.** Retornos diários de ações costumam ter curtose bem acima de 3. Um modelo de risco que
-assume distribuição Normal (curtose 3) para esses retornos erra para mais ou para menos na
-frequência esperada de quedas bruscas?
-
-**5.** Duas distribuições salariais têm a mesma média e o mesmo desvio padrão, mas assimetrias
-muito diferentes (uma quase zero, outra fortemente positiva). Explique por que essas duas empresas
-poderiam demandar políticas de RH bem diferentes, mesmo com os "dois primeiros números" idênticos.
-
----
-
-## Síntese: fechando a Unidade 1
-
-**6.** Volte à primeira aula do semestre e às cinco perguntas de abertura (fundo de investimento,
-pesquisa eleitoral, inflação "dentro da meta", escore de crédito, seguro para jovens). Para cada
-uma, identifique qual ferramenta da Unidade 1 (tipo de variável, tabela, gráfico, posição,
-dispersão, correlação, assimetria) você usaria primeiro para começar a responder com rigor.
+.caixa-aplicacao[
+- **Idade do prefeito:** assimetria ≈ 0,12 e curtose ≈ 2,6: quase simétrica, próxima de um sino.
+- **Faturamento:** assimetria pequena (0,36): por isso média e mediana quase coincidem.
+- **Empregados** e **população:** assimetria forte à direita (1,73 e 2,05) e curtose alta: poucas
+  empresas e municípios **muito grandes**.
+]
 
 ---
 
-class: inverse, center, middle
+## Atividade 3: discussão .tempo[40–46 min]
 
-# Bloco 4: Uso do R
+**1.** A correlação entre faturamento de 1998 e de 1999 das mesmas empresas é 0,87. Isso quer dizer
+que o faturamento de 1998 **causa** o de 1999? Que variável "escondida" explica os dois?
+
+**2.** Um estudo encontra correlação **negativa** entre número de policiais por habitante e taxa de
+crimes entre cidades. E outro, correlação **positiva**. Como os dois podem estar certos?
+
+--
+
+**3.** A assimetria da renda no Brasil é fortemente positiva. O que isso diz sobre a relação entre a
+renda **média** e a **mediana**? Qual das duas o governo deveria usar para definir quem é "classe
+média"?
+
+**4.** Em finanças, retornos de ações costumam ter curtose **maior que 3**. O que isso significa para
+quem calcula o risco supondo uma distribuição normal (curtose 3)?
 
 ---
+
+## Uso do R: correlação .tempo[46–50 min]
 
 
 ``` r
 library(tidyverse)
 empresas &lt;- read.csv("empresas.csv")
 
-cor(empresas$empregados99, empresas$faturamento99)
+# gráfico de dispersão
+ggplot(empresas, aes(x = empregados99, y = faturamento99)) + geom_point()
+plot(empresas$empregados99, empresas$faturamento99)          # versão base do R
 
-var_n &lt;- function(x) mean((x - mean(x))^2)
-assimetria &lt;- function(x) mean((x-mean(x))^3) / var_n(x)^{3/2}
-curtose    &lt;- function(x) mean((x-mean(x))^4) / var_n(x)^2
+# coeficiente de correlação
+cor(empresas$empregados99, empresas$faturamento99)            # 0,747
 
-empresas |&gt; summarise(assimetria(faturamento99), curtose(faturamento99))
+# várias correlações de uma vez
+empresas |&gt; select(empregados99, faturamento98, faturamento99, idade) |&gt; cor()
+
+# PIB e IDH das capitais
+pib &lt;- c(33094.37, 27139, 36827, 28409, 21662, 28483, 24296, 22279, 24322)
+idh &lt;- c(0.772, 0.770, 0.768, 0.763, 0.763, 0.759, 0.754, 0.751, 0.721)
+cor(pib, idh)                                                 # 0,498
 ```
 
-R não tem funções nativas de assimetria/curtose no pacote base, vêm de pacotes como `e1071` ou
-`moments`, mas escrever a fórmula direto (como acima) ajuda a fixar a definição.
+.caixa-r[
+A correlação **não** depende de dividir por \\(n\\) ou \\(n-1\\): os dois se cancelam na fórmula.
+]
+
+---
+
+## Uso do R: assimetria e curtose
+
+
+``` r
+assimetria &lt;- function(x) mean((x - mean(x))^3) / mean((x - mean(x))^2)^(3/2)
+curtose    &lt;- function(x) mean((x - mean(x))^4) / mean((x - mean(x))^2)^2
+
+x &lt;- c(1, 2, 3, 4, 10)
+assimetria(x)                      # 1,14
+curtose(x)                         # 2,79
+
+assimetria(empresas$empregados99)  # 1,73
+curtose(empresas$empregados99)     # 4,96
+
+hist(empresas$empregados99)        # confira a cauda à direita
+```
+
+.caixa-r[
+Pacotes como `moments` e `e1071` também calculam essas medidas, mas algumas versões usam
+correções ou subtraem 3 da curtose ("excesso de curtose"). Nas provas, use as fórmulas desta aula.
+]
+
+---
+
+## Resumo
+
+- **Gráfico de dispersão:** primeira ferramenta para ver a associação entre duas variáveis
+  quantitativas.
+- **Correlação linear:** \\(cor(X,Y) = \frac{1}{n}\sum \left(\frac{x\_i - \bar x}{dp(X)}\right)\left(\frac{y\_i - \bar y}{dp(Y)}\right)\\),
+  entre \\(-1\\) e \\(1\\).
+- \\(cor \approx 0\\) **não** exclui associação **não linear**; correlação alta **não** implica
+  **causalidade** (pode ser espúria).
+- **Assimetria:** referência 0; positiva \\(\Rightarrow\\) cauda à direita; negativa \\(\Rightarrow\\) cauda
+  à esquerda.
+- **Curtose:** referência 3; leptocúrtica (&amp;gt; 3), mesocúrtica (≈ 3), platicúrtica (&amp;lt; 3).
 
 ---
 
 class: inverse, center, middle
 
-# Fim da Unidade 1: Estatística Descritiva
+# Fim da Unidade 1
 
-## Prova 1 cobre exatamente esta unidade
-
-### Revise as Listas 01-04 antes da data oficial de P1
-
----
-
-class: inverse, center, middle
-
-## Próxima aula (23/09): início da Unidade 2: Probabilidade
-
-### Espaço amostral e eventos. Revisão de teoria de conjuntos
+## Próxima aula (21/09): Espaço amostral e eventos · Prova 1: 23/09
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
